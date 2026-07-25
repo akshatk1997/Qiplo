@@ -8,6 +8,27 @@ const AudioFeedback = {
     notify: () => {}
 };
 
+// Autonomous Self-Healing Fetch Wrapper with Automatic Retry & Exponential Backoff
+async function safeFetch(url, options = {}, retries = 3, backoff = 400) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            const res = await fetch(url, options);
+            if (res.ok) return res;
+            if (res.status >= 500 && i < retries - 1) {
+                await new Promise(r => setTimeout(r, backoff * Math.pow(2, i)));
+                continue;
+            }
+            return res;
+        } catch (err) {
+            if (i < retries - 1) {
+                await new Promise(r => setTimeout(r, backoff * Math.pow(2, i)));
+                continue;
+            }
+            throw err;
+        }
+    }
+}
+
 let predictionData = [];
 let riskChart;
 let signalChart;
@@ -18,7 +39,7 @@ async function loadDashboard() {
     try {
         const role = document.getElementById('roleSelect').value;
         const apiKey = localStorage.getItem('at_ai_model_key') || localStorage.getItem('show_ai_model_key') || '';
-        const response = await fetch(`/api/dashboard-state?role=${role}&model_key=${encodeURIComponent(apiKey)}`);
+        const response = await safeFetch(`/api/dashboard-state?role=${role}&model_key=${encodeURIComponent(apiKey)}`);
         const payload = await response.json();
 
         const summaryData = { summary: payload.summary };
