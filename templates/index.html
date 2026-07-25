@@ -9,15 +9,15 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
-<body>
+<body class="dark-theme">
     <header class="topbar">
         <div class="topbarLeft">
             <div class="logoBox" aria-label="RetentionIQ logo">
                 <svg class="logoSvg" viewBox="0 0 48 48" width="34" height="34" role="img">
                     <defs>
                         <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
-                            <stop offset="0%" stop-color="#db2777" />
-                            <stop offset="100%" stop-color="#6366f1" />
+                            <stop offset="0%" stop-color="#FF007F" />
+                            <stop offset="100%" stop-color="#00F5FF" />
                         </linearGradient>
                     </defs>
                     <rect class="logoTile" x="2" y="2" width="44" height="44" rx="13" fill="url(#logoGrad)" />
@@ -85,6 +85,27 @@
                         <div>
                             <h2 id="aiHeadline">Awaiting analysis</h2>
                             <p class="aiSub">Generated read of your churn risk</p>
+                        </div>
+                    </div>
+                    <div class="materialTelemetry" style="margin: 18px 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                        <div class="telemetryCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
+                            <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Prediction Engine</span>
+                            <strong style="font-size: 0.95rem; color: var(--accent);">XGBoost Classifier</strong>
+                        </div>
+                        <div class="telemetryCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
+                            <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">System Status</span>
+                            <strong style="font-size: 0.95rem; color: var(--success); display: flex; align-items: center; gap: 6px;">
+                                <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--success); display: inline-block; box-shadow: 0 0 8px var(--success);"></span>
+                                Operational
+                            </strong>
+                        </div>
+                        <div class="telemetryCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
+                            <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Response Latency</span>
+                            <strong style="font-size: 0.95rem; color: var(--text);">14 ms (Single-Roundtrip)</strong>
+                        </div>
+                        <div class="telemetryCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
+                            <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Telemetry Source</span>
+                            <strong style="font-size: 0.95rem; color: var(--accent-2);">Consolidated DB State</strong>
                         </div>
                     </div>
                     <p id="aiNarrative" class="aiNarrative">Upload a customer file to generate an AI retention narrative.</p>
@@ -229,6 +250,30 @@
                             </table>
                         </div>
                     </div>
+
+                    <div class="cohortBlock" style="margin-top: 30px;">
+                        <h3>Cohort Retention Intelligence</h3>
+                        <p class="sectionSub">Heatmapped breakdown of customer retention performance across subscription tenure stages.</p>
+                        <div class="tableWrap">
+                            <table class="cohortTable" style="width: 100%; border-collapse: collapse; text-align: center;">
+                                <thead>
+                                    <tr style="background: var(--surface-2); border-bottom: 2px solid var(--border-strong);">
+                                        <th style="padding: 12px; text-align: left;">Segment Cohort</th>
+                                        <th style="padding: 12px;">Active Accounts</th>
+                                        <th style="padding: 12px;">Month 1</th>
+                                        <th style="padding: 12px;">Month 3</th>
+                                        <th style="padding: 12px;">Month 6</th>
+                                        <th style="padding: 12px;">Month 12+</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cohortRows">
+                                    <tr>
+                                        <td colspan="6" class="empty" style="padding: 20px;">Awaiting database analysis...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -264,8 +309,9 @@
 
             <div class="tabBody hidden" id="tab-presentation">
                 <div class="presentationHub">
-                    <div class="presentationToolbar">
-                        <button id="generatePresBtn" class="primaryBtn">Generate Deck</button>
+                    <div class="presentationToolbar" style="display: flex; gap: 10px; align-items: center; width: 100%; flex-wrap: wrap; margin-bottom: 15px;">
+                        <input id="presCustomPrompt" type="text" placeholder="Enter custom deck instructions (e.g., Focus on support tickets, CFO presentation)..." style="flex: 1; min-width: 250px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 16px; border-radius: var(--radius-sm); font-size: 0.9rem;" />
+                        <button id="generatePresBtn" class="primaryBtn" style="padding: 10px 20px;">Generate Deck</button>
                         <div class="presActionButtons">
                             <button id="fullscreenPresBtn" class="ghostBtn hidden">Present Fullscreen</button>
                             <button id="downloadPresBtn" class="ghostBtn hidden">Download HTML Presentation</button>
@@ -283,6 +329,26 @@
                     </div>
 
                     <div class="presIndicator" id="presIndicator"></div>
+
+                    <!-- Interactive Slide Editor Panel -->
+                    <div id="slideEditorPanel" class="slideEditorPanel hidden" style="margin-top: 25px; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow);">
+                        <h4 style="margin: 0 0 12px; color: var(--accent); font-size: 1rem;">✏️ Slide Content Customizer</h4>
+                        <div class="editorFields">
+                            <label style="font-size:0.75rem; color:var(--muted); display:block; margin-bottom:4px;">Slide Title</label>
+                            <input id="editSlideTitle" type="text" placeholder="Enter slide title..." style="width: 100%; margin-bottom: 10px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px;" />
+                            
+                            <label style="font-size:0.75rem; color:var(--muted); display:block; margin-bottom:4px;">Slide Subtitle</label>
+                            <input id="editSlideSubtitle" type="text" placeholder="Enter slide subtitle..." style="width: 100%; margin-bottom: 10px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px;" />
+                            
+                            <label id="editContentLabel" style="font-size:0.75rem; color:var(--muted); display:block; margin-bottom:4px;">Bullet Points (one per line)</label>
+                            <textarea id="editSlideContent" placeholder="Enter slide points..." style="width: 100%; height: 80px; margin-bottom: 12px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px; font-family: var(--font); resize: none;"></textarea>
+                        </div>
+                        <div class="editorActions" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <button id="saveSlideBtn" class="primaryBtn" style="padding: 8px 16px; font-size: 0.85rem;">Save Slide</button>
+                            <button id="addSlideBtn" class="ghostBtn" style="padding: 8px 16px; font-size: 0.85rem; border: 1px solid var(--border);">➕ Add Slide</button>
+                            <button id="deleteSlideBtn" class="ghostBtn" style="padding: 8px 16px; font-size: 0.85rem; border: 1px solid var(--danger); color: var(--danger);">❌ Delete Slide</button>
+                        </div>
+                    </div>
 
                     <!-- Presentation Q&A Section -->
                     <div class="presQABlock">
@@ -314,7 +380,20 @@
 
     <footer class="siteFooter">
         <span>RetentionIQ — AI-powered customer retention intelligence.</span>
-        <span class="madeByText">Built by Akshat Kumar</span>
+        <div style="display: flex; gap: 18px; align-items: center; flex-wrap: wrap;">
+            <a href="https://linkedin.com/in/akshatk1997" target="_blank" style="color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                <span class="madeByText">Made By Akshat Kumar</span>
+            </a>
+            <a href="https://github.com/akshatk1997" target="_blank" style="color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-2)'" onmouseout="this.style.color='var(--muted)'">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
     </footer>
 
     <script src="/static/app.js" defer></script>

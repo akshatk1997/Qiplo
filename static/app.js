@@ -1,27 +1,32 @@
+// Web Audio Synth module disabled by user preference
+const AudioFeedback = {
+    toggle: () => {},
+    isEnabled: () => false,
+    click: () => {},
+    success: () => {},
+    delete: () => {},
+    notify: () => {}
+};
+
 let predictionData = [];
 let riskChart;
 let signalChart;
 let labelMapping = { high_risk: 'high_risk', low_risk: 'low_risk' };
+let lastChartsData = null;
 
 async function loadDashboard() {
     try {
         const role = document.getElementById('roleSelect').value;
         const apiKey = localStorage.getItem('at_ai_model_key') || localStorage.getItem('show_ai_model_key') || '';
-        const [summaryRes, predictionRes, chartsRes, insightsRes, aiRes, brandingRes] = await Promise.all([
-            fetch('/api/summary'),
-            fetch('/api/predictions'),
-            fetch('/api/charts'),
-            fetch(`/api/insights?role=${role}`),
-            fetch(`/api/ai-insights?model_key=${encodeURIComponent(apiKey)}`),
-            fetch('/api/branding')
-        ]);
+        const response = await fetch(`/api/dashboard-state?role=${role}&model_key=${encodeURIComponent(apiKey)}`);
+        const payload = await response.json();
 
-        const summaryData = await summaryRes.json();
-        const predictionsPayload = await predictionRes.json();
-        const chartsData = await chartsRes.json();
-        const insightsData = await insightsRes.json();
-        const aiData = await aiRes.json();
-        const brandingData = await brandingRes.json();
+        const summaryData = { summary: payload.summary };
+        const predictionsPayload = { predictions: payload.predictions };
+        const chartsData = payload.charts;
+        const insightsData = payload.insights;
+        const aiData = payload.ai_insights;
+        const brandingData = payload.branding;
 
         predictionData = predictionsPayload.predictions || [];
         labelMapping = brandingData.label_mapping || { high_risk: 'high_risk', low_risk: 'low_risk' };
@@ -48,6 +53,7 @@ async function loadDashboard() {
 
         renderSourceMeta();
         renderRows();
+        lastChartsData = chartsData;
         renderCharts(chartsData);
         renderInsights(insightsData);
         renderExecutiveSummary(insightsData);
@@ -163,7 +169,7 @@ function renderCharts(chartPayload) {
         type: 'doughnut',
         data: {
             labels: riskLabels.length ? riskLabels : ['No data'],
-            datasets: [{ data: riskValues.length ? riskValues : [1], backgroundColor: ['#ff5d5d', '#37d39b', '#4f8cff'] }]
+            datasets: [{ data: riskValues.length ? riskValues : [1], backgroundColor: ['#FF007F', '#00F5FF', '#FFE600'] }]
         },
         options: { responsive: true, maintainAspectRatio: false, cutout: '62%', plugins: { legend: { labels: { color: labelColor } } } }
     });
@@ -172,7 +178,7 @@ function renderCharts(chartPayload) {
         type: 'bar',
         data: {
             labels: signalLabels.length ? signalLabels : ['No retention signals'],
-            datasets: [{ label: 'Customers', data: signalValues.length ? signalValues : [0], backgroundColor: ['#6ea8ff', '#37d39b', '#ffb454', '#ff5d5d'] }]
+            datasets: [{ label: 'Customers', data: signalValues.length ? signalValues : [0], backgroundColor: ['#00F5FF', '#FF007F', '#FFE600', '#39FF14'] }]
         },
         options: {
             responsive: true, maintainAspectRatio: false,
@@ -234,6 +240,7 @@ async function uploadFile(fileOverride) {
         const response = await fetch('/api/upload', { method: 'POST', body: formData });
         const payload = await response.json();
         if (response.ok && payload.status === 'ok') {
+            AudioFeedback.success();
             if (status) {
                 status.textContent = `Source added: ${payload.rows} customer records analyzed.`;
                 status.className = 'status success';
@@ -288,18 +295,65 @@ function setupDragAndDrop() {
     }, false);
 }
 
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
 function setupTabs() {
+    const savedTab = localStorage.getItem('active_tab') || 'overview';
     document.querySelectorAll('.tab').forEach(tab => {
+        const isTarget = tab.dataset.tab === savedTab;
+        tab.classList.toggle('active', isTarget);
+        const tabBody = document.getElementById(`tab-${tab.dataset.tab}`);
+        if (tabBody) {
+            tabBody.classList.toggle('hidden', !isTarget);
+        }
         tab.addEventListener('click', () => {
+            AudioFeedback.click();
+            const target = tab.dataset.tab;
+            localStorage.setItem('active_tab', target);
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tabBody').forEach(b => b.classList.add('hidden'));
             tab.classList.add('active');
-            document.getElementById(`tab-${tab.dataset.tab}`).classList.remove('hidden');
+            const targetBody = document.getElementById(`tab-${target}`);
+            if (targetBody) targetBody.classList.remove('hidden');
         });
     });
 }
 
+// Theme toggle removed - Dark theme default with Fire & Lightning colors
+
+const toggleSoundBtn = document.getElementById('toggleSoundBtn');
+if (toggleSoundBtn) {
+    const soundEnabled = localStorage.getItem('sound_enabled') !== 'false';
+    AudioFeedback.toggle(soundEnabled);
+    toggleSoundBtn.textContent = soundEnabled ? '🔊' : '🔇';
+    toggleSoundBtn.title = soundEnabled ? 'Disable Sound Feedback' : 'Enable Sound Feedback';
+
+    toggleSoundBtn.addEventListener('click', () => {
+        const currentlyEnabled = AudioFeedback.isEnabled();
+        AudioFeedback.toggle(!currentlyEnabled);
+        localStorage.setItem('sound_enabled', !currentlyEnabled);
+        toggleSoundBtn.textContent = currentlyEnabled ? '🔇' : '🔊';
+        toggleSoundBtn.title = currentlyEnabled ? 'Enable Sound Feedback' : 'Disable Sound Feedback';
+        if (!currentlyEnabled) {
+            AudioFeedback.click();
+        }
+    });
+}
+
+// User-interaction initialization triggers AudioContext activation
+document.addEventListener('click', () => {
+    // Soft click feedback activates AudioContext gracefully
+    AudioFeedback.click();
+}, { once: true });
+
 document.getElementById('addSourceBtn').addEventListener('click', () => {
+    AudioFeedback.click();
     document.getElementById('fileInput').click();
 });
 document.getElementById('fileInput').addEventListener('change', () => uploadFile());
@@ -334,10 +388,10 @@ document.getElementById('exportPdfBtn').addEventListener('click', () => {
     }
     window.open('/api/export/pdf', '_blank');
 });
-document.getElementById('companyNameInput').addEventListener('input', () => {
+document.getElementById('companyNameInput').addEventListener('input', debounce(() => {
     const name = document.getElementById('companyNameInput').value.trim();
     if (name) document.getElementById('brandTitle').textContent = name;
-});
+}, 300));
 
 function animateLogo() {
     const el = document.getElementById('logoChar');
@@ -449,6 +503,13 @@ async function handleChatMessage(event) {
 function appendMessage(role, text, isMarkdown = false) {
     const messagesContainer = document.getElementById('chatMessages');
     if (!messagesContainer) return null;
+
+    if (role === 'bot' && text !== 'Thinking...') {
+        AudioFeedback.notify();
+    } else if (role === 'user') {
+        AudioFeedback.click();
+    }
+
     const msgDiv = document.createElement('div');
     msgDiv.className = `msg ${role}`;
     const msgId = 'msg-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
@@ -546,6 +607,7 @@ async function deleteSource(sourceId, event) {
     try {
         const res = await fetch(`/api/sources/${encodeURIComponent(sourceId)}`, { method: 'DELETE' });
         if (res.ok) {
+            AudioFeedback.delete();
             await loadDashboard();
             await fetchSources();
         } else {
@@ -670,6 +732,7 @@ function renderBusinessAnalytics() {
     
     renderBusinessSegments(businessAnalyticsData.segments || []);
     runCampaignSimulation();
+    renderCohortTable();
 }
 
 function renderBusinessSegments(segments) {
@@ -688,6 +751,54 @@ function renderBusinessSegments(segments) {
                 <td>${s.count}</td>
                 <td>${(s.avg_risk * 100).toFixed(1)}%</td>
                 <td class="danger-text"><strong>${currentCurrencySymbol}${Math.round(loss).toLocaleString()}</strong></td>
+            </tr>
+        `;
+    }).join('');
+}
+
+function renderCohortTable() {
+    const tbody = document.getElementById('cohortRows');
+    if (!tbody) return;
+    if (!predictionData || !predictionData.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="empty" style="padding: 20px;">No customer records loaded yet.</td></tr>';
+        return;
+    }
+
+    const cohorts = {};
+    predictionData.forEach(row => {
+        const ct = row.contract_type || 'Month-to-month';
+        if (!cohorts[ct]) {
+            cohorts[ct] = { total: 0, churned: 0 };
+        }
+        cohorts[ct].total++;
+        if (row.prediction_label === 'high_risk' || row.prediction_label === labelMapping.high_risk || row.churned == 1) {
+            cohorts[ct].churned++;
+        }
+    });
+
+    const getHeatmapStyle = (pct) => {
+        if (pct >= 90) return 'background-color: rgba(0, 245, 255, 0.40); color: #fff; font-weight: 700;';
+        if (pct >= 80) return 'background-color: rgba(0, 245, 255, 0.30); color: #fff;';
+        if (pct >= 70) return 'background-color: rgba(0, 245, 255, 0.20); color: #fff;';
+        if (pct >= 50) return 'background-color: rgba(0, 245, 255, 0.10); color: var(--text);';
+        return 'background-color: rgba(255, 0, 127, 0.25); color: var(--danger); font-weight: 700;';
+    };
+
+    tbody.innerHTML = Object.keys(cohorts).map(ct => {
+        const c = cohorts[ct];
+        const m1Pct = Math.round(((c.total - (c.churned * 0.12)) / c.total) * 100);
+        const m3Pct = Math.round(((c.total - (c.churned * 0.32)) / c.total) * 100);
+        const m6Pct = Math.round(((c.total - (c.churned * 0.62)) / c.total) * 100);
+        const m12Pct = Math.round(((c.total - c.churned) / c.total) * 100);
+
+        return `
+            <tr style="border-bottom: 1px solid var(--border);">
+                <td style="padding: 12px; text-align: left; font-weight: 700;">${ct} Cohort</td>
+                <td style="padding: 12px; background: var(--surface-2);">${c.total}</td>
+                <td style="padding: 12px; ${getHeatmapStyle(m1Pct)}">${m1Pct}%</td>
+                <td style="padding: 12px; ${getHeatmapStyle(m3Pct)}">${m3Pct}%</td>
+                <td style="padding: 12px; ${getHeatmapStyle(m6Pct)}">${m6Pct}%</td>
+                <td style="padding: 12px; ${getHeatmapStyle(m12Pct)}">${m12Pct}%</td>
             </tr>
         `;
     }).join('');
@@ -845,6 +956,70 @@ function setupPresentation() {
         }
     });
 
+    // Editor controls binding
+    const saveBtn = document.getElementById('saveSlideBtn');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+            const slide = presentationSlides[currentSlideIndex];
+            if (!slide) return;
+            slide.title = document.getElementById('editSlideTitle').value;
+            slide.subtitle = document.getElementById('editSlideSubtitle').value;
+            
+            if (slide.layout !== 'title') {
+                const contentVal = document.getElementById('editSlideContent').value;
+                const lines = contentVal.split('\n').map(l => l.trim()).filter(l => l);
+                if (slide.layout === 'split_metrics' || slide.layout === 'segment_comparison') {
+                    slide.bullets = lines;
+                } else if (slide.layout === 'journey_workflow') {
+                    slide.steps = lines.map((line, idx) => {
+                        const parts = line.split(':');
+                        return {
+                            step: idx + 1,
+                            title: parts[0] ? parts[0].trim() : `Step ${idx+1}`,
+                            description: parts[1] ? parts[1].trim() : ''
+                        };
+                    });
+                }
+            }
+            renderSlides(presentationSlides);
+            updateSlideView();
+        });
+    }
+
+    const addBtn = document.getElementById('addSlideBtn');
+    if (addBtn) {
+        addBtn.addEventListener('click', () => {
+            const newSlide = {
+                layout: 'split_metrics',
+                title: 'New Custom Analytics Slide',
+                subtitle: 'Ad-hoc retention deep-dive insights',
+                bullets: ['Focus on low-satisfaction accounts', 'Offer special contracts to prevent churn']
+            };
+            presentationSlides.splice(currentSlideIndex + 1, 0, newSlide);
+            currentSlideIndex++;
+            renderSlides(presentationSlides);
+            updateSlideView();
+        });
+    }
+
+    const delBtn = document.getElementById('deleteSlideBtn');
+    if (delBtn) {
+        delBtn.addEventListener('click', () => {
+            if (!presentationSlides.length) return;
+            presentationSlides.splice(currentSlideIndex, 1);
+            currentSlideIndex = Math.max(0, Math.min(currentSlideIndex, presentationSlides.length - 1));
+            if (presentationSlides.length === 0) {
+                document.getElementById('slideViewport').classList.add('hidden');
+                document.getElementById('slideEditorPanel').classList.add('hidden');
+                document.getElementById('prevSlideBtn').classList.add('hidden');
+                document.getElementById('nextSlideBtn').classList.add('hidden');
+            } else {
+                renderSlides(presentationSlides);
+                updateSlideView();
+            }
+        });
+    }
+
     // Bind Presentation Q&A buttons
     document.querySelectorAll('.qa-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -869,10 +1044,11 @@ async function generatePresentationDeck() {
 
     try {
         const apiKey = localStorage.getItem('gemini_api_key') || '';
+        const customPrompt = document.getElementById('presCustomPrompt') ? document.getElementById('presCustomPrompt').value : '';
         const res = await fetch('/api/presentation', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ api_key: apiKey })
+            body: JSON.stringify({ api_key: apiKey, custom_prompt: customPrompt })
         });
         const payload = await res.json();
 
@@ -887,6 +1063,8 @@ async function generatePresentationDeck() {
             nextBtn.classList.remove('hidden');
             fullscreenBtn.classList.remove('hidden');
             downloadBtn.classList.remove('hidden');
+            const editorPanel = document.getElementById('slideEditorPanel');
+            if (editorPanel) editorPanel.classList.remove('hidden');
             status.classList.add('hidden');
 
             updateSlideView();
@@ -1039,6 +1217,36 @@ function updateSlideView() {
             return `<span class="indicatorDot ${activeClass}" onclick="jumpToSlide(${idx})"></span>`;
         }).join('') + `<span class="indicatorText">Slide ${currentSlideIndex + 1} of ${presentationSlides.length}</span>`;
     }
+    populateSlideEditor();
+}
+
+function populateSlideEditor() {
+    const slide = presentationSlides[currentSlideIndex];
+    if (!slide) return;
+    
+    const titleInput = document.getElementById('editSlideTitle');
+    const subtitleInput = document.getElementById('editSlideSubtitle');
+    const contentTextarea = document.getElementById('editSlideContent');
+    const label = document.getElementById('editContentLabel');
+    
+    if (!titleInput || !subtitleInput || !contentTextarea || !label) return;
+
+    titleInput.value = slide.title || '';
+    subtitleInput.value = slide.subtitle || '';
+
+    if (slide.layout === 'title') {
+        contentTextarea.value = '';
+        contentTextarea.disabled = true;
+        label.textContent = 'Bullet Points (Not applicable)';
+    } else if (slide.layout === 'split_metrics' || slide.layout === 'segment_comparison') {
+        contentTextarea.value = (slide.bullets || []).join('\n');
+        contentTextarea.disabled = false;
+        label.textContent = 'Bullet Points (one per line)';
+    } else if (slide.layout === 'journey_workflow') {
+        contentTextarea.value = (slide.steps || []).map(s => `${s.title}: ${s.description || s.desc || ''}`).join('\n');
+        contentTextarea.disabled = false;
+        label.textContent = 'Workflow Steps (one per line, Format: Title: Description)';
+    }
 }
 
 function jumpToSlide(idx) {
@@ -1070,18 +1278,18 @@ function downloadStandalonePresentation() {
     <title>RetentionIQ Executive Slide Deck</title>
     <style>
         :root {
-            --bg: #000000;
-            --surface: #070709;
-            --surface-2: #0e0e12;
-            --text: #ffeef6;
-            --muted: #a0a0b0;
-            --accent: #ff007f;
-            --accent-2: #ff3399;
-            --accent-soft: rgba(255, 0, 127, 0.18);
-            --border: rgba(255, 0, 127, 0.25);
-            --shadow: 0 0 16px rgba(255, 0, 127, 0.25);
-            --radius: 16px;
-            --radius-sm: 12px;
+            --bg: #0C0E12;
+            --surface: #171A21;
+            --surface-2: #202530;
+            --text: #E2E3E9;
+            --muted: #9094A0;
+            --accent: #3DDC84;
+            --accent-2: #84F3B5;
+            --accent-soft: rgba(61, 220, 132, 0.12);
+            --border: rgba(61, 220, 132, 0.15);
+            --shadow: 0 4px 20px rgba(61, 220, 132, 0.08);
+            --radius: 28px;
+            --radius-sm: 16px;
             --font: 'Google Sans', 'Segoe UI', Roboto, system-ui, Arial, sans-serif;
         }
 
@@ -1186,7 +1394,7 @@ function downloadStandalonePresentation() {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(236, 72, 153, 0.1);
+            border-bottom: 1px solid rgba(61, 220, 132, 0.1);
             padding-bottom: 12px;
             font-size: 0.8rem;
             color: var(--muted);
@@ -1204,7 +1412,7 @@ function downloadStandalonePresentation() {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid rgba(236, 72, 153, 0.05);
+            border-top: 1px solid rgba(61, 220, 132, 0.05);
             padding-top: 12px;
             font-size: 0.78rem;
             color: var(--muted);
@@ -1227,7 +1435,7 @@ function downloadStandalonePresentation() {
 
         .statCallout {
             background: var(--surface-2);
-            border: 1px solid rgba(236, 72, 153, 0.1);
+            border: 1px solid rgba(61, 220, 132, 0.1);
             padding: 16px;
             border-radius: var(--radius-sm);
             text-align: center;
@@ -1292,7 +1500,7 @@ function downloadStandalonePresentation() {
 
         .riskComparisonCard {
             background: var(--surface-2);
-            border: 1px solid rgba(236, 72, 153, 0.1);
+            border: 1px solid rgba(61, 220, 132, 0.1);
             border-radius: var(--radius-sm);
             padding: 20px;
             display: flex;
@@ -1372,7 +1580,7 @@ function downloadStandalonePresentation() {
             backdrop-filter: blur(8px);
             padding: 8px 16px;
             border-radius: 20px;
-            border: 1px solid rgba(236, 72, 153, 0.15);
+            border: 1px solid rgba(61, 220, 132, 0.15);
             z-index: 100;
         }
 

@@ -1,20 +1,20 @@
 :root {
     --bg: #000000;
-    --surface: #070709;
-    --surface-2: #0e0e12;
-    --surface-3: #181822;
-    --border: rgba(255, 0, 127, 0.25);
-    --border-strong: rgba(255, 0, 127, 0.5);
-    --text: #ffeef6;
-    --muted: #a0a0b0;
-    --accent: #ff007f;
-    --accent-2: #ff3399;
-    --accent-soft: rgba(255, 0, 127, 0.18);
-    --danger: #ef4444;
-    --success: #10b981;
-    --radius: 16px;
-    --radius-sm: 12px;
-    --shadow: 0 0 16px rgba(255, 0, 127, 0.25);
+    --surface: #090B10;
+    --surface-2: #121620;
+    --surface-3: #1A202E;
+    --border: rgba(0, 245, 255, 0.18);
+    --border-strong: rgba(255, 0, 127, 0.40);
+    --text: #F8F9FA;
+    --muted: #9AA0A6;
+    --accent: #00F5FF;
+    --accent-2: #FF007F;
+    --accent-soft: rgba(0, 245, 255, 0.12);
+    --danger: #FF003C;
+    --success: #39FF14;
+    --radius: 28px;
+    --radius-sm: 16px;
+    --shadow: 0 4px 24px rgba(0, 245, 255, 0.08);
     --font: 'Google Sans', 'Segoe UI', Roboto, system-ui, Arial, sans-serif;
 }
 
@@ -148,6 +148,7 @@ a { color: inherit; text-decoration: none; }
     align-self: start;
     position: sticky;
     top: 82px;
+    contain: content;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .sourcesPane.dragHighlight {
@@ -230,6 +231,7 @@ a { color: inherit; text-decoration: none; }
     flex-direction: column;
     overflow: hidden;
     min-height: 70vh;
+    contain: content;
 }
 
 .studioTabs {
@@ -1028,7 +1030,8 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
     top: 0; left: 0; right: 0; bottom: 0;
     opacity: 0;
     transform: scale(0.96) translateY(10px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
     pointer-events: none;
     display: flex;
     justify-content: center;
@@ -1088,7 +1091,7 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(236, 72, 153, 0.1);
+    border-bottom: 1px solid rgba(61, 220, 132, 0.1);
     padding-bottom: 12px;
     font-size: 0.8rem;
     color: var(--muted);
@@ -1104,7 +1107,7 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid rgba(236, 72, 153, 0.05);
+    border-top: 1px solid rgba(61, 220, 132, 0.05);
     padding-top: 12px;
     font-size: 0.78rem;
     color: var(--muted);
@@ -1126,7 +1129,7 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
 }
 .statCallout {
     background: var(--surface-2);
-    border: 1px solid rgba(236, 72, 153, 0.1);
+    border: 1px solid rgba(61, 220, 132, 0.1);
     padding: 16px;
     border-radius: var(--radius-sm);
     text-align: center;
@@ -1186,7 +1189,7 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
 }
 .riskComparisonCard {
     background: var(--surface-2);
-    border: 1px solid rgba(236, 72, 153, 0.1);
+    border: 1px solid rgba(61, 220, 132, 0.1);
     border-radius: var(--radius-sm);
     padding: 20px;
     display: flex;
@@ -1316,7 +1319,7 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
     color: var(--accent-2);
     text-align: center;
     padding: 20px;
-    border: 1px dashed rgba(236, 72, 153, 0.25);
+    border: 1px dashed rgba(61, 220, 132, 0.25);
     border-radius: var(--radius-sm);
     animation: pulse 1.5s infinite;
 }
@@ -1329,7 +1332,7 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
     flex-direction: column;
     gap: 20px;
     position: relative;
-    box-shadow: 0 8px 32px rgba(236, 72, 153, 0.08);
+    box-shadow: 0 8px 32px rgba(61, 220, 132, 0.08);
 }
 .qaSlideHeader {
     display: flex;
@@ -1339,7 +1342,7 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    border-bottom: 1px solid rgba(236, 72, 153, 0.1);
+    border-bottom: 1px solid rgba(61, 220, 132, 0.1);
     padding-bottom: 8px;
 }
 .qaTag {
@@ -1369,7 +1372,7 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
 .qaSlideFooter {
     font-size: 0.78rem;
     color: var(--muted);
-    border-top: 1px solid rgba(236, 72, 153, 0.05);
+    border-top: 1px solid rgba(61, 220, 132, 0.05);
     padding-top: 8px;
 }
 
@@ -1420,8 +1423,9 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
     gap: 12px;
     position: relative;
     box-shadow: var(--shadow);
-    transition: all 0.3s ease;
-    animation: fadeInUp 0.6s ease both;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 .workflowStepCard:hover {
     transform: translateY(-4px);
@@ -1477,4 +1481,56 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
     .sourcesPane {
         display: none;
     }
+}
+
+/* Fire & Lightning Tactile Animations & Glow Pulses */
+@keyframes lightningPulse {
+    0% { box-shadow: 0 0 6px rgba(0, 245, 255, 0.18); border-color: rgba(0, 245, 255, 0.18); }
+    50% { box-shadow: 0 0 20px rgba(0, 245, 255, 0.6); border-color: rgba(0, 245, 255, 0.8); }
+    100% { box-shadow: 0 0 6px rgba(0, 245, 255, 0.18); border-color: rgba(0, 245, 255, 0.18); }
+}
+
+@keyframes firePulse {
+    0% { box-shadow: 0 0 6px rgba(255, 0, 127, 0.18); border-color: rgba(255, 0, 127, 0.30); }
+    50% { box-shadow: 0 0 22px rgba(255, 0, 127, 0.75); border-color: rgba(255, 0, 127, 0.7); }
+    100% { box-shadow: 0 0 6px rgba(255, 0, 127, 0.18); border-color: rgba(255, 0, 127, 0.30); }
+}
+
+.tab.active {
+    animation: lightningPulse 3s infinite ease-in-out;
+}
+
+.fStatCard.danger,
+.badge.high {
+    animation: firePulse 2.5s infinite ease-in-out;
+}
+
+/* Card hover glow and dynamic lift translations */
+.aiCard, .fStatCard, .campaignSimulator, .segmentRankings, .cohortBlock {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.aiCard:hover, 
+.fStatCard:hover, 
+.campaignSimulator:hover, 
+.segmentRankings:hover, 
+.cohortBlock:hover {
+    transform: translateY(-4px) scale(1.005);
+    border-color: var(--accent) !important;
+    box-shadow: 0 8px 30px rgba(0, 245, 255, 0.20) !important;
+}
+
+/* Tactile button scales */
+.primaryBtn, .ghostBtn, .tab, .exportExcelBtn, .exportPdfBtn, .navSlideBtn {
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.primaryBtn:active, .ghostBtn:active, .tab:active, .navSlideBtn:active {
+    transform: scale(0.96) !important;
+}
+
+@keyframes scanHUD {
+    0% { top: 0%; }
+    50% { top: 100%; }
+    100% { top: 0%; }
 }

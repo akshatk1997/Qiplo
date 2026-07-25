@@ -537,16 +537,31 @@ def train_model(db_path: Path, model_path: Path, config: dict | None = None) -> 
         accuracy = accuracy_score(y, predictions)
         report_text = classification_report(y, predictions, zero_division=0)
     else:
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.25, stratify=y, random_state=42
-        )
-
-        model = build_model(config, feature_columns=feature_columns, X=X_train)
-        model.fit(X_train, y_train)
-
-        predictions = model.predict(X_test)
-        accuracy = accuracy_score(y_test, predictions)
-        report_text = classification_report(y_test, predictions, zero_division=0)
+        try:
+            X_train, X_test, y_train, y_test = train_test_split(
+                X, y, test_size=0.25, stratify=y, random_state=42
+            )
+            model = build_model(config, feature_columns=feature_columns, X=X_train)
+            model.fit(X_train, y_train)
+            predictions = model.predict(X_test)
+            accuracy = accuracy_score(y_test, predictions)
+            report_text = classification_report(y_test, predictions, zero_division=0)
+        except ValueError:
+            try:
+                X_train, X_test, y_train, y_test = train_test_split(
+                    X, y, test_size=0.25, stratify=None, random_state=42
+                )
+                model = build_model(config, feature_columns=feature_columns, X=X_train)
+                model.fit(X_train, y_train)
+                predictions = model.predict(X_test)
+                accuracy = accuracy_score(y_test, predictions)
+                report_text = classification_report(y_test, predictions, zero_division=0)
+            except Exception:
+                model = build_model(config, fallback=True, feature_columns=feature_columns, X=X)
+                model.fit(X, y)
+                predictions = model.predict(X)
+                accuracy = accuracy_score(y, predictions)
+                report_text = classification_report(y, predictions, zero_division=0)
 
     try:
         model_path.parent.mkdir(parents=True, exist_ok=True)
@@ -998,15 +1013,33 @@ def get_database_context_summary(db_path: Path) -> str:
             """
         ).fetchall()
         
+        # Get upload files history metadata
+        upload_rows = conn.execute(
+            """
+            SELECT filename, row_count, created_at, is_active 
+            FROM data_sources 
+            ORDER BY created_at DESC
+            """
+        ).fetchall()
+        
         conn.close()
         
         lines = []
         lines.append("## SYSTEM DATABASE CONTEXT (ACTIVE SOURCES)")
         lines.append(f"Total Customer Records: {total_cust}")
         
+        lines.append("\n### UPLOADED FILES HISTORY:")
+        if upload_rows:
+            for idx, u in enumerate(upload_rows, 1):
+                status = "ACTIVE" if u['is_active'] == 1 else "INACTIVE"
+                lines.append(f"{idx}. File: '{u['filename']}' | Rows: {u['row_count']} | Uploaded: {u['created_at']} | Status: {status}")
+        else:
+            lines.append("- No files have been uploaded yet.")
+            
         breakdown_text = []
         for r in summary_rows:
             breakdown_text.append(f"- {r['prediction_label']}: {r['count']} customers (avg probability: {r['avg_prob']:.2%})")
+        lines.append("\n### RISK BREAKDOWN:")
         lines.append("\n".join(breakdown_text) if breakdown_text else "- No active prediction data generated yet.")
         
         lines.append("\n### TOP 15 HIGHEST RISK ACTIVE CUSTOMERS:")

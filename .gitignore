@@ -4,3 +4,10 @@ node_modules
 .vscode
 .DS_Store
 dist
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+.venv/
+.pytest_cache/
