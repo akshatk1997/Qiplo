@@ -75,13 +75,8 @@ a { color: inherit; text-decoration: none; }
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
 }
 .logoSvg:hover {
-    transform: scale(1.12) rotate(4deg);
+    transform: scale(1.08);
     box-shadow: 0 0 26px rgba(255, 0, 127, 0.5), 0 0 14px rgba(57, 255, 20, 0.4);
-}
-
-.logoRing {
-    transform-origin: 26px 26px;
-    animation: logoSpin 10s linear infinite;
 }
 
 .logoMonogram {
@@ -94,7 +89,6 @@ a { color: inherit; text-decoration: none; }
 }
 
 @keyframes logoFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-@keyframes logoSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 @keyframes logoPulseGlow { 0% { stroke-dashoffset: 0; opacity: 0.9; } 100% { stroke-dashoffset: 10; opacity: 1; filter: drop-shadow(0 0 6px #00F5FF); } }
 @keyframes logoPulseDot { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.45); opacity: 0.6; } }
 
