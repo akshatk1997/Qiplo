@@ -9,5 +9,7 @@ __pycache__/
 *.pyo
 *.pyd
 *.db
+*.pkl
+*.zip
 .venv/
 .pytest_cache/
