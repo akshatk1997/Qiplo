@@ -1,14 +1,17 @@
-# Keeplo — AI Customer Churn Intelligence Studio ⚡
+# Keeplo — Never Lose a Customer Again ⚡
 
-**Keeplo** is a 100% free, open-source, and claims-free AI-powered customer retention platform built with Python, SQLite, and scikit-learn. It predicts customer churn risk, calculates revenue at risk, and generates actionable enterprise retention strategies in real time.
+> *"AI-Powered Customer Churn Intelligence & Retention Engine"*
+
+**Keeplo** is a 100% free, open-source, and claims-free AI customer retention platform designed for high-growth enterprises and modern data teams. It predicts customer churn risk, identifies revenue-at-risk, and generates high-converting retention playbooks in real time.
 
 ## 🌟 Key Features
 - **100% Free & MIT Licensed**: Unrestricted public and enterprise utility.
-- **Instant AI Churn Predictions**: High-precision machine learning pipeline.
+- **Slogan & Mission**: *"Never lose a customer again."*
+- **Instant AI Churn Predictions**: Powered by robust Machine Learning algorithms with multi-tiered zero-key offline solvers.
 - **Financial ROI & Revenue at Risk**: Multi-currency revenue forecasting ($ USD, € EUR, £ GBP, ₹ INR, ¥ JPY).
-- **Executive Presentation Generator**: Generates slide decks automatically from customer analytics.
-- **Offline & Zero-Key Fallbacks**: Operates 100% offline or seamlessly connects with Gemini & Ollama LLMs.
-- **BI Dashboard Connectors**: One-click exports for Power BI (.pbids) and Tableau (.twb).
+- **Executive Presentation Generator**: Automatically builds HTML slide decks for executive reviews.
+- **Fresh Modern Typography**: Styled with Google Fonts (*Outfit*, *Plus Jakarta Sans*, *JetBrains Mono*).
+- **BI Connectors**: One-click datasource exports for Power BI (`.pbids`) and Tableau (`.twb`).
 
 ## 🚀 Quick Setup
 

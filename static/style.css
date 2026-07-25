@@ -15,7 +15,14 @@
     --radius: 28px;
     --radius-sm: 16px;
     --shadow: 0 4px 24px rgba(0, 245, 255, 0.08);
-    --font: 'Google Sans', 'Segoe UI', Roboto, system-ui, Arial, sans-serif;
+    --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6, .appName, button, select, input, .paneHead h2 {
+    font-family: var(--font-heading);
 }
 
 * { box-sizing: border-box; }
