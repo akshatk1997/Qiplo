@@ -1,21 +1,18 @@
-# Security Policy
+# Open Source & Security Policy — RetentionIQ
 
-## Supported Versions
+## 1. 100% Free, Permissive & Claims-Free Licensing
+RetentionIQ is released under the **MIT License**. It is **100% free**, royalty-free, and claims-free for public, commercial, academic, and enterprise usage anywhere in the world. 
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+- **No Usage Limits**: Unlimited customer datasets, predictions, and analysis.
+- **No Paywalls or Hidden Charges**: Built for public utility and global enterprise adoption.
+- **Privacy & On-Premises Ready**: All machine learning and analytical pipelines can be run locally or self-hosted in your own cloud infrastructure without sending customer data to third-party endpoints unless explicitly configured.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+## 2. Security & Compliance Guidelines
+RetentionIQ prioritizes strict data confidentiality:
+- Customer PII (Personally Identifiable Information) remains isolated inside your local or serverless SQLite instance.
+- No remote telemetry or untracked analytics are collected by default.
 
-## Reporting a Vulnerability
-
-Use this section to tell people how to report a vulnerability.
-
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+## 3. Reporting Vulnerabilities
+If you discover any security issues or vulnerabilities, please open an issue on the official GitHub repository or contact the lead maintainer:
+- **Lead Maintainer**: Akshat Kumar
+- **GitHub**: [akshatk1997/Retentioniq](https://github.com/akshatk1997/Retentioniq)
