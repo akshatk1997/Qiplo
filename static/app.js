@@ -381,12 +381,21 @@ document.getElementById('exportExcelBtn').addEventListener('click', () => {
     }
     window.open('/api/export/excel', '_blank');
 });
+document.getElementById('exportReportBtn').addEventListener('click', () => {
+    if (!predictionData || !predictionData.length) {
+        alert("No prediction data available to analyze. Please upload a customer file first.");
+        return;
+    }
+    const company = encodeURIComponent(document.getElementById('companyNameInput').value.trim() || '');
+    window.open(`/api/export/report?company=${company}`, '_blank');
+});
 document.getElementById('exportPdfBtn').addEventListener('click', () => {
     if (!predictionData || !predictionData.length) {
         alert("No prediction data available to export. Please upload a customer file first.");
         return;
     }
-    window.open('/api/export/pdf', '_blank');
+    const company = encodeURIComponent(document.getElementById('companyNameInput').value.trim() || '');
+    window.open(`/api/export/report?company=${company}`, '_blank');
 });
 document.getElementById('companyNameInput').addEventListener('input', debounce(() => {
     const name = document.getElementById('companyNameInput').value.trim();
