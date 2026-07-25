@@ -93,8 +93,20 @@ def create_app() -> Flask:
 
     @app.before_request
     def initialize_database() -> None:
-        if not app.config.get("DB_INITIALIZED"):
-            ensure_database(get_db_path(), SCHEMA_PATH, config=load_config(CONFIG_PATH))
+        db_p = get_db_path()
+        needs_init = not app.config.get("DB_INITIALIZED") or not db_p.exists()
+        if not needs_init:
+            try:
+                conn = sqlite3.connect(db_p)
+                c = conn.execute("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='customer_churn'").fetchone()[0]
+                conn.close()
+                if c == 0:
+                    needs_init = True
+            except Exception:
+                needs_init = True
+
+        if needs_init:
+            ensure_database(db_p, SCHEMA_PATH, config=load_config(CONFIG_PATH))
             app.config["DB_INITIALIZED"] = True
 
     def get_connection() -> sqlite3.Connection:
