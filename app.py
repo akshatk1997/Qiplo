@@ -126,7 +126,7 @@ def create_app() -> Flask:
         model_key = request.args.get("model_key") or request.args.get("api_key") or os.environ.get("GEMINI_API_KEY")
         
         config = load_config(CONFIG_PATH)
-        company = config.get("company_name", "RetentionIQ Analytics")
+        company = config.get("company_name", "Keeplo Analytics")
         label_mapping = config.get("label_mapping", {"high_risk": "high_risk", "low_risk": "low_risk"})
         high_risk_label = label_mapping.get("high_risk", "high_risk")
         low_risk_label = label_mapping.get("low_risk", "low_risk")
@@ -331,7 +331,7 @@ def create_app() -> Flask:
     def branding_api():
         config = load_config(CONFIG_PATH)
         return jsonify({
-            "company_name": config.get("company_name", "RetentionIQ Analytics"),
+            "company_name": config.get("company_name", "Keeplo Analytics"),
             "label_mapping": config.get("label_mapping", {"high_risk": "high_risk", "low_risk": "low_risk"}),
             "risk_threshold": config.get("risk_threshold", 0.6)
         })
@@ -559,7 +559,7 @@ def create_app() -> Flask:
 
             row_dicts = [dict(row) for row in rows]
             config = load_config(CONFIG_PATH)
-            company = config.get("company_name", "RetentionIQ Analytics")
+            company = config.get("company_name", "Keeplo Analytics")
             if api_key:
                 from churn_analysis import generate_insight_with_gemini
                 insight = generate_insight_with_gemini(row_dicts, api_key, config=config, company_name=company)
@@ -717,7 +717,7 @@ def create_app() -> Flask:
             elif any(w in msg_lower for w in ("xgboost", "model", "algorithm", "train", "accuracy", "precision", "recall", "f1", "auc", "classifier")):
                 res_text = (
                     "### 🧠 Machine Learning Engine: XGBoost Pipeline Training & Diagnostics\n\n"
-                    "The RetentionIQ analytical engine uses an **XGBoost (Extreme Gradient Boosting)** Classifier. "
+                    "The Keeplo analytical engine uses an **XGBoost (Extreme Gradient Boosting)** Classifier. "
                     "XGBoost is an optimized distributed gradient boosting library designed to be highly efficient, flexible, and portable.\n\n"
                     "**1. Objective Function & Regularization Math:**\n"
                     "At each iteration step \\(t\\), XGBoost minimizes the following regularized objective function:\n"
@@ -794,7 +794,7 @@ def create_app() -> Flask:
             elif any(w in msg_lower for w in ("schema", "column", "table", "database", "field", "attributes")):
                 res_text = (
                     "### 🗄️ SQLite Database Schema & Analytics Column Catalog\n\n"
-                    "The RetentionIQ database contains the following attributes for customer analysis:\n\n"
+                    "The Keeplo database contains the following attributes for customer analysis:\n\n"
                     "- **`customer_id`** (Text Primary Key): Unique alphanumeric client identifier.\n"
                     "- **`tenure_months`** (Integer): Number of months the customer has been with the company.\n"
                     "- **`monthly_charges`** (Real): Current recurring monthly billing amount.\n"
@@ -877,7 +877,7 @@ def create_app() -> Flask:
 <workbook version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
   <preferences />
   <datasources>
-    <datasource caption='RetentionIQ Churn Analysis' name='sqlite_ds' version='18.1'>
+    <datasource caption='Keeplo Churn Analysis' name='sqlite_ds' version='18.1'>
       <connection class='sqlite' database='{db_path}' server=''>
         <relation join='left' type='join'>
           <clause type='join'>
@@ -903,7 +903,7 @@ def create_app() -> Flask:
             return Response(
                 twb_content,
                 mimetype="application/xml",
-                headers={"Content-Disposition": "attachment; filename=RetentionIQ_Tableau_Dashboard.twb"}
+                headers={"Content-Disposition": "attachment; filename=Keeplo_Tableau_Dashboard.twb"}
             )
         except Exception as e:
             return jsonify({"error": f"Failed to generate Tableau template: {e}"}), 500
@@ -928,7 +928,7 @@ def create_app() -> Flask:
             return Response(
                 json.dumps(pbids_data, indent=2),
                 mimetype="application/json",
-                headers={"Content-Disposition": "attachment; filename=RetentionIQ_PowerBI_Source.pbids"}
+                headers={"Content-Disposition": "attachment; filename=Keeplo_PowerBI_Source.pbids"}
             )
         except Exception as e:
             return jsonify({"error": f"Failed to generate Power BI datasource: {e}"}), 500
@@ -1016,7 +1016,7 @@ def create_app() -> Flask:
                 for row in rows
             )
             head_html = "".join(f"<th>{h}</th>" for h in headers)
-            html = f"""<!doctype html><html><head><meta charset='utf-8'><title>RetentionIQ Report</title><style>body{{font-family:Arial, sans-serif; padding:24px; color:#111827;}}table{{width:100%; border-collapse:collapse; margin-top:16px;}}th,td{{border:1px solid #cbd5e1; padding:8px; text-align:left;}}h1{{color:#1d4ed8;}}</style></head><body><h1>RetentionIQ Churn Report</h1><p>Professional retention analysis generated from the uploaded customer file.</p><table><thead><tr>{head_html}</tr></thead><tbody>{rows_html}</tbody></table><script>window.onload=function(){{window.print();}};</script></body></html>"""
+            html = f"""<!doctype html><html><head><meta charset='utf-8'><title>Keeplo Report</title><style>body{{font-family:Arial, sans-serif; padding:24px; color:#111827;}}table{{width:100%; border-collapse:collapse; margin-top:16px;}}th,td{{border:1px solid #cbd5e1; padding:8px; text-align:left;}}h1{{color:#1d4ed8;}}</style></head><body><h1>Keeplo Churn Report</h1><p>Professional retention analysis generated from the uploaded customer file.</p><table><thead><tr>{head_html}</tr></thead><tbody>{rows_html}</tbody></table><script>window.onload=function(){{window.print();}};</script></body></html>"""
             return Response(html, mimetype="text/html")
         except Exception as e:
             return Response(f"<h3>Export failed: {e}</h3>", mimetype="text/html"), 500
@@ -1254,7 +1254,7 @@ def create_app() -> Flask:
         custom_prompt = data.get("custom_prompt")
         
         # Fallbacks for copy
-        slide1_title = "RetentionIQ Executive Presentation"
+        slide1_title = "Keeplo Executive Presentation"
         slide1_subtitle = f"Strategic Customer Churn Analysis — {total_cust} Accounts Evaluated"
         
         slide2_title = "Executive Churn Summary"

@@ -48,7 +48,7 @@ async function loadDashboard() {
             }
         }
 
-        const company = document.getElementById('companyNameInput').value || brandingData.company_name || 'RetentionIQ Analytics';
+        const company = document.getElementById('companyNameInput').value || brandingData.company_name || 'Keeplo Analytics';
         document.getElementById('brandTitle').textContent = company;
 
         renderSourceMeta();
@@ -1093,7 +1093,7 @@ function renderSlides(slides) {
                 <div class="slideContent layout-title">
                     <div class="slideDecor"></div>
                     <div class="slideHeader">
-                        <div class="presMiniLogo">RetentionIQ</div>
+                        <div class="presMiniLogo">Keeplo</div>
                     </div>
                     <h1>${slide.title}</h1>
                     <p class="slideSubtitle">${slide.subtitle}</p>
@@ -1107,7 +1107,7 @@ function renderSlides(slides) {
             contentHtml = `
                 <div class="slideContent layout-split">
                     <div class="slideHeader">
-                        <div class="presMiniLogo">RetentionIQ</div>
+                        <div class="presMiniLogo">Keeplo</div>
                         <span>Executive Churn Summary</span>
                     </div>
                     <div class="slideSplitBody">
@@ -1143,7 +1143,7 @@ function renderSlides(slides) {
             contentHtml = `
                 <div class="slideContent layout-grid">
                     <div class="slideHeader">
-                        <div class="presMiniLogo">RetentionIQ</div>
+                        <div class="presMiniLogo">Keeplo</div>
                         <span>Priority Segments & Strategic Roadmap</span>
                     </div>
                     <h2>Prioritized Risk Segments & Action Plan</h2>
@@ -1275,7 +1275,7 @@ function downloadStandalonePresentation() {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RetentionIQ Executive Slide Deck</title>
+    <title>Keeplo Executive Slide Deck</title>
     <style>
         :root {
             --bg: #0C0E12;
@@ -1669,7 +1669,7 @@ function downloadStandalonePresentation() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'RetentionIQ_Executive_Presentation.html';
+    a.download = 'Keeplo_Executive_Presentation.html';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -1705,7 +1705,7 @@ async function triggerQuickQA(question) {
                         <div class="qaSlideText">${htmlContent}</div>
                     </div>
                     <div class="qaSlideFooter">
-                        <span>RetentionIQ Corporate Presentation Suite</span>
+                        <span>Keeplo Corporate Presentation Suite</span>
                     </div>
                 </div>
             `;
