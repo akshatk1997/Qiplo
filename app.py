@@ -904,20 +904,23 @@ def create_app() -> Flask:
                     "3. **Excel & Data Exports**: Download raw predictions via **[Excel (.xlsx)](/api/export/excel)** or **[PDF Report](/api/export/pdf)**."
                 )
 
-            # 10. Universal Dynamic Advisory Response for ANY Question
+            # 10. Universal Dynamic Multi-Option Advisory Response for ANY Question
             else:
                 res_text = (
-                    f"### 🤖 Keeplo AI Retention Consultation & Advisory\n\n"
-                    f"Thank you for your inquiry: **\"{user_message}\"**.\n\n"
-                    f"Based on our analysis of your **{total_cust:,} evaluated customer records** ({high_risk:,} high-risk accounts representing ${risk_mrr:,.2f}/mo in MRR exposure), here is my strategic evaluation:\n\n"
-                    f"**1. Operational Context & Analysis:**\n"
-                    f"Your cohort currently exhibits an average churn probability score of **{avg_risk:.1f}%**. "
-                    f"To optimize retention for your business, we must address the primary friction drivers: contract duration, monthly pricing tiers, and support ticket response SLAs.\n\n"
-                    f"**2. Prescriptive Action Plan:**\n"
-                    f"- **Target High-Risk Accounts**: Institute a 24-hour phone outreach SLA for accounts with risk scores ≥ 65%.\n"
-                    f"- **Contract Incentives**: Offer a 15–20% discount to convert month-to-month accounts into 1-year plans.\n"
-                    f"- **Export Reports**: Generate full slide decks or download our **[Full Analysis Report](/api/export/report)** to present to your executive team.\n\n"
-                    f"Would you like me to elaborate on specific model metrics, draft email campaigns, or provide custom BI export connectors?"
+                    f"### ⚡ Keeplo Native AI Advisory — Multi-Perspective Analysis\n\n"
+                    f"**User Prompt Evaluated**: *\"{user_message}\"*\n\n"
+                    f"Analyzing your **{total_cust:,} evaluated accounts** ({high_risk:,} high-risk records; ${risk_mrr:,.2f}/mo in MRR exposure; mean churn probability: **{avg_risk:.1f}%**).\n\n"
+                    f"Here are **3 strategic execution paths** tailored to your inquiry:\n\n"
+                    f"#### 🎯 Option 1: Executive & Financial Risk Stabilization\n"
+                    f"- **Core Focus**: Reclaim maximum MRR by targeting top revenue-generating month-to-month accounts.\n"
+                    f"- **Action Plan**: Deploy a 15% billing discount for migrating to annual contracts, preserving up to **${(risk_mrr * 12 * 0.25):,.2f}/yr** in ARR.\n\n"
+                    f"#### 📞 Option 2: Proactive Customer Success Outreach SLA\n"
+                    f"- **Core Focus**: Rapid intervention for accounts displaying risk probability ≥ 65%.\n"
+                    f"- **Action Plan**: Mandate a 24-hour phone callback SLA from CSMs to resolve onboarding or billing friction points.\n\n"
+                    f"#### 🛠️ Option 3: Support Escalation & Ticket Routing\n"
+                    f"- **Core Focus**: Eliminate service dissatisfaction among active subscribers.\n"
+                    f"- **Action Plan**: Route support tickets from high-risk clients to a VIP senior technical queue (<2h response target).\n\n"
+                    f"*(Powered by Keeplo Ultra-Fast Native AI Engine — 100% Free & Unlimited)*"
                 )
             
             conn.close()
