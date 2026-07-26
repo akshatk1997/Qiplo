@@ -1046,6 +1046,20 @@ def create_app() -> Flask:
             config = load_config(CONFIG_PATH)
             company = request.args.get("company") or config.get("company_name", "Keeplo Analytics")
 
+            # Currency resolution
+            CURRENCIES = {
+                "USD": {"symbol": "$", "rate": 1.0, "name": "US Dollar (USD)"},
+                "EUR": {"symbol": "€", "rate": 0.92, "name": "Euro (EUR)"},
+                "GBP": {"symbol": "£", "rate": 0.78, "name": "British Pound (GBP)"},
+                "INR": {"symbol": "₹", "rate": 83.5, "name": "Indian Rupee (INR)"},
+                "JPY": {"symbol": "¥", "rate": 158.0, "name": "Japanese Yen (JPY)"},
+            }
+            currency_code = (request.args.get("currency") or "USD").upper()
+            curr_info = CURRENCIES.get(currency_code, CURRENCIES["USD"])
+            curr_symbol = curr_info["symbol"]
+            curr_rate = curr_info["rate"]
+            curr_name = curr_info["name"]
+
             # Stats query
             stats = conn.execute(
                 """
@@ -1071,6 +1085,11 @@ def create_app() -> Flask:
             risk_mrr = stats["risk_mrr"] or 0.0
             high_risk_pct = (high_risk / total_cust * 100) if total_cust > 0 else 0
 
+            # Converted values
+            conv_total_mrr = total_mrr * curr_rate
+            conv_risk_mrr = risk_mrr * curr_rate
+            conv_risk_arr = conv_risk_mrr * 12
+
             # Top vulnerable rows
             rows = conn.execute(
                 """
@@ -1092,7 +1111,7 @@ def create_app() -> Flask:
                 p_pct = r["predicted_probability"] * 100
                 badge_cls = "badge-danger" if r["prediction_label"] == "high_risk" else "badge-success"
                 action_text = "Proactive 24h Phone Call & 20% Retention Offer" if r["prediction_label"] == "high_risk" else "Routine Engagement & Service Check"
-                m_charge = f"${r['monthly_charges']:.2f}" if r["monthly_charges"] is not None else "N/A"
+                m_charge = f"{curr_symbol}{(r['monthly_charges'] * curr_rate):,.2f}" if r["monthly_charges"] is not None else "N/A"
                 tenure = f"{r['tenure_months']} mo" if r["tenure_months"] is not None else "N/A"
                 contract = (r["contract_type"] or "Unknown").replace("_", " ").title()
 
@@ -1306,6 +1325,7 @@ def create_app() -> Flask:
             </div>
             <div class="report-meta">
                 <div><strong>Client / Entity:</strong> {company}</div>
+                <div><strong>Active Currency:</strong> <span style="color: var(--primary); font-weight: 700;">{curr_name} ({curr_symbol})</span></div>
                 <div><strong>Generated Date:</strong> {now_str}</div>
                 <div><strong>Engine Version:</strong> Keeplo AI v4.2</div>
             </div>
@@ -1324,9 +1344,9 @@ def create_app() -> Flask:
                 <div class="kpi-sub">Accounts at risk of immediate churn</div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-title">Monthly Revenue at Risk</div>
-                <div class="kpi-val danger">${risk_mrr:,.2f}</div>
-                <div class="kpi-sub">MRR exposure weighted by risk</div>
+                <div class="kpi-title">Monthly Revenue at Risk ({currency_code})</div>
+                <div class="kpi-val danger">{curr_symbol}{conv_risk_mrr:,.2f}</div>
+                <div class="kpi-sub">MRR exposure in {curr_name}</div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-title">Avg Churn Probability</div>
@@ -1348,7 +1368,7 @@ def create_app() -> Flask:
                 </div>
                 <div class="cause-box">
                     <h4>2. Price Sensitivity & Unaligned Pricing Tiers</h4>
-                    <p>Accounts paying >$75/month without receiving tailored onboarding or multi-year discounts account for <strong>42% of total revenue at risk</strong>.</p>
+                    <p>Accounts paying elevated monthly charges without receiving tailored onboarding or multi-year discounts account for <strong>42% of total revenue at risk</strong>.</p>
                 </div>
                 <div class="cause-box">
                     <h4>3. Service Ticket Friction & Support Delays</h4>
@@ -1362,23 +1382,26 @@ def create_app() -> Flask:
         </div>
 
         <!-- Section 2: Results & Risk Distribution -->
-        <h2 class="section-title">2. Analysis Results & Revenue Breakdown</h2>
+        <h2 class="section-title">2. Analysis Results & Revenue Breakdown ({currency_code})</h2>
         <div class="report-card">
             <div style="display: flex; justify-content: space-between; gap: 20px; align-items: center; flex-wrap: wrap;">
                 <div style="flex: 1;">
-                    <h3 style="margin-top:0; font-family:'Outfit', sans-serif;">Financial Risk Summary</h3>
+                    <h3 style="margin-top:0; font-family:'Outfit', sans-serif;">Financial Risk Summary ({curr_name})</h3>
                     <p style="color: var(--muted); font-size:0.88rem;">
-                        Your total monthly recurring billing across active customers is <strong>${total_mrr:,.2f}</strong>. 
-                        Of this value, <strong>${risk_mrr:,.2f} ({((risk_mrr/total_mrr*100) if total_mrr > 0 else 0):.1f}%)</strong> is currently in the high-risk cohort.
+                        Your total monthly recurring billing across active customers is <strong>{curr_symbol}{conv_total_mrr:,.2f}</strong> ({curr_name}). 
+                        Of this value, <strong>{curr_symbol}{conv_risk_mrr:,.2f} ({((risk_mrr/total_mrr*100) if total_mrr > 0 else 0):.1f}%)</strong> is currently in the high-risk cohort.
                     </p>
                     <p style="color: var(--muted); font-size:0.88rem;">
-                        On an annual basis, this represents an expected ARR exposure of <strong>${(risk_mrr * 12):,.2f}</strong> if unmitigated.
+                        On an annual basis, this represents an expected ARR exposure of <strong>{curr_symbol}{conv_risk_arr:,.2f} {currency_code}</strong> if unmitigated.
+                    </p>
+                    <p style="font-size:0.8rem; color: var(--primary); margin-bottom: 0;">
+                        <em>* Note: All financial calculations in this audit report have been dynamically converted to {curr_name} ({curr_symbol}) based on active dashboard currency selection.</em>
                     </p>
                 </div>
                 <div style="background: rgba(255,0,127,0.08); border: 1px solid var(--accent); padding: 18px; border-radius: 10px; min-width: 240px; text-align: center;">
-                    <div style="font-size:0.75rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Annual ARR at Risk</div>
-                    <div style="font-family:'JetBrains Mono', monospace; font-size: 1.8rem; font-weight:700; color:var(--accent); margin:4px 0;">${(risk_mrr * 12):,.2f}</div>
-                    <div style="font-size:0.75rem; color:var(--muted);">Proactive intervention recommended</div>
+                    <div style="font-size:0.75rem; color:var(--muted); font-weight:700; text-transform:uppercase;">Annual ARR at Risk ({currency_code})</div>
+                    <div style="font-family:'JetBrains Mono', monospace; font-size: 1.8rem; font-weight:700; color:var(--accent); margin:4px 0;">{curr_symbol}{conv_risk_arr:,.2f}</div>
+                    <div style="font-size:0.75rem; color:var(--muted);">Proactive intervention recommended ({curr_name})</div>
                 </div>
             </div>
         </div>

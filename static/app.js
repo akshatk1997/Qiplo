@@ -408,7 +408,9 @@ document.getElementById('exportReportBtn').addEventListener('click', () => {
         return;
     }
     const company = encodeURIComponent(document.getElementById('companyNameInput').value.trim() || '');
-    window.open(`/api/export/report?company=${company}`, '_blank');
+    const currencySelect = document.getElementById('currencySelect');
+    const currency = currencySelect ? encodeURIComponent(currencySelect.value) : 'USD';
+    window.open(`/api/export/report?company=${company}&currency=${currency}`, '_blank');
 });
 document.getElementById('exportPdfBtn').addEventListener('click', () => {
     if (!predictionData || !predictionData.length) {
@@ -416,7 +418,9 @@ document.getElementById('exportPdfBtn').addEventListener('click', () => {
         return;
     }
     const company = encodeURIComponent(document.getElementById('companyNameInput').value.trim() || '');
-    window.open(`/api/export/report?company=${company}`, '_blank');
+    const currencySelect = document.getElementById('currencySelect');
+    const currency = currencySelect ? encodeURIComponent(currencySelect.value) : 'USD';
+    window.open(`/api/export/report?company=${company}&currency=${currency}`, '_blank');
 });
 document.getElementById('companyNameInput').addEventListener('input', debounce(() => {
     const name = document.getElementById('companyNameInput').value.trim();
