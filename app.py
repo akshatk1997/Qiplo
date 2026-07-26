@@ -2167,9 +2167,11 @@ window.addEventListener('DOMContentLoaded', function() {{
         requested_num_slides = int(data.get("num_slides") or 5)
         should_shuffle = data.get("shuffle", False)
         
+        import copy
         # Keep the title slide first, conditionally shuffle other presentation slides to support test predictability
-        title_slide = slides_pool[0]
-        other_slides = slides_pool[1:]
+        copied_pool = copy.deepcopy(slides_pool)
+        title_slide = copied_pool[0]
+        other_slides = copied_pool[1:]
         
         if should_shuffle:
             random.shuffle(other_slides)

@@ -1645,6 +1645,12 @@ function renderSlides(slides) {
             </div>
         `;
     }).join('');
+
+    try {
+        if (window.lucide) window.lucide.createIcons();
+    } catch (err) {
+        console.error("Lucide render failed:", err);
+    }
 }
 
 function changeSlide(direction) {
