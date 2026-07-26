@@ -17,25 +17,28 @@
     <header class="topbar">
         <div class="topbarLeft">
             <div class="logoBox" aria-label="Qiplo Logo">
-                <svg class="logoSvg" viewBox="0 0 52 52" width="36" height="36" role="img">
+                <svg class="logoSvg" viewBox="0 0 32 32" width="32" height="32" role="img" style="display: block;">
                     <defs>
                         <linearGradient id="qiploGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#4F46E5" />
                             <stop offset="100%" stop-color="#3B82F6" />
                         </linearGradient>
                     </defs>
-                    <rect class="logoTile" x="3" y="3" width="46" height="46" rx="10" fill="none" stroke="url(#qiploGrad)" stroke-width="2.5" />
-                    <circle class="logoMonogramCircle" cx="24" cy="24" r="11" fill="none" stroke="url(#qiploGrad)" stroke-width="3.5" stroke-linecap="round" />
-                    <path class="logoMonogramTail" d="M28 28 L38 38" fill="none" stroke="url(#qiploGrad)" stroke-width="3.5" stroke-linecap="round" />
-                    <circle class="logoDot" cx="38" cy="38" r="3" fill="#3B82F6" />
+                    <rect width="32" height="32" rx="6" fill="url(#qiploGrad)" />
+                    <circle cx="16" cy="15" r="5" fill="none" stroke="#FFFFFF" stroke-width="2.5" />
+                    <path d="M19.5 19 L23.5 23" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" />
                 </svg>
                 <span class="logoSubLabel">QIPLO</span>
             </div>
             <div class="topbarTitle">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                     <span class="appName" id="brandTitle">Qiplo</span>
-                    <span class="sloganBadge" style="font-size: 0.7rem; color: var(--accent); font-weight: 700; letter-spacing: 0.03em;">"Never lose a customer again."</span>
-                    <span class="claimsFreeBadge" style="font-size: 0.65rem; background: rgba(0, 255, 127, 0.15); color: #00FF7F; border: 1px solid rgba(0, 255, 127, 0.4); padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">MIT Licensed</span>
+                    <span class="sloganBadge" style="font-size: 0.72rem; background: var(--accent-soft); border: 1px solid rgba(79, 70, 229, 0.2); color: var(--accent); padding: 3px 8px; border-radius: 999px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; line-height: 1;">
+                        <i data-lucide="shield-check" class="lucide-icon" style="width: 12px; height: 12px;"></i> Never lose a customer again
+                    </span>
+                    <span class="claimsFreeBadge" style="font-size: 0.68rem; background: var(--surface-2); border: 1px solid var(--border); color: var(--muted); padding: 3px 8px; border-radius: 999px; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; line-height: 1;">
+                        <i data-lucide="git-branch" class="lucide-icon" style="width: 12px; height: 12px;"></i> Open Source MIT
+                    </span>
                 </div>
                 <span class="appSub">AI-Powered Retention Intelligence & Churn Prevention Engine</span>
             </div>

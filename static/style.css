@@ -285,22 +285,18 @@ a { color: inherit; text-decoration: none; }
 }
 
 .logoSubLabel {
-    font-family: 'Space Grotesk', 'Space Mono', sans-serif;
-    font-size: 0.62rem;
-    font-weight: 800;
-    letter-spacing: 0.15em;
+    font-family: var(--font-heading);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    background: linear-gradient(135deg, #00F5FF, #FF007F);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text);
     line-height: 1;
-    text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
-    transition: transform 0.2s ease, text-shadow 0.2s ease;
+    transition: transform 0.2s ease;
 }
 
 .logoBox:hover .logoSubLabel {
-    transform: scale(1.06);
-    text-shadow: 0 0 14px rgba(255, 0, 127, 0.6);
+    transform: scale(1.02);
 }
 
 .logoSvg {
