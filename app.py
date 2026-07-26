@@ -1206,7 +1206,7 @@ def create_app() -> Flask:
     <title>Qiplo — Comprehensive Executive Churn Analysis Report</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {{
@@ -1230,13 +1230,14 @@ def create_app() -> Flask:
             .page-break {{ page-break-before: always; }}
         }}
         body {{
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
             margin: 0;
             padding: 32px 24px;
             line-height: 1.5;
         }}
+        .font-mono {{ font-family: 'Space Mono', monospace; }}
         .report-container {{
             max-width: 1100px;
             margin: 0 auto;
@@ -1250,7 +1251,7 @@ def create_app() -> Flask:
             margin-bottom: 28px;
         }}
         .brand-title {{
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #00F5FF, #FF007F);
