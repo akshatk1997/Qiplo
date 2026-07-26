@@ -104,9 +104,19 @@ body.light-theme .slide {
 body.light-theme .noteCard,
 body.light-theme .termBox,
 body.light-theme .riskComparisonCard,
-body.light-theme .workflowStepCard {
-    background: #F1F5F9 !important;
+body.light-theme .workflowStepCard,
+body.light-theme .insightBox,
+body.light-theme .aiSegment,
+body.light-theme .executiveSummary div {
+    background: #F8FAFC !important;
     border-color: #CBD5E1 !important;
+    color: #0F172A !important;
+}
+
+body.light-theme .insightBox p,
+body.light-theme .aiNarrative,
+body.light-theme .aiSegment p,
+body.light-theme .executiveSummary p {
     color: #0F172A !important;
 }
 
@@ -616,13 +626,13 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
         color: var(--accent-2);
     }
     .aiSegment p {
-        color: #e2e8f0;
+        color: var(--text);
     }
     .aiNarrative {
-        color: #f1f5f9;
+        color: var(--text);
     }
     .insightBox p {
-        color: #e2e8f0;
+        color: var(--text);
     }
     tbody tr:hover {
         background: var(--surface-2);
