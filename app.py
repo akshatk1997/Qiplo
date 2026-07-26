@@ -1103,7 +1103,50 @@ def create_app() -> Flask:
                 LIMIT 25
                 """
             ).fetchall()
+
+            # Contract breakdown for charts
+            contract_rows = conn.execute(
+                """
+                SELECT 
+                    COALESCE(cc.contract_type, 'unknown') as contract,
+                    COUNT(*) as cnt,
+                    SUM(CASE WHEN cp.prediction_label = 'high_risk' THEN 1 ELSE 0 END) as high_risk_cnt
+                FROM churn_predictions cp
+                LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id
+                JOIN data_sources ds ON cc.source_id = ds.source_id
+                WHERE ds.is_active = 1
+                GROUP BY cc.contract_type
+                """
+            ).fetchall()
+
+            # Tenure breakdown for charts
+            tenure_rows = conn.execute(
+                """
+                SELECT 
+                    CASE 
+                        WHEN cc.tenure_months <= 3 THEN '0-3 Months'
+                        WHEN cc.tenure_months <= 6 THEN '4-6 Months'
+                        WHEN cc.tenure_months <= 12 THEN '7-12 Months'
+                        WHEN cc.tenure_months <= 24 THEN '13-24 Months'
+                        ELSE '25+ Months'
+                    END as tenure_bucket,
+                    COUNT(*) as cnt,
+                    AVG(cp.predicted_probability) as avg_prob
+                FROM churn_predictions cp
+                LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id
+                JOIN data_sources ds ON cc.source_id = ds.source_id
+                WHERE ds.is_active = 1
+                GROUP BY tenure_bucket
+                """
+            ).fetchall()
             conn.close()
+
+            contract_labels_json = json.dumps([(r["contract"] or "Unknown").replace("_", " ").title() for r in contract_rows])
+            contract_high_json = json.dumps([r["high_risk_cnt"] for r in contract_rows])
+            contract_total_json = json.dumps([r["cnt"] for r in contract_rows])
+
+            tenure_labels_json = json.dumps([r["tenure_bucket"] for r in tenure_rows])
+            tenure_prob_json = json.dumps([round((r["avg_prob"] or 0.0) * 100, 1) for r in tenure_rows])
 
             # Format rows table
             table_rows_html = ""
@@ -1137,6 +1180,7 @@ def create_app() -> Flask:
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {{
             --primary: #00F5FF;
@@ -1406,8 +1450,42 @@ def create_app() -> Flask:
             </div>
         </div>
 
-        <!-- Section 3: Actionable Solutions -->
-        <h2 class="section-title">3. Prescriptive Solutions & Retention Playbook</h2>
+        <!-- Interactive Visual Analytics & Charts Section -->
+        <h2 class="section-title">3. Interactive Visual Analytics & Telemetry Charts</h2>
+        <div class="report-card">
+            <p style="margin-top:0; color: var(--muted); font-size: 0.88rem;">
+                Visual cohort risk distribution, financial loss exposure in {curr_name} ({curr_symbol}), contract risk concentration, and tenure lifecycle progression curve:
+            </p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px;">
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                    <h4 style="margin:0 0 12px; font-size:0.9rem; color:var(--primary); font-family:'Outfit', sans-serif;">Cohort Risk Profile Distribution</h4>
+                    <div style="height: 220px; position: relative;">
+                        <canvas id="riskDistributionChart"></canvas>
+                    </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                    <h4 style="margin:0 0 12px; font-size:0.9rem; color:var(--primary); font-family:'Outfit', sans-serif;">MRR Risk vs Safe Revenue ({currency_code})</h4>
+                    <div style="height: 220px; position: relative;">
+                        <canvas id="financialRiskChart"></canvas>
+                    </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                    <h4 style="margin:0 0 12px; font-size:0.9rem; color:var(--primary); font-family:'Outfit', sans-serif;">Risk Concentration by Contract Type</h4>
+                    <div style="height: 220px; position: relative;">
+                        <canvas id="contractRiskChart"></canvas>
+                    </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                    <h4 style="margin:0 0 12px; font-size:0.9rem; color:var(--primary); font-family:'Outfit', sans-serif;">Tenure Lifecycle Churn Risk Curve (%)</h4>
+                    <div style="height: 220px; position: relative;">
+                        <canvas id="tenureRiskChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Actionable Solutions -->
+        <h2 class="section-title">4. Prescriptive Solutions & Retention Playbook</h2>
         <div class="report-card">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                 <div class="cause-box" style="border-left: 3px solid var(--success);">
@@ -1429,8 +1507,8 @@ def create_app() -> Flask:
             </div>
         </div>
 
-        <!-- Section 4: Data Directory -->
-        <h2 class="section-title">4. Vulnerable Accounts Evidence & Action Directory</h2>
+        <!-- Section 5: Data Directory -->
+        <h2 class="section-title">5. Vulnerable Accounts Evidence & Action Directory</h2>
         <div class="report-card">
             <p style="margin-top:0; color: var(--muted); font-size: 0.88rem;">
                 Showing the top {len(rows)} most vulnerable customer accounts requiring immediate intervention:
@@ -1459,6 +1537,102 @@ def create_app() -> Flask:
             <div>Report generated automatically for {company}. Confidential & Proprietary.</div>
         </footer>
     </div>
+
+<script>
+window.addEventListener('DOMContentLoaded', function() {{
+    if (typeof Chart === 'undefined') return;
+
+    // 1. Risk Distribution Doughnut
+    new Chart(document.getElementById('riskDistributionChart'), {{
+        type: 'doughnut',
+        data: {{
+            labels: ['High Risk Cohort', 'Low Risk Cohort'],
+            datasets: [{{
+                data: [{high_risk}, {low_risk}],
+                backgroundColor: ['#FF007F', '#00F5FF'],
+                borderColor: '#111827',
+                borderWidth: 2
+            }}]
+        }},
+        options: {{
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {{ legend: {{ labels: {{ color: '#9CA3AF', font: {{ family: 'Plus Jakarta Sans', size: 11 }} }} }} }}
+        }}
+    }});
+
+    // 2. Financial Bar Chart
+    new Chart(document.getElementById('financialRiskChart'), {{
+        type: 'bar',
+        data: {{
+            labels: ['MRR at Risk', 'Safe MRR'],
+            datasets: [{{
+                label: 'Monthly Revenue ({curr_symbol})',
+                data: [{conv_risk_mrr:.2f}, {max(0, conv_total_mrr - conv_risk_mrr):.2f}],
+                backgroundColor: ['#EF4444', '#10B981'],
+                borderRadius: 6
+            }}]
+        }},
+        options: {{
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {{
+                x: {{ ticks: {{ color: '#9CA3AF' }}, grid: {{ color: 'rgba(255,255,255,0.05)' }} }},
+                y: {{ ticks: {{ color: '#9CA3AF' }}, grid: {{ color: 'rgba(255,255,255,0.05)' }} }}
+            }},
+            plugins: {{ legend: {{ display: false }} }}
+        }}
+    }});
+
+    // 3. Contract Risk Chart
+    new Chart(document.getElementById('contractRiskChart'), {{
+        type: 'bar',
+        data: {{
+            labels: {contract_labels_json},
+            datasets: [
+                {{ label: 'High Risk Accounts', data: {contract_high_json}, backgroundColor: '#FF007F', borderRadius: 4 }},
+                {{ label: 'Total Accounts', data: {contract_total_json}, backgroundColor: 'rgba(0, 245, 255, 0.3)', borderRadius: 4 }}
+            ]
+        }},
+        options: {{
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {{
+                x: {{ ticks: {{ color: '#9CA3AF' }}, grid: {{ color: 'rgba(255,255,255,0.05)' }} }},
+                y: {{ ticks: {{ color: '#9CA3AF' }}, grid: {{ color: 'rgba(255,255,255,0.05)' }} }}
+            }},
+            plugins: {{ legend: {{ labels: {{ color: '#9CA3AF', font: {{ size: 11 }} }} }} }}
+        }}
+    }});
+
+    // 4. Tenure Lifecycle Line Chart
+    new Chart(document.getElementById('tenureRiskChart'), {{
+        type: 'line',
+        data: {{
+            labels: {tenure_labels_json},
+            datasets: [{{
+                label: 'Avg Churn Risk %',
+                data: {tenure_prob_json},
+                borderColor: '#00F5FF',
+                backgroundColor: 'rgba(0, 245, 255, 0.1)',
+                fill: true,
+                tension: 0.3,
+                pointBackgroundColor: '#FF007F',
+                pointRadius: 4
+            }}]
+        }},
+        options: {{
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {{
+                x: {{ ticks: {{ color: '#9CA3AF' }}, grid: {{ color: 'rgba(255,255,255,0.05)' }} }},
+                y: {{ ticks: {{ color: '#9CA3AF' }}, grid: {{ color: 'rgba(255,255,255,0.05)' }} }}
+            }},
+            plugins: {{ legend: {{ labels: {{ color: '#9CA3AF', font: {{ size: 11 }} }} }} }}
+        }}
+    }});
+}});
+</script>
 </body>
 </html>
 """
