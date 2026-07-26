@@ -24,22 +24,90 @@
 }
 
 body.light-theme {
-    /* 3-Color Palette Tokens - Light Mode */
+    /* 3-Color Palette Tokens - High Contrast Light Mode */
     --bg: #F8FAFC;
     --surface: #FFFFFF;
     --surface-2: #F1F5F9;
     --surface-3: #E2E8F0;
-    --border: rgba(15, 23, 42, 0.10);
-    --border-strong: rgba(2, 132, 199, 0.35);
+    --border: rgba(15, 23, 42, 0.14);
+    --border-strong: rgba(2, 132, 199, 0.40);
     --text: #0F172A;
-    --muted: #64748B;
+    --muted: #475569;
     --accent: #0284C7;
     --accent-2: #4F46E5;
-    --accent-soft: rgba(2, 132, 199, 0.10);
+    --accent-soft: rgba(2, 132, 199, 0.12);
     --danger: #DC2626;
     --warning: #D97706;
     --success: #059669;
-    --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+    --shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme h1,
+body.light-theme h2,
+body.light-theme h3,
+body.light-theme h4,
+body.light-theme h5,
+body.light-theme h6,
+body.light-theme .appName,
+body.light-theme .paneHead h2,
+body.light-theme .sectionHead h2,
+body.light-theme .aiCardHead h3,
+body.light-theme .slideEditorPanel h4 {
+    color: #0F172A;
+}
+
+body.light-theme input,
+body.light-theme select,
+body.light-theme textarea {
+    background: #FFFFFF;
+    color: #0F172A;
+    border-color: #CBD5E1;
+}
+
+body.light-theme input::placeholder,
+body.light-theme textarea::placeholder {
+    color: #64748B;
+}
+
+body.light-theme .topbar {
+    background: rgba(255, 255, 255, 0.92);
+    border-bottom-color: rgba(15, 23, 42, 0.12);
+}
+
+body.light-theme .tab {
+    color: #475569;
+}
+
+body.light-theme .tab.active,
+body.light-theme .tab:hover {
+    color: #0284C7;
+    border-bottom-color: #0284C7;
+}
+
+body.light-theme .chip {
+    background: #F1F5F9;
+    border-color: #CBD5E1;
+    color: #0F172A;
+}
+
+body.light-theme .chip:hover {
+    border-color: #0284C7;
+    color: #0284C7;
+}
+
+body.light-theme .slide {
+    background: #FFFFFF;
+    border-color: #CBD5E1;
+    color: #0F172A;
+}
+
+body.light-theme .noteCard,
+body.light-theme .termBox,
+body.light-theme .riskComparisonCard,
+body.light-theme .workflowStepCard {
+    background: #F1F5F9 !important;
+    border-color: #CBD5E1 !important;
+    color: #0F172A !important;
 }
 
 /* Lucide Icon Utilities */
