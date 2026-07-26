@@ -1863,67 +1863,74 @@ window.addEventListener('DOMContentLoaded', function() {{
         data = request.json or {}
         api_key = data.get("api_key") or os.environ.get("GEMINI_API_KEY")
         
-        # 1. Fetch current database stats
-        conn = get_connection()
-        cols = [row[1] for row in conn.execute("PRAGMA table_info(customer_churn)").fetchall()]
-        charges_col = next((c for c in cols if c.lower() in ("monthly_charges", "monthlycharges", "charges", "monthly_charge", "monthly")), None)
+        # 1. Fetch current database stats with exception handling for empty databases
+        total_cust = 0
+        avg_risk = 0.0
+        top_segments = []
         
-        stats = conn.execute(
-            """
-            SELECT COUNT(*) as total_customers,
-                   AVG(cp.predicted_probability) as avg_risk
-            FROM churn_predictions cp
-            JOIN customer_churn cc ON cp.customer_id = cc.customer_id
-            JOIN data_sources ds ON cc.source_id = ds.source_id
-            WHERE ds.is_active = 1
-            """
-        ).fetchone()
-        
-        total_cust = stats["total_customers"] or 0
-        avg_risk = stats["avg_risk"] or 0.0
-        
-        # Segment priorities (top 2 segments by expected loss)
-        segments = []
-        group_cols = [c for c in ("contract_type", "payment_method", "internet_service", "region") if c in cols]
-        
-        for g_col in group_cols:
-            if charges_col:
-                q = f"""
-                    SELECT cc."{g_col}" as segment_val,
-                           COUNT(*) as segment_count,
-                           AVG(cp.predicted_probability) as avg_risk,
-                           SUM(cc."{charges_col}" * cp.predicted_probability) as segment_loss
-                    FROM churn_predictions cp
-                    JOIN customer_churn cc ON cp.customer_id = cc.customer_id
-                    JOIN data_sources ds ON cc.source_id = ds.source_id
-                    WHERE ds.is_active = 1 AND cc."{g_col}" IS NOT NULL
-                    GROUP BY cc."{g_col}"
+        try:
+            conn = get_connection()
+            cols = [row[1] for row in conn.execute("PRAGMA table_info(customer_churn)").fetchall()]
+            charges_col = next((c for c in cols if c.lower() in ("monthly_charges", "monthlycharges", "charges", "monthly_charge", "monthly")), None)
+            
+            stats = conn.execute(
                 """
-            else:
-                q = f"""
-                    SELECT cc."{g_col}" as segment_val,
-                           COUNT(*) as segment_count,
-                           AVG(cp.predicted_probability) as avg_risk,
-                           SUM(100.0 * cp.predicted_probability) as segment_loss
-                    FROM churn_predictions cp
-                    JOIN customer_churn cc ON cp.customer_id = cc.customer_id
-                    JOIN data_sources ds ON cc.source_id = ds.source_id
-                    WHERE ds.is_active = 1 AND cc."{g_col}" IS NOT NULL
-                    GROUP BY cc."{g_col}"
+                SELECT COUNT(*) as total_customers,
+                       AVG(cp.predicted_probability) as avg_risk
+                FROM churn_predictions cp
+                JOIN customer_churn cc ON cp.customer_id = cc.customer_id
+                JOIN data_sources ds ON cc.source_id = ds.source_id
+                WHERE ds.is_active = 1
                 """
-            rows = conn.execute(q).fetchall()
-            for r in rows:
-                segments.append({
-                    "dimension": g_col.replace("_", " ").title(),
-                    "value": r["segment_val"],
-                    "count": r["segment_count"],
-                    "avg_risk": round(float(r["avg_risk"]), 3),
-                    "expected_loss": round(float(r["segment_loss"]), 2)
-                })
-        conn.close()
-        
-        segments.sort(key=lambda s: s["expected_loss"], reverse=True)
-        top_segments = segments[:2]
+            ).fetchone()
+            
+            total_cust = stats["total_customers"] or 0
+            avg_risk = stats["avg_risk"] or 0.0
+            
+            # Segment priorities (top 2 segments by expected loss)
+            segments = []
+            group_cols = [c for c in ("contract_type", "payment_method", "internet_service", "region") if c in cols]
+            
+            for g_col in group_cols:
+                if charges_col:
+                    q = f"""
+                        SELECT cc."{g_col}" as segment_val,
+                               COUNT(*) as segment_count,
+                               AVG(cp.predicted_probability) as avg_risk,
+                               SUM(cc."{charges_col}" * cp.predicted_probability) as segment_loss
+                        FROM churn_predictions cp
+                        JOIN customer_churn cc ON cp.customer_id = cc.customer_id
+                        JOIN data_sources ds ON cc.source_id = ds.source_id
+                        WHERE ds.is_active = 1 AND cc."{g_col}" IS NOT NULL
+                        GROUP BY cc."{g_col}"
+                    """
+                else:
+                    q = f"""
+                        SELECT cc."{g_col}" as segment_val,
+                               COUNT(*) as segment_count,
+                               AVG(cp.predicted_probability) as avg_risk,
+                               SUM(100.0 * cp.predicted_probability) as segment_loss
+                        FROM churn_predictions cp
+                        JOIN customer_churn cc ON cp.customer_id = cc.customer_id
+                        JOIN data_sources ds ON cc.source_id = ds.source_id
+                        WHERE ds.is_active = 1 AND cc."{g_col}" IS NOT NULL
+                        GROUP BY cc."{g_col}"
+                    """
+                rows = conn.execute(q).fetchall()
+                for r in rows:
+                    segments.append({
+                        "dimension": g_col.replace("_", " ").title(),
+                        "value": r["segment_val"],
+                        "count": r["segment_count"],
+                        "avg_risk": round(float(r["avg_risk"]), 3),
+                        "expected_loss": round(float(r["segment_loss"]), 2)
+                    })
+            conn.close()
+            
+            segments.sort(key=lambda s: s["expected_loss"], reverse=True)
+            top_segments = segments[:2]
+        except Exception as e:
+            print("Database query failed in presentation API, using defaults:", e)
         
         custom_prompt = data.get("custom_prompt")
         

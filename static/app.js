@@ -1235,11 +1235,26 @@ function setupPresentation() {
 }
 
 function generateLocalSlides(numSlides, customPrompt, shouldShuffle) {
-    const totalCustomersEl = document.getElementById('total-customers') || { textContent: '1,000+' };
-    const avgRiskEl = document.getElementById('average-risk') || { textContent: '26.8%' };
+    let total_cust = '1,000+';
+    let avg_risk_str = '26.8%';
     
-    const total_cust = totalCustomersEl.textContent;
-    const avg_risk_str = avgRiskEl.textContent;
+    try {
+        if (typeof predictionData !== 'undefined' && predictionData && predictionData.length > 0) {
+            const total = predictionData.length;
+            total_cust = total.toLocaleString();
+            
+            const sum = predictionData.reduce((acc, curr) => acc + (parseFloat(curr.predicted_probability) || 0), 0);
+            const avg_risk_val = (sum / total) * 100;
+            avg_risk_str = `${avg_risk_val.toFixed(1)}%`;
+        } else {
+            const metaTotal = document.getElementById('metaTotal');
+            if (metaTotal && metaTotal.textContent !== '—' && metaTotal.textContent !== '') {
+                total_cust = metaTotal.textContent;
+            }
+        }
+    } catch (err) {
+        console.error("Error reading metrics for fallback slides", err);
+    }
     
     let localPool = [
         {
