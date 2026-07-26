@@ -154,6 +154,19 @@ body.light-theme .qaSlideCard {
     box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06) !important;
 }
 
+body.light-theme .qaSlideText pre {
+    background: #F8FAFC !important;
+    border-color: #E2E8F0 !important;
+}
+
+body.light-theme .qaSlideText pre code {
+    color: #0F172A !important;
+}
+
+body.light-theme .qaSlideText code {
+    color: #0284C7 !important;
+}
+
 body.light-theme .badge.high {
     background: rgba(220, 38, 38, 0.12) !important;
     color: #DC2626 !important;
@@ -1676,6 +1689,29 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
 .qaSlideText li {
     margin-bottom: 8px;
     line-height: 1.6;
+}
+.qaSlideText pre {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    margin: 12px 0;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+.qaSlideText code {
+    font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+}
+.qaSlideText pre code {
+    color: var(--text);
+    background: transparent;
+    padding: 0;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 .qaSlideFooter {
     font-size: 0.78rem;
