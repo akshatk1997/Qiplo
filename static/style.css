@@ -1651,16 +1651,31 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
     font-size: 0.98rem;
     line-height: 1.6;
     color: var(--text);
+    text-align: left;
+}
+.qaSlideText h3,
+.qaSlideText h4 {
+    margin: 16px 0 8px;
+    font-size: 1.15rem;
+    color: var(--text);
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+.qaSlideText h3:first-child,
+.qaSlideText h4:first-child {
+    margin-top: 0;
 }
 .qaSlideText p {
     margin: 0 0 12px;
 }
-.qaSlideText ul {
-    margin: 0;
+.qaSlideText ul,
+.qaSlideText ol {
+    margin: 8px 0 16px;
     padding-left: 20px;
 }
 .qaSlideText li {
     margin-bottom: 8px;
+    line-height: 1.6;
 }
 .qaSlideFooter {
     font-size: 0.78rem;
@@ -1758,21 +1773,94 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
     }
 }
 
-/* Responsive collapse sidebars matching NotebookLM views */
+/* Responsive Stacking Sidebars for Mobile-Friendly Feature Parity */
 @media (max-width: 1100px) {
     .studio {
-        grid-template-columns: 260px 1fr;
+        grid-template-columns: 1fr 1.8fr;
+        gap: 16px;
     }
     .notesPane {
-        display: none;
+        grid-column: span 2;
+        position: static;
+        width: 100%;
     }
 }
+
 @media (max-width: 768px) {
     .studio {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
+        padding: 12px !important;
+        gap: 16px !important;
     }
-    .sourcesPane {
-        display: none;
+    .sourcesPane, .notesPane {
+        display: flex !important;
+        position: static !important;
+        width: 100% !important;
+        grid-column: auto !important;
+    }
+    .topbar {
+        padding: 12px 16px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+    }
+    .topbarLeft, .topbarRight {
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+    .topbarRight {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+    .topbarRight input[type="text"] {
+        flex: 1 !important;
+        min-width: 120px !important;
+    }
+}
+
+@media (max-width: 580px) {
+    .qaSlideCard {
+        padding: 16px !important;
+        gap: 14px !important;
+    }
+    .qaSlideBody h3 {
+        font-size: 1.05rem !important;
+    }
+    .qaSlideText {
+        font-size: 0.88rem !important;
+    }
+    .qaSlideText h3, .qaSlideText h4 {
+        font-size: 0.98rem !important;
+        margin: 12px 0 6px !important;
+    }
+    .qaChips {
+        gap: 8px !important;
+    }
+    .qaChips .chip {
+        padding: 8px 12px !important;
+        font-size: 0.8rem !important;
+    }
+    .presPromptChips {
+        gap: 6px !important;
+    }
+    .presPromptChips .chip {
+        padding: 6px 10px !important;
+        font-size: 0.76rem !important;
+    }
+    .presentationToolbar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+    .presActionButtons {
+        justify-content: space-between !important;
+        width: 100% !important;
+    }
+    .presActionButtons button {
+        flex: 1 !important;
+        padding: 8px !important;
+        font-size: 0.75rem !important;
+        justify-content: center !important;
     }
 }
 
