@@ -20,19 +20,14 @@
                 <svg class="logoSvg" viewBox="0 0 52 52" width="36" height="36" role="img">
                     <defs>
                         <linearGradient id="qiploGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#00F5FF" />
-                            <stop offset="50%" stop-color="#FF007F" />
-                            <stop offset="100%" stop-color="#39FF14" />
+                            <stop offset="0%" stop-color="#4F46E5" />
+                            <stop offset="100%" stop-color="#3B82F6" />
                         </linearGradient>
-                        <filter id="qiploGlowFilter" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="1.8" result="blur" />
-                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                        </filter>
                     </defs>
-                    <rect class="logoTile" x="3" y="3" width="46" height="46" rx="14" fill="#0C0F17" stroke="url(#qiploGrad)" stroke-width="2" />
-                    <circle class="logoMonogramCircle" cx="24" cy="24" r="12" fill="none" stroke="url(#qiploGrad)" stroke-width="4" stroke-linecap="round" filter="url(#qiploGlowFilter)" />
-                    <path class="logoMonogramTail" d="M28 28 L38 38" fill="none" stroke="url(#qiploGrad)" stroke-width="4.5" stroke-linecap="round" filter="url(#qiploGlowFilter)" />
-                    <circle class="logoDot" cx="38" cy="38" r="3.2" fill="#39FF14" filter="url(#qiploGlowFilter)" />
+                    <rect class="logoTile" x="3" y="3" width="46" height="46" rx="10" fill="none" stroke="url(#qiploGrad)" stroke-width="2.5" />
+                    <circle class="logoMonogramCircle" cx="24" cy="24" r="11" fill="none" stroke="url(#qiploGrad)" stroke-width="3.5" stroke-linecap="round" />
+                    <path class="logoMonogramTail" d="M28 28 L38 38" fill="none" stroke="url(#qiploGrad)" stroke-width="3.5" stroke-linecap="round" />
+                    <circle class="logoDot" cx="38" cy="38" r="3" fill="#3B82F6" />
                 </svg>
                 <span class="logoSubLabel">QIPLO</span>
             </div>
@@ -50,7 +45,7 @@
                 <i data-lucide="sun" class="lucide-icon"></i>
             </button>
             <input id="companyNameInput" type="text" placeholder="Company name (optional)" autocomplete="off" />
-            <button id="exportReportBtn" class="primaryBtn" type="button" style="background: var(--accent); color: #000; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+            <button id="exportReportBtn" class="primaryBtn" type="button" style="display: inline-flex; align-items: center; gap: 6px;">
                 <i data-lucide="bar-chart-3" class="lucide-icon"></i> Full Analysis Report
             </button>
             <button id="exportTableauBtn" class="ghostBtn" type="button">Tableau</button>

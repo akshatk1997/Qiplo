@@ -1,45 +1,45 @@
 :root {
-    /* 3-Color Palette Tokens - Default Dark Mode */
-    --bg: #0A0C10;
-    --surface: #121620;
-    --surface-2: #1A202C;
-    --surface-3: #222938;
-    --border: rgba(255, 255, 255, 0.10);
-    --border-strong: rgba(0, 245, 255, 0.35);
-    --text: #F8F9FA;
-    --muted: #94A3B8;
-    --accent: #00F5FF;
-    --accent-2: #FF007F;
-    --accent-soft: rgba(0, 245, 255, 0.12);
-    --danger: #EF4444;
-    --warning: #F59E0B;
-    --success: #10B981;
-    --radius: 20px;
-    --radius-sm: 12px;
-    --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    --font-heading: 'Space Grotesk', 'Space Mono', sans-serif;
-    --font-body: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
-    --font-mono: 'Space Mono', 'JetBrains Mono', monospace;
+    /* 3-Color Palette Tokens - Professional SaaS Dark Mode */
+    --bg: #090B11;          /* Slate 950 */
+    --surface: #11131E;     /* Slate 900 */
+    --surface-2: #1E2235;   /* Slate 800 */
+    --surface-3: #2D334E;   /* Slate 700 */
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.15);
+    --text: #F3F4F6;        /* Gray 100 */
+    --muted: #9CA3AF;       /* Gray 400 */
+    --accent: #4F46E5;      /* Corporate Indigo */
+    --accent-2: #6366F1;    /* Light Indigo */
+    --accent-soft: rgba(79, 70, 229, 0.12);
+    --danger: #EF4444;      /* Rose 500 */
+    --warning: #F59E0B;     /* Amber 500 */
+    --success: #10B981;     /* Emerald 500 */
+    --radius: 10px;         /* Standard SaaS border radius */
+    --radius-sm: 6px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Space Mono', monospace;
     --font: var(--font-body);
 }
 
 body.light-theme {
-    /* 3-Color Palette Tokens - High Contrast Light Mode */
-    --bg: #F8FAFC;
-    --surface: #FFFFFF;
-    --surface-2: #F1F5F9;
-    --surface-3: #E2E8F0;
-    --border: rgba(15, 23, 42, 0.14);
-    --border-strong: rgba(2, 132, 199, 0.40);
-    --text: #0F172A;
-    --muted: #475569;
-    --accent: #0284C7;
-    --accent-2: #4F46E5;
-    --accent-soft: rgba(2, 132, 199, 0.12);
-    --danger: #DC2626;
-    --warning: #D97706;
-    --success: #059669;
-    --shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+    /* 3-Color Palette Tokens - Professional SaaS Light Mode */
+    --bg: #F9FAFB;          /* Gray 50 */
+    --surface: #FFFFFF;     /* Pure White */
+    --surface-2: #F3F4F6;   /* Gray 100 */
+    --surface-3: #E5E7EB;   /* Gray 200 */
+    --border: rgba(17, 24, 39, 0.08);
+    --border-strong: rgba(17, 24, 39, 0.15);
+    --text: #111827;        /* Gray 900 */
+    --muted: #4B5563;       /* Gray 600 */
+    --accent: #4F46E5;      /* Corporate Indigo */
+    --accent-2: #6366F1;    /* Light Indigo */
+    --accent-soft: rgba(79, 70, 229, 0.08);
+    --danger: #DC2626;      /* Red 600 */
+    --warning: #D97706;     /* Amber 600 */
+    --success: #059669;     /* Emerald 600 */
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
 body.light-theme h1,
@@ -305,18 +305,16 @@ a { color: inherit; text-decoration: none; }
 
 .logoSvg {
     display: block;
-    border-radius: 14px;
-    box-shadow: 0 0 16px rgba(0, 245, 255, 0.25);
+    border-radius: var(--radius-sm);
     animation: logoFloat 4s ease-in-out infinite;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .logoSvg:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 26px rgba(255, 0, 127, 0.5), 0 0 14px rgba(57, 255, 20, 0.4);
+    transform: scale(1.04);
 }
 
 .logoMonogramCircle, .logoMonogramTail {
-    animation: logoPulseGlow 3s ease-in-out infinite alternate;
+    transition: stroke 0.2s ease;
 }
 
 .logoDot {
@@ -324,9 +322,8 @@ a { color: inherit; text-decoration: none; }
     animation: logoPulseDot 1.8s ease-in-out infinite;
 }
 
-@keyframes logoFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-@keyframes logoPulseGlow { 0% { stroke-dashoffset: 0; opacity: 0.9; } 100% { stroke-dashoffset: 10; opacity: 1; filter: drop-shadow(0 0 6px #00F5FF); } }
-@keyframes logoPulseDot { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.45); opacity: 0.6; } }
+@keyframes logoFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+@keyframes logoPulseDot { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: 0.8; } }
 
 .topbarTitle { display: flex; flex-direction: column; line-height: 1.15; }
 .appName { font-weight: 700; font-size: 1.05rem; color: var(--text); }
@@ -360,11 +357,7 @@ a { color: inherit; text-decoration: none; }
 .ghostBtn:active { transform: scale(0.95) translateY(1px); }
 
 .sloganBadge {
-    animation: sloganGlow 3s ease-in-out infinite alternate;
-}
-@keyframes sloganGlow {
-    0% { text-shadow: 0 0 4px rgba(0, 245, 255, 0.2); }
-    100% { text-shadow: 0 0 12px rgba(0, 245, 255, 0.8), 0 0 20px rgba(255, 0, 127, 0.5); }
+    opacity: 0.95;
 }
 
 .tabBody {
@@ -461,17 +454,21 @@ a { color: inherit; text-decoration: none; }
 
 .primaryBtn {
     background: var(--accent);
-    color: #000;
+    color: #FFFFFF;
     border: none;
-    padding: 10px 20px;
-    border-radius: 22px;
-    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
     cursor: pointer;
-    font-size: 0.9rem;
-    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, box-shadow 0.2s ease;
+    font-size: 0.88rem;
+    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background 0.15s ease, box-shadow 0.15s ease;
 }
-.primaryBtn:hover { background: #39FF14; box-shadow: 0 4px 18px rgba(57, 255, 20, 0.4); transform: translateY(-1px); }
-.primaryBtn:active { transform: scale(0.96) translateY(1px); }
+.primaryBtn:hover {
+    background: var(--accent-2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+}
+.primaryBtn:active { transform: scale(0.97) translateY(1px); }
 .primaryBtn:disabled { opacity: 0.6; cursor: wait; }
 
 .status { font-size: 0.8rem; margin: 0; color: var(--muted); min-height: 16px; }
@@ -1772,31 +1769,9 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
     }
 }
 
-/* Fire & Lightning Tactile Animations & Glow Pulses */
-@keyframes lightningPulse {
-    0% { box-shadow: 0 0 6px rgba(0, 245, 255, 0.18); border-color: rgba(0, 245, 255, 0.18); }
-    50% { box-shadow: 0 0 20px rgba(0, 245, 255, 0.6); border-color: rgba(0, 245, 255, 0.8); }
-    100% { box-shadow: 0 0 6px rgba(0, 245, 255, 0.18); border-color: rgba(0, 245, 255, 0.18); }
-}
-
-@keyframes firePulse {
-    0% { box-shadow: 0 0 6px rgba(255, 0, 127, 0.18); border-color: rgba(255, 0, 127, 0.30); }
-    50% { box-shadow: 0 0 22px rgba(255, 0, 127, 0.75); border-color: rgba(255, 0, 127, 0.7); }
-    100% { box-shadow: 0 0 6px rgba(255, 0, 127, 0.18); border-color: rgba(255, 0, 127, 0.30); }
-}
-
-.tab.active {
-    animation: lightningPulse 3s infinite ease-in-out;
-}
-
-.fStatCard.danger,
-.badge.high {
-    animation: firePulse 2.5s infinite ease-in-out;
-}
-
-/* Card hover glow and dynamic lift translations */
+/* Clean card hover and dynamic lift translations */
 .aiCard, .fStatCard, .campaignSimulator, .segmentRankings, .cohortBlock {
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 .aiCard:hover, 
@@ -1804,9 +1779,9 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
 .campaignSimulator:hover, 
 .segmentRankings:hover, 
 .cohortBlock:hover {
-    transform: translateY(-4px) scale(1.005);
+    transform: translateY(-2px);
     border-color: var(--accent) !important;
-    box-shadow: 0 8px 30px rgba(0, 245, 255, 0.20) !important;
+    box-shadow: var(--shadow) !important;
 }
 
 /* Tactile button scales */
