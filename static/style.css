@@ -563,6 +563,7 @@ a { color: inherit; text-decoration: none; }
 
 .tabBody { padding: 20px; display: flex; flex-direction: column; gap: 18px; }
 .tabBody.hidden { display: none; }
+.hidden { display: none !important; }
 
 /* AI card */
 .aiCard {

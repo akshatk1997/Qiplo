@@ -1403,7 +1403,8 @@ function renderSlides(slides) {
     const themeClass = themeSelect ? themeSelect.value : 'indigo';
     const transClass = transSelect ? transSelect.value : 'fade';
     
-    viewport.className = `slideViewport font-${fontClass} theme-${themeClass} trans-${transClass}`;
+    const isHidden = viewport.classList.contains('hidden');
+    viewport.className = `slideViewport font-${fontClass} theme-${themeClass} trans-${transClass}${isHidden ? ' hidden' : ''}`;
 
     const styleSelect = document.getElementById('presImageStyle');
     const selectedStyle = styleSelect ? styleSelect.value : 'corporate';
