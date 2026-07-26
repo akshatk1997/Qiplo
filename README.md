@@ -4,6 +4,10 @@
 
 **Qiplo** is a 100% free, open-source, and claims-free AI customer retention platform designed for high-growth enterprises and modern data teams. It predicts customer churn risk, identifies revenue-at-risk, and generates high-converting retention playbooks in real time.
 
+## 🌐 Live URLs & Links
+- **Vercel Live Production App**: [https://qiplo.vercel.app](https://qiplo.vercel.app)
+- **Official GitHub Repository**: [https://github.com/akshatk1997/Qiplo](https://github.com/akshatk1997/Qiplo)
+
 ## 🌟 Key Features
 - **100% Free & MIT Licensed**: Unrestricted public and enterprise utility.
 - **Slogan & Mission**: *"Never lose a customer again."*
