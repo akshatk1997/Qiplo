@@ -1991,3 +1991,132 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
 .magnificCloseBtn:hover {
     color: var(--accent);
 }
+
+/* Presentation Custom Fonts & Palette Themes */
+.font-inter_mono {
+    --pres-heading-font: 'Inter', sans-serif;
+    --pres-body-font: 'JetBrains Mono', monospace;
+}
+.font-outfit_jakarta {
+    --pres-heading-font: 'Outfit', sans-serif;
+    --pres-body-font: 'Plus Jakarta Sans', sans-serif;
+}
+.font-playfair_roboto {
+    --pres-heading-font: 'Playfair Display', serif;
+    --pres-body-font: 'Roboto', sans-serif;
+}
+.font-montserrat_fira {
+    --pres-heading-font: 'Montserrat', sans-serif;
+    --pres-body-font: 'Fira Code', monospace;
+}
+
+/* Palette Themes */
+.theme-indigo {
+    --pres-accent: #4F46E5;
+    --pres-accent-soft: rgba(79, 70, 229, 0.1);
+}
+.theme-emerald {
+    --pres-accent: #10B981;
+    --pres-accent-soft: rgba(16, 185, 129, 0.1);
+}
+.theme-amber {
+    --pres-accent: #F59E0B;
+    --pres-accent-soft: rgba(245, 158, 11, 0.1);
+}
+.theme-crimson {
+    --pres-accent: #E11D48;
+    --pres-accent-soft: rgba(225, 29, 72, 0.1);
+}
+.theme-cyan {
+    --pres-accent: #06B6D4;
+    --pres-accent-soft: rgba(6, 182, 212, 0.1);
+}
+
+/* Apply Custom Variables to Slides */
+.slideViewport[class*="font-"] .slideContent h1,
+.slideViewport[class*="font-"] .slideContent h2,
+.slideViewport[class*="font-"] .slideContent h3,
+.slideViewport[class*="font-"] .slideContent h4 {
+    font-family: var(--pres-heading-font) !important;
+}
+.slideViewport[class*="font-"] .slideContent,
+.slideViewport[class*="font-"] .slideContent p,
+.slideViewport[class*="font-"] .slideContent li,
+.slideViewport[class*="font-"] .slideContent span,
+.slideViewport[class*="font-"] .slideContent div {
+    font-family: var(--pres-body-font) !important;
+}
+
+.slideViewport[class*="theme-"] .slideContent .statCallout.pink {
+    background: var(--pres-accent-soft) !important;
+    border-color: var(--pres-accent) !important;
+}
+.slideViewport[class*="theme-"] .slideContent .statCallout.pink h2 {
+    color: var(--pres-accent) !important;
+}
+.slideViewport[class*="theme-"] .slideContent .presMiniLogo {
+    color: var(--pres-accent) !important;
+}
+
+/* Transition Animations */
+.slideViewport[class*="trans-"] {
+    position: relative;
+    overflow: hidden;
+}
+.slideViewport[class*="trans-"] .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease !important;
+}
+.slideViewport[class*="trans-"] .slide.active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+/* Fade */
+.trans-fade .slide {
+    transform: none !important;
+}
+
+/* Slide */
+.trans-slide .slide {
+    transform: translateX(100%) !important;
+}
+.trans-slide .slide.active {
+    transform: translateX(0) !important;
+}
+.trans-slide .slide.previous {
+    transform: translateX(-100%) !important;
+}
+.trans-slide .slide.next {
+    transform: translateX(100%) !important;
+}
+
+/* Zoom */
+.trans-zoom .slide {
+    transform: scale(0.85) !important;
+}
+.trans-zoom .slide.active {
+    transform: scale(1) !important;
+}
+
+/* 3D Elastic Card Flip */
+.trans-flip {
+    perspective: 1200px;
+}
+.trans-flip .slide {
+    transform: rotateY(90deg) !important;
+    transform-origin: center !important;
+    backface-visibility: hidden;
+}
+.trans-flip .slide.active {
+    transform: rotateY(0deg) !important;
+}
+.trans-flip .slide.previous {
+    transform: rotateY(-90deg) !important;
+}

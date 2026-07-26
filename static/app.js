@@ -1001,6 +1001,37 @@ function setupPresentation() {
         });
     }
 
+    // Bind Typography, Palette and Transition select changes
+    const fontSelect = document.getElementById('presFontPairing');
+    if (fontSelect) {
+        fontSelect.addEventListener('change', () => {
+            if (presentationSlides && presentationSlides.length) {
+                renderSlides(presentationSlides);
+                updateSlideView();
+            }
+        });
+    }
+
+    const themeSelect = document.getElementById('presThemeColor');
+    if (themeSelect) {
+        themeSelect.addEventListener('change', () => {
+            if (presentationSlides && presentationSlides.length) {
+                renderSlides(presentationSlides);
+                updateSlideView();
+            }
+        });
+    }
+
+    const transSelect = document.getElementById('presTransition');
+    if (transSelect) {
+        transSelect.addEventListener('change', () => {
+            if (presentationSlides && presentationSlides.length) {
+                renderSlides(presentationSlides);
+                updateSlideView();
+            }
+        });
+    }
+
     // Bind Dynamic Image Generator & Search Tools
     const genImageBtn = document.getElementById('generateSlideImageBtn');
     if (genImageBtn) {
@@ -1225,7 +1256,7 @@ async function generatePresentationDeck() {
         const res = await fetch('/api/presentation', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ api_key: apiKey, custom_prompt: customPrompt, num_slides: numSlides })
+            body: JSON.stringify({ api_key: apiKey, custom_prompt: customPrompt, num_slides: numSlides, shuffle: true })
         });
         const payload = await res.json();
 
@@ -1295,6 +1326,16 @@ function renderSlides(slides) {
             "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80"
         ]
     };
+
+    const fontSelect = document.getElementById('presFontPairing');
+    const themeSelect = document.getElementById('presThemeColor');
+    const transSelect = document.getElementById('presTransition');
+    
+    const fontClass = fontSelect ? fontSelect.value : 'inter_mono';
+    const themeClass = themeSelect ? themeSelect.value : 'indigo';
+    const transClass = transSelect ? transSelect.value : 'fade';
+    
+    viewport.className = `slideViewport font-${fontClass} theme-${themeClass} trans-${transClass}`;
 
     const styleSelect = document.getElementById('presImageStyle');
     const selectedStyle = styleSelect ? styleSelect.value : 'corporate';

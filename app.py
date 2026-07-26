@@ -2156,14 +2156,38 @@ window.addEventListener('DOMContentLoaded', function() {{
             }
         ]
 
+        import random
         requested_num_slides = int(data.get("num_slides") or 5)
-        if requested_num_slides <= len(slides_pool):
-            slides = slides_pool[:requested_num_slides]
-        else:
-            slides = []
-            while len(slides) < requested_num_slides:
-                slides.extend(slides_pool)
-            slides = slides[:requested_num_slides]
+        should_shuffle = data.get("shuffle", False)
+        
+        # Keep the title slide first, conditionally shuffle other presentation slides to support test predictability
+        title_slide = slides_pool[0]
+        other_slides = slides_pool[1:]
+        
+        if should_shuffle:
+            random.shuffle(other_slides)
+            
+            for s in other_slides:
+                if "bullets" in s and s["bullets"]:
+                    copied_bullets = list(s["bullets"])
+                    random.shuffle(copied_bullets)
+                    s["bullets"] = copied_bullets
+                if "playbook" in s and s["playbook"]:
+                    copied_playbook = list(s["playbook"])
+                    random.shuffle(copied_playbook)
+                    s["playbook"] = copied_playbook
+                
+        slides = [title_slide] + other_slides
+        
+        if requested_num_slides > len(slides):
+            extra_slides = []
+            while len(slides) + len(extra_slides) < requested_num_slides:
+                extra_slides.extend(other_slides)
+            if should_shuffle:
+                random.shuffle(extra_slides)
+            slides = slides + extra_slides
+            
+        slides = slides[:requested_num_slides]
         
         return jsonify({"slides": slides})
 
