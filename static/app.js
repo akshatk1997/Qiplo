@@ -990,6 +990,18 @@ function setupPresentation() {
         }
     });
 
+    // Bind AI Prompt Magic Chips
+    document.querySelectorAll('.pres-prompt-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            const promptText = chip.getAttribute('data-prompt');
+            const input = document.getElementById('presCustomPrompt');
+            if (input) {
+                input.value = promptText;
+                generatePresentationDeck();
+            }
+        });
+    });
+
     // Editor controls binding
     const saveBtn = document.getElementById('saveSlideBtn');
     if (saveBtn) {
@@ -998,18 +1010,30 @@ function setupPresentation() {
             if (!slide) return;
             slide.title = document.getElementById('editSlideTitle').value;
             slide.subtitle = document.getElementById('editSlideSubtitle').value;
+            const layoutSelect = document.getElementById('editSlideLayout');
+            if (layoutSelect) slide.layout = layoutSelect.value;
             
             if (slide.layout !== 'title') {
                 const contentVal = document.getElementById('editSlideContent').value;
                 const lines = contentVal.split('\n').map(l => l.trim()).filter(l => l);
                 if (slide.layout === 'split_metrics' || slide.layout === 'segment_comparison') {
                     slide.bullets = lines;
+                } else if (slide.layout === 'prescriptive_playbook') {
+                    slide.playbook = lines.map((line, idx) => {
+                        const parts = line.split(':');
+                        const types = ['success', 'primary', 'warning', 'accent'];
+                        return {
+                            title: parts[0] ? parts[0].trim() : `Solution ${idx+1}`,
+                            desc: parts[1] ? parts[1].trim() : 'Prescriptive retention action item.',
+                            type: types[idx % types.length]
+                        };
+                    });
                 } else if (slide.layout === 'journey_workflow') {
                     slide.steps = lines.map((line, idx) => {
                         const parts = line.split(':');
                         return {
                             step: idx + 1,
-                            title: parts[0] ? parts[0].trim() : `Step ${idx+1}`,
+                            title: parts[0] ? parts[0].trim() : `Stage ${idx+1}`,
                             description: parts[1] ? parts[1].trim() : ''
                         };
                     });
@@ -1347,6 +1371,7 @@ function populateSlideEditor() {
     
     const titleInput = document.getElementById('editSlideTitle');
     const subtitleInput = document.getElementById('editSlideSubtitle');
+    const layoutSelect = document.getElementById('editSlideLayout');
     const contentTextarea = document.getElementById('editSlideContent');
     const label = document.getElementById('editContentLabel');
     
@@ -1354,19 +1379,24 @@ function populateSlideEditor() {
 
     titleInput.value = slide.title || '';
     subtitleInput.value = slide.subtitle || '';
+    if (layoutSelect) layoutSelect.value = slide.layout || 'split_metrics';
 
     if (slide.layout === 'title') {
         contentTextarea.value = '';
         contentTextarea.disabled = true;
-        label.textContent = 'Bullet Points (Not applicable)';
+        label.textContent = 'Slide Copy (Not applicable for Title Slide)';
     } else if (slide.layout === 'split_metrics' || slide.layout === 'segment_comparison') {
         contentTextarea.value = (slide.bullets || []).join('\n');
         contentTextarea.disabled = false;
         label.textContent = 'Bullet Points (one per line)';
+    } else if (slide.layout === 'prescriptive_playbook') {
+        contentTextarea.value = (slide.playbook || []).map(p => `${p.title}: ${p.desc}`).join('\n');
+        contentTextarea.disabled = false;
+        label.textContent = 'Playbook Items (one per line, Format: Title: Description)';
     } else if (slide.layout === 'journey_workflow') {
         contentTextarea.value = (slide.steps || []).map(s => `${s.title}: ${s.description || s.desc || ''}`).join('\n');
         contentTextarea.disabled = false;
-        label.textContent = 'Workflow Steps (one per line, Format: Title: Description)';
+        label.textContent = 'Workflow Steps (one per line, Format: Stage Title: Description)';
     }
 }
 
