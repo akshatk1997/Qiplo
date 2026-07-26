@@ -143,6 +143,39 @@ body.light-theme .executiveSummary p {
     color: #0F172A !important;
 }
 
+body.light-theme .badge.high {
+    background: rgba(220, 38, 38, 0.12) !important;
+    color: #DC2626 !important;
+    border-color: rgba(220, 38, 38, 0.35) !important;
+}
+
+body.light-theme .badge.low {
+    background: rgba(5, 150, 105, 0.12) !important;
+    color: #059669 !important;
+    border-color: rgba(5, 150, 105, 0.35) !important;
+}
+
+body.light-theme th {
+    background: #F1F5F9 !important;
+    color: #334155 !important;
+    border-bottom-color: #CBD5E1 !important;
+}
+
+body.light-theme td {
+    color: #0F172A !important;
+    border-bottom-color: #E2E8F0 !important;
+}
+
+body.light-theme tbody tr:hover {
+    background: #F1F5F9 !important;
+}
+
+body.light-theme .paneHead h2,
+body.light-theme .businessHubHeader h2,
+body.light-theme .chartBlock h3 {
+    color: #0F172A !important;
+}
+
 /* Lucide Icon Utilities */
 .lucide-icon, .lucide {
     width: 16px;
