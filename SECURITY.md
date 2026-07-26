@@ -15,4 +15,4 @@ Keeplo prioritizes strict data confidentiality:
 ## 3. Reporting Vulnerabilities
 If you discover any security issues or vulnerabilities, please open an issue on the official GitHub repository or contact the lead maintainer:
 - **Lead Maintainer**: Akshat Kumar
-- **GitHub Repository**: [akshatk1997/Retentioniq](https://github.com/akshatk1997/Retentioniq)
+- **GitHub Repository**: [akshatk1997/keeplo](https://github.com/akshatk1997/keeplo)
