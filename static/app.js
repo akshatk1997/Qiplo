@@ -1328,72 +1328,19 @@ async function generatePresentationDeck() {
     const downloadBtn = document.getElementById('downloadPresBtn');
 
     genBtn.disabled = true;
-    genBtn.textContent = 'Compiling...';
-    
-    let countdown = 3;
-    status.innerHTML = `<span style="font-size:0.9rem; font-weight:700; color:var(--accent);">⚡ Compiling custom presentation: 3s...</span>`;
-    
-    const timerInterval = setInterval(() => {
-        countdown--;
-        if (countdown > 0) {
-            status.innerHTML = `<span style="font-size:0.9rem; font-weight:700; color:var(--accent);">⚡ Compiling custom presentation: ${countdown}s...</span>`;
-        } else {
-            clearInterval(timerInterval);
-        }
-    }, 1000);
-
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3000);
+    genBtn.textContent = 'Generating...';
 
     try {
-        const apiKey = localStorage.getItem('gemini_api_key') || '';
         const customPrompt = document.getElementById('presCustomPrompt') ? document.getElementById('presCustomPrompt').value : '';
         const slideCountEl = document.getElementById('presSlideCount');
         const numSlides = slideCountEl ? parseInt(slideCountEl.value) : 5;
 
-        const res = await fetch('/api/presentation', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ api_key: apiKey, custom_prompt: customPrompt, num_slides: numSlides, shuffle: true }),
-            signal: controller.signal
-        });
-        clearTimeout(timeoutId);
-        clearInterval(timerInterval);
-        const payload = await res.json();
-
-        if (res.ok && payload.slides) {
-            presentationSlides = payload.slides;
-            currentSlideIndex = 0;
-            renderSlides(payload.slides);
-            
-            viewport.classList.remove('hidden');
-            prevBtn.classList.remove('hidden');
-            nextBtn.classList.remove('hidden');
-            if (fullscreenBtn) fullscreenBtn.classList.remove('hidden');
-            const printBtn = document.getElementById('printPresBtn');
-            if (printBtn) printBtn.classList.remove('hidden');
-            if (downloadBtn) downloadBtn.classList.remove('hidden');
-            const editorPanel = document.getElementById('slideEditorPanel');
-            if (editorPanel) editorPanel.classList.remove('hidden');
-            status.classList.add('hidden');
-            updateSlideView();
-        } else {
-            throw new Error(payload.error || 'Server error');
-        }
-    } catch (e) {
-        clearTimeout(timeoutId);
-        clearInterval(timerInterval);
-        
-        // Instant Fallback to Local Templates
-        const customPrompt = document.getElementById('presCustomPrompt') ? document.getElementById('presCustomPrompt').value : '';
-        const slideCountEl = document.getElementById('presSlideCount');
-        const numSlides = slideCountEl ? parseInt(slideCountEl.value) : 5;
-        
+        // Instant dynamic client-side generation using loaded database metrics
         const fallbackSlides = generateLocalSlides(numSlides, customPrompt, true);
         presentationSlides = fallbackSlides;
         currentSlideIndex = 0;
         renderSlides(fallbackSlides);
-        
+
         viewport.classList.remove('hidden');
         prevBtn.classList.remove('hidden');
         nextBtn.classList.remove('hidden');
@@ -1405,6 +1352,8 @@ async function generatePresentationDeck() {
         if (editorPanel) editorPanel.classList.remove('hidden');
         status.classList.add('hidden');
         updateSlideView();
+    } catch (e) {
+        console.error("Instant presentation generation failed:", e);
     } finally {
         genBtn.disabled = false;
         genBtn.textContent = 'Generate AI Deck';
