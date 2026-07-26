@@ -1149,8 +1149,18 @@ function renderSlides(slides) {
     const viewport = document.getElementById('slideViewport');
     if (!viewport) return;
 
+    const curatedImages = [
+        "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80", // Modern Boardroom Meeting
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80", // Financial Analytics & Growth
+        "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80", // Tech Operations & Data
+        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80", // Team Collaboration Strategy
+        "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80"  // Customer Handshake & Success
+    ];
+
     viewport.innerHTML = slides.map((slide, idx) => {
         let contentHtml = '';
+        const imgUrl = curatedImages[idx % curatedImages.length];
+
         if (slide.layout === 'title') {
             contentHtml = `
                 <div class="slideContent layout-title">
@@ -1158,27 +1168,19 @@ function renderSlides(slides) {
                         <div class="presMiniLogo">Keeplo</div>
                         <span>Never lose a customer again.</span>
                     </div>
-                    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin: 20px 0;">
-                        <div style="text-align: left; max-width: 65%;">
-                            <h1 style="font-size: 2.3rem; margin: 0 0 12px; line-height: 1.15; background: linear-gradient(135deg, #00F5FF, #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${slide.title}</h1>
-                            <p class="slideSubtitle" style="font-size: 1.05rem; color: var(--muted); margin: 0 0 16px;">${slide.subtitle}</p>
+                    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin: 16px 0; gap: 24px;">
+                        <div style="text-align: left; flex: 1;">
+                            <h1 style="font-size: 2.2rem; margin: 0 0 10px; line-height: 1.15; background: linear-gradient(135deg, #00F5FF, #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${slide.title}</h1>
+                            <p class="slideSubtitle" style="font-size: 1rem; color: var(--muted); margin: 0 0 16px; line-height: 1.5;">${slide.subtitle}</p>
                             <div style="display: inline-flex; gap: 8px; align-items: center; background: rgba(0,245,255,0.08); border: 1px solid var(--primary); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; color: var(--primary); font-weight: 600;">
-                                ⚡ Ultra-Fast Zero-Key AI • 100% Watermark Free
+                                💼 Executive Strategic Briefing • 100% Watermark Free
                             </div>
                         </div>
-                        <div class="slideAiGraphic">
-                            <svg width="170" height="170" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <defs>
-                                <linearGradient id="gradTitle${idx}" x1="0%" y1="0%" x2="100%" y2="100%">
-                                  <stop offset="0%" stop-color="#00F5FF" />
-                                  <stop offset="100%" stop-color="#FF007F" />
-                                </linearGradient>
-                              </defs>
-                              <polygon points="100,15 175,55 175,145 100,185 25,145 25,55" stroke="url(#gradTitle${idx})" stroke-width="3" fill="rgba(0,245,255,0.06)" />
-                              <circle cx="100" cy="100" r="50" stroke="#00F5FF" stroke-width="2" stroke-dasharray="8 4" />
-                              <circle cx="100" cy="100" r="28" fill="url(#gradTitle${idx})" />
-                              <path d="M100 65 L115 110 L85 110 Z" fill="#ffffff" opacity="0.9" />
-                            </svg>
+                        <div class="slideHeroPhoto" style="flex: 0 0 210px; height: 170px; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); position: relative;">
+                            <img src="${imgUrl}" alt="Corporate Executive Presentation" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9) contrast(1.05);" />
+                            <div style="position: absolute; bottom: 8px; left: 8px; right: 8px; background: rgba(12,15,23,0.85); backdrop-filter: blur(8px); padding: 4px 8px; border-radius: 6px; font-size: 0.68rem; color: var(--text); font-weight: 600;">
+                                🏢 Executive Boardroom
+                            </div>
                         </div>
                     </div>
                     <div class="slideFooter">
@@ -1195,31 +1197,23 @@ function renderSlides(slides) {
                         <div class="presMiniLogo">Keeplo</div>
                         <span>Executive Churn & Risk Summary</span>
                     </div>
-                    <div class="slideSplitBody" style="display: flex; gap: 30px; margin: 16px 0; align-items: center;">
-                        <div class="slideLeftPane" style="flex: 0 0 240px;">
-                            <div class="statCallout pink" style="margin-bottom: 10px; padding: 12px; background: rgba(255,0,127,0.1); border: 1px solid var(--accent); border-radius: 12px;">
-                                <span style="font-size:0.72rem; color:var(--muted); text-transform:uppercase;">Evaluated Accounts</span>
-                                <h2 style="margin:4px 0 0; color:#ffffff; font-family:'JetBrains Mono', monospace; font-size:1.5rem;">${slide.total_cust || '1,000+'}</h2>
+                    <div class="slideSplitBody" style="display: flex; gap: 24px; margin: 14px 0; align-items: center;">
+                        <div class="slideLeftPane" style="flex: 0 0 220px;">
+                            <div style="height: 100px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 10px;">
+                                <img src="${imgUrl}" alt="Financial Analytics & Revenue Exposure" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);" />
                             </div>
-                            <div class="statCallout" style="padding: 12px; background: rgba(0,245,255,0.08); border: 1px solid var(--primary); border-radius: 12px;">
-                                <span style="font-size:0.72rem; color:var(--muted); text-transform:uppercase;">Avg Risk Score</span>
-                                <h2 style="margin:4px 0 0; color:var(--primary); font-family:'JetBrains Mono', monospace; font-size:1.5rem;">${slide.avg_risk_str || '26.8%'}</h2>
+                            <div class="statCallout pink" style="margin-bottom: 8px; padding: 10px; background: rgba(255,0,127,0.1); border: 1px solid var(--accent); border-radius: 10px;">
+                                <span style="font-size:0.68rem; color:var(--muted); text-transform:uppercase;">Evaluated Accounts</span>
+                                <h2 style="margin:2px 0 0; color:#ffffff; font-family:'JetBrains Mono', monospace; font-size:1.35rem;">${slide.total_cust || '1,000+'}</h2>
                             </div>
-                            <div style="margin-top: 10px;">
-                                <svg width="100%" height="75" viewBox="0 0 240 75" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="0" y="8" width="240" height="18" rx="9" fill="rgba(255,255,255,0.06)" />
-                                    <rect x="0" y="8" width="240" height="18" rx="9" fill="url(#gradTitle0)" />
-                                    <text x="10" y="21" fill="#090D16" font-weight="800" font-size="10">COHORT RISK TELEMETRY</text>
-
-                                    <rect x="0" y="40" width="240" height="18" rx="9" fill="rgba(255,255,255,0.06)" />
-                                    <rect x="0" y="40" width="150" height="18" rx="9" fill="#FF007F" />
-                                    <text x="10" y="53" fill="#ffffff" font-weight="700" font-size="10">HIGH RISK ATTRITION PATH</text>
-                                </svg>
+                            <div class="statCallout" style="padding: 10px; background: rgba(0,245,255,0.08); border: 1px solid var(--primary); border-radius: 10px;">
+                                <span style="font-size:0.68rem; color:var(--muted); text-transform:uppercase;">Avg Risk Score</span>
+                                <h2 style="margin:2px 0 0; color:var(--primary); font-family:'JetBrains Mono', monospace; font-size:1.35rem;">${slide.avg_risk_str || '26.8%'}</h2>
                             </div>
                         </div>
                         <div class="slideRightPane" style="flex: 1;">
-                            <h2 style="margin-top: 0; font-size: 1.35rem; color: var(--text);">${slide.title}</h2>
-                            <ul style="line-height: 1.6; font-size: 0.92rem; color: var(--muted); padding-left: 20px;">${listHtml}</ul>
+                            <h2 style="margin-top: 0; font-size: 1.3rem; color: var(--text);">${slide.title}</h2>
+                            <ul style="line-height: 1.65; font-size: 0.9rem; color: var(--muted); padding-left: 20px;">${listHtml}</ul>
                         </div>
                     </div>
                     <div class="slideFooter">
@@ -1230,9 +1224,9 @@ function renderSlides(slides) {
             `;
         } else if (slide.layout === 'segment_comparison') {
             const listHtml = (slide.bullets || []).map(b => `
-                <div class="riskComparisonCard" style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px;">
-                    <div class="cardIcon" style="font-size:1.2rem;">🎯</div>
-                    <div class="cardContent" style="font-size:0.9rem; color:var(--text);">
+                <div class="riskComparisonCard" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px;">
+                    <div class="cardIcon" style="font-size:1.1rem;">🎯</div>
+                    <div class="cardContent" style="font-size:0.88rem; color:var(--text);">
                         <p style="margin:0;">${b}</p>
                     </div>
                 </div>
@@ -1243,19 +1237,24 @@ function renderSlides(slides) {
                         <div class="presMiniLogo">Keeplo</div>
                         <span>Priority Risk Segments & Vulnerabilities</span>
                     </div>
-                    <h2 style="margin: 10px 0 6px; font-size: 1.35rem;">${slide.title}</h2>
-                    <div style="margin-bottom: 10px;">
-                        <svg width="100%" height="45" viewBox="0 0 540 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="10" y="5" width="250" height="36" rx="8" fill="rgba(255,0,127,0.12)" stroke="#FF007F" stroke-width="1.5"/>
-                            <text x="25" y="22" fill="#FF007F" font-weight="800" font-size="10">HIGH SEVERITY VULNERABILITY</text>
-                            <text x="25" y="34" fill="#9CA3AF" font-size="9">Contract & Payment Method Friction</text>
-
-                            <rect x="280" y="5" width="250" height="36" rx="8" fill="rgba(0,245,255,0.1)" stroke="#00F5FF" stroke-width="1.5"/>
-                            <text x="295" y="22" fill="#00F5FF" font-weight="800" font-size="10">HIGH LOSS MRR SEGMENT</text>
-                            <text x="295" y="34" fill="#9CA3AF" font-size="9">Fiber Optic Tiers & Check Billing</text>
-                        </svg>
+                    <div style="display: flex; gap: 16px; align-items: center; margin: 8px 0;">
+                        <div style="flex: 1;">
+                            <h2 style="margin: 0 0 6px; font-size: 1.3rem;">${slide.title}</h2>
+                            <div style="margin-bottom: 8px;">
+                                <svg width="100%" height="38" viewBox="0 0 380 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="5" y="4" width="180" height="30" rx="6" fill="rgba(255,0,127,0.12)" stroke="#FF007F" stroke-width="1.2"/>
+                                    <text x="15" y="22" fill="#FF007F" font-weight="800" font-size="9">HIGH SEVERITY VULNERABILITY</text>
+                                    
+                                    <rect x="195" y="4" width="180" height="30" rx="6" fill="rgba(0,245,255,0.1)" stroke="#00F5FF" stroke-width="1.2"/>
+                                    <text x="205" y="22" fill="#00F5FF" font-weight="800" font-size="9">HIGH LOSS MRR SEGMENT</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div style="flex: 0 0 140px; height: 85px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border);">
+                            <img src="${imgUrl}" alt="Operations Risk Analysis" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);" />
+                        </div>
                     </div>
-                    <div class="slideGridBody" style="display: flex; flex-direction: column; gap: 10px;">
+                    <div class="slideGridBody" style="display: flex; flex-direction: column; gap: 8px;">
                         ${listHtml}
                     </div>
                     <div class="slideFooter">
@@ -1266,9 +1265,9 @@ function renderSlides(slides) {
             `;
         } else if (slide.layout === 'prescriptive_playbook') {
             const playbookCards = (slide.playbook || []).map(p => `
-                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-left: 4px solid var(--${p.type || 'primary'}); padding: 12px; border-radius: 8px;">
-                    <h4 style="margin: 0 0 4px; font-size: 0.9rem; color: var(--${p.type || 'primary'}); font-family: 'Outfit', sans-serif;">${p.title}</h4>
-                    <p style="margin: 0; font-size: 0.82rem; color: var(--muted);">${p.desc}</p>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-left: 4px solid var(--${p.type || 'primary'}); padding: 10px 12px; border-radius: 8px;">
+                    <h4 style="margin: 0 0 3px; font-size: 0.88rem; color: var(--${p.type || 'primary'}); font-family: 'Outfit', sans-serif;">${p.title}</h4>
+                    <p style="margin: 0; font-size: 0.8rem; color: var(--muted);">${p.desc}</p>
                 </div>
             `).join('');
             contentHtml = `
@@ -1277,8 +1276,13 @@ function renderSlides(slides) {
                         <div class="presMiniLogo">Keeplo</div>
                         <span>Prescriptive Solutions & Action Matrix</span>
                     </div>
-                    <h2 style="margin: 10px 0; font-size: 1.35rem;">${slide.title}</h2>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 10px 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin: 8px 0 6px;">
+                        <h2 style="margin: 0; font-size: 1.3rem;">${slide.title}</h2>
+                        <div style="display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--primary); background: rgba(0,245,255,0.08); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--border);">
+                            <span>👥 Strategy Playbook</span>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0;">
                         ${playbookCards}
                     </div>
                     <div class="slideFooter">
@@ -1289,11 +1293,11 @@ function renderSlides(slides) {
             `;
         } else if (slide.layout === 'journey_workflow') {
             const stepsHtml = (slide.steps || []).map((st, i) => `
-                <div class="workflowStepCard" style="flex:1; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 12px; border-radius: 10px;">
-                    <div class="workflowStepNum" style="font-weight:800; color:var(--primary); font-size:0.85rem; margin-bottom:4px;">STAGE 0${i+1}</div>
+                <div class="workflowStepCard" style="flex:1; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 10px; border-radius: 8px;">
+                    <div class="workflowStepNum" style="font-weight:800; color:var(--primary); font-size:0.8rem; margin-bottom:3px;">STAGE 0${i+1}</div>
                     <div class="workflowStepContent">
-                        <h4 style="margin:0 0 4px; font-size:0.88rem; color:#ffffff;">${st.title}</h4>
-                        <p style="margin:0; font-size:0.8rem; color:var(--muted);">${st.description || st.desc || ''}</p>
+                        <h4 style="margin:0 0 3px; font-size:0.85rem; color:#ffffff;">${st.title}</h4>
+                        <p style="margin:0; font-size:0.78rem; color:var(--muted);">${st.description || st.desc || ''}</p>
                     </div>
                 </div>
             `).join('');
@@ -1304,24 +1308,24 @@ function renderSlides(slides) {
                         <div class="presMiniLogo">Keeplo</div>
                         <span>Interactive Customer Journey Workflow</span>
                     </div>
-                    <h2 style="margin: 10px 0 6px; font-size: 1.35rem;">${slide.title}</h2>
-                    <div style="margin-bottom: 10px;">
-                        <svg width="100%" height="36" viewBox="0 0 540 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <line x1="50" y1="18" x2="490" y2="18" stroke="url(#gradTitle0)" stroke-width="2.5" stroke-dasharray="6 4" />
-                            <circle cx="80" cy="18" r="12" fill="#111827" stroke="#00F5FF" stroke-width="2" />
-                            <text x="80" y="22" text-anchor="middle" fill="#00F5FF" font-weight="800" font-size="10">1</text>
+                    <h2 style="margin: 8px 0 4px; font-size: 1.3rem;">${slide.title}</h2>
+                    <div style="margin-bottom: 8px;">
+                        <svg width="100%" height="30" viewBox="0 0 540 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="50" y1="15" x2="490" y2="15" stroke="url(#gradTitle0)" stroke-width="2" stroke-dasharray="6 4" />
+                            <circle cx="80" cy="15" r="10" fill="#111827" stroke="#00F5FF" stroke-width="2" />
+                            <text x="80" y="18" text-anchor="middle" fill="#00F5FF" font-weight="800" font-size="9">1</text>
                             
-                            <circle cx="210" cy="18" r="12" fill="#111827" stroke="#00F5FF" stroke-width="2" />
-                            <text x="210" y="22" text-anchor="middle" fill="#00F5FF" font-weight="800" font-size="10">2</text>
+                            <circle cx="210" cy="15" r="10" fill="#111827" stroke="#00F5FF" stroke-width="2" />
+                            <text x="210" y="18" text-anchor="middle" fill="#00F5FF" font-weight="800" font-size="9">2</text>
                             
-                            <circle cx="340" cy="18" r="12" fill="#111827" stroke="#FF007F" stroke-width="2" />
-                            <text x="340" y="22" text-anchor="middle" fill="#FF007F" font-weight="800" font-size="10">3</text>
+                            <circle cx="340" cy="15" r="10" fill="#111827" stroke="#FF007F" stroke-width="2" />
+                            <text x="340" y="18" text-anchor="middle" fill="#FF007F" font-weight="800" font-size="9">3</text>
                             
-                            <circle cx="470" cy="18" r="12" fill="#111827" stroke="#10B981" stroke-width="2" />
-                            <text x="470" y="22" text-anchor="middle" fill="#10B981" font-weight="800" font-size="10">4</text>
+                            <circle cx="470" cy="15" r="10" fill="#111827" stroke="#10B981" stroke-width="2" />
+                            <text x="470" y="18" text-anchor="middle" fill="#10B981" font-weight="800" font-size="9">4</text>
                         </svg>
                     </div>
-                    <div class="slideWorkflowBody" style="display: flex; gap: 10px;">
+                    <div class="slideWorkflowBody" style="display: flex; gap: 8px;">
                         ${stepsHtml}
                     </div>
                     <div class="slideFooter">
