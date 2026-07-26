@@ -327,9 +327,10 @@
                     <div class="presentationToolbar" style="display: flex; gap: 10px; align-items: center; width: 100%; flex-wrap: wrap; margin-bottom: 15px;">
                         <input id="presCustomPrompt" type="text" placeholder="Enter custom deck instructions (e.g., Focus on support tickets, CFO presentation)..." style="flex: 1; min-width: 250px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 16px; border-radius: var(--radius-sm); font-size: 0.9rem;" />
                         <button id="generatePresBtn" class="primaryBtn" style="padding: 10px 20px;">Generate Deck</button>
-                        <div class="presActionButtons">
-                            <button id="fullscreenPresBtn" class="ghostBtn hidden">Present Fullscreen</button>
-                            <button id="downloadPresBtn" class="ghostBtn hidden">Download HTML Presentation</button>
+                        <div class="presActionButtons" style="display: flex; gap: 8px;">
+                            <button id="fullscreenPresBtn" class="ghostBtn hidden">🖥️ Fullscreen Mode</button>
+                            <button id="printPresBtn" class="ghostBtn hidden" onclick="window.print()">🖨️ Print / Save PDF Deck</button>
+                            <button id="downloadPresBtn" class="ghostBtn hidden">📥 Download Clean HTML Deck</button>
                         </div>
                     </div>
                     

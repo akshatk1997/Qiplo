@@ -24,7 +24,7 @@ def test_presentation_api_generation(tmp_path):
 
         assert "slides" in payload
         slides = payload["slides"]
-        assert len(slides) == 4
+        assert len(slides) == 5
 
         # Check Slide 1: Title
         assert slides[0]["layout"] == "title"
@@ -40,10 +40,15 @@ def test_presentation_api_generation(tmp_path):
         assert slides[2]["layout"] == "segment_comparison"
         assert "bullets" in slides[2]
 
-        # Check Slide 4: Journey workflow
-        assert slides[3]["layout"] == "journey_workflow"
-        assert "steps" in slides[3]
-        assert len(slides[3]["steps"]) == 4
+        # Check Slide 4: Prescriptive Playbook
+        assert slides[3]["layout"] == "prescriptive_playbook"
+        assert "playbook" in slides[3]
+        assert len(slides[3]["playbook"]) == 4
+
+        # Check Slide 5: Journey workflow
+        assert slides[4]["layout"] == "journey_workflow"
+        assert "steps" in slides[4]
+        assert len(slides[4]["steps"]) == 4
     finally:
         if old_db is not None:
             os.environ["CHURN_DB"] = old_db

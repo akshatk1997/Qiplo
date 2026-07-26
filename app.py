@@ -1874,57 +1874,65 @@ window.addEventListener('DOMContentLoaded', function() {{
         
         # Fallbacks for copy
         slide1_title = "Keeplo Executive Presentation"
-        slide1_subtitle = f"Strategic Customer Churn Analysis — {total_cust} Accounts Evaluated"
+        slide1_subtitle = f"Strategic Customer Churn Intelligence — {total_cust:,} Accounts Evaluated"
         
-        slide2_title = "Executive Churn Summary"
+        slide2_title = "Executive Churn & Risk Summary"
         slide2_bullets = [
-            f"Overall average customer churn risk is currently at {avg_risk:.1%}.",
-            "Month-to-month contracts and manual payment methods continue to drive the highest attrition rates.",
-            "Proactive engagement combined with custom incentives will secure vulnerable contract values."
+            f"Overall average customer churn risk across active accounts is currently at {avg_risk:.1%}.",
+            "Month-to-month contracts and non-automated payment methods represent the primary attrition drivers.",
+            "Targeted proactive outreach combined with annual plan incentives will safeguard vulnerable ARR."
         ]
         
-        slide3_title = "Vulnerable Segments Analysis"
+        slide3_title = "Priority Risk Segments & Vulnerabilities"
         slide3_bullets = [
-            f"Top risk segment: {top_segments[0]['dimension']} '{top_segments[0]['value']}' has an expected monthly loss of ${top_segments[0]['expected_loss']:,.2f}.",
-            f"Secondary risk segment: {top_segments[1]['dimension']} '{top_segments[1]['value']}' accounts represent ${top_segments[1]['expected_loss']:,.2f} in expected loss.",
-            "Customers using Fiber Optic internet service require active support escalations to secure loyalty."
-        ] if len(top_segments) >= 2 else ["Insufficient segment data to profile priority risks."]
+            f"Primary risk segment: {top_segments[0]['dimension']} '{top_segments[0]['value']}' (Expected loss of ${top_segments[0]['expected_loss']:,.2f})." if len(top_segments) >= 1 else "Primary segment data unavailable.",
+            f"Secondary risk segment: {top_segments[1]['dimension']} '{top_segments[1]['value']}' (Expected loss of ${top_segments[1]['expected_loss']:,.2f})." if len(top_segments) >= 2 else "Secondary segment data unavailable.",
+            "Fiber Optic & paper check payment accounts exhibit heightened sensitivity requiring priority support."
+        ]
         
-        slide4_title = "Interactive Retention Roadmap"
-        slide4_steps = [
-            {"title": "Identify Risk", "description": "@ AI scans accounts for predictive churn metrics."},
-            {"title": "Design Action", "description": "Formulate billing recovery & proactive support incentives."},
-            {"title": "Execute Offer", "description": "Managers initiate outreach using pre-compiled templates."},
-            {"title": "Secure ARR", "description": "Contracts successfully extended; customer retention maximized."}
+        slide4_title = "Prescriptive Solutions & Action Matrix"
+        slide4_playbook = [
+            {"title": "24-Hour CSM Call SLA", "desc": "Mandatory outreach within 24 hours for accounts reaching ≥65% churn risk score.", "type": "success"},
+            {"title": "Annual Migration Discount", "desc": "15-20% incentive credit for switching month-to-month contracts to annual terms.", "type": "primary"},
+            {"title": "Support Escalation Fast-Track", "desc": "Priority ticket routing (<2 hour response SLA) for accounts with >2 open issues.", "type": "warning"},
+            {"title": "VIP Onboarding Check-Ins", "desc": "Structured 90-day milestone check-ins to eliminate early tenure drop-offs.", "type": "accent"}
+        ]
+
+        slide5_title = "Interactive Customer Journey Workflow"
+        slide5_steps = [
+            {"title": "Predictive Audit", "description": "@ AI engine scans database records for risk scores."},
+            {"title": "Strategy Design", "description": "Formulate billing recovery & proactive support incentives."},
+            {"title": "Manager Outreach", "description": "CSMs initiate outreach using pre-compiled email & call templates."},
+            {"title": "ARR Preservation", "description": "Contracts successfully extended; customer retention maximized."}
         ]
         
         # Apply local fallback customization based on prompt keywords
         custom_lower = (custom_prompt or "").lower()
         if any(w in custom_lower for w in ("cfo", "finance", "billing", "charges", "revenue")):
             slide1_title = "Financial Risk Exposure Analysis"
-            slide1_subtitle = f"CFO Retention Briefing — {total_cust} Accounts Profiled"
+            slide1_subtitle = f"CFO Retention Briefing — {total_cust:,} Accounts Profiled"
             slide2_title = "CFO Revenue Summary"
             slide2_bullets = [
                 f"Active weighted average portfolio risk exposure stands at {avg_risk:.1%}.",
                 "Month-to-Month contracts represent the highest immediate MRR leakage path.",
                 "Autopay conversion incentives will protect vulnerable cash flow pipelines."
             ]
-            slide3_title = "High-Value Segment Exposure"
+            slide3_title = "High-Value Segment Revenue Exposure"
             slide3_bullets = [
                 f"Primary risk exposure: {top_segments[0]['dimension']} '{top_segments[0]['value']}' (expected loss of ${top_segments[0]['expected_loss']:,.2f})." if len(top_segments) >= 1 else "No high-value billing segments found.",
                 f"Secondary risk exposure: {top_segments[1]['dimension']} '{top_segments[1]['value']}' (expected loss of ${top_segments[1]['expected_loss']:,.2f})." if len(top_segments) >= 2 else "No secondary billing segments found.",
-                "Targeting credit card billing updates will secure critical monthly revenue."
+                "Targeting credit card billing updates will secure critical monthly recurring revenue."
             ]
-            slide4_title = "Financial Recovery Roadmap"
-            slide4_steps = [
-                {"title": "Audit Billing", "description": "Scan payment method delays and high paper check usage."},
+            slide5_title = "Financial Recovery Roadmap"
+            slide5_steps = [
+                {"title": "Audit Billing", "description": "Scan payment method delays and paper check usage."},
                 {"title": "Target Outliers", "description": "Identify month-to-month contracts carrying heavy charges."},
                 {"title": "Incentivize Autopay", "description": "Offer pre-approved credits for switching to auto-billing."},
                 {"title": "Secure MRR", "description": "Transition accounts to yearly terms to safeguard recurring revenue."}
             ]
         elif any(w in custom_lower for w in ("support", "ticket", "complaint", "satisfaction", "csat")):
             slide1_title = "Support Ticket & Friction Audit"
-            slide1_subtitle = f"Customer Satisfaction Briefing — {total_cust} Accounts Profiled"
+            slide1_subtitle = f"Customer Satisfaction Briefing — {total_cust:,} Accounts Profiled"
             slide2_title = "Client Friction Summary"
             slide2_bullets = [
                 "Low satisfaction scores (CSAT <= 2) correlate to a 4x increase in churn probability.",
@@ -1937,8 +1945,8 @@ window.addEventListener('DOMContentLoaded', function() {{
                 "Fiber optic service tiers show heightened complaint counts requiring technical escalations.",
                 "Direct success manager assignments will stabilize customer relationships."
             ]
-            slide4_title = "Friction Resolution Roadmap"
-            slide4_steps = [
+            slide5_title = "Friction Resolution Roadmap"
+            slide5_steps = [
                 {"title": "Flag CSAT", "description": "Identify all accounts with satisfaction scores below 2.5."},
                 {"title": "Escalate Tickets", "description": "Route active tickets to priority tier-3 engineering queues."},
                 {"title": "Direct Contact", "description": "Success team follows up with a personalized service check-in."},
@@ -1951,14 +1959,14 @@ window.addEventListener('DOMContentLoaded', function() {{
                 system_instruction = (
                     "You are a professional corporate slide designer and retention executive. "
                     "You write highly engaging, human-like presentation copy (no jargon, no typical AI transitions). "
-                    "Write content for 4 slides based on the database details and the user's specific custom prompt request. "
+                    "Write content for 5 slides based on the database details and the user's specific custom prompt request. "
                     "Format the output strictly as a JSON object: "
                     '{"slide1_title": "...", "slide1_subtitle": "...", '
                     '"slide2_title": "...", "slide2_bullets": ["...", "...", "..."], '
                     '"slide3_title": "...", "slide3_bullets": ["...", "...", "..."], '
-                    '"slide4_title": "...", "slide4_steps": [{"title": "...", "description": "..."}, {"title": "...", "description": "..."}, {"title": "...", "description": "..."}, {"title": "...", "description": "..."}]}. '
-                    "Do not output markdown code blocks (like ```json), write only the raw JSON string. "
-                    "Keep sentences brief, impactful, and ready to be printed on slides."
+                    '"slide4_title": "...", "slide4_playbook": [{"title": "...", "desc": "...", "type": "..."}, ...], '
+                    '"slide5_title": "...", "slide5_steps": [{"title": "...", "description": "..."}, ...]} '
+                    "Do not output markdown code blocks, write only raw JSON string."
                 )
                 prompt = (
                     f"Retention Data:\n"
@@ -1966,7 +1974,7 @@ window.addEventListener('DOMContentLoaded', function() {{
                     f"- Average risk probability: {avg_risk:.1%}\n"
                     f"- Top segments: {top_segments}\n\n"
                     f"Custom User Request: {custom_prompt or 'Standard executive churn overview'}\n\n"
-                    "Please generate Slide 1 title/subtitle, Slide 2 title/bullets (3 items), Slide 3 title/bullets (3 items), and Slide 4 title/steps (4 items)."
+                    "Please generate Slide 1 to 5 titles and copy."
                 )
                 ai_text = call_gemini_api(prompt, api_key, system_instruction=system_instruction)
                 
@@ -1980,22 +1988,16 @@ window.addEventListener('DOMContentLoaded', function() {{
                     cleaned = "\n".join(lines).strip()
                     
                 ai_data = json.loads(cleaned)
-                if "slide1_title" in ai_data:
-                    slide1_title = ai_data["slide1_title"]
-                if "slide1_subtitle" in ai_data:
-                    slide1_subtitle = ai_data["slide1_subtitle"]
-                if "slide2_title" in ai_data:
-                    slide2_title = ai_data["slide2_title"]
-                if "slide2_bullets" in ai_data:
-                    slide2_bullets = ai_data["slide2_bullets"]
-                if "slide3_title" in ai_data:
-                    slide3_title = ai_data["slide3_title"]
-                if "slide3_bullets" in ai_data:
-                    slide3_bullets = ai_data["slide3_bullets"]
-                if "slide4_title" in ai_data:
-                    slide4_title = ai_data["slide4_title"]
-                if "slide4_steps" in ai_data:
-                    slide4_steps = ai_data["slide4_steps"]
+                if "slide1_title" in ai_data: slide1_title = ai_data["slide1_title"]
+                if "slide1_subtitle" in ai_data: slide1_subtitle = ai_data["slide1_subtitle"]
+                if "slide2_title" in ai_data: slide2_title = ai_data["slide2_title"]
+                if "slide2_bullets" in ai_data: slide2_bullets = ai_data["slide2_bullets"]
+                if "slide3_title" in ai_data: slide3_title = ai_data["slide3_title"]
+                if "slide3_bullets" in ai_data: slide3_bullets = ai_data["slide3_bullets"]
+                if "slide4_title" in ai_data: slide4_title = ai_data["slide4_title"]
+                if "slide4_playbook" in ai_data: slide4_playbook = ai_data["slide4_playbook"]
+                if "slide5_title" in ai_data: slide5_title = ai_data["slide5_title"]
+                if "slide5_steps" in ai_data: slide5_steps = ai_data["slide5_steps"]
             except Exception:
                 pass
                 
@@ -2008,7 +2010,9 @@ window.addEventListener('DOMContentLoaded', function() {{
             {
                 "layout": "split_metrics",
                 "title": slide2_title,
-                "bullets": slide2_bullets
+                "bullets": slide2_bullets,
+                "total_cust": f"{total_cust:,}",
+                "avg_risk_str": f"{avg_risk:.1%}"
             },
             {
                 "layout": "segment_comparison",
@@ -2016,9 +2020,14 @@ window.addEventListener('DOMContentLoaded', function() {{
                 "bullets": slide3_bullets
             },
             {
-                "layout": "journey_workflow",
+                "layout": "prescriptive_playbook",
                 "title": slide4_title,
-                "steps": slide4_steps
+                "playbook": slide4_playbook
+            },
+            {
+                "layout": "journey_workflow",
+                "title": slide5_title,
+                "steps": slide5_steps
             }
         ]
         

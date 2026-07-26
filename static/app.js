@@ -1095,8 +1095,10 @@ async function generatePresentationDeck() {
             viewport.classList.remove('hidden');
             prevBtn.classList.remove('hidden');
             nextBtn.classList.remove('hidden');
-            fullscreenBtn.classList.remove('hidden');
-            downloadBtn.classList.remove('hidden');
+            if (fullscreenBtn) fullscreenBtn.classList.remove('hidden');
+            const printBtn = document.getElementById('printPresBtn');
+            if (printBtn) printBtn.classList.remove('hidden');
+            if (downloadBtn) downloadBtn.classList.remove('hidden');
             const editorPanel = document.getElementById('slideEditorPanel');
             if (editorPanel) editorPanel.classList.remove('hidden');
             status.classList.add('hidden');
@@ -1125,52 +1127,86 @@ function renderSlides(slides) {
         if (slide.layout === 'title') {
             contentHtml = `
                 <div class="slideContent layout-title">
-                    <div class="slideDecor"></div>
                     <div class="slideHeader">
                         <div class="presMiniLogo">Keeplo</div>
+                        <span>Never lose a customer again.</span>
                     </div>
-                    <h1>${slide.title}</h1>
-                    <p class="slideSubtitle">${slide.subtitle}</p>
+                    <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin: 20px 0;">
+                        <div style="text-align: left; max-width: 65%;">
+                            <h1 style="font-size: 2.3rem; margin: 0 0 12px; line-height: 1.15; background: linear-gradient(135deg, #00F5FF, #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${slide.title}</h1>
+                            <p class="slideSubtitle" style="font-size: 1.05rem; color: var(--muted); margin: 0 0 16px;">${slide.subtitle}</p>
+                            <div style="display: inline-flex; gap: 8px; align-items: center; background: rgba(0,245,255,0.08); border: 1px solid var(--primary); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; color: var(--primary); font-weight: 600;">
+                                ⚡ Ultra-Fast Zero-Key AI • 100% Watermark Free
+                            </div>
+                        </div>
+                        <div class="slideAiGraphic">
+                            <svg width="170" height="170" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <defs>
+                                <linearGradient id="gradTitle${idx}" x1="0%" y1="0%" x2="100%" y2="100%">
+                                  <stop offset="0%" stop-color="#00F5FF" />
+                                  <stop offset="100%" stop-color="#FF007F" />
+                                </linearGradient>
+                              </defs>
+                              <polygon points="100,15 175,55 175,145 100,185 25,145 25,55" stroke="url(#gradTitle${idx})" stroke-width="3" fill="rgba(0,245,255,0.06)" />
+                              <circle cx="100" cy="100" r="50" stroke="#00F5FF" stroke-width="2" stroke-dasharray="8 4" />
+                              <circle cx="100" cy="100" r="28" fill="url(#gradTitle${idx})" />
+                              <path d="M100 65 L115 110 L85 110 Z" fill="#ffffff" opacity="0.9" />
+                            </svg>
+                        </div>
+                    </div>
                     <div class="slideFooter">
-                        <span>Executive Summary & Churn Briefing</span>
+                        <span>Executive Churn Intelligence Briefing</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
                     </div>
                 </div>
             `;
         } else if (slide.layout === 'split_metrics') {
-            const listHtml = slide.bullets.map(b => `<li>${b}</li>`).join('');
+            const listHtml = (slide.bullets || []).map(b => `<li>${b}</li>`).join('');
             contentHtml = `
                 <div class="slideContent layout-split">
                     <div class="slideHeader">
                         <div class="presMiniLogo">Keeplo</div>
-                        <span>Executive Churn Summary</span>
+                        <span>Executive Churn & Risk Summary</span>
                     </div>
-                    <div class="slideSplitBody">
-                        <div class="slideLeftPane">
-                            <div class="statCallout pink">
-                                <span>Risk Analysis Status</span>
-                                <h2>ACTIVE</h2>
+                    <div class="slideSplitBody" style="display: flex; gap: 30px; margin: 16px 0; align-items: center;">
+                        <div class="slideLeftPane" style="flex: 0 0 240px;">
+                            <div class="statCallout pink" style="margin-bottom: 10px; padding: 12px; background: rgba(255,0,127,0.1); border: 1px solid var(--accent); border-radius: 12px;">
+                                <span style="font-size:0.72rem; color:var(--muted); text-transform:uppercase;">Evaluated Accounts</span>
+                                <h2 style="margin:4px 0 0; color:#ffffff; font-family:'JetBrains Mono', monospace; font-size:1.5rem;">${slide.total_cust || '1,000+'}</h2>
                             </div>
-                            <div class="statCallout">
-                                <span>Evaluation Method</span>
-                                <h4>DATA-GROUNDED</h4>
+                            <div class="statCallout" style="padding: 12px; background: rgba(0,245,255,0.08); border: 1px solid var(--primary); border-radius: 12px;">
+                                <span style="font-size:0.72rem; color:var(--muted); text-transform:uppercase;">Avg Risk Score</span>
+                                <h2 style="margin:4px 0 0; color:var(--primary); font-family:'JetBrains Mono', monospace; font-size:1.5rem;">${slide.avg_risk_str || '26.8%'}</h2>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <svg width="100%" height="75" viewBox="0 0 240 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="0" y="8" width="240" height="18" rx="9" fill="rgba(255,255,255,0.06)" />
+                                    <rect x="0" y="8" width="240" height="18" rx="9" fill="url(#gradTitle0)" />
+                                    <text x="10" y="21" fill="#090D16" font-weight="800" font-size="10">COHORT RISK TELEMETRY</text>
+
+                                    <rect x="0" y="40" width="240" height="18" rx="9" fill="rgba(255,255,255,0.06)" />
+                                    <rect x="0" y="40" width="150" height="18" rx="9" fill="#FF007F" />
+                                    <text x="10" y="53" fill="#ffffff" font-weight="700" font-size="10">HIGH RISK ATTRITION PATH</text>
+                                </svg>
                             </div>
                         </div>
-                        <div class="slideRightPane">
-                            <h2>Key Findings & Executive Insights</h2>
-                            <ul>${listHtml}</ul>
+                        <div class="slideRightPane" style="flex: 1;">
+                            <h2 style="margin-top: 0; font-size: 1.35rem; color: var(--text);">${slide.title}</h2>
+                            <ul style="line-height: 1.6; font-size: 0.92rem; color: var(--muted); padding-left: 20px;">${listHtml}</ul>
                         </div>
                     </div>
                     <div class="slideFooter">
-                        <span>Slide 2 of 3</span>
+                        <span>Executive Churn Summary</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
                     </div>
                 </div>
             `;
         } else if (slide.layout === 'segment_comparison') {
-            const listHtml = slide.bullets.map(b => `
-                <div class="riskComparisonCard">
-                    <div class="cardIcon">🎯</div>
-                    <div class="cardContent">
-                        <p>${b}</p>
+            const listHtml = (slide.bullets || []).map(b => `
+                <div class="riskComparisonCard" style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px;">
+                    <div class="cardIcon" style="font-size:1.2rem;">🎯</div>
+                    <div class="cardContent" style="font-size:0.9rem; color:var(--text);">
+                        <p style="margin:0;">${b}</p>
                     </div>
                 </div>
             `).join('');
@@ -1178,41 +1214,92 @@ function renderSlides(slides) {
                 <div class="slideContent layout-grid">
                     <div class="slideHeader">
                         <div class="presMiniLogo">Keeplo</div>
-                        <span>Priority Segments & Strategic Roadmap</span>
+                        <span>Priority Risk Segments & Vulnerabilities</span>
                     </div>
-                    <h2>Prioritized Risk Segments & Action Plan</h2>
-                    <div class="slideGridBody">
+                    <h2 style="margin: 10px 0 6px; font-size: 1.35rem;">${slide.title}</h2>
+                    <div style="margin-bottom: 10px;">
+                        <svg width="100%" height="45" viewBox="0 0 540 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="5" width="250" height="36" rx="8" fill="rgba(255,0,127,0.12)" stroke="#FF007F" stroke-width="1.5"/>
+                            <text x="25" y="22" fill="#FF007F" font-weight="800" font-size="10">HIGH SEVERITY VULNERABILITY</text>
+                            <text x="25" y="34" fill="#9CA3AF" font-size="9">Contract & Payment Method Friction</text>
+
+                            <rect x="280" y="5" width="250" height="36" rx="8" fill="rgba(0,245,255,0.1)" stroke="#00F5FF" stroke-width="1.5"/>
+                            <text x="295" y="22" fill="#00F5FF" font-weight="800" font-size="10">HIGH LOSS MRR SEGMENT</text>
+                            <text x="295" y="34" fill="#9CA3AF" font-size="9">Fiber Optic Tiers & Check Billing</text>
+                        </svg>
+                    </div>
+                    <div class="slideGridBody" style="display: flex; flex-direction: column; gap: 10px;">
                         ${listHtml}
                     </div>
                     <div class="slideFooter">
-                        <span>Slide 3 of 3</span>
+                        <span>Risk Segment Analysis</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
+        } else if (slide.layout === 'prescriptive_playbook') {
+            const playbookCards = (slide.playbook || []).map(p => `
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-left: 4px solid var(--${p.type || 'primary'}); padding: 12px; border-radius: 8px;">
+                    <h4 style="margin: 0 0 4px; font-size: 0.9rem; color: var(--${p.type || 'primary'}); font-family: 'Outfit', sans-serif;">${p.title}</h4>
+                    <p style="margin: 0; font-size: 0.82rem; color: var(--muted);">${p.desc}</p>
+                </div>
+            `).join('');
+            contentHtml = `
+                <div class="slideContent layout-playbook">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Keeplo</div>
+                        <span>Prescriptive Solutions & Action Matrix</span>
+                    </div>
+                    <h2 style="margin: 10px 0; font-size: 1.35rem;">${slide.title}</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 10px 0;">
+                        ${playbookCards}
+                    </div>
+                    <div class="slideFooter">
+                        <span>Prescriptive Action Matrix</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
                     </div>
                 </div>
             `;
         } else if (slide.layout === 'journey_workflow') {
-            const stepsHtml = slide.steps.map((st, i) => `
-                <div class="workflowStepCard" style="animation-delay: ${i * 0.15}s;">
-                    <div class="workflowStepNum">0${i+1}</div>
+            const stepsHtml = (slide.steps || []).map((st, i) => `
+                <div class="workflowStepCard" style="flex:1; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 12px; border-radius: 10px;">
+                    <div class="workflowStepNum" style="font-weight:800; color:var(--primary); font-size:0.85rem; margin-bottom:4px;">STAGE 0${i+1}</div>
                     <div class="workflowStepContent">
-                        <h4>${st.title}</h4>
-                        <p>${st.description}</p>
+                        <h4 style="margin:0 0 4px; font-size:0.88rem; color:#ffffff;">${st.title}</h4>
+                        <p style="margin:0; font-size:0.8rem; color:var(--muted);">${st.description || st.desc || ''}</p>
                     </div>
                 </div>
-                ${i < slide.steps.length - 1 ? '<div class="workflowConnector">➔</div>' : ''}
             `).join('');
 
             contentHtml = `
                 <div class="slideContent layout-workflow">
                     <div class="slideHeader">
-                        <div class="presMiniLogo">@ AI</div>
+                        <div class="presMiniLogo">Keeplo</div>
                         <span>Interactive Customer Journey Workflow</span>
                     </div>
-                    <h2>${slide.title}</h2>
-                    <div class="slideWorkflowBody">
+                    <h2 style="margin: 10px 0 6px; font-size: 1.35rem;">${slide.title}</h2>
+                    <div style="margin-bottom: 10px;">
+                        <svg width="100%" height="36" viewBox="0 0 540 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="50" y1="18" x2="490" y2="18" stroke="url(#gradTitle0)" stroke-width="2.5" stroke-dasharray="6 4" />
+                            <circle cx="80" cy="18" r="12" fill="#111827" stroke="#00F5FF" stroke-width="2" />
+                            <text x="80" y="22" text-anchor="middle" fill="#00F5FF" font-weight="800" font-size="10">1</text>
+                            
+                            <circle cx="210" cy="18" r="12" fill="#111827" stroke="#00F5FF" stroke-width="2" />
+                            <text x="210" y="22" text-anchor="middle" fill="#00F5FF" font-weight="800" font-size="10">2</text>
+                            
+                            <circle cx="340" cy="18" r="12" fill="#111827" stroke="#FF007F" stroke-width="2" />
+                            <text x="340" y="22" text-anchor="middle" fill="#FF007F" font-weight="800" font-size="10">3</text>
+                            
+                            <circle cx="470" cy="18" r="12" fill="#111827" stroke="#10B981" stroke-width="2" />
+                            <text x="470" y="22" text-anchor="middle" fill="#10B981" font-weight="800" font-size="10">4</text>
+                        </svg>
+                    </div>
+                    <div class="slideWorkflowBody" style="display: flex; gap: 10px;">
                         ${stepsHtml}
                     </div>
                     <div class="slideFooter">
-                        <span>Slide 4 of 4</span>
+                        <span>Retention Journey Roadmap</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
                     </div>
                 </div>
             `;
