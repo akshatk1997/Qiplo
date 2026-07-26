@@ -990,6 +990,69 @@ function setupPresentation() {
         }
     });
 
+    // Bind Image Style Select Change
+    const styleSelect = document.getElementById('presImageStyle');
+    if (styleSelect) {
+        styleSelect.addEventListener('change', () => {
+            if (presentationSlides && presentationSlides.length) {
+                renderSlides(presentationSlides);
+                updateSlideView();
+            }
+        });
+    }
+
+    // Bind Dynamic Image Generator & Search Tools
+    const genImageBtn = document.getElementById('generateSlideImageBtn');
+    if (genImageBtn) {
+        genImageBtn.addEventListener('click', async () => {
+            const promptInput = document.getElementById('slideCustomImagePrompt');
+            const keyword = promptInput ? promptInput.value.trim() : '';
+            const resultsContainer = document.getElementById('imageResultsContainer');
+            
+            if (!keyword) {
+                alert('Please enter a description or keyword for the image.');
+                return;
+            }
+            
+            if (resultsContainer) {
+                resultsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--muted);">Searching & generating copyright-free options...</span>';
+            }
+            
+            // Build 4 dynamic copyright-free options using Unsplash featured search
+            const generatedUrls = [
+                `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
+                `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
+                `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
+                `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`
+            ];
+            
+            if (resultsContainer) {
+                resultsContainer.innerHTML = generatedUrls.map((url, idx) => `
+                    <div class="generatedImageThumb" onclick="selectSlideImage('${url}')" style="flex:0 0 100px; height:70px; border-radius:6px; overflow:hidden; border:2px solid var(--border); cursor:pointer; position:relative; transition:all 0.15s ease;">
+                        <img src="${url}" style="width:100%; height:100%; object-fit:cover;" />
+                        <span style="position:absolute; bottom:2px; right:2px; background:rgba(0,0,0,0.6); color:#fff; font-size:0.55rem; padding:1px 3px; border-radius:3px; font-weight:700;">Option ${idx+1}</span>
+                    </div>
+                `).join('');
+            }
+        });
+    }
+
+    window.selectSlideImage = function(url) {
+        if (!presentationSlides || !presentationSlides[currentSlideIndex]) return;
+        presentationSlides[currentSlideIndex].imgUrl = url;
+        renderSlides(presentationSlides);
+        updateSlideView();
+        
+        document.querySelectorAll('.generatedImageThumb').forEach(thumb => {
+            const img = thumb.querySelector('img');
+            if (img && img.src === url) {
+                thumb.style.borderColor = 'var(--accent)';
+            } else {
+                thumb.style.borderColor = 'var(--border)';
+            }
+        });
+    };
+
     // Bind AI Prompt Magic Chips
     document.querySelectorAll('.pres-prompt-chip').forEach(chip => {
         chip.addEventListener('click', () => {
@@ -1002,7 +1065,6 @@ function setupPresentation() {
         });
     });
 
-    // Editor controls binding
     const saveBtn = document.getElementById('saveSlideBtn');
     if (saveBtn) {
         saveBtn.addEventListener('click', () => {
@@ -1149,17 +1211,44 @@ function renderSlides(slides) {
     const viewport = document.getElementById('slideViewport');
     if (!viewport) return;
 
-    const curatedImages = [
-        "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80", // Modern Boardroom Meeting
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80", // Financial Analytics & Growth
-        "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80", // Tech Operations & Data
-        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80", // Team Collaboration Strategy
-        "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80"  // Customer Handshake & Success
-    ];
+    const imageStyles = {
+        corporate: [
+            "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80"
+        ],
+        anime: [
+            "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1601987177651-8edfe6c20009?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=600&q=80"
+        ],
+        minimalist: [
+            "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1604871000636-074fa5117945?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80"
+        ],
+        cyberpunk: [
+            "https://images.unsplash.com/photo-1515621061946-eff1c2a352bd?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80"
+        ]
+    };
+
+    const styleSelect = document.getElementById('presImageStyle');
+    const selectedStyle = styleSelect ? styleSelect.value : 'corporate';
+    const activeList = imageStyles[selectedStyle] || imageStyles.corporate;
 
     viewport.innerHTML = slides.map((slide, idx) => {
         let contentHtml = '';
-        const imgUrl = curatedImages[idx % curatedImages.length];
+        const imgUrl = slide.imgUrl || activeList[idx % activeList.length];
 
         if (slide.layout === 'title') {
             contentHtml = `
