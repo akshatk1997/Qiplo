@@ -172,7 +172,34 @@ body.light-theme tbody tr:hover {
 
 body.light-theme .paneHead h2,
 body.light-theme .businessHubHeader h2,
-body.light-theme .chartBlock h3 {
+body.light-theme .chartBlock h3,
+body.light-theme .sourcesPane h2 {
+    color: #0F172A !important;
+}
+
+body.light-theme .sourcesPane {
+    background: #FFFFFF !important;
+    border-color: #CBD5E1 !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+}
+
+body.light-theme .sourceMetaRow,
+body.light-theme .sourceItem,
+body.light-theme .uploadCard,
+body.light-theme .chartArea {
+    background: #F8FAFC !important;
+    border-color: #CBD5E1 !important;
+    color: #0F172A !important;
+}
+
+body.light-theme .sourceMetaRow span,
+body.light-theme .sourceRows,
+body.light-theme #uploadStatus {
+    color: #475569 !important;
+}
+
+body.light-theme .sourceMetaRow strong,
+body.light-theme .sourceName {
     color: #0F172A !important;
 }
 
@@ -380,7 +407,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Sources pane */
 .sourcesPane {
-    background: rgba(9, 11, 16, 0.85);
+    background: var(--surface);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border);
