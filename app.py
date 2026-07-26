@@ -163,7 +163,7 @@ def create_app() -> Flask:
             "status": status,
             "auto_repaired": repaired,
             "database": str(db_p),
-            "engine": "Keeplo Autonomous Self-Healing Security Engine v1.0"
+            "engine": "Qiplo Autonomous Self-Healing Security Engine v1.0"
         })
 
     @app.route("/api/dashboard-state")
@@ -172,7 +172,7 @@ def create_app() -> Flask:
         model_key = request.args.get("model_key") or request.args.get("api_key") or os.environ.get("GEMINI_API_KEY")
         
         config = load_config(CONFIG_PATH)
-        company = config.get("company_name", "Keeplo Analytics")
+        company = config.get("company_name", "Qiplo Analytics")
         label_mapping = config.get("label_mapping", {"high_risk": "high_risk", "low_risk": "low_risk"})
         high_risk_label = label_mapping.get("high_risk", "high_risk")
         low_risk_label = label_mapping.get("low_risk", "low_risk")
@@ -377,7 +377,7 @@ def create_app() -> Flask:
     def branding_api():
         config = load_config(CONFIG_PATH)
         return jsonify({
-            "company_name": config.get("company_name", "Keeplo Analytics"),
+            "company_name": config.get("company_name", "Qiplo Analytics"),
             "label_mapping": config.get("label_mapping", {"high_risk": "high_risk", "low_risk": "low_risk"}),
             "risk_threshold": config.get("risk_threshold", 0.6)
         })
@@ -595,7 +595,7 @@ def create_app() -> Flask:
                 f"""
                 SELECT cp.customer_id, cp.predicted_probability, cp.prediction_label{cc_cols}
                 FROM churn_predictions cp
-                LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id
+                LEFT JOIN customer_churn cc ON cp.customer_id = cp.customer_id
                 JOIN data_sources ds ON cc.source_id = ds.source_id
                 WHERE ds.is_active = 1
                 ORDER BY cp.predicted_probability DESC
@@ -605,7 +605,7 @@ def create_app() -> Flask:
 
             row_dicts = [dict(row) for row in rows]
             config = load_config(CONFIG_PATH)
-            company = config.get("company_name", "Keeplo Analytics")
+            company = config.get("company_name", "Qiplo Analytics")
             if api_key:
                 from churn_analysis import generate_insight_with_gemini
                 insight = generate_insight_with_gemini(row_dicts, api_key, config=config, company_name=company)
@@ -754,7 +754,7 @@ def create_app() -> Flask:
             # 1. Greetings & Introductions
             if any(w in msg_lower for w in ("hi", "hello", "hey", "who are you", "what can you do", "intro", "welcome", "start")):
                 res_text = (
-                    "### 👋 Welcome to Keeplo — Senior Data Science Consultation & Retention Assistant!\n\n"
+                    "### 👋 Welcome to Qiplo — Senior Data Science Consultation & Retention Assistant!\n\n"
                     "I am **@ AI**, your dedicated Senior Customer Retention & Data Science Advisory Engine. "
                     "I am designed to answer all your questions regarding customer churn analysis, financial risk exposure, retention strategies, and machine learning diagnostics.\n\n"
                     f"**Current System Status:**\n"
@@ -787,11 +787,11 @@ def create_app() -> Flask:
                     "4. **90-Day Onboarding Workflows**: Establish structured check-ins during the critical first 90 days to ensure product adoption."
                 )
 
-            # 3. How to use Keeplo & Features
+            # 3. How to use Qiplo & Features
             elif any(w in msg_lower for w in ("how to use", "how to upload", "features", "instruction", "guide", "help me", "how does this work")):
                 res_text = (
-                    "### 🚀 How to Use Keeplo — Step-by-Step Guide\n\n"
-                    "Keeplo provides a seamless, end-to-end platform for customer churn analytics and retention management:\n\n"
+                    "### 🚀 How to Use Qiplo — Step-by-Step Guide\n\n"
+                    "Qiplo provides a seamless, end-to-end platform for customer churn analytics and retention management:\n\n"
                     "1. **Upload Customer Data**: Click the **`+ Add`** button in the left sidebar to upload CSV or Excel files containing customer attributes (`tenure_months`, `monthly_charges`, `contract_type`, etc.).\n"
                     "2. **View Interactive Analytics**: Explore the **Business Retention Hub** tab to view total MRR at risk, risk distribution charts, and simulate campaign ROI.\n"
                     "3. **Generate Slide Decks**: Click **`Generate Deck`** in the Presentation tab to build an executive presentation deck complete with custom AI prompts.\n"
@@ -802,8 +802,8 @@ def create_app() -> Flask:
             # 4. Business Terms, Financial Metrics & Corporate Policies
             elif any(w in msg_lower for w in ("mrr", "arr", "clv", "churn rate", "cac", "nrr", "policy", "policies", "sla", "business terms", "financial terms", "glossary", "guidelines")):
                 res_text = (
-                    "### ℹ️ Keeplo Official Business Terms, Financial Metrics & Corporate Policies\n\n"
-                    "Here is the complete reference guide matching Keeplo's core motive: *'Never lose a customer again.'*\n\n"
+                    "### ℹ️ Qiplo Official Business Terms, Financial Metrics & Corporate Policies\n\n"
+                    "Here is the complete reference guide matching Qiplo's core motive: *'Never lose a customer again.'*\n\n"
                     "#### 1. Core Financial Metric Definitions & Formulas\n"
                     f"- **MRR (Monthly Recurring Revenue)**: Total predictable revenue generated by active customer subscriptions each month.\n"
                     f"  - *Formula*: `MRR = Sum of Active Customer Monthly Charges` (Current Portfolio: **${total_mrr:,.2f}**)\n"
@@ -830,7 +830,7 @@ def create_app() -> Flask:
             elif any(w in msg_lower for w in ("power bi", "powerbi", "tableau", "dashboard", "export", "connect", "bi")):
                 res_text = (
                     "### 📊 Professional Dashboard Integration & Telemetry Connectors\n\n"
-                    "Keeplo provides pre-built connector workbooks mapping directly to your active SQLite predictions database:\n\n"
+                    "Qiplo provides pre-built connector workbooks mapping directly to your active SQLite predictions database:\n\n"
                     "- **[Download Power BI Datasource (.pbids)](/api/export/powerbi)**\n"
                     "- **[Download Tableau Workbook (.twb)](/api/export/tableau)**\n"
                     "- **[Download Excel Spreadsheet (.xlsx)](/api/export/excel)**\n"
@@ -845,7 +845,7 @@ def create_app() -> Flask:
             elif any(w in msg_lower for w in ("xgboost", "model", "algorithm", "train", "accuracy", "precision", "recall", "f1", "auc", "classifier", "machine learning", "scikit")):
                 res_text = (
                     "### 🧠 Machine Learning Engine Diagnostics & Model Architecture\n\n"
-                    "Keeplo uses an optimized **XGBoost (Extreme Gradient Boosting)** Classifier pipeline integrated with Scikit-Learn data transformers:\n\n"
+                    "Qiplo uses an optimized **XGBoost (Extreme Gradient Boosting)** Classifier pipeline integrated with Scikit-Learn data transformers:\n\n"
                     "**1. Objective Function & Regularization Math:**\n"
                     "\\[\\mathcal{L}^{(t)} = \\sum_{i=1}^n l(y_i, \\hat{y}_i^{(t-1)} + f_t(x_i)) + \\Omega(f_t)\\]\n"
                     "Where the regularization complexity penalty is:\n"
@@ -871,7 +871,7 @@ def create_app() -> Flask:
                 rows = conn.execute(q).fetchall()
                 res_text = (
                     "### 💸 Revenue Exposure & Financial Impact Analysis\n\n"
-                    f"Keeplo is currently tracking **{total_cust:,} active accounts** with a total Monthly Recurring Revenue (MRR) of **${total_mrr:,.2f}**.\n\n"
+                    f"Qiplo is currently tracking **{total_cust:,} active accounts** with a total Monthly Recurring Revenue (MRR) of **${total_mrr:,.2f}**.\n\n"
                     f"**Financial Risk Exposure:**\n"
                     f"- **High-Risk Monthly Revenue Exposure (MRR at Risk)**: **${risk_mrr:,.2f}** ({((risk_mrr/total_mrr*100) if total_mrr > 0 else 0):.1f}% of total MRR)\n"
                     f"- **Annualized ARR at Risk**: **${(risk_mrr * 12):,.2f}**\n\n"
@@ -905,7 +905,7 @@ def create_app() -> Flask:
                     "### ✉️ Retention Campaign Email Outreach Templates\n\n"
                     "**Template A: Proactive Contract Loyalty Offer**\n"
                     "```\n"
-                    "Subject: Exclusive 20% loyalty credit on your Keeplo account\n\n"
+                    "Subject: Exclusive 20% loyalty credit on your Qiplo account\n\n"
                     "Dear [Customer Name],\n\n"
                     "We deeply value your partnership. To show our appreciation, we have applied an exclusive 20% loyalty credit to your account when migrating to our 1-year plan.\n\n"
                     "Warm regards,\n"
@@ -925,7 +925,7 @@ def create_app() -> Flask:
             elif any(w in msg_lower for w in ("presentation", "slide", "deck", "report", "pdf", "ppt", "powerpoint")):
                 res_text = (
                     "### 📊 Slide Decks & Analysis Reports Guidance\n\n"
-                    "Keeplo includes automated presentation and reporting tools:\n\n"
+                    "Qiplo includes automated presentation and reporting tools:\n\n"
                     "1. **Executive Slide Decks**: Go to the **Presentation** tab, enter optional custom instructions, and click **`Generate Deck`** to build an interactive HTML presentation.\n"
                     "2. **Full Analysis Audit Report**: Click **`📊 Full Analysis Report`** in the topbar (or visit `/api/export/report`) to view and print a complete executive audit report.\n"
                     "3. **Excel & Data Exports**: Download raw predictions via **[Excel (.xlsx)](/api/export/excel)** or **[PDF Report](/api/export/pdf)**."
@@ -934,7 +934,7 @@ def create_app() -> Flask:
             # 10. Universal Dynamic Multi-Option Advisory Response for ANY Question
             else:
                 res_text = (
-                    f"### ⚡ Keeplo Native AI Advisory — Multi-Perspective Analysis\n\n"
+                    f"### ⚡ Qiplo Native AI Advisory — Multi-Perspective Analysis\n\n"
                     f"**User Prompt Evaluated**: *\"{user_message}\"*\n\n"
                     f"Analyzing your **{total_cust:,} evaluated accounts** ({high_risk:,} high-risk records; ${risk_mrr:,.2f}/mo in MRR exposure; mean churn probability: **{avg_risk:.1f}%**).\n\n"
                     f"Here are **3 strategic execution paths** tailored to your inquiry:\n\n"
@@ -947,7 +947,7 @@ def create_app() -> Flask:
                     f"#### 🛠️ Option 3: Support Escalation & Ticket Routing\n"
                     f"- **Core Focus**: Eliminate service dissatisfaction among active subscribers.\n"
                     f"- **Action Plan**: Route support tickets from high-risk clients to a VIP senior technical queue (<2h response target).\n\n"
-                    f"*(Powered by Keeplo Ultra-Fast Native AI Engine — 100% Free & Unlimited)*"
+                    f"*(Powered by Qiplo Ultra-Fast Native AI Engine — 100% Free & Unlimited)*"
                 )
             
             conn.close()
@@ -963,7 +963,7 @@ def create_app() -> Flask:
 <workbook version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
   <preferences />
   <datasources>
-    <datasource caption='Keeplo Churn Analysis' name='sqlite_ds' version='18.1'>
+    <datasource caption='Qiplo Churn Analysis' name='sqlite_ds' version='18.1'>
       <connection class='sqlite' database='{db_path}' server=''>
         <relation join='left' type='join'>
           <clause type='join'>
@@ -989,7 +989,7 @@ def create_app() -> Flask:
             return Response(
                 twb_content,
                 mimetype="application/xml",
-                headers={"Content-Disposition": "attachment; filename=Keeplo_Tableau_Dashboard.twb"}
+                headers={"Content-Disposition": "attachment; filename=Qiplo_Tableau_Dashboard.twb"}
             )
         except Exception as e:
             return jsonify({"error": f"Failed to generate Tableau template: {e}"}), 500
@@ -1014,7 +1014,7 @@ def create_app() -> Flask:
             return Response(
                 json.dumps(pbids_data, indent=2),
                 mimetype="application/json",
-                headers={"Content-Disposition": "attachment; filename=Keeplo_PowerBI_Source.pbids"}
+                headers={"Content-Disposition": "attachment; filename=Qiplo_PowerBI_Source.pbids"}
             )
         except Exception as e:
             return jsonify({"error": f"Failed to generate Power BI datasource: {e}"}), 500
@@ -1035,7 +1035,7 @@ def create_app() -> Flask:
             query = f"""
             SELECT cp.customer_id, cp.predicted_probability, cp.prediction_label{cc_cols}
             FROM churn_predictions cp
-            LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id
+            LEFT JOIN customer_churn cc ON cp.customer_id = cp.customer_id
             JOIN data_sources ds ON cc.source_id = ds.source_id
             WHERE ds.is_active = 1
             ORDER BY cp.predicted_probability DESC
@@ -1071,7 +1071,7 @@ def create_app() -> Flask:
                 return Response("<h3>No prediction data available. Please upload customer data first.</h3>", mimetype="text/html"), 400
 
             config = load_config(CONFIG_PATH)
-            company = request.args.get("company") or config.get("company_name", "Keeplo Analytics")
+            company = request.args.get("company") or config.get("company_name", "Qiplo Analytics")
 
             # Currency resolution
             CURRENCIES = {
@@ -1098,7 +1098,7 @@ def create_app() -> Flask:
                     SUM(cc.monthly_charges) as total_mrr,
                     SUM(CASE WHEN cp.prediction_label = 'high_risk' THEN cc.monthly_charges ELSE 0 END) as risk_mrr
                 FROM churn_predictions cp
-                LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id
+                LEFT JOIN customer_churn cc ON cp.customer_id = cc.customer_id
                 JOIN data_sources ds ON cc.source_id = ds.source_id
                 WHERE ds.is_active = 1
                 """
@@ -1203,7 +1203,7 @@ def create_app() -> Flask:
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Keeplo — Comprehensive Executive Churn Analysis Report</title>
+    <title>Qiplo — Comprehensive Executive Churn Analysis Report</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Outfit:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -1391,14 +1391,14 @@ def create_app() -> Flask:
 
         <header class="report-header">
             <div>
-                <h1 class="brand-title">Keeplo</h1>
+                <h1 class="brand-title">Qiplo</h1>
                 <div class="tagline">"Never lose a customer again." — Enterprise Churn Audit & Strategy Report</div>
             </div>
             <div class="report-meta">
                 <div><strong>Client / Entity:</strong> {company}</div>
                 <div><strong>Active Currency:</strong> <span style="color: var(--primary); font-weight: 700;">{curr_name} ({curr_symbol})</span></div>
                 <div><strong>Generated Date:</strong> {now_str}</div>
-                <div><strong>Engine Version:</strong> Keeplo AI v4.2</div>
+                <div><strong>Engine Version:</strong> Qiplo AI v4.2</div>
             </div>
         </header>
 
@@ -1560,7 +1560,7 @@ def create_app() -> Flask:
 
         <!-- Footer -->
         <footer style="margin-top: 40px; text-align: center; border-top: 1px solid var(--border); padding-top: 20px; font-size: 0.8rem; color: var(--muted);">
-            <div><strong>Keeplo AI Customer Retention Platform</strong> — 100% Free & Open Source (MIT Licensed)</div>
+            <div><strong>Qiplo AI Customer Retention Platform</strong> — 100% Free & Open Source (MIT Licensed)</div>
             <div>Report generated automatically for {company}. Confidential & Proprietary.</div>
         </footer>
     </div>
@@ -1900,7 +1900,7 @@ window.addEventListener('DOMContentLoaded', function() {{
         custom_prompt = data.get("custom_prompt")
         
         # Fallbacks for copy
-        slide1_title = "Keeplo Executive Presentation"
+        slide1_title = "Qiplo Executive Presentation"
         slide1_subtitle = f"Strategic Customer Churn Intelligence — {total_cust:,} Accounts Evaluated"
         
         slide2_title = "Executive Churn & Risk Summary"

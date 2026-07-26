@@ -1,8 +1,8 @@
-# Keeplo — Never Lose a Customer Again ⚡
+# Qiplo — Never Lose a Customer Again ⚡
 
 > *"AI-Powered Customer Churn Intelligence & Retention Engine"*
 
-**Keeplo** is a 100% free, open-source, and claims-free AI customer retention platform designed for high-growth enterprises and modern data teams. It predicts customer churn risk, identifies revenue-at-risk, and generates high-converting retention playbooks in real time.
+**Qiplo** is a 100% free, open-source, and claims-free AI customer retention platform designed for high-growth enterprises and modern data teams. It predicts customer churn risk, identifies revenue-at-risk, and generates high-converting retention playbooks in real time.
 
 ## 🌟 Key Features
 - **100% Free & MIT Licensed**: Unrestricted public and enterprise utility.

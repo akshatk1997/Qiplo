@@ -1084,7 +1084,7 @@ def call_gemini_api(prompt: str, api_key: str, system_instruction: str | None = 
 def generate_insight_with_gemini(rows: list[dict], api_key: str, config: dict | None = None, company_name: str | None = None) -> dict:
     """Use Gemini API to generate a professional retention narrative. Fallback to offline on failure."""
     config = config or load_config()
-    company = company_name or config.get("company_name", "Keeplo Analytics")
+    company = company_name or config.get("company_name", "Qiplo Analytics")
     
     local_insight = generate_ai_insight(rows, config=config)
     if not rows:

@@ -69,7 +69,7 @@ async function loadDashboard() {
             }
         }
 
-        const company = document.getElementById('companyNameInput').value || brandingData.company_name || 'Keeplo Analytics';
+        const company = document.getElementById('companyNameInput').value || brandingData.company_name || 'Qiplo Analytics';
         document.getElementById('brandTitle').textContent = company;
 
         renderSourceMeta();
@@ -1165,7 +1165,7 @@ function renderSlides(slides) {
             contentHtml = `
                 <div class="slideContent layout-title">
                     <div class="slideHeader">
-                        <div class="presMiniLogo">Keeplo</div>
+                        <div class="presMiniLogo">Qiplo</div>
                         <span>Never lose a customer again.</span>
                     </div>
                     <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin: 16px 0; gap: 24px;">
@@ -1194,7 +1194,7 @@ function renderSlides(slides) {
             contentHtml = `
                 <div class="slideContent layout-split">
                     <div class="slideHeader">
-                        <div class="presMiniLogo">Keeplo</div>
+                        <div class="presMiniLogo">Qiplo</div>
                         <span>Executive Churn & Risk Summary</span>
                     </div>
                     <div class="slideSplitBody" style="display: flex; gap: 24px; margin: 14px 0; align-items: center;">
@@ -1234,7 +1234,7 @@ function renderSlides(slides) {
             contentHtml = `
                 <div class="slideContent layout-grid">
                     <div class="slideHeader">
-                        <div class="presMiniLogo">Keeplo</div>
+                        <div class="presMiniLogo">Qiplo</div>
                         <span>Priority Risk Segments & Vulnerabilities</span>
                     </div>
                     <div style="display: flex; gap: 16px; align-items: center; margin: 8px 0;">
@@ -1273,7 +1273,7 @@ function renderSlides(slides) {
             contentHtml = `
                 <div class="slideContent layout-playbook">
                     <div class="slideHeader">
-                        <div class="presMiniLogo">Keeplo</div>
+                        <div class="presMiniLogo">Qiplo</div>
                         <span>Prescriptive Solutions & Action Matrix</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center; margin: 8px 0 6px;">
@@ -1305,7 +1305,7 @@ function renderSlides(slides) {
             contentHtml = `
                 <div class="slideContent layout-workflow">
                     <div class="slideHeader">
-                        <div class="presMiniLogo">Keeplo</div>
+                        <div class="presMiniLogo">Qiplo</div>
                         <span>Interactive Customer Journey Workflow</span>
                     </div>
                     <h2 style="margin: 8px 0 4px; font-size: 1.3rem;">${slide.title}</h2>
@@ -1433,7 +1433,7 @@ function downloadStandalonePresentation() {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keeplo Executive Slide Deck</title>
+    <title>Qiplo Executive Slide Deck</title>
     <style>
         :root {
             --bg: #0C0E12;
@@ -1827,7 +1827,7 @@ function downloadStandalonePresentation() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'Keeplo_Executive_Presentation.html';
+    a.download = 'Qiplo_Executive_Presentation.html';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -1863,7 +1863,7 @@ async function triggerQuickQA(question) {
                         <div class="qaSlideText">${htmlContent}</div>
                     </div>
                     <div class="qaSlideFooter">
-                        <span>Keeplo Corporate Presentation Suite</span>
+                        <span>Qiplo Corporate Presentation Suite</span>
                     </div>
                 </div>
             `;

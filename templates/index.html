@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Keeplo — Never Lose a Customer Again</title>
+    <title>Qiplo — Never Lose a Customer Again</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -15,28 +15,29 @@
 <body class="dark-theme">
     <header class="topbar">
         <div class="topbarLeft">
-            <div class="logoBox" aria-label="Keeplo Logo">
+            <div class="logoBox" aria-label="Qiplo Logo">
                 <svg class="logoSvg" viewBox="0 0 52 52" width="36" height="36" role="img">
                     <defs>
-                        <linearGradient id="keeploGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#FF007F" />
-                            <stop offset="50%" stop-color="#00F5FF" />
+                        <linearGradient id="qiploGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#00F5FF" />
+                            <stop offset="50%" stop-color="#FF007F" />
                             <stop offset="100%" stop-color="#39FF14" />
                         </linearGradient>
-                        <filter id="keeploGlowFilter" x="-20%" y="-20%" width="140%" height="140%">
+                        <filter id="qiploGlowFilter" x="-20%" y="-20%" width="140%" height="140%">
                             <feGaussianBlur stdDeviation="1.8" result="blur" />
                             <feComposite in="SourceGraphic" in2="blur" operator="over" />
                         </filter>
                     </defs>
-                    <rect class="logoTile" x="3" y="3" width="46" height="46" rx="14" fill="#0C0F17" stroke="url(#keeploGrad)" stroke-width="2" />
-                    <path class="logoMonogram" d="M18 14 V38 M18 26 L33 14 M23 22 L34 38" fill="none" stroke="url(#keeploGrad)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#keeploGlowFilter)" />
-                    <circle class="logoDot" cx="38" cy="14" r="3.5" fill="#39FF14" filter="url(#keeploGlowFilter)" />
+                    <rect class="logoTile" x="3" y="3" width="46" height="46" rx="14" fill="#0C0F17" stroke="url(#qiploGrad)" stroke-width="2" />
+                    <circle class="logoMonogramCircle" cx="24" cy="24" r="12" fill="none" stroke="url(#qiploGrad)" stroke-width="4" stroke-linecap="round" filter="url(#qiploGlowFilter)" />
+                    <path class="logoMonogramTail" d="M28 28 L38 38" fill="none" stroke="url(#qiploGrad)" stroke-width="4.5" stroke-linecap="round" filter="url(#qiploGlowFilter)" />
+                    <circle class="logoDot" cx="38" cy="38" r="3.2" fill="#39FF14" filter="url(#qiploGlowFilter)" />
                 </svg>
-                <span class="logoSubLabel">KEEPLO</span>
+                <span class="logoSubLabel">QIPLO</span>
             </div>
             <div class="topbarTitle">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                    <span class="appName" id="brandTitle">Keeplo</span>
+                    <span class="appName" id="brandTitle">Qiplo</span>
                     <span class="sloganBadge" style="font-size: 0.7rem; color: #00F5FF; font-weight: 700; letter-spacing: 0.03em;">"Never lose a customer again."</span>
                     <span class="aiModelBadge" style="font-size: 0.65rem; background: rgba(255, 0, 127, 0.15); color: #FF007F; border: 1px solid rgba(255, 0, 127, 0.4); padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">⚡ Ultra-Fast Zero-Key AI (100% Free & Unlimited)</span>
                     <span class="openSourceBadge" style="font-size: 0.65rem; background: rgba(0, 245, 255, 0.15); color: #00F5FF; border: 1px solid rgba(0, 245, 255, 0.4); padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">100% Free & Open Source</span>
@@ -421,7 +422,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 16px;">
                             <div>
                                 <h2 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.5rem; background: linear-gradient(135deg, #00F5FF, #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ℹ️ Business Glossary, Financial Metrics & Corporate Policies</h2>
-                                <p style="margin: 4px 0 0; color: var(--muted); font-size: 0.9rem;">Comprehensive guide matching Keeplo's core motive: <em>"Never lose a customer again."</em></p>
+                                <p style="margin: 4px 0 0; color: var(--muted); font-size: 0.9rem;">Comprehensive guide matching Qiplo's core motive: <em>"Never lose a customer again."</em></p>
                             </div>
                             <div style="background: rgba(0, 245, 255, 0.08); border: 1px solid var(--primary); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; color: var(--primary); font-weight: 700;">
                                 🛡️ Official Corporate Governance Guide
@@ -431,12 +432,12 @@
                     </div>
 
                     <!-- Section 1: Platform Motive & Retention Philosophy -->
-                    <div class="guideSectionCard" data-search-term="motive retention philosophy lifetime value cac customer churn keeplo" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 22px;">
+                    <div class="guideSectionCard" data-search-term="motive retention philosophy lifetime value cac customer churn qiplo" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 22px;">
                         <h3 style="margin: 0 0 12px; font-family: 'Outfit', sans-serif; color: var(--primary); display: flex; align-items: center; gap: 8px;">
                             <span>🎯</span> 1. Platform Motive & Customer Retention Philosophy
                         </h3>
                         <p style="color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin-top: 0;">
-                            Keeplo is built on a single core principle: <strong>"Never lose a customer again."</strong> Modern SaaS, subscription, and contractual businesses thrive on recurring revenue predictability rather than one-time transaction fees.
+                            <strong>Qiplo</strong> is built on a single core principle: <strong>"Never lose a customer again."</strong> Modern SaaS, subscription, and contractual businesses thrive on recurring revenue predictability rather than one-time transaction fees.
                         </p>
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px;">
                             <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 14px;">
@@ -575,7 +576,7 @@
     </main>
 
     <footer class="siteFooter">
-        <span>Keeplo — 100% Free & Open Source AI Customer Churn Intelligence (MIT Licensed).</span>
+        <span>Qiplo — 100% Free & Open Source AI Customer Churn Intelligence (MIT Licensed).</span>
         <div style="display: flex; gap: 18px; align-items: center; flex-wrap: wrap;">
             <a href="https://linkedin.com/in/akshatk1997" target="_blank" style="color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
