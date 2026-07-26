@@ -166,6 +166,102 @@ def create_app() -> Flask:
             "engine": "Qiplo Autonomous Self-Healing Security Engine v1.0"
         })
 
+    def build_role_recommendations(role, high_risk_label, low_risk_label, insight_rows, customer_rows, cols):
+        high_risk = next((row for row in insight_rows if row["prediction_label"] == high_risk_label), None)
+        low_risk = next((row for row in insight_rows if row["prediction_label"] == low_risk_label), None)
+        recommendations = []
+
+        if high_risk and high_risk["customers"]:
+            def cnt(col, threshold, cmp):
+                return sum(1 for r in customer_rows if r["prediction_label"] == high_risk_label and cmp(r[col] or 0, threshold))
+            
+            ticks_count = cnt("support_tickets", 3, lambda a, b: a >= b) if "support_tickets" in cols else 0
+            comp_count = cnt("complaint_count", 3, lambda a, b: a >= b) if "complaint_count" in cols else 0
+            sats_count = cnt("customer_satisfaction_score", 2, lambda a, b: a <= b) if "customer_satisfaction_score" in cols else 0
+            delays_count = cnt("payment_delays", 1, lambda a, b: a >= b) if "payment_delays" in cols else 0
+
+            avg_prob = round(high_risk['avg_probability'] * 100, 1)
+            high_count = high_risk['customers']
+            low_count = low_risk['customers'] if low_risk else 0
+
+            if role == "sales":
+                recommendations.append(
+                    f"Initiate contract renewal negotiations immediately for the {high_count} high-risk accounts to protect revenue."
+                )
+                if delays_count:
+                    recommendations.append(
+                        f"Audit the billing and transaction history for {delays_count} payment-delay customers before sales outreach."
+                    )
+                if low_count:
+                    recommendations.append(
+                        f"Offer proactive loyalty expansions or multi-year packages to secure the {low_count} low-risk accounts."
+                    )
+                recommendations.append(
+                    f"Prioritize upsell and relationship-building tasks with accounts exhibiting average prediction confidence of {avg_prob}%."
+                )
+
+            elif role == "support":
+                if ticks_count:
+                    recommendations.append(
+                        f"Create high-priority support tickets to resolve issues for {ticks_count} customers with 3+ pending tickets."
+                    )
+                if comp_count:
+                    recommendations.append(
+                        f"Escalate and resolve cases for the {comp_count} customers with 3+ formal complaints."
+                    )
+                if sats_count:
+                    recommendations.append(
+                        f"Initiate technical support outreach for {sats_count} users with low satisfaction scores (<= 2.0)."
+                    )
+                if not recommendations:
+                    recommendations.append("All customer support tickets are currently resolved and within SLAs.")
+
+            elif role == "executive":
+                recommendations.append(
+                    f"Acknowledge potential ARR risk from the {high_count} high-risk customer segments (average probability: {avg_prob}%)."
+                )
+                if sats_count:
+                    recommendations.append(
+                        f"Investigate systemic service gaps affecting the {sats_count} low-satisfaction accounts."
+                    )
+                if delays_count:
+                    recommendations.append(
+                        f"Authorize a billing flow review to reduce friction for the {delays_count} accounts with payment delays."
+                    )
+                if low_count:
+                    recommendations.append(
+                        f"Approve capital allocation for customer advocacy and engagement programs securing {low_count} low-risk accounts."
+                    )
+
+            else:  # manager
+                recommendations.append(
+                    f"Prioritize intervention for {high_count} high-risk records (average probability: {avg_prob}%)."
+                )
+                if ticks_count:
+                    recommendations.append(
+                        f"Address {ticks_count} high-risk customers who have submitted 3 or more support tickets."
+                    )
+                if comp_count:
+                    recommendations.append(
+                        f"Resolve issues for {comp_count} high-risk accounts with 3 or more complaint cases."
+                    )
+                if sats_count:
+                    recommendations.append(
+                        f"Initiate check-ins for {sats_count} high-risk users who reported low satisfaction scores (<= 2.0)."
+                    )
+                if delays_count:
+                    recommendations.append(
+                        f"Review accounts for {delays_count} high-risk customers showing billing or payment delay indicators."
+                    )
+                if low_count:
+                    recommendations.append(
+                        f"Protect {low_count} lower-risk records with loyalty offers and regular engagement."
+                    )
+        else:
+            recommendations.append("No churn activity detected yet; upload more customer data to generate insights.")
+
+        return recommendations
+
     @app.route("/api/dashboard-state")
     def dashboard_state_api():
         role = request.args.get("role", "manager").lower()
@@ -275,44 +371,7 @@ def create_app() -> Flask:
                 f"SELECT {sel_sig} FROM churn_predictions cp LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id"
             ).fetchall()
 
-        high_risk = next((row for row in insight_rows if row["prediction_label"] == high_risk_label), None)
-        low_risk = next((row for row in insight_rows if row["prediction_label"] == low_risk_label), None)
-        recommendations = []
-
-        if high_risk and high_risk["customers"]:
-            def cnt(col, threshold, cmp):
-                return sum(1 for r in customer_rows if r["prediction_label"] == high_risk_label and cmp(r[col] or 0, threshold))
-            
-            ticks_count = cnt("support_tickets", 3, lambda a, b: a >= b) if "support_tickets" in cols else 0
-            comp_count = cnt("complaint_count", 3, lambda a, b: a >= b) if "complaint_count" in cols else 0
-            sats_count = cnt("customer_satisfaction_score", 2, lambda a, b: a <= b) if "customer_satisfaction_score" in cols else 0
-            delays_count = cnt("payment_delays", 1, lambda a, b: a >= b) if "payment_delays" in cols else 0
-
-            recommendations.append(
-                f"Prioritize intervention for {high_risk['customers']} high-risk records (average probability: {high_risk['avg_probability'] * 100}%)."
-            )
-            if ticks_count:
-                recommendations.append(
-                    f"Address {ticks_count} high-risk customers who have submitted 3 or more support tickets."
-                )
-            if comp_count:
-                recommendations.append(
-                    f"Resolve issues for {comp_count} high-risk accounts with 3 or more complaint cases."
-                )
-            if sats_count:
-                recommendations.append(
-                    f"Initiate check-ins for {sats_count} high-risk users who reported low satisfaction scores (<= 2.0)."
-                )
-            if delays_count:
-                recommendations.append(
-                    f"Review accounts for {delays_count} high-risk customers showing billing or payment delay indicators."
-                )
-        if low_risk and low_risk["customers"]:
-            recommendations.append(
-                f"Protect {low_risk['customers']} lower-risk records with loyalty offers, product guidance, and regular engagement."
-            )
-        if not recommendations:
-            recommendations.append("No churn activity detected yet; upload more customer data to generate insights.")
+        recommendations = build_role_recommendations(role, high_risk_label, low_risk_label, insight_rows, customer_rows, cols)
 
         insights_payload = {
             "role": role,
@@ -542,39 +601,7 @@ def create_app() -> Flask:
             ).fetchall()
         conn.close()
 
-        high_risk = next((row for row in rows if row["prediction_label"] == high_risk_label), None)
-        low_risk = next((row for row in rows if row["prediction_label"] == low_risk_label), None)
-        recommendations = []
-
-        def cnt(col, threshold, cmp):
-            return sum(1 for r in customer_rows if r["prediction_label"] == high_risk_label and cmp(r[col] or 0, threshold))
-
-        if high_risk and high_risk["customers"]:
-            recommendations.append(
-                f"{role.title()} action: prioritize {high_risk['customers']} high-risk records with targeted retention outreach, service recovery, and executive follow-up."
-            )
-        if "support_tickets" in cols:
-            v = cnt("support_tickets", 3, lambda a, b: a >= b)
-            if v:
-                recommendations.append(f"Assign senior support to {v} records with repeated support tickets and elevated churn signals.")
-        if "complaint_count" in cols:
-            v = cnt("complaint_count", 3, lambda a, b: a >= b)
-            if v:
-                recommendations.append(f"Escalate {v} complaint-heavy records for immediate issue resolution and loyalty recovery.")
-        if "customer_satisfaction_score" in cols:
-            v = cnt("customer_satisfaction_score", 2, lambda a, b: a <= b)
-            if v:
-                recommendations.append(f"Launch proactive outreach to {v} records with low satisfaction scores before churn escalates.")
-        if "payment_delays" in cols:
-            v = cnt("payment_delays", 1, lambda a, b: a >= b)
-            if v:
-                recommendations.append(f"Offer billing flexibility or payment-plan options to {v} records showing late-payment behavior.")
-        if low_risk and low_risk["customers"]:
-            recommendations.append(
-                f"Protect {low_risk['customers']} lower-risk records with loyalty offers, product guidance, and regular engagement."
-            )
-        if not recommendations:
-            recommendations.append("No churn activity detected yet; upload more customer data to generate insights.")
+        recommendations = build_role_recommendations(role, high_risk_label, low_risk_label, rows, customer_rows, cols)
 
         return jsonify({
             "role": role,
