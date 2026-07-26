@@ -107,9 +107,32 @@ body.light-theme .riskComparisonCard,
 body.light-theme .workflowStepCard,
 body.light-theme .insightBox,
 body.light-theme .aiSegment,
+body.light-theme .telemetryCard,
 body.light-theme .executiveSummary div {
     background: #F8FAFC !important;
     border-color: #CBD5E1 !important;
+    color: #0F172A !important;
+}
+
+body.light-theme .aiCard,
+body.light-theme .signalsBlock {
+    background: #FFFFFF !important;
+    border-color: #CBD5E1 !important;
+    color: #0F172A !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+}
+
+body.light-theme .aiCardHead h2,
+body.light-theme .signalsBlock h3 {
+    color: #0F172A !important;
+}
+
+body.light-theme .aiSub,
+body.light-theme .telemetryCard span {
+    color: #475569 !important;
+}
+
+body.light-theme .telemetryCard strong {
     color: #0F172A !important;
 }
 

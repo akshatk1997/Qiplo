@@ -1936,6 +1936,9 @@ function setupThemeToggle() {
             toggleBtn.innerHTML = '<i data-lucide="moon" class="lucide-icon"></i>';
         }
         if (window.lucide) lucide.createIcons();
+        if (typeof lastChartsData !== 'undefined' && lastChartsData) {
+            renderCharts(lastChartsData);
+        }
     });
 }
 
