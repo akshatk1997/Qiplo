@@ -1929,3 +1929,65 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
     50% { top: 100%; }
     100% { top: 0%; }
 }
+
+/* Magnific Zoom Lightbox Overlay */
+.magnificZoomModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(11, 13, 20, 0.95);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    transition: opacity 0.25s ease;
+}
+.magnificZoomModal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.magnificZoomContent {
+    position: relative;
+    max-width: 85vw;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: scale(0.9);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.magnificZoomModal:not(.hidden) .magnificZoomContent {
+    transform: scale(1);
+}
+.magnificZoomContent img {
+    max-width: 100%;
+    max-height: 70vh;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    object-fit: contain;
+}
+.magnificZoomCaption {
+    margin-top: 15px;
+    color: var(--text);
+    font-size: 0.95rem;
+    text-align: center;
+    font-weight: 500;
+}
+.magnificCloseBtn {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 2.2rem;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+.magnificCloseBtn:hover {
+    color: var(--accent);
+}

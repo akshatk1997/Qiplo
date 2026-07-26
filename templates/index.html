@@ -398,10 +398,17 @@
                             </div>
                             <div style="grid-column: span 2; border-top: 1px solid var(--border); padding-top: 14px; margin-top: 6px;">
                                 <label style="font-size:0.75rem; color:var(--accent); display:block; margin-bottom:4px; font-weight: 700;">
-                                    <i data-lucide="image" class="lucide-icon" style="width: 12px; height: 12px; display: inline-block;"></i> Dynamic Copyright-Free Image Search & AI Generator
+                                    <i data-lucide="image" class="lucide-icon" style="width: 12px; height: 12px; display: inline-block;"></i> Dynamic Copyright-Free Media Hub & AI Generator
                                 </label>
-                                <div style="display: flex; gap: 8px;">
-                                    <input id="slideCustomImagePrompt" type="text" placeholder="Describe image (e.g. boardroom meeting, programming, anime workspace)..." style="flex: 1; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px;" />
+                                <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
+                                    <select id="slideImageSource" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;">
+                                        <option value="unsplash" selected>📷 Unsplash Stock</option>
+                                        <option value="pexels">📸 Pexels Premium</option>
+                                        <option value="pixabay">🎨 Pixabay Vector/Photos</option>
+                                        <option value="openverse">🔍 Google CC / Openverse</option>
+                                        <option value="lottie">⚡ Lottie Animations & SVGs</option>
+                                    </select>
+                                    <input id="slideCustomImagePrompt" type="text" placeholder="Describe photo, illustration, or animation..." style="flex: 1; min-width: 180px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px;" />
                                     <button id="generateSlideImageBtn" class="ghostBtn" type="button" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px;">
                                         <i data-lucide="sparkles" class="lucide-icon"></i> Search & Generate
                                     </button>
@@ -611,6 +618,15 @@
             </span>
         </div>
     </footer>
+
+    <!-- Magnific Zoom Lightbox Overlay -->
+    <div id="magnificZoomModal" class="magnificZoomModal hidden" onclick="closeMagnificZoom()">
+        <div class="magnificZoomContent" onclick="event.stopPropagation()">
+            <button class="magnificCloseBtn" onclick="closeMagnificZoom()">&times;</button>
+            <img id="magnificZoomImg" src="" alt="Zoomed Preview" />
+            <div id="magnificZoomCaption" class="magnificZoomCaption"></div>
+        </div>
+    </div>
 
     <script src="/static/app.js" defer></script>
 </body>

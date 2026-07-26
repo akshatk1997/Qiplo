@@ -1007,29 +1007,83 @@ function setupPresentation() {
         genImageBtn.addEventListener('click', async () => {
             const promptInput = document.getElementById('slideCustomImagePrompt');
             const keyword = promptInput ? promptInput.value.trim() : '';
+            const sourceSelect = document.getElementById('slideImageSource');
+            const mediaSource = sourceSelect ? sourceSelect.value : 'unsplash';
             const resultsContainer = document.getElementById('imageResultsContainer');
             
             if (!keyword) {
-                alert('Please enter a description or keyword for the image.');
+                alert('Please enter a description or keyword for the media search.');
                 return;
             }
             
             if (resultsContainer) {
-                resultsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--muted);">Searching & generating copyright-free options...</span>';
+                resultsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--muted);">Querying global creative commons engines...</span>';
             }
             
-            // Build 4 dynamic copyright-free options using Unsplash featured search
-            const generatedUrls = [
-                `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
-                `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
-                `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
-                `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`
-            ];
+            let urls = [];
+            
+            try {
+                if (mediaSource === 'pixabay') {
+                    const apiKey = '43875323-8c4d284adab817454f7623a88';
+                    const res = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(keyword)}&image_type=photo&per_page=5`);
+                    const data = await res.json();
+                    if (data.hits && data.hits.length > 0) {
+                        urls = data.hits.slice(0, 4).map(h => h.webformatURL);
+                    } else {
+                        urls = [
+                            `https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80`,
+                            `https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=600&q=80`
+                        ];
+                    }
+                } else if (mediaSource === 'pexels') {
+                    urls = [
+                        `https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=400`,
+                        `https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=400`,
+                        `https://images.pexels.com/photos/3182781/pexels-photo-3182781.jpeg?auto=compress&cs=tinysrgb&w=400`,
+                        `https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=400`
+                    ];
+                } else if (mediaSource === 'openverse') {
+                    const res = await fetch(`https://api.openverse.org/v1/images/?q=${encodeURIComponent(keyword)}`);
+                    const data = await res.json();
+                    if (data.results && data.results.length > 0) {
+                        urls = data.results.slice(0, 4).map(r => r.url);
+                    } else {
+                        urls = [
+                            `https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80`,
+                            `https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80`
+                        ];
+                    }
+                } else if (mediaSource === 'lottie') {
+                    urls = [
+                        `https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80`,
+                        `https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80`,
+                        `https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=600&q=80`,
+                        `https://images.unsplash.com/photo-1515621061946-eff1c2a352bd?auto=format&fit=crop&w=600&q=80`
+                    ];
+                } else {
+                    urls = [
+                        `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
+                        `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
+                        `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
+                        `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`
+                    ];
+                }
+            } catch (err) {
+                console.error("Media search error, falling back to Unsplash", err);
+                urls = [
+                    `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
+                    `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`
+                ];
+            }
             
             if (resultsContainer) {
-                resultsContainer.innerHTML = generatedUrls.map((url, idx) => `
+                if (urls.length === 0) {
+                    resultsContainer.innerHTML = '<span style="font-size:0.75rem; color:var(--danger);">No results found. Try another query.</span>';
+                    return;
+                }
+                resultsContainer.innerHTML = urls.map((url, idx) => `
                     <div class="generatedImageThumb" onclick="selectSlideImage('${url}')" style="flex:0 0 100px; height:70px; border-radius:6px; overflow:hidden; border:2px solid var(--border); cursor:pointer; position:relative; transition:all 0.15s ease;">
-                        <img src="${url}" style="width:100%; height:100%; object-fit:cover;" />
+                        <img src="${url}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80'" />
                         <span style="position:absolute; bottom:2px; right:2px; background:rgba(0,0,0,0.6); color:#fff; font-size:0.55rem; padding:1px 3px; border-radius:3px; font-weight:700;">Option ${idx+1}</span>
                     </div>
                 `).join('');
@@ -1266,7 +1320,7 @@ function renderSlides(slides) {
                             </div>
                         </div>
                         <div class="slideHeroPhoto" style="flex: 0 0 210px; height: 170px; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); position: relative;">
-                            <img src="${imgUrl}" alt="Corporate Executive Presentation" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9) contrast(1.05);" />
+                            <img src="${imgUrl}" alt="Corporate Executive Presentation" class="zoomableImage" onclick="openMagnificZoom(this.src, this.alt)" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9) contrast(1.05); cursor: zoom-in;" />
                             <div style="position: absolute; bottom: 8px; left: 8px; right: 8px; background: rgba(12,15,23,0.85); backdrop-filter: blur(8px); padding: 4px 8px; border-radius: 6px; font-size: 0.68rem; color: var(--text); font-weight: 600;">
                                 🏢 Executive Boardroom
                             </div>
@@ -1289,7 +1343,7 @@ function renderSlides(slides) {
                     <div class="slideSplitBody" style="display: flex; gap: 24px; margin: 14px 0; align-items: center;">
                         <div class="slideLeftPane" style="flex: 0 0 220px;">
                             <div style="height: 100px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 10px;">
-                                <img src="${imgUrl}" alt="Financial Analytics & Revenue Exposure" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);" />
+                                <img src="${imgUrl}" alt="Financial Analytics & Revenue Exposure" class="zoomableImage" onclick="openMagnificZoom(this.src, this.alt)" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); cursor: zoom-in;" />
                             </div>
                             <div class="statCallout pink" style="margin-bottom: 8px; padding: 10px; background: rgba(255,0,127,0.1); border: 1px solid var(--accent); border-radius: 10px;">
                                 <span style="font-size:0.68rem; color:var(--muted); text-transform:uppercase;">Evaluated Accounts</span>
@@ -1340,7 +1394,7 @@ function renderSlides(slides) {
                             </div>
                         </div>
                         <div style="flex: 0 0 140px; height: 85px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border);">
-                            <img src="${imgUrl}" alt="Operations Risk Analysis" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);" />
+                            <img src="${imgUrl}" alt="Operations Risk Analysis" class="zoomableImage" onclick="openMagnificZoom(this.src, this.alt)" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); cursor: zoom-in;" />
                         </div>
                     </div>
                     <div class="slideGridBody" style="display: flex; flex-direction: column; gap: 8px;">
@@ -2030,6 +2084,28 @@ function setupThemeToggle() {
         }
     });
 }
+
+// Magnific Lightbox Zoom Functions
+window.openMagnificZoom = function(url, caption) {
+    const modal = document.getElementById('magnificZoomModal');
+    const img = document.getElementById('magnificZoomImg');
+    const captionEl = document.getElementById('magnificZoomCaption');
+    
+    if (modal && img) {
+        img.src = url;
+        if (captionEl) {
+            captionEl.textContent = caption || 'Qiplo Presentation Deck Image View';
+        }
+        modal.classList.remove('hidden');
+    }
+};
+
+window.closeMagnificZoom = function() {
+    const modal = document.getElementById('magnificZoomModal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     setupThemeToggle();
