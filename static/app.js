@@ -1172,8 +1172,8 @@ function renderSlides(slides) {
                         <div style="text-align: left; flex: 1;">
                             <h1 style="font-size: 2.2rem; margin: 0 0 10px; line-height: 1.15; background: linear-gradient(135deg, #00F5FF, #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${slide.title}</h1>
                             <p class="slideSubtitle" style="font-size: 1rem; color: var(--muted); margin: 0 0 16px; line-height: 1.5;">${slide.subtitle}</p>
-                            <div style="display: inline-flex; gap: 8px; align-items: center; background: rgba(0,245,255,0.08); border: 1px solid var(--primary); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; color: var(--primary); font-weight: 600;">
-                                💼 Executive Strategic Briefing • 100% Watermark Free
+                            <div style="display: inline-flex; gap: 8px; align-items: center; background: rgba(0,245,255,0.08); border: 1px solid var(--accent); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 600;">
+                                <i data-lucide="shield-check" class="lucide-icon"></i> Executive Strategic Briefing • 100% Watermark Free
                             </div>
                         </div>
                         <div class="slideHeroPhoto" style="flex: 0 0 210px; height: 170px; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow); position: relative;">
@@ -1225,7 +1225,7 @@ function renderSlides(slides) {
         } else if (slide.layout === 'segment_comparison') {
             const listHtml = (slide.bullets || []).map(b => `
                 <div class="riskComparisonCard" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px;">
-                    <div class="cardIcon" style="font-size:1.1rem;">🎯</div>
+                    <div class="cardIcon" style="font-size:1.1rem; color: var(--accent);"><i data-lucide="target" class="lucide-icon"></i></div>
                     <div class="cardContent" style="font-size:0.88rem; color:var(--text);">
                         <p style="margin:0;">${b}</p>
                     </div>
@@ -1278,8 +1278,8 @@ function renderSlides(slides) {
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center; margin: 8px 0 6px;">
                         <h2 style="margin: 0; font-size: 1.3rem;">${slide.title}</h2>
-                        <div style="display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--primary); background: rgba(0,245,255,0.08); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--border);">
-                            <span>👥 Strategy Playbook</span>
+                        <div style="display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--accent); background: rgba(0,245,255,0.08); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--border);">
+                            <span style="display: inline-flex; align-items: center; gap: 4px;"><i data-lucide="users" class="lucide-icon"></i> Strategy Playbook</span>
                         </div>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0;">
@@ -1908,4 +1908,39 @@ function setupBusinessGuide() {
     }
 }
 
-setupBusinessGuide();
+function setupThemeToggle() {
+    const toggleBtn = document.getElementById('themeToggleBtn');
+    if (!toggleBtn) return;
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') {
+        document.body.classList.remove('dark-theme');
+        document.body.classList.add('light-theme');
+        toggleBtn.innerHTML = '<i data-lucide="moon" class="lucide-icon"></i>';
+    } else {
+        document.body.classList.remove('light-theme');
+        document.body.classList.add('dark-theme');
+        toggleBtn.innerHTML = '<i data-lucide="sun" class="lucide-icon"></i>';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        if (document.body.classList.contains('light-theme')) {
+            document.body.classList.remove('light-theme');
+            document.body.classList.add('dark-theme');
+            localStorage.setItem('theme', 'dark');
+            toggleBtn.innerHTML = '<i data-lucide="sun" class="lucide-icon"></i>';
+        } else {
+            document.body.classList.remove('dark-theme');
+            document.body.classList.add('light-theme');
+            localStorage.setItem('theme', 'light');
+            toggleBtn.innerHTML = '<i data-lucide="moon" class="lucide-icon"></i>';
+        }
+        if (window.lucide) lucide.createIcons();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    setupThemeToggle();
+    setupBusinessGuide();
+    if (window.lucide) lucide.createIcons();
+});

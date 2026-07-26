@@ -1,28 +1,81 @@
 :root {
-    --bg: #000000;
-    --surface: #090B10;
-    --surface-2: #121620;
-    --surface-3: #1A202E;
-    --border: rgba(0, 245, 255, 0.18);
-    --border-strong: rgba(255, 0, 127, 0.40);
+    /* 3-Color Palette Tokens - Default Dark Mode */
+    --bg: #0A0C10;
+    --surface: #121620;
+    --surface-2: #1A202C;
+    --surface-3: #222938;
+    --border: rgba(255, 255, 255, 0.10);
+    --border-strong: rgba(0, 245, 255, 0.35);
     --text: #F8F9FA;
-    --muted: #9AA0A6;
+    --muted: #94A3B8;
     --accent: #00F5FF;
     --accent-2: #FF007F;
     --accent-soft: rgba(0, 245, 255, 0.12);
-    --danger: #FF003C;
-    --success: #39FF14;
-    --radius: 28px;
-    --radius-sm: 16px;
-    --shadow: 0 4px 24px rgba(0, 245, 255, 0.08);
+    --danger: #EF4444;
+    --warning: #F59E0B;
+    --success: #10B981;
+    --radius: 20px;
+    --radius-sm: 12px;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     --font-heading: 'Space Grotesk', 'Space Mono', sans-serif;
     --font-body: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
     --font-mono: 'Space Mono', 'JetBrains Mono', monospace;
     --font: var(--font-body);
 }
 
-h1, h2, h3, h4, h5, h6, .appName, button, select, input, .paneHead h2 {
-    font-family: var(--font-heading);
+body.light-theme {
+    /* 3-Color Palette Tokens - Light Mode */
+    --bg: #F8FAFC;
+    --surface: #FFFFFF;
+    --surface-2: #F1F5F9;
+    --surface-3: #E2E8F0;
+    --border: rgba(15, 23, 42, 0.10);
+    --border-strong: rgba(2, 132, 199, 0.35);
+    --text: #0F172A;
+    --muted: #64748B;
+    --accent: #0284C7;
+    --accent-2: #4F46E5;
+    --accent-soft: rgba(2, 132, 199, 0.10);
+    --danger: #DC2626;
+    --warning: #D97706;
+    --success: #059669;
+    --shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+}
+
+/* Lucide Icon Utilities */
+.lucide-icon, .lucide {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2.2;
+    vertical-align: middle;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.themeToggleBtn {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.themeToggleBtn:hover {
+    border-color: var(--accent);
+    transform: scale(1.05);
+}
+
+/* Framer Motion Spring Micro-Animations */
+.framer-card, .card, .statCallout, .aiCard, .guideSectionCard, .slide {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+.framer-card:hover, .statCallout:hover, .guideSectionCard:hover {
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 12px 30px rgba(0, 245, 255, 0.12);
 }
 
 * { box-sizing: border-box; }
