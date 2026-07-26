@@ -1103,10 +1103,13 @@ async function generatePresentationDeck() {
     try {
         const apiKey = localStorage.getItem('gemini_api_key') || '';
         const customPrompt = document.getElementById('presCustomPrompt') ? document.getElementById('presCustomPrompt').value : '';
+        const slideCountEl = document.getElementById('presSlideCount');
+        const numSlides = slideCountEl ? parseInt(slideCountEl.value) : 5;
+
         const res = await fetch('/api/presentation', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ api_key: apiKey, custom_prompt: customPrompt })
+            body: JSON.stringify({ api_key: apiKey, custom_prompt: customPrompt, num_slides: numSlides })
         });
         const payload = await res.json();
 

@@ -334,6 +334,13 @@
 
                     <div class="presentationToolbar" style="display: flex; gap: 10px; align-items: center; width: 100%; flex-wrap: wrap; margin-bottom: 15px;">
                         <input id="presCustomPrompt" type="text" placeholder="Enter custom deck instructions (e.g., Focus on support tickets, CFO presentation)..." style="flex: 1; min-width: 250px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 16px; border-radius: var(--radius-sm); font-size: 0.9rem;" />
+                        <select id="presSlideCount" aria-label="Select slide count" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600;">
+                            <option value="3">3 Slides (Quick Executive Brief)</option>
+                            <option value="5" selected>5 Slides (Executive Deck)</option>
+                            <option value="8">8 Slides (Comprehensive Audit Deck)</option>
+                            <option value="10">10 Slides (Full Board Pitch Deck)</option>
+                            <option value="12">12 Slides (Enterprise Deep Dive)</option>
+                        </select>
                         <button id="generatePresBtn" class="primaryBtn" style="padding: 10px 20px;">🪄 Generate AI Deck</button>
                         <div class="presActionButtons" style="display: flex; gap: 8px;">
                             <button id="fullscreenPresBtn" class="ghostBtn hidden">🖥️ Fullscreen Mode</button>

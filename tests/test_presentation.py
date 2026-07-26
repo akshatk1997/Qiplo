@@ -83,3 +83,28 @@ def test_bi_exports(tmp_path):
             os.environ["CHURN_DB"] = old_db
         elif "CHURN_DB" in os.environ:
             del os.environ["CHURN_DB"]
+
+
+def test_custom_slide_count_presentation(tmp_path):
+    db_path = tmp_path / "custom_presentation_test.db"
+    old_db = os.environ.get("CHURN_DB")
+    os.environ["CHURN_DB"] = str(db_path)
+    try:
+        flask_app = app_module.create_app()
+        flask_app.config.update(TESTING=True)
+        client = flask_app.test_client()
+
+        response = client.post("/api/presentation", json={"num_slides": 8})
+        assert response.status_code == 200
+        payload = response.get_json()
+        assert len(payload["slides"]) == 8
+
+        response12 = client.post("/api/presentation", json={"num_slides": 12})
+        assert response12.status_code == 200
+        payload12 = response12.get_json()
+        assert len(payload12["slides"]) == 12
+    finally:
+        if old_db is not None:
+            os.environ["CHURN_DB"] = old_db
+        elif "CHURN_DB" in os.environ:
+            del os.environ["CHURN_DB"]

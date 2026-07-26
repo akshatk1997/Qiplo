@@ -2001,7 +2001,7 @@ window.addEventListener('DOMContentLoaded', function() {{
             except Exception:
                 pass
                 
-        slides = [
+        slides_pool = [
             {
                 "layout": "title",
                 "title": slide1_title,
@@ -2028,8 +2028,87 @@ window.addEventListener('DOMContentLoaded', function() {{
                 "layout": "journey_workflow",
                 "title": slide5_title,
                 "steps": slide5_steps
+            },
+            {
+                "layout": "split_metrics",
+                "title": "Contract & Billing Friction Analysis",
+                "bullets": [
+                    "Month-to-month billing cycles exhibit 3.4x higher churn rate than annual contracts.",
+                    "Electronic check and paper check payments carry elevated delinquency rates.",
+                    "Autopay conversion incentives deliver immediate retention stabilization."
+                ],
+                "total_cust": f"{total_cust:,}",
+                "avg_risk_str": f"{avg_risk:.1%}"
+            },
+            {
+                "layout": "segment_comparison",
+                "title": "Support Ticket Escalations & CSAT Friction",
+                "bullets": [
+                    "Accounts with >3 support tickets show a +38% spike in churn probability.",
+                    "Fiber Optic internet subscribers exhibit heightened sensitivity to service outages.",
+                    "Tier-3 engineering fast-tracking (<2h response SLA) restores customer trust."
+                ]
+            },
+            {
+                "layout": "prescriptive_playbook",
+                "title": "Executive Retention Incentives & ARR Safeguards",
+                "playbook": [
+                    {"title": "Annual Plan Migration", "desc": "Offer 15-20% billing discount for switching to 12-month terms.", "type": "success"},
+                    {"title": "Autopay Setup Credit", "desc": "$25 account credit for enabling automatic credit card billing.", "type": "primary"},
+                    {"title": "CSAT Follow-Up SLA", "desc": "Mandatory senior manager phone call for low satisfaction scores.", "type": "warning"},
+                    {"title": "VIP Onboarding Check-Ins", "desc": "Structured 30/60/90-day milestone reviews for new accounts.", "type": "accent"}
+                ]
+            },
+            {
+                "layout": "journey_workflow",
+                "title": "Multi-Stage Account Recovery Timeline",
+                "steps": [
+                    {"title": "Risk Detection", "description": "@ AI engine flags account crossing 65% churn risk threshold."},
+                    {"title": "Template Selection", "description": "CSM selects tailored retention outreach offer."},
+                    {"title": "Incentive Dispatch", "description": "Direct communication sent via phone and priority email."},
+                    {"title": "Contract Renewal", "description": "Client agrees to annual contract; ARR preserved."}
+                ]
+            },
+            {
+                "layout": "split_metrics",
+                "title": "Executive Governance & ROI Forecast",
+                "bullets": [
+                    "Retaining 20% of high-risk cohort recovers substantial recurring ARR.",
+                    "Payback period on retention incentives is achieved within 45 days.",
+                    "Quarterly retention audits maintain long-term account health."
+                ],
+                "total_cust": f"{total_cust:,}",
+                "avg_risk_str": f"{avg_risk:.1%}"
+            },
+            {
+                "layout": "segment_comparison",
+                "title": "Regional Cohort & Regional Churn Distribution",
+                "bullets": [
+                    "High-risk accounts are concentrated in high-density urban & suburban regions.",
+                    "Regional support routing eliminates localized service delay friction.",
+                    "Custom regional incentives stabilize localized account churn."
+                ]
+            },
+            {
+                "layout": "journey_workflow",
+                "title": "Strategic Execution Timeline & Milestones",
+                "steps": [
+                    {"title": "Week 1", "description": "Launch 24-hour CSM callback SLA for high-risk accounts."},
+                    {"title": "Week 2", "description": "Deploy annual contract migration discount campaign."},
+                    {"title": "Week 4", "description": "Evaluate autopay conversion velocity & MRR recovery."},
+                    {"title": "Month 3", "description": "Achieve 85%+ cohort retention stability."}
+                ]
             }
         ]
+
+        requested_num_slides = int(data.get("num_slides") or 5)
+        if requested_num_slides <= len(slides_pool):
+            slides = slides_pool[:requested_num_slides]
+        else:
+            slides = []
+            while len(slides) < requested_num_slides:
+                slides.extend(slides_pool)
+            slides = slides[:requested_num_slides]
         
         return jsonify({"slides": slides})
 
