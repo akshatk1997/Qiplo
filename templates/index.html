@@ -46,6 +46,7 @@
         </div>
         <div class="topbarRight">
             <input id="companyNameInput" type="text" placeholder="Company name (optional)" autocomplete="off" />
+            <button id="guideNavBtn" class="ghostBtn" type="button" style="border: 1px solid var(--primary); color: var(--primary); font-weight: 600;">ℹ️ Business Terms & Guide</button>
             <button id="exportReportBtn" class="primaryBtn" type="button" style="background: linear-gradient(135deg, #00F5FF, #FF007F); color: #fff; font-weight: 700;">📊 Full Analysis Report</button>
             <button id="exportTableauBtn" class="ghostBtn" type="button">Tableau</button>
             <button id="exportPowerBiBtn" class="ghostBtn" type="button">Power BI</button>
@@ -90,6 +91,7 @@
                 <button class="tab" data-tab="customers" type="button">Customers</button>
                 <button class="tab" data-tab="business" type="button">Business Hub</button>
                 <button class="tab" data-tab="presentation" type="button">Presentation</button>
+                <button class="tab" data-tab="guide" type="button">ℹ️ Business Guide</button>
                 <button class="tab" data-tab="copilot" type="button">@ AI</button>
             </div>
 
@@ -406,6 +408,155 @@
                         </div>
                         <div id="qaResponseBox" class="qaResponseBox hidden">
                             <!-- Q&A answer slide will render here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Terms & Corporate Policies Knowledge Guide -->
+            <div class="tabBody hidden" id="tab-guide">
+                <div class="guideHub" style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Guide Header & Search Filter -->
+                    <div class="guideHeaderCard" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 24px; box-shadow: var(--shadow);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 16px;">
+                            <div>
+                                <h2 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.5rem; background: linear-gradient(135deg, #00F5FF, #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ℹ️ Business Glossary, Financial Metrics & Corporate Policies</h2>
+                                <p style="margin: 4px 0 0; color: var(--muted); font-size: 0.9rem;">Comprehensive guide matching Keeplo's core motive: <em>"Never lose a customer again."</em></p>
+                            </div>
+                            <div style="background: rgba(0, 245, 255, 0.08); border: 1px solid var(--primary); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; color: var(--primary); font-weight: 700;">
+                                🛡️ Official Corporate Governance Guide
+                            </div>
+                        </div>
+                        <input id="guideSearchInput" type="text" placeholder="🔍 Search business terms, financial formulas, or retention policies (e.g. MRR, ARR, CLV, SLA, Churn, Autopay)..." style="width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 12px 18px; border-radius: var(--radius-sm); font-size: 0.92rem;" />
+                    </div>
+
+                    <!-- Section 1: Platform Motive & Retention Philosophy -->
+                    <div class="guideSectionCard" data-search-term="motive retention philosophy lifetime value cac customer churn keeplo" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 22px;">
+                        <h3 style="margin: 0 0 12px; font-family: 'Outfit', sans-serif; color: var(--primary); display: flex; align-items: center; gap: 8px;">
+                            <span>🎯</span> 1. Platform Motive & Customer Retention Philosophy
+                        </h3>
+                        <p style="color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin-top: 0;">
+                            Keeplo is built on a single core principle: <strong>"Never lose a customer again."</strong> Modern SaaS, subscription, and contractual businesses thrive on recurring revenue predictability rather than one-time transaction fees.
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px;">
+                            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 14px;">
+                                <h4 style="margin: 0 0 6px; font-size: 0.9rem; color: #ffffff;">5x–25x Cost Advantage</h4>
+                                <p style="margin: 0; font-size: 0.82rem; color: var(--muted);">Acquiring a new customer is 5 to 25 times more expensive than retaining an existing account (Harvard Business Review).</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 14px;">
+                                <h4 style="margin: 0 0 6px; font-size: 0.9rem; color: var(--success);">+25% to +95% Profit Boost</h4>
+                                <p style="margin: 0; font-size: 0.82rem; color: var(--muted);">Increasing customer retention rates by just 5% increases overall corporate net profitability by 25% to 95% (Bain & Company).</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 14px;">
+                                <h4 style="margin: 0 0 6px; font-size: 0.9rem; color: var(--primary);">Proactive Machine Learning</h4>
+                                <p style="margin: 0; font-size: 0.82rem; color: var(--muted);">Replaces reactive exit surveys with predictive XGBoost risk telemetry before accounts decide to cancel.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Executive Financial Terms & Formulas -->
+                    <div class="guideSectionCard" data-search-term="mrr monthly recurring revenue arr annual recurring revenue clv lifetime value churn rate cac nrr net revenue retention" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 22px;">
+                        <h3 style="margin: 0 0 16px; font-family: 'Outfit', sans-serif; color: var(--primary); display: flex; align-items: center; gap: 8px;">
+                            <span>💰</span> 2. Executive Financial Terms & Calculation Formulas
+                        </h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div class="termBox" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <h4 style="margin: 0; font-size: 0.95rem; color: var(--primary); font-family: 'Outfit', sans-serif;">MRR (Monthly Recurring Revenue)</h4>
+                                    <span style="font-size: 0.7rem; background: rgba(0,245,255,0.1); color: var(--primary); padding: 2px 6px; border-radius: 4px; font-weight: 700;">CORE METRIC</span>
+                                </div>
+                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Total predictable, normalized monthly income generated by active customer subscriptions.</p>
+                                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; background: var(--surface-2); padding: 6px 10px; border-radius: 6px; color: var(--text);">
+                                    MRR = Sum of Active Customer Monthly Charges
+                                </div>
+                            </div>
+
+                            <div class="termBox" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <h4 style="margin: 0; font-size: 0.95rem; color: var(--accent); font-family: 'Outfit', sans-serif;">ARR (Annual Recurring Revenue)</h4>
+                                    <span style="font-size: 0.7rem; background: rgba(255,0,127,0.1); color: var(--accent); padding: 2px 6px; border-radius: 4px; font-weight: 700;">ANNUAL PROJECTION</span>
+                                </div>
+                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Annualized valuation of recurring revenue generated by subscription contracts.</p>
+                                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; background: var(--surface-2); padding: 6px 10px; border-radius: 6px; color: var(--text);">
+                                    ARR = MRR × 12 Months
+                                </div>
+                            </div>
+
+                            <div class="termBox" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <h4 style="margin: 0; font-size: 0.95rem; color: var(--success); font-family: 'Outfit', sans-serif;">CLV (Customer Lifetime Value)</h4>
+                                    <span style="font-size: 0.7rem; background: rgba(16,185,129,0.1); color: var(--success); padding: 2px 6px; border-radius: 4px; font-weight: 700;">ACCOUNT LTV</span>
+                                </div>
+                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Estimated gross margin profit contributed by an account throughout its relationship lifespan.</p>
+                                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; background: var(--surface-2); padding: 6px 10px; border-radius: 6px; color: var(--text);">
+                                    CLV = (Average Monthly Bill × Gross Margin %) ÷ Monthly Churn Rate
+                                </div>
+                            </div>
+
+                            <div class="termBox" style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <h4 style="margin: 0; font-size: 0.95rem; color: var(--danger); font-family: 'Outfit', sans-serif;">Churn Rate (Attrition Rate %)</h4>
+                                    <span style="font-size: 0.7rem; background: rgba(239,68,68,0.1); color: var(--danger); padding: 2px 6px; border-radius: 4px; font-weight: 700;">ATTRITION %</span>
+                                </div>
+                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Percentage of active accounts that cancel or fail to renew within a specified billing period.</p>
+                                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; background: var(--surface-2); padding: 6px 10px; border-radius: 6px; color: var(--text);">
+                                    Churn Rate % = (Canceled Accounts ÷ Total Start Accounts) × 100
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Risk Cohorts & Threshold Definitions -->
+                    <div class="guideSectionCard" data-search-term="risk cohorts high risk medium risk low risk watchlist scores thresholds" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 22px;">
+                        <h3 style="margin: 0 0 16px; font-family: 'Outfit', sans-serif; color: var(--primary); display: flex; align-items: center; gap: 8px;">
+                            <span>📊</span> 3. Risk Cohort Classifications & Telemetry Thresholds
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                            <div style="background: rgba(239,68,68,0.06); border: 1px solid var(--danger); border-radius: 10px; padding: 16px;">
+                                <div style="font-size: 0.75rem; color: var(--danger); font-weight: 800; text-transform: uppercase;">HIGH RISK COHORT</div>
+                                <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 800; color: var(--danger); margin: 4px 0;">≥ 65.0%</div>
+                                <p style="margin: 0; font-size: 0.82rem; color: var(--muted);">Accounts exhibiting severe churn indicators. Requires mandatory 24-hour CSM call SLA.</p>
+                            </div>
+
+                            <div style="background: rgba(245,158,11,0.06); border: 1px solid var(--warning); border-radius: 10px; padding: 16px;">
+                                <div style="font-size: 0.75rem; color: var(--warning); font-weight: 800; text-transform: uppercase;">WATCHLIST COHORT</div>
+                                <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 800; color: var(--warning); margin: 4px 0;">35.0% – 64.9%</div>
+                                <p style="margin: 0; font-size: 0.82rem; color: var(--muted);">Moderate friction detected (short tenure, month-to-month). Automated check-in & support SLA monitoring.</p>
+                            </div>
+
+                            <div style="background: rgba(16,185,129,0.06); border: 1px solid var(--success); border-radius: 10px; padding: 16px;">
+                                <div style="font-size: 0.75rem; color: var(--success); font-weight: 800; text-transform: uppercase;">HEALTHY COHORT</div>
+                                <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 800; color: var(--success); margin: 4px 0;">&lt; 35.0%</div>
+                                <p style="margin: 0; font-size: 0.82rem; color: var(--muted);">Stable, satisfied accounts with high tenure. Target cohort for annual expansion & upsell offers.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Corporate Retention Policies & Operational SLAs -->
+                    <div class="guideSectionCard" data-search-term="policies sla corporate retention guidelines 24 hour outreach annual discount autopay credit ticket fast track" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 22px;">
+                        <h3 style="margin: 0 0 16px; font-family: 'Outfit', sans-serif; color: var(--primary); display: flex; align-items: center; gap: 8px;">
+                            <span>📜</span> 4. Corporate Retention Policies & Operational SLAs
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-left: 4px solid var(--success); padding: 14px; border-radius: 8px;">
+                                <h4 style="margin: 0 0 4px; font-size: 0.95rem; color: var(--success); font-family: 'Outfit', sans-serif;">Policy 1: Proactive 24-Hour Outreach SLA</h4>
+                                <p style="margin: 0; font-size: 0.85rem; color: var(--muted);">Every account that crosses the <strong>≥65% high-risk churn threshold</strong> must be assigned to a Customer Success Manager with mandatory 1-on-1 outreach initiated within <strong>24 business hours</strong>.</p>
+                            </div>
+
+                            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-left: 4px solid var(--primary); padding: 14px; border-radius: 8px;">
+                                <h4 style="margin: 0 0 4px; font-size: 0.95rem; color: var(--primary); font-family: 'Outfit', sans-serif;">Policy 2: Annual Contract Migration Incentive</h4>
+                                <p style="margin: 0; font-size: 0.85rem; color: var(--muted);">CSMs are authorized to issue a pre-approved <strong>15%–20% billing discount credit</strong> to month-to-month accounts in exchange for locking in a 12-month annual contract.</p>
+                            </div>
+
+                            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-left: 4px solid var(--warning); padding: 14px; border-radius: 8px;">
+                                <h4 style="margin: 0 0 4px; font-size: 0.95rem; color: var(--warning); font-family: 'Outfit', sans-serif;">Policy 3: Autopay & Electronic Payment Incentive</h4>
+                                <p style="margin: 0; font-size: 0.85rem; color: var(--muted);">Provide a <strong>$25 one-time statement credit</strong> to customers switching from paper checks or manual payment methods to automated credit card or ACH direct debit billing.</p>
+                            </div>
+
+                            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-left: 4px solid var(--accent); padding: 14px; border-radius: 8px;">
+                                <h4 style="margin: 0 0 4px; font-size: 0.95rem; color: var(--accent); font-family: 'Outfit', sans-serif;">Policy 4: Priority Support Ticket Fast-Tracking (&lt;2h Response SLA)</h4>
+                                <p style="margin: 0; font-size: 0.85rem; color: var(--muted);">All active support tickets originating from high-risk accounts must be automatically escalated to Senior Tier-3 Technical Engineers with a <strong>guaranteed &lt;2 hour response SLA</strong>.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

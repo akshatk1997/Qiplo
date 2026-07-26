@@ -1872,3 +1872,36 @@ async function triggerQuickQA(question) {
 }
 
 setupCopilot();
+
+// 5. Business Guide Controller
+function setupBusinessGuide() {
+    const searchInput = document.getElementById('guideSearchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            document.querySelectorAll('.guideSectionCard, .termBox').forEach(card => {
+                const text = card.textContent.toLowerCase();
+                const searchTerm = card.getAttribute('data-search-term') || '';
+                if (!query || text.includes(query) || searchTerm.includes(query)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    const guideNavBtn = document.getElementById('guideNavBtn');
+    if (guideNavBtn) {
+        guideNavBtn.addEventListener('click', () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tabBody').forEach(b => b.classList.add('hidden'));
+            const guideTab = document.querySelector('.tab[data-tab="guide"]');
+            const guideBody = document.getElementById('tab-guide');
+            if (guideTab) guideTab.classList.add('active');
+            if (guideBody) guideBody.classList.remove('hidden');
+        });
+    }
+}
+
+setupBusinessGuide();
