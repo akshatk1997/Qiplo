@@ -2195,6 +2195,21 @@ window.closeMagnificZoom = function() {
     }
 };
 
+window.openToolInfo = function() {
+    const modal = document.getElementById('toolInfoModal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        if (window.lucide) window.lucide.createIcons();
+    }
+};
+
+window.closeToolInfo = function() {
+    const modal = document.getElementById('toolInfoModal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     setupThemeToggle();
     setupBusinessGuide();

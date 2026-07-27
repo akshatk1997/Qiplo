@@ -171,7 +171,10 @@
             <div class="tabBody hidden" id="tab-business">
                 <div class="businessHubLayout">
                     <div class="businessHubHeader">
-                        <h2>Business Retention Intelligence</h2>
+                        <h2 style="display: flex; align-items: center; gap: 8px; margin: 0;">
+                            Business Retention Intelligence
+                            <button id="toolInfoBtn" onclick="openToolInfo()" class="infoCircleBtn" type="button" aria-label="Tool Information" title="Tool A to Z Guide" style="background: var(--surface-3); border: 1px solid var(--border); color: var(--accent-2); width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; cursor: pointer; padding: 0; line-height: 1; transition: all 0.2s ease;">i</button>
+                        </h2>
                         <div class="currencySelector">
                             <label for="currencySelect">Currency: </label>
                             <select id="currencySelect" class="roleSelect" aria-label="Change currency">
@@ -606,6 +609,48 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Section 5: Business Entity Types & Company-Formation Legal Frameworks -->
+                    <div class="guideSectionCard" data-search-term="company law entity types llc c-corp s-corp partnership incorporation ein bylaws legal registration formation" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 22px;">
+                        <h3 style="margin: 0 0 16px; font-family: var(--font-heading); color: var(--accent); display: flex; align-items: center; gap: 8px;">
+                            <i data-lucide="scale" class="lucide-icon"></i> 5. Business Entity Types & Company-Formation Legal Frameworks
+                        </h3>
+                        <p style="color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin-top: 0; margin-bottom: 16px;">
+                            Choosing the correct legal structure is critical for liability protection, taxation models, and raising equity. Below is a comprehensive guide to standard business entities and the formation roadmap.
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px;">
+                            <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent); font-family: var(--font-heading);">LLC (Limited Liability Company)</h4>
+                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Pass-through taxation structure combining partnership flexibility with corporate personal liability protection. Ideal for small-to-medium businesses.</p>
+                                <span style="font-size: 0.72rem; background: rgba(79, 70, 229, 0.1); color: var(--accent); padding: 3px 6px; border-radius: 4px; font-weight: 700;">★ Best for Solopreneurs</span>
+                            </div>
+                            <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent-2); font-family: var(--font-heading);">C-Corporation (C-Corp)</h4>
+                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Standard corporate structure where owners/shareholders are taxed separately. Subject to double taxation but required to issue stock and raise VC funding.</p>
+                                <span style="font-size: 0.72rem; background: rgba(99, 102, 241, 0.1); color: var(--accent-2); padding: 3px 6px; border-radius: 4px; font-weight: 700;">★ Best for Venture Funding</span>
+                            </div>
+                            <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--success); font-family: var(--font-heading);">S-Corporation (S-Corp)</h4>
+                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Special tax status election (for LLCs or C-Corps) allowing income to pass directly to shareholders' tax returns to avoid double taxation. Limited to 100 US shareholders.</p>
+                                <span style="font-size: 0.72rem; background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 3px 6px; border-radius: 4px; font-weight: 700;">★ Best for Tax Optimization</span>
+                            </div>
+                            <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--warning); font-family: var(--font-heading);">Sole Proprietorship / Partnership</h4>
+                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Unincorporated entity owned by one or more individuals. Offers zero separation between business assets and personal liabilities.</p>
+                                <span style="font-size: 0.72rem; background: rgba(245, 158, 11, 0.1); color: var(--warning); padding: 3px 6px; border-radius: 4px; font-weight: 700;">⚠ High Personal Risk</span>
+                            </div>
+                        </div>
+                        <div style="background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--accent); padding: 14px; border-radius: 8px;">
+                            <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--text); font-family: var(--font-heading);">🚀 5-Step Company Formation Checklist</h4>
+                            <ul style="margin: 0; padding-left: 20px; font-size: 0.84rem; color: var(--muted); line-height: 1.6;">
+                                <li><strong>1. File Articles of Organization / Incorporation</strong>: Register your company with the Secretary of State.</li>
+                                <li><strong>2. Acquire an EIN (Employer Identification Number)</strong>: Obtain a free tax ID from the IRS for business banking and hiring.</li>
+                                <li><strong>3. Draft Bylaws or Operating Agreement</strong>: Define shareholder equity splits, voting protocols, and management structure.</li>
+                                <li><strong>4. Secure Local Licenses & Permits</strong>: Obtain sales tax permits, professional licenses, or zoning certificates.</li>
+                                <li><strong>5. Open a Business Bank Account</strong>: Keep personal and business expenses strictly separate to maintain corporate liability protection.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -646,6 +691,42 @@
             <button class="magnificCloseBtn" onclick="closeMagnificZoom()">&times;</button>
             <img id="magnificZoomImg" src="" alt="Zoomed Preview" />
             <div id="magnificZoomCaption" class="magnificZoomCaption"></div>
+        </div>
+    </div>
+
+    <!-- Tool Information Modal -->
+    <div id="toolInfoModal" class="magnificZoomModal hidden" onclick="closeToolInfo()">
+        <div class="magnificZoomContent" onclick="event.stopPropagation()" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; text-align: left; box-shadow: var(--shadow);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 18px;">
+                <h3 style="margin: 0; font-family: var(--font-heading); font-size: 1.3rem; color: var(--accent); display: flex; align-items: center; gap: 8px;"><i data-lucide="info" class="lucide-icon"></i> Qiplo — Churn Intelligence Guide A to Z</h3>
+                <button onclick="closeToolInfo()" style="background: transparent; border: none; color: var(--muted); font-size: 1.6rem; cursor: pointer; line-height: 1;">&times;</button>
+            </div>
+            
+            <div style="font-size: 0.9rem; line-height: 1.6; color: var(--text);">
+                <p style="margin-top: 0;">
+                    <strong>Qiplo</strong> is an AI-powered Churn Retention Intelligence and customer risk modeling platform. It enables customer success managers, finance directors, and executives to proactively predict which accounts are about to cancel their subscriptions, assess the associated financial impact, and trigger recovery campaigns.
+                </p>
+
+                <h4 style="color: var(--accent-2); margin: 16px 0 6px; font-family: var(--font-heading);">⚙️ Core Operational Process</h4>
+                <ol style="margin: 0; padding-left: 20px; color: var(--muted);">
+                    <li><strong>Data Integration & Upload</strong>: Users drop active billing logs or CRM CSV exports containing user fields, contract formats, and charges.</li>
+                    <li><strong>XGBoost Churn Risk Model</strong>: The system processes database parameters to calculate a probability score (0% to 100%) for each customer.</li>
+                    <li><strong>Financial Impact Weighted Cohorting</strong>: Weighs probability scores against active monthly charges to highlight expected monthly recurring revenue (MRR) at risk.</li>
+                    <li><strong>Prescriptive Playbooks & Slide Decks</strong>: Generates customized stakeholder presentations and workflows mapping actionable templates, font profiles, and layouts.</li>
+                    <li><strong>Retention Actions & Notes</strong>: Success teams track callback status, note accounts, and schedule discount migrations.</li>
+                </ol>
+
+                <h4 style="color: var(--accent-2); margin: 16px 0 6px; font-family: var(--font-heading);">📊 Core Capabilities</h4>
+                <ul style="margin: 0; padding-left: 20px; color: var(--muted);">
+                    <li><strong>Business Retention Intelligence</strong>: Track risk exposure across regions, contract terms, billing options, and customer types.</li>
+                    <li><strong>AI Copilot Integration</strong>: Ask analytical questions to extract SQL-backed business intelligence instantly.</li>
+                    <li><strong>Creative Media Hub</strong>: Add copyright-free stock photography dynamically across templates (Unsplash, Pixabay, Pexels, Pinterest).</li>
+                </ul>
+            </div>
+            
+            <div style="margin-top: 24px; display: flex; justify-content: flex-end;">
+                <button class="primaryBtn" onclick="closeToolInfo()" style="padding: 8px 18px; font-size: 0.85rem;">Got it, thanks!</button>
+            </div>
         </div>
     </div>
 
