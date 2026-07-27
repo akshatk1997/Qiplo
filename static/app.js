@@ -1054,54 +1054,26 @@ function setupPresentation() {
             let urls = [];
             
             try {
-                if (mediaSource === 'pixabay') {
-                    const apiKey = '43875323-8c4d284adab817454f7623a88';
-                    const res = await fetch(`https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(keyword)}&image_type=photo&per_page=5`);
-                    const data = await res.json();
-                    if (data.hits && data.hits.length > 0) {
-                        urls = data.hits.slice(0, 4).map(h => h.webformatURL);
-                    } else {
-                        urls = [
-                            `https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80`,
-                            `https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=600&q=80`
-                        ];
-                    }
-                } else if (mediaSource === 'pexels') {
-                    urls = [
-                        `https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=400`,
-                        `https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=400`,
-                        `https://images.pexels.com/photos/3182781/pexels-photo-3182781.jpeg?auto=compress&cs=tinysrgb&w=400`,
-                        `https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=400`
-                    ];
-                } else if (mediaSource === 'openverse') {
-                    const res = await fetch(`https://api.openverse.org/v1/images/?q=${encodeURIComponent(keyword)}`);
-                    const data = await res.json();
+                const response = await fetch('/api/media/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: keyword, source: mediaSource })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
                     if (data.results && data.results.length > 0) {
-                        urls = data.results.slice(0, 4).map(r => r.url);
-                    } else {
-                        urls = [
-                            `https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80`,
-                            `https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80`
-                        ];
+                        urls = data.results.map(r => r.url);
                     }
-                } else if (mediaSource === 'lottie') {
-                    urls = [
-                        `https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80`,
-                        `https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80`,
-                        `https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=600&q=80`,
-                        `https://images.unsplash.com/photo-1515621061946-eff1c2a352bd?auto=format&fit=crop&w=600&q=80`
-                    ];
-                } else {
-                    urls = [
-                        `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
-                        `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
-                        `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
-                        `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`
-                    ];
                 }
             } catch (err) {
                 console.error("Media search error, falling back to Unsplash", err);
+            }
+            
+            if (urls.length === 0) {
                 urls = [
+                    `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
+                    `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
                     `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`,
                     `https://images.unsplash.com/featured/300x200?sig=${Math.floor(Math.random()*1000)}&${encodeURIComponent(keyword)}`
                 ];

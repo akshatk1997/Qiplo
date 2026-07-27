@@ -2124,3 +2124,118 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
 .trans-flip .slide.previous {
     transform: rotateY(-90deg) !important;
 }
+
+/* ==========================================
+   PREMIUM SAAS OBSIDIAN DARK MODE THEME OVERRIDES
+   ========================================== */
+
+/* Dark Mode Scrollbars */
+body.dark-theme::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+body.dark-theme::-webkit-scrollbar-track {
+    background: #000000;
+}
+body.dark-theme::-webkit-scrollbar-thumb {
+    background: #1e2335;
+    border: 2px solid #000000;
+    border-radius: 4px;
+}
+body.dark-theme::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* Radical Obsidian Background Gradient */
+body.dark-theme {
+    background: radial-gradient(circle at 50% 0%, #0d0f1b 0%, #000000 80%) !important;
+}
+
+/* Glassmorphic Topbar */
+body.dark-theme .topbar {
+    background: rgba(11, 13, 20, 0.75) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Glassmorphic Panes */
+body.dark-theme .sourcesPane,
+body.dark-theme .studioPane,
+body.dark-theme .notesPane {
+    background: rgba(11, 13, 20, 0.6) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Premium Gradient Card Overlays */
+body.dark-theme .aiCard,
+body.dark-theme .signalsBlock,
+body.dark-theme .noteCard,
+body.dark-theme .telemetryCard,
+body.dark-theme .riskComparisonCard,
+body.dark-theme .workflowStepCard,
+body.dark-theme .sourceMetaRow,
+body.dark-theme .chatMsg,
+body.dark-theme .insightBox,
+body.dark-theme .aiSegment,
+body.dark-theme .slideEditorPanel {
+    background: linear-gradient(135deg, rgba(20, 24, 36, 0.6), rgba(30, 35, 53, 0.4)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.dark-theme .aiCard:hover,
+body.dark-theme .telemetryCard:hover,
+body.dark-theme .riskComparisonCard:hover,
+body.dark-theme .workflowStepCard:hover,
+body.dark-theme .sourceMetaRow:hover {
+    border-color: rgba(99, 102, 241, 0.4) !important;
+    box-shadow: 0 8px 24px 0 rgba(79, 70, 229, 0.15) !important;
+}
+
+/* Slick inputs, selects and textareas */
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea {
+    background: rgba(20, 24, 36, 0.75) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    transition: all 0.2s ease;
+}
+
+body.dark-theme input:focus,
+body.dark-theme select:focus,
+body.dark-theme textarea:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.25) !important;
+}
+
+/* Premium Gradient Buttons */
+body.dark-theme .primaryBtn {
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%) !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+    transition: all 0.2s ease;
+}
+
+body.dark-theme .primaryBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45) !important;
+}
+
+body.dark-theme .ghostBtn {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: var(--muted) !important;
+    transition: all 0.2s ease;
+}
+
+body.dark-theme .ghostBtn:hover {
+    background: rgba(255, 255, 255, 0.07) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
