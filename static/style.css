@@ -545,6 +545,13 @@ a { color: inherit; text-decoration: none; }
     gap: 4px;
     padding: 12px 14px 0;
     border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.studioTabs::-webkit-scrollbar {
+    display: none;
 }
 .tab {
     background: transparent;
@@ -557,9 +564,22 @@ a { color: inherit; text-decoration: none; }
     border-radius: 10px 10px 0 0;
     border-bottom: 2px solid transparent;
     transition: color 0.15s ease, background 0.15s ease;
+    flex-shrink: 0;
 }
 .tab:hover { color: var(--text); background: var(--surface-3); }
 .tab.active { color: var(--accent-2); border-bottom-color: var(--accent); }
+button.tab[data-tab="copilot"] {
+    color: var(--accent-2) !important;
+    font-weight: 700;
+}
+button.tab[data-tab="copilot"]:hover {
+    color: var(--text) !important;
+    background: var(--surface-3);
+}
+button.tab[data-tab="copilot"].active {
+    color: var(--accent-2) !important;
+    border-bottom: 2px solid var(--accent) !important;
+}
 
 .tabBody { padding: 20px; display: flex; flex-direction: column; gap: 18px; }
 .tabBody.hidden { display: none; }
