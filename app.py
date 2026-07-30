@@ -568,15 +568,19 @@ def create_app() -> Flask:
         if frame.empty:
             return jsonify({"status": "error", "message": "The uploaded file is empty."}), 400
 
-        # Validate columns
-        columns = [c.lower() for c in frame.columns]
-        id_cols = {"customer_id", "customerid", "id", "cust_id", "account_id", "accountid"}
-        has_id = any(c in id_cols for c in columns)
-        if not has_id:
-            return jsonify({
-                "status": "error",
-                "message": "Validation Error: The uploaded CSV/Excel file must contain a unique customer identifier column (such as 'customer_id' or 'id') so the prediction engine can map records correctly."
-            }), 400
+        # Auto-detect and standardize or generate customer identifier column
+        id_col_found = None
+        for col in frame.columns:
+            if str(col).lower() in {"customer_id", "customerid", "id", "cust_id", "account_id", "accountid"}:
+                id_col_found = col
+                break
+
+        if id_col_found:
+            if id_col_found != "customer_id":
+                frame.rename(columns={id_col_found: "customer_id"}, inplace=True)
+        else:
+            # Generate unique customer identifier values dynamically
+            frame["customer_id"] = [f"CUST_{i+1:05d}" for i in range(len(frame))]
 
         try:
             rows = import_frame_to_sql(frame, get_db_path(), replace=False, config=config, filename=uploaded.filename)
