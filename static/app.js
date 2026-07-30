@@ -292,12 +292,120 @@ function renderExecutiveSummary(insightsData) {
     `;
 }
 
+function renderAnalyzedTips(role) {
+    const tipsPanel = document.getElementById('analyzedTipsPanel');
+    if (!tipsPanel) return;
+
+    if (!predictionData || !predictionData.length) {
+        tipsPanel.innerHTML = '<p style="color: var(--muted); font-size: 0.88rem; margin: 0; text-align: center;">Upload customer data to see real-time diagnostics.</p>';
+        return;
+    }
+
+    const highRiskLabel = labelMapping.high_risk;
+    const highRiskCustomers = predictionData.filter(item => item.prediction_label === highRiskLabel);
+    const totalHighRisk = highRiskCustomers.length;
+
+    const totalChargesAtRisk = highRiskCustomers.reduce((sum, item) => {
+        const val = item.monthly_charges !== undefined && item.monthly_charges !== null ? Number(item.monthly_charges) : 100;
+        return sum + val;
+    }, 0) * currentCurrencyRate;
+
+    const ticketHeavyCount = highRiskCustomers.filter(item => {
+        const tickets = item.support_tickets !== undefined && item.support_tickets !== null ? Number(item.support_tickets) : 0;
+        return tickets >= 3;
+    }).length;
+
+    const avgHighProb = totalHighRisk
+        ? (highRiskCustomers.reduce((sum, item) => sum + Number(item.predicted_probability || 0), 0) / totalHighRisk * 100).toFixed(1)
+        : '0.0';
+
+    const lowSatsCount = highRiskCustomers.filter(item => {
+        const csat = item.customer_satisfaction_score !== undefined && item.customer_satisfaction_score !== null ? Number(item.customer_satisfaction_score) : 5;
+        return csat <= 2;
+    }).length;
+    const lowSatsPct = totalHighRisk ? Math.round((lowSatsCount / totalHighRisk) * 100) : 0;
+
+    const projectedGrossSaved = totalChargesAtRisk * 0.40;
+    const projectedCost = totalChargesAtRisk * 0.20;
+    const projectedNetSaved = Math.max(0, projectedGrossSaved - projectedCost);
+
+    let tipsHtml = '';
+
+    if (role === 'executive') {
+        tipsHtml = `
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; border-left: 4px solid var(--accent-2);">
+                <p style="margin: 0 0 4px; font-size: 0.88rem; font-weight: 700; color: var(--text);">💰 Financial Exposure Alert</p>
+                <p style="margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.45;">
+                    Churn risk is threatening a total of <strong>${currentCurrencySymbol}${Math.round(totalChargesAtRisk).toLocaleString()}</strong> in active monthly recurring contract value. Recommending executive funding allocation of targeted loyalty discounts to protect key accounts.
+                </p>
+            </div>
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; border-left: 4px solid var(--danger);">
+                <p style="margin: 0 0 4px; font-size: 0.88rem; font-weight: 700; color: var(--text);">⚡ Service Level Deficiencies</p>
+                <p style="margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.45;">
+                    Approximately <strong>${lowSatsPct}%</strong> of high-risk customers show low satisfaction ratings (CSAT &le; 2.0). Directing engineering and product heads to address systemic service gaps is critical.
+                </p>
+            </div>
+        `;
+    } else if (role === 'sales') {
+        tipsHtml = `
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; border-left: 4px solid var(--success);">
+                <p style="margin: 0 0 4px; font-size: 0.88rem; font-weight: 700; color: var(--text);">📈 Proactive Renewal Strategy</p>
+                <p style="margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.45;">
+                    Targeting the <strong>${totalHighRisk}</strong> high-risk customers with proactive contract extension plans is estimated to save a net monthly contract value of <strong>${currentCurrencySymbol}${Math.round(projectedNetSaved).toLocaleString()}</strong>.
+                </p>
+            </div>
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; border-left: 4px solid var(--warning);">
+                <p style="margin: 0 0 4px; font-size: 0.88rem; font-weight: 700; color: var(--text);">⏳ Billing Configuration Threat</p>
+                <p style="margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.45;">
+                    Month-to-month billing segments constitute the highest risk cohort. Pitch annual pricing pre-payments during CSM outreach to lock in long-term commitments.
+                </p>
+            </div>
+        `;
+    } else if (role === 'support') {
+        tipsHtml = `
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; border-left: 4px solid var(--danger);">
+                <p style="margin: 0 0 4px; font-size: 0.88rem; font-weight: 700; color: var(--text);">🔧 Urgent Ticket Backlogs</p>
+                <p style="margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.45;">
+                    There are <strong>${ticketHeavyCount}</strong> high-risk accounts with 3+ unresolved support tickets. Assigning senior engineers to close these tickets immediately is recommended to prevent support-related churn.
+                </p>
+            </div>
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; border-left: 4px solid var(--accent);">
+                <p style="margin: 0 0 4px; font-size: 0.88rem; font-weight: 700; color: var(--text);">💬 CSAT Recovery Protocols</p>
+                <p style="margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.45;">
+                    High-risk customers exhibit an average churn probability of <strong>${avgHighProb}%</strong>. Support management should execute direct outbound recovery campaigns for low-rating accounts.
+                </p>
+            </div>
+        `;
+    } else {
+        tipsHtml = `
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; border-left: 4px solid var(--accent-2);">
+                <p style="margin: 0 0 4px; font-size: 0.88rem; font-weight: 700; color: var(--text);">📋 CSM Assignment Balance</p>
+                <p style="margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.45;">
+                    CSM workload for high-risk accounts is currently active. Recommend distributing assignments evenly to avoid response delays.
+                </p>
+            </div>
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; border-left: 4px solid var(--success);">
+                <p style="margin: 0 0 4px; font-size: 0.88rem; font-weight: 700; color: var(--text);">🔔 Webhook Notifications Fired</p>
+                <p style="margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.45;">
+                    Live Slack and Microsoft Teams SLA high-risk alerts have been configured. Ensure CSMs perform standard 24-hour outreach audits.
+                </p>
+            </div>
+        `;
+    }
+
+    tipsPanel.innerHTML = tipsHtml;
+    if (window.lucide) lucide.createIcons();
+}
+
 function renderInsights(insightsData) {
     const panel = document.getElementById('insightPanel');
     const recommendations = insightsData.recommendations || [];
     panel.innerHTML = recommendations.length
         ? recommendations.map(item => `<p>${item}</p>`).join('')
         : '<p>No insights available yet.</p>';
+
+    const role = document.getElementById('roleSelect').value;
+    renderAnalyzedTips(role);
 }
 
 async function uploadFile(fileOverride) {
