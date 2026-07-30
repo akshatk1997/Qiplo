@@ -96,6 +96,17 @@ def get_model_path() -> Path:
         return db_dir / "churn_model.pkl"
 
 
+def get_connection() -> sqlite3.Connection:
+    db_p = get_db_path()
+    if db_p.exists():
+        try:
+            os.chmod(db_p, 0o666)
+        except Exception:
+            pass
+    conn = sqlite3.connect(db_p)
+    conn.row_factory = sqlite3.Row
+    return conn
+
 
 def create_app() -> Flask:
     app = Flask(__name__, template_folder=str(BASE_DIR / "templates"), static_folder=str(BASE_DIR / "static"))
@@ -119,17 +130,6 @@ def create_app() -> Flask:
         if needs_init:
             ensure_database(db_p, SCHEMA_PATH, config=load_config(CONFIG_PATH))
             app.config["DB_INITIALIZED"] = True
-
-    def get_connection() -> sqlite3.Connection:
-        db_p = get_db_path()
-        if db_p.exists():
-            try:
-                os.chmod(db_p, 0o666)
-            except Exception:
-                pass
-        conn = sqlite3.connect(db_p)
-        conn.row_factory = sqlite3.Row
-        return conn
 
     def customer_columns(conn: sqlite3.Connection) -> list[str]:
         """Return the actual customer_churn columns present in the table."""
