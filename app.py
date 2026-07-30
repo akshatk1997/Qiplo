@@ -3976,24 +3976,36 @@ def download_presentation_pptx():
                 mapped_layout = "title"
             elif layout == "split_metrics":
                 mapped_layout = "two_column"
-                bullets = s.get("bullets", [])
                 s["left_title"] = "Key Insights"
-                s["left_items"] = bullets[:3]
-                s["right_title"] = "Supporting Metrics"
-                s["right_items"] = bullets[3:6]
+                s["left_items"] = s.get("bullets", [])
+                s["right_title"] = "Key Metrics"
+                s["right_items"] = [
+                    f"Total Customers Evaluated: {s.get('total_cust', '1,000+')}",
+                    f"Average Churn Risk: {s.get('avg_risk_str', '26.8%')}"
+                ]
             elif layout == "segment_comparison":
                 mapped_layout = "two_column"
                 bullets = s.get("bullets", [])
-                s["left_title"] = "Target Segments"
+                s["left_title"] = "Vulnerable Segments"
                 s["left_items"] = bullets[:2]
-                s["right_title"] = "Comparative Analysis"
-                s["right_items"] = bullets[2:4]
+                s["right_title"] = "Sensitivity Analysis"
+                s["right_items"] = bullets[2:]
             elif layout == "journey_workflow":
                 mapped_layout = "timeline"
-                bullets = s.get("bullets", [])
-                s["steps"] = [{"title": b, "description": ""} for b in bullets[:4]]
+                raw_steps = s.get("steps", [])
+                s["steps"] = [
+                    {
+                        "title": step.get("title", ""),
+                        "description": step.get("description", "") or step.get("desc", "")
+                    } for step in raw_steps
+                ]
             elif layout == "prescriptive_playbook":
                 mapped_layout = "content"
+                playbook = s.get("playbook", [])
+                s["bullets"] = [
+                    f"{p.get('title', '')}: {p.get('desc', '') or p.get('description', '')}"
+                    for p in playbook
+                ]
             
             _add_pptx_slide(prs, mapped_layout, s, palette_name=palette_name)
 
