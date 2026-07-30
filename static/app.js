@@ -35,7 +35,21 @@ let signalChart;
 let labelMapping = { high_risk: 'high_risk', low_risk: 'low_risk' };
 let lastChartsData = null;
 
+function showLoadingSkeletons() {
+    const ids = ['metaTotal', 'metaHigh', 'metaLow', 'metaFields', 'simTargetedCount', 'simCampaignCost', 'simSavedRevenue', 'simNetSavedRevenue'];
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = '<span class="skeleton-loader"></span>';
+    });
+    const lgIds = ['bizTotalCharges', 'bizExpectedLoss', 'bizRiskExposurePct'];
+    lgIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = '<span class="skeleton-loader skeleton-loader-lg"></span>';
+    });
+}
+
 async function loadDashboard() {
+    showLoadingSkeletons();
     try {
         const role = document.getElementById('roleSelect').value;
         const apiKey = localStorage.getItem('at_ai_model_key') || localStorage.getItem('show_ai_model_key') || '';
@@ -50,6 +64,18 @@ async function loadDashboard() {
         const brandingData = payload.branding;
 
         predictionData = predictionsPayload.predictions || [];
+        
+        // Render model metrics
+        if (payload.model_metrics) {
+            const acc = document.getElementById('modelAccuracy');
+            const prec = document.getElementById('modelPrecision');
+            const rec = document.getElementById('modelRecall');
+            const auc = document.getElementById('modelAuc');
+            if (acc) acc.textContent = payload.model_metrics.accuracy;
+            if (prec) prec.textContent = payload.model_metrics.precision;
+            if (rec) rec.textContent = payload.model_metrics.recall;
+            if (auc) auc.textContent = payload.model_metrics.auc;
+        }
         labelMapping = brandingData.label_mapping || { high_risk: 'high_risk', low_risk: 'low_risk' };
 
         const riskFilter = document.getElementById('riskFilter');
@@ -294,6 +320,13 @@ async function uploadFile(fileOverride) {
             if (status) {
                 status.textContent = `Source added: ${payload.rows} customer records analyzed.`;
                 status.className = 'status success';
+            }
+            // Automatically select 'Upload Own' toggle style
+            const toggleDemoBtn = document.getElementById('toggleDemoBtn');
+            const toggleCustomBtn = document.getElementById('toggleCustomBtn');
+            if (toggleDemoBtn && toggleCustomBtn) {
+                toggleDemoBtn.classList.remove('active');
+                toggleCustomBtn.classList.add('active');
             }
             await loadDashboard();
             await fetchSources();
@@ -1294,7 +1327,7 @@ function generateLocalSlides(numSlides, customPrompt, shouldShuffle) {
             "layout": "journey_workflow",
             "title": "Interactive Customer Journey Workflow",
             "steps": [
-                {"title": "Predictive Audit", "description": "@ AI engine scans database records for risk scores."},
+                {"title": "Predictive Audit", "description": "Qiplo Copilot scans database records for risk scores."},
                 {"title": "Strategy Design", "description": "Formulate billing recovery & proactive support incentives."},
                 {"title": "Manager Outreach", "description": "CSMs initiate outreach using pre-compiled templates."},
                 {"title": "ARR Preservation", "description": "Contracts successfully extended; customer retention maximized."}
@@ -2557,9 +2590,55 @@ function setupEnterpriseListeners() {
     }
 }
 
+function setupDemoToggle() {
+    const toggleDemoBtn = document.getElementById('toggleDemoBtn');
+    const toggleCustomBtn = document.getElementById('toggleCustomBtn');
+
+    if (toggleDemoBtn && toggleCustomBtn) {
+        toggleDemoBtn.addEventListener('click', async () => {
+            AudioFeedback.click();
+            toggleDemoBtn.classList.add('active');
+            toggleCustomBtn.classList.remove('active');
+            try {
+                const res = await safeFetch('/api/demo/set-mode', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mode: 'demo' })
+                });
+                if (res.ok) {
+                    await loadDashboard();
+                    await fetchSources();
+                }
+            } catch (err) {
+                console.error('Failed to set demo mode:', err);
+            }
+        });
+
+        toggleCustomBtn.addEventListener('click', async () => {
+            AudioFeedback.click();
+            toggleDemoBtn.classList.remove('active');
+            toggleCustomBtn.classList.add('active');
+            try {
+                const res = await safeFetch('/api/demo/set-mode', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mode: 'custom' })
+                });
+                if (res.ok) {
+                    await loadDashboard();
+                    await fetchSources();
+                }
+            } catch (err) {
+                console.error('Failed to set custom mode:', err);
+            }
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     setupThemeToggle();
     setupBusinessGuide();
     setupEnterpriseListeners();
+    setupDemoToggle();
     if (window.lucide) lucide.createIcons();
 });

@@ -4,6 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Qiplo — Never Lose a Customer Again</title>
+    <meta name="description" content="Qiplo is a professional customer churn predictive modeling platform built on advanced XGBoost telemetry to analyze customer attrition, automate high-risk SLA notifications, manage CSM assignments, and optimize SaaS retention campaign ROI." />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Qiplo — Advanced Customer Churn Predictive Platform" />
+    <meta property="og:description" content="Proactively predict customer attrition, configure automated SLA alerts, assign CSM tasks, and build strategic pitch decks to maximize ARR preservation." />
+    <meta property="og:image" content="/static/assets/og-image.png" />
+    <meta property="og:url" content="https://qiplo.vercel.app" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Qiplo — Advanced Customer Churn Predictive Platform" />
+    <meta name="twitter:description" content="Proactively predict customer attrition, configure automated SLA alerts, assign CSM tasks, and build strategic pitch decks to maximize ARR preservation." />
+    <meta name="twitter:image" content="/static/assets/og-image.png" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@400;500;700&family=Montserrat:wght@400;600;700;800&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -58,10 +73,22 @@
 
     <main class="studio">
         <aside class="sourcesPane">
-            <div class="paneHead">
-                <h2>Sources</h2>
-                <button id="addSourceBtn" class="ghostBtn" type="button">+ Add</button>
-                <input id="fileInput" type="file" accept=".csv,text/csv,.xlsx,.json" hidden />
+            <div class="paneHead" style="display: flex; flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 12px; border-bottom: none; padding-bottom: 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Sources</h2>
+                    <button id="addSourceBtn" class="ghostBtn" type="button">+ Add</button>
+                    <input id="fileInput" type="file" accept=".csv,text/csv,.xlsx,.json" hidden />
+                </div>
+                <!-- Try Demo / Upload Own Toggle -->
+                <div class="demoToggleContainer" style="display: grid; grid-template-columns: 1fr 1fr; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 2px;">
+                    <button id="toggleDemoBtn" class="active" style="border: none; border-radius: 6px; padding: 6px 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: center; background: transparent; transition: all 0.2s;">Try Demo</button>
+                    <button id="toggleCustomBtn" style="border: none; border-radius: 6px; padding: 6px 12px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: center; background: transparent; color: var(--muted); transition: all 0.2s;">Upload Own</button>
+                </div>
+                <!-- CSV Schema Hint -->
+                <div style="font-size: 0.72rem; color: var(--muted); display: flex; align-items: center; gap: 4px; padding: 2px 4px;">
+                    <i data-lucide="info" class="lucide-icon" style="width: 12px; height: 12px;"></i>
+                    <span>Requires <code>customer_id</code> column.</span>
+                </div>
             </div>
 
             <p id="uploadStatus" class="status">Ready to analyze company data.</p>
@@ -71,10 +98,10 @@
             </div>
 
             <div class="sourceMeta">
-                <div class="sourceMetaRow"><span>Customers</span><strong id="metaTotal">—</strong></div>
-                <div class="sourceMetaRow"><span>High risk</span><strong id="metaHigh" class="danger">—</strong></div>
-                <div class="sourceMetaRow"><span>Low risk</span><strong id="metaLow" class="success">—</strong></div>
-                <div class="sourceMetaRow"><span>Fields</span><strong id="metaFields">—</strong></div>
+                <div class="sourceMetaRow"><span>Customers</span><strong id="metaTotal"><span class="skeleton-loader"></span></strong></div>
+                <div class="sourceMetaRow"><span>High risk</span><strong id="metaHigh" class="danger"><span class="skeleton-loader"></span></strong></div>
+                <div class="sourceMetaRow"><span>Low risk</span><strong id="metaLow" class="success"><span class="skeleton-loader"></span></strong></div>
+                <div class="sourceMetaRow"><span>Fields</span><strong id="metaFields"><span class="skeleton-loader"></span></strong></div>
             </div>
 
             <div class="chartBlock">
@@ -93,7 +120,7 @@
                 <button class="tab" data-tab="business" type="button">Business Hub</button>
                 <button class="tab" data-tab="presentation" type="button">Presentation</button>
                 <button class="tab" data-tab="guide" type="button"><i data-lucide="book-marked" class="lucide-icon"></i> Business Guide</button>
-                <button class="tab" data-tab="copilot" type="button">@ AI</button>
+                <button class="tab" data-tab="copilot" type="button"><i data-lucide="brain-circuit" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Qiplo Copilot</button>
             </div>
 
             <div class="tabBody" id="tab-overview">
@@ -124,6 +151,28 @@
                         <div class="telemetryCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
                             <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Telemetry Source</span>
                             <strong style="font-size: 0.95rem; color: var(--accent-2);">Consolidated DB State</strong>
+                        </div>
+                    </div>
+                    <!-- Model Performance Metrics Card -->
+                    <div class="modelPerformanceCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; margin: 18px 0; display: flex; flex-direction: column; gap: 10px;">
+                        <h4 style="margin: 0; font-size: 0.78rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;"><i data-lucide="gauge" class="lucide-icon" style="width: 14px; height: 14px;"></i> Model Performance Telemetry</h4>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center;">
+                            <div style="background: var(--surface); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03);">
+                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 2px;">Accuracy</span>
+                                <strong style="font-size: 1rem; color: #ffffff; font-family: 'JetBrains Mono', monospace;" id="modelAccuracy"><span class="skeleton-loader"></span></strong>
+                            </div>
+                            <div style="background: var(--surface); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03);">
+                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 2px;">Precision</span>
+                                <strong style="font-size: 1rem; color: #ffffff; font-family: 'JetBrains Mono', monospace;" id="modelPrecision"><span class="skeleton-loader"></span></strong>
+                            </div>
+                            <div style="background: var(--surface); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03);">
+                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 2px;">Recall</span>
+                                <strong style="font-size: 1rem; color: #ffffff; font-family: 'JetBrains Mono', monospace;" id="modelRecall"><span class="skeleton-loader"></span></strong>
+                            </div>
+                            <div style="background: var(--surface); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03);">
+                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 2px;">ROC AUC</span>
+                                <strong style="font-size: 1rem; color: #ffffff; font-family: 'JetBrains Mono', monospace;" id="modelAuc"><span class="skeleton-loader"></span></strong>
+                            </div>
                         </div>
                     </div>
                     <p id="aiNarrative" class="aiNarrative">Upload a customer file to generate an AI retention narrative.</p>
@@ -189,17 +238,17 @@
                     <div class="financialStatsGrid">
                         <div class="fStatCard">
                             <span>Total Monthly Charges</span>
-                            <h3 id="bizTotalCharges">—</h3>
+                            <h3 id="bizTotalCharges"><span class="skeleton-loader skeleton-loader-lg"></span></h3>
                             <p class="fStatSub">Total active contract value</p>
                         </div>
                         <div class="fStatCard danger">
                             <span>Expected Monthly Loss</span>
-                            <h3 id="bizExpectedLoss">—</h3>
+                            <h3 id="bizExpectedLoss"><span class="skeleton-loader skeleton-loader-lg"></span></h3>
                             <p class="fStatSub">Loss weighted by churn risk</p>
                         </div>
                         <div class="fStatCard warning">
                             <span>Risk Exposure</span>
-                            <h3 id="bizRiskExposurePct">—</h3>
+                            <h3 id="bizRiskExposurePct"><span class="skeleton-loader skeleton-loader-lg"></span></h3>
                             <p class="fStatSub">Percentage of value at risk</p>
                         </div>
                     </div>
@@ -232,19 +281,19 @@
                         <div class="simResultsGrid">
                             <div class="simResultCard">
                                 <span>Targeted Accounts</span>
-                                <h4 id="simTargetedCount">—</h4>
+                                <h4 id="simTargetedCount"><span class="skeleton-loader"></span></h4>
                             </div>
                             <div class="simResultCard">
                                 <span>Monthly Campaign Cost</span>
-                                <h4 id="simCampaignCost">—</h4>
+                                <h4 id="simCampaignCost"><span class="skeleton-loader"></span></h4>
                             </div>
                             <div class="simResultCard success">
                                 <span>Expected Saved Revenue</span>
-                                <h4 id="simSavedRevenue">—</h4>
+                                <h4 id="simSavedRevenue"><span class="skeleton-loader"></span></h4>
                             </div>
                             <div class="simResultCard success highlight">
                                 <span>Net Saved Revenue</span>
-                                <h4 id="simNetSavedRevenue">—</h4>
+                                <h4 id="simNetSavedRevenue"><span class="skeleton-loader"></span></h4>
                             </div>
                         </div>
                     </div>
@@ -450,15 +499,15 @@
 
             <div class="tabBody hidden" id="tab-copilot">
                 <div class="paneHead">
-                    <h2>@ AI Agent</h2>
+                    <h2>Qiplo Copilot Agent</h2>
                     <div class="apiKeyWrapper">
-                        <input id="geminiApiKeyInput" type="password" placeholder="Paste @ AI Model Key (Optional)..." autocomplete="off" />
+                        <input id="geminiApiKeyInput" type="password" placeholder="Paste Copilots API Key (Optional)..." autocomplete="off" />
                     </div>
                 </div>
                 <div class="copilotBox">
                     <div id="chatMessages" class="chatMessages">
                         <div class="msg bot">
-                            <p>Hello! I am <strong>@ AI</strong>. I have access to your database details, prediction summaries, and retention records. Ask me any analysis or business queries, such as:</p>
+                            <p>Hello! I am <strong>Qiplo Copilot</strong>. I have access to your database details, prediction summaries, and retention records. Ask me any analysis or business queries, such as:</p>
                             <ul>
                                 <li>"What are the top 3 contract types linked to churn?"</li>
                                 <li>"Draft a personalized recovery email for client C001."</li>

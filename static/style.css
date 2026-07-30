@@ -2259,3 +2259,30 @@ body.dark-theme .ghostBtn:hover {
     color: #ffffff !important;
     border-color: rgba(255, 255, 255, 0.15) !important;
 }
+
+/* Skeleton Loading Animation */
+@keyframes skeleton-pulse {
+    0% { background-color: rgba(255, 255, 255, 0.04); }
+    50% { background-color: rgba(255, 255, 255, 0.12); }
+    100% { background-color: rgba(255, 255, 255, 0.04); }
+}
+.skeleton-loader {
+    display: inline-block;
+    height: 1.2em;
+    width: 50px;
+    border-radius: 4px;
+    animation: skeleton-pulse 1.4s infinite ease-in-out;
+    vertical-align: middle;
+}
+.skeleton-loader-lg {
+    height: 1.6em;
+    width: 80px;
+}
+
+/* Demo/Custom toggle controls style */
+.demoToggleContainer button.active {
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(79, 70, 229, 0.2) !important;
+}
+
