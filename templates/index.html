@@ -296,6 +296,156 @@
                             </table>
                         </div>
                     </div>
+
+                    <!-- Enterprise Control Center -->
+                    <div class="enterpriseGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 30px;">
+                        
+                        <!-- Account CSM Assignments & SLA Trigger -->
+                        <div class="bizCard" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 20px;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                                <i data-lucide="users" class="lucide-icon" style="color: var(--accent-2);"></i>
+                                <h3 style="margin: 0;">CSM & Account Assignments</h3>
+                            </div>
+                            <p class="sectionSub" style="margin-bottom: 15px;">Assign specific Customer Success Managers to high-risk accounts and track SLA outreach.</p>
+                            
+                            <form id="csmAssignForm" style="display: flex; flex-direction: column; gap: 10px;">
+                                <div>
+                                    <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px;">Select Customer Account</label>
+                                    <select id="assignCustomerSelect" class="roleSelect" style="width: 100%;"></select>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <div>
+                                        <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px;">Assign CSM</label>
+                                        <input type="text" id="assignCsmName" placeholder="E.g. Sarah Jenkins" style="width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.9rem;" />
+                                    </div>
+                                    <div>
+                                        <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px;">SLA Status</label>
+                                        <select id="assignStatusSelect" class="roleSelect" style="width: 100%;">
+                                            <option value="unassigned">Unassigned</option>
+                                            <option value="contacted">Contacted</option>
+                                            <option value="in progress">In Progress</option>
+                                            <option value="resolved">Resolved / Saved</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px;">CSM Collaboration Notes</label>
+                                    <textarea id="assignNotes" placeholder="Write internal alignment notes or call summary..." rows="2" style="width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.88rem; resize: none;"></textarea>
+                                </div>
+                                <div style="display: flex; gap: 10px; margin-top: 5px;">
+                                    <button type="submit" class="primaryBtn" style="flex: 1; padding: 8px;">Save Notes</button>
+                                    <button type="button" id="triggerSlaAlertBtn" class="dangerBtn" style="padding: 8px;"><i data-lucide="bell" class="lucide-icon" style="width: 14px; height: 14px;"></i> Fire SLA Alert</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Enterprise Integrations & Automated Reports -->
+                        <div class="bizCard" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 20px;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                                <i data-lucide="link" class="lucide-icon" style="color: var(--accent-2);"></i>
+                                <h3 style="margin: 0;">CRM Connections & Reports</h3>
+                            </div>
+                            <p class="sectionSub" style="margin-bottom: 15px;">Stream data dynamically from HubSpot, Salesforce, Stripe, and schedule board reports.</p>
+                            
+                            <div class="tabs" style="display: flex; border-bottom: 1px solid var(--border); margin-bottom: 12px; padding-bottom: 4px; gap: 12px;">
+                                <span id="intTabCrm" style="cursor: pointer; font-weight: 700; color: var(--accent-2); font-size: 0.85rem;">CRM SYNC</span>
+                                <span id="intTabReport" style="cursor: pointer; font-weight: 700; color: var(--muted); font-size: 0.85rem;">SCHEDULER</span>
+                            </div>
+                            
+                            <!-- CRM Sub-tab -->
+                            <div id="crmSubTabBody" style="display: flex; flex-direction: column; gap: 8px;">
+                                <div style="display: flex; gap: 10px;">
+                                    <select id="crmPlatformSelect" class="roleSelect" style="flex: 1;">
+                                        <option value="hubspot">HubSpot CRM</option>
+                                        <option value="salesforce">Salesforce Cloud</option>
+                                        <option value="stripe">Stripe Billing</option>
+                                    </select>
+                                    <input type="password" id="crmApiKey" placeholder="CRM API Secret Token..." style="flex: 2; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.9rem;" />
+                                </div>
+                                <button type="button" id="crmConnectBtn" class="primaryBtn" style="padding: 8px; width: 100%;">Establish Integration Channel</button>
+                                <div style="margin-top: 8px; font-size: 0.78rem; color: var(--muted);">
+                                    Active Streams: <span id="activeCrmStreams">None (Manual uploads default)</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Scheduler Sub-tab -->
+                            <div id="schedulerSubTabBody" class="hidden" style="display: flex; flex-direction: column; gap: 8px;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <div>
+                                        <label style="font-size: 0.75rem; color: var(--muted);">Schedule Interval</label>
+                                        <select id="reportFreq" class="roleSelect" style="width: 100%;">
+                                            <option value="weekly">Weekly (Monday 8AM)</option>
+                                            <option value="daily">Daily Churn Digest</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label style="font-size: 0.75rem; color: var(--muted);">Report Format</label>
+                                        <select id="reportFormat" class="roleSelect" style="width: 100%;">
+                                            <option value="pdf">PDF Exec Summary</option>
+                                            <option value="excel">Excel Detailed Sheets</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <input type="email" id="reportEmail" placeholder="board-members@company.com" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.9rem;" />
+                                <button type="button" id="schedulerBtn" class="primaryBtn" style="padding: 8px; width: 100%;">Save Automated Schedule</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- A/B Retention Campaigns & Compliance Audit logs -->
+                    <div class="enterpriseGrid2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 24px;">
+                        
+                        <!-- A/B Retention Campaigns -->
+                        <div class="bizCard" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 20px;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                                <i data-lucide="check-square" class="lucide-icon" style="color: var(--accent-2);"></i>
+                                <h3 style="margin: 0;">A/B Test Retention Tracker</h3>
+                            </div>
+                            <p class="sectionSub" style="margin-bottom: 15px;">Log and compare predicted vs. actual churn rates of retention campaigns.</p>
+                            
+                            <form id="abTestForm" style="display: flex; flex-direction: column; gap: 8px;">
+                                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 10px;">
+                                    <input type="text" id="abCampaignName" placeholder="Campaign (e.g. Winter Offer)" required style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.88rem;" />
+                                    <input type="number" id="abSampleSize" placeholder="Size (e.g. 100)" required style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.88rem;" />
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <div>
+                                        <label style="font-size: 0.72rem; color: var(--muted); display: block; margin-bottom: 2px;">Predicted Risk</label>
+                                        <input type="number" step="0.01" min="0" max="1" id="abPredRate" placeholder="0.25 (25%)" required style="width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.88rem;" />
+                                    </div>
+                                    <div>
+                                        <label style="font-size: 0.72rem; color: var(--muted); display: block; margin-bottom: 2px;">Actual Risk</label>
+                                        <input type="number" step="0.01" min="0" max="1" id="abActRate" placeholder="0.18 (18%)" required style="width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.88rem;" />
+                                    </div>
+                                </div>
+                                <button type="submit" class="primaryBtn" style="padding: 8px; width: 100%;">Log Campaign Outcome</button>
+                            </form>
+                            
+                            <!-- Small campaign list preview -->
+                            <div style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 10px; max-height: 120px; overflow-y: auto;">
+                                <h4 style="margin: 0 0 6px; font-size: 0.8rem; text-transform: uppercase; color: var(--muted);">Log Outcomes</h4>
+                                <div id="abTestList" style="display: flex; flex-direction: column; gap: 6px; font-size: 0.8rem;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Compliance Audit logs -->
+                        <div class="bizCard" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 20px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <i data-lucide="shield-alert" class="lucide-icon" style="color: var(--accent-2);"></i>
+                                    <h3 style="margin: 0;">Compliance Audit History</h3>
+                                </div>
+                                <span style="font-size: 0.65rem; color: var(--accent); background: rgba(0, 245, 255, 0.08); padding: 2px 6px; border-radius: 10px; border: 1px solid var(--accent); font-weight: 700;">SOC 2 / ISO</span>
+                            </div>
+                            <p class="sectionSub" style="margin-bottom: 15px;">Real-time tamper-proof activity logs tracking customer touchpoints and configurations.</p>
+                            
+                            <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 10px; max-height: 220px; overflow-y: auto; font-family: monospace; font-size: 0.72rem; display: flex; flex-direction: column; gap: 8px;" id="auditLogContainer">
+                                <!-- Audit rows will be populated here -->
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 

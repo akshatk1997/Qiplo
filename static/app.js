@@ -80,6 +80,10 @@ async function loadDashboard() {
         renderExecutiveSummary(insightsData);
         renderAiPanel(aiData);
         
+        // Relational CSM assignments & campaign loaders
+        await loadEnterpriseFeatures();
+        applyRolePermissions(role);
+        
         // NotebookLM sidebars refresh
         await fetchSources();
         await fetchNotes();
@@ -162,7 +166,32 @@ function renderRows() {
         const labelClass = item.prediction_label === labelMapping.high_risk ? 'high' : 'low';
         const idVal = idCol ? cell(item[idCol]) : cell(item.customer_id);
 
-        const tds = [`<td>${idVal}</td>`,
+        let assignInfo = '';
+        if (window.csmAssignments && window.csmAssignments[idVal]) {
+            const assignment = window.csmAssignments[idVal];
+            const badgeMap = {
+                'unassigned': 'rgba(100, 116, 139, 0.1)',
+                'contacted': 'rgba(59, 130, 246, 0.1)',
+                'in progress': 'rgba(234, 179, 8, 0.1)',
+                'resolved': 'rgba(34, 197, 94, 0.1)'
+            };
+            const colorMap = {
+                'unassigned': 'var(--muted)',
+                'contacted': '#3b82f6',
+                'in progress': 'var(--warning)',
+                'resolved': 'var(--success)'
+            };
+            assignInfo = `
+                <div style="font-size: 0.72rem; color: var(--muted); margin-top: 4px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                    <span style="background: ${badgeMap[assignment.status] || 'rgba(100,116,139,0.1)'}; color: ${colorMap[assignment.status] || 'var(--muted)'}; padding: 1px 6px; border-radius: 4px; font-weight: 700; font-size: 0.65rem; text-transform: uppercase;">
+                        ${assignment.status}
+                    </span>
+                    <span>CSM: <strong>${assignment.csm_name || 'Unassigned'}</strong></span>
+                </div>
+            `;
+        }
+
+        const tds = [`<td><div><strong>${idVal}</strong></div>${assignInfo}</td>`,
             `<td><span class="badge ${labelClass}">${item.prediction_label.replace('_', ' ')}</span></td>`,
             `<td>${probability}</td>`,
             ...extra.map(c => `<td>${cell(item[c])}</td>`)].join('');
@@ -2210,8 +2239,292 @@ window.closeToolInfo = function() {
     }
 };
 
+// -------------------------------------------------------------
+// Enterprise Features Logic
+// -------------------------------------------------------------
+
+function applyRolePermissions(role) {
+    const tabAccess = {
+        executive: ['overview', 'actions', 'customers', 'business', 'presentation', 'guide', 'copilot'],
+        manager: ['overview', 'actions', 'customers', 'business', 'presentation', 'guide', 'copilot'],
+        sales: ['overview', 'customers', 'business', 'presentation', 'copilot'],
+        support: ['overview', 'actions', 'customers', 'guide', 'copilot']
+    };
+    const allowed = tabAccess[role.toLowerCase()] || tabAccess['executive'];
+    let activeTab = localStorage.getItem('active_tab') || 'overview';
+    
+    document.querySelectorAll('.studioTabs .tab').forEach(tab => {
+        const tabName = tab.dataset.tab;
+        const isAllowed = allowed.includes(tabName);
+        tab.classList.toggle('hidden', !isAllowed);
+        if (!isAllowed && tab.classList.contains('active')) {
+            tab.classList.remove('active');
+            const tabBody = document.getElementById(`tab-${tabName}`);
+            if (tabBody) tabBody.classList.add('hidden');
+            activeTab = 'overview';
+        }
+    });
+    
+    const targetTab = document.querySelector(`.studioTabs .tab[data-tab="${activeTab}"]`);
+    if (targetTab) {
+        targetTab.classList.add('active');
+        const tabBody = document.getElementById(`tab-${activeTab}`);
+        if (tabBody) tabBody.classList.remove('hidden');
+    }
+    localStorage.setItem('active_tab', activeTab);
+}
+
+async function loadEnterpriseFeatures() {
+    try {
+        const select = document.getElementById('assignCustomerSelect');
+        if (select) {
+            select.innerHTML = predictionData.length 
+                ? predictionData.map(c => `<option value="${c.customer_id}">${c.customer_id} (Risk: ${Math.round((c.predicted_probability || 0) * 100)}%)</option>`).join('')
+                : '<option value="">No accounts available</option>';
+        }
+
+        const assRes = await safeFetch('/api/assignments/status');
+        const assData = await assRes.json();
+        const assignments = assData.assignments || [];
+        
+        window.csmAssignments = {};
+        assignments.forEach(a => {
+            window.csmAssignments[a.customer_id] = a;
+        });
+
+        const abRes = await safeFetch('/api/abtests/list');
+        const abData = await abRes.json();
+        const campaigns = abData.campaigns || [];
+        const abContainer = document.getElementById('abTestList');
+        if (abContainer) {
+            abContainer.innerHTML = campaigns.length
+                ? campaigns.map(c => `
+                    <div style="border-bottom: 1px solid var(--border); padding: 6px 0; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                        <div>
+                            <strong>${c.campaign_name}</strong>
+                            <div style="font-size: 0.7rem; color: var(--muted);">Size: ${c.sample_size} | Date: ${c.start_date}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <span class="badge ${c.actual_churn_rate < c.predicted_churn_rate ? 'success' : 'warning'}" style="font-size: 0.72rem; padding: 2px 6px;">
+                                ${Math.round(c.actual_churn_rate * 100)}% vs ${Math.round(c.predicted_churn_rate * 100)}%
+                            </span>
+                            <div style="font-size: 0.72rem; color: var(--accent); font-weight: 700;">${c.outcome}</div>
+                        </div>
+                    </div>
+                `).join('')
+                : '<div style="color: var(--muted); font-size: 0.8rem; text-align: center;">No logged campaigns yet.</div>';
+        }
+
+        const auditRes = await safeFetch('/api/audit/logs');
+        const auditData = await auditRes.json();
+        const logs = auditData.logs || [];
+        const logContainer = document.getElementById('auditLogContainer');
+        if (logContainer) {
+            logContainer.innerHTML = logs.length
+                ? logs.map(l => `
+                    <div style="border-left: 2px solid var(--accent); padding-left: 8px; margin-bottom: 4px;">
+                        <span style="color: var(--accent-2); font-weight: 700;">[${l.user_role}]</span> 
+                        <span>${l.action}</span>
+                        ${l.target_customer ? `<span style="color: var(--warning); font-weight: 700;">(Target: ${l.target_customer})</span>` : ''}
+                        <div style="font-size: 0.65rem; color: var(--muted);">${new Date(l.timestamp).toLocaleTimeString()} | ${new Date(l.timestamp).toLocaleDateString()}</div>
+                    </div>
+                `).join('')
+                : '<div style="color: var(--muted);">No compliance records found.</div>';
+        }
+        
+        const crmRes = await safeFetch('/api/crm/status');
+        const crmData = await crmRes.json();
+        const activeCrms = (crmData.integrations || []).map(i => i.platform.toUpperCase()).join(', ');
+        const activeLabel = document.getElementById('activeCrmStreams');
+        if (activeLabel) {
+            activeLabel.innerHTML = activeCrms ? `<span class="badge success" style="padding: 2px 8px;">${activeCrms} Connected (Active API Stream)</span>` : 'None (Manual CSV uploads default)';
+        }
+
+    } catch (err) {
+        console.error('Failed to load enterprise dashboard components:', err);
+    }
+}
+
+function setupEnterpriseListeners() {
+    const tabCrm = document.getElementById('intTabCrm');
+    const tabReport = document.getElementById('intTabReport');
+    const subCrm = document.getElementById('crmSubTabBody');
+    const subReport = document.getElementById('schedulerSubTabBody');
+    
+    if (tabCrm && tabReport && subCrm && subReport) {
+        tabCrm.addEventListener('click', () => {
+            tabCrm.style.color = 'var(--accent-2)';
+            tabReport.style.color = 'var(--muted)';
+            subCrm.classList.remove('hidden');
+            subReport.classList.add('hidden');
+        });
+        tabReport.addEventListener('click', () => {
+            tabReport.style.color = 'var(--accent-2)';
+            tabCrm.style.color = 'var(--muted)';
+            subReport.classList.remove('hidden');
+            subCrm.classList.add('hidden');
+        });
+    }
+
+    const assignForm = document.getElementById('csmAssignForm');
+    if (assignForm) {
+        assignForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            AudioFeedback.click();
+            const customer_id = document.getElementById('assignCustomerSelect').value;
+            const csm_name = document.getElementById('assignCsmName').value;
+            const status = document.getElementById('assignStatusSelect').value;
+            const notes = document.getElementById('assignNotes').value;
+            
+            try {
+                const res = await safeFetch('/api/assignments/assign', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ customer_id, csm_name, status, notes })
+                });
+                const payload = await res.json();
+                if (payload.status === 'ok') {
+                    alert('Assignment saved and logged to Compliance Audit Trails successfully.');
+                    await loadEnterpriseFeatures();
+                    renderRows();
+                } else {
+                    alert(payload.error || 'Failed to save notes.');
+                }
+            } catch (err) {
+                alert('Save failed: ' + err);
+            }
+        });
+    }
+
+    const triggerSlaBtn = document.getElementById('triggerSlaAlertBtn');
+    if (triggerSlaBtn) {
+        triggerSlaBtn.addEventListener('click', async () => {
+            AudioFeedback.click();
+            const customer_id = document.getElementById('assignCustomerSelect').value;
+            const csm_name = document.getElementById('assignCsmName').value || 'Customer Success Bot';
+            
+            if (!customer_id) {
+                alert('Select an active customer first.');
+                return;
+            }
+
+            try {
+                const res = await safeFetch('/api/alerts/fire', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ customer_id, csm_name })
+                });
+                const payload = await res.json();
+                if (payload.status === 'ok') {
+                    alert(`🚨 SLA Webhook Fired Successfully!\n\nPayload:\n${JSON.stringify(payload.payload, null, 2)}`);
+                    await loadEnterpriseFeatures();
+                } else {
+                    alert(payload.error || 'Failed to fire SLA Alert.');
+                }
+            } catch (err) {
+                alert('Webhook fire failed: ' + err);
+            }
+        });
+    }
+
+    const crmConnectBtn = document.getElementById('crmConnectBtn');
+    if (crmConnectBtn) {
+        crmConnectBtn.addEventListener('click', async () => {
+            AudioFeedback.click();
+            const platform = document.getElementById('crmPlatformSelect').value;
+            const api_key = document.getElementById('crmApiKey').value;
+            
+            if (!api_key) {
+                alert('Please enter your API Key or connection token.');
+                return;
+            }
+
+            try {
+                const res = await safeFetch('/api/crm/integrate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ platform, api_key })
+                });
+                const payload = await res.json();
+                if (payload.status === 'ok') {
+                    alert(payload.message || 'CRM synchronized.');
+                    await loadDashboard();
+                } else {
+                    alert(payload.error || 'Connection failed.');
+                }
+            } catch (err) {
+                alert('Connection failed: ' + err);
+            }
+        });
+    }
+
+    const schedulerBtn = document.getElementById('schedulerBtn');
+    if (schedulerBtn) {
+        schedulerBtn.addEventListener('click', async () => {
+            AudioFeedback.click();
+            const email = document.getElementById('reportEmail').value;
+            const frequency = document.getElementById('reportFreq').value;
+            const format = document.getElementById('reportFormat').value;
+            
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid recipient email address.');
+                return;
+            }
+
+            try {
+                const res = await safeFetch('/api/reports/schedule', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, frequency, format })
+                });
+                const payload = await res.json();
+                if (payload.status === 'ok') {
+                    alert(payload.message || 'Report scheduled.');
+                    await loadEnterpriseFeatures();
+                } else {
+                    alert(payload.error || 'Failed to schedule.');
+                }
+            } catch (err) {
+                alert('Scheduling failed: ' + err);
+            }
+        });
+    }
+
+    const abForm = document.getElementById('abTestForm');
+    if (abForm) {
+        abForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            AudioFeedback.click();
+            const campaign_name = document.getElementById('abCampaignName').value;
+            const sample_size = document.getElementById('abSampleSize').value;
+            const predicted_churn_rate = document.getElementById('abPredRate').value;
+            const actual_churn_rate = document.getElementById('abActRate').value;
+            const outcome = Number(actual_churn_rate) < Number(predicted_churn_rate) ? 'Outperformed Predictions' : 'Met Expectations';
+
+            try {
+                const res = await safeFetch('/api/abtests/log', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ campaign_name, sample_size, predicted_churn_rate, actual_churn_rate, outcome })
+                });
+                const payload = await res.json();
+                if (payload.status === 'ok') {
+                    alert('A/B campaign outcome logged successfully.');
+                    abForm.reset();
+                    await loadEnterpriseFeatures();
+                } else {
+                    alert(payload.error || 'Failed to log campaign.');
+                }
+            } catch (err) {
+                alert('Submit failed: ' + err);
+            }
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     setupThemeToggle();
     setupBusinessGuide();
+    setupEnterpriseListeners();
     if (window.lucide) lucide.createIcons();
 });

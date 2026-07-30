@@ -109,8 +109,9 @@ def create_app() -> Flask:
             try:
                 conn = sqlite3.connect(db_p)
                 c = conn.execute("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='customer_churn'").fetchone()[0]
+                c2 = conn.execute("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='crm_integrations'").fetchone()[0]
                 conn.close()
-                if c == 0:
+                if c == 0 or c2 == 0:
                     needs_init = True
             except Exception:
                 needs_init = True
@@ -3536,6 +3537,417 @@ def ai_generate_social_card():
         })
     except Exception as e:
         return jsonify({"error": f"Social card generation failed: {e}"}), 500
+
+
+# -------------------------------------------------------------
+# Corporate / Enterprise Feature Routes
+# -------------------------------------------------------------
+
+@app.route("/api/crm/integrate", methods=["POST"])
+def crm_integrate():
+    """HubSpot, Salesforce, Stripe connection endpoint (Simulated/Mocked live sync)."""
+    data = request.json or {}
+    platform = data.get("platform", "").strip().lower()
+    api_key = data.get("api_key", "").strip()
+
+    if platform not in ["hubspot", "salesforce", "stripe"]:
+        return jsonify({"error": "Invalid platform. Must be hubspot, salesforce, or stripe."}), 400
+
+    try:
+        conn = get_connection()
+        existing = conn.execute("SELECT 1 FROM crm_integrations WHERE platform = ?", (platform,)).fetchone()
+        now_str = datetime.now().isoformat()
+        
+        if existing:
+            conn.execute(
+                "UPDATE crm_integrations SET api_key = ?, connected_at = ?, status = 'active' WHERE platform = ?",
+                (api_key, now_str, platform)
+            )
+        else:
+            conn.execute(
+                "INSERT INTO crm_integrations (integration_id, platform, api_key, connected_at, status) VALUES (?, ?, ?, ?, 'active')",
+                (f"crm_{platform}_{int(time.time())}", platform, api_key, now_str)
+            )
+        
+        conn.execute(
+            "INSERT INTO audit_logs (user_role, action, target_customer, timestamp) VALUES (?, ?, ?, ?)",
+            ("Executive", f"Connected CRM Integration platform: {platform.upper()}", None, now_str)
+        )
+        
+        mock_customers = [
+            {"customer_id": f"{platform.upper()}-001", "tenure_months": 12, "monthly_charges": 150.0, "total_charges": 1800.0, "contract_type": "One year", "internet_service": "Fiber optic", "payment_method": "Credit card", "region": "North America", "support_tickets": 0, "payment_delays": 0, "product_usage": 0.95, "complaint_count": 0, "customer_satisfaction_score": 4.8, "churned": 0},
+            {"customer_id": f"{platform.upper()}-002", "tenure_months": 3, "monthly_charges": 299.0, "total_charges": 897.0, "contract_type": "Month-to-month", "internet_service": "Fiber optic", "payment_method": "Electronic check", "region": "Europe", "support_tickets": 4, "payment_delays": 2, "product_usage": 0.40, "complaint_count": 3, "customer_satisfaction_score": 2.1, "churned": 0}
+        ]
+        
+        source_id = f"crm_sync_{platform}"
+        conn.execute(
+            "INSERT OR REPLACE INTO data_sources (source_id, filename, row_count, created_at, is_active) VALUES (?, ?, ?, ?, 1)",
+            (source_id, f"{platform}_live_feed.json", len(mock_customers), now_str)
+        )
+        
+        for cust in mock_customers:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO customer_churn (
+                    customer_id, source_id, tenure_months, monthly_charges, total_charges, 
+                    contract_type, internet_service, payment_method, region, 
+                    support_tickets, payment_delays, product_usage, complaint_count, 
+                    customer_satisfaction_score, churned
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    cust["customer_id"], source_id, cust["tenure_months"], cust["monthly_charges"], cust["total_charges"],
+                    cust["contract_type"], cust["internet_service"], cust["payment_method"], cust["region"],
+                    cust["support_tickets"], cust["payment_delays"], cust["product_usage"], cust["complaint_count"],
+                    cust["customer_satisfaction_score"], cust["churned"]
+                )
+            )
+            
+            prob = 0.85 if cust["complaint_count"] > 1 else 0.15
+            label = "High Risk" if prob >= 0.5 else "Low Risk"
+            conn.execute(
+                "INSERT OR REPLACE INTO churn_predictions (customer_id, predicted_probability, prediction_label, created_at) VALUES (?, ?, ?, ?)",
+                (cust["customer_id"], prob, label, now_str)
+            )
+            
+            for offset_weeks in range(4):
+                hist_date = (datetime.now() - pd.Timedelta(weeks=offset_weeks)).strftime("%Y-%m-%d")
+                hist_prob = min(1.0, max(0.0, prob - (offset_weeks * 0.05)))
+                hist_label = "High Risk" if hist_prob >= 0.5 else "Low Risk"
+                conn.execute(
+                    "INSERT INTO risk_history (customer_id, predicted_probability, prediction_label, recorded_date) VALUES (?, ?, ?, ?)",
+                    (cust["customer_id"], hist_prob, hist_label, hist_date)
+                )
+
+        conn.commit()
+        conn.close()
+        
+        return jsonify({"status": "ok", "message": f"Successfully integrated with {platform.upper()} and synchronized customer data."})
+    except Exception as e:
+        return jsonify({"error": f"CRM Integration failed: {e}"}), 500
+
+
+@app.route("/api/crm/status", methods=["GET"])
+def crm_status():
+    """Retrieve connected CRM platforms."""
+    try:
+        conn = get_connection()
+        rows = conn.execute("SELECT platform, connected_at, status FROM crm_integrations").fetchall()
+        conn.close()
+        return jsonify({"integrations": [dict(r) for r in rows]})
+    except Exception as e:
+        return jsonify({"error": f"Failed to get integrations: {e}"}), 500
+
+
+@app.route("/api/history/trends", methods=["GET"])
+def history_trends():
+    """Historical churn risk over time for charting."""
+    customer_id = request.args.get("customer_id", "").strip()
+    try:
+        conn = get_connection()
+        has_trends = conn.execute("SELECT COUNT(*) FROM risk_history").fetchone()[0]
+        if has_trends == 0:
+            preds = conn.execute("SELECT customer_id, predicted_probability, prediction_label FROM churn_predictions LIMIT 10").fetchall()
+            now = datetime.now()
+            for p in preds:
+                for w in range(5):
+                    recorded_date = (now - pd.Timedelta(weeks=w)).strftime("%Y-%m-%d")
+                    prob_variance = (w * -0.04) + (secrets.randbelow(10) - 5) / 100.0
+                    hist_prob = min(1.0, max(0.0, p["predicted_probability"] + prob_variance))
+                    hist_label = "High Risk" if hist_prob >= 0.5 else "Low Risk"
+                    conn.execute(
+                        "INSERT INTO risk_history (customer_id, predicted_probability, prediction_label, recorded_date) VALUES (?, ?, ?, ?)",
+                        (p["customer_id"], hist_prob, hist_label, recorded_date)
+                    )
+            conn.commit()
+
+        if customer_id:
+            rows = conn.execute(
+                "SELECT recorded_date, predicted_probability FROM risk_history WHERE customer_id = ? ORDER BY recorded_date ASC",
+                (customer_id,)
+            ).fetchall()
+        else:
+            rows = conn.execute(
+                "SELECT recorded_date, AVG(predicted_probability) as predicted_probability FROM risk_history GROUP BY recorded_date ORDER BY recorded_date ASC"
+            ).fetchall()
+            
+        conn.close()
+        return jsonify({"trends": [{"date": r["recorded_date"], "probability": r["predicted_probability"]} for r in rows]})
+    except Exception as e:
+        return jsonify({"error": f"Failed to get trends: {e}"}), 500
+
+
+@app.route("/api/audit/logs", methods=["GET"])
+def audit_logs_api():
+    """Audit logs endpoint for compliance."""
+    try:
+        conn = get_connection()
+        rows = conn.execute("SELECT log_id, user_role, action, target_customer, timestamp FROM audit_logs ORDER BY timestamp DESC LIMIT 50").fetchall()
+        conn.close()
+        return jsonify({"logs": [dict(r) for r in rows]})
+    except Exception as e:
+        return jsonify({"error": f"Failed to fetch audit logs: {e}"}), 500
+
+
+@app.route("/api/audit/create", methods=["POST"])
+def audit_logs_create():
+    """Create a compliance audit entry."""
+    data = request.json or {}
+    role = data.get("user_role", "CSM")
+    action = data.get("action", "")
+    target = data.get("target_customer")
+    
+    if not action:
+        return jsonify({"error": "Action field is required."}), 400
+
+    try:
+        conn = get_connection()
+        conn.execute(
+            "INSERT INTO audit_logs (user_role, action, target_customer, timestamp) VALUES (?, ?, ?, ?)",
+            (role, action, target, datetime.now().isoformat())
+        )
+        conn.commit()
+        conn.close()
+        return jsonify({"status": "ok"})
+    except Exception as e:
+        return jsonify({"error": f"Failed to log audit action: {e}"}), 500
+
+
+@app.route("/api/alerts/webhook", methods=["POST"])
+def configure_alert_webhook():
+    """Save webhooks for Slack/Teams alerts."""
+    data = request.json or {}
+    platform = data.get("platform", "").strip().lower()
+    webhook_url = data.get("webhook_url", "").strip()
+
+    if platform not in ["slack", "teams"]:
+        return jsonify({"error": "Invalid webhook platform. Use slack or teams."}), 400
+    if not webhook_url:
+        return jsonify({"error": "Webhook URL is required."}), 400
+
+    try:
+        conn = get_connection()
+        conn.execute(
+            "INSERT OR REPLACE INTO integrations_webhooks (webhook_id, platform, webhook_url, is_active) VALUES (?, ?, ?, 1)",
+            (f"wh_{platform}_{int(time.time())}", platform, webhook_url)
+        )
+        conn.commit()
+        conn.close()
+        return jsonify({"status": "ok", "message": f"Successfully configured {platform.upper()} alert webhook."})
+    except Exception as e:
+        return jsonify({"error": f"Failed to configure webhook: {e}"}), 500
+
+
+@app.route("/api/alerts/fire", methods=["POST"])
+def simulate_webhook_alert():
+    """Fire a mock SLA Slack/Teams webhook alert for high-risk accounts."""
+    data = request.json or {}
+    customer_id = data.get("customer_id", "").strip()
+    csm_name = data.get("csm_name", "CSM Bot").strip()
+    
+    if not customer_id:
+        return jsonify({"error": "Customer ID is required."}), 400
+
+    try:
+        conn = get_connection()
+        cust = conn.execute(
+            "SELECT cp.predicted_probability, cc.monthly_charges, cc.support_tickets, cc.region "
+            "FROM churn_predictions cp JOIN customer_churn cc ON cp.customer_id = cc.customer_id "
+            "WHERE cp.customer_id = ?", (customer_id,)
+        ).fetchone()
+        
+        if not cust:
+            conn.close()
+            return jsonify({"error": "Customer not found."}), 404
+
+        prob = cust["predicted_probability"]
+        charges = cust["monthly_charges"]
+        tickets = cust["support_tickets"]
+        region = cust["region"]
+        
+        conn.execute(
+            "INSERT INTO audit_logs (user_role, action, target_customer, timestamp) VALUES (?, ?, ?, ?)",
+            ("System SLA Alert", f"Automated 24-hr SLA alert dispatched to notification channels", customer_id, datetime.now().isoformat())
+        )
+        conn.commit()
+        conn.close()
+
+        alert_payload = {
+            "text": f"🚨 *HIGH-RISK CHURN ALERT*: Customer *{customer_id}* has a predicted churn rate of *{prob*100:.1f}%*!",
+            "blocks": [
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": f"🚨 *HIGH-RISK CHURN ALERT* (24-hr SLA Triggered)\n"
+                                f"*Customer ID*: `{customer_id}`\n"
+                                f"*Risk Probability*: `{prob*100:.1f}%`\n"
+                                f"*MRR Exposure*: `${charges}/mo`\n"
+                                f"*Region*: `{region}`\n"
+                                f"*CSM Assigned*: `{csm_name}`"
+                    }
+                },
+                {
+                    "type": "context",
+                    "elements": [
+                        {
+                            "type": "mrkdwn",
+                            "text": f"📍 Support tickets opened: *{tickets}* | Action Plan: Initiate outreach."
+                        }
+                    ]
+                }
+            ]
+        }
+        return jsonify({"status": "ok", "message": "Alert triggered and Slack/Teams block payload compiled.", "payload": alert_payload})
+    except Exception as e:
+        return jsonify({"error": f"Failed to fire alert: {e}"}), 500
+
+
+@app.route("/api/reports/schedule", methods=["POST"])
+def schedule_report():
+    """Schedule executive reports."""
+    data = request.json or {}
+    email = data.get("email", "").strip()
+    frequency = data.get("frequency", "weekly").strip().lower()
+    format_type = data.get("format", "pdf").strip().lower()
+
+    if not email:
+        return jsonify({"error": "Email is required."}), 400
+    if frequency not in ["daily", "weekly"]:
+        return jsonify({"error": "Frequency must be daily or weekly."}), 400
+    if format_type not in ["pdf", "excel"]:
+        return jsonify({"error": "Format must be pdf or excel."}), 400
+
+    try:
+        conn = get_connection()
+        conn.execute(
+            "INSERT OR REPLACE INTO scheduled_reports (report_id, recipient_email, frequency, format, last_sent) VALUES (?, ?, ?, ?, ?)",
+            (f"sch_{int(time.time())}", email, frequency, format_type, "Never")
+        )
+        conn.execute(
+            "INSERT INTO audit_logs (user_role, action, target_customer, timestamp) VALUES (?, ?, ?, ?)",
+            ("Executive", f"Scheduled auto-generated {frequency} {format_type.upper()} report to {email}", None, datetime.now().isoformat())
+        )
+        conn.commit()
+        conn.close()
+        return jsonify({"status": "ok", "message": f"Successfully scheduled {frequency} {format_type.upper()} board report to {email}."})
+    except Exception as e:
+        return jsonify({"error": f"Failed to schedule report: {e}"}), 500
+
+
+@app.route("/api/reports/scheduled-list", methods=["GET"])
+def scheduled_reports_list():
+    """List scheduled reports."""
+    try:
+        conn = get_connection()
+        rows = conn.execute("SELECT report_id, recipient_email, frequency, format, last_sent FROM scheduled_reports").fetchall()
+        conn.close()
+        return jsonify({"reports": [dict(r) for r in rows]})
+    except Exception as e:
+        return jsonify({"error": f"Failed to list scheduled reports: {e}"}), 500
+
+
+@app.route("/api/abtests/log", methods=["POST"])
+def abtests_log():
+    """Save campaign outcomes for campaign performance tracking."""
+    data = request.json or {}
+    name = data.get("campaign_name", "").strip()
+    pred_rate = float(data.get("predicted_churn_rate", 0))
+    act_rate = float(data.get("actual_churn_rate", 0))
+    size = int(data.get("sample_size", 100))
+    outcome = data.get("outcome", "Successful").strip()
+
+    if not name:
+        return jsonify({"error": "Campaign name is required."}), 400
+
+    try:
+        conn = get_connection()
+        conn.execute(
+            "INSERT INTO ab_tests (campaign_name, predicted_churn_rate, actual_churn_rate, sample_size, outcome, start_date) VALUES (?, ?, ?, ?, ?, ?)",
+            (name, pred_rate, act_rate, size, outcome, datetime.now().strftime("%Y-%m-%d"))
+        )
+        conn.commit()
+        conn.close()
+        return jsonify({"status": "ok", "message": f"Successfully logged campaign '{name}'."})
+    except Exception as e:
+        return jsonify({"error": f"Failed to log campaign: {e}"}), 500
+
+
+@app.route("/api/abtests/list", methods=["GET"])
+def abtests_list():
+    """List retention campaign A/B outcomes."""
+    try:
+        conn = get_connection()
+        count = conn.execute("SELECT COUNT(*) FROM ab_tests").fetchone()[0]
+        if count == 0:
+            default_campaigns = [
+                {"name": "Discount Offer (High Churn Cohort)", "pred": 0.25, "act": 0.18, "size": 150, "outcome": "Outperformed Predictions"},
+                {"name": "Support Call Outreach", "pred": 0.40, "act": 0.38, "size": 80, "outcome": "Met Expectations"}
+            ]
+            for c in default_campaigns:
+                conn.execute(
+                    "INSERT INTO ab_tests (campaign_name, predicted_churn_rate, actual_churn_rate, sample_size, outcome, start_date) "
+                    "VALUES (?, ?, ?, ?, ?, ?)",
+                    (c["name"], c["pred"], c["act"], c["size"], c["outcome"], "2026-07-25")
+                )
+            conn.commit()
+            
+        rows = conn.execute("SELECT campaign_id, campaign_name, predicted_churn_rate, actual_churn_rate, sample_size, outcome, start_date FROM ab_tests").fetchall()
+        conn.close()
+        return jsonify({"campaigns": [dict(r) for r in rows]})
+    except Exception as e:
+        return jsonify({"error": f"Failed to fetch A/B tests: {e}"}), 500
+
+
+@app.route("/api/assignments/assign", methods=["POST"])
+def assignments_assign():
+    """Assign CSM, update status, and write collaboration notes."""
+    data = request.json or {}
+    customer_id = data.get("customer_id", "").strip()
+    csm_name = data.get("csm_name", "").strip()
+    status = data.get("status", "unassigned").strip()
+    notes = data.get("notes", "").strip()
+
+    if not customer_id:
+        return jsonify({"error": "Customer ID is required."}), 400
+
+    try:
+        conn = get_connection()
+        now_str = datetime.now().isoformat()
+        
+        existing = conn.execute("SELECT 1 FROM account_assignments WHERE customer_id = ?", (customer_id,)).fetchone()
+        if existing:
+            conn.execute(
+                "UPDATE account_assignments SET csm_name = ?, status = ?, notes = ?, last_updated = ? WHERE customer_id = ?",
+                (csm_name, status, notes, now_str, customer_id)
+            )
+        else:
+            conn.execute(
+                "INSERT INTO account_assignments (customer_id, csm_name, status, notes, last_updated) VALUES (?, ?, ?, ?, ?)",
+                (customer_id, csm_name, status, notes, now_str)
+            )
+
+        conn.execute(
+            "INSERT INTO audit_logs (user_role, action, target_customer, timestamp) VALUES (?, ?, ?, ?)",
+            ("CSM", f"Assigned account to {csm_name} and marked status as {status}", customer_id, now_str)
+        )
+        conn.commit()
+        conn.close()
+        return jsonify({"status": "ok", "message": f"Successfully updated assignment status for customer {customer_id}."})
+    except Exception as e:
+        return jsonify({"error": f"Failed to assign account: {e}"}), 500
+
+
+@app.route("/api/assignments/status", methods=["GET"])
+def assignments_status():
+    """Retrieve assignments and notes status."""
+    try:
+        conn = get_connection()
+        rows = conn.execute("SELECT customer_id, csm_name, status, notes, last_updated FROM account_assignments").fetchall()
+        conn.close()
+        return jsonify({"assignments": [dict(r) for r in rows]})
+    except Exception as e:
+        return jsonify({"error": f"Failed to retrieve assignments: {e}"}), 500
 
 
 if __name__ == "__main__":
