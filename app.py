@@ -3950,5 +3950,66 @@ def assignments_status():
         return jsonify({"error": f"Failed to retrieve assignments: {e}"}), 500
 
 
+@app.route("/api/presentation/download-pptx", methods=["POST"])
+def download_presentation_pptx():
+    """Generates a downloadable PPTX file from the client-side presentation deck configuration."""
+    data = request.json or {}
+    slides = data.get("slides", [])
+    palette_name = (data.get("theme") or "indigo").strip().lower()
+    title = (data.get("title") or "Qiplo Churn Presentation").strip()
+
+    if palette_name not in THEME_PALETTES:
+        palette_name = "indigo"
+
+    try:
+        from pptx import Presentation
+        from pptx.util import Inches
+        
+        prs = Presentation()
+        prs.slide_width = Inches(13.333)
+        prs.slide_height = Inches(7.5)
+
+        for s in slides:
+            layout = s.get("layout", "content")
+            mapped_layout = "content"
+            if layout == "title":
+                mapped_layout = "title"
+            elif layout == "split_metrics":
+                mapped_layout = "two_column"
+                bullets = s.get("bullets", [])
+                s["left_title"] = "Key Insights"
+                s["left_items"] = bullets[:3]
+                s["right_title"] = "Supporting Metrics"
+                s["right_items"] = bullets[3:6]
+            elif layout == "segment_comparison":
+                mapped_layout = "two_column"
+                bullets = s.get("bullets", [])
+                s["left_title"] = "Target Segments"
+                s["left_items"] = bullets[:2]
+                s["right_title"] = "Comparative Analysis"
+                s["right_items"] = bullets[2:4]
+            elif layout == "journey_workflow":
+                mapped_layout = "timeline"
+                bullets = s.get("bullets", [])
+                s["steps"] = [{"title": b, "description": ""} for b in bullets[:4]]
+            elif layout == "prescriptive_playbook":
+                mapped_layout = "content"
+            
+            _add_pptx_slide(prs, mapped_layout, s, palette_name=palette_name)
+
+        _apply_pptx_theme(prs, palette_name=palette_name)
+
+        filename = f"qiplo_deck_{int(datetime.now().timestamp())}.pptx"
+        out_path = SEARCH_FILES_DIR / filename
+        prs.save(str(out_path))
+
+        return jsonify({
+            "status": "ok",
+            "download_url": f"/api/download/{filename}"
+        })
+    except Exception as e:
+        return jsonify({"error": f"Failed to build presentation PPTX: {e}"}), 500
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

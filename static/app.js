@@ -1005,6 +1005,11 @@ function setupPresentation() {
         downloadBtn.addEventListener('click', downloadStandalonePresentation);
     }
 
+    const downloadPptxBtn = document.getElementById('downloadPresPptxBtn');
+    if (downloadPptxBtn) {
+        downloadPptxBtn.addEventListener('click', downloadPresentationAsPptx);
+    }
+
     // Keyboard Arrow Navigation
     document.addEventListener('keydown', (e) => {
         const presentationTab = document.querySelector('.tab[data-tab="presentation"]');
@@ -1349,6 +1354,8 @@ async function generatePresentationDeck() {
         const printBtn = document.getElementById('printPresBtn');
         if (printBtn) printBtn.classList.remove('hidden');
         if (downloadBtn) downloadBtn.classList.remove('hidden');
+        const downloadPptxBtn = document.getElementById('downloadPresPptxBtn');
+        if (downloadPptxBtn) downloadPptxBtn.classList.remove('hidden');
         const editorPanel = document.getElementById('slideEditorPanel');
         if (editorPanel) editorPanel.classList.remove('hidden');
         status.classList.add('hidden');
@@ -1670,6 +1677,51 @@ function populateSlideEditor() {
 function jumpToSlide(idx) {
     currentSlideIndex = idx;
     updateSlideView();
+}
+
+async function downloadPresentationAsPptx() {
+    if (!presentationSlides || !presentationSlides.length) {
+        alert("No presentation slides available to export.");
+        return;
+    }
+
+    const theme = document.getElementById('presThemeColor') ? document.getElementById('presThemeColor').value : 'indigo';
+    const customPrompt = document.getElementById('presCustomPrompt') ? document.getElementById('presCustomPrompt').value : 'Qiplo Slide Deck';
+
+    try {
+        const downloadPptxBtn = document.getElementById('downloadPresPptxBtn');
+        const oldText = downloadPptxBtn.innerHTML;
+        downloadPptxBtn.disabled = true;
+        downloadPptxBtn.innerHTML = 'Compiling PPTX...';
+
+        const res = await safeFetch('/api/presentation/download-pptx', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                slides: presentationSlides,
+                theme: theme,
+                title: customPrompt
+            })
+        });
+
+        const payload = await res.json();
+        downloadPptxBtn.disabled = false;
+        downloadPptxBtn.innerHTML = oldText;
+
+        if (payload.status === 'ok' && payload.download_url) {
+            window.open(payload.download_url, '_blank');
+        } else {
+            alert(payload.error || 'Failed to download PPTX.');
+        }
+    } catch (err) {
+        alert('PPTX export error: ' + err);
+        const downloadPptxBtn = document.getElementById('downloadPresPptxBtn');
+        if (downloadPptxBtn) {
+            downloadPptxBtn.disabled = false;
+            downloadPptxBtn.innerHTML = '<i data-lucide="file-presentation" class="lucide-icon"></i> Download PPTX Deck';
+            if (window.lucide) window.lucide.createIcons();
+        }
+    }
 }
 
 function enterFullscreenPresentation() {
