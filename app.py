@@ -22,7 +22,7 @@ if str(BASE_DIR) not in sys.path:
 import json
 from datetime import datetime
 import pandas as pd
-from flask import Flask, jsonify, render_template, request, Response
+from flask import Flask, jsonify, render_template, request, Response, redirect
 
 from churn_analysis import (ensure_database, import_frame_to_sql, load_config, predict_from_frame,
                              train_model, generate_ai_insight_with_llm)
@@ -2784,6 +2784,11 @@ def settings_page():
 @app.route("/gamma")
 def gamma():
     return render_template("gamma/index.html")
+
+
+@app.route("/gamma/dashboard")
+def gamma_dashboard():
+    return redirect("/gamma")
 
 
 @app.route("/gamma/about")
