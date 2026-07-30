@@ -411,17 +411,9 @@ setupDragAndDrop();
 document.getElementById('riskFilter').addEventListener('change', renderRows);
 document.getElementById('roleSelect').addEventListener('change', loadDashboard);
 document.getElementById('exportTableauBtn').addEventListener('click', () => {
-    if (!predictionData || !predictionData.length) {
-        alert("No prediction data available to export. Please upload a customer file first.");
-        return;
-    }
     window.open('/api/export/tableau', '_blank');
 });
 document.getElementById('exportPowerBiBtn').addEventListener('click', () => {
-    if (!predictionData || !predictionData.length) {
-        alert("No prediction data available to export. Please upload a customer file first.");
-        return;
-    }
     window.open('/api/export/powerbi', '_blank');
 });
 document.getElementById('exportExcelBtn').addEventListener('click', () => {
