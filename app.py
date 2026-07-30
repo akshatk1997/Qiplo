@@ -197,76 +197,76 @@ def create_app() -> Flask:
 
             if role == "sales":
                 recommendations.append(
-                    f"Initiate contract renewal negotiations immediately for the {high_count} high-risk accounts to protect revenue."
+                    f"Initiate contract renewal negotiations immediately for the {high_count} high-risk accounts to protect ARR. Target month-to-month contracts by offering a 10% discount on a 12-month commitment transition."
                 )
                 if delays_count:
                     recommendations.append(
-                        f"Audit the billing and transaction history for {delays_count} payment-delay customers before sales outreach."
+                        f"Audit the billing and transaction history for {delays_count} payment-delay customers before sales outreach. Propose a migration to automated credit card auto-pay to eliminate payment barriers."
                     )
                 if low_count:
                     recommendations.append(
-                        f"Offer proactive loyalty expansions or multi-year packages to secure the {low_count} low-risk accounts."
+                        f"Offer proactive loyalty expansions or multi-year contract renewals to secure the {low_count} low-risk accounts. Suggest premium features based on their high usage to expand account value."
                     )
                 recommendations.append(
-                    f"Prioritize upsell and relationship-building tasks with accounts exhibiting average prediction confidence of {avg_prob}%."
+                    f"Prioritize upsell and relationship-building tasks with accounts exhibiting average prediction confidence of {avg_prob}%. Schedule structured QBRs to showcase business value."
                 )
 
             elif role == "support":
                 if ticks_count:
                     recommendations.append(
-                        f"Create high-priority support tickets to resolve issues for {ticks_count} customers with 3+ pending tickets."
+                        f"Create high-priority support tickets to resolve issues for {ticks_count} customers with 3+ pending tickets. Assign a senior support engineer to close these tickets within a strict 24-hour SLA."
                     )
                 if comp_count:
                     recommendations.append(
-                        f"Escalate and resolve cases for the {comp_count} customers with 3+ formal complaints."
+                        f"Escalate and resolve cases for the {comp_count} customers with 3+ formal complaints. Conduct phone outreach from support management to restore trust."
                     )
                 if sats_count:
                     recommendations.append(
-                        f"Initiate technical support outreach for {sats_count} users with low satisfaction scores (<= 2.0)."
+                        f"Initiate technical support outreach for {sats_count} users with low satisfaction scores (<= 2.0). Schedule a 15-minute diagnostic call to isolate product gaps."
                     )
                 if not recommendations:
-                    recommendations.append("All customer support tickets are currently resolved and within SLAs.")
+                    recommendations.append("All customer support tickets are currently resolved and within standard SLAs.")
 
             elif role == "executive":
                 recommendations.append(
-                    f"Acknowledge potential ARR risk from the {high_count} high-risk customer segments (average probability: {avg_prob}%)."
+                    f"Acknowledge potential ARR risk from the {high_count} high-risk customer segments (average probability: {avg_prob}%). Prepare board reports detailing potential revenue impact and cash-retention actions."
                 )
                 if sats_count:
                     recommendations.append(
-                        f"Investigate systemic service gaps affecting the {sats_count} low-satisfaction accounts."
+                        f"Investigate systemic service gaps affecting the {sats_count} low-satisfaction accounts. Direct Product & Engineering heads to address core performance bottlenecks."
                     )
                 if delays_count:
                     recommendations.append(
-                        f"Authorize a billing flow review to reduce friction for the {delays_count} accounts with payment delays."
+                        f"Authorize a billing flow review to reduce friction for the {delays_count} accounts with payment delays. Standardize digital auto-billing options to lower involuntary churn."
                     )
                 if low_count:
                     recommendations.append(
-                        f"Approve capital allocation for customer advocacy and engagement programs securing {low_count} low-risk accounts."
+                        f"Approve capital allocation for customer advocacy and engagement programs securing {low_count} low-risk accounts. Incentivize customer reviews (G2, Capterra) to drive organic referrals."
                     )
 
             else:  # manager
                 recommendations.append(
-                    f"Prioritize intervention for {high_count} high-risk records (average probability: {avg_prob}%)."
+                    f"Prioritize intervention for {high_count} high-risk records (average probability: {avg_prob}%). Set daily task checklists for CSMs to check on these accounts."
                 )
                 if ticks_count:
                     recommendations.append(
-                        f"Address {ticks_count} high-risk customers who have submitted 3 or more support tickets."
+                        f"Address {ticks_count} high-risk customers who have submitted 3 or more support tickets. Run product training webinars to guide users through complex configurations."
                     )
                 if comp_count:
                     recommendations.append(
-                        f"Resolve issues for {comp_count} high-risk accounts with 3 or more complaint cases."
+                        f"Resolve issues for {comp_count} high-risk accounts with 3 or more complaint cases. Standardize refund/credit compensation rules for account recovery."
                     )
                 if sats_count:
                     recommendations.append(
-                        f"Initiate check-ins for {sats_count} high-risk users who reported low satisfaction scores (<= 2.0)."
+                        f"Initiate check-ins for {sats_count} high-risk users who reported low satisfaction scores (<= 2.0). Implement a CSAT recovery email sequence."
                     )
                 if delays_count:
                     recommendations.append(
-                        f"Review accounts for {delays_count} high-risk customers showing billing or payment delay indicators."
+                        f"Review accounts for {delays_count} high-risk customers showing billing or payment delay indicators. Verify billing contact accuracy."
                     )
                 if low_count:
                     recommendations.append(
-                        f"Protect {low_count} lower-risk records with loyalty offers and regular engagement."
+                        f"Protect {low_count} lower-risk records with loyalty offers and regular engagement. Schedule monthly email updates highlighting new product releases."
                     )
         else:
             recommendations.append("No churn activity detected yet; upload more customer data to generate insights.")

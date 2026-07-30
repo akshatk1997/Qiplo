@@ -115,11 +115,11 @@
         <section class="studioPane">
             <div class="studioTabs">
                 <button class="tab active" data-tab="overview" type="button">Overview</button>
-                <button class="tab" data-tab="actions" type="button">Recommended Actions</button>
+                <button class="tab" data-tab="actions" type="button">Recommendations</button>
                 <button class="tab" data-tab="customers" type="button">Customers</button>
                 <button class="tab" data-tab="business" type="button">Business Hub</button>
                 <button class="tab" data-tab="presentation" type="button">Presentation</button>
-                <button class="tab" data-tab="guide" type="button"><i data-lucide="book-marked" class="lucide-icon"></i> Business Guide</button>
+                <button class="tab" data-tab="guide" type="button"><i data-lucide="book-marked" class="lucide-icon"></i> Guide</button>
                 <button class="tab" data-tab="copilot" type="button"><i data-lucide="brain-circuit" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Qiplo Copilot</button>
             </div>
 
@@ -189,7 +189,7 @@
 
             <div class="tabBody hidden" id="tab-actions">
                 <div class="paneHead">
-                    <h2>Recommended Actions</h2>
+                    <h2>Recommendations</h2>
                     <select id="roleSelect" class="roleSelect" aria-label="View insights as role">
                         <option value="manager">Manager</option>
                         <option value="sales">Sales</option>
@@ -674,7 +674,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 16px;">
                             <div>
                                 <h2 style="margin: 0; font-family: var(--font-heading); font-size: 1.5rem; color: var(--text); display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                                    <i data-lucide="book-open" class="lucide-icon"></i> Business Glossary, Financial Metrics & Corporate Policies
+                                    <i data-lucide="book-open" class="lucide-icon"></i> Glossary, Financial Metrics & Corporate Policies
                                     <button id="guideInfoBtn" onclick="openToolInfo()" class="infoCircleBtn" type="button" aria-label="Tool Information" title="Tool A to Z Guide" style="background: var(--surface-3); border: 1px solid var(--border); color: var(--accent-2); width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; cursor: pointer; padding: 0; line-height: 1; transition: all 0.2s ease;">i</button>
                                 </h2>
                                 <p style="margin: 4px 0 0; color: var(--muted); font-size: 0.9rem;">Comprehensive guide matching Qiplo's core motive: <em>"Never lose a customer again."</em></p>
@@ -855,6 +855,50 @@
                                 <li><strong>4. Secure Local Licenses & Permits</strong>: Obtain sales tax permits, professional licenses, or zoning certificates.</li>
                                 <li><strong>5. Open a Business Bank Account</strong>: Keep personal and business expenses strictly separate to maintain corporate liability protection.</li>
                             </ul>
+                        </div>
+                    </div>
+
+                    <!-- Section 6: Strategic Company Improvement & Growth Playbooks -->
+                    <div class="guideSectionCard" data-search-term="improvement strategy tips growth scaling funding patent trademark tax optimization corporate veil" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 22px;">
+                        <h3 style="margin: 0 0 16px; font-family: var(--font-heading); color: var(--accent); display: flex; align-items: center; gap: 8px;">
+                            <i data-lucide="trending-up" class="lucide-icon"></i> 6. Strategic Company Improvement & Growth Playbooks
+                        </h3>
+                        <p style="color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin-top: 0; margin-bottom: 16px;">
+                            Implement standard executive playbooks to optimize cash flow, raise venture financing, protect intellectual assets, and scale subscription retention.
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px;">
+                            <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent); font-family: var(--font-heading);">📊 Cash Flow & OpEx Optimization</h4>
+                                <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5;">
+                                    <li><strong>Quarterly Tool Audits</strong>: Prune inactive SaaS licenses to reduce monthly burn by up to 15%.</li>
+                                    <li><strong>Extend Accounts Payable</strong>: Negotiate net-60 billing cycles with vendors to keep cash in bank longer.</li>
+                                    <li><strong>Annual Pre-payments</strong>: Offer 15% discount for upfront annual commitments to increase upfront cash reserves.</li>
+                                </ul>
+                            </div>
+                            <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent-2); font-family: var(--font-heading);">⚖ Legal Integrity & IP Protection</h4>
+                                <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5;">
+                                    <li><strong>Preserve the Corporate Veil</strong>: Never co-mingle personal/business funds; pay salaries strictly from business accounts.</li>
+                                    <li><strong>IP Assignment Contracts</strong>: Ensure all co-founders, contractors, and employees sign proprietary information agreements.</li>
+                                    <li><strong>Delaware Franchise Tax</strong>: File Delaware corporate returns by March 1st annually to avoid compliance lockouts.</li>
+                                </ul>
+                            </div>
+                            <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--success); font-family: var(--font-heading);">🚀 Scaling & Fundraising Readiness</h4>
+                                <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5;">
+                                    <li><strong>Delaware C-Corp Flipping</strong>: If starting as an LLC, prepare to convert to a Delaware C-Corp before seeking institutional venture rounds.</li>
+                                    <li><strong>Cap Table Hygiene</strong>: Maintain clean cap tables using equity management software (like Carta) to avoid dilutive disputes.</li>
+                                    <li><strong>Pro-Forma Modeling</strong>: Create dynamic financial models simulating 36-month hiring, ARR scaling, and churn margins.</li>
+                                </ul>
+                            </div>
+                            <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--warning); font-family: var(--font-heading);">🎯 Retention Scaling (CSM Alignment)</h4>
+                                <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5;">
+                                    <li><strong>Tied Compensations</strong>: Link Customer Success Manager (CSM) performance bonuses directly to Net Revenue Retention (NRR).</li>
+                                    <li><strong>Predictive Playbooks</strong>: Trigger proactive check-ins based on predictive risk alerts rather than waiting for cancel requests.</li>
+                                    <li><strong>Post-Mortem Auditing</strong>: Conduct structured exit interviews for cancelled accounts to log product feedback.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
