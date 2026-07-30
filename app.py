@@ -2324,7 +2324,26 @@ window.addEventListener('DOMContentLoaded', function() {{
 app = create_app()
 
 
-SEARCH_FILES_DIR = (BASE_DIR / "files").resolve()
+def _resolve_files_dir() -> Path:
+    base_files_dir = (BASE_DIR / "files").resolve()
+    is_serverless = bool(os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"))
+    if is_serverless:
+        writable_dir = Path(tempfile.gettempdir()) / "qiplo_files"
+        writable_dir.mkdir(parents=True, exist_ok=True)
+        return writable_dir
+        
+    try:
+        base_files_dir.mkdir(parents=True, exist_ok=True)
+        test_file = base_files_dir / ".writable_test"
+        test_file.touch()
+        test_file.unlink()
+        return base_files_dir
+    except (PermissionError, OSError):
+        writable_dir = Path(tempfile.gettempdir()) / "qiplo_files"
+        writable_dir.mkdir(parents=True, exist_ok=True)
+        return writable_dir
+
+SEARCH_FILES_DIR = _resolve_files_dir()
 
 
 def _safe_relative_path(filename: str) -> str | None:
