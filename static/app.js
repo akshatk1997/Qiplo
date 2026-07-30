@@ -1372,7 +1372,7 @@ function renderSlides(slides) {
     const viewport = document.getElementById('slideViewport');
     if (!viewport) return;
 
-    const imageStyles = {
+    window.imageStyles = {
         corporate: [
             "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=600&q=80",
             "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
@@ -1416,7 +1416,7 @@ function renderSlides(slides) {
 
     const styleSelect = document.getElementById('presImageStyle');
     const selectedStyle = styleSelect ? styleSelect.value : 'corporate';
-    const activeList = imageStyles[selectedStyle] || imageStyles.corporate;
+    const activeList = window.imageStyles[selectedStyle] || window.imageStyles.corporate;
 
     viewport.innerHTML = slides.map((slide, idx) => {
         let contentHtml = '';
@@ -1688,6 +1688,15 @@ async function downloadPresentationAsPptx() {
     const theme = document.getElementById('presThemeColor') ? document.getElementById('presThemeColor').value : 'indigo';
     const customPrompt = document.getElementById('presCustomPrompt') ? document.getElementById('presCustomPrompt').value : 'Qiplo Slide Deck';
 
+    const styleSelect = document.getElementById('presImageStyle');
+    const selectedStyle = styleSelect ? styleSelect.value : 'corporate';
+    const activeList = window.imageStyles ? (window.imageStyles[selectedStyle] || window.imageStyles.corporate) : [];
+
+    const enrichedSlides = presentationSlides.map((s, idx) => ({
+        ...s,
+        imgUrl: s.imgUrl || activeList[idx % activeList.length]
+    }));
+
     try {
         const downloadPptxBtn = document.getElementById('downloadPresPptxBtn');
         const oldText = downloadPptxBtn.innerHTML;
@@ -1698,7 +1707,7 @@ async function downloadPresentationAsPptx() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                slides: presentationSlides,
+                slides: enrichedSlides,
                 theme: theme,
                 title: customPrompt
             })
@@ -1739,6 +1748,13 @@ function downloadStandalonePresentation() {
     if (!presentationSlides.length) return;
 
     const slidesHtml = document.getElementById('slideViewport').innerHTML;
+    const fontSelect = document.getElementById('presFontPairing');
+    const themeSelect = document.getElementById('presThemeColor');
+    const transSelect = document.getElementById('presTransition');
+    
+    const fontClass = fontSelect ? fontSelect.value : 'inter_mono';
+    const themeClass = themeSelect ? themeSelect.value : 'indigo';
+    const transClass = transSelect ? transSelect.value : 'fade';
 
     const standaloneHtml = `<!DOCTYPE html>
 <html lang="en">
@@ -1746,6 +1762,8 @@ function downloadStandalonePresentation() {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qiplo Executive Slide Deck</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@400;700&family=Outfit:wght@400;700&family=Plus+Jakarta+Sans:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,400&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0C0E12;
@@ -1785,7 +1803,7 @@ function downloadStandalonePresentation() {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            box-shadow: 0 12px 48px rgba(219, 39, 119, 0.2);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.5);
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -1801,8 +1819,6 @@ function downloadStandalonePresentation() {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             opacity: 0;
-            transform: scale(0.95) translateY(10px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
             pointer-events: none;
             display: flex;
             justify-content: center;
@@ -1813,7 +1829,6 @@ function downloadStandalonePresentation() {
 
         .slide.active {
             opacity: 1;
-            transform: scale(1) translateY(0);
             pointer-events: auto;
             z-index: 10;
         }
@@ -1833,38 +1848,12 @@ function downloadStandalonePresentation() {
             text-align: center;
         }
 
-        .layout-title h1 {
-            font-size: 2.8rem;
-            margin: 0 0 16px;
-            color: #ffffff;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, var(--accent-2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .layout-title .slideSubtitle {
-            font-size: 1.25rem;
-            color: var(--muted);
-            margin: 0;
-            max-width: 700px;
-        }
-
-        .slideDecor {
-            position: absolute;
-            width: 120px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-2));
-            bottom: calc(50% + 80px);
-            border-radius: 2px;
-        }
-
         .slideHeader {
             width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(61, 220, 132, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             padding-bottom: 12px;
             font-size: 0.8rem;
             color: var(--muted);
@@ -1882,160 +1871,140 @@ function downloadStandalonePresentation() {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid rgba(61, 220, 132, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             padding-top: 12px;
             font-size: 0.78rem;
             color: var(--muted);
         }
 
-        .slideSplitBody {
+        /* Font classes */
+        .font-inter_mono {
+            --pres-heading-font: 'Inter', sans-serif;
+            --pres-body-font: 'JetBrains Mono', monospace;
+        }
+        .font-outfit_jakarta {
+            --pres-heading-font: 'Outfit', sans-serif;
+            --pres-body-font: 'Plus Jakarta Sans', sans-serif;
+        }
+        .font-playfair_roboto {
+            --pres-heading-font: 'Playfair Display', serif;
+            --pres-body-font: 'Roboto', sans-serif;
+        }
+        .font-montserrat_fira {
+            --pres-heading-font: 'Montserrat', sans-serif;
+            --pres-body-font: 'Fira Code', monospace;
+        }
+
+        /* Palette classes */
+        .theme-indigo {
+            --pres-accent: #4F46E5;
+            --pres-accent-soft: rgba(79, 70, 229, 0.1);
+        }
+        .theme-emerald {
+            --pres-accent: #10B981;
+            --pres-accent-soft: rgba(16, 185, 129, 0.1);
+        }
+        .theme-amber {
+            --pres-accent: #F59E0B;
+            --pres-accent-soft: rgba(245, 158, 11, 0.1);
+        }
+        .theme-crimson {
+            --pres-accent: #E11D48;
+            --pres-accent-soft: rgba(225, 29, 72, 0.1);
+        }
+        .theme-cyan {
+            --pres-accent: #06B6D4;
+            --pres-accent-soft: rgba(6, 182, 212, 0.1);
+        }
+
+        .slideViewport[class*="font-"] h1,
+        .slideViewport[class*="font-"] h2,
+        .slideViewport[class*="font-"] h3,
+        .slideViewport[class*="font-"] h4 {
+            font-family: var(--pres-heading-font) !important;
+        }
+        .slideViewport[class*="font-"] .slideContent,
+        .slideViewport[class*="font-"] p,
+        .slideViewport[class*="font-"] li,
+        .slideViewport[class*="font-"] span,
+        .slideViewport[class*="font-"] div {
+            font-family: var(--pres-body-font) !important;
+        }
+
+        .slideViewport[class*="theme-"] .statCallout.pink {
+            background: var(--pres-accent-soft) !important;
+            border-color: var(--pres-accent) !important;
+        }
+        .slideViewport[class*="theme-"] .statCallout.pink h2 {
+            color: var(--pres-accent) !important;
+        }
+        .slideViewport[class*="theme-"] .presMiniLogo {
+            color: var(--pres-accent) !important;
+        }
+
+        /* Transition Animations styling */
+        .slideViewport[class*="trans-"] .slide {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease !important;
+        }
+        .trans-fade .slide {
+            transform: none !important;
+        }
+        .trans-slide .slide {
+            transform: translateX(100%) !important;
+        }
+        .trans-slide .slide.active {
+            transform: translateX(0) !important;
+        }
+        .trans-slide .slide.previous {
+            transform: translateX(-100%) !important;
+        }
+        .trans-slide .slide.next {
+            transform: translateX(100%) !important;
+        }
+        .trans-zoom .slide {
+            transform: scale(0.85) !important;
+        }
+        .trans-zoom .slide.active {
+            transform: scale(1) !important;
+        }
+        .trans-flip {
+            perspective: 1200px;
+        }
+        .trans-flip .slide {
+            transform: rotateY(90deg) !important;
+            transform-origin: center !important;
+            backface-visibility: hidden;
+        }
+        .trans-flip .slide.active {
+            transform: rotateY(0deg) !important;
+        }
+        .trans-flip .slide.previous {
+            transform: rotateY(-90deg) !important;
+        }
+
+        /* Lightbox Image Zoom style */
+        .zoom-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 11, 14, 0.95);
             display: flex;
-            gap: 40px;
-            flex: 1;
+            justify-content: center;
             align-items: center;
-            margin: 20px 0;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
         }
-
-        .slideLeftPane {
-            flex: 0 0 260px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+        .zoom-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
         }
-
-        .statCallout {
-            background: var(--surface-2);
-            border: 1px solid rgba(61, 220, 132, 0.1);
-            padding: 16px;
-            border-radius: var(--radius-sm);
-            text-align: center;
-        }
-
-        .statCallout span {
-            font-size: 0.7rem;
-            color: var(--muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .statCallout h2 {
-            margin: 0;
-            font-size: 1.8rem;
-            color: var(--accent-2);
-        }
-
-        .statCallout h4 {
-            margin: 0;
-            font-size: 1.1rem;
-            color: #ffffff;
-        }
-
-        .slideRightPane {
-            flex: 1;
-        }
-
-        .slideRightPane h2 {
-            margin: 0 0 16px;
-            font-size: 1.4rem;
-            color: #ffffff;
-        }
-
-        .slideRightPane ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-
-        .slideRightPane li {
-            margin-bottom: 12px;
-            font-size: 1rem;
-            line-height: 1.5;
-            color: var(--text);
-        }
-
-        .layout-grid h2 {
-            margin: 20px 0 16px;
-            font-size: 1.4rem;
-            color: #ffffff;
-        }
-
-        .slideGridBody {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            flex: 1;
-            margin-bottom: 20px;
-        }
-
-        .riskComparisonCard {
-            background: var(--surface-2);
-            border: 1px solid rgba(61, 220, 132, 0.1);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .cardIcon {
-            font-size: 1.5rem;
-        }
-
-        .cardContent p {
-            margin: 0;
-            font-size: 0.88rem;
-            line-height: 1.55;
-            color: var(--text);
-        }
-
-        .layout-workflow {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            justify-content: space-between;
-        }
-        .slideWorkflowBody {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin: 20px 0;
-            width: 100%;
-        }
-        .workflowStepCard {
-            flex: 1;
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            position: relative;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-        }
-        .workflowStepNum {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--accent);
-            line-height: 1;
-        }
-        .workflowStepContent h4 {
-            margin: 0 0 6px;
-            font-size: 0.95rem;
-            color: #ffffff;
-        }
-        .workflowStepContent p {
-            margin: 0;
-            font-size: 0.8rem;
-            line-height: 1.4;
-            color: var(--muted);
-        }
-        .workflowConnector {
-            font-size: 1.4rem;
-            color: var(--accent-2);
+        .zoom-overlay img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
         .controls {
@@ -2046,11 +2015,11 @@ function downloadStandalonePresentation() {
             display: flex;
             gap: 12px;
             align-items: center;
-            background: rgba(10, 11, 14, 0.8);
+            background: rgba(10, 11, 14, 0.85);
             backdrop-filter: blur(8px);
             padding: 8px 16px;
             border-radius: 20px;
-            border: 1px solid rgba(61, 220, 132, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 100;
         }
 
@@ -2062,10 +2031,11 @@ function downloadStandalonePresentation() {
             cursor: pointer;
             padding: 0 8px;
             line-height: 1;
+            transition: color 0.2s ease;
         }
 
         .controlBtn:hover {
-            color: var(--accent-2);
+            color: var(--accent);
         }
 
         .slideNum {
@@ -2090,7 +2060,7 @@ function downloadStandalonePresentation() {
 </head>
 <body>
     <div class="presContainer">
-        <div class="slideViewport">
+        <div class="slideViewport font-${fontClass} theme-${themeClass} trans-${transClass}">
             ${slidesHtml}
         </div>
 
@@ -2103,15 +2073,21 @@ function downloadStandalonePresentation() {
         <div class="helpText">Use Left/Right arrow keys to navigate</div>
     </div>
 
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
 
         function updateSlides() {
             slides.forEach((slide, idx) => {
-                slide.classList.remove('active');
+                slide.classList.remove('active', 'previous', 'next');
                 if (idx === currentSlide) {
                     slide.classList.add('active');
+                } else if (idx === currentSlide - 1) {
+                    slide.classList.add('previous');
+                } else if (idx === currentSlide + 1) {
+                    slide.classList.add('next');
                 }
             });
             document.getElementById('slideNum').textContent = "Slide " + (currentSlide + 1) + " of " + slides.length;
@@ -2130,7 +2106,22 @@ function downloadStandalonePresentation() {
             }
         });
 
+        // Image Zoom lightbox implementation
+        const overlay = document.createElement('div');
+        overlay.className = 'zoom-overlay';
+        overlay.innerHTML = '<img src="" id="zoomImg" alt="Slide Image" />';
+        document.body.appendChild(overlay);
+        overlay.addEventListener('click', () => overlay.classList.remove('active'));
+
+        window.openMagnificZoom = function(src) {
+            document.getElementById('zoomImg').src = src;
+            overlay.classList.add('active');
+        };
+
         updateSlides();
+        if (window.lucide) {
+            lucide.createIcons();
+        }
     </script>
 </body>
 </html>`;

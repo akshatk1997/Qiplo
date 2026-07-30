@@ -2999,6 +2999,18 @@ def _hex_to_rgb(hex_color):
     return tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4))
 
 
+def _get_image_stream(url):
+    import io
+    import urllib.request
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req, timeout=5) as response:
+            return io.BytesIO(response.read())
+    except Exception as e:
+        print(f"Failed to fetch image {url}: {e}")
+        return None
+
+
 def _apply_pptx_theme(prs, palette_name="indigo"):
     palette = THEME_PALETTES.get(palette_name, THEME_PALETTES["indigo"])
     from pptx.dml.color import RGBColor
@@ -3031,40 +3043,55 @@ def _add_pptx_slide(prs, layout_type, data, palette_name="indigo"):
     palette = THEME_PALETTES.get(palette_name, THEME_PALETTES["indigo"])
     slide = prs.slides.add_slide(prs.slide_layouts[6])
 
+    image_url = data.get("imgUrl") or data.get("image_url")
+    img_stream = _get_image_stream(image_url) if image_url else None
+
     if layout_type == "title":
         title = data.get("title", "")
         subtitle = data.get("subtitle", "")
         content = data.get("content", "")
-        if title:
-            shape = slide.shapes.add_textbox(Inches(0.8), Inches(2.2), Inches(11.7), Inches(1.4))
-            tf = shape.text_frame
-            tf.word_wrap = True
-            p = tf.paragraphs[0]
-            p.text = title
-            p.font.size = Pt(48)
-            p.font.bold = True
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
-            p.alignment = PP_ALIGN.CENTER
-        if subtitle:
-            shape = slide.shapes.add_textbox(Inches(0.8), Inches(3.7), Inches(11.7), Inches(1.2))
-            tf = shape.text_frame
-            tf.word_wrap = True
-            p = tf.paragraphs[0]
-            p.text = subtitle
-            p.font.size = Pt(20)
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
-            p.alignment = PP_ALIGN.CENTER
-        if content:
-            shape = slide.shapes.add_textbox(Inches(0.8), Inches(4.8), Inches(11.7), Inches(2.0))
-            tf = shape.text_frame
-            tf.word_wrap = True
-            for para in content.split("\n"):
-                if para.strip():
-                    p = tf.add_paragraph()
-                    p.text = para.strip()
-                    p.font.size = Pt(14)
-                    p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
-                    p.alignment = PP_ALIGN.CENTER
+        if img_stream:
+            if title:
+                shape = slide.shapes.add_textbox(Inches(0.8), Inches(1.8), Inches(6.0), Inches(1.8))
+                tf = shape.text_frame
+                tf.word_wrap = True
+                p = tf.paragraphs[0]
+                p.text = title
+                p.font.size = Pt(36)
+                p.font.bold = True
+                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
+            if subtitle:
+                shape = slide.shapes.add_textbox(Inches(0.8), Inches(3.8), Inches(6.0), Inches(1.2))
+                tf = shape.text_frame
+                tf.word_wrap = True
+                p = tf.paragraphs[0]
+                p.text = subtitle
+                p.font.size = Pt(18)
+                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
+            try:
+                slide.shapes.add_picture(img_stream, Inches(7.2), Inches(1.8), width=Inches(5.3), height=Inches(4.2))
+            except Exception:
+                pass
+        else:
+            if title:
+                shape = slide.shapes.add_textbox(Inches(0.8), Inches(2.2), Inches(11.7), Inches(1.4))
+                tf = shape.text_frame
+                tf.word_wrap = True
+                p = tf.paragraphs[0]
+                p.text = title
+                p.font.size = Pt(48)
+                p.font.bold = True
+                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
+                p.alignment = PP_ALIGN.CENTER
+            if subtitle:
+                shape = slide.shapes.add_textbox(Inches(0.8), Inches(3.7), Inches(11.7), Inches(1.2))
+                tf = shape.text_frame
+                tf.word_wrap = True
+                p = tf.paragraphs[0]
+                p.text = subtitle
+                p.font.size = Pt(20)
+                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
+                p.alignment = PP_ALIGN.CENTER
 
     elif layout_type == "content":
         title = data.get("title", "")
@@ -3085,20 +3112,23 @@ def _add_pptx_slide(prs, layout_type, data, palette_name="indigo"):
             p.text = subtitle
             p.font.size = Pt(16)
             p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
+            
+        text_width = Inches(7.2) if img_stream else Inches(12.0)
         if bullets:
-            shape = slide.shapes.add_textbox(Inches(0.7), Inches(2.1), Inches(12.0), Inches(5.0))
+            shape = slide.shapes.add_textbox(Inches(0.7), Inches(2.1), text_width, Inches(5.0))
             tf = shape.text_frame
             tf.word_wrap = True
             for idx, bullet in enumerate(bullets):
-                if idx == 0:
-                    p = tf.paragraphs[0]
-                else:
-                    p = tf.add_paragraph()
+                p = tf.paragraphs[0] if idx == 0 else tf.add_paragraph()
                 p.text = bullet
                 p.font.size = Pt(18)
                 p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
                 p.space_after = Pt(10)
-                p.level = 0
+        if img_stream:
+            try:
+                slide.shapes.add_picture(img_stream, Inches(8.3), Inches(2.1), width=Inches(4.3), height=Inches(4.5))
+            except Exception:
+                pass
 
     elif layout_type == "two_column":
         title = data.get("title", "")
@@ -3122,8 +3152,10 @@ def _add_pptx_slide(prs, layout_type, data, palette_name="indigo"):
             p.font.size = Pt(20)
             p.font.bold = True
             p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent_2"]))
+            
+        left_height = Inches(2.6) if img_stream else Inches(5.2)
         if left_items:
-            shape = slide.shapes.add_textbox(Inches(0.7), Inches(2.0), Inches(5.5), Inches(5.2))
+            shape = slide.shapes.add_textbox(Inches(0.7), Inches(2.0), Inches(5.5), left_height)
             tf = shape.text_frame
             tf.word_wrap = True
             for idx, item in enumerate(left_items):
@@ -3132,6 +3164,13 @@ def _add_pptx_slide(prs, layout_type, data, palette_name="indigo"):
                 p.font.size = Pt(16)
                 p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
                 p.space_after = Pt(8)
+                
+        if img_stream:
+            try:
+                slide.shapes.add_picture(img_stream, Inches(0.7), Inches(4.6), width=Inches(5.5), height=Inches(2.3))
+            except Exception:
+                pass
+                
         if right_title:
             shape = slide.shapes.add_textbox(Inches(7.0), Inches(1.4), Inches(5.5), Inches(0.5))
             tf = shape.text_frame
