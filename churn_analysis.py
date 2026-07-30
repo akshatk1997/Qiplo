@@ -539,7 +539,7 @@ def train_model(db_path: Path, model_path: Path, config: dict | None = None) -> 
     else:
         try:
             X_train, X_test, y_train, y_test = train_test_split(
-                X, y, test_size=0.25, stratify=y, random_state=42
+                X, y, test_size=0.20, stratify=y, random_state=42
             )
             model = build_model(config, feature_columns=feature_columns, X=X_train)
             model.fit(X_train, y_train)
@@ -549,7 +549,7 @@ def train_model(db_path: Path, model_path: Path, config: dict | None = None) -> 
         except ValueError:
             try:
                 X_train, X_test, y_train, y_test = train_test_split(
-                    X, y, test_size=0.25, stratify=None, random_state=42
+                    X, y, test_size=0.20, stratify=None, random_state=42
                 )
                 model = build_model(config, feature_columns=feature_columns, X=X_train)
                 model.fit(X_train, y_train)
