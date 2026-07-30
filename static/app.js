@@ -2468,9 +2468,13 @@ async function loadEnterpriseFeatures() {
     try {
         const select = document.getElementById('assignCustomerSelect');
         if (select) {
+            const currentSelected = select.value;
             select.innerHTML = predictionData.length 
                 ? predictionData.map(c => `<option value="${c.customer_id}">${c.customer_id} (Risk: ${Math.round((c.predicted_probability || 0) * 100)}%)</option>`).join('')
                 : '<option value="">No accounts available</option>';
+            if (currentSelected && predictionData.some(c => c.customer_id === currentSelected)) {
+                select.value = currentSelected;
+            }
         }
 
         const assRes = await safeFetch('/api/assignments/status');
@@ -2481,6 +2485,23 @@ async function loadEnterpriseFeatures() {
         assignments.forEach(a => {
             window.csmAssignments[a.customer_id] = a;
         });
+
+        if (select) {
+            const customerId = select.value;
+            const assignment = window.csmAssignments[customerId] || null;
+            const csmInput = document.getElementById('assignCsmName');
+            const statusSelect = document.getElementById('assignStatusSelect');
+            const notesInput = document.getElementById('assignNotes');
+            if (assignment) {
+                if (csmInput) csmInput.value = assignment.csm_name || '';
+                if (statusSelect) statusSelect.value = assignment.status || 'unassigned';
+                if (notesInput) notesInput.value = assignment.notes || '';
+            } else {
+                if (csmInput) csmInput.value = '';
+                if (statusSelect) statusSelect.value = 'unassigned';
+                if (notesInput) notesInput.value = '';
+            }
+        }
 
         const abRes = await safeFetch('/api/abtests/list');
         const abData = await abRes.json();
@@ -2553,6 +2574,26 @@ function setupEnterpriseListeners() {
             tabCrm.style.color = 'var(--muted)';
             subReport.classList.remove('hidden');
             subCrm.classList.add('hidden');
+        });
+    }
+
+    const assignCustomerSelect = document.getElementById('assignCustomerSelect');
+    if (assignCustomerSelect) {
+        assignCustomerSelect.addEventListener('change', () => {
+            const customerId = assignCustomerSelect.value;
+            const assignment = (window.csmAssignments && window.csmAssignments[customerId]) || null;
+            const csmInput = document.getElementById('assignCsmName');
+            const statusSelect = document.getElementById('assignStatusSelect');
+            const notesInput = document.getElementById('assignNotes');
+            if (assignment) {
+                if (csmInput) csmInput.value = assignment.csm_name || '';
+                if (statusSelect) statusSelect.value = assignment.status || 'unassigned';
+                if (notesInput) notesInput.value = assignment.notes || '';
+            } else {
+                if (csmInput) csmInput.value = '';
+                if (statusSelect) statusSelect.value = 'unassigned';
+                if (notesInput) notesInput.value = '';
+            }
         });
     }
 
