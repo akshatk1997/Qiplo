@@ -3,8 +3,17 @@ import sys
 import shutil
 import tempfile
 import sqlite3
+import secrets
+import threading
+import time
 from io import BytesIO
 from pathlib import Path
+from collections import deque
+
+import urllib.request
+import urllib.parse
+import urllib.error
+import ssl
 
 BASE_DIR = Path(__file__).resolve().parent
 if str(BASE_DIR) not in sys.path:
@@ -85,6 +94,7 @@ def get_model_path() -> Path:
         return artifacts_dir / "churn_model.pkl"
     except (PermissionError, OSError):
         return db_dir / "churn_model.pkl"
+
 
 
 def create_app() -> Flask:
@@ -982,33 +992,61 @@ def create_app() -> Flask:
         except Exception as ex:
             return jsonify({"response": f"Factual fallback mode error: {ex}"})
 
+    @app.route("/api/export/csv")
+    def export_csv_api():
+        try:
+            conn = get_connection()
+            has_preds = conn.execute("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='churn_predictions'").fetchone()[0]
+            if not has_preds:
+                conn.close()
+                return jsonify({"error": "No predictions available. Please upload data first."}), 400
+                
+            cols = [c for c in customer_columns(conn) if c != "customer_id"]
+            cc_cols = ", ".join(f'cc."{c}"' for c in cols) if cols else ""
+            if cc_cols:
+                cc_cols = ", " + cc_cols
+            query = f"""
+            SELECT cp.customer_id, cp.predicted_probability, cp.prediction_label{cc_cols}
+            FROM churn_predictions cp
+            LEFT JOIN customer_churn cc ON cp.customer_id = cc.customer_id
+            JOIN data_sources ds ON cc.source_id = ds.source_id
+            WHERE ds.is_active = 1
+            ORDER BY cp.predicted_probability DESC
+            """
+            frame = pd.read_sql_query(query, conn)
+            conn.close()
+
+            if frame.empty:
+                return jsonify({"error": "No active customer records to export."}), 400
+
+            output = BytesIO()
+            frame.to_csv(output, index=False, encoding="utf-8-sig")
+            output.seek(0)
+            return Response(
+                output.getvalue(),
+                mimetype="text/csv",
+                headers={"Content-Disposition": "attachment; filename=Qiplo_Churn_Predictions.csv"}
+            )
+        except Exception as e:
+            return jsonify({"error": f"Failed to export CSV: {e}"}), 500
+
     @app.route("/api/export/tableau")
     def export_tableau_api():
         try:
-            db_path = os.path.abspath(get_db_path()).replace("\\", "/")
+            csv_dir = f"{request.url_root}api/export"
+            filename = "csv"
             twb_content = f"""<?xml version='1.0' encoding='utf-8' ?>
 <workbook version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
   <preferences />
   <datasources>
-    <datasource caption='Qiplo Churn Analysis' name='sqlite_ds' version='18.1'>
-      <connection class='sqlite' database='{db_path}' server=''>
-        <relation join='left' type='join'>
-          <clause type='join'>
-            <expression op='='>
-              <expression op='[customer_churn].[customer_id]' />
-              <expression op='[churn_predictions].[customer_id]' />
-            </expression>
-          </clause>
-          <relation name='customer_churn' table='[customer_churn]' type='table' />
-          <relation name='churn_predictions' table='[churn_predictions]' type='table' />
-        </relation>
-      </connection>
+    <datasource caption='Qiplo Live Churn Feed' name='web_csv_ds' version='18.1'>
+      <connection class='textscan' directory='{csv_dir}' filename='{filename}' password='' server='' username='' />
     </datasource>
   </datasources>
   <worksheets>
     <worksheet name='Executive Overview'>
       <table>
-        <rows>[sqlite_ds].[customer_id]</rows>
+        <rows>[web_csv_ds].[customer_id]</rows>
       </table>
     </worksheet>
   </worksheets>
@@ -1024,14 +1062,13 @@ def create_app() -> Flask:
     @app.route("/api/export/powerbi")
     def export_powerbi_api():
         try:
-            db_path = os.path.abspath(get_db_path()).replace("\\", "/")
             pbids_data = {
                 "version": "1.0",
                 "connections": [
                     {
-                        "type": "Sqlite",
+                        "type": "Web",
                         "address": {
-                          "path": db_path
+                            "url": f"{request.url_root}api/export/csv"
                         },
                         "authentication": None,
                         "query": None
@@ -2284,6 +2321,1221 @@ window.addEventListener('DOMContentLoaded', function() {{
 
 
 app = create_app()
+
+
+SEARCH_FILES_DIR = (BASE_DIR / "files").resolve()
+
+
+def _safe_relative_path(filename: str) -> str | None:
+    cleaned = os.path.normpath(filename).replace("\\", "/")
+    if cleaned.startswith("/") or ".." in cleaned.split("/"):
+        return None
+    return cleaned
+
+
+@app.route("/search")
+def search_page():
+    return render_template("search.html")
+
+
+@app.route("/api/search")
+def search_files_api():
+    query = (request.args.get("q") or "").strip().lower()
+    if not query:
+        return jsonify({"results": []})
+
+    if not SEARCH_FILES_DIR.exists():
+        return jsonify({"results": []})
+
+    results = []
+    for root, _, files in os.walk(SEARCH_FILES_DIR):
+        for name in files:
+            rel = os.path.relpath(os.path.join(root, name), SEARCH_FILES_DIR).replace("\\", "/")
+            if query in name.lower() or query in rel.lower():
+                full_path = SEARCH_FILES_DIR / rel
+                try:
+                    size = full_path.stat().st_size
+                except OSError:
+                    size = 0
+                ext = name.rsplit(".", 1)[-1].lower() if "." in name else ""
+                results.append({
+                    "name": name,
+                    "path": rel,
+                    "size": size,
+                    "ext": ext,
+                })
+    results.sort(key=lambda r: r["name"].lower())
+    return jsonify({"results": results})
+
+
+@app.route("/api/download/<path:filename>")
+def download_file_api(filename):
+    rel = _safe_relative_path(filename)
+    if rel is None:
+        return jsonify({"error": "Invalid file path."}), 400
+    safe_path = (SEARCH_FILES_DIR / rel).resolve()
+    try:
+        safe_path.relative_to(SEARCH_FILES_DIR)
+    except ValueError:
+        return jsonify({"error": "Access denied."}), 403
+    if not safe_path.exists() or not safe_path.is_file():
+        return jsonify({"error": "File not found."}), 404
+    from flask import send_file
+    return send_file(str(safe_path), as_attachment=True)
+
+
+class ProxyManager:
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._proxies = {}
+        self._order = []
+        self._index = 0
+        self._strategy = "round_robin"
+        self._enabled = False
+        self._stats = {}
+
+    def add_proxy(self, proxy_id, url, protocol="http", country=None, location=None):
+        with self._lock:
+            self._proxies[proxy_id] = {
+                "id": proxy_id,
+                "url": url,
+                "protocol": protocol.lower(),
+                "country": country or "",
+                "location": location or "",
+                "added_at": datetime.now().isoformat(),
+                "last_used": None,
+                "success_count": 0,
+                "failure_count": 0,
+                "active": True,
+            }
+            if proxy_id not in self._order:
+                self._order.append(proxy_id)
+            self._stats[proxy_id] = {
+                "total_requests": 0,
+                "last_latency_ms": 0,
+            }
+
+    def remove_proxy(self, proxy_id):
+        with self._lock:
+            self._proxies.pop(proxy_id, None)
+            self._order = [p for p in self._order if p != proxy_id]
+            self._stats.pop(proxy_id, None)
+
+    def get_proxy(self):
+        with self._lock:
+            if not self._enabled or not self._order:
+                return None
+            active = [p for p in self._order if self._proxies.get(p, {}).get("active")]
+            if not active:
+                return None
+            if self._strategy == "random":
+                proxy_id = secrets.choice(active)
+            else:
+                proxy_id = active[self._index % len(active)]
+                self._index += 1
+            proxy = self._proxies.get(proxy_id)
+            if proxy:
+                proxy["last_used"] = datetime.now().isoformat()
+                self._stats[proxy_id]["total_requests"] += 1
+            return proxy
+
+    def mark_result(self, proxy_id, success, latency_ms=0):
+        with self._lock:
+            proxy = self._proxies.get(proxy_id)
+            if not proxy:
+                return
+            if success:
+                proxy["success_count"] += 1
+            else:
+                proxy["failure_count"] += 1
+            if proxy_id in self._stats:
+                self._stats[proxy_id]["last_latency_ms"] = latency_ms
+
+    def set_strategy(self, strategy):
+        with self._lock:
+            self._strategy = strategy if strategy in ("round_robin", "random") else "round_robin"
+            self._index = 0
+
+    def set_enabled(self, enabled):
+        with self._lock:
+            self._enabled = bool(enabled)
+
+    def get_pool(self):
+        with self._lock:
+            return [dict(self._proxies.get(pid, {})) for pid in self._order]
+
+    def get_stats(self):
+        with self._lock:
+            result = []
+            for pid in self._order:
+                proxy = self._proxies.get(pid, {})
+                stats = self._stats.get(pid, {})
+                result.append({
+                    "id": pid,
+                    "url": proxy.get("url", ""),
+                    "protocol": proxy.get("protocol", "http"),
+                    "country": proxy.get("country", ""),
+                    "location": proxy.get("location", ""),
+                    "active": proxy.get("active", False),
+                    "success_count": proxy.get("success_count", 0),
+                    "failure_count": proxy.get("failure_count", 0),
+                    "last_used": proxy.get("last_used"),
+                    "total_requests": stats.get("total_requests", 0),
+                    "last_latency_ms": stats.get("last_latency_ms", 0),
+                })
+            return result
+
+
+proxy_manager = ProxyManager()
+
+
+def get_proxy_config():
+    return {
+        "enabled": proxy_manager._enabled,
+        "strategy": proxy_manager._strategy,
+        "pool": proxy_manager.get_pool(),
+        "stats": proxy_manager.get_stats(),
+    }
+
+
+def apply_proxy_to_request(url, timeout=30):
+    proxy = proxy_manager.get_proxy()
+    if not proxy:
+        return urllib.request.urlopen(url, timeout=timeout)
+
+    proxy_url = proxy["url"]
+    proxy_id = proxy["id"]
+    start = time.time()
+    try:
+        if proxy["protocol"] in ("socks4", "socks5"):
+            import socks as _socks
+            import socket as _socket
+            parsed = urllib.parse.urlparse(proxy_url)
+            host = parsed.hostname
+            port = parsed.port or 1080
+            username = parsed.username
+            password = parsed.password
+            socks_proxy = _socks.socksocket()
+            socks_proxy.set_proxy(
+                _socks.SOCKS5 if proxy["protocol"] == "socks5" else _socks.SOCKS4,
+                host,
+                port,
+                username=username,
+                password=password,
+            )
+            socks_proxy.settimeout(timeout)
+            parsed_url = urllib.parse.urlparse(url)
+            if parsed_url.scheme == "https":
+                import ssl
+                socks_proxy = _socks.ssl.wrap_socket(socks_proxy)
+            socks_proxy.connect((parsed_url.hostname, parsed_url.port or (443 if parsed_url.scheme == "https" else 80)))
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            socks_proxy.send(req.encode())
+            response = socks_proxy.makefile("rb")
+            code = response.readline().split()[1]
+            headers = {}
+            while True:
+                line = response.readline().decode().strip()
+                if not line:
+                    break
+                if ":" in line:
+                    k, v = line.split(":", 1)
+                    headers[k.strip()] = v.strip()
+            body = response.read()
+            socks_proxy.close()
+
+            class FakeResponse:
+                def read(self):
+                    return body
+                def geturl(self):
+                    return url
+                def info(self):
+                    class HeaderDict:
+                        def get(self, key, default=""):
+                            return headers.get(key, default)
+                    return HeaderDict()
+                def getcode(self):
+                    return int(code)
+                def close(self):
+                    pass
+
+            latency_ms = int((time.time() - start) * 1000)
+            proxy_manager.mark_result(proxy_id, True, latency_ms)
+            return FakeResponse()
+        else:
+            proxy_handler = urllib.request.ProxyHandler({"http": proxy_url, "https": proxy_url})
+            opener = urllib.request.build_opener(proxy_handler)
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            resp = opener.open(req, timeout=timeout)
+            latency_ms = int((time.time() - start) * 1000)
+            proxy_manager.mark_result(proxy_id, True, latency_ms)
+            return resp
+    except Exception as e:
+        proxy_manager.mark_result(proxy_id, False, 0)
+        raise e
+
+
+@app.route("/api/proxy/config")
+def proxy_config_api():
+    return jsonify(get_proxy_config())
+
+
+@app.route("/api/proxy/pool", methods=["GET", "POST"])
+def proxy_pool_api():
+    if request.method == "GET":
+        return jsonify({"pool": proxy_manager.get_pool(), "stats": proxy_manager.get_stats()})
+
+    data = request.json or {}
+    proxy_id = data.get("id")
+    url = (data.get("url") or "").strip()
+    protocol = (data.get("protocol") or "http").strip().lower()
+    country = (data.get("country") or "").strip()
+    location = (data.get("location") or "").strip()
+
+    if not proxy_id or not url:
+        return jsonify({"error": "proxy id and url are required"}), 400
+
+    proxy_manager.add_proxy(proxy_id, url, protocol=protocol, country=country, location=location)
+    return jsonify({"status": "ok", "pool": proxy_manager.get_pool()})
+
+
+@app.route("/api/proxy/pool/<proxy_id>", methods=["DELETE"])
+def proxy_pool_delete(proxy_id):
+    proxy_manager.remove_proxy(proxy_id)
+    return jsonify({"status": "ok"})
+
+
+@app.route("/api/proxy/pool/<proxy_id>/toggle", methods=["POST"])
+def proxy_pool_toggle(proxy_id):
+    data = request.json or {}
+    active = data.get("active")
+    with proxy_manager._lock:
+        proxy = proxy_manager._proxies.get(proxy_id)
+        if proxy:
+            proxy["active"] = bool(active)
+    return jsonify({"status": "ok"})
+
+
+@app.route("/api/proxy/strategy", methods=["POST"])
+def proxy_strategy_api():
+    data = request.json or {}
+    strategy = (data.get("strategy") or "round_robin").strip().lower()
+    proxy_manager.set_strategy(strategy)
+    return jsonify({"status": "ok", "strategy": proxy_manager._strategy})
+
+
+@app.route("/api/proxy/toggle", methods=["POST"])
+def proxy_toggle_api():
+    data = request.json or {}
+    enabled = data.get("enabled")
+    proxy_manager.set_enabled(bool(enabled))
+    return jsonify({"status": "ok", "enabled": proxy_manager._enabled})
+
+
+@app.route("/api/proxy/test", methods=["POST"])
+def proxy_test_api():
+    data = request.json or {}
+    proxy_id = data.get("id")
+    with proxy_manager._lock:
+        proxy = proxy_manager._proxies.get(proxy_id)
+    if not proxy:
+        return jsonify({"error": "proxy not found"}), 404
+
+    test_url = "https://api.ipify.org?format=json"
+    start = time.time()
+    try:
+        req = urllib.request.Request(test_url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            body = resp.read().decode()
+            latency_ms = int((time.time() - start) * 1000)
+            proxy_manager.mark_result(proxy_id, True, latency_ms)
+            return jsonify({"status": "ok", "latency_ms": latency_ms, "response": body})
+    except Exception as e:
+        latency_ms = int((time.time() - start) * 1000)
+        proxy_manager.mark_result(proxy_id, False, latency_ms)
+        return jsonify({"status": "error", "error": str(e), "latency_ms": latency_ms}), 500
+
+
+@app.route("/settings")
+def settings_page():
+    return render_template("settings.html")
+
+
+@app.route("/gamma")
+def gamma():
+    return render_template("gamma/index.html")
+
+
+@app.route("/gamma/about")
+def gamma_about():
+    return render_template("gamma/about.html")
+
+
+@app.route("/api/ai/generate-txt", methods=["POST"])
+def ai_generate_txt():
+    data = request.json or {}
+    content = (data.get("content") or "").strip()
+    title = (data.get("title") or "AI Generated Text").strip()
+
+    if not content:
+        return jsonify({"error": "Text content is required."}), 400
+
+    filename = f"ai_generated_{int(datetime.now().timestamp())}.txt"
+    out_path = SEARCH_FILES_DIR / filename
+    header = title + "\n" + "=" * len(title) + "\n\n" if title else ""
+    out_path.write_text(header + content, encoding="utf-8")
+
+    return jsonify({
+        "status": "ok",
+        "filename": filename,
+        "path": filename,
+        "download_url": f"/api/download/{filename}",
+        "size": out_path.stat().st_size,
+    })
+
+
+@app.route("/api/ai/generate-image", methods=["POST"])
+def ai_generate_image():
+    data = request.json or {}
+    prompt = (data.get("prompt") or "").strip()
+    if not prompt:
+        return jsonify({"error": "Prompt is required."}), 400
+
+    import urllib.request
+    import urllib.parse
+    import ssl
+    import json as _json
+
+    context = ssl._create_unverified_context()
+    encoded_prompt = urllib.parse.quote(prompt)
+    width = int(data.get("width") or 1024)
+    height = int(data.get("height") or 1024)
+    seed = data.get("seed") or ""
+
+    image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width={width}&height={height}"
+    if seed:
+        image_url += f"&seed={urllib.parse.quote(str(seed))}"
+
+    try:
+        req = urllib.request.Request(image_url, headers={"User-Agent": "Mozilla/5.0"})
+        if proxy_manager._enabled:
+            resp = apply_proxy_to_request(image_url, timeout=45)
+            image_bytes = resp.read()
+            content_type = resp.info().get("Content-Type", "image/png")
+        else:
+            with urllib.request.urlopen(req, timeout=30, context=context) as resp:
+                image_bytes = resp.read()
+                content_type = resp.headers.get("Content-Type", "image/png")
+    except Exception as e:
+        return jsonify({"error": f"Image generation failed: {e}"}), 500
+
+    ext = "png"
+    if "jpeg" in content_type or "jpg" in content_type:
+        ext = "jpg"
+    elif "webp" in content_type:
+        ext = "webp"
+
+    filename = f"ai_generated_image_{int(datetime.now().timestamp())}.{ext}"
+    out_path = SEARCH_FILES_DIR / filename
+    out_path.write_bytes(image_bytes)
+
+    return jsonify({
+        "status": "ok",
+        "filename": filename,
+        "path": filename,
+        "download_url": f"/api/download/{filename}",
+        "size": len(image_bytes),
+        "content_type": content_type,
+    })
+
+
+@app.route("/api/ai/generate-docx", methods=["POST"])
+def ai_generate_docx():
+    data = request.json or {}
+    title = (data.get("title") or "AI Generated Document").strip()
+    content = (data.get("content") or "").strip()
+    author = (data.get("author") or "Qiplo AI").strip()
+
+    if not content:
+        return jsonify({"error": "Document content is required."}), 400
+
+    try:
+        from docx import Document
+        from docx.shared import Inches, Pt
+        from docx.enum.text import WD_ALIGN_PARAGRAPH
+
+        doc = Document()
+        doc.add_heading(title, 0)
+        doc.add_paragraph(f"Generated by Qiplo AI | Author: {author}")
+        doc.add_paragraph("")
+
+        for para in content.split("\n"):
+            if para.strip():
+                p = doc.add_paragraph(para)
+                p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+
+        filename = f"ai_generated_{int(datetime.now().timestamp())}.docx"
+        out_path = SEARCH_FILES_DIR / filename
+        doc.save(str(out_path))
+
+        return jsonify({
+            "status": "ok",
+            "filename": filename,
+            "path": filename,
+            "download_url": f"/api/download/{filename}",
+            "size": out_path.stat().st_size,
+        })
+    except Exception as e:
+        return jsonify({"error": f"DOCX generation failed: {e}"}), 500
+
+
+@app.route("/api/ai/generate-pdf", methods=["POST"])
+def ai_generate_pdf():
+    data = request.json or {}
+    title = (data.get("title") or "AI Generated Report").strip()
+    content = (data.get("content") or "").strip()
+    author = (data.get("author") or "Qiplo AI").strip()
+
+    if not content:
+        return jsonify({"error": "PDF content is required."}), 400
+
+    try:
+        from reportlab.lib import colors
+        from reportlab.lib.pagesizes import letter
+        from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+        from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+        from reportlab.lib.units import inch
+
+        filename = f"ai_generated_{int(datetime.now().timestamp())}.pdf"
+        out_path = SEARCH_FILES_DIR / filename
+        doc = SimpleDocTemplate(str(out_path), pagesize=letter)
+        styles = getSampleStyleSheet()
+        story = []
+
+        title_style = ParagraphStyle(
+            "CustomTitle",
+            parent=styles["Heading1"],
+            fontSize=22,
+            textColor=colors.HexColor("#4F46E5"),
+            spaceAfter=14,
+        )
+        story.append(Paragraph(title, title_style))
+        story.append(Spacer(1, 6))
+        story.append(Paragraph(f"Generated by Qiplo AI | Author: {author}", styles["Normal"]))
+        story.append(Spacer(1, 18))
+
+        body_style = ParagraphStyle(
+            "CustomBody",
+            parent=styles["BodyText"],
+            fontSize=11,
+            leading=16,
+            spaceAfter=10,
+        )
+        for para in content.split("\n"):
+            if para.strip():
+                story.append(Paragraph(para, body_style))
+
+        doc.build(story)
+
+        return jsonify({
+            "status": "ok",
+            "filename": filename,
+            "path": filename,
+            "download_url": f"/api/download/{filename}",
+            "size": out_path.stat().st_size,
+        })
+    except Exception as e:
+        return jsonify({"error": f"PDF generation failed: {e}"}), 500
+
+
+@app.route("/api/ai/generate-pptx", methods=["POST"])
+def ai_generate_pptx():
+    data = request.json or {}
+    title = (data.get("title") or "AI Generated Presentation").strip()
+    content = (data.get("content") or "").strip()
+    author = (data.get("author") or "Qiplo AI").strip()
+
+    if not content:
+        return jsonify({"error": "Presentation content is required."}), 400
+
+    try:
+        from pptx import Presentation
+        from pptx.util import Inches, Pt
+        from pptx.enum.text import PP_ALIGN
+
+        prs = Presentation()
+        prs.slide_width = Inches(13.333)
+        prs.slide_height = Inches(7.5)
+
+        slide_layout = prs.slide_layouts[0]
+        slide = prs.slides.add_slide(slide_layout)
+        slide.shapes.title.text = title
+        slide.placeholders[1].text = f"Generated by Qiplo AI | {author}"
+
+        lines = [line for line in content.split("\n") if line.strip()]
+        chunk_size = 5
+        for i in range(0, len(lines), chunk_size):
+            chunk = lines[i:i + chunk_size]
+            slide_layout = prs.slide_layouts[1]
+            slide = prs.slides.add_slide(slide_layout)
+            slide.shapes.title.text = f"Slide {i // chunk_size + 2}"
+            tf = slide.placeholders[1].text_frame
+            tf.clear()
+            for idx, line in enumerate(chunk):
+                p = tf.add_paragraph()
+                p.text = line
+                p.level = 0
+                if idx == 0:
+                    p.font.size = Pt(20)
+                    p.font.bold = True
+
+        filename = f"ai_generated_{int(datetime.now().timestamp())}.pptx"
+        out_path = SEARCH_FILES_DIR / filename
+        prs.save(str(out_path))
+
+        return jsonify({
+            "status": "ok",
+            "filename": filename,
+            "path": filename,
+            "download_url": f"/api/download/{filename}",
+            "size": out_path.stat().st_size,
+        })
+    except Exception as e:
+        return jsonify({"error": f"PPTX generation failed: {e}"}), 500
+
+
+THEME_PALETTES = {
+    "indigo": {
+        "bg": "#0B0D14",
+        "surface": "#141824",
+        "accent": "#4F46E5",
+        "accent_2": "#6366F1",
+        "text": "#FFFFFF",
+        "muted": "#94A3B8",
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "danger": "#EF4444",
+    },
+    "emerald": {
+        "bg": "#022C22",
+        "surface": "#064E3B",
+        "accent": "#10B981",
+        "accent_2": "#34D399",
+        "text": "#ECFDF5",
+        "muted": "#A7F3D0",
+        "success": "#6EE7B7",
+        "warning": "#FCD34D",
+        "danger": "#FCA5A5",
+    },
+    "amber": {
+        "bg": "#1C1917",
+        "surface": "#292524",
+        "accent": "#F59E0B",
+        "accent_2": "#FBBF24",
+        "text": "#FFFBEB",
+        "muted": "#D6D3D1",
+        "success": "#34D399",
+        "warning": "#FCD34D",
+        "danger": "#FCA5A5",
+    },
+    "crimson": {
+        "bg": "#1A0505",
+        "surface": "#2E0A0A",
+        "accent": "#EF4444",
+        "accent_2": "#F87171",
+        "text": "#FEF2F2",
+        "muted": "#FECACA",
+        "success": "#6EE7B7",
+        "warning": "#FCD34D",
+        "danger": "#FCA5A5",
+    },
+    "cyan": {
+        "bg": "#042F2E",
+        "surface": "#0E4D4A",
+        "accent": "#06B6D4",
+        "accent_2": "#22D3EE",
+        "text": "#ECFEFF",
+        "muted": "#A5F3FC",
+        "success": "#6EE7B7",
+        "warning": "#FCD34D",
+        "danger": "#FCA5A5",
+    },
+    "light": {
+        "bg": "#FFFFFF",
+        "surface": "#F3F4F6",
+        "accent": "#4F46E5",
+        "accent_2": "#6366F1",
+        "text": "#0F172A",
+        "muted": "#475569",
+        "success": "#059669",
+        "warning": "#D97706",
+        "danger": "#DC2626",
+    },
+}
+
+
+def _hex_to_rgb(hex_color):
+    hex_color = hex_color.lstrip("#")
+    return tuple(int(hex_color[i:i + 2], 16) for i in (0, 2, 4))
+
+
+def _apply_pptx_theme(prs, palette_name="indigo"):
+    palette = THEME_PALETTES.get(palette_name, THEME_PALETTES["indigo"])
+    from pptx.dml.color import RGBColor
+    from pptx.enum.text import PP_ALIGN
+
+    slide_width = prs.slide_width
+    slide_height = prs.slide_height
+
+    for slide in prs.slides:
+        background = slide.background
+        fill = background.fill
+        fill.solid()
+        fill.fore_color.rgb = RGBColor(*_hex_to_rgb(palette["bg"]))
+
+        for shape in slide.shapes:
+            if not shape.has_text_frame:
+                continue
+            for paragraph in shape.text_frame.paragraphs:
+                for run in paragraph.runs:
+                    run.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
+
+
+def _add_pptx_slide(prs, layout_type, data, palette_name="indigo"):
+    from pptx import Presentation
+    from pptx.util import Inches, Pt, Emu
+    from pptx.dml.color import RGBColor
+    from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+    from pptx.enum.shapes import MSO_SHAPE
+
+    palette = THEME_PALETTES.get(palette_name, THEME_PALETTES["indigo"])
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+
+    if layout_type == "title":
+        title = data.get("title", "")
+        subtitle = data.get("subtitle", "")
+        content = data.get("content", "")
+        if title:
+            shape = slide.shapes.add_textbox(Inches(0.8), Inches(2.2), Inches(11.7), Inches(1.4))
+            tf = shape.text_frame
+            tf.word_wrap = True
+            p = tf.paragraphs[0]
+            p.text = title
+            p.font.size = Pt(48)
+            p.font.bold = True
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
+            p.alignment = PP_ALIGN.CENTER
+        if subtitle:
+            shape = slide.shapes.add_textbox(Inches(0.8), Inches(3.7), Inches(11.7), Inches(1.2))
+            tf = shape.text_frame
+            tf.word_wrap = True
+            p = tf.paragraphs[0]
+            p.text = subtitle
+            p.font.size = Pt(20)
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
+            p.alignment = PP_ALIGN.CENTER
+        if content:
+            shape = slide.shapes.add_textbox(Inches(0.8), Inches(4.8), Inches(11.7), Inches(2.0))
+            tf = shape.text_frame
+            tf.word_wrap = True
+            for para in content.split("\n"):
+                if para.strip():
+                    p = tf.add_paragraph()
+                    p.text = para.strip()
+                    p.font.size = Pt(14)
+                    p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
+                    p.alignment = PP_ALIGN.CENTER
+
+    elif layout_type == "content":
+        title = data.get("title", "")
+        bullets = data.get("bullets", [])
+        subtitle = data.get("subtitle", "")
+        if title:
+            shape = slide.shapes.add_textbox(Inches(0.7), Inches(0.6), Inches(12.0), Inches(1.0))
+            tf = shape.text_frame
+            p = tf.paragraphs[0]
+            p.text = title
+            p.font.size = Pt(36)
+            p.font.bold = True
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
+        if subtitle:
+            shape = slide.shapes.add_textbox(Inches(0.7), Inches(1.4), Inches(12.0), Inches(0.5))
+            tf = shape.text_frame
+            p = tf.paragraphs[0]
+            p.text = subtitle
+            p.font.size = Pt(16)
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
+        if bullets:
+            shape = slide.shapes.add_textbox(Inches(0.7), Inches(2.1), Inches(12.0), Inches(5.0))
+            tf = shape.text_frame
+            tf.word_wrap = True
+            for idx, bullet in enumerate(bullets):
+                if idx == 0:
+                    p = tf.paragraphs[0]
+                else:
+                    p = tf.add_paragraph()
+                p.text = bullet
+                p.font.size = Pt(18)
+                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
+                p.space_after = Pt(10)
+                p.level = 0
+
+    elif layout_type == "two_column":
+        title = data.get("title", "")
+        left_title = data.get("left_title", "")
+        left_items = data.get("left_items", [])
+        right_title = data.get("right_title", "")
+        right_items = data.get("right_items", [])
+        if title:
+            shape = slide.shapes.add_textbox(Inches(0.7), Inches(0.5), Inches(12.0), Inches(0.8))
+            tf = shape.text_frame
+            p = tf.paragraphs[0]
+            p.text = title
+            p.font.size = Pt(32)
+            p.font.bold = True
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
+        if left_title:
+            shape = slide.shapes.add_textbox(Inches(0.7), Inches(1.4), Inches(5.5), Inches(0.5))
+            tf = shape.text_frame
+            p = tf.paragraphs[0]
+            p.text = left_title
+            p.font.size = Pt(20)
+            p.font.bold = True
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent_2"]))
+        if left_items:
+            shape = slide.shapes.add_textbox(Inches(0.7), Inches(2.0), Inches(5.5), Inches(5.2))
+            tf = shape.text_frame
+            tf.word_wrap = True
+            for idx, item in enumerate(left_items):
+                p = tf.paragraphs[0] if idx == 0 else tf.add_paragraph()
+                p.text = item
+                p.font.size = Pt(16)
+                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
+                p.space_after = Pt(8)
+        if right_title:
+            shape = slide.shapes.add_textbox(Inches(7.0), Inches(1.4), Inches(5.5), Inches(0.5))
+            tf = shape.text_frame
+            p = tf.paragraphs[0]
+            p.text = right_title
+            p.font.size = Pt(20)
+            p.font.bold = True
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent_2"]))
+        if right_items:
+            shape = slide.shapes.add_textbox(Inches(7.0), Inches(2.0), Inches(5.5), Inches(5.2))
+            tf = shape.text_frame
+            tf.word_wrap = True
+            for idx, item in enumerate(right_items):
+                p = tf.paragraphs[0] if idx == 0 else tf.add_paragraph()
+                p.text = item
+                p.font.size = Pt(16)
+                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
+                p.space_after = Pt(8)
+
+    elif layout_type == "image_right":
+        title = data.get("title", "")
+        bullets = data.get("bullets", [])
+        image_url = data.get("image_url")
+        if title:
+            shape = slide.shapes.add_textbox(Inches(0.7), Inches(0.5), Inches(7.5), Inches(0.8))
+            tf = shape.text_frame
+            p = tf.paragraphs[0]
+            p.text = title
+            p.font.size = Pt(32)
+            p.font.bold = True
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
+        if bullets:
+            shape = slide.shapes.add_textbox(Inches(0.7), Inches(1.4), Inches(7.5), Inches(5.5))
+            tf = shape.text_frame
+            tf.word_wrap = True
+            for idx, bullet in enumerate(bullets):
+                p = tf.paragraphs[0] if idx == 0 else tf.add_paragraph()
+                p.text = bullet
+                p.font.size = Pt(16)
+                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
+                p.space_after = Pt(8)
+        if image_url:
+            try:
+                slide.shapes.add_picture(image_url, Inches(8.5), Inches(1.8), width=Inches(4.2))
+            except Exception:
+                pass
+
+    elif layout_type == "quote":
+        quote = data.get("quote", "")
+        attribution = data.get("attribution", "")
+        if quote:
+            shape = slide.shapes.add_textbox(Inches(1.0), Inches(2.5), Inches(11.3), Inches(2.5))
+            tf = shape.text_frame
+            tf.word_wrap = True
+            p = tf.paragraphs[0]
+            p.text = f'"{quote}"'
+            p.font.size = Pt(32)
+            p.font.italic = True
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent_2"]))
+            p.alignment = PP_ALIGN.CENTER
+        if attribution:
+            shape = slide.shapes.add_textbox(Inches(1.0), Inches(5.0), Inches(11.3), Inches(0.8))
+            tf = shape.text_frame
+            p = tf.paragraphs[0]
+            p.text = f"— {attribution}"
+            p.font.size = Pt(16)
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
+            p.alignment = PP_ALIGN.CENTER
+
+    elif layout_type == "timeline":
+        title = data.get("title", "")
+        steps = data.get("steps", [])
+        if title:
+            shape = slide.shapes.add_textbox(Inches(0.7), Inches(0.5), Inches(12.0), Inches(0.8))
+            tf = shape.text_frame
+            p = tf.paragraphs[0]
+            p.text = title
+            p.font.size = Pt(32)
+            p.font.bold = True
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
+        if steps:
+            box_width = Inches(2.6)
+            box_height = Inches(1.6)
+            start_x = Inches(0.8)
+            y = Inches(2.0)
+            gap = Inches(0.4)
+            for idx, step in enumerate(steps):
+                x = start_x + idx * (box_width + gap)
+                rect = slide.shapes.add_shape(
+                    MSO_SHAPE.ROUNDED_RECTANGLE, x, y, box_width, box_height
+                )
+                rect.fill.solid()
+                rect.fill.fore_color.rgb = RGBColor(*_hex_to_rgb(palette["surface"]))
+                rect.line.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
+                rect.line.width = Pt(1.5)
+                tf = rect.text_frame
+                tf.word_wrap = True
+                p = tf.paragraphs[0]
+                p.text = step.get("title", f"Step {idx + 1}")
+                p.font.size = Pt(14)
+                p.font.bold = True
+                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
+                desc = step.get("description", "")
+                if desc:
+                    p2 = tf.add_paragraph()
+                    p2.text = desc
+                    p2.font.size = Pt(12)
+                    p2.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
+                    p2.space_before = Pt(6)
+
+    elif layout_type == "closing":
+        title = data.get("title", "")
+        subtitle = data.get("subtitle", "")
+        contact = data.get("contact", "")
+        if title:
+            shape = slide.shapes.add_textbox(Inches(0.8), Inches(2.6), Inches(11.7), Inches(1.2))
+            tf = shape.text_frame
+            p = tf.paragraphs[0]
+            p.text = title
+            p.font.size = Pt(44)
+            p.font.bold = True
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
+            p.alignment = PP_ALIGN.CENTER
+        if subtitle:
+            shape = slide.shapes.add_textbox(Inches(0.8), Inches(4.0), Inches(11.7), Inches(0.8))
+            tf = shape.text_frame
+            p = tf.paragraphs[0]
+            p.text = subtitle
+            p.font.size = Pt(18)
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
+            p.alignment = PP_ALIGN.CENTER
+        if contact:
+            shape = slide.shapes.add_textbox(Inches(0.8), Inches(5.0), Inches(11.7), Inches(0.8))
+            tf = shape.text_frame
+            p = tf.paragraphs[0]
+            p.text = contact
+            p.font.size = Pt(14)
+            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent_2"]))
+            p.alignment = PP_ALIGN.CENTER
+
+
+def build_gamma_pptx(slides_data, palette_name="indigo", author="Qiplo AI"):
+    from pptx import Presentation
+    from pptx.util import Inches, Pt
+    from pptx.dml.color import RGBColor
+
+    prs = Presentation()
+    prs.slide_width = Inches(13.333)
+    prs.slide_height = Inches(7.5)
+
+    for slide_def in slides_data:
+        layout = slide_def.get("layout", "content")
+        _add_pptx_slide(prs, layout, slide_def, palette_name=palette_name)
+
+    _apply_pptx_theme(prs, palette_name=palette_name)
+    return prs
+
+
+@app.route("/api/ai/generate-gamma-pptx", methods=["POST"])
+def ai_generate_gamma_pptx():
+    data = request.json or {}
+    title = (data.get("title") or "Gamma Style Presentation").strip()
+    content = (data.get("content") or "").strip()
+    author = (data.get("author") or "Qiplo AI").strip()
+    palette_name = (data.get("theme") or "indigo").strip().lower()
+    num_slides = int(data.get("num_slides") or 5)
+    layout_mode = (data.get("layout_mode") or "auto").strip().lower()
+
+    if palette_name not in THEME_PALETTES:
+        palette_name = "indigo"
+
+    if not content:
+        return jsonify({"error": "Presentation content or prompt is required."}), 400
+
+    try:
+        lines = [line.strip() for line in content.split("\n") if line.strip()]
+        if not lines:
+            return jsonify({"error": "Content is empty."}), 400
+
+        slides_data = []
+
+        # Slide 1: Title
+        slides_data.append({
+            "layout": "title",
+            "title": title,
+            "subtitle": f"Generated by {author}",
+            "content": lines[0] if len(lines) > 0 else "",
+        })
+
+        # Distribute remaining lines across content slides
+        remaining = lines[1:] if len(lines) > 1 else [title]
+        chunk_size = max(1, min(6, (len(remaining) + max(0, num_slides - 1) - 1) // max(1, num_slides - 1)))
+
+        for i in range(0, len(remaining), chunk_size):
+            chunk = remaining[i:i + chunk_size]
+            if layout_mode == "auto":
+                layout_type = "content"
+            else:
+                layout_type = layout_mode
+            slides_data.append({
+                "layout": layout_type,
+                "title": chunk[0] if chunk else f"Slide {i // chunk_size + 2}",
+                "bullets": chunk,
+                "subtitle": "",
+            })
+
+        slides_data = slides_data[:num_slides]
+
+        # If content type is generic, enrich with two_column / image_right / timeline / quote layouts
+        if layout_mode == "gamma":
+            enriched = [slides_data[0]]
+            for idx, s in enumerate(slides_data[1:], start=1):
+                if idx % 4 == 1:
+                    enriched.append({
+                        "layout": "two_column",
+                        "title": s.get("title", ""),
+                        "left_title": "Key Insight",
+                        "left_items": s.get("bullets", [])[:3],
+                        "right_title": "Supporting Data",
+                        "right_items": s.get("bullets", [])[3:6],
+                    })
+                elif idx % 4 == 2:
+                    enriched.append({
+                        "layout": "image_right",
+                        "title": s.get("title", ""),
+                        "bullets": s.get("bullets", []),
+                    })
+                elif idx % 4 == 3:
+                    enriched.append({
+                        "layout": "timeline",
+                        "title": s.get("title", ""),
+                        "steps": [
+                            {"title": item, "description": ""} for item in s.get("bullets", [])[:4]
+                        ],
+                    })
+                else:
+                    enriched.append({
+                        "layout": "quote",
+                        "quote": s.get("bullets", [""])[0] if s.get("bullets") else "",
+                        "attribution": author,
+                    })
+            slides_data = enriched[:num_slides]
+
+        prs = build_gamma_pptx(slides_data, palette_name=palette_name, author=author)
+        filename = f"gamma_presentation_{int(datetime.now().timestamp())}.pptx"
+        out_path = SEARCH_FILES_DIR / filename
+        prs.save(str(out_path))
+
+        return jsonify({
+            "status": "ok",
+            "filename": filename,
+            "path": filename,
+            "download_url": f"/api/download/{filename}",
+            "size": out_path.stat().st_size,
+            "slides": len(slides_data),
+            "layout_mode": layout_mode,
+            "theme": palette_name,
+        })
+    except Exception as e:
+        return jsonify({"error": f"Gamma PPTX generation failed: {e}"}), 500
+
+
+@app.route("/api/ai/generate-document", methods=["POST"])
+def ai_generate_document():
+    data = request.json or {}
+    title = (data.get("title") or "AI Generated Document").strip()
+    content = (data.get("content") or "").strip()
+    author = (data.get("author") or "Qiplo AI").strip()
+    doc_type = (data.get("doc_type") or "report").strip().lower()
+    palette_name = (data.get("theme") or "indigo").strip().lower()
+
+    if palette_name not in THEME_PALETTES:
+        palette_name = "indigo"
+
+    if not content:
+        return jsonify({"error": "Document content is required."}), 400
+
+    try:
+        from docx import Document
+        from docx.shared import Inches, Pt, RGBColor
+        from docx.enum.text import WD_ALIGN_PARAGRAPH
+
+        palette = THEME_PALETTES[palette_name]
+        accent_rgb = _hex_to_rgb(palette["accent"])
+        text_rgb = _hex_to_rgb(palette["text"])
+        muted_rgb = _hex_to_rgb(palette["muted"])
+
+        doc = Document()
+        style = doc.styles["Normal"]
+        font = style.font
+        font.name = "Inter"
+        font.size = Pt(11)
+        font.color.rgb = RGBColor(*text_rgb)
+
+        section = doc.sections[0]
+        section.top_margin = Inches(1)
+        section.bottom_margin = Inches(1)
+        section.left_margin = Inches(1)
+        section.right_margin = Inches(1)
+
+        heading = doc.add_heading(title, level=0)
+        heading.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        for run in heading.runs:
+            run.font.color.rgb = RGBColor(*accent_rgb)
+            run.font.size = Pt(28)
+
+        meta = doc.add_paragraph()
+        meta.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run = meta.add_run(f"Generated by {author} | Type: {doc_type}")
+        run.font.color.rgb = RGBColor(*muted_rgb)
+        run.font.size = Pt(10)
+
+        doc.add_paragraph("")
+
+        for para in content.split("\n"):
+            text = para.strip()
+            if not text:
+                continue
+            if text.startswith("# "):
+                p = doc.add_heading(text[2:].strip(), level=1)
+                for run in p.runs:
+                    run.font.color.rgb = RGBColor(*accent_rgb)
+            elif text.startswith("## "):
+                p = doc.add_heading(text[3:].strip(), level=2)
+                for run in p.runs:
+                    run.font.color.rgb = RGBColor(*accent_rgb)
+            elif text.startswith("- "):
+                p = doc.add_paragraph(text[2:].strip(), style="List Bullet")
+                for run in p.runs:
+                    run.font.color.rgb = RGBColor(*text_rgb)
+            elif text.startswith("> "):
+                p = doc.add_paragraph()
+                run = p.add_run(text[2:].strip())
+                run.italic = True
+                run.font.color.rgb = RGBColor(*muted_rgb)
+            else:
+                p = doc.add_paragraph(text)
+                for run in p.runs:
+                    run.font.color.rgb = RGBColor(*text_rgb)
+
+        filename = f"gamma_document_{int(datetime.now().timestamp())}.docx"
+        out_path = SEARCH_FILES_DIR / filename
+        doc.save(str(out_path))
+
+        return jsonify({
+            "status": "ok",
+            "filename": filename,
+            "path": filename,
+            "download_url": f"/api/download/{filename}",
+            "size": out_path.stat().st_size,
+            "doc_type": doc_type,
+            "theme": palette_name,
+        })
+    except Exception as e:
+        return jsonify({"error": f"Document generation failed: {e}"}), 500
+
+
+@app.route("/api/ai/generate-social-card", methods=["POST"])
+def ai_generate_social_card():
+    data = request.json or {}
+    title = (data.get("title") or "").strip()
+    content = (data.get("content") or "").strip()
+    platform = (data.get("platform") or "linkedin").strip().lower()
+    palette_name = (data.get("theme") or "indigo").strip().lower()
+
+    if palette_name not in THEME_PALETTES:
+        palette_name = "indigo"
+
+    if not content:
+        return jsonify({"error": "Card content is required."}), 400
+
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+        import textwrap
+
+        palette = THEME_PALETTES[palette_name]
+        width, height = 1200, 630
+        img = Image.new("RGB", (width, height), palette["bg"])
+        draw = ImageDraw.Draw(img)
+
+        accent_rgb = _hex_to_rgb(palette["accent"])
+        text_rgb = _hex_to_rgb(palette["text"])
+        muted_rgb = _hex_to_rgb(palette["muted"])
+
+        draw.rectangle([0, 0, width, 8], fill=accent_rgb)
+
+        try:
+            font_title = ImageFont.truetype("arial.ttf", 52)
+            font_body = ImageFont.truetype("arial.ttf", 28)
+            font_meta = ImageFont.truetype("arial.ttf", 20)
+        except Exception:
+            font_title = ImageFont.load_default()
+            font_body = ImageFont.load_default()
+            font_meta = ImageFont.load_default()
+
+        y = 60
+        if title:
+            for line in textwrap.wrap(title, width=28):
+                draw.text((60, y), line, font=font_title, fill=text_rgb)
+                y += 70
+            y += 20
+
+        for line in textwrap.wrap(content, width=48):
+            draw.text((60, y), line, font=font_body, fill=muted_rgb)
+            y += 38
+
+        footer = f"Qiplo AI | {platform.title()} | Generated with Gamma Engine"
+        draw.text((60, height - 50), footer, font=font_meta, fill=accent_rgb)
+
+        filename = f"gamma_social_{platform}_{int(datetime.now().timestamp())}.png"
+        out_path = SEARCH_FILES_DIR / filename
+        img.save(str(out_path), "PNG")
+
+        return jsonify({
+            "status": "ok",
+            "filename": filename,
+            "path": filename,
+            "download_url": f"/api/download/{filename}",
+            "size": out_path.stat().st_size,
+            "platform": platform,
+            "theme": palette_name,
+        })
+    except Exception as e:
+        return jsonify({"error": f"Social card generation failed: {e}"}), 500
 
 
 if __name__ == "__main__":
