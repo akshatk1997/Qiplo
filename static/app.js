@@ -177,9 +177,19 @@ function renderRows() {
     thead.innerHTML = `<tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr>`;
     rows.innerHTML = '';
 
-    const filtered = filterValue === 'all'
+    const searchInput = document.getElementById('customerSearchInput');
+    const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+    let filtered = filterValue === 'all'
         ? predictionData
         : predictionData.filter(item => item.prediction_label === filterValue);
+
+    if (searchTerm) {
+        filtered = filtered.filter(item => {
+            const idVal = idCol ? String(item[idCol]) : String(item.customer_id);
+            return idVal.toLowerCase().includes(searchTerm);
+        });
+    }
 
     if (!filtered.length) {
         rows.innerHTML = `<tr><td colspan="${headers.length}" class="empty">No records to display yet. Upload a file to begin.</td></tr>`;
@@ -442,6 +452,10 @@ document.getElementById('addSourceBtn').addEventListener('click', () => {
 document.getElementById('fileInput').addEventListener('change', () => uploadFile());
 setupDragAndDrop();
 document.getElementById('riskFilter').addEventListener('change', renderRows);
+const custSearch = document.getElementById('customerSearchInput');
+if (custSearch) {
+    custSearch.addEventListener('input', renderRows);
+}
 document.getElementById('roleSelect').addEventListener('change', loadDashboard);
 document.getElementById('exportTableauBtn').addEventListener('click', () => {
     window.open('/api/export/tableau', '_blank');
