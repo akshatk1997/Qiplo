@@ -115,11 +115,11 @@
         <section class="studioPane">
             <div class="studioTabs">
                 <button class="tab active" data-tab="overview" type="button">Overview</button>
-                <button class="tab" data-tab="actions" type="button">Recommendations</button>
+                <button class="tab" data-tab="actions" type="button">Actions</button>
                 <button class="tab" data-tab="customers" type="button">Customers</button>
                 <button class="tab" data-tab="business" type="button">Business Hub</button>
                 <button class="tab" data-tab="presentation" type="button">Presentation</button>
-                <button class="tab" data-tab="guide" type="button"><i data-lucide="book-marked" class="lucide-icon"></i> Guide</button>
+                <button class="tab" data-tab="guide" type="button"><i data-lucide="book-marked" class="lucide-icon"></i> Guide Book</button>
                 <button class="tab" data-tab="copilot" type="button"><i data-lucide="brain-circuit" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Qiplo Copilot</button>
             </div>
 
@@ -1022,26 +1022,52 @@
                 <button onclick="closeToolInfo()" style="background: transparent; border: none; color: var(--muted); font-size: 1.6rem; cursor: pointer; line-height: 1;">&times;</button>
             </div>
             
-            <div style="font-size: 0.9rem; line-height: 1.6; color: var(--text);">
-                <p style="margin-top: 0;">
+            <div style="font-size: 0.88rem; line-height: 1.55; color: var(--text);">
+                <p style="margin-top: 0; margin-bottom: 12px;">
                     <strong>Qiplo</strong> is an AI-powered Churn Retention Intelligence and customer risk modeling platform. It enables customer success managers, finance directors, and executives to proactively predict which accounts are about to cancel their subscriptions, assess the associated financial impact, and trigger recovery campaigns.
                 </p>
 
-                <h4 style="color: var(--accent-2); margin: 16px 0 6px; font-family: var(--font-heading);">⚙️ Core Operational Process</h4>
-                <ol style="margin: 0; padding-left: 20px; color: var(--muted);">
-                    <li><strong>Data Integration & Upload</strong>: Users drop active billing logs or CRM CSV exports containing user fields, contract formats, and charges.</li>
-                    <li><strong>XGBoost Churn Risk Model</strong>: The system processes database parameters to calculate a probability score (0% to 100%) for each customer.</li>
-                    <li><strong>Financial Impact Weighted Cohorting</strong>: Weighs probability scores against active monthly charges to highlight expected monthly recurring revenue (MRR) at risk.</li>
-                    <li><strong>Prescriptive Playbooks & Slide Decks</strong>: Generates customized stakeholder presentations and workflows mapping actionable templates, font profiles, and layouts.</li>
-                    <li><strong>Retention Actions & Notes</strong>: Success teams track callback status, note accounts, and schedule discount migrations.</li>
-                </ol>
+                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">📊 1. Overview Dashboard</h4>
+                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
+                    <strong>Capabilities:</strong> Real-time risk distribution metrics, at-risk MRR tracking, service performance charts, and XGBoost machine learning model metrics (Accuracy, Precision, Recall, and ROC AUC).<br/>
+                    <strong>Usecase:</strong> Provides executives with a single-pane-of-glass overview of company revenue health and predictions reliability.
+                </p>
 
-                <h4 style="color: var(--accent-2); margin: 16px 0 6px; font-family: var(--font-heading);">📊 Core Capabilities</h4>
-                <ul style="margin: 0; padding-left: 20px; color: var(--muted);">
-                    <li><strong>Business Retention Intelligence</strong>: Track risk exposure across regions, contract terms, billing options, and customer types.</li>
-                    <li><strong>AI Copilot Integration</strong>: Ask analytical questions to extract SQL-backed business intelligence instantly.</li>
-                    <li><strong>Creative Media Hub</strong>: Add copyright-free stock photography dynamically across templates (Unsplash, Pixabay, Pexels, Pinterest).</li>
-                </ul>
+                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">🎯 2. Actions Hub</h4>
+                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
+                    <strong>Capabilities:</strong> Role-based (Sales, Support, Executive, Manager) retention strategy panels displaying live analyzed diagnostics and performance recommendations based on dataset statistics.<br/>
+                    <strong>Usecase:</strong> Aligns cross-functional departments on recovery campaigns to prevent voluntary and involuntary churn.
+                </p>
+
+                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">👥 3. Customers Database</h4>
+                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
+                    <strong>Capabilities:</strong> Granular results database viewer with live customer name/ID text filtering and risk classification indicators.<br/>
+                    <strong>Usecase:</strong> Allows Customer Success Managers to query specific accounts, review history, and view active manager assignments.
+                </p>
+
+                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">💼 4. Business Hub (Simulator & CRM Sync)</h4>
+                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
+                    <strong>Capabilities:</strong> Interactive ROI campaign simulator sliders, CRM webhook connectors (Salesforce, HubSpot, Stripe), and automated CSV report delivery schedulers.<br/>
+                    <strong>Usecase:</strong> Models retention coupon payout margins, automates CRM software streams, and schedules deliveries.
+                </p>
+
+                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">✨ 5. Presentation Slide Exporter</h4>
+                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
+                    <strong>Capabilities:</strong> Automated slide exporter translating raw analytics summaries into high-quality PowerPoint PPTX decks with responsive layouts.<br/>
+                    <strong>Usecase:</strong> Empowers corporate directors to present polished retention pitches to board members and stakeholders.
+                </p>
+
+                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">🧠 6. Qiplo Copilot</h4>
+                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
+                    <strong>Capabilities:</strong> Interactive AI assistant responding to natural language questions with SQL queries.<br/>
+                    <strong>Usecase:</strong> Accelerates analytical lookups by removing SQL coding barriers for business users.
+                </p>
+
+                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">📖 7. Guide Book</h4>
+                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
+                    <strong>Capabilities:</strong> Reference glossary defining standard business parameters (MRR, ARR, LTV, CAC, NRR), legal checklists, and growth playbooks.<br/>
+                    <strong>Usecase:</strong> Keeps team members aligned on corporate standards and regulatory compliance policies.
+                </p>
             </div>
             
             <div style="margin-top: 24px; display: flex; justify-content: flex-end;">
