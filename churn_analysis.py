@@ -162,7 +162,13 @@ def connect_db(db_path: Path | str) -> sqlite3.Connection:
             os.chmod(p, 0o666)
         except Exception:
             pass
-    return sqlite3.connect(p)
+    conn = sqlite3.connect(p, timeout=30.0)
+    try:
+        conn.execute("PRAGMA journal_mode=WAL")
+        conn.execute("PRAGMA synchronous=NORMAL")
+    except Exception:
+        pass
+    return conn
 
 
 def ensure_database(db_path: Path, schema_path: Path, config: dict | None = None) -> None:

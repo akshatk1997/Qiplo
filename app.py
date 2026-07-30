@@ -103,7 +103,12 @@ def get_connection() -> sqlite3.Connection:
             os.chmod(db_p, 0o666)
         except Exception:
             pass
-    conn = sqlite3.connect(db_p)
+    conn = sqlite3.connect(db_p, timeout=30.0)
+    try:
+        conn.execute("PRAGMA journal_mode=WAL")
+        conn.execute("PRAGMA synchronous=NORMAL")
+    except Exception:
+        pass
     conn.row_factory = sqlite3.Row
     return conn
 
