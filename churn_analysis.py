@@ -211,6 +211,74 @@ class TabularAttentionTransformerClassifier(BaseEstimator, ClassifierMixin):
         imps = np.array([est.feature_importances_ for est in self.estimators_])
         return np.mean(imps, axis=0)
 
+class TabularHybridTransformerEnsembleClassifier(BaseEstimator, ClassifierMixin):
+    def __init__(self, d_model=16, n_heads=2, lr=0.02, epochs=20, n_estimators=5, random_state=42):
+        self.d_model = d_model
+        self.n_heads = n_heads
+        self.lr = lr
+        self.epochs = epochs
+        self.n_estimators = n_estimators
+        self.random_state = random_state
+        self.classes_ = np.array([0, 1])
+        
+    def fit(self, X, y):
+        if hasattr(X, "toarray"):
+            X = X.toarray()
+        elif hasattr(X, "values"):
+            X = X.values
+        else:
+            X = np.asarray(X)
+            
+        y = np.asarray(y)
+        self.n_samples_ = X.shape[0]
+        self.n_features = X.shape[1]
+        
+        self.rf_ = RandomForestClassifier(n_estimators=self.n_estimators * 10, max_depth=8, random_state=self.random_state)
+        self.rf_.fit(X, y)
+        
+        self.transformer_ = TabularAttentionTransformerClassifier(
+            d_model=self.d_model,
+            n_heads=self.n_heads,
+            lr=self.lr,
+            epochs=self.epochs,
+            n_estimators=self.n_estimators,
+            random_state=self.random_state
+        )
+        self.transformer_.fit(X, y)
+        
+        self.transformer_weight_ = min(0.85, max(0.15, self.n_samples_ / 300.0))
+        
+        self.estimators_ = []
+        if hasattr(self.rf_, "estimators_"):
+            self.estimators_.extend(self.rf_.estimators_)
+        if hasattr(self.transformer_, "estimators_"):
+            self.estimators_.extend(self.transformer_.estimators_)
+            
+        return self
+        
+    def predict_proba(self, X):
+        if hasattr(X, "toarray"):
+            X = X.toarray()
+        elif hasattr(X, "values"):
+            X = X.values
+        else:
+            X = np.asarray(X)
+            
+        prob_rf = self.rf_.predict_proba(X)
+        prob_trans = self.transformer_.predict_proba(X)
+        
+        w = self.transformer_weight_
+        return (1.0 - w) * prob_rf + w * prob_trans
+        
+    def predict(self, X):
+        proba = self.predict_proba(X)
+        return (proba[:, 1] >= 0.5).astype(int)
+        
+    @property
+    def feature_importances_(self):
+        w = self.transformer_weight_
+        return (1.0 - w) * self.rf_.feature_importances_ + w * self.transformer_.feature_importances_
+
 DEFAULT_CONFIG_PATH = Path(__file__).resolve().parent / "config" / "company_config.json"
 DEFAULT_FEATURE_COLUMNS = [
     "tenure_months",
@@ -716,7 +784,7 @@ def build_model(config: dict | None = None, fallback: bool = False, feature_colu
     return Pipeline(
         steps=[
             ("preprocessor", preprocessor),
-            ("classifier", TabularAttentionTransformerClassifier(d_model=16, n_heads=2, lr=0.02, epochs=20, n_estimators=5, random_state=42)),
+            ("classifier", TabularHybridTransformerEnsembleClassifier(d_model=16, n_heads=2, lr=0.02, epochs=20, n_estimators=5, random_state=42)),
         ]
     )
 
