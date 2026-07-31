@@ -471,7 +471,6 @@ def create_app() -> Flask:
             }
 
         # Get model version and last retrained metadata
-        import os
         from datetime import datetime
         model_last_trained = "Awaiting initial training"
         model_version = "v1.0.0-RF"

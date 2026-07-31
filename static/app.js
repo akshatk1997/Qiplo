@@ -2197,7 +2197,7 @@ function renderSlideSorterTimeline() {
             <div onclick="selectSlide(${idx})" style="flex: 0 0 140px; height: 95px; border-radius: 6px; padding: 8px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s; position: relative; ${borderStyle} ${backgroundStyle}">
                 <div style="font-size: 0.65rem; color: var(--muted); font-weight: 700; display: flex; justify-content: space-between;">
                     <span>SLIDE ${idx + 1}</span>
-                    <span style="text-transform: uppercase; font-size: 0.58rem; color: var(--accent);">${slide.layout.replace('_', ' ')}</span>
+                    <span style="text-transform: uppercase; font-size: 0.58rem; color: var(--accent);">${(slide.layout || '').replace('_', ' ')}</span>
                 </div>
                 <div style="font-size: 0.72rem; color: var(--text); font-weight: 600; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; margin-bottom: auto; margin-top: 4px;">
                     ${slide.title || 'Untitled Slide'}
