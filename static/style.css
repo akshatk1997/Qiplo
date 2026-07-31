@@ -2286,3 +2286,38 @@ body.dark-theme .ghostBtn:hover {
     box-shadow: 0 2px 6px rgba(79, 70, 229, 0.2) !important;
 }
 
+/* Dynamic Mobile Responsiveness Alignment Adaptations */
+@media (max-width: 600px) {
+    .topbarRight {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 6px !important;
+    }
+    #exportReportBtn {
+        grid-column: span 2 !important;
+    }
+    .topbarRight input[type="text"] {
+        grid-column: span 2 !important;
+    }
+    .topbarRight button {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 6px 10px !important;
+        font-size: 0.78rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .modelMetricsGrid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .materialTelemetry {
+        grid-template-columns: 1fr !important;
+    }
+    .topbarLeft {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px !important;
+    }
+}
+
