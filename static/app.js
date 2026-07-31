@@ -10,6 +10,17 @@ const AudioFeedback = {
 
 // Autonomous Self-Healing Fetch Wrapper with Automatic Retry & Exponential Backoff
 async function safeFetch(url, options = {}, retries = 3, backoff = 400) {
+    const roleSelect = document.getElementById('roleSelect');
+    const activeRole = roleSelect ? roleSelect.value : 'manager';
+    if (!options.headers) {
+        options.headers = {};
+    }
+    // Handle both headers objects and Headers class
+    if (options.headers instanceof Headers) {
+        options.headers.set('X-User-Role', activeRole);
+    } else {
+        options.headers['X-User-Role'] = activeRole;
+    }
     for (let i = 0; i < retries; i++) {
         try {
             const res = await fetch(url, options);
@@ -34,6 +45,7 @@ let riskChart;
 let signalChart;
 let importanceChart;
 let cohortTrendChart;
+let currentAuthorizedRole = localStorage.getItem('user_role') || 'manager';
 let labelMapping = { high_risk: 'high_risk', low_risk: 'low_risk' };
 let lastChartsData = null;
 
@@ -715,7 +727,28 @@ const custSearch = document.getElementById('customerSearchInput');
 if (custSearch) {
     custSearch.addEventListener('input', renderRows);
 }
-document.getElementById('roleSelect').addEventListener('change', loadDashboard);
+document.getElementById('roleSelect').addEventListener('change', async (e) => {
+    const rs = document.getElementById('roleSelect');
+    const targetRole = rs.value;
+    if (targetRole === currentAuthorizedRole) return;
+
+    const codes = {
+        executive: 'executive123',
+        manager: 'manager123',
+        sales: 'sales123',
+        support: 'support123'
+    };
+
+    const code = prompt(`Enter passcode to authorize [${targetRole.toUpperCase()}] access:`);
+    if (code === codes[targetRole]) {
+        currentAuthorizedRole = targetRole;
+        localStorage.setItem('user_role', targetRole);
+        await loadDashboard();
+    } else {
+        alert('Access Denied: Incorrect passcode entered.');
+        rs.value = currentAuthorizedRole;
+    }
+});
 document.getElementById('exportTableauBtn').addEventListener('click', () => {
     window.open('/api/export/tableau', '_blank');
 });
@@ -2761,6 +2794,17 @@ async function loadEnterpriseFeatures() {
             }
         }
 
+        try {
+            const alertsRes = await safeFetch('/api/alerts/config');
+            const alertsData = await alertsRes.json();
+            const slackInput = document.getElementById('alertSlackWebhook');
+            const emailInput = document.getElementById('alertEmailRecipient');
+            if (slackInput) slackInput.value = alertsData.slack_webhook_url || '';
+            if (emailInput) emailInput.value = alertsData.alert_email_recipient || '';
+        } catch (e) {
+            console.error('Failed to load alert channel settings:', e);
+        }
+
         const abRes = await safeFetch('/api/abtests/list');
         const abData = await abRes.json();
         const campaigns = abData.campaigns || [];
@@ -2817,21 +2861,35 @@ async function loadEnterpriseFeatures() {
 function setupEnterpriseListeners() {
     const tabCrm = document.getElementById('intTabCrm');
     const tabReport = document.getElementById('intTabReport');
+    const tabAlerts = document.getElementById('intTabAlerts');
     const subCrm = document.getElementById('crmSubTabBody');
     const subReport = document.getElementById('schedulerSubTabBody');
+    const subAlerts = document.getElementById('alertsSubTabBody');
     
-    if (tabCrm && tabReport && subCrm && subReport) {
+    if (tabCrm && tabReport && tabAlerts && subCrm && subReport && subAlerts) {
         tabCrm.addEventListener('click', () => {
             tabCrm.style.color = 'var(--accent-2)';
             tabReport.style.color = 'var(--muted)';
+            tabAlerts.style.color = 'var(--muted)';
             subCrm.classList.remove('hidden');
             subReport.classList.add('hidden');
+            subAlerts.classList.add('hidden');
         });
         tabReport.addEventListener('click', () => {
             tabReport.style.color = 'var(--accent-2)';
             tabCrm.style.color = 'var(--muted)';
+            tabAlerts.style.color = 'var(--muted)';
             subReport.classList.remove('hidden');
             subCrm.classList.add('hidden');
+            subAlerts.classList.add('hidden');
+        });
+        tabAlerts.addEventListener('click', () => {
+            tabAlerts.style.color = 'var(--accent-2)';
+            tabCrm.style.color = 'var(--muted)';
+            tabReport.style.color = 'var(--muted)';
+            subAlerts.classList.remove('hidden');
+            subCrm.classList.add('hidden');
+            subReport.classList.add('hidden');
         });
     }
 
@@ -2979,6 +3037,32 @@ function setupEnterpriseListeners() {
         });
     }
 
+    const saveAlertChannelsBtn = document.getElementById('saveAlertChannelsBtn');
+    if (saveAlertChannelsBtn) {
+        saveAlertChannelsBtn.addEventListener('click', async () => {
+            AudioFeedback.click();
+            const slack_webhook_url = document.getElementById('alertSlackWebhook').value;
+            const alert_email_recipient = document.getElementById('alertEmailRecipient').value;
+            
+            try {
+                const res = await safeFetch('/api/alerts/config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ slack_webhook_url, alert_email_recipient })
+                });
+                const payload = await res.json();
+                if (payload.status === 'ok') {
+                    alert(payload.message || 'Alert configurations saved.');
+                    await loadEnterpriseFeatures();
+                } else {
+                    alert(payload.error || 'Failed to save alert settings.');
+                }
+            } catch (err) {
+                alert('Save failed: ' + err);
+            }
+        });
+    }
+
     const abForm = document.getElementById('abTestForm');
     if (abForm) {
         abForm.addEventListener('submit', async (e) => {
@@ -3056,7 +3140,14 @@ function setupDemoToggle() {
     }
 }
 
+window.exportAuditLogs = function() {
+    window.location.href = `/api/compliance/audit/export?role=${currentAuthorizedRole}`;
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+    const rs = document.getElementById('roleSelect');
+    if (rs) rs.value = currentAuthorizedRole;
+
     setupThemeToggle();
     setupBusinessGuide();
     setupEnterpriseListeners();
