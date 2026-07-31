@@ -141,6 +141,11 @@ def create_app() -> Flask:
         return [row[1] for row in conn.execute("PRAGMA table_info(customer_churn)").fetchall()]
 
     @app.route("/")
+    @app.route("/dashboard")
+    @app.route("/actions")
+    @app.route("/business")
+    @app.route("/presentation")
+    @app.route("/guide")
     def index() -> str:
         return render_template("index.html")
 
@@ -430,6 +435,9 @@ def create_app() -> Flask:
                 "source": "local",
             }
 
+        # Check if the active dataset is the demo dataset
+        active_sources = conn.execute("SELECT source_id FROM data_sources WHERE is_active = 1").fetchall()
+        is_demo = len(active_sources) == 1 and active_sources[0]["source_id"] == "sample_data"
         conn.close()
 
         # 6. Branding & Config
@@ -448,7 +456,8 @@ def create_app() -> Flask:
             "insights": insights_payload,
             "ai_insights": ai_payload,
             "branding": branding_payload,
-            "model_metrics": model_metrics
+            "model_metrics": model_metrics,
+            "is_demo": is_demo
         })
 
     def load_model_metrics() -> dict:
@@ -1284,6 +1293,12 @@ def create_app() -> Flask:
                     f"*(Powered by Qiplo Ultra-Fast Native AI Engine — 100% Free & Unlimited)*"
                 )
             
+            # Check if current dataset is demo sandbox
+            active_sources = conn.execute("SELECT source_id FROM data_sources WHERE is_active = 1").fetchall()
+            is_demo = len(active_sources) == 1 and active_sources[0]["source_id"] == "sample_data"
+            if is_demo:
+                res_text = "*(Analyzing Demo Sandbox Data)*\n\n" + res_text
+
             conn.close()
             return jsonify({"response": res_text})
         except Exception as ex:

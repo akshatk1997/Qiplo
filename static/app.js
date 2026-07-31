@@ -105,6 +105,11 @@ async function loadDashboard() {
 
         const company = document.getElementById('companyNameInput').value || brandingData.company_name || 'Qiplo Analytics';
         document.getElementById('brandTitle').textContent = company;
+        
+        const demoBadge = document.getElementById('demoBadge');
+        if (demoBadge) {
+            demoBadge.style.display = payload.is_demo ? 'inline-block' : 'none';
+        }
 
         renderSourceMeta();
         renderRows();
@@ -523,9 +528,18 @@ function debounce(func, wait) {
 }
 
 function setupTabs() {
-    const savedTab = localStorage.getItem('active_tab') || 'overview';
+    const routeMap = {
+        '/dashboard': 'overview',
+        '/actions': 'actions',
+        '/business': 'business',
+        '/presentation': 'presentation',
+        '/guide': 'guide'
+    };
+    const currentPath = window.location.pathname;
+    const initialTab = routeMap[currentPath] || localStorage.getItem('active_tab') || 'overview';
+
     document.querySelectorAll('.tab').forEach(tab => {
-        const isTarget = tab.dataset.tab === savedTab;
+        const isTarget = tab.dataset.tab === initialTab;
         tab.classList.toggle('active', isTarget);
         const tabBody = document.getElementById(`tab-${tab.dataset.tab}`);
         if (tabBody) {
@@ -540,6 +554,16 @@ function setupTabs() {
             tab.classList.add('active');
             const targetBody = document.getElementById(`tab-${target}`);
             if (targetBody) targetBody.classList.remove('hidden');
+            
+            const routeMapInverse = {
+                'overview': '/dashboard',
+                'actions': '/actions',
+                'business': '/business',
+                'presentation': '/presentation',
+                'guide': '/guide'
+            };
+            const routePath = routeMapInverse[target] || '/';
+            window.history.pushState(null, '', routePath);
         });
     });
 }
@@ -2483,8 +2507,16 @@ function applyRolePermissions(role) {
         sales: ['overview', 'customers', 'business', 'presentation', 'copilot'],
         support: ['overview', 'actions', 'customers', 'guide', 'copilot']
     };
+    const routeMap = {
+        '/dashboard': 'overview',
+        '/actions': 'actions',
+        '/business': 'business',
+        '/presentation': 'presentation',
+        '/guide': 'guide'
+    };
+    const currentPath = window.location.pathname;
     const allowed = tabAccess[role.toLowerCase()] || tabAccess['executive'];
-    let activeTab = localStorage.getItem('active_tab') || 'overview';
+    let activeTab = routeMap[currentPath] || localStorage.getItem('active_tab') || 'overview';
     
     document.querySelectorAll('.studioTabs .tab').forEach(tab => {
         const tabName = tab.dataset.tab;
