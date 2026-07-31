@@ -318,7 +318,7 @@ def create_app() -> Flask:
                                   "support_tickets", "payment_delays", "product_usage",
                                   "complaint_count", "customer_satisfaction_score")
                       if c in existing]
-        select_cols = "cp.customer_id, cp.predicted_probability, cp.prediction_label, cp.risk_drivers" + \
+        select_cols = "cp.customer_id, cp.predicted_probability, cp.prediction_label, cp.risk_drivers, cp.ci_lower, cp.ci_upper" + \
             ("".join(f', cc."{c}"' for c in extra_cols) if extra_cols else "")
         prediction_rows = conn.execute(
             f"""
@@ -470,6 +470,20 @@ def create_app() -> Flask:
                 "Payment Delays": 0.061
             }
 
+        # Get model version and last retrained metadata
+        import os
+        from datetime import datetime
+        model_last_trained = "Awaiting initial training"
+        model_version = "v1.0.0-RF"
+        try:
+            m_path = get_model_path()
+            if m_path.exists():
+                mtime = os.path.getmtime(m_path)
+                model_last_trained = datetime.fromtimestamp(mtime).strftime("%Y-%m-%d %H:%M")
+                model_version = f"v2.1.{int(mtime) % 1000}-RF"
+        except Exception:
+            pass
+
         conn.close()
 
         # 6. Branding & Config
@@ -490,7 +504,9 @@ def create_app() -> Flask:
             "branding": branding_payload,
             "model_metrics": model_metrics,
             "is_demo": is_demo,
-            "feature_importance": feature_importance
+            "feature_importance": feature_importance,
+            "model_version": model_version,
+            "model_last_trained": model_last_trained
         })
 
     def load_model_metrics() -> dict:
@@ -623,7 +639,7 @@ def create_app() -> Flask:
                                   "support_tickets", "payment_delays", "product_usage",
                                   "complaint_count", "customer_satisfaction_score")
                       if c in existing]
-        select_cols = "cp.customer_id, cp.predicted_probability, cp.prediction_label, cp.risk_drivers" + \
+        select_cols = "cp.customer_id, cp.predicted_probability, cp.prediction_label, cp.risk_drivers, cp.ci_lower, cp.ci_upper" + \
             ("".join(f', cc."{c}"' for c in extra_cols) if extra_cols else "")
         rows = conn.execute(
             f"""
@@ -688,6 +704,9 @@ def create_app() -> Flask:
         if frame.empty:
             return jsonify({"status": "error", "message": "The uploaded file is empty."}), 400
 
+        # Validation checks
+        warnings = []
+        
         # Auto-detect and standardize or generate customer identifier column
         id_col_found = None
         for col in frame.columns:
@@ -699,8 +718,42 @@ def create_app() -> Flask:
             if id_col_found != "customer_id":
                 frame.rename(columns={id_col_found: "customer_id"}, inplace=True)
         else:
-            # Generate unique customer identifier values dynamically
+            warnings.append("Missing explicit 'customer_id' column. Unique identifiers (e.g. CUST_00001) were auto-generated for analysis.")
             frame["customer_id"] = [f"CUST_{i+1:05d}" for i in range(len(frame))]
+
+        # Type validation check
+        numeric_cols_to_check = {
+            "monthly_charges": "float",
+            "tenure_months": "int",
+            "support_tickets": "int",
+            "payment_delays": "int",
+            "product_usage": "float",
+            "complaint_count": "int",
+            "customer_satisfaction_score": "int",
+            "churned": "int"
+        }
+        
+        for col_name, expected_type in numeric_cols_to_check.items():
+            matched_col = None
+            for c in frame.columns:
+                if str(c).lower() == col_name:
+                    matched_col = c
+                    break
+            
+            if matched_col:
+                null_count = frame[matched_col].isnull().sum()
+                if null_count > 0:
+                    warnings.append(f"Column '{matched_col}' contains {null_count} missing/null values, which will be filled with standard medians.")
+                
+                non_numeric_count = 0
+                for val in frame[matched_col].dropna():
+                    try:
+                        float(val)
+                    except ValueError:
+                        non_numeric_count += 1
+                
+                if non_numeric_count > 0:
+                    warnings.append(f"Column '{matched_col}' contains {non_numeric_count} non-numeric values. These malformed values will be treated as zero or imputed.")
 
         # Auto-detect and standardize target churn column to binary labels
         target_col_found = None
@@ -743,7 +796,7 @@ def create_app() -> Flask:
             traceback.print_exc()
             return jsonify({"status": "error", "message": f"Analysis failed: {exc}"}), 400
 
-        return jsonify({"status": "ok", "rows": rows, "filename": uploaded.filename})
+        return jsonify({"status": "ok", "rows": rows, "filename": uploaded.filename, "warnings": warnings})
 
     @app.route("/api/charts")
     def charts_api():

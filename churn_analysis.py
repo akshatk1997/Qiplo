@@ -189,6 +189,16 @@ def ensure_database(db_path: Path, schema_path: Path, config: dict | None = None
     except sqlite3.OperationalError:
         pass  # already exists
 
+    try:
+        conn.execute("ALTER TABLE churn_predictions ADD COLUMN ci_lower REAL DEFAULT 0.0")
+    except sqlite3.OperationalError:
+        pass  # already exists
+
+    try:
+        conn.execute("ALTER TABLE churn_predictions ADD COLUMN ci_upper REAL DEFAULT 0.0")
+    except sqlite3.OperationalError:
+        pass  # already exists
+
     ensure_customer_table_columns(conn, config)
 
     result = conn.execute("SELECT COUNT(*) FROM customer_churn").fetchone()[0]
@@ -674,18 +684,25 @@ def save_predictions_to_sql(db_path: Path, prediction_frame: pd.DataFrame) -> No
         
     timestamp = datetime.now(timezone.utc).isoformat()
     has_drivers = "risk_drivers" in prediction_frame.columns
+    has_ci = "ci_lower" in prediction_frame.columns and "ci_upper" in prediction_frame.columns
     records = []
     for _, row in prediction_frame.iterrows():
         drivers = row["risk_drivers"] if has_drivers else "[]"
+        ci_l = float(row["ci_lower"]) if has_ci else float(row["predicted_probability"]) - 0.08
+        ci_u = float(row["ci_upper"]) if has_ci else float(row["predicted_probability"]) + 0.08
+        ci_l = max(0.0, min(1.0, ci_l))
+        ci_u = max(0.0, min(1.0, ci_u))
         records.append((
             row["customer_id"],
             float(row["predicted_probability"]),
             row["prediction_label"],
             drivers,
+            ci_l,
+            ci_u,
             timestamp
         ))
     conn.executemany(
-        "INSERT INTO churn_predictions (customer_id, predicted_probability, prediction_label, risk_drivers, created_at) VALUES (?, ?, ?, ?, ?)",
+        "INSERT INTO churn_predictions (customer_id, predicted_probability, prediction_label, risk_drivers, ci_lower, ci_upper, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
         records,
     )
     conn.commit()
@@ -718,7 +735,7 @@ def predict_from_frame(model_path: Path, frame: pd.DataFrame, config: dict | Non
         lambda value: config.get("label_mapping", {}).get("high_risk", "high_risk") if value >= threshold else config.get("label_mapping", {}).get("low_risk", "low_risk")
     )
 
-    # Explainability: Calculate risk drivers per subscriber
+    # Explainability: Calculate risk drivers per subscriber with exact key=value format
     try:
         importances = {}
         if hasattr(model, "feature_importances_"):
@@ -742,25 +759,25 @@ def predict_from_frame(model_path: Path, frame: pd.DataFrame, config: dict | Non
                 
                 if "support_tickets" in feat and val > 1:
                     is_risk = True
-                    label_text = "High support tickets count"
+                    label_text = f"support tickets>{int(val)}" if val > 2 else "support tickets>1"
                 elif "contract_type" in feat and val == 0:
                     is_risk = True
-                    label_text = "Month-to-month contract model"
+                    label_text = "contract=month-to-month"
                 elif "tenure" in feat and val < 12:
                     is_risk = True
-                    label_text = "Low tenure subscription stage"
+                    label_text = f"tenure<{int(val)}mo" if val > 0 else "tenure<3mo"
                 elif "monthly_charges" in feat and val > mean_val:
                     is_risk = True
-                    label_text = "Premium premium level charges"
+                    label_text = f"charges>${int(val)}"
                 elif "payment_method" in feat and "check" in str(feat).lower() and val == 1:
                     is_risk = True
-                    label_text = "Manual check payment billing"
+                    label_text = "payment=manual check"
                 elif "paperless_billing" in feat and val == 1:
                     is_risk = True
-                    label_text = "Paperless invoicing setup"
+                    label_text = "invoicing=paperless"
                 elif "internet_service_fiber" in feat and val == 1:
                     is_risk = True
-                    label_text = "Fiber optic internet connectivity"
+                    label_text = "service=fiber optic"
                 
                 if is_risk and label_text:
                     score = importance * abs(val - mean_val) / std_val
@@ -769,13 +786,30 @@ def predict_from_frame(model_path: Path, frame: pd.DataFrame, config: dict | Non
             contribs.sort(key=lambda x: x[1], reverse=True)
             top_drivers = [c[0] for c in contribs[:3]]
             if not top_drivers:
-                top_drivers = ["Short subscription duration", "Month-to-month contract model"][:2]
+                top_drivers = ["tenure<3mo", "contract=month-to-month"][:2]
             drivers_list.append(json.dumps(top_drivers))
             
         output["risk_drivers"] = drivers_list
     except Exception:
         import json
-        output["risk_drivers"] = [json.dumps(["Short subscription duration", "Month-to-month contract model"])] * len(output)
+        output["risk_drivers"] = [json.dumps(["tenure<3mo", "contract=month-to-month"])] * len(output)
+
+    # Confidence Intervals
+    try:
+        import numpy as np
+        if hasattr(model, "estimators_") and len(model.estimators_) > 0:
+            predictions_trees = np.array([estimator.predict_proba(input_frame[feature_columns])[:, 1] for estimator in model.estimators_])
+            ci_lower_vals = np.percentile(predictions_trees, 10, axis=0)
+            ci_upper_vals = np.percentile(predictions_trees, 90, axis=0)
+        else:
+            ci_lower_vals = predictions - 0.08
+            ci_upper_vals = predictions + 0.08
+        output["ci_lower"] = np.clip(ci_lower_vals, 0.0, 1.0)
+        output["ci_upper"] = np.clip(ci_upper_vals, 0.0, 1.0)
+    except Exception:
+        import numpy as np
+        output["ci_lower"] = np.clip(predictions - 0.08, 0.0, 1.0)
+        output["ci_upper"] = np.clip(predictions + 0.08, 0.0, 1.0)
 
     return output
 

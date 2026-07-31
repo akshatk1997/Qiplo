@@ -29,6 +29,8 @@ CREATE TABLE IF NOT EXISTS churn_predictions (
     predicted_probability REAL NOT NULL,
     prediction_label TEXT NOT NULL,
     risk_drivers TEXT DEFAULT '[]',
+    ci_lower REAL DEFAULT 0.0,
+    ci_upper REAL DEFAULT 0.0,
     created_at TEXT NOT NULL
 );
 

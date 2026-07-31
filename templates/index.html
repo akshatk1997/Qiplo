@@ -106,6 +106,7 @@
             </div>
 
             <p id="uploadStatus" class="status">Ready to analyze company data.</p>
+            <div id="uploadValidationFeedback" style="display: none; font-size: 0.72rem; padding: 10px 12px; border-radius: 6px; margin: 10px 0; line-height: 1.4; border: 1px solid rgba(234, 179, 8, 0.3); background: rgba(234, 179, 8, 0.08); color: var(--warning);"></div>
 
             <div class="sourcesList" id="sourcesList">
                 <!-- Sources will be rendered dynamically -->
@@ -146,10 +147,10 @@
                             <p class="aiSub">Generated read of your churn risk</p>
                         </div>
                     </div>
-                    <div class="materialTelemetry" style="margin: 18px 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                    <div class="materialTelemetry" style="margin: 18px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
                         <div class="telemetryCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
                             <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Prediction Engine</span>
-                            <strong style="font-size: 0.95rem; color: var(--accent);">XGBoost Classifier</strong>
+                            <strong style="font-size: 0.95rem; color: var(--accent);">Random Forest Classifier</strong>
                         </div>
                         <div class="telemetryCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
                             <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">System Status</span>
@@ -163,8 +164,16 @@
                             <strong style="font-size: 0.95rem; color: var(--text);" id="modelLatency"><span class="skeleton-loader"></span></strong>
                         </div>
                         <div class="telemetryCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
+                            <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Model Version</span>
+                            <strong style="font-size: 0.95rem; color: var(--accent-2);" id="lblModelVersion">v1.0.0-RF</strong>
+                        </div>
+                        <div class="telemetryCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
+                            <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Last Retrained</span>
+                            <strong style="font-size: 0.95rem; color: var(--accent);" id="lblModelLastTrained">Awaiting training</strong>
+                        </div>
+                        <div class="telemetryCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
                             <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Telemetry Source</span>
-                            <strong style="font-size: 0.95rem; color: var(--accent-2);">Consolidated DB State</strong>
+                            <strong style="font-size: 0.95rem; color: var(--text);">Consolidated DB State</strong>
                         </div>
                     </div>
                     <!-- Model Performance Metrics Card -->
@@ -388,27 +397,47 @@
                         </div>
                     </div>
 
-                    <div class="cohortBlock" style="margin-top: 30px;">
-                        <h3>Cohort Retention Intelligence</h3>
-                        <p class="sectionSub">Heatmapped breakdown of customer retention performance across subscription tenure stages.</p>
-                        <div class="tableWrap">
-                            <table class="cohortTable" style="width: 100%; border-collapse: collapse; text-align: center;">
-                                <thead>
-                                    <tr style="background: var(--surface-2); border-bottom: 2px solid var(--border-strong);">
-                                        <th style="padding: 12px; text-align: left;">Segment Cohort</th>
-                                        <th style="padding: 12px;">Active Accounts</th>
-                                        <th style="padding: 12px;">Month 1</th>
-                                        <th style="padding: 12px;">Month 3</th>
-                                        <th style="padding: 12px;">Month 6</th>
-                                        <th style="padding: 12px;">Month 12+</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="cohortRows">
-                                    <tr>
-                                        <td colspan="6" class="empty" style="padding: 20px;">Awaiting database analysis...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="cohortBlock" style="margin-top: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+                        <div style="background: var(--surface); border: 1px solid var(--border); padding: 16px; border-radius: var(--radius-sm);">
+                            <h3 style="margin-top: 0;">Cohort Segment Churn Trend</h3>
+                            <p class="sectionSub">Select a custom segment to drill down and visualize its time-series churn trend.</p>
+                            <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                                <label for="segmentDrillDownSelect" style="font-size: 0.8rem; color: var(--muted); font-weight: 600;">Segment Dimension:</label>
+                                <select id="segmentDrillDownSelect" class="roleSelect" onchange="updateDrillDownChart()" style="padding: 4px 8px; font-size: 0.8rem;">
+                                    <option value="all">All Subscribers</option>
+                                    <option value="contract_Month-to-month">Month-to-Month Contract</option>
+                                    <option value="contract_One year">One Year Contract</option>
+                                    <option value="contract_Two year">Two Year Contract</option>
+                                    <option value="support_high">High Support Tickets (>=3)</option>
+                                    <option value="support_low">Low Support Tickets (&lt;3)</option>
+                                </select>
+                            </div>
+                            <div class="chartArea" style="height: 180px; position: relative;">
+                                <canvas id="cohortTrendChart"></canvas>
+                            </div>
+                        </div>
+                        <div style="background: var(--surface); border: 1px solid var(--border); padding: 16px; border-radius: var(--radius-sm);">
+                            <h3 style="margin-top: 0;">Cohort Retention Matrix</h3>
+                            <p class="sectionSub">Heatmapped breakdown of customer retention performance across subscription tenure stages.</p>
+                            <div class="tableWrap">
+                                <table class="cohortTable" style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.8rem;">
+                                    <thead>
+                                        <tr style="background: var(--surface-2); border-bottom: 2px solid var(--border-strong);">
+                                            <th style="padding: 12px; text-align: left;">Segment Cohort</th>
+                                            <th style="padding: 12px;">Active Accounts</th>
+                                            <th style="padding: 12px;">Month 1</th>
+                                            <th style="padding: 12px;">Month 3</th>
+                                            <th style="padding: 12px;">Month 6</th>
+                                            <th style="padding: 12px;">Month 12+</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cohortRows">
+                                        <tr>
+                                            <td colspan="6" class="empty" style="padding: 20px;">Awaiting database analysis...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
 
