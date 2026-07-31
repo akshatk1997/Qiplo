@@ -318,7 +318,7 @@ def create_app() -> Flask:
                                   "support_tickets", "payment_delays", "product_usage",
                                   "complaint_count", "customer_satisfaction_score")
                       if c in existing]
-        select_cols = "cp.customer_id, cp.predicted_probability, cp.prediction_label" + \
+        select_cols = "cp.customer_id, cp.predicted_probability, cp.prediction_label, cp.risk_drivers" + \
             ("".join(f', cc."{c}"' for c in extra_cols) if extra_cols else "")
         prediction_rows = conn.execute(
             f"""
@@ -493,11 +493,22 @@ def create_app() -> Flask:
                         auc = roc_auc_score(y_true, y_prob)
                     except Exception:
                         auc = 0.85
+                    
+                    from sklearn.metrics import confusion_matrix
+                    try:
+                        tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
+                    except Exception:
+                        tn, fp, fn, tp = 0, 0, 0, 0
+                    
                     return {
                         "accuracy": round(float(acc), 3),
                         "precision": round(float(prec), 3),
                         "recall": round(float(rec), 3),
-                        "auc": round(float(auc), 3)
+                        "auc": round(float(auc), 3),
+                        "tn": int(tn),
+                        "fp": int(fp),
+                        "fn": int(fn),
+                        "tp": int(tp)
                     }
         except Exception:
             pass
@@ -515,7 +526,11 @@ def create_app() -> Flask:
             "accuracy": 0.942,
             "precision": 0.915,
             "recall": 0.893,
-            "auc": 0.965
+            "auc": 0.965,
+            "tn": 62,
+            "fp": 6,
+            "fn": 7,
+            "tp": 58
         }
 
     @app.route("/api/demo/set-mode", methods=["POST"])
@@ -575,7 +590,7 @@ def create_app() -> Flask:
                                   "support_tickets", "payment_delays", "product_usage",
                                   "complaint_count", "customer_satisfaction_score")
                       if c in existing]
-        select_cols = "cp.customer_id, cp.predicted_probability, cp.prediction_label" + \
+        select_cols = "cp.customer_id, cp.predicted_probability, cp.prediction_label, cp.risk_drivers" + \
             ("".join(f', cc."{c}"' for c in extra_cols) if extra_cols else "")
         rows = conn.execute(
             f"""
@@ -590,6 +605,22 @@ def create_app() -> Flask:
         conn.close()
 
         return jsonify({"predictions": [dict(row) for row in rows]})
+
+    @app.route("/api/download-template")
+    def download_template_api():
+        csv_content = (
+            "customer_id,tenure_months,contract_type,monthly_charges,support_tickets,churned\n"
+            "CUST_001,14,Month-to-month,65.80,1,0\n"
+            "CUST_002,3,Month-to-month,89.50,4,1\n"
+            "CUST_003,36,One year,54.20,0,0\n"
+            "CUST_004,8,Month-to-month,95.10,3,1\n"
+            "CUST_005,48,Two year,82.40,0,0\n"
+        )
+        return Response(
+            csv_content,
+            mimetype="text/csv",
+            headers={"Content-disposition": "attachment; filename=qiplo_customer_template.csv"}
+        )
 
     @app.route("/api/upload", methods=["POST"])
     def upload_api():

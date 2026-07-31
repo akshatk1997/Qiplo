@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS churn_predictions (
     customer_id TEXT PRIMARY KEY,
     predicted_probability REAL NOT NULL,
     prediction_label TEXT NOT NULL,
+    risk_drivers TEXT DEFAULT '[]',
     created_at TEXT NOT NULL
 );
 

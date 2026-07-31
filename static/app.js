@@ -83,6 +83,15 @@ async function loadDashboard() {
             if (prec) prec.textContent = payload.model_metrics.precision;
             if (rec) rec.textContent = payload.model_metrics.recall;
             if (auc) auc.textContent = payload.model_metrics.auc;
+
+            const tn = document.getElementById('valTN');
+            const fp = document.getElementById('valFP');
+            const fn = document.getElementById('valFN');
+            const tp = document.getElementById('valTP');
+            if (tn) tn.textContent = payload.model_metrics.tn !== undefined ? payload.model_metrics.tn : 0;
+            if (fp) fp.textContent = payload.model_metrics.fp !== undefined ? payload.model_metrics.fp : 0;
+            if (fn) fn.textContent = payload.model_metrics.fn !== undefined ? payload.model_metrics.fn : 0;
+            if (tp) tp.textContent = payload.model_metrics.tp !== undefined ? payload.model_metrics.tp : 0;
         }
         labelMapping = brandingData.label_mapping || { high_risk: 'high_risk', low_risk: 'low_risk' };
 
@@ -240,7 +249,24 @@ function renderRows() {
             `;
         }
 
-        const tds = [`<td><div><strong>${idVal}</strong></div>${assignInfo}</td>`,
+        let driversHtml = '';
+        if (item.risk_drivers) {
+            try {
+                const drivers = typeof item.risk_drivers === 'string' ? JSON.parse(item.risk_drivers) : item.risk_drivers;
+                if (drivers && drivers.length) {
+                    driversHtml = `
+                        <div class="risk-drivers-list" style="font-size: 0.7rem; color: #ff007f; margin-top: 6px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
+                            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.65rem; color: var(--muted);">Drivers:</span>
+                            ${drivers.map(d => `<span style="background: rgba(255, 0, 127, 0.08); border: 1px solid rgba(255, 0, 127, 0.15); padding: 1px 6px; border-radius: 4px; color: #ff007f; font-weight: 500;">${d}</span>`).join('')}
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                // Ignore parse errors
+            }
+        }
+
+        const tds = [`<td><div><strong>${idVal}</strong></div>${assignInfo}${driversHtml}</td>`,
             `<td><span class="badge ${labelClass}">${item.prediction_label.replace('_', ' ')}</span></td>`,
             `<td>${probability}</td>`,
             ...extra.map(c => `<td>${cell(item[c])}</td>`)].join('');

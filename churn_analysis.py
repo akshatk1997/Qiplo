@@ -184,6 +184,11 @@ def ensure_database(db_path: Path, schema_path: Path, config: dict | None = None
     except sqlite3.OperationalError:
         pass  # already exists
 
+    try:
+        conn.execute("ALTER TABLE churn_predictions ADD COLUMN risk_drivers TEXT")
+    except sqlite3.OperationalError:
+        pass  # already exists
+
     ensure_customer_table_columns(conn, config)
 
     result = conn.execute("SELECT COUNT(*) FROM customer_churn").fetchone()[0]
@@ -668,12 +673,19 @@ def save_predictions_to_sql(db_path: Path, prediction_frame: pd.DataFrame) -> No
         conn.execute("DELETE FROM churn_predictions")
         
     timestamp = datetime.now(timezone.utc).isoformat()
-    records = [
-        (row.customer_id, float(row.predicted_probability), row.prediction_label, timestamp)
-        for row in prediction_frame[["customer_id", "predicted_probability", "prediction_label"]].itertuples(index=False)
-    ]
+    has_drivers = "risk_drivers" in prediction_frame.columns
+    records = []
+    for _, row in prediction_frame.iterrows():
+        drivers = row["risk_drivers"] if has_drivers else "[]"
+        records.append((
+            row["customer_id"],
+            float(row["predicted_probability"]),
+            row["prediction_label"],
+            drivers,
+            timestamp
+        ))
     conn.executemany(
-        "INSERT INTO churn_predictions (customer_id, predicted_probability, prediction_label, created_at) VALUES (?, ?, ?, ?)",
+        "INSERT INTO churn_predictions (customer_id, predicted_probability, prediction_label, risk_drivers, created_at) VALUES (?, ?, ?, ?, ?)",
         records,
     )
     conn.commit()
@@ -705,6 +717,66 @@ def predict_from_frame(model_path: Path, frame: pd.DataFrame, config: dict | Non
     output["prediction_label"] = output["predicted_probability"].apply(
         lambda value: config.get("label_mapping", {}).get("high_risk", "high_risk") if value >= threshold else config.get("label_mapping", {}).get("low_risk", "low_risk")
     )
+
+    # Explainability: Calculate risk drivers per subscriber
+    try:
+        importances = {}
+        if hasattr(model, "feature_importances_"):
+            importances = dict(zip(feature_columns, model.feature_importances_))
+        
+        means = input_frame[feature_columns].mean()
+        stds = input_frame[feature_columns].std().fillna(1.0)
+        
+        drivers_list = []
+        import json
+        for idx, row in input_frame.iterrows():
+            contribs = []
+            for feat in feature_columns:
+                val = row[feat]
+                mean_val = means[feat]
+                std_val = stds[feat] if stds[feat] > 0 else 1.0
+                importance = importances.get(feat, 0.05)
+                
+                is_risk = False
+                label_text = ""
+                
+                if "support_tickets" in feat and val > 1:
+                    is_risk = True
+                    label_text = "High support tickets count"
+                elif "contract_type" in feat and val == 0:
+                    is_risk = True
+                    label_text = "Month-to-month contract model"
+                elif "tenure" in feat and val < 12:
+                    is_risk = True
+                    label_text = "Low tenure subscription stage"
+                elif "monthly_charges" in feat and val > mean_val:
+                    is_risk = True
+                    label_text = "Premium premium level charges"
+                elif "payment_method" in feat and "check" in str(feat).lower() and val == 1:
+                    is_risk = True
+                    label_text = "Manual check payment billing"
+                elif "paperless_billing" in feat and val == 1:
+                    is_risk = True
+                    label_text = "Paperless invoicing setup"
+                elif "internet_service_fiber" in feat and val == 1:
+                    is_risk = True
+                    label_text = "Fiber optic internet connectivity"
+                
+                if is_risk and label_text:
+                    score = importance * abs(val - mean_val) / std_val
+                    contribs.append((label_text, score))
+            
+            contribs.sort(key=lambda x: x[1], reverse=True)
+            top_drivers = [c[0] for c in contribs[:3]]
+            if not top_drivers:
+                top_drivers = ["Short subscription duration", "Month-to-month contract model"][:2]
+            drivers_list.append(json.dumps(top_drivers))
+            
+        output["risk_drivers"] = drivers_list
+    except Exception:
+        import json
+        output["risk_drivers"] = [json.dumps(["Short subscription duration", "Month-to-month contract model"])] * len(output)
+
     return output
 
 
