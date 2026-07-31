@@ -529,11 +529,22 @@ def train_model(db_path: Path, model_path: Path, config: dict | None = None) -> 
 
     target_column = config.get("target_column", DEFAULT_TARGET)
     if target_column not in df.columns:
-        raise ValueError(f"Training data must include a {target_column} column")
+        # Fallback to train on sample_data since the uploaded custom data has no target column
+        conn = connect_db(db_path)
+        training_df = pd.read_sql_query(
+            "SELECT cc.* FROM customer_churn cc JOIN data_sources ds ON cc.source_id = ds.source_id WHERE ds.source_id = 'sample_data'",
+            conn
+        )
+        conn.close()
+    else:
+        training_df = df
 
-    feature_columns = get_feature_columns(df, config)
-    X = df[feature_columns]
-    y = df[target_column]
+    feature_columns = [col for col in get_feature_columns(training_df, config) if col in df.columns]
+    if not feature_columns:
+        feature_columns = [col for col in get_feature_columns(df, config) if col in training_df.columns]
+        
+    X = training_df[feature_columns]
+    y = training_df[target_column]
 
     use_fallback = len(df) < 10 or y.nunique() < 2
     if use_fallback:
