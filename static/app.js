@@ -1668,6 +1668,75 @@ function setupPresentation() {
             triggerQuickQA(question);
         });
     });
+
+    // Listen for blur event to save contentedited fields
+    const viewport = document.getElementById('slideViewport');
+    if (viewport) {
+        viewport.addEventListener('blur', (e) => {
+            if (e.target.hasAttribute('contenteditable')) {
+                const slideIdx = Number(e.target.dataset.slideIndex);
+                const field = e.target.dataset.field;
+                const bulletIdx = e.target.dataset.bulletIndex;
+                const playbookIdx = e.target.dataset.playbookIndex;
+                const stepIdx = e.target.dataset.stepIndex;
+                
+                if (presentationSlides[slideIdx]) {
+                    if (field === 'title') {
+                        presentationSlides[slideIdx].title = e.target.innerText;
+                    } else if (field === 'subtitle') {
+                        presentationSlides[slideIdx].subtitle = e.target.innerText;
+                    } else if (field === 'bullet' && bulletIdx !== undefined) {
+                        if (presentationSlides[slideIdx].bullets) {
+                            presentationSlides[slideIdx].bullets[Number(bulletIdx)] = e.target.innerText;
+                        }
+                    } else if (field === 'playbook-title' && playbookIdx !== undefined) {
+                        const pIdx = Number(playbookIdx);
+                        if (presentationSlides[slideIdx].playbook && presentationSlides[slideIdx].playbook[pIdx]) {
+                            presentationSlides[slideIdx].playbook[pIdx].title = e.target.innerText;
+                        }
+                    } else if (field === 'playbook-desc' && playbookIdx !== undefined) {
+                        const pIdx = Number(playbookIdx);
+                        if (presentationSlides[slideIdx].playbook && presentationSlides[slideIdx].playbook[pIdx]) {
+                            presentationSlides[slideIdx].playbook[pIdx].desc = e.target.innerText;
+                        }
+                    } else if (field === 'step-title' && stepIdx !== undefined) {
+                        const sIdx = Number(stepIdx);
+                        if (presentationSlides[slideIdx].steps && presentationSlides[slideIdx].steps[sIdx]) {
+                            presentationSlides[slideIdx].steps[sIdx].title = e.target.innerText;
+                        }
+                    } else if (field === 'step-desc' && stepIdx !== undefined) {
+                        const sIdx = Number(stepIdx);
+                        if (presentationSlides[slideIdx].steps && presentationSlides[slideIdx].steps[sIdx]) {
+                            presentationSlides[slideIdx].steps[sIdx].description = e.target.innerText;
+                            presentationSlides[slideIdx].steps[sIdx].desc = e.target.innerText;
+                        }
+                    }
+                    
+                    // Sync inputs in the Slide Editor Panel
+                    const editTitle = document.getElementById('editSlideTitle');
+                    const editSubtitle = document.getElementById('editSlideSubtitle');
+                    const editContent = document.getElementById('editSlideContent');
+                    
+                    if (slideIdx === currentSlideIndex) {
+                        if (editTitle && field === 'title') editTitle.value = e.target.innerText;
+                        if (editSubtitle && field === 'subtitle') editSubtitle.value = e.target.innerText;
+                        if (editContent) {
+                            if (presentationSlides[slideIdx].layout === 'split_metrics' || presentationSlides[slideIdx].layout === 'segment_comparison') {
+                                editContent.value = (presentationSlides[slideIdx].bullets || []).join('\n');
+                            } else if (presentationSlides[slideIdx].layout === 'prescriptive_playbook') {
+                                editContent.value = (presentationSlides[slideIdx].playbook || []).map(p => `${p.title}: ${p.desc}`).join('\n');
+                            } else if (presentationSlides[slideIdx].layout === 'journey_workflow') {
+                                editContent.value = (presentationSlides[slideIdx].steps || []).map(s => `${s.title}: ${s.description || s.desc || ''}`).join('\n');
+                            }
+                        }
+                    }
+                    
+                    // Update sorter timeline thumbnails
+                    renderSlideSorterTimeline();
+                }
+            }
+        }, true);
+    }
 }
 
 function generateLocalSlides(numSlides, customPrompt, shouldShuffle) {
@@ -1861,8 +1930,8 @@ function renderSlides(slides) {
                     </div>
                     <div style="display: flex; align-items: center; justify-content: space-between; width: 100%; margin: 16px 0; gap: 24px;">
                         <div style="text-align: left; flex: 1;">
-                            <h1 style="font-size: 2.2rem; margin: 0 0 10px; line-height: 1.15; background: linear-gradient(135deg, #00F5FF, #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${slide.title}</h1>
-                            <p class="slideSubtitle" style="font-size: 1rem; color: var(--muted); margin: 0 0 16px; line-height: 1.5;">${slide.subtitle}</p>
+                            <h1 contenteditable="true" data-slide-index="${idx}" data-field="title" style="font-size: 2.2rem; margin: 0 0 10px; line-height: 1.15; background: linear-gradient(135deg, #00F5FF, #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${slide.title}</h1>
+                            <p class="slideSubtitle" contenteditable="true" data-slide-index="${idx}" data-field="subtitle" style="font-size: 1rem; color: var(--muted); margin: 0 0 16px; line-height: 1.5;">${slide.subtitle}</p>
                             <div style="display: inline-flex; gap: 8px; align-items: center; background: rgba(0,245,255,0.08); border: 1px solid var(--accent); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 600;">
                                 <i data-lucide="shield-check" class="lucide-icon"></i> Executive Strategic Briefing • 100% Watermark Free
                             </div>
@@ -1881,7 +1950,7 @@ function renderSlides(slides) {
                 </div>
             `;
         } else if (slide.layout === 'split_metrics') {
-            const listHtml = (slide.bullets || []).map(b => `<li>${b}</li>`).join('');
+            const listHtml = (slide.bullets || []).map((b, bIdx) => `<li contenteditable="true" data-slide-index="${idx}" data-field="bullet" data-bullet-index="${bIdx}">${b}</li>`).join('');
             contentHtml = `
                 <div class="slideContent layout-split">
                     <div class="slideHeader">
@@ -1903,7 +1972,7 @@ function renderSlides(slides) {
                             </div>
                         </div>
                         <div class="slideRightPane" style="flex: 1;">
-                            <h2 style="margin-top: 0; font-size: 1.3rem; color: var(--text);">${slide.title}</h2>
+                            <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin-top: 0; font-size: 1.3rem; color: var(--text);">${slide.title}</h2>
                             <ul style="line-height: 1.65; font-size: 0.9rem; color: var(--muted); padding-left: 20px;">${listHtml}</ul>
                         </div>
                     </div>
@@ -1914,11 +1983,11 @@ function renderSlides(slides) {
                 </div>
             `;
         } else if (slide.layout === 'segment_comparison') {
-            const listHtml = (slide.bullets || []).map(b => `
+            const listHtml = (slide.bullets || []).map((b, bIdx) => `
                 <div class="riskComparisonCard" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px;">
                     <div class="cardIcon" style="font-size:1.1rem; color: var(--accent);"><i data-lucide="target" class="lucide-icon"></i></div>
-                    <div class="cardContent" style="font-size:0.88rem; color:var(--text);">
-                        <p style="margin:0;">${b}</p>
+                    <div class="cardContent" style="font-size:0.88rem; color:var(--text); flex:1;">
+                        <p style="margin:0;" contenteditable="true" data-slide-index="${idx}" data-field="bullet" data-bullet-index="${bIdx}">${b}</p>
                     </div>
                 </div>
             `).join('');
@@ -1930,7 +1999,7 @@ function renderSlides(slides) {
                     </div>
                     <div style="display: flex; gap: 16px; align-items: center; margin: 8px 0;">
                         <div style="flex: 1;">
-                            <h2 style="margin: 0 0 6px; font-size: 1.3rem;">${slide.title}</h2>
+                            <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin: 0 0 6px; font-size: 1.3rem;">${slide.title}</h2>
                             <div style="margin-bottom: 8px;">
                                 <svg width="100%" height="38" viewBox="0 0 380 38" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <rect x="5" y="4" width="180" height="30" rx="6" fill="rgba(255,0,127,0.12)" stroke="#FF007F" stroke-width="1.2"/>
@@ -1955,10 +2024,10 @@ function renderSlides(slides) {
                 </div>
             `;
         } else if (slide.layout === 'prescriptive_playbook') {
-            const playbookCards = (slide.playbook || []).map(p => `
+            const playbookCards = (slide.playbook || []).map((p, pIdx) => `
                 <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-left: 4px solid var(--${p.type || 'primary'}); padding: 10px 12px; border-radius: 8px;">
-                    <h4 style="margin: 0 0 3px; font-size: 0.88rem; color: var(--${p.type || 'primary'}); font-family: 'Outfit', sans-serif;">${p.title}</h4>
-                    <p style="margin: 0; font-size: 0.8rem; color: var(--muted);">${p.desc}</p>
+                    <h4 contenteditable="true" data-slide-index="${idx}" data-field="playbook-title" data-playbook-index="${pIdx}" style="margin: 0 0 3px; font-size: 0.88rem; color: var(--${p.type || 'primary'}); font-family: 'Outfit', sans-serif;">${p.title}</h4>
+                    <p contenteditable="true" data-slide-index="${idx}" data-field="playbook-desc" data-playbook-index="${pIdx}" style="margin: 0; font-size: 0.8rem; color: var(--muted);">${p.desc}</p>
                 </div>
             `).join('');
             contentHtml = `
@@ -1968,7 +2037,7 @@ function renderSlides(slides) {
                         <span>Prescriptive Solutions & Action Matrix</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center; margin: 8px 0 6px;">
-                        <h2 style="margin: 0; font-size: 1.3rem;">${slide.title}</h2>
+                        <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin: 0; font-size: 1.3rem;">${slide.title}</h2>
                         <div style="display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--accent); background: rgba(0,245,255,0.08); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--border);">
                             <span style="display: inline-flex; align-items: center; gap: 4px;"><i data-lucide="users" class="lucide-icon"></i> Strategy Playbook</span>
                         </div>
@@ -1983,12 +2052,12 @@ function renderSlides(slides) {
                 </div>
             `;
         } else if (slide.layout === 'journey_workflow') {
-            const stepsHtml = (slide.steps || []).map((st, i) => `
+            const stepsHtml = (slide.steps || []).map((st, sIdx) => `
                 <div class="workflowStepCard" style="flex:1; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 10px; border-radius: 8px;">
-                    <div class="workflowStepNum" style="font-weight:800; color:var(--primary); font-size:0.8rem; margin-bottom:3px;">STAGE 0${i+1}</div>
+                    <div class="workflowStepNum" style="font-weight:800; color:var(--primary); font-size:0.8rem; margin-bottom:3px;">STAGE 0${sIdx+1}</div>
                     <div class="workflowStepContent">
-                        <h4 style="margin:0 0 3px; font-size:0.85rem; color:#ffffff;">${st.title}</h4>
-                        <p style="margin:0; font-size:0.78rem; color:var(--muted);">${st.description || st.desc || ''}</p>
+                        <h4 contenteditable="true" data-slide-index="${idx}" data-field="step-title" data-step-index="${sIdx}" style="margin:0 0 3px; font-size:0.85rem; color:#ffffff;">${st.title}</h4>
+                        <p contenteditable="true" data-slide-index="${idx}" data-field="step-desc" data-step-index="${sIdx}" style="margin:0; font-size:0.78rem; color:var(--muted);">${st.description || st.desc || ''}</p>
                     </div>
                 </div>
             `).join('');
@@ -1999,7 +2068,7 @@ function renderSlides(slides) {
                         <div class="presMiniLogo">Qiplo</div>
                         <span>Interactive Customer Journey Workflow</span>
                     </div>
-                    <h2 style="margin: 8px 0 4px; font-size: 1.3rem;">${slide.title}</h2>
+                    <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin: 8px 0 4px; font-size: 1.3rem;">${slide.title}</h2>
                     <div style="margin-bottom: 8px;">
                         <svg width="100%" height="30" viewBox="0 0 540 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <line x1="50" y1="15" x2="490" y2="15" stroke="url(#gradTitle0)" stroke-width="2" stroke-dasharray="6 4" />
@@ -2067,6 +2136,7 @@ function updateSlideView() {
         }).join('') + `<span class="indicatorText">Slide ${currentSlideIndex + 1} of ${presentationSlides.length}</span>`;
     }
     populateSlideEditor();
+    renderSlideSorterTimeline();
 }
 
 function populateSlideEditor() {
@@ -2103,6 +2173,100 @@ function populateSlideEditor() {
         label.textContent = 'Workflow Steps (one per line, Format: Stage Title: Description)';
     }
 }
+
+function renderSlideSorterTimeline() {
+    const timeline = document.getElementById('slideSorterTimeline');
+    const controls = document.getElementById('slideLevelControls');
+    if (!timeline) return;
+    
+    if (!presentationSlides || !presentationSlides.length) {
+        timeline.classList.add('hidden');
+        if (controls) controls.classList.add('hidden');
+        return;
+    }
+    
+    timeline.classList.remove('hidden');
+    if (controls) controls.classList.remove('hidden');
+    
+    timeline.innerHTML = presentationSlides.map((slide, idx) => {
+        const isActive = idx === currentSlideIndex;
+        const borderStyle = isActive ? 'border: 2px solid var(--accent);' : 'border: 1px solid var(--border);';
+        const backgroundStyle = isActive ? 'background: rgba(0, 245, 255, 0.05);' : 'background: var(--surface);';
+        
+        return `
+            <div onclick="selectSlide(${idx})" style="flex: 0 0 140px; height: 95px; border-radius: 6px; padding: 8px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s; position: relative; ${borderStyle} ${backgroundStyle}">
+                <div style="font-size: 0.65rem; color: var(--muted); font-weight: 700; display: flex; justify-content: space-between;">
+                    <span>SLIDE ${idx + 1}</span>
+                    <span style="text-transform: uppercase; font-size: 0.58rem; color: var(--accent);">${slide.layout.replace('_', ' ')}</span>
+                </div>
+                <div style="font-size: 0.72rem; color: var(--text); font-weight: 600; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; margin-bottom: auto; margin-top: 4px;">
+                    ${slide.title || 'Untitled Slide'}
+                </div>
+                <div style="font-size: 0.65rem; color: var(--muted); text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                    ${slide.subtitle || ''}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+window.selectSlide = function(idx) {
+    if (idx >= 0 && idx < presentationSlides.length) {
+        currentSlideIndex = idx;
+        updateSlideView();
+    }
+};
+
+window.addNewBlankSlide = function() {
+    const newSlide = {
+        title: 'New Blank Slide Title',
+        subtitle: 'Click to edit subtitle text',
+        layout: 'title',
+        bullets: ['Point 1', 'Point 2'],
+        imgUrl: ''
+    };
+    presentationSlides.splice(currentSlideIndex + 1, 0, newSlide);
+    currentSlideIndex++;
+    renderSlides(presentationSlides);
+    updateSlideView();
+};
+
+window.duplicateCurrentSlide = function() {
+    if (!presentationSlides.length) return;
+    const current = presentationSlides[currentSlideIndex];
+    const clone = JSON.parse(JSON.stringify(current));
+    presentationSlides.splice(currentSlideIndex + 1, 0, clone);
+    currentSlideIndex++;
+    renderSlides(presentationSlides);
+    updateSlideView();
+};
+
+window.deleteCurrentSlide = function() {
+    if (!presentationSlides.length) return;
+    presentationSlides.splice(currentSlideIndex, 1);
+    currentSlideIndex = Math.max(0, Math.min(currentSlideIndex, presentationSlides.length - 1));
+    renderSlides(presentationSlides);
+    updateSlideView();
+};
+
+window.addNewBulletPoint = function() {
+    if (!presentationSlides.length) return;
+    const current = presentationSlides[currentSlideIndex];
+    if (!current.bullets) current.bullets = [];
+    current.bullets.push('Click to type new bullet point');
+    renderSlides(presentationSlides);
+    updateSlideView();
+};
+
+window.deleteLastBulletPoint = function() {
+    if (!presentationSlides.length) return;
+    const current = presentationSlides[currentSlideIndex];
+    if (current.bullets && current.bullets.length > 0) {
+        current.bullets.pop();
+        renderSlides(presentationSlides);
+        updateSlideView();
+    }
+};
 
 function jumpToSlide(idx) {
     currentSlideIndex = idx;

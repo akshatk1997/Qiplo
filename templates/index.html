@@ -697,6 +697,19 @@
                     
                     <div class="deckStatus" id="deckStatus">Click "Generate AI Deck" or select a prompt magic template above to compile your custom presentation.</div>
 
+                    <!-- Slide Sorter Timeline -->
+                    <div id="slideSorterTimeline" class="slideSorterTimeline hidden" style="margin: 15px 0; padding: 10px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow-x: auto; display: flex; gap: 10px; align-items: center; scrollbar-width: thin;">
+                    </div>
+
+                    <!-- Slide Level Controls Toolbar -->
+                    <div id="slideLevelControls" class="slideLevelControls hidden" style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                        <button type="button" onclick="addNewBlankSlide()" class="ghostBtn" style="padding: 6px 12px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 4px;"><i data-lucide="plus-circle" style="width: 14px; height: 14px;"></i> Add Blank Slide</button>
+                        <button type="button" onclick="duplicateCurrentSlide()" class="ghostBtn" style="padding: 6px 12px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 4px;"><i data-lucide="copy" style="width: 14px; height: 14px;"></i> Duplicate Slide</button>
+                        <button type="button" onclick="deleteCurrentSlide()" class="dangerBtn" style="padding: 6px 12px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 4px;"><i data-lucide="trash-2" style="width: 14px; height: 14px;"></i> Delete Slide</button>
+                        <button type="button" onclick="addNewBulletPoint()" class="ghostBtn" style="padding: 6px 12px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 4px; margin-left: auto;"><i data-lucide="list-plus" style="width: 14px; height: 14px;"></i> Add Bullet</button>
+                        <button type="button" onclick="deleteLastBulletPoint()" class="ghostBtn" style="padding: 6px 12px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 4px;"><i data-lucide="list-minus" style="width: 14px; height: 14px;"></i> Delete Last Bullet</button>
+                    </div>
+
                     <div class="presContainer">
                         <div id="slideViewport" class="slideViewport hidden">
                             <!-- Slides will be rendered here dynamically -->
