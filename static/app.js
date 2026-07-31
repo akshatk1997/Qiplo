@@ -53,8 +53,16 @@ async function loadDashboard() {
     try {
         const role = document.getElementById('roleSelect').value;
         const apiKey = localStorage.getItem('at_ai_model_key') || localStorage.getItem('show_ai_model_key') || '';
+        const t0 = performance.now();
         const response = await safeFetch(`/api/dashboard-state?role=${role}&model_key=${encodeURIComponent(apiKey)}`);
         const payload = await response.json();
+        const t1 = performance.now();
+        
+        const latency = Math.round(t1 - t0);
+        const latencyEl = document.getElementById('modelLatency');
+        if (latencyEl) {
+            latencyEl.textContent = `${latency} ms (Roundtrip)`;
+        }
 
         const summaryData = { summary: payload.summary };
         const predictionsPayload = { predictions: payload.predictions };

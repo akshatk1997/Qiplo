@@ -149,7 +149,7 @@
                         </div>
                         <div class="telemetryCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
                             <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Response Latency</span>
-                            <strong style="font-size: 0.95rem; color: var(--text);">14 ms (Single-Roundtrip)</strong>
+                            <strong style="font-size: 0.95rem; color: var(--text);" id="modelLatency"><span class="skeleton-loader"></span></strong>
                         </div>
                         <div class="telemetryCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; display: flex; flex-direction: column; gap: 4px;">
                             <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Telemetry Source</span>
@@ -829,44 +829,44 @@
                         </div>
                     </div>
 
-                    <!-- Section 5: Business Entity Types & Company-Formation Legal Frameworks -->
-                    <div class="guideSectionCard" data-search-term="company law entity types llc c-corp s-corp partnership incorporation ein bylaws legal registration formation" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 22px;">
+                    <!-- Section 5: Customer Lifetime Value (CLV) & Cohort Metrics -->
+                    <div class="guideSectionCard" data-search-term="clv lifetime value cohort metrics retention curves churn rate payback period coc" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 22px;">
                         <h3 style="margin: 0 0 16px; font-family: var(--font-heading); color: var(--accent); display: flex; align-items: center; gap: 8px;">
-                            <i data-lucide="scale" class="lucide-icon"></i> 5. Business Entity Types & Company-Formation Legal Frameworks
+                            <i data-lucide="line-chart" class="lucide-icon"></i> 5. Customer Lifetime Value (CLV) & Cohort Metrics
                         </h3>
                         <p style="color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin-top: 0; margin-bottom: 16px;">
-                            Choosing the correct legal structure is critical for liability protection, taxation models, and raising equity. Below is a comprehensive guide to standard business entities and the formation roadmap.
+                            Measuring subscription health requires monitoring non-linear customer lifecycles and cohort behaviors. Below is a glossary of advanced retention mechanics.
                         </p>
                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px;">
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent); font-family: var(--font-heading);">LLC (Limited Liability Company)</h4>
-                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Pass-through taxation structure combining partnership flexibility with corporate personal liability protection. Ideal for small-to-medium businesses.</p>
-                                <span style="font-size: 0.72rem; background: rgba(79, 70, 229, 0.1); color: var(--accent); padding: 3px 6px; border-radius: 4px; font-weight: 700;">★ Best for Solopreneurs</span>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent); font-family: var(--font-heading);">LTV-to-CAC Ratio</h4>
+                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Measures the relationship between the lifetime value of a customer and the cost to acquire them. Standard SaaS target is >3x.</p>
+                                <span style="font-size: 0.72rem; background: rgba(79, 70, 229, 0.1); color: var(--accent); padding: 3px 6px; border-radius: 4px; font-weight: 700;">★ Target: >3.0x Ratio</span>
                             </div>
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent-2); font-family: var(--font-heading);">C-Corporation (C-Corp)</h4>
-                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Standard corporate structure where owners/shareholders are taxed separately. Subject to double taxation but required to issue stock and raise VC funding.</p>
-                                <span style="font-size: 0.72rem; background: rgba(99, 102, 241, 0.1); color: var(--accent-2); padding: 3px 6px; border-radius: 4px; font-weight: 700;">★ Best for Venture Funding</span>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent-2); font-family: var(--font-heading);">CAC Payback Period</h4>
+                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">The number of months required for a customer to generate enough gross profit to pay back the initial acquisition cost.</p>
+                                <span style="font-size: 0.72rem; background: rgba(99, 102, 241, 0.1); color: var(--accent-2); padding: 3px 6px; border-radius: 4px; font-weight: 700;">★ Target: <12 Months</span>
                             </div>
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--success); font-family: var(--font-heading);">S-Corporation (S-Corp)</h4>
-                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Special tax status election (for LLCs or C-Corps) allowing income to pass directly to shareholders' tax returns to avoid double taxation. Limited to 100 US shareholders.</p>
-                                <span style="font-size: 0.72rem; background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 3px 6px; border-radius: 4px; font-weight: 700;">★ Best for Tax Optimization</span>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--success); font-family: var(--font-heading);">Logo Churn vs. Revenue Churn</h4>
+                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Logo churn tracks the percentage of lost accounts. Revenue churn tracks the percentage of lost contract value (MRR).</p>
+                                <span style="font-size: 0.72rem; background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 3px 6px; border-radius: 4px; font-weight: 700;">★ Net Negative Possible</span>
                             </div>
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--warning); font-family: var(--font-heading);">Sole Proprietorship / Partnership</h4>
-                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Unincorporated entity owned by one or more individuals. Offers zero separation between business assets and personal liabilities.</p>
-                                <span style="font-size: 0.72rem; background: rgba(245, 158, 11, 0.1); color: var(--warning); padding: 3px 6px; border-radius: 4px; font-weight: 700;">⚠ High Personal Risk</span>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--warning); font-family: var(--font-heading);">Cohort Retention Curves</h4>
+                                <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">A chart plotting customer longevity based on their signup month, showing when churn stabilizes to calculate asymptotic lifetime value.</p>
+                                <span style="font-size: 0.72rem; background: rgba(245, 158, 11, 0.1); color: var(--warning); padding: 3px 6px; border-radius: 4px; font-weight: 700;">⚠ Decay Visualization</span>
                             </div>
                         </div>
                         <div style="background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--accent); padding: 14px; border-radius: 8px;">
-                            <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--text); font-family: var(--font-heading);">🚀 5-Step Company Formation Checklist</h4>
+                            <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--text); font-family: var(--font-heading);">📈 5 Rules of Cohort Analysis</h4>
                             <ul style="margin: 0; padding-left: 20px; font-size: 0.84rem; color: var(--muted); line-height: 1.6;">
-                                <li><strong>1. File Articles of Organization / Incorporation</strong>: Register your company with the Secretary of State.</li>
-                                <li><strong>2. Acquire an EIN (Employer Identification Number)</strong>: Obtain a free tax ID from the IRS for business banking and hiring.</li>
-                                <li><strong>3. Draft Bylaws or Operating Agreement</strong>: Define shareholder equity splits, voting protocols, and management structure.</li>
-                                <li><strong>4. Secure Local Licenses & Permits</strong>: Obtain sales tax permits, professional licenses, or zoning certificates.</li>
-                                <li><strong>5. Open a Business Bank Account</strong>: Keep personal and business expenses strictly separate to maintain corporate liability protection.</li>
+                                <li><strong>1. Align by Signup Month</strong>: Analyze customers signing up in the same calendar month to prevent tenure bias.</li>
+                                <li><strong>2. Track Contract Value (MRR) separately</strong>: Customer count retention can be high while contract value drops, or vice versa.</li>
+                                <li><strong>3. Monitor the Stabilization Point</strong>: Identify the month at which the cohort retention curve flattens out (e.g. Month 6).</li>
+                                <li><strong>4. Compare Campaign Cohorts</strong>: Evaluate if users acquired during discounts exhibit higher decay rates.</li>
+                                <li><strong>5. Calculate Net Revenue Retention</strong>: Focus on expansion revenue (upsells) within the cohort to achieve >100% NRR.</li>
                             </ul>
                         </div>
                     </div>
@@ -931,41 +931,41 @@
                         </div>
                     </div>
 
-                    <!-- Section 7: Strategic Company Improvement & Growth Playbooks -->
-                    <div class="guideSectionCard" data-search-term="improvement strategy tips growth scaling funding patent trademark tax optimization corporate veil" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 22px;">
+                    <!-- Section 7: Strategic Customer Retention Playbooks -->
+                    <div class="guideSectionCard" data-search-term="retention playbooks churn mitigation csm kpi customer success life cycle expansion mrr" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 22px;">
                         <h3 style="margin: 0 0 16px; font-family: var(--font-heading); color: var(--accent); display: flex; align-items: center; gap: 8px;">
-                            <i data-lucide="trending-up" class="lucide-icon"></i> 7. Strategic Company Improvement & Growth Playbooks
+                            <i data-lucide="trending-up" class="lucide-icon"></i> 7. Strategic Customer Retention Playbooks
                         </h3>
                         <p style="color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin-top: 0; margin-bottom: 16px;">
-                            Implement standard executive playbooks to optimize cash flow, raise venture financing, protect intellectual assets, and scale subscription retention.
+                            Implement standard executive playbooks to optimize customer longevity, decrease monthly logo churn, and scale contract expansions.
                         </p>
                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px;">
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent); font-family: var(--font-heading);">📊 Cash Flow & OpEx Optimization</h4>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent); font-family: var(--font-heading);">📊 Churn Rate Optimization</h4>
                                 <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5;">
-                                    <li><strong>Quarterly Tool Audits</strong>: Prune inactive SaaS licenses to reduce monthly burn by up to 15%.</li>
-                                    <li><strong>Extend Accounts Payable</strong>: Negotiate net-60 billing cycles with vendors to keep cash in bank longer.</li>
-                                    <li><strong>Annual Pre-payments</strong>: Offer 15% discount for upfront annual commitments to increase upfront cash reserves.</li>
+                                    <li><strong>Quarterly Health Audits</strong>: Run proactive health checks on high-risk accounts to resolve setup friction.</li>
+                                    <li><strong>Extend Support Access</strong>: Fast-track open support tickets for accounts showing >65% risk.</li>
+                                    <li><strong>Annual Pre-payments</strong>: Offer 15-20% discounts to convert month-to-month contracts to annual commitments.</li>
                                 </ul>
                             </div>
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent-2); font-family: var(--font-heading);">⚖ Legal Integrity & IP Protection</h4>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent-2); font-family: var(--font-heading);">💡 Revenue Recovery & Billing Churn</h4>
                                 <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5;">
-                                    <li><strong>Preserve the Corporate Veil</strong>: Never co-mingle personal/business funds; pay salaries strictly from business accounts.</li>
-                                    <li><strong>IP Assignment Contracts</strong>: Ensure all co-founders, contractors, and employees sign proprietary information agreements.</li>
-                                    <li><strong>Delaware Franchise Tax</strong>: File Delaware corporate returns by March 1st annually to avoid compliance lockouts.</li>
+                                    <li><strong>Involuntary Churn Checks</strong>: Enforce card retries and custom email alerts when invoice charging fails.</li>
+                                    <li><strong>Automated Statement Credits</strong>: Offer statement credits to customers switching from manual to auto-pay.</li>
+                                    <li><strong>Grace Period Management</strong>: Extend accounts by 14 days before disabling access due to billing failure.</li>
                                 </ul>
                             </div>
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--success); font-family: var(--font-heading);">🚀 Scaling & Fundraising Readiness</h4>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--success); font-family: var(--font-heading);">🚀 Customer Success Lifecycle Alignment</h4>
                                 <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5;">
-                                    <li><strong>Delaware C-Corp Flipping</strong>: If starting as an LLC, prepare to convert to a Delaware C-Corp before seeking institutional venture rounds.</li>
-                                    <li><strong>Cap Table Hygiene</strong>: Maintain clean cap tables using equity management software (like Carta) to avoid dilutive disputes.</li>
-                                    <li><strong>Pro-Forma Modeling</strong>: Create dynamic financial models simulating 36-month hiring, ARR scaling, and churn margins.</li>
+                                    <li><strong>90-Day Critical Window</strong>: Enforce structured training check-ins during the first 90 days after signup.</li>
+                                    <li><strong>Usage Milestone Alerts</strong>: Set alerts for accounts that demonstrate sudden drop-offs in product usage.</li>
+                                    <li><strong>Expansion Campaigns</strong>: Target healthy low-risk cohorts with expansion upsell offerings.</li>
                                 </ul>
                             </div>
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--warning); font-family: var(--font-heading);">🎯 Retention Scaling (CSM Alignment)</h4>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--warning); font-family: var(--font-heading);">🎯 Retention Scaling (CSM KPI Alignment)</h4>
                                 <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5;">
                                     <li><strong>Tied Compensations</strong>: Link Customer Success Manager (CSM) performance bonuses directly to Net Revenue Retention (NRR).</li>
                                     <li><strong>Predictive Playbooks</strong>: Trigger proactive check-ins based on predictive risk alerts rather than waiting for cancel requests.</li>
@@ -1072,12 +1072,12 @@
                     <strong>Usecase:</strong> Keeps team members aligned on corporate standards and regulatory compliance policies.
                 </p>
                 
-                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">📜 8. Licensing & Global Compliance</h4>
+                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">📜 8. Licensing & Privacy-by-Design</h4>
                 <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
-                    <strong>MIT Open Source License:</strong> Qiplo is released under the MIT License, making it 100% free, royalty-free, and claims-free for public, commercial, academic, and enterprise usage globally.<br/>
-                    <strong>GDPR & CCPA Compliant:</strong> Zero remote tracking, local data isolation, data minimization, and immediate erasure boundaries.<br/>
-                    <strong>SOC2 Type II & ISO 27001 Readiness:</strong> Supports network-segregated proxy pooling and HTTPS outbound configurations.<br/>
-                    <strong>HIPAA PHI Protection:</strong> Auto-anonymizes patient or customer identifier attributes to maintain total confidentiality.
+                    <strong>MIT Open Source License:</strong> Qiplo is released under the MIT License—100% free, royalty-free, and claims-free for commercial or enterprise-wide usage.<br/>
+                    <strong>Data Sovereignty & Privacy:</strong> Supports GDPR/CCPA readiness through local storage (no remote tracking), data minimization, and cascading SQL deletion pathways.<br/>
+                    <strong>Deployment Hardening:</strong> Outbound AI requests can be routed through an authenticated proxy pool to shield the host IP, supporting standard SOC 2/ISO 27001 deployment requirements.<br/>
+                    <strong>Anonymization Tooling:</strong> Automatically drops candidate PII column fields during file import and replaces them with anonymous identifier hashes.
                 </p>
             </div>
             
