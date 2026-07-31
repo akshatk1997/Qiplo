@@ -2729,6 +2729,17 @@ window.addEventListener('DOMContentLoaded', function() {{
                 
         return jsonify({"results": urls})
 
+    # Auto-copy module-level decorated routes to new app instances to prevent 404 in serverless / pytest
+    global_app = globals().get("app")
+    if global_app is not None and global_app is not app:
+        import copy
+        for rule in global_app.url_map.iter_rules():
+            if rule.endpoint != "static" and rule.endpoint not in app.view_functions:
+                new_rule = copy.copy(rule)
+                new_rule.map = None
+                app.url_map.add(new_rule)
+                app.view_functions[rule.endpoint] = global_app.view_functions[rule.endpoint]
+
     return app
 
 

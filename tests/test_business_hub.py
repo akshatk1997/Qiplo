@@ -42,3 +42,13 @@ def test_business_analytics_api_seeding(tmp_path):
             os.environ["CHURN_DB"] = old_db
         elif "CHURN_DB" in os.environ:
             del os.environ["CHURN_DB"]
+
+
+def test_settings_page_opens():
+    flask_app = app_module.create_app()
+    flask_app.config.update(TESTING=True)
+    client = flask_app.test_client()
+
+    response = client.get("/settings")
+    assert response.status_code == 200
+    assert b"settings" in response.data.lower()
