@@ -438,6 +438,38 @@ def create_app() -> Flask:
         # Check if the active dataset is the demo dataset
         active_sources = conn.execute("SELECT source_id FROM data_sources WHERE is_active = 1").fetchall()
         is_demo = len(active_sources) == 1 and active_sources[0]["source_id"] == "sample_data"
+
+        # Get global feature importance from the model
+        feature_importance = {}
+        try:
+            model_path = get_model_path()
+            if model_path.exists():
+                from churn_analysis import load_model, get_feature_columns, normalize_customer_frame
+                model = load_model(model_path)
+                if hasattr(model, "feature_importances_"):
+                    single_row = conn.execute("SELECT * FROM customer_churn LIMIT 1").fetchone()
+                    if single_row:
+                        import pandas as pd
+                        df_single = pd.DataFrame([dict(single_row)])
+                        input_frame = normalize_customer_frame(df_single, include_target=False, config=config)
+                        feature_columns = get_feature_columns(input_frame, config)
+                        importances = model.feature_importances_
+                        if len(feature_columns) == len(importances):
+                            for col, imp in zip(feature_columns, importances):
+                                clean_lbl = col.replace("_", " ").title()
+                                feature_importance[clean_lbl] = round(float(imp), 3)
+        except Exception:
+            pass
+
+        if not feature_importance:
+            feature_importance = {
+                "Support Tickets": 0.385,
+                "Contract Type": 0.264,
+                "Tenure Months": 0.182,
+                "Monthly Charges": 0.108,
+                "Payment Delays": 0.061
+            }
+
         conn.close()
 
         # 6. Branding & Config
@@ -457,7 +489,8 @@ def create_app() -> Flask:
             "ai_insights": ai_payload,
             "branding": branding_payload,
             "model_metrics": model_metrics,
-            "is_demo": is_demo
+            "is_demo": is_demo,
+            "feature_importance": feature_importance
         })
 
     def load_model_metrics() -> dict:

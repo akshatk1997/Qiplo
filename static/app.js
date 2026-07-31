@@ -32,6 +32,7 @@ async function safeFetch(url, options = {}, retries = 3, backoff = 400) {
 let predictionData = [];
 let riskChart;
 let signalChart;
+let importanceChart;
 let labelMapping = { high_risk: 'high_risk', low_risk: 'low_risk' };
 let lastChartsData = null;
 
@@ -123,7 +124,7 @@ async function loadDashboard() {
         renderSourceMeta();
         renderRows();
         lastChartsData = chartsData;
-        renderCharts(chartsData);
+        renderCharts(chartsData, payload.feature_importance);
         renderInsights(insightsData);
         renderExecutiveSummary(insightsData);
         renderAiPanel(aiData);
@@ -277,7 +278,7 @@ function renderRows() {
     });
 }
 
-function renderCharts(chartPayload) {
+function renderCharts(chartPayload, featureImportance) {
     const riskLabels = (chartPayload.charts || []).map(item => item.label);
     const riskValues = (chartPayload.charts || []).map(item => item.value);
     const signalLabels = (chartPayload.signals || []).map(item => item.label);
@@ -285,6 +286,7 @@ function renderCharts(chartPayload) {
 
     if (riskChart) riskChart.destroy();
     if (signalChart) signalChart.destroy();
+    if (importanceChart) importanceChart.destroy();
 
     const bodyStyles = getComputedStyle(document.body);
     const labelColor = bodyStyles.getPropertyValue('--muted').trim() || '#475467';
@@ -311,6 +313,29 @@ function renderCharts(chartPayload) {
             scales: {
                 y: { beginAtZero: true, ticks: { color: labelColor }, grid: { color: gridColor } },
                 x: { ticks: { color: labelColor }, grid: { color: gridColor } }
+            }
+        }
+    });
+
+    const sortedFeatures = Object.entries(featureImportance || {})
+        .sort((a, b) => b[1] - a[1]);
+        
+    const importanceLabels = sortedFeatures.map(item => item[0]);
+    const importanceValues = sortedFeatures.map(item => item[1]);
+
+    importanceChart = new Chart(document.getElementById('importanceChart'), {
+        type: 'bar',
+        data: {
+            labels: importanceLabels.length ? importanceLabels : ['No metrics'],
+            datasets: [{ label: 'Feature weight', data: importanceValues.length ? importanceValues : [0], backgroundColor: '#FF007F' }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { beginAtZero: true, max: 1.0, ticks: { color: labelColor }, grid: { color: gridColor } },
+                y: { ticks: { color: labelColor }, grid: { color: gridColor } }
             }
         }
     });
