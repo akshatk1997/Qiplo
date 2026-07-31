@@ -2835,6 +2835,48 @@ class ProxyManager:
         self._strategy = "round_robin"
         self._enabled = False
         self._stats = {}
+        self.load_from_disk()
+
+    def save_to_disk(self):
+        config_path = BASE_DIR / "config" / "proxy_config.json"
+        try:
+            config_path.parent.mkdir(parents=True, exist_ok=True)
+            import json
+            with self._lock:
+                strategy = self._strategy
+                enabled = self._enabled
+                proxies = self._proxies
+                order = self._order
+            with config_path.open("w", encoding="utf-8") as f:
+                json.dump({
+                    "strategy": strategy,
+                    "enabled": enabled,
+                    "proxies": proxies,
+                    "order": order
+                }, f, indent=4)
+        except Exception:
+            pass
+
+    def load_from_disk(self):
+        config_path = BASE_DIR / "config" / "proxy_config.json"
+        if config_path.exists():
+            try:
+                import json
+                with config_path.open("r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    self._strategy = data.get("strategy", "round_robin")
+                    self._enabled = bool(data.get("enabled", False))
+                    self._proxies = data.get("proxies", {})
+                    self._order = data.get("order", [])
+                    # Initialize stats dict for loaded proxies
+                    self._stats = {}
+                    for pid in self._order:
+                        self._stats[pid] = {
+                            "total_requests": 0,
+                            "last_latency_ms": 0,
+                        }
+            except Exception:
+                pass
 
     def add_proxy(self, proxy_id, url, protocol="http", country=None, location=None):
         with self._lock:
@@ -2856,12 +2898,14 @@ class ProxyManager:
                 "total_requests": 0,
                 "last_latency_ms": 0,
             }
+        self.save_to_disk()
 
     def remove_proxy(self, proxy_id):
         with self._lock:
             self._proxies.pop(proxy_id, None)
             self._order = [p for p in self._order if p != proxy_id]
             self._stats.pop(proxy_id, None)
+        self.save_to_disk()
 
     def get_proxy(self):
         with self._lock:
@@ -2897,10 +2941,12 @@ class ProxyManager:
         with self._lock:
             self._strategy = strategy if strategy in ("round_robin", "random") else "round_robin"
             self._index = 0
+        self.save_to_disk()
 
     def set_enabled(self, enabled):
         with self._lock:
             self._enabled = bool(enabled)
+        self.save_to_disk()
 
     def get_pool(self):
         with self._lock:
@@ -2971,18 +3017,35 @@ def apply_proxy_to_request(url, timeout=30):
                 import ssl
                 socks_proxy = _socks.ssl.wrap_socket(socks_proxy)
             socks_proxy.connect((parsed_url.hostname, parsed_url.port or (443 if parsed_url.scheme == "https" else 80)))
-            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            socks_proxy.send(req.encode())
+            
+            path = parsed_url.path or "/"
+            if parsed_url.query:
+                path += "?" + parsed_url.query
+            request_headers = (
+                f"GET {path} HTTP/1.1\r\n"
+                f"Host: {parsed_url.hostname}\r\n"
+                f"User-Agent: Mozilla/5.0\r\n"
+                f"Connection: close\r\n\r\n"
+            )
+            socks_proxy.sendall(request_headers.encode("utf-8"))
+            
             response = socks_proxy.makefile("rb")
-            code = response.readline().split()[1]
+            status_line = response.readline().decode("utf-8", errors="ignore").strip()
+            parts = status_line.split()
+            code = 200
+            if len(parts) >= 2:
+                try:
+                    code = int(parts[1])
+                except Exception:
+                    pass
             headers = {}
             while True:
-                line = response.readline().decode().strip()
+                line = response.readline().decode("utf-8", errors="ignore").strip()
                 if not line:
                     break
                 if ":" in line:
                     k, v = line.split(":", 1)
-                    headers[k.strip()] = v.strip()
+                    headers[k.strip().lower()] = v.strip()
             body = response.read()
             socks_proxy.close()
 

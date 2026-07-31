@@ -52,3 +52,40 @@ def test_settings_page_opens():
     response = client.get("/settings")
     assert response.status_code == 200
     assert b"settings" in response.data.lower()
+
+
+def test_proxy_endpoints_functional():
+    flask_app = app_module.create_app()
+    flask_app.config.update(TESTING=True)
+    client = flask_app.test_client()
+
+    # Test toggling proxy engine
+    res = client.post("/api/proxy/toggle", json={"enabled": True})
+    assert res.status_code == 200
+    assert res.get_json()["enabled"] is True
+
+    # Test setting strategy
+    res = client.post("/api/proxy/strategy", json={"strategy": "random"})
+    assert res.status_code == 200
+    assert res.get_json()["strategy"] == "random"
+
+    # Test adding proxy
+    res = client.post("/api/proxy/pool", json={
+        "id": "test-node",
+        "url": "http://127.0.0.1:8080",
+        "protocol": "http",
+        "country": "US",
+        "location": "Ashburn"
+    })
+    assert res.status_code == 200
+    
+    # Test getting proxy pool status
+    res = client.get("/api/proxy/pool")
+    assert res.status_code == 200
+    payload = res.get_json()
+    assert len(payload["pool"]) > 0
+    assert payload["pool"][0]["id"] == "test-node"
+
+    # Clean up proxy
+    res = client.delete("/api/proxy/pool/test-node")
+    assert res.status_code == 200
