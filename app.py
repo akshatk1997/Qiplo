@@ -25,7 +25,7 @@ import pandas as pd
 from flask import Flask, jsonify, render_template, request, Response, redirect
 
 from churn_analysis import (ensure_database, import_frame_to_sql, load_config, predict_from_frame,
-                             train_model, generate_ai_insight_with_llm)
+                             train_model, generate_ai_insight_with_llm, DEFAULT_TARGET)
 
 SCHEMA_PATH = BASE_DIR / "sql" / "schema.sql"
 CONFIG_PATH = BASE_DIR / "config" / "company_config.json"
@@ -586,6 +586,32 @@ def create_app() -> Flask:
         else:
             # Generate unique customer identifier values dynamically
             frame["customer_id"] = [f"CUST_{i+1:05d}" for i in range(len(frame))]
+
+        # Auto-detect and standardize target churn column to binary labels
+        target_col_found = None
+        for col in frame.columns:
+            if str(col).lower() in {"churn", "churned", "churn_label", "attrition", "left", "exited", "cancelled", "status", "class", "target"}:
+                target_col_found = col
+                break
+            if str(col).lower() in {"active", "is_active", "status_active"}:
+                target_col_found = col
+                break
+
+        target_col_name = config.get("target_column", DEFAULT_TARGET)
+        if target_col_found:
+            if target_col_found != target_col_name:
+                frame.rename(columns={target_col_found: target_col_name}, inplace=True)
+            # If the column represents "active" state, we need to invert the labels because active=1 means churn=0, and active=0 means churn=1
+            if str(target_col_found).lower() in {"active", "is_active", "status_active"}:
+                try:
+                    frame[target_col_name] = frame[target_col_name].apply(lambda x: 0 if str(x).strip().lower() in {"1", "true", "yes", "active"} else 1)
+                except Exception:
+                    pass
+            else:
+                try:
+                    frame[target_col_name] = frame[target_col_name].apply(lambda x: 1 if str(x).strip().lower() in {"1", "true", "yes", "churned", "churn", "exited", "left", "cancelled"} else 0)
+                except Exception:
+                    pass
 
         try:
             rows = import_frame_to_sql(frame, get_db_path(), replace=False, config=config, filename=uploaded.filename)

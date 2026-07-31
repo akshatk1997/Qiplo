@@ -12,6 +12,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.dummy import DummyClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
@@ -507,7 +508,7 @@ def build_model(config: dict | None = None, fallback: bool = False, feature_colu
     return Pipeline(
         steps=[
             ("preprocessor", preprocessor),
-            ("classifier", LogisticRegression(max_iter=3000, random_state=42)),
+            ("classifier", RandomForestClassifier(n_estimators=100, max_depth=10, min_samples_split=4, random_state=42)),
         ]
     )
 
