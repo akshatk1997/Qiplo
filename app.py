@@ -2476,7 +2476,7 @@ window.addEventListener('DOMContentLoaded', function() {{
     @app.route("/api/sources")
     def get_sources():
         conn = get_connection()
-        rows = conn.execute("SELECT * FROM data_sources ORDER BY created_at DESC").fetchall()
+        rows = conn.execute("SELECT * FROM data_sources WHERE source_id != 'sample_data' ORDER BY created_at DESC").fetchall()
         conn.close()
         return jsonify({"sources": [dict(row) for row in rows]})
 
