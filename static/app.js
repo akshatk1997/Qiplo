@@ -738,22 +738,9 @@ document.getElementById('roleSelect').addEventListener('change', async (e) => {
     const targetRole = rs.value;
     if (targetRole === currentAuthorizedRole) return;
 
-    const codes = {
-        executive: 'executive123',
-        manager: 'manager123',
-        sales: 'sales123',
-        support: 'support123'
-    };
-
-    const code = prompt(`Enter passcode to authorize [${targetRole.toUpperCase()}] access:`);
-    if (code === codes[targetRole]) {
-        currentAuthorizedRole = targetRole;
-        localStorage.setItem('user_role', targetRole);
-        await loadDashboard();
-    } else {
-        alert('Access Denied: Incorrect passcode entered.');
-        rs.value = currentAuthorizedRole;
-    }
+    currentAuthorizedRole = targetRole;
+    localStorage.setItem('user_role', targetRole);
+    await loadDashboard();
 });
 document.getElementById('exportTableauBtn').addEventListener('click', () => {
     window.open('/api/export/tableau', '_blank');

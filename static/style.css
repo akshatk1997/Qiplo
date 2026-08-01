@@ -2171,21 +2171,17 @@ body.dark-theme {
     background: radial-gradient(circle at 50% 0%, #0d0f1b 0%, #000000 80%) !important;
 }
 
-/* Glassmorphic Topbar */
+/* Glassmorphic Topbar (Opaque fallback for speed) */
 body.dark-theme .topbar {
-    background: rgba(11, 13, 20, 0.75) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: #0b0d14 !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
-/* Glassmorphic Panes */
+/* Glassmorphic Panes (Solid premium slate for lag-free rendering) */
 body.dark-theme .sourcesPane,
 body.dark-theme .studioPane,
 body.dark-theme .notesPane {
-    background: rgba(11, 13, 20, 0.6) !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: #0b0d14 !important;
     border: 1px solid rgba(255, 255, 255, 0.06) !important;
     box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4) !important;
 }
@@ -2205,7 +2201,7 @@ body.dark-theme .slideEditorPanel {
     background: linear-gradient(135deg, rgba(20, 24, 36, 0.6), rgba(30, 35, 53, 0.4)) !important;
     border: 1px solid rgba(255, 255, 255, 0.05) !important;
     box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2) !important;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 body.dark-theme .aiCard:hover,
