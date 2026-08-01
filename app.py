@@ -1511,7 +1511,7 @@ def create_app() -> Flask:
                 )
 
             # 5. Machine Learning Models & Algorithms
-            elif any(w in msg_lower for w in ("xgboost", "model", "algorithm", "train", "accuracy", "precision", "recall", "f1", "auc", "classifier", "machine learning", "scikit")):
+            elif any(w in msg_lower for w in ("transformer", "attention", "model", "algorithm", "train", "accuracy", "precision", "recall", "f1", "auc", "classifier", "machine learning", "scikit")):
                 res_text = (
                     "### Machine Learning Engine Diagnostics & Model Architecture\n\n"
                     "Qiplo uses an optimized **Tabular Hybrid Transformer** Classifier pipeline integrated with custom Queries, Keys, and Values self-attention projections:\n\n"
