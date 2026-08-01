@@ -13,6 +13,7 @@ if sys.platform.startswith("win"):
 
 # Insert project path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+os.environ["TESTING"] = "True"
 
 import app as app_module
 import churn_analysis
