@@ -79,14 +79,12 @@ async function loadDashboard() {
         }
 
 
-        const summaryData = { summary: payload.summary };
-        const predictionsPayload = { predictions: payload.predictions };
-        const chartsData = payload.charts;
-        const insightsData = payload.insights;
-        const aiData = payload.ai_insights;
-        const brandingData = payload.branding;
+        const brandingData = payload.branding || {};
+        const chartsData = payload.charts || { charts: [], signals: [] };
+        const insightsData = payload.insights || { recommendations: [], summary: [] };
+        const aiData = payload.ai_insights || { headline: 'Awaiting analysis', narrative: '', segments: [] };
 
-        predictionData = predictionsPayload.predictions || [];
+        predictionData = payload.predictions || [];
         
         // Render model metrics
         if (payload.model_metrics) {
@@ -118,8 +116,8 @@ async function loadDashboard() {
         const riskFilter = document.getElementById('riskFilter');
         if (riskFilter) {
             const currentVal = riskFilter.value;
-            const highLabel = labelMapping.high_risk.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
-            const lowLabel = labelMapping.low_risk.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+            const highLabel = (labelMapping.high_risk || 'high_risk').replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+            const lowLabel = (labelMapping.low_risk || 'low_risk').replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
             riskFilter.innerHTML = `
                 <option value="all">All risks</option>
                 <option value="${labelMapping.high_risk}">${highLabel}</option>
@@ -132,8 +130,9 @@ async function loadDashboard() {
             }
         }
 
-        const company = document.getElementById('companyNameInput').value || brandingData.company_name || 'Qiplo Analytics';
-        document.getElementById('brandTitle').textContent = company;
+        const company = (document.getElementById('companyNameInput') && document.getElementById('companyNameInput').value) || brandingData.company_name || 'Qiplo Analytics';
+        const brandTitle = document.getElementById('brandTitle');
+        if (brandTitle) brandTitle.textContent = company;
         
         const engineLabel = document.getElementById('modelEngineLabel');
         if (engineLabel && brandingData.model_engine_name) {
@@ -145,22 +144,22 @@ async function loadDashboard() {
             demoBadge.style.display = payload.is_demo ? 'inline-block' : 'none';
         }
 
-        renderSourceMeta();
-        renderRows();
+        try { renderSourceMeta(); } catch (e) { console.error('renderSourceMeta failed', e); }
+        try { renderRows(); } catch (e) { console.error('renderRows failed', e); }
         lastChartsData = chartsData;
-        renderCharts(chartsData, payload.feature_importance);
-        renderInsights(insightsData);
-        renderExecutiveSummary(insightsData);
-        renderAiPanel(aiData);
+        try { renderCharts(chartsData, payload.feature_importance); } catch (e) { console.error('renderCharts failed', e); }
+        try { renderInsights(insightsData); } catch (e) { console.error('renderInsights failed', e); }
+        try { renderExecutiveSummary(insightsData); } catch (e) { console.error('renderExecutiveSummary failed', e); }
+        try { renderAiPanel(aiData); } catch (e) { console.error('renderAiPanel failed', e); }
         
         // Relational CSM assignments & campaign loaders
-        await loadEnterpriseFeatures();
-        applyRolePermissions(role);
+        try { await loadEnterpriseFeatures(); } catch (e) { console.error('loadEnterpriseFeatures failed', e); }
+        try { applyRolePermissions(role); } catch (e) { console.error('applyRolePermissions failed', e); }
         
         // NotebookLM sidebars refresh
-        await fetchSources();
-        await fetchNotes();
-        await loadBusinessAnalytics();
+        try { await fetchSources(); } catch (e) { console.error('fetchSources failed', e); }
+        try { await fetchNotes(); } catch (e) { console.error('fetchNotes failed', e); }
+        try { await loadBusinessAnalytics(); } catch (e) { console.error('loadBusinessAnalytics failed', e); }
     } catch (error) {
         console.error('Dashboard load failed', error);
     }
