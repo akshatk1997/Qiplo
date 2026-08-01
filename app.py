@@ -1193,26 +1193,68 @@ def create_app() -> Flask:
         # Strategy 3: Factual Offline SQLite Solver & Universal Knowledge Engine (Zero-Key Fallback)
         try:
             conn = get_connection()
-            stats = conn.execute(
-                """
+            cols = [row[1] for row in conn.execute("PRAGMA table_info(customer_churn)").fetchall()]
+            charges_col = next((c for c in cols if c.lower() in ("monthly_charges", "monthlycharges", "charges", "monthly_charge", "monthly")), None)
+            
+            if charges_col:
+                q = f"""
                 SELECT COUNT(*) as total_customers,
                        AVG(cp.predicted_probability) as avg_risk,
                        SUM(CASE WHEN cp.prediction_label = 'high_risk' THEN 1 ELSE 0 END) as high_risk_count,
-                       SUM(cc.monthly_charges) as total_mrr,
-                       SUM(CASE WHEN cp.prediction_label = 'high_risk' THEN cc.monthly_charges ELSE 0 END) as risk_mrr
+                       SUM(cc."{charges_col}") as total_mrr,
+                       SUM(CASE WHEN cp.prediction_label = 'high_risk' THEN cc."{charges_col}" ELSE 0 END) as risk_mrr
                 FROM churn_predictions cp
                 JOIN customer_churn cc ON cp.customer_id = cc.customer_id
                 JOIN data_sources ds ON cc.source_id = ds.source_id
                 WHERE ds.is_active = 1
                 """
-            ).fetchone()
+            else:
+                q = """
+                SELECT COUNT(*) as total_customers,
+                       AVG(cp.predicted_probability) as avg_risk,
+                       SUM(CASE WHEN cp.prediction_label = 'high_risk' THEN 1 ELSE 0 END) as high_risk_count,
+                       SUM(100.0) as total_mrr,
+                       SUM(CASE WHEN cp.prediction_label = 'high_risk' THEN 100.0 ELSE 0 END) as risk_mrr
+                FROM churn_predictions cp
+                JOIN customer_churn cc ON cp.customer_id = cc.customer_id
+                JOIN data_sources ds ON cc.source_id = ds.source_id
+                WHERE ds.is_active = 1
+                """
             
+            stats = conn.execute(q).fetchone()
             total_cust = stats["total_customers"] or 0
             avg_risk = (stats["avg_risk"] or 0.0) * 100
             high_risk = stats["high_risk_count"] or 0
             total_mrr = stats["total_mrr"] or 0.0
             risk_mrr = stats["risk_mrr"] or 0.0
             high_risk_pct = (high_risk / total_cust * 100) if total_cust > 0 else 0.0
+
+            tenure_col = next((c for c in cols if c.lower() in ("tenure_months", "tenuremonths", "tenure", "months")), None)
+            tickets_col = next((c for c in cols if c.lower() in ("support_tickets", "supporttickets", "tickets", "ticket", "support")), None)
+            contract_col = next((c for c in cols if c.lower() in ("contract_type", "contracttype", "contract")), None)
+
+            select_parts = ["cc.customer_id"]
+            if charges_col:
+                select_parts.append(f'cc."{charges_col}" as monthly_charges')
+            else:
+                select_parts.append('100.0 as monthly_charges')
+                
+            if tenure_col:
+                select_parts.append(f'cc."{tenure_col}" as tenure_months')
+            else:
+                select_parts.append('12 as tenure_months')
+                
+            if contract_col:
+                select_parts.append(f'cc."{contract_col}" as contract_type')
+            else:
+                select_parts.append('"Month-to-month" as contract_type')
+                
+            if tickets_col:
+                select_parts.append(f'cc."{tickets_col}" as support_tickets')
+            else:
+                select_parts.append('0 as support_tickets')
+                
+            select_clause = ", ".join(select_parts)
 
             msg_lower = user_message.lower().strip()
             import re
@@ -1223,8 +1265,8 @@ def create_app() -> Flask:
             if cust_id_pattern:
                 target_id = cust_id_pattern[0].upper()
                 info = conn.execute(
-                    """
-                    SELECT cc.*, cp.predicted_probability, cp.prediction_label, aa.csm_name, aa.status, aa.notes
+                    f"""
+                    SELECT {select_clause}, cp.predicted_probability, cp.prediction_label, aa.csm_name, aa.status, aa.notes
                     FROM customer_churn cc
                     LEFT JOIN churn_predictions cp ON cc.customer_id = cp.customer_id
                     LEFT JOIN account_assignments aa ON cc.customer_id = aa.customer_id
@@ -1278,8 +1320,8 @@ def create_app() -> Flask:
             # 2. High-risk customer listing
             elif any(w in msg_lower for w in ("high risk list", "who is high risk", "show high risk", "list of high risk", "which customers are high risk")):
                 high_list = conn.execute(
-                    """
-                    SELECT cp.customer_id, cp.predicted_probability, cc.monthly_charges, cc.contract_type
+                    f"""
+                    SELECT cp.customer_id, cp.predicted_probability, {select_clause.replace("cc.", "")}
                     FROM churn_predictions cp
                     JOIN customer_churn cc ON cp.customer_id = cc.customer_id
                     WHERE cp.prediction_label = 'high_risk'
