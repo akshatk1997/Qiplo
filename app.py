@@ -1248,7 +1248,7 @@ def create_app() -> Flask:
                         f"| Parameter | Value |\n"
                         f"| :--- | :--- |\n"
                         f"| **Customer ID** | `{target_id}` |\n"
-                        f"| **XGBoost Risk Score** | `{risk_score}%` ({info['prediction_label'].replace('_', ' ').upper()}) |\n"
+                        f"| **Transformer Risk Score** | `{risk_score}%` ({info['prediction_label'].replace('_', ' ').upper()}) |\n"
                         f"| **Monthly Recurring Cost** | `{charges}` |\n"
                         f"| **Contract Duration** | `{contract}` |\n"
                         f"| **Account Tenure** | `{tenure}` |\n"
@@ -1298,7 +1298,7 @@ def create_app() -> Flask:
                     
                     res_text = (
                         f"### 🚨 Top High-Risk Customer Attrition List\n\n"
-                        f"Here are the top high-risk accounts currently flagged by the XGBoost Classifier:\n\n"
+                        f"Here are the top high-risk accounts currently flagged by the Tabular Hybrid Transformer:\n\n"
                         f"| Customer ID | Risk Score % | Monthly Bill | Contract Type |\n"
                         f"| :--- | :--- | :--- | :--- |\n" + "\n".join(table_rows) + "\n\n"
                         f"**Next Steps:** Assign these accounts to active Success Managers in the **Actions** tab to ensure daily resolution of unresolved tickets."
@@ -1367,7 +1367,7 @@ def create_app() -> Flask:
                 auc = f"{metrics_data.get('roc_auc', 0.965) * 100:.1f}%"
                 
                 res_text = (
-                    f"### ⚙️ XGBoost Classifier Telemetry Diagnostics\n\n"
+                    f"### ⚙️ Tabular Hybrid Transformer Telemetry Diagnostics\n\n"
                     f"Our churn model is trained and tested dynamically using the following parameters:\n\n"
                     f"| Metric | Telemetry Value | Explanation |\n"
                     f"| :--- | :--- | :--- |\n"
@@ -1472,11 +1472,11 @@ def create_app() -> Flask:
             elif any(w in msg_lower for w in ("xgboost", "model", "algorithm", "train", "accuracy", "precision", "recall", "f1", "auc", "classifier", "machine learning", "scikit")):
                 res_text = (
                     "### Machine Learning Engine Diagnostics & Model Architecture\n\n"
-                    "Qiplo uses an optimized **XGBoost (Extreme Gradient Boosting)** Classifier pipeline integrated with Scikit-Learn data transformers:\n\n"
-                    "**1. Objective Function & Regularization Math:**\n"
-                    "\\[\\mathcal{L}^{(t)} = \\sum_{i=1}^n l(y_i, \\hat{y}_i^{(t-1)} + f_t(x_i)) + \\Omega(f_t)\\]\n"
-                    "Where the regularization complexity penalty is:\n"
-                    "\\[\\Omega(f_t) = \\gamma T + \\frac{1}{2}\\lambda \\sum_{j=1}^T w_j^2\\]\n\n"
+                    "Qiplo uses an optimized **Tabular Hybrid Transformer** Classifier pipeline integrated with custom Queries, Keys, and Values self-attention projections:\n\n"
+                    "**1. Self-Attention Projection Mechanics:**\n"
+                    "\\[\\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}\\right)V\\]\n"
+                    "Where $Q, K, V$ correspond to projected feature representations of size $d_k$:\n"
+                    "\\[Q = XW_Q, \\quad K = XW_K, \\quad V = XW_V\\]\n\n"
                     "**2. Evaluation Metrics Performance:**\n"
                     "- **Precision**: Optimizes outreach target purity, minimizing false alarms:\n"
                     "\\[\\text{Precision} = \\frac{\\text{TP}}{\\text{TP} + \\text{FP}}\\]\n"

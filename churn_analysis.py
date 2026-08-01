@@ -837,20 +837,7 @@ def build_model(config: dict | None = None, fallback: bool = False, feature_colu
         ]
     )
 
-    engine = config.get("model_engine", "hybrid").lower()
-    if engine == "xgboost":
-        from xgboost import XGBClassifier
-        classifier = XGBClassifier(
-            n_estimators=100,
-            max_depth=6,
-            learning_rate=0.1,
-            random_state=42,
-            eval_metric="logloss"
-        )
-    elif engine == "random_forest":
-        classifier = RandomForestClassifier(n_estimators=100, max_depth=10, min_samples_split=4, random_state=42)
-    else:
-        classifier = TabularHybridTransformerEnsembleClassifier(d_model=16, n_heads=2, lr=0.02, epochs=20, n_estimators=5, random_state=42)
+    classifier = TabularHybridTransformerEnsembleClassifier(d_model=16, n_heads=2, lr=0.02, epochs=20, n_estimators=5, random_state=42)
 
     return Pipeline(
         steps=[
@@ -902,7 +889,7 @@ def train_model(db_path: Path, model_path: Path, config: dict | None = None) -> 
     best_report = ""
     best_predictions = None
     
-    candidate_engines = ["hybrid", "xgboost", "random_forest"]
+    candidate_engines = ["hybrid"]
     
     if use_fallback:
         for eng in candidate_engines:
@@ -976,9 +963,7 @@ def train_model(db_path: Path, model_path: Path, config: dict | None = None) -> 
         report_text = best_report
 
     engine_names = {
-        "hybrid": "Tabular Hybrid Transformer",
-        "xgboost": "XGBoost Classifier",
-        "random_forest": "Random Forest Classifier"
+        "hybrid": "Tabular Hybrid Transformer"
     }
     config["model_engine"] = best_engine
     config["model_engine_name"] = engine_names.get(best_engine, "Tabular Hybrid Transformer")

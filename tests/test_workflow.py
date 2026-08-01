@@ -23,13 +23,13 @@ def test_train_and_predict(tmp_path):
     conn.close()
     assert count > 0
 
-def test_xgboost_pipeline(tmp_path):
-    db_path = tmp_path / "test_xgb.db"
+def test_transformer_pipeline_parameters(tmp_path):
+    db_path = tmp_path / "test_hybrid_params.db"
     schema_path = Path(__file__).resolve().parents[1] / "sql" / "schema.sql"
-    model_path = tmp_path / "model_xgb.pkl"
+    model_path = tmp_path / "model_hybrid_params.pkl"
     
     churn_analysis.ensure_database(db_path, schema_path)
-    config = {"model_engine": "xgboost"}
+    config = {"model_engine": "hybrid", "numeric_features": ["tenure_months", "monthly_charges"]}
     result = churn_analysis.train_model(db_path, model_path, config=config)
     
     assert result["accuracy"] >= 0.5
