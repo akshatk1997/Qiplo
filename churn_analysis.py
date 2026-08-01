@@ -300,10 +300,65 @@ def resolve_path(base_dir: Path, path_value: str) -> Path:
     return base_dir / path
 
 
+def get_writable_config_path(default_path: Path | None = None) -> Path:
+    import os
+    if "CHURN_DB" in os.environ:
+        db_p = Path(os.environ["CHURN_DB"])
+    else:
+        db_p = Path(__file__).resolve().parent / "data" / "customer_churn.db"
+    
+    try:
+        db_dir = db_p.parent
+        db_dir.mkdir(parents=True, exist_ok=True)
+        test_file = db_dir / ".write_test"
+        with test_file.open("w") as f:
+            f.write("")
+        test_file.unlink()
+        return db_dir / "company_config.json"
+    except Exception:
+        import tempfile
+        return Path(tempfile.gettempdir()) / "company_config.json"
+
 def load_config(config_path: Path | None = None) -> dict:
+    writable_path = get_writable_config_path(config_path)
+    if not writable_path.exists():
+        target_path = config_path or DEFAULT_CONFIG_PATH
+        try:
+            if target_path.exists():
+                with target_path.open("r", encoding="utf-8") as handle:
+                    data = json.load(handle)
+                with writable_path.open("w", encoding="utf-8") as handle:
+                    json.dump(data, handle, indent=2)
+                return data
+        except Exception:
+            pass
+            
+    try:
+        if writable_path.exists():
+            with writable_path.open("r", encoding="utf-8") as handle:
+                return json.load(handle)
+    except Exception:
+        pass
+        
     target_path = config_path or DEFAULT_CONFIG_PATH
     with target_path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
+
+def save_config(config: dict, config_path: Path | None = None) -> None:
+    writable_path = get_writable_config_path(config_path)
+    try:
+        with writable_path.open("w", encoding="utf-8") as handle:
+            json.dump(config, handle, indent=2)
+    except Exception as e:
+        print(f"Warning: Failed to save config to writable path: {e}")
+        
+    target_path = config_path or DEFAULT_CONFIG_PATH
+    if target_path != writable_path:
+        try:
+            with target_path.open("w", encoding="utf-8") as handle:
+                json.dump(config, handle, indent=2)
+        except Exception:
+            pass
 
 
 def normalize_column_name(name: str) -> str:

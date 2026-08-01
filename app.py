@@ -24,7 +24,7 @@ from datetime import datetime
 import pandas as pd
 from flask import Flask, jsonify, render_template, request, Response, redirect
 
-from churn_analysis import (ensure_database, import_frame_to_sql, load_config, predict_from_frame,
+from churn_analysis import (ensure_database, import_frame_to_sql, load_config, save_config, predict_from_frame,
                              train_model, generate_ai_insight_with_llm, DEFAULT_TARGET)
 
 SCHEMA_PATH = BASE_DIR / "sql" / "schema.sql"
@@ -708,10 +708,8 @@ def create_app() -> Flask:
             config["slack_webhook_url"] = data.get("slack_webhook_url", "").strip()
             config["alert_email_recipient"] = data.get("alert_email_recipient", "").strip()
             
-            import json
             try:
-                with open(config_path, "w", encoding="utf-8") as f:
-                    json.dump(config, f, indent=2)
+                save_config(config, config_path)
             except Exception as e:
                 return jsonify({"error": f"Failed to save config: {e}"}), 500
                 
@@ -744,10 +742,8 @@ def create_app() -> Flask:
                 
             config["model_engine"] = engine
             
-            import json
             try:
-                with open(config_path, "w", encoding="utf-8") as f:
-                    json.dump(config, f, indent=2)
+                save_config(config, config_path)
             except Exception as e:
                 return jsonify({"error": f"Failed to save config: {e}"}), 500
                 
