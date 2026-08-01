@@ -2931,8 +2931,8 @@ function applyRolePermissions(role) {
     const tabAccess = {
         executive: ['overview', 'actions', 'customers', 'business', 'presentation', 'guide', 'copilot'],
         manager: ['overview', 'actions', 'customers', 'business', 'presentation', 'guide', 'copilot'],
-        sales: ['overview', 'customers', 'business', 'presentation', 'copilot'],
-        support: ['overview', 'actions', 'customers', 'guide', 'copilot']
+        sales: ['overview', 'actions', 'customers', 'business', 'presentation', 'guide', 'copilot'],
+        support: ['overview', 'actions', 'customers', 'business', 'presentation', 'guide', 'copilot']
     };
     const routeMap = {
         '/dashboard': 'overview',
