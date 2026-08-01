@@ -521,8 +521,21 @@ async function uploadFile(fileOverride) {
     formData.append('file', file);
 
     if (status) {
-        status.textContent = `Uploading "${file.name}"...`;
+        status.textContent = `Uploading and analyzing "${file.name}"...`;
         status.className = 'status';
+    }
+
+    // Show loading skeletons immediately so the user knows analysis is running
+    showLoadingSkeletons();
+    
+    // Set placeholder loading states in table and tips panel
+    const pRows = document.getElementById('predictionRows');
+    if (pRows) {
+        pRows.innerHTML = `<tr><td colspan="10" class="empty" style="text-align: center; padding: 30px;"><span class="skeleton-loader" style="width: 80%; height: 16px; display: inline-block; margin-bottom: 8px;"></span><br><strong>Scoring and analyzing custom dataset...</strong></td></tr>`;
+    }
+    const tPanel = document.getElementById('analyzedTipsPanel');
+    if (tPanel) {
+        tPanel.innerHTML = '<p style="color: var(--muted); font-size: 0.88rem; margin: 0; text-align: center;"><span class="skeleton-loader" style="width: 100px; display: inline-block;"></span> Calculating insights...</p>';
     }
 
     try {
