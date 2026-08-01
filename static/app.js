@@ -2105,11 +2105,52 @@ function renderSlides(slides) {
 
 function changeSlide(direction) {
     if (!presentationSlides.length) return;
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+    }
     currentSlideIndex = (currentSlideIndex + direction + presentationSlides.length) % presentationSlides.length;
     updateSlideView();
 }
 
+window.speakCurrentSlide = function() {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        
+        const slide = presentationSlides[currentSlideIndex];
+        if (!slide) return;
+        
+        let text = `${slide.title}. ${slide.subtitle || ''}. `;
+        if (slide.bullets) {
+            text += slide.bullets.join('. ');
+        }
+        if (slide.playbook) {
+            text += slide.playbook.map(p => `${p.title}: ${p.desc}`).join('. ');
+        }
+        if (slide.steps) {
+            text += slide.steps.map(s => `${s.title}: ${s.description || s.desc || ''}`).join('. ');
+        }
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.95;
+        utterance.pitch = 1.0;
+        
+        const voices = window.speechSynthesis.getVoices();
+        const enVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Microsoft')));
+        if (enVoice) {
+            utterance.voice = enVoice;
+        }
+        
+        window.speechSynthesis.speak(utterance);
+        showNotification("🔊 Playing slide audio narration...");
+    } else {
+        showNotification("⚠️ Text-to-speech narration is not supported in this browser.");
+    }
+};
+
 function updateSlideView() {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+    }
     document.querySelectorAll('.slide').forEach((slide, idx) => {
         slide.classList.remove('active', 'previous', 'next');
         if (idx === currentSlideIndex) {
