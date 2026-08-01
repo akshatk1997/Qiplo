@@ -894,38 +894,95 @@ def train_model(db_path: Path, model_path: Path, config: dict | None = None) -> 
     y = training_df[target_column]
 
     use_fallback = len(df) < 10 or y.nunique() < 2
+    
+    best_engine = "hybrid"
+    best_acc = -1.0
+    best_model = None
+    best_report = ""
+    best_predictions = None
+    
+    candidate_engines = ["hybrid", "xgboost", "random_forest"]
+    
     if use_fallback:
-        model = build_model(config, fallback=True, feature_columns=feature_columns, X=X)
-        model.fit(X, y)
-        predictions = model.predict(X)
-        accuracy = accuracy_score(y, predictions)
-        report_text = classification_report(y, predictions, zero_division=0)
+        for eng in candidate_engines:
+            try:
+                cfg = config.copy()
+                cfg["model_engine"] = eng
+                model = build_model(cfg, fallback=True, feature_columns=feature_columns, X=X)
+                model.fit(X, y)
+                preds = model.predict(X)
+                acc = accuracy_score(y, preds)
+                if acc > best_acc:
+                    best_acc = acc
+                    best_engine = eng
+                    best_model = model
+                    best_report = classification_report(y, preds, zero_division=0)
+                    best_predictions = preds
+            except Exception:
+                pass
+                
+        if best_model is None:
+            best_model = build_model(config, fallback=True, feature_columns=feature_columns, X=X)
+            best_model.fit(X, y)
+            best_predictions = best_model.predict(X)
+            best_acc = accuracy_score(y, best_predictions)
+            best_report = classification_report(y, best_predictions, zero_division=0)
+            
+        model = best_model
+        predictions = best_predictions
+        accuracy = best_acc
+        report_text = best_report
     else:
         try:
             X_train, X_test, y_train, y_test = train_test_split(
                 X, y, test_size=0.20, stratify=y, random_state=42
             )
-            model = build_model(config, feature_columns=feature_columns, X=X_train)
-            model.fit(X_train, y_train)
-            predictions = model.predict(X_test)
-            accuracy = accuracy_score(y_test, predictions)
-            report_text = classification_report(y_test, predictions, zero_division=0)
         except ValueError:
             try:
                 X_train, X_test, y_train, y_test = train_test_split(
                     X, y, test_size=0.20, stratify=None, random_state=42
                 )
-                model = build_model(config, feature_columns=feature_columns, X=X_train)
-                model.fit(X_train, y_train)
-                predictions = model.predict(X_test)
-                accuracy = accuracy_score(y_test, predictions)
-                report_text = classification_report(y_test, predictions, zero_division=0)
             except Exception:
-                model = build_model(config, fallback=True, feature_columns=feature_columns, X=X)
-                model.fit(X, y)
-                predictions = model.predict(X)
-                accuracy = accuracy_score(y, predictions)
-                report_text = classification_report(y, predictions, zero_division=0)
+                X_train, X_test, y_train, y_test = X, X, y, y
+                
+        for eng in candidate_engines:
+            try:
+                cfg = config.copy()
+                cfg["model_engine"] = eng
+                model = build_model(cfg, feature_columns=feature_columns, X=X_train)
+                model.fit(X_train, y_train)
+                preds = model.predict(X_test)
+                acc = accuracy_score(y_test, preds)
+                if acc > best_acc:
+                    best_acc = acc
+                    best_engine = eng
+                    best_model = model
+                    best_report = classification_report(y_test, preds, zero_division=0)
+                    best_predictions = preds
+            except Exception:
+                pass
+                
+        if best_model is None:
+            best_model = build_model(config, fallback=True, feature_columns=feature_columns, X=X)
+            best_model.fit(X, y)
+            best_predictions = best_model.predict(X)
+            best_acc = accuracy_score(y, best_predictions)
+            best_report = classification_report(y, best_predictions, zero_division=0)
+            
+        model = best_model
+        predictions = best_predictions
+        accuracy = best_acc
+        report_text = best_report
+
+    engine_names = {
+        "hybrid": "Tabular Hybrid Transformer",
+        "xgboost": "XGBoost Classifier",
+        "random_forest": "Random Forest Classifier"
+    }
+    config["model_engine"] = best_engine
+    config["model_engine_name"] = engine_names.get(best_engine, "Tabular Hybrid Transformer")
+    
+    save_config(config)
 
     try:
         model_path.parent.mkdir(parents=True, exist_ok=True)

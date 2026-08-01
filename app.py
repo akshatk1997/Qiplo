@@ -489,7 +489,8 @@ def create_app() -> Flask:
         branding_payload = {
             "company_name": company,
             "label_mapping": label_mapping,
-            "risk_threshold": config.get("risk_threshold", 0.6)
+            "risk_threshold": config.get("risk_threshold", 0.6),
+            "model_engine_name": config.get("model_engine_name", "Tabular Hybrid Transformer")
         }
 
         model_metrics = load_model_metrics()
