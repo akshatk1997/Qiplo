@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@400;500;700&family=Montserrat:wght@400;600;700;800&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel="stylesheet" href="/static/style.css?v=2.5.0" />
+    <link rel="stylesheet" href="/static/style.css?v=2.6.0" />
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -133,6 +133,7 @@
                 <button class="tab" data-tab="actions" type="button">Actions</button>
                 <button class="tab" data-tab="customers" type="button">Customers</button>
                 <button class="tab" data-tab="business" type="button">Business Hub</button>
+                <button class="tab" data-tab="sandbox" type="button"><i data-lucide="flask-conical" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> What-If Sandbox</button>
                 <button class="tab" data-tab="presentation" type="button">Presentation</button>
                 <button class="tab" data-tab="guide" type="button"><i data-lucide="book-marked" class="lucide-icon"></i> Guide Book</button>
                 <button class="tab" data-tab="copilot" type="button"><i data-lucide="brain-circuit" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Qiplo Copilot</button>
@@ -290,6 +291,103 @@
                     <table id="predictionTable">
                         <tbody id="predictionRows"></tbody>
                     </table>
+                </div>
+            </div>
+
+            <div class="tabBody hidden" id="tab-sandbox">
+                <div class="paneHead">
+                    <h2>What-If Retention Sandbox</h2>
+                    <span style="font-size: 0.78rem; color: var(--muted);">Simulate account parameters to test dynamic churn probability</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 14px;">
+                    <!-- Left Column: Inputs -->
+                    <div class="aiCard" style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
+                        <h3 style="margin: 0; font-size: 0.95rem; color: var(--accent); text-transform: uppercase;">1. Account Parameters</h3>
+                        
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.8rem;">
+                                <span>Tenure Months</span>
+                                <span id="valSandboxTenure" style="font-weight: 700;">24 months</span>
+                            </div>
+                            <input type="range" id="sandboxTenure" min="1" max="72" value="24" style="width: 100%; accent-color: var(--accent);" oninput="updateSandboxVal('SandboxTenure', this.value + ' months'); runSandboxSimulation();" />
+                        </div>
+                        
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.8rem;">
+                                <span>Monthly Charges ($)</span>
+                                <span id="valSandboxCharges" style="font-weight: 700;">$70.00</span>
+                            </div>
+                            <input type="range" id="sandboxCharges" min="10" max="200" value="70" style="width: 100%; accent-color: var(--accent);" oninput="updateSandboxVal('SandboxCharges', '$' + Number(this.value).toFixed(2)); runSandboxSimulation();" />
+                        </div>
+                        
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.8rem;">
+                                <span>Support Tickets (Unresolved)</span>
+                                <span id="valSandboxTickets" style="font-weight: 700;">0 tickets</span>
+                            </div>
+                            <input type="range" id="sandboxTickets" min="0" max="10" value="0" style="width: 100%; accent-color: var(--accent);" oninput="updateSandboxVal('SandboxTickets', this.value + ' tickets'); runSandboxSimulation();" />
+                        </div>
+
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.8rem;">
+                                <span>CSAT Satisfaction Score</span>
+                                <span id="valSandboxSatisfaction" style="font-weight: 700;">4 / 5</span>
+                            </div>
+                            <input type="range" id="sandboxSatisfaction" min="1" max="5" value="4" style="width: 100%; accent-color: var(--accent);" oninput="updateSandboxVal('SandboxSatisfaction', this.value + ' / 5'); runSandboxSimulation();" />
+                        </div>
+
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.8rem;">
+                                <span>Billing Delays (Days)</span>
+                                <span id="valSandboxDelays" style="font-weight: 700;">0 days</span>
+                            </div>
+                            <input type="range" id="sandboxDelays" min="0" max="30" value="0" style="width: 100%; accent-color: var(--accent);" oninput="updateSandboxVal('SandboxDelays', this.value + ' days'); runSandboxSimulation();" />
+                        </div>
+
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.8rem;">
+                                <span>Weekly Usage Hours</span>
+                                <span id="valSandboxUsage" style="font-weight: 700;">15 hours</span>
+                            </div>
+                            <input type="range" id="sandboxUsage" min="0" max="80" value="15" style="width: 100%; accent-color: var(--accent);" oninput="updateSandboxVal('SandboxUsage', this.value + ' hours'); runSandboxSimulation();" />
+                        </div>
+
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.8rem;">
+                                <span>Past Complaints</span>
+                                <span id="valSandboxComplaints" style="font-weight: 700;">0 complaints</span>
+                            </div>
+                            <input type="range" id="sandboxComplaints" min="0" max="10" value="0" style="width: 100%; accent-color: var(--accent);" oninput="updateSandboxVal('SandboxComplaints', this.value + ' complaints'); runSandboxSimulation();" />
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Churn Risk Gauge & Dynamic Insight -->
+                    <div class="aiCard" style="padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; min-height: 400px; text-align: center;">
+                        <h3 style="margin: 0; font-size: 0.95rem; color: var(--accent); text-transform: uppercase;">2. Simulated Churn Outlook</h3>
+                        
+                        <div style="position: relative; width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; margin: 20px 0;">
+                            <!-- Circular Progress Indicator -->
+                            <svg width="180" height="180" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                                <circle cx="50" cy="50" r="40" stroke="var(--border)" stroke-width="8" fill="transparent" />
+                                <circle id="sandboxGaugeCircle" cx="50" cy="50" r="40" stroke="var(--accent)" stroke-width="8" fill="transparent" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2" style="transition: stroke-dashoffset 0.35s ease;" />
+                            </svg>
+                            <div style="position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                <span id="sandboxProbabilityText" style="font-size: 1.8rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: var(--text);">0.0%</span>
+                                <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase;">Churn Probability</span>
+                            </div>
+                        </div>
+
+                        <div id="sandboxStatusBadge" style="padding: 6px 12px; border-radius: 20px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; background: var(--surface-3); color: var(--text); border: 1px solid var(--border);">
+                            Awaiting Simulation
+                        </div>
+
+                        <div id="sandboxRecommendations" style="width: 100%; border-top: 1px solid var(--border); padding-top: 14px; margin-top: 14px; text-align: left; display: flex; flex-direction: column; gap: 8px;">
+                            <span style="font-size: 0.75rem; color: var(--muted); text-transform: uppercase; font-weight: 700;">Prescriptive Solutions</span>
+                            <div id="sandboxRecommendationsList" style="font-size: 0.82rem; color: var(--text); font-weight: 500; display: flex; flex-direction: column; gap: 6px;">
+                                Change the sliders to run scenario simulation models.
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1199,6 +1297,6 @@
         </div>
     </div>
 
-    <script src="/static/app.js?v=2.5.0" defer></script>
+    <script src="/static/app.js?v=2.6.0" defer></script>
 </body>
 </html>

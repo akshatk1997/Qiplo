@@ -781,6 +781,107 @@ def create_app() -> Flask:
             "model_engine": config.get("model_engine", "hybrid")
         })
 
+    @app.route("/api/sandbox/predict", methods=["POST"])
+    def sandbox_predict_api():
+        import pickle
+        try:
+            data = request.json or {}
+            
+            model_path = get_model_path()
+            if not model_path.exists():
+                # Let's train a model if it doesn't exist
+                try:
+                    db_path = get_db_path()
+                    train_model(db_path, model_path, config=load_config(CONFIG_PATH))
+                except Exception:
+                    return jsonify({"error": "No trained model found. Please upload a customer dataset first."}), 400
+                
+            if not model_path.exists():
+                return jsonify({"error": "No trained model found. Please upload a customer dataset first."}), 400
+                
+            with open(model_path, "rb") as handle:
+                model = pickle.load(handle)
+                
+            config = load_config(CONFIG_PATH)
+            
+            feature_cols = []
+            if hasattr(model, "steps"):
+                preprocessor = model.steps[0][1]
+                if hasattr(preprocessor, "transformers_"):
+                    for name, trans, cols in preprocessor.transformers_:
+                        feature_cols.extend(cols)
+            
+            if not feature_cols:
+                feature_cols = config.get("numeric_features", []) + config.get("categorical_features", [])
+                
+            if not feature_cols:
+                # Fallback to standard columns
+                feature_cols = [
+                    "tenure_months", "monthly_charges", "support_tickets",
+                    "customer_satisfaction_score", "payment_delays",
+                    "product_usage", "complaint_count"
+                ]
+                
+            sim_dict = {}
+            for col in feature_cols:
+                val = None
+                for k, v in data.items():
+                    if k.lower().replace("_", "") == col.lower().replace("_", ""):
+                        val = v
+                        break
+                
+                if val is None:
+                    if "charge" in col.lower() or "usage" in col.lower() or "delays" in col.lower():
+                        val = 0.0
+                    elif "tenure" in col.lower():
+                        val = 12
+                    elif "satisfaction" in col.lower():
+                        val = 4
+                    elif "ticket" in col.lower() or "complaint" in col.lower():
+                        val = 0
+                    else:
+                        val = "No"
+                        
+                sim_dict[col] = [val]
+                
+            df_sim = pd.DataFrame(sim_dict)
+            
+            # Execute prediction probabilities
+            proba = float(model.predict_proba(df_sim)[0, 1])
+            threshold = float(config.get("risk_threshold", 0.6))
+            label_mapping = config.get("label_mapping", {"high_risk": "high_risk", "low_risk": "low_risk"})
+            
+            label = label_mapping["high_risk"] if proba >= threshold else label_mapping["low_risk"]
+            
+            recs = []
+            if proba >= threshold:
+                recs.append("⚠️ <strong>HIGH CHURN RISK</strong>: Simulated account parameters indicate high attrition probability.")
+                
+                tickets = data.get("support_tickets", 0)
+                satisfaction = data.get("customer_satisfaction_score", 4)
+                delays = data.get("payment_delays", 0)
+                
+                if int(tickets) > 1:
+                    recs.append(f"• <strong>Resolve Support Issues</strong>: Address {tickets} unresolved support tickets immediately.")
+                if int(satisfaction) <= 2:
+                    recs.append(f"• <strong>CSAT Recovery Program</strong>: Proactively contact customer due to low satisfaction ({satisfaction}/5).")
+                if int(delays) > 2:
+                    recs.append(f"• <strong>Billing Outreach</strong>: Customer has {delays} days of payment delay. Offer flexible billing options.")
+            else:
+                recs.append("✅ <strong>LOW CHURN RISK</strong>: Account parameters reflect a stable customer relation.")
+                recs.append("• <strong>Loyalty Upgrades</strong>: Eligible for standard account growth upgrades.")
+                
+            return jsonify({
+                "status": "ok",
+                "probability": proba,
+                "label": label,
+                "threshold": threshold,
+                "recommendations": recs
+            })
+        except Exception as e:
+            return jsonify({"status": "error", "message": str(e)}), 500
+
+
     @app.route("/api/upload", methods=["POST"])
     def upload_api():
         if "file" not in request.files:
