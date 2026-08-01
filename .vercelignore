@@ -1,0 +1,19 @@
+# Ignore test suite and dev server scripts
+tests/
+.pytest_cache/
+verify.py
+run_server.bat
+
+# Ignore build archives and virtual environments
+Qiplo_Vercel_Build.zip
+.venv/
+__pycache__/
+*.zip
+*.db
+
+# Ignore documentation files
+README.md
+LICENSE
+SECURITY.md
+COMPLIANCE.md
+artifacts/
