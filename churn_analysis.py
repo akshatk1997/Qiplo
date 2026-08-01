@@ -943,6 +943,9 @@ def save_predictions_to_sql(db_path: Path, prediction_frame: pd.DataFrame) -> No
     else:
         conn.execute("DELETE FROM churn_predictions")
         
+    # Deduplicate by customer_id to prevent constraint violations
+    prediction_frame = prediction_frame.drop_duplicates(subset=["customer_id"])
+    
     timestamp = datetime.now(timezone.utc).isoformat()
     has_drivers = "risk_drivers" in prediction_frame.columns
     has_ci = "ci_lower" in prediction_frame.columns and "ci_upper" in prediction_frame.columns
@@ -963,7 +966,7 @@ def save_predictions_to_sql(db_path: Path, prediction_frame: pd.DataFrame) -> No
             timestamp
         ))
     conn.executemany(
-        "INSERT INTO churn_predictions (customer_id, predicted_probability, prediction_label, risk_drivers, ci_lower, ci_upper, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        "INSERT OR REPLACE INTO churn_predictions (customer_id, predicted_probability, prediction_label, risk_drivers, ci_lower, ci_upper, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
         records,
     )
     conn.commit()
