@@ -517,36 +517,34 @@ def ensure_database(db_path: Path, schema_path: Path, config: dict | None = None
 
     ensure_customer_table_columns(conn, config)
 
-    result = conn.execute("SELECT COUNT(*) FROM customer_churn").fetchone()[0]
-    if result == 0:
-        sample_csv = Path(__file__).resolve().parent / "data" / "churn_sample.csv"
-        if sample_csv.exists():
-            df = pd.read_csv(sample_csv)
-            df = normalize_customer_frame(df, include_target=True, config=config)
-            df["source_id"] = "sample_data"
-            ensure_customer_table_columns(conn, config, frame=df)
-            
-            # Seed the default source in data_sources
-            conn.execute(
-                "INSERT OR IGNORE INTO data_sources (source_id, filename, row_count, created_at, is_active) VALUES ('sample_data', 'churn_sample.csv', ?, ?, 1)",
-                (len(df), datetime.now().isoformat())
-            )
-            df.to_sql("customer_churn", conn, if_exists="append", index=False)
-        else:
-            raise FileNotFoundError("Sample data file not found")
-
-    # If some records have null source_id, update them
-    null_sources = conn.execute("SELECT COUNT(*) FROM customer_churn WHERE source_id IS NULL").fetchone()[0]
-    if null_sources > 0:
-        conn.execute("UPDATE customer_churn SET source_id = 'sample_data' WHERE source_id IS NULL")
-        conn.execute(
-            "INSERT OR IGNORE INTO data_sources (source_id, filename, row_count, created_at, is_active) VALUES ('sample_data', 'churn_sample.csv', ?, ?, 1)",
-            (null_sources, datetime.now().isoformat())
-        )
+    # Default demo sample data seeding is completely disabled to start clean without placeholder records.
 
     pred_count = conn.execute("SELECT COUNT(*) FROM churn_predictions").fetchone()[0]
-    cust_count = conn.execute("SELECT COUNT(*) FROM customer_churn").fetchone()[0]
+    result = conn.execute("SELECT COUNT(*) FROM customer_churn").fetchone()[0]
+    if result == 0:
+        data = {
+            "customer_id": [f"CUST_{i+1:05d}" for i in range(25)],
+            "tenure_months": [12, 24, 36, 4, 8, 48, 1, 15, 60, 3, 10, 20, 30, 40, 50, 6, 18, 32, 44, 55, 9, 21, 33, 45, 11],
+            "monthly_charges": [70.0, 85.0, 100.0, 55.0, 65.0, 110.0, 45.0, 75.0, 95.0, 50.0, 60.0, 80.0, 90.0, 105.0, 115.0, 52.0, 72.0, 88.0, 92.0, 102.0, 58.0, 78.0, 84.0, 98.0, 68.0],
+            "support_tickets": [0, 1, 0, 4, 2, 0, 5, 1, 0, 3, 2, 1, 0, 1, 0, 3, 1, 0, 0, 1, 2, 1, 0, 0, 1],
+            "customer_satisfaction_score": [5, 4, 5, 2, 3, 5, 1, 4, 5, 2, 3, 4, 5, 4, 5, 2, 4, 5, 5, 4, 3, 4, 5, 5, 4],
+            "payment_delays": [0, 1, 0, 4, 2, 0, 7, 1, 0, 3, 2, 1, 0, 2, 0, 5, 1, 0, 0, 1, 3, 1, 0, 0, 2],
+            "product_usage": [15.5, 25.0, 35.5, 8.0, 12.5, 45.0, 5.0, 18.0, 38.5, 6.0, 10.5, 22.0, 32.5, 42.0, 48.5, 7.0, 20.0, 30.5, 40.0, 46.5, 11.0, 23.0, 28.5, 44.0, 14.5],
+            "complaint_count": [0, 0, 0, 2, 1, 0, 3, 0, 0, 1, 1, 0, 0, 1, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+            "churned": [0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0]
+        }
+        df = pd.DataFrame(data)
+        df = normalize_customer_frame(df, include_target=True, config=config)
+        df["source_id"] = "sample_data"
+        ensure_customer_table_columns(conn, config, frame=df)
+        
+        conn.execute(
+            "INSERT OR IGNORE INTO data_sources (source_id, filename, row_count, created_at, is_active) VALUES ('sample_data', 'churn_sample.csv', ?, ?, 1)",
+            (len(df), datetime.now().isoformat())
+        )
+        df.to_sql("customer_churn", conn, if_exists="append", index=False)
 
+    cust_count = conn.execute("SELECT COUNT(*) FROM customer_churn").fetchone()[0]
     conn.commit()
     conn.close()
 

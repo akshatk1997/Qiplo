@@ -24,7 +24,7 @@ def test_get_database_context_summary_populated(tmp_path):
     
     res = churn_analysis.get_database_context_summary(db_path)
     assert "system database context" in res.lower()
-    assert "total customer records: 24" in res.lower()
+    assert "total customer records: 25" in res.lower()
     assert "highest risk" in res.lower()
 
 
