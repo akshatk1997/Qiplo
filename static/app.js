@@ -78,6 +78,17 @@ async function loadDashboard() {
             latencyEl.textContent = `${latency} ms (Roundtrip)`;
         }
 
+        try {
+            const engineRes = await safeFetch('/api/model/engine');
+            const engineData = await engineRes.json();
+            const engineSelect = document.getElementById('modelEngineSelect');
+            if (engineSelect && engineData.model_engine) {
+                engineSelect.value = engineData.model_engine;
+            }
+        } catch (e) {
+            console.error('Failed to load active model engine:', e);
+        }
+
         const summaryData = { summary: payload.summary };
         const predictionsPayload = { predictions: payload.predictions };
         const chartsData = payload.charts;
@@ -3306,6 +3317,26 @@ function setupDemoToggle() {
 
 window.exportAuditLogs = function() {
     window.location.href = `/api/compliance/audit/export?role=${currentAuthorizedRole}`;
+};
+
+window.updateModelEngine = async function(engine) {
+    showLoadingSkeletons();
+    try {
+        const res = await safeFetch('/api/model/engine', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ model_engine: engine })
+        });
+        const payload = await res.json();
+        if (payload.status === 'ok') {
+            await loadDashboard();
+        } else {
+            alert(payload.error || 'Failed to switch model engine.');
+        }
+    } catch (e) {
+        console.error('Failed to update model engine:', e);
+        alert('Engine switch failed: ' + e);
+    }
 };
 
 document.addEventListener('DOMContentLoaded', () => {

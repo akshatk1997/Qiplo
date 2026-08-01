@@ -730,6 +730,60 @@ def create_app() -> Flask:
             "alert_email_recipient": config.get("alert_email_recipient", "")
         })
 
+    @app.route("/api/model/engine", methods=["GET", "POST"])
+    def model_engine_api():
+        role = request.args.get("role", request.headers.get("X-User-Role", "manager")).lower()
+        config_path = CONFIG_PATH
+        config = load_config(config_path)
+        
+        if request.method == "POST":
+            data = request.json or {}
+            engine = data.get("model_engine", "hybrid").lower()
+            if engine not in ["hybrid", "xgboost", "random_forest"]:
+                return jsonify({"error": "Invalid model engine. Valid options are: hybrid, xgboost, random_forest."}), 400
+                
+            config["model_engine"] = engine
+            
+            import json
+            try:
+                with open(config_path, "w", encoding="utf-8") as f:
+                    json.dump(config, f, indent=2)
+            except Exception as e:
+                return jsonify({"error": f"Failed to save config: {e}"}), 500
+                
+            # Retrain model and update predictions in DB using the new model engine
+            try:
+                from churn_analysis import train_model
+                db_path = get_db_path()
+                model_path = get_model_path()
+                if model_path.exists():
+                    try:
+                        model_path.unlink()
+                    except Exception:
+                        pass
+                train_res = train_model(db_path, model_path, config=config)
+            except Exception as e:
+                return jsonify({"error": f"Failed to train and predict with model engine '{engine}': {e}"}), 500
+                
+            conn = get_connection()
+            conn.execute(
+                "INSERT INTO audit_logs (user_role, action, target_customer, timestamp) VALUES (?, ?, ?, ?)",
+                (role.upper(), f"Switched active prediction engine to {engine.upper()} and retrained model.", None, datetime.now().isoformat())
+            )
+            conn.commit()
+            conn.close()
+            
+            return jsonify({
+                "status": "ok", 
+                "model_engine": engine,
+                "accuracy": train_res.get("accuracy", 0.0),
+                "message": f"Successfully switched prediction engine to {engine.upper()} and updated predictions."
+            })
+            
+        return jsonify({
+            "model_engine": config.get("model_engine", "hybrid")
+        })
+
     @app.route("/api/upload", methods=["POST"])
     def upload_api():
         if "file" not in request.files:
