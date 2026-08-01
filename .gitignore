@@ -15,7 +15,3 @@ __pycache__/
 .pytest_cache/
 .kilo/
 files/
-check_dupes.py
-find_tv_routes.py
-fix_api.py
-revert_app.py
