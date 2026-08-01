@@ -1,34 +1,83 @@
 # Qiplo — Never Lose a Customer Again ⚡
 
-> *"AI-Powered Customer Churn Intelligence & Retention Engine"*
+> **"SOTA AI-Powered Customer Churn Intelligence & Retention Engine"**
 
-**Qiplo** is a 100% free, open-source, and claims-free AI customer retention platform designed for high-growth enterprises and modern data teams. It predicts customer churn risk, identifies revenue-at-risk, and generates high-converting retention playbooks in real time.
+**Qiplo** is a 100% free, open-source, and claims-free customer retention predictive analytics platform designed for high-growth enterprises and modern customer success teams. Powered by a custom state-of-the-art **Tabular Hybrid Attention Transformer Classifier**, Qiplo maps unstructured database inputs, identifies revenue-at-risk, and generates recovery playbooks with zero latency.
+
+---
 
 ## 🌐 Live URLs & Links
-- **Vercel Live Production App**: [https://qiplo.vercel.app](https://qiplo.vercel.app)
-- **Official GitHub Repository**: [https://github.com/akshatk1997/Qiplo](https://github.com/akshatk1997/Qiplo)
+* **Vercel Live Production App**: [https://qiplo.vercel.app](https://qiplo.vercel.app)
+* **Official GitHub Repository**: [https://github.com/akshatk1997/Qiplo](https://github.com/akshatk1997/Qiplo)
+
+---
 
 ## 🌟 Key Features
-- **100% Free & MIT Licensed**: Unrestricted public and enterprise utility.
-- **Slogan & Mission**: *"Never lose a customer again."*
-- **Instant AI Churn Predictions**: Powered by robust Machine Learning algorithms with multi-tiered zero-key offline solvers.
-- **Financial ROI & Revenue at Risk**: Multi-currency revenue forecasting ($ USD, € EUR, £ GBP, ₹ INR, ¥ JPY).
-- **Executive Presentation Generator**: Automatically builds HTML slide decks for executive reviews.
-- **Fresh Modern Typography**: Styled with Google Fonts (*Outfit*, *Plus Jakarta Sans*, *JetBrains Mono*).
-- **BI Connectors**: One-click datasource exports for Power BI (`.pbids`) and Tableau (`.twb`).
 
-## 🚀 Quick Setup
+* **SOTA Tabular Hybrid Attention Transformer Classifier**:
+  Qiplo features a custom self-attention classification architecture built in NumPy that uses scale projections to capture inter-feature correlations dynamically:
+  $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
+  Optimized for tabular customer parameters (tenure, charges, support tickets, CSAT, billing delays), it operates as the absolute single-source classifier engine.
+  
+* **Interactive What-If Simulation Sandbox**:
+  A professional playground allowing customer success managers to adjust account sliders (billing, support tickets, CSAT, complaints) and observe simulated churn risk changes in real time, accompanied by an interactive SVG circular risk dial and prescriptive recovery recipes.
 
+* **Smart PowerPoint & HTML Slide Deck Builder**:
+  Generates fully styled slideshow presentation decks from active analytics datasets, customizable by theme colors, typography pairings, and layout counts. Includes standard PowerPoint (`.pptx`) deck downloads.
+
+* **Client-Side Text-To-Speech Audio Narration**:
+  Features a built-in vocal player inside the slides dashboard utilizing the browser's native HTML5 `SpeechSynthesis` Web API to read slide summaries, bullets, and playbook steps with professional pacing.
+
+* **Passcode-Free Instant Role Switcher**:
+  Bypasses passcode dialog prompts entirely, allowing instant navigation across `EXECUTIVE`, `MANAGER`, `SALES`, and `SUPPORT` permission layers.
+
+* **High-Performance Dark Mode**:
+  Replaced heavy backdrop-filter blur rendering layers with paint-optimized solid surface overlays to eliminate browser repaint lags and maximize frame rates in dark mode.
+
+* **Secure Gated Seeding & Fresh Production State**:
+  Gates mock dataset seeding to testing environments (`pytest` or `TESTING=True` contexts). On standard production runs, it initializes with a completely fresh, empty database.
+
+---
+
+## 🚀 Quick Setup & Installation
+
+### 1. Install dependencies
 ```bash
-# 1. Install dependencies
-python -m pip install -r requirements.txt
+# Clone the repository
+git clone https://github.com/akshatk1997/Qiplo.git
+cd Qiplo
 
-# 2. Run local web server
+# Install requirements
+pip install -r requirements.txt
+```
+
+### 2. Run local web server
+```bash
 python app.py
 ```
-Then open **http://127.0.0.1:5000/** in your browser.
+Open **http://127.0.0.1:5000/** in your browser.
+
+---
+
+## 🧪 Automated Testing & Verifications
+
+Qiplo includes an end-to-end integration verifier and a complete pytest suite.
+
+### Run A-to-Z Integration Verifications
+Simulates user sessions over all endpoints:
+```bash
+python verify.py
+```
+
+### Run Pytest Suite
+Runs all 21 automated validation test cases:
+```bash
+pytest
+```
+
+---
 
 ## 📄 License & Credits
 Released under the permissive **[MIT License](LICENSE)**.
 
-Made with ❤️ by **Akshat Kumar**.
+Developed by **Akshat Kumar** and pairs. Confidentially compiled for enterprise customer success alignment.
