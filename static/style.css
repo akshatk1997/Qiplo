@@ -421,8 +421,6 @@ a { color: inherit; text-decoration: none; }
 /* Sources pane */
 .sourcesPane {
     background: var(--surface);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 18px;
@@ -2168,7 +2166,7 @@ body.dark-theme::-webkit-scrollbar-thumb:hover {
 
 /* Radical Obsidian Background Gradient */
 body.dark-theme {
-    background: radial-gradient(circle at 50% 0%, #0d0f1b 0%, #000000 80%) !important;
+    background: #060810 !important;
 }
 
 /* Glassmorphic Topbar (Opaque fallback for speed) */
@@ -2186,7 +2184,7 @@ body.dark-theme .notesPane {
     box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4) !important;
 }
 
-/* Premium Gradient Card Overlays */
+/* Premium Gradient Card Overlays (High-performance solid backgrounds) */
 body.dark-theme .aiCard,
 body.dark-theme .signalsBlock,
 body.dark-theme .noteCard,
@@ -2198,7 +2196,7 @@ body.dark-theme .chatMsg,
 body.dark-theme .insightBox,
 body.dark-theme .aiSegment,
 body.dark-theme .slideEditorPanel {
-    background: linear-gradient(135deg, rgba(20, 24, 36, 0.6), rgba(30, 35, 53, 0.4)) !important;
+    background: #101424 !important;
     border: 1px solid rgba(255, 255, 255, 0.05) !important;
     box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2) !important;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;

@@ -1013,24 +1013,7 @@ async function deleteSource(sourceId, event) {
             const sourcesData = await sourcesRes.json();
             const remainingCustom = (sourcesData.sources || []).filter(src => src.source_id !== 'sample_data');
             
-            if (remainingCustom.length === 0) {
-                try {
-                    await safeFetch('/api/demo/set-mode', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ mode: 'demo' })
-                    });
-                    
-                    const toggleDemoBtn = document.getElementById('toggleDemoBtn');
-                    const toggleCustomBtn = document.getElementById('toggleCustomBtn');
-                    if (toggleDemoBtn && toggleCustomBtn) {
-                        toggleDemoBtn.classList.add('active');
-                        toggleCustomBtn.classList.remove('active');
-                    }
-                } catch (err) {
-                    console.error('Failed to set demo mode on delete:', err);
-                }
-            }
+
 
             await loadDashboard();
             await fetchSources();
