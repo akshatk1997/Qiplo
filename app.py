@@ -461,7 +461,7 @@ def create_app() -> Flask:
         except Exception:
             pass
 
-        if not feature_importance:
+        if not feature_importance and active_sources:
             feature_importance = {
                 "Support Tickets": 0.385,
                 "Contract Type": 0.264,
@@ -512,6 +512,19 @@ def create_app() -> Flask:
     def load_model_metrics() -> dict:
         try:
             conn = get_connection()
+            active_count = conn.execute("SELECT COUNT(*) FROM data_sources WHERE is_active = 1").fetchone()[0]
+            if active_count == 0:
+                conn.close()
+                return {
+                    "accuracy": "n/a",
+                    "precision": "n/a",
+                    "recall": "n/a",
+                    "auc": "n/a",
+                    "tn": 0,
+                    "fp": 0,
+                    "fn": 0,
+                    "tp": 0
+                }
             rows = conn.execute(
                 """
                 SELECT cc.churned, cp.prediction_label, cp.predicted_probability
