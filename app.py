@@ -300,6 +300,7 @@ def create_app() -> Flask:
         insights_payload = {"role": role, "recommendations": [], "summary": []}
         active_sources = []
         is_demo = False
+        conn = None
 
         try:
             conn = get_connection()
@@ -415,17 +416,17 @@ def create_app() -> Flask:
 
             active_sources = conn.execute("SELECT source_id FROM data_sources WHERE is_active = 1").fetchall()
             is_demo = len(active_sources) == 1 and active_sources[0]["source_id"] == "sample_data"
-            conn.close()
         except Exception as exc:
             import traceback
             traceback.print_exc()
-            try:
-                conn.close()
-            except Exception:
-                pass
 
         # 5. AI narrative insights
         ai_payload = None
+        if conn is None:
+            try:
+                conn = get_connection()
+            except Exception:
+                pass
         try:
             db_cols_list = [c for c in cols if c != "customer_id"]
             cc_cols_str = ", ".join(f'cc."{c}"' for c in db_cols_list) if db_cols_list else ""
@@ -460,7 +461,17 @@ def create_app() -> Flask:
             }
 
         # Check if the active dataset is the demo dataset
-        active_sources = conn.execute("SELECT source_id FROM data_sources WHERE is_active = 1").fetchall()
+        if conn is None:
+            try:
+                conn = get_connection()
+            except Exception:
+                pass
+        
+        active_sources = []
+        try:
+            active_sources = conn.execute("SELECT source_id FROM data_sources WHERE is_active = 1").fetchall()
+        except Exception:
+            pass
         is_demo = len(active_sources) == 1 and active_sources[0]["source_id"] == "sample_data"
 
         # Get global feature importance from the model
@@ -471,6 +482,11 @@ def create_app() -> Flask:
                 from churn_analysis import load_model, get_feature_columns, normalize_customer_frame
                 model = load_model(model_path)
                 if hasattr(model, "feature_importances_"):
+                    if conn is None:
+                        try:
+                            conn = get_connection()
+                        except Exception:
+                            pass
                     single_row = conn.execute("SELECT * FROM customer_churn LIMIT 1").fetchone()
                     if single_row:
                         import pandas as pd
