@@ -361,13 +361,18 @@ def create_app() -> Flask:
             
         signals = []
         if "support_tickets" in cols:
-            signals.append({"label": "High support tickets", "value": sum(1 for r in signal_rows if (r["support_tickets"] or 0) >= 3)})
+            signals.append({"label": "High support tickets (3+)", "value": sum(1 for r in signal_rows if (r["support_tickets"] or 0) >= 3)})
+            signals.append({"label": "Low support tickets (0-1)", "value": sum(1 for r in signal_rows if (r["support_tickets"] or 0) <= 1)})
         if "complaint_count" in cols:
-            signals.append({"label": "High complaints", "value": sum(1 for r in signal_rows if (r["complaint_count"] or 0) >= 3)})
+            signals.append({"label": "High complaints (3+)", "value": sum(1 for r in signal_rows if (r["complaint_count"] or 0) >= 3)})
+            signals.append({"label": "Zero complaints", "value": sum(1 for r in signal_rows if (r["complaint_count"] or 0) == 0)})
         if "customer_satisfaction_score" in cols:
-            signals.append({"label": "Low satisfaction", "value": sum(1 for r in signal_rows if (r["customer_satisfaction_score"] or 0) <= 2)})
+            signals.append({"label": "Low satisfaction (1-2)", "value": sum(1 for r in signal_rows if (r["customer_satisfaction_score"] or 0) <= 2)})
+            signals.append({"label": "High satisfaction (4-5)", "value": sum(1 for r in signal_rows if (r["customer_satisfaction_score"] or 0) >= 4)})
         if "payment_delays" in cols:
-            signals.append({"label": "Payment delays", "value": sum(1 for r in signal_rows if (r["payment_delays"] or 0) >= 1)})
+            signals.append({"label": "Payment delays (1+)", "value": sum(1 for r in signal_rows if (r["payment_delays"] or 0) >= 1)})
+        if "tenure_months" in cols:
+            signals.append({"label": "Loyal tenure (24mo+)", "value": sum(1 for r in signal_rows if (r["tenure_months"] or 0) >= 24)})
 
         charts_payload = {
             "charts": [{"label": r["prediction_label"], "value": r["customers"]} for r in chart_rows],
@@ -1011,13 +1016,18 @@ def create_app() -> Flask:
 
         signals = []
         if "support_tickets" in cols:
-            signals.append({"label": "High support tickets", "value": sum(1 for r in signal_rows if (r["support_tickets"] or 0) >= 3)})
+            signals.append({"label": "High support tickets (3+)", "value": sum(1 for r in signal_rows if (r["support_tickets"] or 0) >= 3)})
+            signals.append({"label": "Low support tickets (0-1)", "value": sum(1 for r in signal_rows if (r["support_tickets"] or 0) <= 1)})
         if "complaint_count" in cols:
-            signals.append({"label": "High complaints", "value": sum(1 for r in signal_rows if (r["complaint_count"] or 0) >= 3)})
+            signals.append({"label": "High complaints (3+)", "value": sum(1 for r in signal_rows if (r["complaint_count"] or 0) >= 3)})
+            signals.append({"label": "Zero complaints", "value": sum(1 for r in signal_rows if (r["complaint_count"] or 0) == 0)})
         if "customer_satisfaction_score" in cols:
-            signals.append({"label": "Low satisfaction", "value": sum(1 for r in signal_rows if (r["customer_satisfaction_score"] or 0) <= 2)})
+            signals.append({"label": "Low satisfaction (1-2)", "value": sum(1 for r in signal_rows if (r["customer_satisfaction_score"] or 0) <= 2)})
+            signals.append({"label": "High satisfaction (4-5)", "value": sum(1 for r in signal_rows if (r["customer_satisfaction_score"] or 0) >= 4)})
         if "payment_delays" in cols:
-            signals.append({"label": "Payment delays", "value": sum(1 for r in signal_rows if (r["payment_delays"] or 0) >= 1)})
+            signals.append({"label": "Payment delays (1+)", "value": sum(1 for r in signal_rows if (r["payment_delays"] or 0) >= 1)})
+        if "tenure_months" in cols:
+            signals.append({"label": "Loyal tenure (24mo+)", "value": sum(1 for r in signal_rows if (r["tenure_months"] or 0) >= 24)})
 
         return jsonify({
             "charts": [{"label": row["prediction_label"], "value": row["customers"]} for row in data],

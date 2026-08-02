@@ -331,11 +331,19 @@ function renderCharts(chartPayload, featureImportance) {
         options: { responsive: true, maintainAspectRatio: false, cutout: '62%', plugins: { legend: { labels: { color: labelColor } } } }
     });
 
+    const signalColors = (signalLabels.length ? signalLabels : ['No retention signals']).map(lbl => {
+        const l = lbl.toLowerCase();
+        if (l.includes('zero') || l.includes('high satisfaction') || l.includes('low support') || l.includes('loyal')) {
+            return '#10B981'; // Emerald Green
+        }
+        return '#FF007F'; // Magenta
+    });
+
     signalChart = new Chart(document.getElementById('signalChart'), {
         type: 'bar',
         data: {
             labels: signalLabels.length ? signalLabels : ['No retention signals'],
-            datasets: [{ label: 'Customers', data: signalValues.length ? signalValues : [0], backgroundColor: ['#00F5FF', '#FF007F', '#FFE600', '#39FF14'] }]
+            datasets: [{ label: 'Customers', data: signalValues.length ? signalValues : [0], backgroundColor: signalColors }]
         },
         options: {
             responsive: true, maintainAspectRatio: false,
