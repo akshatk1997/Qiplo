@@ -2343,5 +2343,37 @@ body.dark-theme .ghostBtn:hover {
     .modelMetricsGrid {
         grid-template-columns: repeat(2, 1fr) !important;
     }
+    
+    /* Business Hub Responsiveness */
+    .financialStatsGrid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    .simControlsGrid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    .simResultsGrid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+    
+    /* Presentation Slide Editor & Sorter Resizing */
+    #tab-presentation .editorFields {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Guide Book Grid Resizing */
+    #tab-guide div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .simResultsGrid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
 }
 
