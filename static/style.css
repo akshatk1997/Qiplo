@@ -2377,3 +2377,11 @@ body.dark-theme .ghostBtn:hover {
     }
 }
 
+/* Snappy Interface & GPU Layer Acceleration */
+.tabBody {
+    content-visibility: auto;
+}
+.framer-card, .statCallout, .guideSectionCard, .fStatCard, .simResultCard, .themeToggleBtn, .tab {
+    will-change: transform, opacity;
+}
+
