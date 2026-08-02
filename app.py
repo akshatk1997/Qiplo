@@ -294,116 +294,135 @@ def create_app() -> Flask:
         high_risk_label = label_mapping.get("high_risk", "high_risk")
         low_risk_label = label_mapping.get("low_risk", "low_risk")
         
-        conn = get_connection()
-        cols = customer_columns(conn)
-        
-        # 1. Summary
-        summary_rows = conn.execute(
-            """
-            SELECT cp.prediction_label as label, COUNT(*) as customers,
-                   ROUND(AVG(cp.predicted_probability), 3) as avg_probability
-            FROM churn_predictions cp
-            JOIN customer_churn cc ON cp.customer_id = cc.customer_id
-            JOIN data_sources ds ON cc.source_id = ds.source_id
-            WHERE ds.is_active = 1
-            GROUP BY cp.prediction_label
-            ORDER BY customers DESC
-            """
-        ).fetchall()
-        summary_data = [dict(r) for r in summary_rows]
+        summary_data = []
+        predictions_data = []
+        charts_payload = {"charts": [], "signals": []}
+        insights_payload = {"role": role, "recommendations": [], "summary": []}
+        active_sources = []
+        is_demo = False
 
-        # 2. Predictions
-        existing = set(cols)
-        extra_cols = [c for c in ("region", "contract_type", "tenure_months", "churned",
-                                  "support_tickets", "payment_delays", "product_usage",
-                                  "complaint_count", "customer_satisfaction_score")
-                      if c in existing]
-        select_cols = "cp.customer_id, cp.predicted_probability, cp.prediction_label, cp.risk_drivers, cp.ci_lower, cp.ci_upper" + \
-            ("".join(f', cc."{c}"' for c in extra_cols) if extra_cols else "")
-        prediction_rows = conn.execute(
-            f"""
-            SELECT {select_cols}
-            FROM churn_predictions cp
-            LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id
-            JOIN data_sources ds ON cc.source_id = ds.source_id
-            WHERE ds.is_active = 1
-            ORDER BY cp.predicted_probability DESC
-            """
-        ).fetchall()
-        predictions_data = [dict(r) for r in prediction_rows]
+        try:
+            conn = get_connection()
+            cols = customer_columns(conn)
+            
+            # 1. Summary
+            summary_rows = conn.execute(
+                """
+                SELECT cp.prediction_label as label, COUNT(*) as customers,
+                       ROUND(AVG(cp.predicted_probability), 3) as avg_probability
+                FROM churn_predictions cp
+                JOIN customer_churn cc ON cp.customer_id = cc.customer_id
+                JOIN data_sources ds ON cc.source_id = ds.source_id
+                WHERE ds.is_active = 1
+                GROUP BY cp.prediction_label
+                ORDER BY customers DESC
+                """
+            ).fetchall()
+            summary_data = [dict(r) for r in summary_rows]
 
-        # 3. Charts & Signals
-        chart_rows = conn.execute(
-            """
-            SELECT cp.prediction_label, COUNT(*) AS customers
-            FROM churn_predictions cp
-            JOIN customer_churn cc ON cp.customer_id = cc.customer_id
-            JOIN data_sources ds ON cc.source_id = ds.source_id
-            WHERE ds.is_active = 1
-            GROUP BY cp.prediction_label
-            ORDER BY customers DESC
-            """
-        ).fetchall()
-        
-        numeric_candidates = [c for c in ("support_tickets", "complaint_count", "customer_satisfaction_score", "payment_delays")
-                              if c in cols]
-        signal_rows = []
-        if numeric_candidates:
-            sel = ", ".join(f"cc.{c}" for c in numeric_candidates)
-            signal_rows = conn.execute(
+            # 2. Predictions
+            existing = set(cols)
+            extra_cols = [c for c in ("region", "contract_type", "tenure_months", "churned",
+                                      "support_tickets", "payment_delays", "product_usage",
+                                      "complaint_count", "customer_satisfaction_score")
+                          if c in existing]
+            select_cols = "cp.customer_id, cp.predicted_probability, cp.prediction_label, cp.risk_drivers, cp.ci_lower, cp.ci_upper" + \
+                ("".join(f', cc."{c}"' for c in extra_cols) if extra_cols else "")
+            prediction_rows = conn.execute(
                 f"""
-                SELECT {sel} FROM churn_predictions cp 
+                SELECT {select_cols}
+                FROM churn_predictions cp
                 LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id
                 JOIN data_sources ds ON cc.source_id = ds.source_id
                 WHERE ds.is_active = 1
+                ORDER BY cp.predicted_probability DESC
+                """
+            ).fetchall()
+            predictions_data = [dict(r) for r in prediction_rows]
+
+            # 3. Charts & Signals
+            chart_rows = conn.execute(
+                """
+                SELECT cp.prediction_label, COUNT(*) AS customers
+                FROM churn_predictions cp
+                JOIN customer_churn cc ON cp.customer_id = cc.customer_id
+                JOIN data_sources ds ON cc.source_id = ds.source_id
+                WHERE ds.is_active = 1
+                GROUP BY cp.prediction_label
+                ORDER BY customers DESC
                 """
             ).fetchall()
             
-        signals = []
-        if "support_tickets" in cols:
-            signals.append({"label": "High support tickets (3+)", "value": sum(1 for r in signal_rows if (r["support_tickets"] or 0) >= 3)})
-            signals.append({"label": "Low support tickets (0-1)", "value": sum(1 for r in signal_rows if (r["support_tickets"] or 0) <= 1)})
-        if "complaint_count" in cols:
-            signals.append({"label": "High complaints (3+)", "value": sum(1 for r in signal_rows if (r["complaint_count"] or 0) >= 3)})
-            signals.append({"label": "Zero complaints", "value": sum(1 for r in signal_rows if (r["complaint_count"] or 0) == 0)})
-        if "customer_satisfaction_score" in cols:
-            signals.append({"label": "Low satisfaction (1-2)", "value": sum(1 for r in signal_rows if (r["customer_satisfaction_score"] or 0) <= 2)})
-            signals.append({"label": "High satisfaction (4-5)", "value": sum(1 for r in signal_rows if (r["customer_satisfaction_score"] or 0) >= 4)})
-        if "payment_delays" in cols:
-            signals.append({"label": "Payment delays (1+)", "value": sum(1 for r in signal_rows if (r["payment_delays"] or 0) >= 1)})
-        if "tenure_months" in cols:
-            signals.append({"label": "Loyal tenure (24mo+)", "value": sum(1 for r in signal_rows if (r["tenure_months"] or 0) >= 24)})
+            numeric_candidates = [c for c in ("support_tickets", "complaint_count", "customer_satisfaction_score", "payment_delays", "tenure_months")
+                                  if c in cols]
+            signal_rows = []
+            if numeric_candidates:
+                sel = ", ".join(f"cc.{c}" for c in numeric_candidates)
+                signal_rows = conn.execute(
+                    f"""
+                    SELECT {sel} FROM churn_predictions cp 
+                    LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id
+                    JOIN data_sources ds ON cc.source_id = ds.source_id
+                    WHERE ds.is_active = 1
+                    """
+                ).fetchall()
+                
+            signals = []
+            if "support_tickets" in cols:
+                signals.append({"label": "High support tickets (3+)", "value": sum(1 for r in signal_rows if (r["support_tickets"] or 0) >= 3)})
+                signals.append({"label": "Low support tickets (0-1)", "value": sum(1 for r in signal_rows if (r["support_tickets"] or 0) <= 1)})
+            if "complaint_count" in cols:
+                signals.append({"label": "High complaints (3+)", "value": sum(1 for r in signal_rows if (r["complaint_count"] or 0) >= 3)})
+                signals.append({"label": "Zero complaints", "value": sum(1 for r in signal_rows if (r["complaint_count"] or 0) == 0)})
+            if "customer_satisfaction_score" in cols:
+                signals.append({"label": "Low satisfaction (1-2)", "value": sum(1 for r in signal_rows if (r["customer_satisfaction_score"] or 0) <= 2)})
+                signals.append({"label": "High satisfaction (4-5)", "value": sum(1 for r in signal_rows if (r["customer_satisfaction_score"] or 0) >= 4)})
+            if "payment_delays" in cols:
+                signals.append({"label": "Payment delays (1+)", "value": sum(1 for r in signal_rows if (r["payment_delays"] or 0) >= 1)})
+            if "tenure_months" in cols:
+                signals.append({"label": "Loyal tenure (24mo+)", "value": sum(1 for r in signal_rows if (r["tenure_months"] or 0) >= 24)})
 
-        charts_payload = {
-            "charts": [{"label": r["prediction_label"], "value": r["customers"]} for r in chart_rows],
-            "signals": [s for s in signals if s["value"]],
-        }
+            charts_payload = {
+                "charts": [{"label": r["prediction_label"], "value": r["customers"]} for r in chart_rows],
+                "signals": [s for s in signals if s["value"]],
+            }
 
-        # 4. Insights recommendations
-        insight_rows = conn.execute(
-            """
-            SELECT prediction_label, COUNT(*) AS customers, ROUND(AVG(predicted_probability), 3) AS avg_probability
-            FROM churn_predictions
-            GROUP BY prediction_label
-            ORDER BY customers DESC
-            """
-        ).fetchall()
-
-        signal_cols = [c for c in ("support_tickets", "complaint_count", "customer_satisfaction_score", "payment_delays") if c in cols]
-        customer_rows = []
-        if signal_cols:
-            sel_sig = "cp.prediction_label, " + ", ".join(f"cc.{c}" for c in signal_cols)
-            customer_rows = conn.execute(
-                f"SELECT {sel_sig} FROM churn_predictions cp LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id"
+            # 4. Insights recommendations
+            insight_rows = conn.execute(
+                """
+                SELECT prediction_label, COUNT(*) AS customers, ROUND(AVG(predicted_probability), 3) AS avg_probability
+                FROM churn_predictions
+                GROUP BY prediction_label
+                ORDER BY customers DESC
+                """
             ).fetchall()
 
-        recommendations = build_role_recommendations(role, high_risk_label, low_risk_label, insight_rows, customer_rows, cols)
+            signal_cols = [c for c in ("support_tickets", "complaint_count", "customer_satisfaction_score", "payment_delays") if c in cols]
+            customer_rows = []
+            if signal_cols:
+                sel_sig = "cp.prediction_label, " + ", ".join(f"cc.{c}" for c in signal_cols)
+                customer_rows = conn.execute(
+                    f"SELECT {sel_sig} FROM churn_predictions cp LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id"
+                ).fetchall()
 
-        insights_payload = {
-            "role": role,
-            "recommendations": recommendations,
-            "summary": [dict(r) for r in insight_rows],
-        }
+            recommendations = build_role_recommendations(role, high_risk_label, low_risk_label, insight_rows, customer_rows, cols)
+
+            insights_payload = {
+                "role": role,
+                "recommendations": recommendations,
+                "summary": [dict(r) for r in insight_rows],
+            }
+
+            active_sources = conn.execute("SELECT source_id FROM data_sources WHERE is_active = 1").fetchall()
+            is_demo = len(active_sources) == 1 and active_sources[0]["source_id"] == "sample_data"
+            conn.close()
+        except Exception as exc:
+            import traceback
+            traceback.print_exc()
+            try:
+                conn.close()
+            except Exception:
+                pass
 
         # 5. AI narrative insights
         ai_payload = None
@@ -488,7 +507,10 @@ def create_app() -> Flask:
         except Exception:
             pass
 
-        conn.close()
+        try:
+            conn.close()
+        except Exception:
+            pass
 
         # 6. Branding & Config
         branding_payload = {
@@ -999,7 +1021,7 @@ def create_app() -> Flask:
         ).fetchall()
 
         cols = customer_columns(conn)
-        numeric_candidates = [c for c in ("support_tickets", "complaint_count", "customer_satisfaction_score", "payment_delays")
+        numeric_candidates = [c for c in ("support_tickets", "complaint_count", "customer_satisfaction_score", "payment_delays", "tenure_months")
                               if c in cols]
         signal_rows = []
         if numeric_candidates:
