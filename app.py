@@ -584,10 +584,13 @@ def create_app() -> Flask:
                 y_true = []
                 y_pred = []
                 y_prob = []
+                config = load_config(CONFIG_PATH)
+                label_mapping = config.get("label_mapping", {"high_risk": "high_risk", "low_risk": "low_risk"})
+                high_label = label_mapping.get("high_risk", "high_risk")
                 for r in rows:
                     if r["churned"] is not None:
                         y_true.append(int(r["churned"]))
-                        y_pred.append(1 if r["prediction_label"] == "high_risk" else 0)
+                        y_pred.append(1 if r["prediction_label"] == high_label else 0)
                         y_prob.append(float(r["predicted_probability"]))
                 
                 if len(y_true) >= 5 and len(set(y_true)) > 1:
