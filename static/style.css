@@ -2315,3 +2315,33 @@ body.dark-theme .ghostBtn:hover {
     }
 }
 
+/* Mobile Collapsible Sidebars & Sandbox Responsiveness */
+@media (max-width: 768px) {
+    .sourcesPane.collapsed, .notesPane.collapsed {
+        height: 52px !important;
+        overflow: hidden !important;
+        padding-bottom: 0 !important;
+        border-bottom: 1px solid var(--border) !important;
+    }
+    .sourcesPane .paneHead, .notesPane .paneHead {
+        cursor: pointer;
+        user-select: none;
+    }
+    .sourcesPane .paneHead h2::after, .notesPane .paneHead h2::after {
+        content: ' ▾';
+        font-size: 0.8rem;
+        color: var(--accent);
+        transition: transform 0.2s ease;
+    }
+    .sourcesPane:not(.collapsed) .paneHead h2::after, .notesPane:not(.collapsed) .paneHead h2::after {
+        content: ' ▴';
+    }
+    #sandboxSplitLayout {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+    .modelMetricsGrid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+

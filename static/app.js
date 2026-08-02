@@ -2919,10 +2919,10 @@ window.closeToolInfo = function() {
 
 function applyRolePermissions(role) {
     const tabAccess = {
-        executive: ['overview', 'actions', 'customers', 'business', 'presentation', 'guide', 'copilot'],
-        manager: ['overview', 'actions', 'customers', 'business', 'presentation', 'guide', 'copilot'],
-        sales: ['overview', 'actions', 'customers', 'business', 'presentation', 'guide', 'copilot'],
-        support: ['overview', 'actions', 'customers', 'business', 'presentation', 'guide', 'copilot']
+        executive: ['overview', 'actions', 'customers', 'sandbox', 'business', 'presentation', 'guide', 'copilot'],
+        manager: ['overview', 'actions', 'customers', 'sandbox', 'business', 'presentation', 'guide', 'copilot'],
+        sales: ['overview', 'actions', 'customers', 'sandbox', 'business', 'presentation', 'guide', 'copilot'],
+        support: ['overview', 'actions', 'customers', 'sandbox', 'business', 'presentation', 'guide', 'copilot']
     };
     const routeMap = {
         '/dashboard': 'overview',
@@ -3419,5 +3419,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Sandbox simulation
     if (document.getElementById('sandboxTenure')) {
         runSandboxSimulation();
+    }
+
+    // Mobile Collapsible Sidebars
+    if (window.innerWidth <= 768) {
+        document.querySelectorAll('.sourcesPane, .notesPane').forEach(pane => {
+            pane.classList.add('collapsed');
+            const head = pane.querySelector('.paneHead');
+            if (head) {
+                head.addEventListener('click', () => {
+                    pane.classList.toggle('collapsed');
+                });
+            }
+        });
     }
 });
