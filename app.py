@@ -967,7 +967,7 @@ def create_app() -> Flask:
                     pass
 
         try:
-            rows = import_frame_to_sql(frame, get_db_path(), replace=False, config=config, filename=uploaded.filename)
+            rows = import_frame_to_sql(frame, get_db_path(), replace=True, config=config, filename=uploaded.filename)
             train_model(get_db_path(), get_model_path(), config=config)
             
             # Deactivate demo data and activate custom data on successful custom upload
