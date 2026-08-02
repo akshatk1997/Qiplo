@@ -298,7 +298,7 @@ function renderRows() {
         }
 
         const tds = [`<td><div><strong>${idVal}</strong></div>${assignInfo}${driversHtml}</td>`,
-            `<td><span class="badge ${labelClass}">${item.prediction_label.replace('_', ' ')}</span></td>`,
+            `<td><span class="badge ${labelClass}">${(item.prediction_label || 'low_risk').replace('_', ' ')}</span></td>`,
             `<td><div><strong>${probability}</strong></div>${ciText}</td>`,
             ...extra.map(c => `<td>${cell(item[c])}</td>`)].join('');
 
