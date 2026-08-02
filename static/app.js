@@ -3350,60 +3350,64 @@ window.updateSandboxVal = function(id, val) {
     if (el) el.textContent = val;
 };
 
-window.runSandboxSimulation = async function() {
-    const tenure = parseInt(document.getElementById('sandboxTenure').value);
-    const charges = parseFloat(document.getElementById('sandboxCharges').value);
-    const tickets = parseInt(document.getElementById('sandboxTickets').value);
-    const satisfaction = parseInt(document.getElementById('sandboxSatisfaction').value);
-    const delays = parseInt(document.getElementById('sandboxDelays').value);
-    const usage = parseFloat(document.getElementById('sandboxUsage').value);
-    const complaints = parseInt(document.getElementById('sandboxComplaints').value);
+let sandboxTimeout = null;
+window.runSandboxSimulation = function() {
+    if (sandboxTimeout) clearTimeout(sandboxTimeout);
+    sandboxTimeout = setTimeout(async () => {
+        const tenure = parseInt(document.getElementById('sandboxTenure').value);
+        const charges = parseFloat(document.getElementById('sandboxCharges').value);
+        const tickets = parseInt(document.getElementById('sandboxTickets').value);
+        const satisfaction = parseInt(document.getElementById('sandboxSatisfaction').value);
+        const delays = parseInt(document.getElementById('sandboxDelays').value);
+        const usage = parseFloat(document.getElementById('sandboxUsage').value);
+        const complaints = parseInt(document.getElementById('sandboxComplaints').value);
 
-    try {
-        const res = await safeFetch('/api/sandbox/predict', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                support_tickets: tickets,
-                customer_satisfaction_score: satisfaction,
-                payment_delays: delays,
-                tenure_months: tenure,
-                monthly_charges: charges,
-                product_usage: usage,
-                complaint_count: complaints
-            })
-        });
-        const payload = await res.json();
-        if (payload.status === 'ok') {
-            const probPct = (payload.probability * 100).toFixed(1);
-            document.getElementById('sandboxProbabilityText').textContent = probPct + '%';
-            
-            const circle = document.getElementById('sandboxGaugeCircle');
-            if (circle) {
-                const offset = 251.2 - (251.2 * payload.probability);
-                circle.style.strokeDashoffset = offset;
+        try {
+            const res = await safeFetch('/api/sandbox/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    support_tickets: tickets,
+                    customer_satisfaction_score: satisfaction,
+                    payment_delays: delays,
+                    tenure_months: tenure,
+                    monthly_charges: charges,
+                    product_usage: usage,
+                    complaint_count: complaints
+                })
+            });
+            const payload = await res.json();
+            if (payload.status === 'ok') {
+                const probPct = (payload.probability * 100).toFixed(1);
+                document.getElementById('sandboxProbabilityText').textContent = probPct + '%';
                 
-                if (payload.probability >= payload.threshold) {
-                    circle.style.stroke = 'var(--danger)';
-                    document.getElementById('sandboxStatusBadge').style.borderColor = 'var(--danger)';
-                    document.getElementById('sandboxStatusBadge').style.color = 'var(--danger)';
-                    document.getElementById('sandboxStatusBadge').textContent = '⚠️ HIGH RISK ACCOUNT';
-                } else {
-                    circle.style.stroke = 'var(--success)';
-                    document.getElementById('sandboxStatusBadge').style.borderColor = 'var(--success)';
-                    document.getElementById('sandboxStatusBadge').style.color = 'var(--success)';
-                    document.getElementById('sandboxStatusBadge').textContent = '✅ STABLE / LOW RISK';
+                const circle = document.getElementById('sandboxGaugeCircle');
+                if (circle) {
+                    const offset = 251.2 - (251.2 * payload.probability);
+                    circle.style.strokeDashoffset = offset;
+                    
+                    if (payload.probability >= payload.threshold) {
+                        circle.style.stroke = 'var(--danger)';
+                        document.getElementById('sandboxStatusBadge').style.borderColor = 'var(--danger)';
+                        document.getElementById('sandboxStatusBadge').style.color = 'var(--danger)';
+                        document.getElementById('sandboxStatusBadge').textContent = '⚠️ HIGH RISK ACCOUNT';
+                    } else {
+                        circle.style.stroke = 'var(--success)';
+                        document.getElementById('sandboxStatusBadge').style.borderColor = 'var(--success)';
+                        document.getElementById('sandboxStatusBadge').style.color = 'var(--success)';
+                        document.getElementById('sandboxStatusBadge').textContent = '✅ STABLE / LOW RISK';
+                    }
+                }
+
+                const list = document.getElementById('sandboxRecommendationsList');
+                if (list && payload.recommendations) {
+                    list.innerHTML = payload.recommendations.map(r => `<div>${r}</div>`).join('');
                 }
             }
-
-            const list = document.getElementById('sandboxRecommendationsList');
-            if (list && payload.recommendations) {
-                list.innerHTML = payload.recommendations.map(r => `<div>${r}</div>`).join('');
-            }
+        } catch (e) {
+            console.error('Sandbox simulation failed:', e);
         }
-    } catch (e) {
-        console.error('Sandbox simulation failed:', e);
-    }
+    }, 150);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
