@@ -291,9 +291,21 @@
             </div>
 
             <div class="tabBody hidden" id="tab-sandbox">
-                <div class="paneHead">
-                    <h2>Sandbox</h2>
-                    <span style="font-size: 0.78rem; color: var(--muted);">Simulate account parameters to test dynamic churn probability</span>
+                <div class="paneHead" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <div>
+                        <h2>Sandbox</h2>
+                        <span style="font-size: 0.78rem; color: var(--muted);">Simulate account parameters to test dynamic churn probability</span>
+                    </div>
+                    <div class="currencySelector">
+                        <label for="sandboxCurrencySelect">Currency: </label>
+                        <select id="sandboxCurrencySelect" class="roleSelect" aria-label="Change currency">
+                            <option value="USD" data-symbol="$" data-rate="1.0">USD ($)</option>
+                            <option value="EUR" data-symbol="€" data-rate="0.92">EUR (€)</option>
+                            <option value="GBP" data-symbol="£" data-rate="0.78">GBP (£)</option>
+                            <option value="INR" data-symbol="₹" data-rate="83.5">INR (₹)</option>
+                            <option value="JPY" data-symbol="¥" data-rate="158.0">JPY (¥)</option>
+                        </select>
+                    </div>
                 </div>
                 <div id="sandboxSplitLayout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 14px;">
                     <!-- Left Column: Inputs -->
@@ -310,10 +322,10 @@
                         
                         <div>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.8rem;">
-                                <span>Monthly Charges ($)</span>
+                                <span>Monthly Charges</span>
                                 <span id="valSandboxCharges" style="font-weight: 700;">$70.00</span>
                             </div>
-                            <input type="range" id="sandboxCharges" min="10" max="200" value="70" style="width: 100%; accent-color: var(--accent);" oninput="updateSandboxVal('SandboxCharges', '$' + Number(this.value).toFixed(2)); runSandboxSimulation();" />
+                            <input type="range" id="sandboxCharges" min="10" max="200" value="70" style="width: 100%; accent-color: var(--accent);" oninput="updateSandboxVal('SandboxCharges', currentCurrencySymbol + (Number(this.value) * currentCurrencyRate).toFixed(2)); runSandboxSimulation();" />
                         </div>
                         
                         <div>

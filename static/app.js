@@ -1313,8 +1313,21 @@ function setupBusinessHub() {
             const opt = e.target.options[e.target.selectedIndex];
             currentCurrencySymbol = opt.getAttribute('data-symbol') || '$';
             currentCurrencyRate = parseFloat(opt.getAttribute('data-rate') || '1.0');
+            
+            // Sync to Sandbox tab currency selector
+            const sandboxCurrencySelect = document.getElementById('sandboxCurrencySelect');
+            if (sandboxCurrencySelect) sandboxCurrencySelect.value = e.target.value;
+            
+            updateSandboxChargesLabel();
             renderBusinessAnalytics();
         });
+    }
+}
+
+function updateSandboxChargesLabel() {
+    const valEl = document.getElementById('sandboxCharges');
+    if (valEl) {
+        updateSandboxVal('SandboxCharges', currentCurrencySymbol + (Number(valEl.value) * currentCurrencyRate).toFixed(2));
     }
 }
 
@@ -3423,6 +3436,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Sandbox simulation
     if (document.getElementById('sandboxTenure')) {
         runSandboxSimulation();
+    }
+
+    const sandboxCurrencySelect = document.getElementById('sandboxCurrencySelect');
+    if (sandboxCurrencySelect) {
+        sandboxCurrencySelect.addEventListener('change', (e) => {
+            const opt = e.target.options[e.target.selectedIndex];
+            currentCurrencySymbol = opt.getAttribute('data-symbol') || '$';
+            currentCurrencyRate = parseFloat(opt.getAttribute('data-rate') || '1.0');
+            
+            // Sync to Business tab currency selector
+            const bizCurrencySelect = document.getElementById('currencySelect');
+            if (bizCurrencySelect) bizCurrencySelect.value = e.target.value;
+            
+            updateSandboxChargesLabel();
+            renderBusinessAnalytics();
+        });
     }
 
     // Mobile Collapsible Sidebars
