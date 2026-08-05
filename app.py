@@ -1248,7 +1248,8 @@ def create_app() -> Flask:
                     headers={"Content-Type": "application/json"},
                     method="POST"
                 )
-                with urllib.request.urlopen(req, timeout=3) as resp:
+                context = ssl._create_unverified_context()
+                with urllib.request.urlopen(req, timeout=3, context=context) as resp:
                     res = _json.loads(resp.read().decode("utf-8"))
                     return jsonify({"response": res.get("response", "")})
             except Exception:
@@ -1865,15 +1866,17 @@ def create_app() -> Flask:
     def export_powerbi_api():
         try:
             pbids_data = {
-                "version": "1.0",
+                "version": "0.1",
                 "connections": [
                     {
-                        "type": "Web",
-                        "address": {
-                            "url": f"{request.url_root}api/export/csv"
+                        "details": {
+                            "protocol": "web-contents",
+                            "address": {
+                                "url": f"{request.url_root}api/export/csv"
+                            }
                         },
-                        "authentication": None,
-                        "query": None
+                        "options": {},
+                        "mode": None
                     }
                 ]
             }
@@ -3379,7 +3382,8 @@ def get_proxy_config():
 def apply_proxy_to_request(url, timeout=30):
     proxy = proxy_manager.get_proxy()
     if not proxy:
-        return urllib.request.urlopen(url, timeout=timeout)
+        context = ssl._create_unverified_context()
+        return urllib.request.urlopen(url, timeout=timeout, context=context)
 
     proxy_url = proxy["url"]
     proxy_id = proxy["id"]
@@ -3540,7 +3544,8 @@ def proxy_test_api():
     start = time.time()
     try:
         req = urllib.request.Request(test_url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=15) as resp:
+        context = ssl._create_unverified_context()
+        with urllib.request.urlopen(req, timeout=15, context=context) as resp:
             body = resp.read().decode()
             latency_ms = int((time.time() - start) * 1000)
             proxy_manager.mark_result(proxy_id, True, latency_ms)
@@ -3882,9 +3887,11 @@ def _hex_to_rgb(hex_color):
 def _get_image_stream(url):
     import io
     import urllib.request
+    import ssl
     try:
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=5) as response:
+        context = ssl._create_unverified_context()
+        with urllib.request.urlopen(req, timeout=5, context=context) as response:
             return io.BytesIO(response.read())
     except Exception as e:
         print(f"Failed to fetch image {url}: {e}")
@@ -4756,7 +4763,8 @@ def simulate_webhook_alert():
                     headers={"Content-Type": "application/json"},
                     method="POST"
                 )
-                with urllib.request.urlopen(req, timeout=5) as resp:
+                context = ssl._create_unverified_context()
+                with urllib.request.urlopen(req, timeout=5, context=context) as resp:
                     if resp.status in (200, 201, 204):
                         real_webhook_status = "Outbound Slack request dispatched successfully."
                     else:
@@ -4999,6 +5007,205 @@ def download_presentation_pptx():
         })
     except Exception as e:
         return jsonify({"error": f"Failed to build presentation PPTX: {e}"}), 500
+
+
+# ============================================================
+# Bulk Email Marketing & Campaign Tool
+# ============================================================
+from email_service import get_recipients_for_segment, render_template_html, generate_tracking_token, start_campaign_send
+
+@app.route("/email")
+def email_campaign_page():
+    return render_template("email_campaigns.html")
+
+@app.route("/api/email/templates", methods=["GET", "POST"])
+def email_templates_api():
+    conn = get_connection()
+    if request.method == "POST":
+        data = request.json or {}
+        name = data.get("name", "").strip()
+        subject = data.get("subject", "").strip()
+        body_html = data.get("body_html", "").strip()
+        if not name or not subject or not body_html:
+            return jsonify({"error": "name, subject, and body_html are required."}), 400
+        template_id = f"tpl_{int(datetime.now().timestamp())}"
+        now = datetime.now().isoformat()
+        conn.execute(
+            "INSERT INTO email_templates (template_id, name, subject, body_html, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)",
+            (template_id, name, subject, body_html, now, now)
+        )
+        conn.commit()
+        conn.close()
+        return jsonify({"status": "ok", "template_id": template_id})
+    
+    rows = conn.execute("SELECT * FROM email_templates ORDER BY updated_at DESC").fetchall()
+    conn.close()
+    return jsonify({"templates": [dict(row) for row in rows]})
+
+@app.route("/api/email/templates/<template_id>", methods=["GET", "PUT", "DELETE"])
+def email_template_detail_api(template_id):
+    conn = get_connection()
+    if request.method == "DELETE":
+        conn.execute("DELETE FROM email_templates WHERE template_id = ?", (template_id,))
+        conn.commit()
+        conn.close()
+        return jsonify({"status": "ok"})
+    
+    if request.method == "PUT":
+        data = request.json or {}
+        name = data.get("name", "").strip()
+        subject = data.get("subject", "").strip()
+        body_html = data.get("body_html", "").strip()
+        if not name or not subject or not body_html:
+            return jsonify({"error": "name, subject, and body_html are required."}), 400
+        now = datetime.now().isoformat()
+        conn.execute(
+            "UPDATE email_templates SET name = ?, subject = ?, body_html = ?, updated_at = ? WHERE template_id = ?",
+            (name, subject, body_html, now, template_id)
+        )
+        conn.commit()
+        conn.close()
+        return jsonify({"status": "ok"})
+    
+    row = conn.execute("SELECT * FROM email_templates WHERE template_id = ?", (template_id,)).fetchone()
+    conn.close()
+    if not row:
+        return jsonify({"error": "Template not found."}), 404
+    return jsonify(dict(row))
+
+@app.route("/api/email/campaigns", methods=["GET", "POST"])
+def email_campaigns_api():
+    conn = get_connection()
+    if request.method == "POST":
+        data = request.json or {}
+        name = data.get("name", "").strip()
+        template_id = data.get("template_id", "").strip()
+        recipient_segment = data.get("recipient_segment", "all").strip()
+        if not name or not template_id:
+            return jsonify({"error": "name and template_id are required."}), 400
+        
+        template = conn.execute("SELECT * FROM email_templates WHERE template_id = ?", (template_id,)).fetchone()
+        if not template:
+            return jsonify({"error": "Template not found."}), 404
+        
+        now = datetime.now().isoformat()
+        cursor = conn.execute(
+            "INSERT INTO email_campaigns (name, template_id, recipient_segment, status, created_at) VALUES (?, ?, ?, 'draft', ?)",
+            (name, template_id, recipient_segment, now)
+        )
+        campaign_id = cursor.lastrowid
+        conn.commit()
+        conn.close()
+        return jsonify({"status": "ok", "campaign_id": campaign_id})
+    
+    rows = conn.execute("SELECT * FROM email_campaigns ORDER BY created_at DESC").fetchall()
+    conn.close()
+    return jsonify({"campaigns": [dict(row) for row in rows]})
+
+@app.route("/api/email/campaigns/<int:campaign_id>", methods=["GET"])
+def email_campaign_detail_api(campaign_id):
+    conn = get_connection()
+    campaign = conn.execute("SELECT * FROM email_campaigns WHERE campaign_id = ?", (campaign_id,)).fetchone()
+    if not campaign:
+        conn.close()
+        return jsonify({"error": "Campaign not found."}), 404
+    
+    template = conn.execute("SELECT * FROM email_templates WHERE template_id = ?", (campaign["template_id"],)).fetchone()
+    logs = conn.execute("SELECT * FROM email_logs WHERE campaign_id = ? ORDER BY sent_at DESC", (campaign_id,)).fetchall()
+    conn.close()
+    return jsonify({
+        "campaign": dict(campaign),
+        "template": dict(template) if template else None,
+        "logs": [dict(row) for row in logs]
+    })
+
+@app.route("/api/email/send", methods=["POST"])
+def email_send_api():
+    data = request.json or {}
+    campaign_id = data.get("campaign_id")
+    if not campaign_id:
+        return jsonify({"error": "campaign_id is required."}), 400
+    
+    conn = get_connection()
+    campaign = conn.execute("SELECT * FROM email_campaigns WHERE campaign_id = ?", (campaign_id,)).fetchone()
+    if not campaign:
+        conn.close()
+        return jsonify({"error": "Campaign not found."}), 404
+    
+    template = conn.execute("SELECT * FROM email_templates WHERE template_id = ?", (campaign["template_id"],)).fetchone()
+    if not template:
+        conn.close()
+        return jsonify({"error": "Template not found."}), 404
+    
+    recipients = get_recipients_for_segment(campaign["recipient_segment"])
+    if not recipients:
+        conn.close()
+        return jsonify({"error": "No recipients found for the selected segment."}), 400
+    
+    config = load_config(CONFIG_PATH)
+    company_name = config.get("company_name", "Qiplo Analytics")
+    
+    conn.execute("UPDATE email_campaigns SET total_recipients = ? WHERE campaign_id = ?", (len(recipients), campaign_id))
+    conn.commit()
+    conn.close()
+    
+    thread = start_campaign_send(campaign_id, recipients, template["subject"], template["body_html"], company_name)
+    
+    return jsonify({"status": "ok", "message": f"Campaign started. Sending to {len(recipients)} recipients.", "total_recipients": len(recipients)})
+
+@app.route("/api/email/campaigns/<int:campaign_id>/status", methods=["GET"])
+def email_campaign_status_api(campaign_id):
+    conn = get_connection()
+    campaign = conn.execute("SELECT * FROM email_campaigns WHERE campaign_id = ?", (campaign_id,)).fetchone()
+    if not campaign:
+        conn.close()
+        return jsonify({"error": "Campaign not found."}), 404
+    
+    recent_logs = conn.execute(
+        "SELECT * FROM email_logs WHERE campaign_id = ? ORDER BY log_id DESC LIMIT 20", (campaign_id,)
+    ).fetchall()
+    conn.close()
+    return jsonify({
+        "campaign": dict(campaign),
+        "recent_logs": [dict(row) for row in recent_logs]
+    })
+
+@app.route("/api/email/track/open/<token>")
+def email_track_open(token):
+    try:
+        conn = get_connection()
+        log = conn.execute("SELECT * FROM email_logs WHERE tracking_token = ?", (token,)).fetchone()
+        if log and log["status"] == "sent":
+            conn.execute("UPDATE email_logs SET status = 'opened', opened_at = ? WHERE tracking_token = ?", (datetime.now().isoformat(), token))
+            conn.execute("UPDATE email_campaigns SET opened_count = opened_count + 1 WHERE campaign_id = ?", (log["campaign_id"],))
+            conn.commit()
+        conn.close()
+    except Exception:
+        pass
+    pixel = b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15\xc4\x89\x00\x00\x00\nIDATx\x9cc\x00\x01\x00\x00\x05\x00\x01\r\n-\xb4\x00\x00\x00\x00IEND\xaeB`\x82'
+    return Response(pixel, mimetype="image/png")
+
+@app.route("/api/email/track/click/<token>")
+def email_track_click(token):
+    try:
+        conn = get_connection()
+        log = conn.execute("SELECT * FROM email_logs WHERE tracking_token = ?", (token,)).fetchone()
+        if log:
+            conn.execute("UPDATE email_logs SET status = 'clicked', clicked_at = ? WHERE tracking_token = ?", (datetime.now().isoformat(), token))
+            conn.execute("UPDATE email_campaigns SET clicked_count = clicked_count + 1 WHERE campaign_id = ?", (log["campaign_id"],))
+            conn.commit()
+        conn.close()
+    except Exception:
+        pass
+    target = request.args.get("url", "/")
+    return redirect(target)
+
+@app.route("/api/email/recipients/preview", methods=["POST"])
+def email_recipients_preview_api():
+    data = request.json or {}
+    segment = data.get("segment", "all").strip()
+    recipients = get_recipients_for_segment(segment)
+    return jsonify({"recipients": recipients[:20], "total": len(recipients)})
 
 
 if __name__ == "__main__":

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qiplo — Bulk Email Campaign Tool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style.css?v=2.6.0" />
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js" defer></script>
+    <style>
+        :root {
+            --bg: #090D16;
+            --surface: #111827;
+            --surface-2: #1F2937;
+            --border: #374151;
+            --text: #F9FAFB;
+            --muted: #9CA3AF;
+            --accent: #4F46E5;
+            --accent-2: #6366F1;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --primary: #00F5FF;
+            --accent-pink: #FF007F;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .topbarLeft { display: flex; align-items: center; gap: 12px; }
+        .logoBox {
+            width: 36px; height: 36px; border-radius: 8px;
+            background: linear-gradient(135deg, #4F46E5, #3B82F6);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; color: #fff; font-size: 0.8rem;
+        }
+        .topbarTitle h1 { margin: 0; font-size: 1.1rem; font-weight: 700; }
+        .topbarTitle p { margin: 0; font-size: 0.72rem; color: var(--muted); }
+        .topbarRight { display: flex; align-items: center; gap: 10px; }
+        .btn {
+            padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border);
+            background: var(--surface-2); color: var(--text); cursor: pointer;
+            font-size: 0.82rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn:hover { background: var(--border); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            border: none; color: #fff;
+        }
+        .btn-primary:hover { opacity: 0.9; background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+        .btn-danger { background: var(--danger); border: none; color: #fff; }
+        .btn-success { background: var(--success); border: none; color: #fff; }
+        .btn-sm { padding: 5px 10px; font-size: 0.72rem; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+        .tabs {
+            display: flex; gap: 4px; background: var(--surface); padding: 4px;
+            border-radius: 10px; border: 1px solid var(--border); margin-bottom: 24px; overflow-x: auto;
+        }
+        .tab {
+            padding: 10px 18px; border-radius: 8px; border: none; background: transparent;
+            color: var(--muted); cursor: pointer; font-size: 0.82rem; font-weight: 600;
+            white-space: nowrap; transition: all 0.2s;
+        }
+        .tab.active { background: var(--accent); color: #fff; }
+        .tab:hover:not(.active) { color: var(--text); background: var(--surface-2); }
+        .panel { display: none; }
+        .panel.active { display: block; }
+        .card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+            padding: 20px; margin-bottom: 16px;
+        }
+        .card-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
+        }
+        .card-title { margin: 0; font-size: 1rem; font-weight: 700; }
+        .grid { display: grid; gap: 16px; }
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        @media (max-width: 1024px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        }
+        .stat-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+            padding: 16px; text-align: center;
+        }
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace; font-size: 1.6rem; font-weight: 700;
+        }
+        .stat-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; margin-top: 4px; }
+        .stat-value.success { color: var(--success); }
+        .stat-value.warning { color: var(--warning); }
+        .stat-value.danger { color: var(--danger); }
+        .stat-value.primary { color: var(--primary); }
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted);
+            text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;
+        }
+        .form-control {
+            width: 100%; padding: 10px 14px; background: var(--surface-2); border: 1px solid var(--border);
+            border-radius: 8px; color: var(--text); font-size: 0.88rem; font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus { outline: none; border-color: var(--accent); }
+        textarea.form-control { min-height: 120px; resize: vertical; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; }
+        select.form-control { cursor: pointer; }
+        .badge {
+            display: inline-block; padding: 3px 8px; border-radius: 6px;
+            font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+        }
+        .badge-success { background: rgba(16,185,129,0.15); color: #6EE7B7; border: 1px solid rgba(16,185,129,0.3); }
+        .badge-warning { background: rgba(245,158,11,0.15); color: #FCD34D; border: 1px solid rgba(245,158,11,0.3); }
+        .badge-danger { background: rgba(239,68,68,0.15); color: #FCA5A5; border: 1px solid rgba(239,68,68,0.3); }
+        .badge-info { background: rgba(79,70,229,0.15); color: #A5B4FC; border: 1px solid rgba(79,70,229,0.3); }
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+        th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { color: var(--muted); font-weight: 700; text-transform: uppercase; font-size: 0.68rem; letter-spacing: 0.05em; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        .empty-state {
+            text-align: center; padding: 60px 20px; color: var(--muted);
+        }
+        .empty-state i { margin-bottom: 12px; opacity: 0.5; }
+        .progress-bar {
+            height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            border-radius: 4px; transition: width 0.5s ease;
+        }
+        .toast {
+            position: fixed; bottom: 24px; right: 24px; padding: 14px 20px;
+            border-radius: 10px; color: #fff; font-weight: 600; font-size: 0.85rem;
+            z-index: 999; transform: translateY(100px); opacity: 0; transition: all 0.3s ease;
+            max-width: 400px;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--danger); }
+        .toast.info { background: var(--accent); }
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200;
+            display: none; align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+            padding: 24px; width: 100%; max-width: 700px; max-height: 90vh; overflow-y: auto;
+        }
+        .modal-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border);
+        }
+        .modal-title { margin: 0; font-size: 1.1rem; }
+        .modal-close { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.2rem; }
+        .modal-close:hover { color: var(--text); }
+        .token-hint {
+            font-size: 0.72rem; color: var(--muted); margin-top: 4px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .action-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+        .recipient-preview {
+            background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px;
+            padding: 12px; max-height: 200px; overflow-y: auto; font-size: 0.78rem;
+        }
+        .recipient-item { padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.03); display: flex; justify-content: space-between; }
+        .recipient-item:last-child { border-bottom: none; }
+        .chart-container { position: relative; height: 280px; }
+        .link-btn { background: none; border: none; color: var(--accent); cursor: pointer; font-size: 0.8rem; text-decoration: underline; }
+        .link-btn:hover { color: var(--accent-2); }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbarLeft">
+            <div class="logoBox">Q</div>
+            <div class="topbarTitle">
+                <h1>Bulk Email Campaign Tool</h1>
+                <p>Send personalized emails to all customers with one click</p>
+            </div>
+        </div>
+        <div class="topbarRight">
+            <a href="/" class="btn" type="button"><i data-lucide="arrow-left" style="width:14px;height:14px;"></i> Back to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" data-tab="dashboard" type="button"><i data-lucide="layout-dashboard" style="width:13px;height:13px;"></i> Dashboard</button>
+            <button class="tab" data-tab="templates" type="button"><i data-lucide="file-text" style="width:13px;height:13px;"></i> Templates</button>
+            <button class="tab" data-tab="new-campaign" type="button"><i data-lucide="send" style="width:13px;height:13px;"></i> New Campaign</button>
+            <button class="tab" data-tab="analytics" type="button"><i data-lucide="bar-chart-3" style="width:13px;height:13px;"></i> Analytics</button>
+        </div>
+
+        <!-- Dashboard Panel -->
+        <div class="panel active" id="tab-dashboard">
+            <div class="grid grid-4" style="margin-bottom: 20px;">
+                <div class="stat-card">
+                    <div class="stat-value primary" id="dashTotalCampaigns">0</div>
+                    <div class="stat-label">Total Campaigns</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value success" id="dashTotalSent">0</div>
+                    <div class="stat-label">Emails Sent</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value warning" id="dashTotalOpened">0</div>
+                    <div class="stat-label">Opened</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value danger" id="dashTotalClicked">0</div>
+                    <div class="stat-label">Clicked</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i data-lucide="list" style="width:14px;height:14px;"></i> Recent Campaigns</h3>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>ID</th><th>Name</th><th>Segment</th><th>Status</th><th>Sent</th><th>Opened</th><th>Clicked</th><th>Bounced</th><th>Created</th></tr>
+                        </thead>
+                        <tbody id="recentCampaignsTable">
+                            <tr><td colspan="9" style="text-align:center;color:var(--muted);">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Templates Panel -->
+        <div class="panel" id="tab-templates">
+            <div class="action-bar">
+                <button class="btn btn-primary" id="createTemplateBtn" type="button"><i data-lucide="plus" style="width:14px;height:14px;"></i> New Template</button>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Email Templates</h3>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>ID</th><th>Name</th><th>Subject</th><th>Updated</th><th>Actions</th></tr>
+                        </thead>
+                        <tbody id="templatesTable">
+                            <tr><td colspan="5" style="text-align:center;color:var(--muted);">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Campaign Panel -->
+        <div class="panel" id="tab-new-campaign">
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i data-lucide="mail" style="width:14px;height:14px;"></i> Compose Campaign</h3>
+                    </div>
+                    <div class="form-group">
+                        <label>Campaign Name</label>
+                        <input type="text" id="campaignName" class="form-control" placeholder="e.g. Summer Retention Offer" />
+                    </div>
+                    <div class="form-group">
+                        <label>Email Template</label>
+                        <select id="templateSelect" class="form-control">
+                            <option value="">-- Select a template --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Recipient Segment</label>
+                        <select id="segmentSelect" class="form-control">
+                            <option value="all">All Customers</option>
+                            <option value="high_risk">High Risk Only</option>
+                            <option value="low_risk">Low Risk Only</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Preview Recipients</label>
+                        <button class="btn btn-sm" id="previewRecipientsBtn" type="button"><i data-lucide="eye" style="width:12px;height:12px;"></i> Preview</button>
+                        <div class="recipient-preview" id="recipientPreview" style="display:none; margin-top:8px;"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>SMTP Configuration</label>
+                        <p style="font-size:0.72rem;color:var(--muted);margin:0 0 8px;">
+                            Configure via environment variables: <code>SMTP_HOST</code>, <code>SMTP_PORT</code>, <code>SMTP_USERNAME</code>, <code>SMTP_PASSWORD</code>, <code>SMTP_FROM_EMAIL</code>, <code>SMTP_FROM_NAME</code>
+                        </p>
+                        <div id="smtpStatus" class="badge badge-warning">Not configured</div>
+                    </div>
+                    <button class="btn btn-primary" id="sendCampaignBtn" type="button" style="width:100%;justify-content:center;padding:12px;">
+                        <i data-lucide="send" style="width:14px;height:14px;"></i> Send Campaign Now
+                    </button>
+                    <div id="sendProgress" style="display:none; margin-top:12px;">
+                        <div style="display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:4px;">
+                            <span id="progressLabel">Sending...</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%;"></div></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i data-lucide="file-code" style="width:14px;height:14px;"></i> Template Editor</h3>
+                    </div>
+                    <div class="form-group">
+                        <label>Subject Line</label>
+                        <input type="text" id="editorSubject" class="form-control" placeholder="Enter email subject..." />
+                    </div>
+                    <div class="form-group">
+                        <label>HTML Body</label>
+                        <textarea id="editorBody" class="form-control" placeholder="<p>Hello {{customer_name}},</p>..."></textarea>
+                        <p class="token-hint">Available tokens: {{customer_name}}, {{company_name}}, {{risk_label}}, {{risk_score}}, {{contract_type}}, {{monthly_charges}}, {{tenure_months}}, {{support_tickets}}, {{customer_id}}</p>
+                    </div>
+                    <button class="btn btn-sm" id="saveTemplateBtn" type="button"><i data-lucide="save" style="width:12px;height:12px;"></i> Save as Template</button>
+                    <button class="btn btn-sm" id="useTemplateBtn" type="button" style="margin-left:6px;"><i data-lucide="check" style="width:12px;height:12px;"></i> Use This Template</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Panel -->
+        <div class="panel" id="tab-analytics">
+            <div class="grid grid-2" style="margin-bottom: 20px;">
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Campaign Performance</h3></div>
+                    <div class="chart-container"><canvas id="analyticsChart"></canvas></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3 class="card-title">Engagement Breakdown</h3></div>
+                    <div class="chart-container"><canvas id="engagementChart"></canvas></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Campaign Logs</h3>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>Log ID</th><th>Campaign</th><th>Recipient</th><th>Subject</th><th>Status</th><th>Sent At</th><th>Opened At</th></tr>
+                        </thead>
+                        <tbody id="logsTable">
+                            <tr><td colspan="7" style="text-align:center;color:var(--muted);">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template Modal -->
+    <div class="modal-overlay" id="templateModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="templateModalTitle">New Template</h3>
+                <button class="modal-close" id="closeTemplateModal">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Template Name</label>
+                <input type="text" id="modalTemplateName" class="form-control" placeholder="e.g. Retention Offer Email" />
+            </div>
+            <div class="form-group">
+                <label>Subject</label>
+                <input type="text" id="modalTemplateSubject" class="form-control" placeholder="Email subject line" />
+            </div>
+            <div class="form-group">
+                <label>HTML Body</label>
+                <textarea id="modalTemplateBody" class="form-control" placeholder="<p>Hello {{customer_name}},</p>..."></textarea>
+            </div>
+            <div style="display:flex;gap:8px;justify-content:flex-end;">
+                <button class="btn" id="cancelTemplateModal" type="button">Cancel</button>
+                <button class="btn btn-primary" id="saveTemplateModal" type="button">Save Template</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        let currentTab = 'dashboard';
+        let editingTemplateId = null;
+        let analyticsChartInstance = null;
+        let engagementChartInstance = null;
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type;
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+            document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + tab));
+            if (tab === 'dashboard') loadDashboard();
+            if (tab === 'templates') loadTemplates();
+            if (tab === 'new-campaign') loadNewCampaign();
+            if (tab === 'analytics') loadAnalytics();
+        }
+
+        document.querySelectorAll('.tab').forEach(t => {
+            t.addEventListener('click', () => switchTab(t.dataset.tab));
+        });
+
+        async function api(url, options = {}) {
+            const res = await fetch(url, {
+                headers: { 'Content-Type': 'application/json' },
+                ...options,
+                body: options.body ? JSON.stringify(options.body) : undefined
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Request failed');
+            return data;
+        }
+
+        async function loadDashboard() {
+            try {
+                const campaigns = await api('/api/email/campaigns');
+                const rows = campaigns.campaigns || [];
+                let totalSent = 0, totalOpened = 0, totalClicked = 0, totalBounced = 0;
+                const tbody = document.getElementById('recentCampaignsTable');
+                tbody.innerHTML = '';
+                rows.forEach(c => {
+                    totalSent += c.sent_count || 0;
+                    totalOpened += c.opened_count || 0;
+                    totalClicked += c.clicked_count || 0;
+                    totalBounced += c.bounced_count || 0;
+                    const statusBadge = c.status === 'completed' ? 'badge-success' : c.status === 'sending' ? 'badge-warning' : c.status === 'error' ? 'badge-danger' : 'badge-info';
+                    tbody.innerHTML += `<tr>
+                        <td>${c.campaign_id}</td>
+                        <td><strong>${c.name}</strong></td>
+                        <td>${c.recipient_segment}</td>
+                        <td><span class="badge ${statusBadge}">${c.status}</span></td>
+                        <td>${c.sent_count || 0}</td>
+                        <td>${c.opened_count || 0}</td>
+                        <td>${c.clicked_count || 0}</td>
+                        <td>${c.bounced_count || 0}</td>
+                        <td>${c.created_at ? c.created_at.split('T')[0] : ''}</td>
+                    </tr>`;
+                });
+                document.getElementById('dashTotalCampaigns').textContent = rows.length;
+                document.getElementById('dashTotalSent').textContent = totalSent;
+                document.getElementById('dashTotalOpened').textContent = totalOpened;
+                document.getElementById('dashTotalClicked').textContent = totalClicked;
+                if (rows.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--muted);">No campaigns yet. Create your first campaign!</td></tr>';
+                }
+            } catch (e) {
+                showToast('Failed to load dashboard: ' + e.message, 'error');
+            }
+        }
+
+        async function loadTemplates() {
+            try {
+                const data = await api('/api/email/templates');
+                const rows = data.templates || [];
+                const tbody = document.getElementById('templatesTable');
+                tbody.innerHTML = '';
+                rows.forEach(t => {
+                    tbody.innerHTML += `<tr>
+                        <td><code>${t.template_id}</code></td>
+                        <td><strong>${t.name}</strong></td>
+                        <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.subject}</td>
+                        <td>${t.updated_at ? t.updated_at.split('T')[0] : ''}</td>
+                        <td>
+                            <button class="btn btn-sm edit-template-btn" data-id="${t.template_id}">Edit</button>
+                            <button class="btn btn-sm btn-danger delete-template-btn" data-id="${t.template_id}" style="margin-left:4px;">Delete</button>
+                        </td>
+                    </tr>`;
+                });
+                document.querySelectorAll('.edit-template-btn').forEach(b => b.addEventListener('click', () => openTemplateModal(b.dataset.id)));
+                document.querySelectorAll('.delete-template-btn').forEach(b => b.addEventListener('click', async () => {
+                    if (!confirm('Delete this template?')) return;
+                    await api('/api/email/templates/' + b.dataset.id, { method: 'DELETE' });
+                    showToast('Template deleted', 'success');
+                    loadTemplates();
+                }));
+                if (rows.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);">No templates yet.</td></tr>';
+                }
+            } catch (e) {
+                showToast('Failed to load templates: ' + e.message, 'error');
+            }
+        }
+
+        async function loadNewCampaign() {
+            try {
+                const templates = await api('/api/email/templates');
+                const sel = document.getElementById('templateSelect');
+                sel.innerHTML = '<option value="">-- Select a template --</option>';
+                (templates.templates || []).forEach(t => {
+                    sel.innerHTML += `<option value="${t.template_id}">${t.name} — ${t.subject}</option>`;
+                });
+                if (templates.templates && templates.templates.length > 0) {
+                    sel.value = templates.templates[0].template_id;
+                    await loadTemplateIntoEditor(templates.templates[0].template_id);
+                }
+                checkSmtpStatus();
+            } catch (e) {
+                showToast('Failed to load templates: ' + e.message, 'error');
+            }
+        }
+
+        async function loadTemplateIntoEditor(templateId) {
+            try {
+                const t = await api('/api/email/templates/' + templateId);
+                document.getElementById('editorSubject').value = t.subject || '';
+                document.getElementById('editorBody').value = t.body_html || '';
+            } catch (e) {
+                console.error('Failed to load template', e);
+            }
+        }
+
+        async function checkSmtpStatus() {
+            try {
+                const res = await fetch('/api/email/send', { method: 'POST', body: JSON.stringify({}) });
+                const data = await res.json();
+                const el = document.getElementById('smtpStatus');
+                if (data.error && data.error.includes('campaign_id')) {
+                    el.className = 'badge badge-warning';
+                    el.textContent = 'Ready (needs campaign)';
+                } else {
+                    el.className = 'badge badge-success';
+                    el.textContent = 'SMTP Configured';
+                }
+            } catch (e) {
+                document.getElementById('smtpStatus').className = 'badge badge-danger';
+                document.getElementById('smtpStatus').textContent = 'Error checking SMTP';
+            }
+        }
+
+        document.getElementById('templateSelect').addEventListener('change', async (e) => {
+            if (e.target.value) await loadTemplateIntoEditor(e.target.value);
+        });
+
+        document.getElementById('previewRecipientsBtn').addEventListener('click', async () => {
+            const segment = document.getElementById('segmentSelect').value;
+            try {
+                const data = await api('/api/email/recipients/preview', { method: 'POST', body: { segment } });
+                const container = document.getElementById('recipientPreview');
+                container.style.display = 'block';
+                container.innerHTML = `<strong>Total: ${data.total} recipients (showing first 20)</strong><br/><br/>`;
+                (data.recipients || []).forEach(r => {
+                    container.innerHTML += `<div class="recipient-item"><span>${r.customer_id}</span><span class="badge ${r.prediction_label === 'high_risk' ? 'badge-danger' : 'badge-success'}">${r.prediction_label}</span></div>`;
+                });
+            } catch (e) {
+                showToast('Failed to preview recipients: ' + e.message, 'error');
+            }
+        });
+
+        document.getElementById('saveTemplateBtn').addEventListener('click', async () => {
+            const subject = document.getElementById('editorSubject').value.trim();
+            const body = document.getElementById('editorBody').value.trim();
+            if (!subject || !body) { showToast('Subject and body are required', 'error'); return; }
+            try {
+                await api('/api/email/templates', { method: 'POST', body: { name: 'Custom Template ' + Date.now(), subject, body_html: body } });
+                showToast('Template saved!', 'success');
+                loadNewCampaign();
+            } catch (e) {
+                showToast('Failed to save template: ' + e.message, 'error');
+            }
+        });
+
+        document.getElementById('useTemplateBtn').addEventListener('click', async () => {
+            const subject = document.getElementById('editorSubject').value.trim();
+            const body = document.getElementById('editorBody').value.trim();
+            if (!subject || !body) { showToast('Subject and body are required', 'error'); return; }
+            try {
+                const res = await api('/api/email/templates', { method: 'POST', body: { name: 'Campaign Template ' + Date.now(), subject, body_html: body } });
+                document.getElementById('templateSelect').innerHTML += `<option value="${res.template_id}" selected>Campaign Template — ${subject}</option>`;
+                showToast('Template created and selected!', 'success');
+            } catch (e) {
+                showToast('Failed: ' + e.message, 'error');
+            }
+        });
+
+        document.getElementById('sendCampaignBtn').addEventListener('click', async () => {
+            const name = document.getElementById('campaignName').value.trim();
+            const templateId = document.getElementById('templateSelect').value;
+            const segment = document.getElementById('segmentSelect').value;
+            if (!name) { showToast('Campaign name is required', 'error'); return; }
+            if (!templateId) { showToast('Please select a template', 'error'); return; }
+            try {
+                const campaign = await api('/api/email/campaigns', { method: 'POST', body: { name, template_id: templateId, recipient_segment: segment } });
+                const result = await api('/api/email/send', { method: 'POST', body: { campaign_id: campaign.campaign_id } });
+                showToast(result.message, 'success');
+                document.getElementById('sendProgress').style.display = 'block';
+                pollCampaignStatus(campaign.campaign_id);
+            } catch (e) {
+                showToast('Failed to start campaign: ' + e.message, 'error');
+            }
+        });
+
+        async function pollCampaignStatus(campaignId) {
+            const interval = setInterval(async () => {
+                try {
+                    const data = await api('/api/email/campaigns/' + campaignId + '/status');
+                    const c = data.campaign;
+                    const total = c.total_recipients || 1;
+                    const sent = c.sent_count || 0;
+                    const pct = Math.round((sent / total) * 100);
+                    document.getElementById('progressFill').style.width = pct + '%';
+                    document.getElementById('progressPercent').textContent = pct + '%';
+                    document.getElementById('progressLabel').textContent = `Sent: ${sent} / ${total} | Opened: ${c.opened_count || 0} | Clicked: ${c.clicked_count || 0}`;
+                    if (c.status === 'completed' || c.status === 'error') {
+                        clearInterval(interval);
+                        showToast('Campaign finished: ' + c.status, c.status === 'completed' ? 'success' : 'error');
+                    }
+                } catch (e) {
+                    clearInterval(interval);
+                }
+            }, 2000);
+        }
+
+        // Template Modal
+        const templateModal = document.getElementById('templateModal');
+        document.getElementById('createTemplateBtn').addEventListener('click', () => openTemplateModal());
+        document.getElementById('closeTemplateModal').addEventListener('click', () => templateModal.classList.remove('active'));
+        document.getElementById('cancelTemplateModal').addEventListener('click', () => templateModal.classList.remove('active'));
+
+        function openTemplateModal(editId = null) {
+            editingTemplateId = editId;
+            document.getElementById('templateModalTitle').textContent = editId ? 'Edit Template' : 'New Template';
+            document.getElementById('modalTemplateName').value = '';
+            document.getElementById('modalTemplateSubject').value = '';
+            document.getElementById('modalTemplateBody').value = '';
+            templateModal.classList.add('active');
+        }
+
+        document.getElementById('saveTemplateModal').addEventListener('click', async () => {
+            const name = document.getElementById('modalTemplateName').value.trim();
+            const subject = document.getElementById('modalTemplateSubject').value.trim();
+            const body = document.getElementById('modalTemplateBody').value.trim();
+            if (!name || !subject || !body) { showToast('All fields are required', 'error'); return; }
+            try {
+                if (editingTemplateId) {
+                    await api('/api/email/templates/' + editingTemplateId, { method: 'PUT', body: { name, subject, body_html: body } });
+                    showToast('Template updated', 'success');
+                } else {
+                    await api('/api/email/templates', { method: 'POST', body: { name, subject, body_html: body } });
+                    showToast('Template created', 'success');
+                }
+                templateModal.classList.remove('active');
+                loadTemplates();
+            } catch (e) {
+                showToast('Failed to save: ' + e.message, 'error');
+            }
+        });
+
+        async function loadAnalytics() {
+            try {
+                const campaigns = await api('/api/email/campaigns');
+                const rows = campaigns.campaigns || [];
+                const tbody = document.getElementById('logsTable');
+                tbody.innerHTML = '';
+                let totalLogs = 0;
+                for (const c of rows) {
+                    try {
+                        const detail = await api('/api/email/campaigns/' + c.campaign_id);
+                        (detail.logs || []).forEach(log => {
+                            totalLogs++;
+                            const statusBadge = log.status === 'sent' ? 'badge-success' : log.status === 'opened' ? 'badge-info' : log.status === 'clicked' ? 'badge-primary' : log.status === 'failed' ? 'badge-danger' : 'badge-warning';
+                            tbody.innerHTML += `<tr>
+                                <td>${log.log_id}</td>
+                                <td>${c.name}</td>
+                                <td>${log.recipient_email}</td>
+                                <td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${log.subject}</td>
+                                <td><span class="badge ${statusBadge}">${log.status}</span></td>
+                                <td>${log.sent_at ? log.sent_at.split('T')[0] : ''}</td>
+                                <td>${log.opened_at ? log.opened_at.split('T')[0] : ''}</td>
+                            </tr>`;
+                        });
+                    } catch (e) { console.error(e); }
+                }
+                if (totalLogs === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);">No email logs yet.</td></tr>';
+                }
+
+                // Build charts
+                const labels = rows.map(c => c.name.length > 20 ? c.name.substring(0, 20) + '...' : c.name);
+                const sentData = rows.map(c => c.sent_count || 0);
+                const openedData = rows.map(c => c.opened_count || 0);
+                const clickedData = rows.map(c => c.clicked_count || 0);
+                const bouncedData = rows.map(c => c.bounced_count || 0);
+
+                if (analyticsChartInstance) analyticsChartInstance.destroy();
+                if (engagementChartInstance) engagementChartInstance.destroy();
+
+                const ctx1 = document.getElementById('analyticsChart').getContext('2d');
+                analyticsChartInstance = new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            { label: 'Sent', data: sentData, backgroundColor: '#4F46E5', borderRadius: 4 },
+                            { label: 'Opened', data: openedData, backgroundColor: '#10B981', borderRadius: 4 },
+                            { label: 'Clicked', data: clickedData, backgroundColor: '#FF007F', borderRadius: 4 }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        scales: { x: { ticks: { color: '#9CA3AF' }, grid: { color: 'rgba(255,255,255,0.05)' } }, y: { ticks: { color: '#9CA3AF' }, grid: { color: 'rgba(255,255,255,0.05)' } } },
+                        plugins: { legend: { labels: { color: '#9CA3AF' } } }
+                    }
+                });
+
+                const totalSent = sentData.reduce((a, b) => a + b, 0) || 1;
+                const ctx2 = document.getElementById('engagementChart').getContext('2d');
+                engagementChartInstance = new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Sent', 'Opened', 'Clicked', 'Bounced'],
+                        datasets: [{
+                            data: [totalSent, openedData.reduce((a, b) => a + b, 0), clickedData.reduce((a, b) => a + b, 0), bouncedData.reduce((a, b) => a + b, 0)],
+                            backgroundColor: ['#4F46E5', '#10B981', '#FF007F', '#EF4444'],
+                            borderColor: '#111827', borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { labels: { color: '#9CA3AF' } } }
+                    }
+                });
+            } catch (e) {
+                showToast('Failed to load analytics: ' + e.message, 'error');
+            }
+        }
+
+        // Initialize
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
+
+        function initApp() {
+            try {
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+                loadDashboard();
+            } catch (e) {
+                console.error('App initialization failed:', e);
+                showToast('Failed to initialize app. Please refresh the page.', 'error');
+            }
+        }
+
+        function safeCreateChart(canvasId, config) {
+            if (typeof Chart === 'undefined') {
+                console.warn('Chart.js not loaded yet');
+                return null;
+            }
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return null;
+            const ctx = canvas.getContext('2d');
+            return new Chart(ctx, config);
+        }
+
+        async function loadAnalytics() {
+            try {
+                const campaigns = await api('/api/email/campaigns');
+                const rows = campaigns.campaigns || [];
+                const tbody = document.getElementById('logsTable');
+                tbody.innerHTML = '';
+                let totalLogs = 0;
+                for (const c of rows) {
+                    try {
+                        const detail = await api('/api/email/campaigns/' + c.campaign_id);
+                        (detail.logs || []).forEach(log => {
+                            totalLogs++;
+                            const statusBadge = log.status === 'sent' ? 'badge-success' : log.status === 'opened' ? 'badge-info' : log.status === 'clicked' ? 'badge-primary' : log.status === 'failed' ? 'badge-danger' : 'badge-warning';
+                            tbody.innerHTML += `<tr>
+                                <td>${log.log_id}</td>
+                                <td>${c.name}</td>
+                                <td>${log.recipient_email}</td>
+                                <td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${log.subject}</td>
+                                <td><span class="badge ${statusBadge}">${log.status}</span></td>
+                                <td>${log.sent_at ? log.sent_at.split('T')[0] : ''}</td>
+                                <td>${log.opened_at ? log.opened_at.split('T')[0] : ''}</td>
+                            </tr>`;
+                        });
+                    } catch (e) { console.error(e); }
+                }
+                if (totalLogs === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);">No email logs yet.</td></tr>';
+                }
+
+                const labels = rows.map(c => c.name.length > 20 ? c.name.substring(0, 20) + '...' : c.name);
+                const sentData = rows.map(c => c.sent_count || 0);
+                const openedData = rows.map(c => c.opened_count || 0);
+                const clickedData = rows.map(c => c.clicked_count || 0);
+                const bouncedData = rows.map(c => c.bounced_count || 0);
+
+                if (analyticsChartInstance) analyticsChartInstance.destroy();
+                if (engagementChartInstance) engagementChartInstance.destroy();
+
+                const totalSent = sentData.reduce((a, b) => a + b, 0) || 1;
+
+                if (typeof Chart !== 'undefined') {
+                    const ctx1 = document.getElementById('analyticsChart');
+                    if (ctx1) {
+                        analyticsChartInstance = new Chart(ctx1, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [
+                                    { label: 'Sent', data: sentData, backgroundColor: '#4F46E5', borderRadius: 4 },
+                                    { label: 'Opened', data: openedData, backgroundColor: '#10B981', borderRadius: 4 },
+                                    { label: 'Clicked', data: clickedData, backgroundColor: '#FF007F', borderRadius: 4 }
+                                ]
+                            },
+                            options: {
+                                responsive: true, maintainAspectRatio: false,
+                                scales: { x: { ticks: { color: '#9CA3AF' }, grid: { color: 'rgba(255,255,255,0.05)' } }, y: { ticks: { color: '#9CA3AF' }, grid: { color: 'rgba(255,255,255,0.05)' } } },
+                                plugins: { legend: { labels: { color: '#9CA3AF' } } }
+                            }
+                        });
+                    }
+
+                    const ctx2 = document.getElementById('engagementChart');
+                    if (ctx2) {
+                        engagementChartInstance = new Chart(ctx2, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['Sent', 'Opened', 'Clicked', 'Bounced'],
+                                datasets: [{
+                                    data: [totalSent, openedData.reduce((a, b) => a + b, 0), clickedData.reduce((a, b) => a + b, 0), bouncedData.reduce((a, b) => a + b, 0)],
+                                    backgroundColor: ['#4F46E5', '#10B981', '#FF007F', '#EF4444'],
+                                    borderColor: '#111827', borderWidth: 2
+                                }]
+                            },
+                            options: {
+                                responsive: true, maintainAspectRatio: false,
+                                plugins: { legend: { labels: { color: '#9CA3AF' } } }
+                            }
+                        });
+                    }
+                } else {
+                    console.warn('Chart.js not loaded, skipping chart rendering');
+                    const chartContainer1 = document.getElementById('analyticsChart');
+                    const chartContainer2 = document.getElementById('engagementChart');
+                    if (chartContainer1) chartContainer1.insertAdjacentHTML('afterend', '<p style="color:var(--muted);font-size:0.8rem;text-align:center;">Charts require Chart.js library.</p>');
+                    if (chartContainer2) chartContainer2.insertAdjacentHTML('afterend', '<p style="color:var(--muted);font-size:0.8rem;text-align:center;">Charts require Chart.js library.</p>');
+                }
+            } catch (e) {
+                showToast('Failed to load analytics: ' + e.message, 'error');
+            }
+        }
+    </script>
+</body>
+</html>

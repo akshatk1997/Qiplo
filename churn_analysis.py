@@ -3,6 +3,7 @@ import json
 import pickle
 import re
 import sqlite3
+import ssl
 from datetime import datetime, timezone
 from pathlib import Path
 import time
@@ -1401,7 +1402,8 @@ def generate_ai_insight_with_llm(rows: list[dict], config: dict | None = None, c
             headers={"Content-Type": "application/json"},
             method="POST",
         )
-        with urllib.request.urlopen(req, timeout=8) as resp:
+        context = ssl._create_unverified_context()
+        with urllib.request.urlopen(req, timeout=8, context=context) as resp:
             result = _json.loads(resp.read().decode("utf-8"))
         llm_text = (result.get("response") or "").strip()
         if llm_text:

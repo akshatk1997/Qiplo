@@ -97,3 +97,43 @@ CREATE TABLE IF NOT EXISTS integrations_webhooks (
     webhook_url TEXT NOT NULL,
     is_active INTEGER DEFAULT 1
 );
+
+CREATE TABLE IF NOT EXISTS email_templates (
+    template_id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    subject TEXT NOT NULL,
+    body_html TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS email_campaigns (
+    campaign_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    template_id TEXT NOT NULL,
+    recipient_segment TEXT NOT NULL DEFAULT 'all',
+    scheduled_at TEXT,
+    sent_at TEXT,
+    status TEXT DEFAULT 'draft',
+    total_recipients INTEGER DEFAULT 0,
+    sent_count INTEGER DEFAULT 0,
+    opened_count INTEGER DEFAULT 0,
+    clicked_count INTEGER DEFAULT 0,
+    bounced_count INTEGER DEFAULT 0,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS email_logs (
+    log_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    campaign_id INTEGER NOT NULL,
+    recipient_email TEXT NOT NULL,
+    customer_id TEXT,
+    subject TEXT NOT NULL,
+    status TEXT DEFAULT 'queued',
+    sent_at TEXT,
+    opened_at TEXT,
+    clicked_at TEXT,
+    error_message TEXT,
+    tracking_token TEXT UNIQUE,
+    FOREIGN KEY (campaign_id) REFERENCES email_campaigns(campaign_id)
+);
