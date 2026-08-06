@@ -238,19 +238,25 @@ body.light-theme .sourceName {
 }
 
 .themeToggleBtn {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid var(--accent);
     color: var(--text);
-    padding: 8px 12px;
-    border-radius: var(--radius-sm);
+    padding: 6px 14px;
+    border-radius: 999px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.15);
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .themeToggleBtn:hover {
-    border-color: var(--accent);
+    background: rgba(99, 102, 241, 0.16);
+    border-color: var(--accent-2);
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
     transform: scale(1.05);
 }
 

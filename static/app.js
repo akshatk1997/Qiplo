@@ -2863,11 +2863,11 @@ function setupThemeToggle() {
     if (savedTheme === 'light') {
         document.body.classList.remove('dark-theme');
         document.body.classList.add('light-theme');
-        toggleBtn.innerHTML = '<i data-lucide="moon" class="lucide-icon"></i>';
+        toggleBtn.innerHTML = '<i data-lucide="moon" class="lucide-icon"></i> <span>Light Mode</span>';
     } else {
         document.body.classList.remove('light-theme');
         document.body.classList.add('dark-theme');
-        toggleBtn.innerHTML = '<i data-lucide="sun" class="lucide-icon"></i>';
+        toggleBtn.innerHTML = '<i data-lucide="sun" class="lucide-icon"></i> <span>Dark Mode</span>';
     }
     if (window.lucide) lucide.createIcons();
 
@@ -2876,12 +2876,12 @@ function setupThemeToggle() {
             document.body.classList.remove('light-theme');
             document.body.classList.add('dark-theme');
             localStorage.setItem('theme', 'dark');
-            toggleBtn.innerHTML = '<i data-lucide="sun" class="lucide-icon"></i>';
+            toggleBtn.innerHTML = '<i data-lucide="sun" class="lucide-icon"></i> <span>Dark Mode</span>';
         } else {
             document.body.classList.remove('dark-theme');
             document.body.classList.add('light-theme');
             localStorage.setItem('theme', 'light');
-            toggleBtn.innerHTML = '<i data-lucide="moon" class="lucide-icon"></i>';
+            toggleBtn.innerHTML = '<i data-lucide="moon" class="lucide-icon"></i> <span>Light Mode</span>';
         }
         if (window.lucide) lucide.createIcons();
         if (typeof lastChartsData !== 'undefined' && lastChartsData) {
