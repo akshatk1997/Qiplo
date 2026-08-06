@@ -136,6 +136,91 @@ def create_app() -> Flask:
             ensure_database(db_p, SCHEMA_PATH, config=load_config(CONFIG_PATH))
             app.config["DB_INITIALIZED"] = True
 
+    @app.before_request
+    def security_waf_filter():
+        # Quick request inspection for SQL Injection and Cross-Site Scripting payloads
+        if request.method in ("GET", "DELETE"):
+            params = request.args
+        else:
+            params = request.form or {}
+            if request.is_json:
+                try:
+                    params = request.json or {}
+                except Exception:
+                    params = {}
+
+        sqli_patterns = [
+            r"union\s+select",
+            r"or\s+\d+\s*=\s*\d+",
+            r"select\s+.*\s+from",
+            r"drop\s+table",
+            r"insert\s+into",
+            r"delete\s+from",
+            r"update\s+.*\s+set",
+            r"'\s*or\s*'",
+            r"\"\s*or\s*\""
+        ]
+        xss_patterns = [
+            r"<script",
+            r"javascript:",
+            r"onload\s*=",
+            r"onerror\s*=",
+            r"alert\(",
+            r"document\.cookie"
+        ]
+
+        def check_val(val):
+            if not isinstance(val, str):
+                return False
+            val_lower = val.lower()
+            import re
+            for pat in sqli_patterns:
+                if re.search(pat, val_lower):
+                    return "SQL Injection Attempt Blocked"
+            for pat in xss_patterns:
+                if re.search(pat, val_lower):
+                    return "Cross-Site Scripting Attempt Blocked"
+            return None
+
+        def scan_payload(data):
+            if isinstance(data, dict):
+                for k, v in data.items():
+                    res = scan_payload(v)
+                    if res:
+                        return res
+            elif isinstance(data, list):
+                for item in data:
+                    res = scan_payload(item)
+                    if res:
+                        return res
+            elif isinstance(data, str):
+                return check_val(data)
+            return None
+
+        security_alert = scan_payload(params)
+        if security_alert:
+            return jsonify({
+                "status": "security_blocked",
+                "message": security_alert,
+                "engine": "Qiplo Autonomous WAF Engine v1.0"
+            }), 400
+
+    @app.after_request
+    def apply_security_headers(response):
+        response.headers["X-Frame-Options"] = "SAMEORIGIN"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-XSS-Protection"] = "1; mode=block"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self' https:; "
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; "
+            "font-src 'self' data: https://fonts.gstatic.com; "
+            "img-src 'self' data: https:; "
+            "connect-src 'self' https:;"
+        )
+        return response
+
     def customer_columns(conn: sqlite3.Connection) -> list[str]:
         """Return the actual customer_churn columns present in the table."""
         return [row[1] for row in conn.execute("PRAGMA table_info(customer_churn)").fetchall()]
@@ -152,16 +237,34 @@ def create_app() -> Flask:
     @app.errorhandler(Exception)
     def handle_global_exception(e):
         """Autonomous self-healing error handler. Catches unhandled system errors, repairs database/config state, and returns a gracefully restored JSON response."""
-        try:
-            db_p = get_db_path()
-            ensure_database(db_p, SCHEMA_PATH, config=load_config(CONFIG_PATH))
-        except Exception:
-            pass
+        from werkzeug.exceptions import HTTPException
+        if isinstance(e, HTTPException):
+            return jsonify({
+                "status": "error",
+                "message": e.description,
+                "error_detail": str(e)
+            }), e.code
+
+        # Only attempt database reconstruction for database/SQLite anomalies to optimize response latency
+        e_str = str(e).lower()
+        is_db_err = isinstance(e, sqlite3.Error) or any(k in e_str for k in ("database", "no such table", "sqlite", "operationalerror", "programmingerror"))
+        if is_db_err:
+            try:
+                db_p = get_db_path()
+                ensure_database(db_p, SCHEMA_PATH, config=load_config(CONFIG_PATH))
+            except Exception:
+                pass
+            return jsonify({
+                "status": "auto_repaired",
+                "message": "Self-healing security engine intercepted system error and restored database integrity.",
+                "error_detail": str(e)
+            }), 200
+
         return jsonify({
-            "status": "auto_repaired",
-            "message": "Self-healing security engine intercepted system error and restored database integrity.",
+            "status": "error",
+            "message": "System encountered an unexpected exception.",
             "error_detail": str(e)
-        }), 200
+        }), 500
 
     @app.route("/api/health")
     def health_api():
@@ -184,7 +287,7 @@ def create_app() -> Flask:
             "status": status,
             "auto_repaired": repaired,
             "database": str(db_p),
-            "engine": "Qiplo Autonomous Self-Healing Security Engine v1.0"
+            "engine": "Qiplo Autonomous Self-Healing Security Engine v2.0"
         })
 
     def build_role_recommendations(role, high_risk_label, low_risk_label, insight_rows, customer_rows, cols):
@@ -2700,6 +2803,7 @@ window.addEventListener('DOMContentLoaded', function() {{
         })
 
     # Presentation slides builder endpoint
+    @app.route("/api/presentation/generate", methods=["POST"])
     @app.route("/api/presentation", methods=["POST"])
     def presentation_api():
         data = request.json or {}
@@ -3127,10 +3231,11 @@ window.addEventListener('DOMContentLoaded', function() {{
     if global_app is not None and global_app is not app:
         import copy
         for rule in global_app.url_map.iter_rules():
-            if rule.endpoint != "static" and rule.endpoint not in app.view_functions:
-                new_rule = copy.copy(rule)
-                new_rule.map = None
-                app.url_map.add(new_rule)
+            if rule.endpoint != "static":
+                if not any(r.rule == rule.rule for r in app.url_map.iter_rules()):
+                    new_rule = copy.copy(rule)
+                    new_rule.map = None
+                    app.url_map.add(new_rule)
                 app.view_functions[rule.endpoint] = global_app.view_functions[rule.endpoint]
 
     return app
@@ -4626,6 +4731,7 @@ def history_trends():
         return jsonify({"error": f"Failed to get trends: {e}"}), 500
 
 
+@app.route("/api/compliance/audit/logs", methods=["GET"])
 @app.route("/api/audit/logs", methods=["GET"])
 def audit_logs_api():
     """Audit logs endpoint for compliance."""
