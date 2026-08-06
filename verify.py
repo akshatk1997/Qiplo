@@ -14,6 +14,7 @@ if sys.platform.startswith("win"):
 # Insert project path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 os.environ["TESTING"] = "True"
+os.environ["CHURN_DB"] = "churn_verify.db"
 
 import app as app_module
 import churn_analysis
@@ -210,6 +211,14 @@ def run_atoz_verification():
     else:
         print(f"  [ERROR] POST /api/chat -> FAILED ({res.status_code})")
         success = False
+
+    # Clean up verification database file
+    try:
+        db_file = Path("churn_verify.db")
+        if db_file.exists():
+            db_file.unlink()
+    except Exception:
+        pass
 
     print("\n======================================================================")
     if success:

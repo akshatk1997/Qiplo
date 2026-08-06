@@ -2869,6 +2869,7 @@ function setupThemeToggle() {
         document.body.classList.add('dark-theme');
         toggleBtn.innerHTML = '<i data-lucide="sun" class="lucide-icon"></i>';
     }
+    if (window.lucide) lucide.createIcons();
 
     toggleBtn.addEventListener('click', () => {
         if (document.body.classList.contains('light-theme')) {
