@@ -619,10 +619,18 @@ def normalize_customer_frame(df: pd.DataFrame, include_target: bool = True, conf
     if keep_original_columns:
         # Arbitrary dataset: keep the uploaded columns as-is, only ensure an id
         # and a target column exist. Do not inject configured churn columns.
-        id_col = next((c for c in normalized.columns if c.lower() in ("id", "client_id", "customer")), None)
+        aliases = build_column_aliases(config)
+        id_list = aliases.get("customer_id", [])
+        id_col = None
+        for cand in id_list:
+            matched = next((c for c in normalized.columns if str(c).lower() == str(cand).lower()), None)
+            if matched:
+                id_col = matched
+                break
+                
         if id_col and id_col != "customer_id":
             normalized["customer_id"] = normalized[id_col].astype(str)
-            normalized = normalized.drop(columns=[id_col])
+            # Do not drop the original column so it stays visible in the results!
         elif "customer_id" in normalized.columns:
             normalized["customer_id"] = normalized["customer_id"].astype(str)
         else:

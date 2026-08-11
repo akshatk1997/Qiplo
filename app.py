@@ -1046,12 +1046,17 @@ def create_app() -> Flask:
         warnings = []
         
         # Auto-detect and standardize or generate customer identifier column
+        from churn_analysis import build_column_aliases
+        aliases = build_column_aliases(config)
+        id_list = aliases.get("customer_id", [])
+        
         id_col_found = None
-        for col in frame.columns:
-            if str(col).lower() in {"customer_id", "customerid", "id", "cust_id", "account_id", "accountid"}:
-                id_col_found = col
+        for cand in id_list:
+            matched = next((c for c in frame.columns if str(c).lower() == str(cand).lower()), None)
+            if matched:
+                id_col_found = matched
                 break
-
+                
         if id_col_found:
             if id_col_found != "customer_id":
                 frame.rename(columns={id_col_found: "customer_id"}, inplace=True)
