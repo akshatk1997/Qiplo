@@ -849,6 +849,7 @@ def build_model(config: dict | None = None, fallback: bool = False, feature_colu
 
 
 def train_model(db_path: Path, model_path: Path, config: dict | None = None) -> dict:
+    from sklearn.model_selection import train_test_split
     config = config or load_config()
     df = load_training_data(db_path, config)
     if df.empty:
@@ -881,6 +882,26 @@ def train_model(db_path: Path, model_path: Path, config: dict | None = None) -> 
         
     X = training_df[feature_columns]
     y = training_df[target_column]
+
+    # Stratified subsampling for big datasets to prevent web timeout
+    if len(X) > 1000:
+        try:
+            _, X_sampled, _, y_sampled = train_test_split(
+                X, y, test_size=1000, stratify=y, random_state=42
+            )
+            X = X_sampled
+            y = y_sampled
+        except Exception:
+            try:
+                _, X_sampled, _, y_sampled = train_test_split(
+                    X, y, test_size=1000, stratify=None, random_state=42
+                )
+                X = X_sampled
+                y = y_sampled
+            except Exception:
+                sampled_indices = np.random.RandomState(42).choice(len(X), size=1000, replace=False)
+                X = X.iloc[sampled_indices]
+                y = y.iloc[sampled_indices]
 
     use_fallback = len(df) < 10 or y.nunique() < 2
     
