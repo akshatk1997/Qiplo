@@ -369,10 +369,10 @@ def normalize_column_name(name: str) -> str:
 def build_column_aliases(config: dict | None = None) -> dict[str, list[str]]:
     config = config or load_config()
     aliases = {
-        "customer_id": ["customer_id", "id", "customer", "client_id"],
-        "tenure_months": ["tenure_months", "tenure", "tenure_month", "tenure_in_months"],
-        "monthly_charges": ["monthly_charges", "monthly_charge", "monthly_fee", "monthly_cost"],
-        "total_charges": ["total_charges", "total_charge", "total_spend", "lifetime_value"],
+        "customer_id": ["customer_id", "id", "customer", "client_id", "transaction_id", "invoice_id", "ref_id"],
+        "tenure_months": ["tenure_months", "tenure", "tenure_month", "tenure_in_months", "months", "days", "years", "time", "duration", "age", "period", "frequency", "purchase_frequency"],
+        "monthly_charges": ["monthly_charges", "monthly_charge", "monthly_fee", "monthly_cost", "amount", "revenue", "income", "charge", "spent", "value", "price", "mrr", "cost", "expense", "sales", "mrr_loss", "billing_amount", "amount_due"],
+        "total_charges": ["total_charges", "total_charge", "total_spend", "lifetime_value", "total_amount", "total_revenue", "total_value", "total_spent", "gross_amount", "arr"],
         "contract_type": ["contract_type", "contract", "subscription_type", "plan"],
         "internet_service": ["internet_service", "internet", "service_type", "connection_type"],
         "payment_method": ["payment_method", "payment", "billing_method", "payment_type"],
@@ -384,7 +384,7 @@ def build_column_aliases(config: dict | None = None) -> dict[str, list[str]]:
         "customer_satisfaction_score": ["customer_satisfaction_score", "satisfaction", "csat", "satisfaction_score"],
     }
     target_column = config.get("target_column", DEFAULT_TARGET)
-    aliases[target_column] = [target_column, "churned", "churn", "attrition", "is_churned", "label", "status", "outcome"]
+    aliases[target_column] = [target_column, "churned", "churn", "attrition", "is_churned", "label", "status", "outcome", "target", "y", "class", "category", "flag", "is_at_risk"]
     return aliases
 
 
@@ -440,37 +440,50 @@ def encode_target_column(series: pd.Series) -> pd.Series:
 
 
 def generate_heuristic_target(frame: pd.DataFrame) -> pd.Series:
-    scores = []
-    for _, row in frame.iterrows():
-        score = 0.0
-        support_tickets = _safe_num(row.get("support_tickets", row.get("support_calls", 0)), 0.0)
-        complaints = _safe_num(row.get("complaint_count", row.get("complaints", 0)), 0.0)
-        payment_delays = _safe_num(row.get("payment_delays", row.get("late_payments", 0)), 0.0)
-        satisfaction = _safe_num(row.get("customer_satisfaction_score", row.get("satisfaction", 5)), 5.0)
-        tenure = _safe_num(row.get("tenure_months", row.get("tenure", 0)), 0.0)
-        usage = _safe_num(row.get("product_usage", row.get("usage", 0)), 0.0)
-        contract = str(row.get("contract_type", row.get("contract", "")) or "").lower()
-
-        if contract in {"month-to-month", "month to month", "monthly", "m2m"}:
-            score += 0.2
-        elif contract in {"one year", "1 year", "annual", "yearly"}:
-            score += 0.05
-        elif contract in {"two year", "2 year", "two-year", "2-year"}:
-            score -= 0.05
-
-        score += min(0.25, support_tickets * 0.04)
-        score += min(0.25, complaints * 0.08)
-        score += min(0.25, payment_delays * 0.12)
-        score += max(0.0, (5.0 - satisfaction) * 0.08)
-        if tenure < 12:
-            score += 0.12
-        elif tenure < 24:
-            score += 0.06
-        if usage < 20:
-            score += 0.1
-
-        scores.append(1 if score >= 0.55 else 0)
-    return pd.Series(scores, dtype=int)
+    if frame.empty:
+        return pd.Series(dtype=int)
+        
+    n_samples = len(frame)
+    scores = np.zeros(n_samples)
+    
+    # 1. Identify columns by common business aliases
+    cost_cols = [c for c in frame.columns if any(w in str(c).lower() for w in ("expense", "cost", "loss", "delay", "ticket", "complaint", "fee"))]
+    value_cols = [c for c in frame.columns if any(w in str(c).lower() for w in ("revenue", "income", "profit", "margin", "satisfaction", "tenure", "usage", "sales", "amount", "charge"))]
+    
+    # Process numeric columns
+    numeric_cols = [c for c in frame.columns if pd.api.types.is_numeric_dtype(frame[c]) and str(c).lower() not in ("customer_id", "source_id")]
+    
+    has_signals = False
+    for col in numeric_cols:
+        series = pd.to_numeric(frame[col], errors="coerce").fillna(0.0)
+        if series.std() < 1e-4:
+            continue
+            
+        z = (series - series.mean()) / (series.std() + 1e-6)
+        
+        if col in cost_cols:
+            scores += z.values * 0.5
+            has_signals = True
+        elif col in value_cols:
+            scores -= z.values * 0.5
+            has_signals = True
+            
+    if not has_signals and numeric_cols:
+        for col in numeric_cols:
+            series = pd.to_numeric(frame[col], errors="coerce").fillna(0.0)
+            if series.std() < 1e-4:
+                continue
+            z = (series - series.mean()) / (series.std() + 1e-6)
+            scores -= z.values * 0.3
+            has_signals = True
+            
+    if has_signals and not np.all(scores == 0):
+        threshold = np.percentile(scores, 75)
+        binary_labels = (scores >= threshold).astype(int)
+    else:
+        binary_labels = np.array([1 if i % 4 == 0 else 0 for i in range(n_samples)])
+        
+    return pd.Series(binary_labels, dtype=int)
 
 
 def connect_db(db_path: Path | str) -> sqlite3.Connection:
