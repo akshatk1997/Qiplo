@@ -1185,12 +1185,10 @@ function updateBusinessDiagnostics() {
     }
     
     const revValEl = document.getElementById('health-revenue-val');
-    if (revValEl) {
+    const revIndEl = document.getElementById('health-revenue-ind');
+    if (revValEl && revIndEl) {
         revValEl.textContent = highRiskCount > 5 ? 'At Risk' : 'Stable';
-        const ind = revValEl.previousElementSibling;
-        if (ind) {
-            ind.className = 'status-indicator ' + (highRiskCount > 5 ? 'status-yellow' : 'status-green');
-        }
+        revIndEl.className = 'status-indicator ' + (highRiskCount > 5 ? 'status-yellow' : 'status-green');
     }
     
     // 2. Calculate dynamic problems
