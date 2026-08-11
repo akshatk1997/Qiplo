@@ -1631,6 +1631,39 @@ def get_database_context_summary(db_path: Path) -> str:
             """
         ).fetchall()
         
+        # Count & Sum stats for all numeric/categorical columns in active sources
+        metrics_lines = []
+        for col in cols:
+            if col in ("customer_id", "source_id"):
+                continue
+            try:
+                stats = conn.execute(
+                    f"""
+                    SELECT SUM("{col}"), AVG("{col}"), MIN("{col}"), MAX("{col}") 
+                    FROM customer_churn cc
+                    JOIN data_sources ds ON cc.source_id = ds.source_id
+                    WHERE ds.is_active = 1
+                    """
+                ).fetchone()
+                if stats and stats[0] is not None:
+                    metrics_lines.append(f"- Column '{col}' (NUMERIC) | Total Sum: {stats[0]:,.2f} | Average: {stats[1]:,.2f} | Min: {stats[2]:,.2f} | Max: {stats[3]:,.2f}")
+                else:
+                    val_counts = conn.execute(
+                        f"""
+                        SELECT "{col}", COUNT(*) as cnt 
+                        FROM customer_churn cc
+                        JOIN data_sources ds ON cc.source_id = ds.source_id
+                        WHERE ds.is_active = 1
+                        GROUP BY "{col}"
+                        ORDER BY cnt DESC
+                        LIMIT 5
+                        """
+                    ).fetchall()
+                    counts_str = ", ".join(f"'{r[0]}': {r[1]}" for r in val_counts)
+                    metrics_lines.append(f"- Column '{col}' (CATEGORICAL) | Unique Distribution: {counts_str}")
+            except Exception:
+                pass
+        
         conn.close()
         
         lines = []
@@ -1644,6 +1677,12 @@ def get_database_context_summary(db_path: Path) -> str:
                 lines.append(f"{idx}. File: '{u['filename']}' | Rows: {u['row_count']} | Uploaded: {u['created_at']} | Status: {status}")
         else:
             lines.append("- No files have been uploaded yet.")
+
+        lines.append("\n### DYNAMIC COLUMN METRICS & FINANCIAL SUMMARIES:")
+        if metrics_lines:
+            lines.extend(metrics_lines)
+        else:
+            lines.append("- No metric summaries generated.")
             
         breakdown_text = []
         for r in summary_rows:
