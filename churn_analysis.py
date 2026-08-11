@@ -369,22 +369,22 @@ def normalize_column_name(name: str) -> str:
 def build_column_aliases(config: dict | None = None) -> dict[str, list[str]]:
     config = config or load_config()
     aliases = {
-        "customer_id": ["customer_id", "id", "customer", "client_id", "transaction_id", "invoice_id", "ref_id"],
-        "tenure_months": ["tenure_months", "tenure", "tenure_month", "tenure_in_months", "months", "days", "years", "time", "duration", "age", "period", "frequency", "purchase_frequency"],
-        "monthly_charges": ["monthly_charges", "monthly_charge", "monthly_fee", "monthly_cost", "amount", "revenue", "income", "charge", "spent", "value", "price", "mrr", "cost", "expense", "sales", "mrr_loss", "billing_amount", "amount_due"],
+        "customer_id": ["customer_id", "id", "customer", "client_id", "transaction_id", "invoice_id", "ref_id", "booking_id", "guest_id"],
+        "tenure_months": ["tenure_months", "tenure", "tenure_month", "tenure_in_months", "months", "days", "years", "time", "duration", "age", "period", "frequency", "purchase_frequency", "lead_time", "stays_in_weekend_nights", "stays_in_week_nights", "length_of_stay", "nights", "stay_duration"],
+        "monthly_charges": ["monthly_charges", "monthly_charge", "monthly_fee", "monthly_cost", "amount", "revenue", "income", "charge", "spent", "value", "price", "mrr", "cost", "expense", "sales", "mrr_loss", "billing_amount", "amount_due", "adr", "daily_rate", "average_daily_rate"],
         "total_charges": ["total_charges", "total_charge", "total_spend", "lifetime_value", "total_amount", "total_revenue", "total_value", "total_spent", "gross_amount", "arr"],
         "contract_type": ["contract_type", "contract", "subscription_type", "plan"],
         "internet_service": ["internet_service", "internet", "service_type", "connection_type"],
         "payment_method": ["payment_method", "payment", "billing_method", "payment_type"],
         "region": ["region", "territory", "area", "location"],
-        "support_tickets": ["support_tickets", "support_calls", "tickets", "service_tickets"],
+        "support_tickets": ["support_tickets", "support_calls", "tickets", "service_tickets", "previous_cancellations", "cancellations"],
         "payment_delays": ["payment_delays", "late_payments", "delayed_payments", "billing_delays"],
         "product_usage": ["product_usage", "usage", "feature_usage", "activity_score"],
-        "complaint_count": ["complaint_count", "complaints", "complaint_total", "issue_count"],
+        "complaint_count": ["complaint_count", "complaints", "complaint_total", "issue_count", "booking_changes", "changes"],
         "customer_satisfaction_score": ["customer_satisfaction_score", "satisfaction", "csat", "satisfaction_score"],
     }
     target_column = config.get("target_column", DEFAULT_TARGET)
-    aliases[target_column] = [target_column, "churned", "churn", "attrition", "is_churned", "label", "status", "outcome", "target", "y", "class", "category", "flag", "is_at_risk"]
+    aliases[target_column] = [target_column, "churned", "churn", "attrition", "is_churned", "label", "status", "outcome", "target", "y", "class", "category", "flag", "is_at_risk", "is_canceled", "is_cancelled", "canceled", "cancelled", "cancellation"]
     return aliases
 
 
