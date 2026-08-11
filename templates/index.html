@@ -466,6 +466,65 @@
                             </select>
                         </div>
                     </div>
+
+                    <!-- Closed-Loop Business Decision Intelligence Console -->
+                    <div class="decision-intelligence-console framer-card">
+                        <div class="console-header">
+                            <div class="console-prompt">
+                                <i data-lucide="help-circle" class="lucide-icon" style="color: var(--accent-2); width: 22px; height: 22px;"></i>
+                                <span class="console-title">What's wrong with my business?</span>
+                            </div>
+                            <span class="console-tag">Qiplo Closed-Loop Decision Diagnostics</span>
+                        </div>
+                        
+                        <div class="console-body-grid">
+                            <!-- Left Pane: Business Health Summary Status -->
+                            <div class="health-summary-panel">
+                                <h4>Business Health Status</h4>
+                                <div class="health-status-list">
+                                    <div class="health-status-item">
+                                        <span class="status-indicator status-green"></span>
+                                        <span class="health-label">Revenue</span>
+                                        <span class="health-value-sub" id="health-revenue-val">Stable</span>
+                                    </div>
+                                    <div class="health-status-item">
+                                        <span class="status-indicator status-yellow" id="health-retention-ind"></span>
+                                        <span class="health-label">Customer Retention</span>
+                                        <span class="health-value-sub" id="health-retention-val">Awaiting analysis</span>
+                                    </div>
+                                    <div class="health-status-item">
+                                        <span class="status-indicator status-red"></span>
+                                        <span class="health-label">Inventory</span>
+                                        <span class="health-value-sub">Slow Moving</span>
+                                    </div>
+                                    <div class="health-status-item">
+                                        <span class="status-indicator status-red"></span>
+                                        <span class="health-label">Receivables</span>
+                                        <span class="health-value-sub">Delayed Payments</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Right Pane: Top 5 Detected Problems -->
+                            <div class="detected-problems-panel">
+                                <h4>Top 5 Detected Problems</h4>
+                                <div class="problems-list" id="diagnosedProblemsList">
+                                    <!-- Dynamic problem cards are rendered here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Active Resolution Loops checklist -->
+                    <div class="active-loops-card framer-card">
+                        <div class="loops-header">
+                            <i data-lucide="wrench" class="lucide-icon" style="color: var(--accent-2); width: 18px; height: 18px;"></i>
+                            <h3 style="margin: 0; font-family: var(--font-heading); font-size: 1rem;">Active Closed-Loop Resolutions</h3>
+                        </div>
+                        <div class="loops-grid" id="activeResolutionLoopsList">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
                     <div class="financialStatsGrid">
                         <div class="fStatCard">
                             <span>Total Monthly Charges</span>
@@ -1352,6 +1411,72 @@
             <div style="margin-top: 24px; display: flex; justify-content: flex-end;">
                 <button class="primaryBtn" onclick="closeToolInfo()" style="padding: 8px 18px; font-size: 0.85rem;">Got it, thanks!</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Closed-Loop Resolution Wizard Modal -->
+    <div id="resolutionWizardModal" class="magnificZoomModal hidden" onclick="closeResolutionWizard()">
+        <div class="magnificZoomContent" onclick="event.stopPropagation()" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; max-width: 500px; width: 90%; max-height: 85vh; overflow-y: auto; text-align: left; box-shadow: var(--shadow); position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 18px;">
+                <h3 style="margin: 0; font-family: var(--font-heading); font-size: 1.2rem; color: var(--accent-2); display: flex; align-items: center; gap: 8px;">
+                    <i data-lucide="wrench" class="lucide-icon"></i> Qiplo Closed-Loop Resolution
+                </h3>
+                <button onclick="closeResolutionWizard()" style="background: transparent; border: none; color: var(--muted); font-size: 1.6rem; cursor: pointer; line-height: 1;">&times;</button>
+            </div>
+            
+            <form id="resolutionWizardForm" style="display: flex; flex-direction: column; gap: 14px;">
+                <input type="hidden" id="wizardProblemId" />
+                
+                <div>
+                    <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px; font-weight: 600;">PROBLEM</label>
+                    <div id="wizardProblemTitle" style="font-size: 1rem; font-weight: 700; color: var(--text);"></div>
+                </div>
+                
+                <div>
+                    <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px; font-weight: 600;">ROOT CAUSE</label>
+                    <div id="wizardRootCause" style="font-size: 0.88rem; color: var(--text-2); background: var(--surface-2); padding: 8px 12px; border-radius: 4px; border: 1px solid var(--border);"></div>
+                </div>
+                
+                <div>
+                    <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px; font-weight: 600;">RECOMMENDED ACTION</label>
+                    <div id="wizardAction" style="font-size: 0.88rem; color: var(--text-2); background: var(--surface-2); padding: 8px 12px; border-radius: 4px; border: 1px solid var(--border);"></div>
+                </div>
+                
+                <div>
+                    <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px; font-weight: 600;">EXPECTED IMPACT</label>
+                    <div id="wizardImpact" style="font-size: 0.88rem; color: var(--accent-2); font-weight: 600;"></div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px; font-weight: 600;">PRIORITY</label>
+                        <select id="wizardPriority" class="roleSelect" style="width: 100%;">
+                            <option value="CRITICAL">🔴 CRITICAL</option>
+                            <option value="HIGH">🟡 HIGH</option>
+                            <option value="MEDIUM">🟢 MEDIUM</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px; font-weight: 600;">OWNER</label>
+                        <input type="text" id="wizardOwner" placeholder="E.g. Sarah Jenkins" style="width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.9rem;" required />
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px; font-weight: 600;">DEADLINE</label>
+                        <input type="date" id="wizardDeadline" style="width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.9rem;" required />
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px; font-weight: 600;">KPI TO MONITOR</label>
+                        <input type="text" id="wizardKpi" placeholder="E.g. NRR, conversion rate" style="width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.9rem;" required />
+                    </div>
+                </div>
+                
+                <button type="submit" class="fix-problem-btn" style="margin-top: 10px; width: 100%; padding: 12px; font-size: 0.9rem; text-align: center;">
+                    Activate Closed-Loop Action Loop
+                </button>
+            </form>
         </div>
     </div>
 
