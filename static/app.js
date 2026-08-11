@@ -674,6 +674,21 @@ function debounce(func, wait) {
     };
 }
 
+function syncPipelineWithTab(activeTab) {
+    document.querySelectorAll('.pipeline-step').forEach(el => el.classList.remove('active-step'));
+    let step = '';
+    if (activeTab === 'business') step = 'business_impact';
+    else if (activeTab === 'sandbox') step = 'recommendation';
+    else if (activeTab === 'actions') step = 'action';
+    else if (activeTab === 'guide') step = 'measure_result';
+    else if (activeTab === 'overview') step = 'data';
+    
+    if (step) {
+        const activeEl = document.querySelector(`.pipeline-step[onclick*="'${step}'"]`);
+        if (activeEl) activeEl.classList.add('active-step');
+    }
+}
+
 function setupTabs() {
     const routeMap = {
         '/dashboard': 'overview',
@@ -711,8 +726,11 @@ function setupTabs() {
             };
             const routePath = routeMapInverse[target] || '/';
             window.history.pushState(null, '', routePath);
+            try { syncPipelineWithTab(target); } catch (e) {}
         });
     });
+
+    try { syncPipelineWithTab(initialTab); } catch (e) {}
 }
 
 // Theme toggle removed - Dark theme default with Fire & Lightning colors
@@ -3468,3 +3486,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+function switchTab(tabId) {
+    const tab = document.querySelector(`.tab[data-tab="${tabId}"]`);
+    if (tab) {
+        tab.click();
+    }
+}
+
+window.focusPipelineStep = function(step) {
+    // 1. Remove active-step class from all steps
+    document.querySelectorAll('.pipeline-step').forEach(el => el.classList.remove('active-step'));
+    
+    // 2. Add active-step class to clicked step
+    const activeEl = document.querySelector(`.pipeline-step[onclick*="'${step}'"]`);
+    if (activeEl) activeEl.classList.add('active-step');
+    
+    // 3. Switch tab and focus/scroll to corresponding section
+    if (step === 'data') {
+        switchTab('overview');
+        const el = document.getElementById('sourcesList') || document.querySelector('.sourcesPane');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else if (step === 'ai_analysis') {
+        switchTab('overview');
+        const el = document.getElementById('modelAccuracy') || document.querySelector('.system-health-grid') || document.querySelector('.modelStats');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else if (step === 'problem_detection') {
+        switchTab('overview');
+        const el = document.getElementById('riskChart') || document.getElementById('predictionsTable');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else if (step === 'root_cause') {
+        switchTab('overview');
+        const el = document.querySelector('.featureImportance') || document.querySelector('.chartBlock') || document.getElementById('metaFields');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else if (step === 'business_impact') {
+        switchTab('business');
+        const el = document.getElementById('tab-business');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else if (step === 'recommendation') {
+        switchTab('sandbox');
+        const el = document.getElementById('tab-sandbox');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else if (step === 'action') {
+        switchTab('actions');
+        const el = document.getElementById('tab-actions');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else if (step === 'measure_result') {
+        switchTab('guide');
+        const el = document.getElementById('tab-guide');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+};

@@ -2392,3 +2392,99 @@ body.dark-theme .ghostBtn:hover {
     will-change: transform, opacity;
 }
 
+/* Decision Intelligence Pipeline CSS Styles */
+.decision-pipeline-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 24px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.decision-pipeline-bar::-webkit-scrollbar {
+    display: none;
+}
+.pipeline-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    white-space: nowrap;
+    border-right: 1px solid var(--border);
+    padding-right: 18px;
+    flex-shrink: 0;
+}
+.pipeline-flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-grow: 1;
+    justify-content: space-around;
+}
+.pipeline-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 99px;
+    border: 1px solid transparent;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+.pipeline-step:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+.pipeline-step.active-step {
+    background: var(--accent-soft);
+    border-color: var(--accent-2);
+    box-shadow: 0 0 10px rgba(0, 245, 255, 0.25);
+}
+.step-num {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent-2);
+    opacity: 0.85;
+}
+.step-label {
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text);
+}
+.pipeline-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    opacity: 0.5;
+    flex-shrink: 0;
+}
+.pipeline-arrow .lucide-icon {
+    width: 14px;
+    height: 14px;
+}
+@media (max-width: 1024px) {
+    .decision-pipeline-bar {
+        padding: 10px 16px;
+    }
+    .pipeline-flow {
+        justify-content: flex-start;
+        gap: 4px;
+    }
+    .pipeline-title {
+        display: none;
+    }
+}
+

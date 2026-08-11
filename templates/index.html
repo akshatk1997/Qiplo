@@ -54,7 +54,7 @@
                     </span>
                     <span class="demoBadge" id="demoBadge" style="display: none; background: #e11d48; color: #ffffff; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1;">Demo Sandbox Active</span>
                 </div>
-                <span class="appSub">AI-Powered Retention Intelligence & Churn Prevention Engine</span>
+                <span class="appSub">Business Decision Intelligence Platform</span>
             </div>
         </div>
         <div class="topbarRight">
@@ -78,6 +78,55 @@
             </div>
         </div>
     </header>
+
+    <!-- Decision Intelligence Pipeline Flowchart -->
+    <div class="decision-pipeline-bar">
+        <div class="pipeline-title">
+            <i data-lucide="layers" class="lucide-icon" style="color: var(--accent-2); width: 14px; height: 14px;"></i>
+            <span>DECISION PIPELINE</span>
+        </div>
+        <div class="pipeline-flow">
+            <div class="pipeline-step" onclick="focusPipelineStep('data')" title="Click to view Customer Data Sources">
+                <span class="step-num">01</span>
+                <span class="step-label">DATA</span>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
+            <div class="pipeline-step" onclick="focusPipelineStep('ai_analysis')" title="Click to view Machine Learning Model metrics">
+                <span class="step-num">02</span>
+                <span class="step-label">AI ANALYSIS</span>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
+            <div class="pipeline-step" onclick="focusPipelineStep('problem_detection')" title="Click to view High Risk Customer Segments">
+                <span class="step-num">03</span>
+                <span class="step-label">PROBLEM DETECTION</span>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
+            <div class="pipeline-step" onclick="focusPipelineStep('root_cause')" title="Click to view Key Risk Drivers">
+                <span class="step-num">04</span>
+                <span class="step-label">ROOT CAUSE</span>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
+            <div class="pipeline-step" onclick="focusPipelineStep('business_impact')" title="Click to view expected ARR loss and ROI Simulator">
+                <span class="step-num">05</span>
+                <span class="step-label">BUSINESS IMPACT</span>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
+            <div class="pipeline-step" onclick="focusPipelineStep('recommendation')" title="Click to view Playbooks & AI advisor recommendations">
+                <span class="step-num">06</span>
+                <span class="step-label">RECOMMENDATION</span>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
+            <div class="pipeline-step" onclick="focusPipelineStep('action')" title="Click to view CSM Task Assignments & Campaigns">
+                <span class="step-num">07</span>
+                <span class="step-label">ACTION</span>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
+            <div class="pipeline-step" onclick="focusPipelineStep('measure_result')" title="Click to view Compliance Logs & Audit Trail">
+                <span class="step-num">08</span>
+                <span class="step-label">MEASURE RESULT</span>
+            </div>
+        </div>
+    </div>
 
     <main class="studio">
         <aside class="sourcesPane">
