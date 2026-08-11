@@ -1125,10 +1125,12 @@ def create_app() -> Flask:
             
             # Deactivate demo data and activate custom data on successful custom upload
             conn = get_connection()
-            conn.execute("UPDATE data_sources SET is_active = 0 WHERE source_id = 'sample_data'")
-            conn.execute("UPDATE data_sources SET is_active = 1 WHERE source_id != 'sample_data'")
-            conn.commit()
-            conn.close()
+            try:
+                conn.execute("UPDATE data_sources SET is_active = 0 WHERE source_id = 'sample_data'")
+                conn.execute("UPDATE data_sources SET is_active = 1 WHERE source_id != 'sample_data'")
+                conn.commit()
+            finally:
+                conn.close()
         except Exception as exc:
             import traceback
             traceback.print_exc()

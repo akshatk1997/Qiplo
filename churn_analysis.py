@@ -732,56 +732,61 @@ def import_frame_to_sql(frame: pd.DataFrame, db_path: Path, replace: bool = Fals
     is_arbitrary = churn_like < 3
 
     conn = connect_db(db_path)
-    
-    # Generate unique source_id
-    source_id = "src_" + datetime.now().strftime("%Y%m%d%H%M%S") + "_" + str(hash(filename) % 10000)
-    
-    if is_arbitrary:
-        normalized = normalize_customer_frame(frame, include_target=True, config=config, keep_original_columns=True)
-        if replace:
-            rebuild_customer_table(conn, normalized, target_column)
-            conn.execute("DELETE FROM data_sources")
+    try:
+        # Generate unique source_id
+        source_id = "src_" + datetime.now().strftime("%Y%m%d%H%M%S") + "_" + str(hash(filename) % 10000)
+        
+        if is_arbitrary:
+            normalized = normalize_customer_frame(frame, include_target=True, config=config, keep_original_columns=True)
+            if replace:
+                rebuild_customer_table(conn, normalized, target_column)
+                conn.execute("DELETE FROM data_sources")
+            else:
+                ensure_customer_table_columns(conn, config, frame=normalized)
         else:
-            ensure_customer_table_columns(conn, config, frame=normalized)
-    else:
-        normalized = normalize_customer_frame(frame, include_target=True, config=config)
-        if replace:
-            ensure_customer_table_columns(conn, config, frame=normalized)
-            conn.execute("DELETE FROM customer_churn")
-            conn.execute("DELETE FROM data_sources")
+            normalized = normalize_customer_frame(frame, include_target=True, config=config)
+            if replace:
+                ensure_customer_table_columns(conn, config, frame=normalized)
+                conn.execute("DELETE FROM customer_churn")
+                conn.execute("DELETE FROM data_sources")
+            else:
+                ensure_customer_table_columns(conn, config, frame=normalized)
+
+        normalized["source_id"] = source_id
+        
+        # Log source
+        conn.execute(
+            "INSERT INTO data_sources (source_id, filename, row_count, created_at, is_active) VALUES (?, ?, ?, ?, 1)",
+            (source_id, filename, len(normalized), datetime.now().isoformat())
+        )
+
+        db_cols = {row[1] for row in conn.execute("PRAGMA table_info(customer_churn)").fetchall()}
+        existing_ids = {row[0] for row in conn.execute("SELECT customer_id FROM customer_churn").fetchall()}
+        new_rows = normalized[~normalized["customer_id"].isin(existing_ids)]
+        if not new_rows.empty:
+            valid_cols = [c for c in new_rows.columns if c in db_cols]
+            new_rows[valid_cols].to_sql("customer_churn", conn, if_exists="append", index=False)
         else:
-            ensure_customer_table_columns(conn, config, frame=normalized)
+            for _, row in normalized.iterrows():
+                if row["customer_id"] in existing_ids:
+                    updates = []
+                    values = []
+                    for column in normalized.columns:
+                        if column == "customer_id" or column not in db_cols:
+                            continue
+                        updates.append(f'"{column}" = ?')
+                        values.append(row[column])
+                    if updates:
+                        values.append(row["customer_id"])
+                        conn.execute(f'UPDATE customer_churn SET {", ".join(updates)} WHERE customer_id = ?', values)
 
-    normalized["source_id"] = source_id
-    
-    # Log source
-    conn.execute(
-        "INSERT INTO data_sources (source_id, filename, row_count, created_at, is_active) VALUES (?, ?, ?, ?, 1)",
-        (source_id, filename, len(normalized), datetime.now().isoformat())
-    )
-
-    db_cols = {row[1] for row in conn.execute("PRAGMA table_info(customer_churn)").fetchall()}
-    existing_ids = {row[0] for row in conn.execute("SELECT customer_id FROM customer_churn").fetchall()}
-    new_rows = normalized[~normalized["customer_id"].isin(existing_ids)]
-    if not new_rows.empty:
-        valid_cols = [c for c in new_rows.columns if c in db_cols]
-        new_rows[valid_cols].to_sql("customer_churn", conn, if_exists="append", index=False)
-    else:
-        for _, row in normalized.iterrows():
-            if row["customer_id"] in existing_ids:
-                updates = []
-                values = []
-                for column in normalized.columns:
-                    if column == "customer_id" or column not in db_cols:
-                        continue
-                    updates.append(f'"{column}" = ?')
-                    values.append(row[column])
-                if updates:
-                    values.append(row["customer_id"])
-                    conn.execute(f'UPDATE customer_churn SET {", ".join(updates)} WHERE customer_id = ?', values)
-
-    conn.commit()
-    conn.close()
+        conn.commit()
+    except Exception as exc:
+        conn.rollback()
+        raise exc
+    finally:
+        conn.close()
+        
     return len(normalized)
 
 
