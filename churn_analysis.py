@@ -371,15 +371,15 @@ def build_column_aliases(config: dict | None = None) -> dict[str, list[str]]:
     aliases = {
         "customer_id": ["customer_id", "id", "customer", "client_id", "transaction_id", "invoice_id", "ref_id", "booking_id", "guest_id", "name", "email", "phone-number", "phone_number", "credit_card"],
         "tenure_months": ["tenure_months", "tenure", "tenure_month", "tenure_in_months", "months", "days", "years", "time", "duration", "age", "period", "frequency", "purchase_frequency", "lead_time", "stays_in_weekend_nights", "stays_in_week_nights", "length_of_stay", "nights", "stay_duration"],
-        "monthly_charges": ["monthly_charges", "monthly_charge", "monthly_fee", "monthly_cost", "amount", "revenue", "income", "charge", "spent", "value", "price", "mrr", "cost", "expense", "sales", "mrr_loss", "billing_amount", "amount_due", "adr", "daily_rate", "average_daily_rate"],
+        "monthly_charges": ["monthly_charges", "monthly_charge", "monthly_fee", "monthly_cost", "amount", "revenue", "income", "charge", "spent", "value", "price", "mrr", "cost", "expense", "sales", "mrr_loss", "billing_amount", "amount_due", "adr", "daily_rate", "average_daily_rate", "roi", "profit", "margin", "net_profit", "ebitda", "earnings", "gain", "turnover", "yield"],
         "total_charges": ["total_charges", "total_charge", "total_spend", "lifetime_value", "total_amount", "total_revenue", "total_value", "total_spent", "gross_amount", "arr"],
         "contract_type": ["contract_type", "contract", "subscription_type", "plan", "customer_type", "deposit_type", "distribution_channel", "market_segment", "hotel"],
         "internet_service": ["internet_service", "internet", "service_type", "connection_type", "meal", "reserved_room_type", "assigned_room_type"],
         "payment_method": ["payment_method", "payment", "billing_method", "payment_type", "deposit_type"],
         "region": ["region", "territory", "area", "location", "country"],
         "support_tickets": ["support_tickets", "support_calls", "tickets", "service_tickets", "previous_cancellations", "cancellations"],
-        "payment_delays": ["payment_delays", "late_payments", "delayed_payments", "billing_delays", "days_in_waiting_list", "waiting_list_days"],
-        "product_usage": ["product_usage", "usage", "feature_usage", "activity_score", "required_car_parking_spaces", "total_of_special_requests", "special_requests"],
+        "payment_delays": ["payment_delays", "late_payments", "delayed_payments", "billing_delays", "days_in_waiting_list", "waiting_list_days", "waiting_list", "waiting_days", "chargeback", "refund", "late_payment", "penalty", "liabilities", "debt"],
+        "product_usage": ["product_usage", "usage", "feature_usage", "activity_score", "required_car_parking_spaces", "total_of_special_requests", "special_requests", "conversion", "efficiency", "nps"],
         "complaint_count": ["complaint_count", "complaints", "complaint_total", "issue_count", "booking_changes", "changes"],
         "customer_satisfaction_score": ["customer_satisfaction_score", "satisfaction", "csat", "satisfaction_score", "is_repeated_guest"],
     }
@@ -447,8 +447,8 @@ def generate_heuristic_target(frame: pd.DataFrame) -> pd.Series:
     scores = np.zeros(n_samples)
     
     # 1. Identify columns by common business aliases
-    cost_cols = [c for c in frame.columns if any(w in str(c).lower() for w in ("expense", "cost", "loss", "delay", "ticket", "complaint", "fee"))]
-    value_cols = [c for c in frame.columns if any(w in str(c).lower() for w in ("revenue", "income", "profit", "margin", "satisfaction", "tenure", "usage", "sales", "amount", "charge"))]
+    cost_cols = [c for c in frame.columns if any(w in str(c).lower() for w in ("expense", "cost", "loss", "delay", "ticket", "complaint", "fee", "spent", "payout", "liability", "tax", "interest", "refund", "chargeback", "debt", "fine", "penalty", "waiting_list", "cancellation", "canceled", "cancelled", "overhead"))]
+    value_cols = [c for c in frame.columns if any(w in str(c).lower() for w in ("revenue", "income", "profit", "margin", "satisfaction", "tenure", "usage", "sales", "amount", "charge", "growth", "roi", "yield", "earnings", "ebitda", "turnover", "csat", "nps", "retained", "special_requests", "bookings", "conversion", "efficiency"))]
     
     # Process numeric columns
     numeric_cols = [c for c in frame.columns if pd.api.types.is_numeric_dtype(frame[c]) and str(c).lower() not in ("customer_id", "source_id")]
