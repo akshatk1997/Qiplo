@@ -1799,7 +1799,7 @@ function generateLocalSlides(numSlides, customPrompt, shouldShuffle) {
         {
             "layout": "title",
             "title": customPrompt ? `Custom Profile: ${customPrompt}` : "Qiplo Executive Presentation",
-            "subtitle": `Strategic Customer Churn Intelligence — ${total_cust} Accounts Evaluated`
+            "subtitle": `Business Decision Intelligence Platform — ${total_cust} Accounts Evaluated`
         },
         {
             "layout": "split_metrics",
@@ -1978,7 +1978,7 @@ function renderSlides(slides) {
                         </div>
                     </div>
                     <div class="slideFooter">
-                        <span>Executive Churn Intelligence Briefing</span>
+                        <span>Executive Business Decision Intelligence Briefing</span>
                         <span>Slide ${idx+1} of ${slides.length}</span>
                     </div>
                 </div>

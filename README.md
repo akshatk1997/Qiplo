@@ -1,8 +1,8 @@
 # Qiplo — Never Lose a Customer Again ⚡
 
-> **"SOTA AI-Powered Customer Churn Intelligence & Retention Engine"**
+> **"Business Decision Intelligence Platform"**
 
-**Qiplo** is a 100% free, open-source, and claims-free customer retention predictive analytics platform designed for high-growth enterprises and modern customer success teams. Powered by a custom state-of-the-art **Tabular Hybrid Attention Transformer Classifier**, Qiplo maps unstructured database inputs, identifies revenue-at-risk, and generates recovery playbooks with zero latency.
+**Qiplo** is a 100% free, open-source, and claims-free Business Decision Intelligence Platform designed for high-growth enterprises and modern customer success teams. Powered by a custom state-of-the-art **Tabular Hybrid Attention Transformer Classifier**, Qiplo maps unstructured database inputs, identifies revenue-at-risk, and generates recovery playbooks with zero latency.
 
 ---
 

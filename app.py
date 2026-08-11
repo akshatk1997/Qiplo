@@ -2882,7 +2882,7 @@ window.addEventListener('DOMContentLoaded', function() {{
         
         # Fallbacks for copy
         slide1_title = "Qiplo Executive Presentation"
-        slide1_subtitle = f"Strategic Customer Churn Intelligence — {total_cust:,} Accounts Evaluated"
+        slide1_subtitle = f"Business Decision Intelligence Platform — {total_cust:,} Accounts Evaluated"
         
         slide2_title = "Executive Churn & Risk Summary"
         slide2_bullets = [
