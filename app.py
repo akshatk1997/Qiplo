@@ -1033,6 +1033,15 @@ def create_app() -> Flask:
         if frame.empty:
             return jsonify({"status": "error", "message": "The uploaded file is empty."}), 400
 
+        # Clean and sanitize column names to prevent SQL syntax injection and crash anomalies
+        sanitized_cols = []
+        for i, col in enumerate(frame.columns):
+            cleaned = str(col).replace('"', '').replace("'", "").replace("`", "").strip()
+            if not cleaned:
+                cleaned = f"column_{i}"
+            sanitized_cols.append(cleaned)
+        frame.columns = sanitized_cols
+
         # Validation checks
         warnings = []
         

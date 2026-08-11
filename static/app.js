@@ -554,7 +554,19 @@ async function uploadFile(fileOverride) {
 
     try {
         const response = await fetch('/api/upload', { method: 'POST', body: formData });
-        const payload = await response.json();
+        let payload;
+        try {
+            payload = await response.json();
+        } catch (jsonErr) {
+            const textError = await response.text();
+            console.error('Non-JSON response from upload:', textError);
+            if (status) {
+                status.textContent = `Upload failed (Status ${response.status}): Server returned an invalid response.`;
+                status.className = 'status error';
+            }
+            return;
+        }
+
         if (response.ok && payload.status === 'ok') {
             AudioFeedback.success();
             if (status) {
