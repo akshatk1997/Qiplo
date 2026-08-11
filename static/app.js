@@ -178,7 +178,14 @@ function renderSourceMeta() {
 
 function renderAiPanel(aiData) {
     document.getElementById('aiHeadline').textContent = aiData.headline || 'Awaiting analysis';
-    document.getElementById('aiNarrative').textContent = aiData.narrative || '';
+    const narrativeEl = document.getElementById('aiNarrative');
+    if (narrativeEl) {
+        if (window.marked && aiData.narrative) {
+            narrativeEl.innerHTML = marked.parse(aiData.narrative);
+        } else {
+            narrativeEl.textContent = aiData.narrative || '';
+        }
+    }
     const segments = aiData.segments || [];
     document.getElementById('aiSegments').innerHTML = segments.length
         ? segments.map(s => `<div class="aiSegment"><h4>${s.title}</h4><p>${s.detail}</p></div>`).join('')

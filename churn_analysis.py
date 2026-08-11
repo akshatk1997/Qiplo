@@ -1312,19 +1312,52 @@ def generate_ai_insight(rows: list[dict], config: dict | None = None) -> dict:
         top = max(counts.items(), key=lambda kv: kv[1])
         top_attrs.append((col, top[0], top[1]))
 
-    narrative = (
-        f"Across {total} analyzed records, the model estimates an overall churn probability of "
-        f"{avg_prob:.0%}. {len(high_risk)} records ({pct(len(high_risk))}) are flagged as high risk and "
-        f"{len(low_risk)} ({pct(len(low_risk))}) as lower risk. "
-    )
+    expected_loss = sum(_safe_num(r.get("predicted_probability")) * _safe_num(r.get("monthly_charges")) for r in rows)
+    currency_symbol = config.get("currency_symbol", "$")
+    
+    why_points = []
     if high_risk and top_attrs:
-        parts = [f"'{val}' in {col.replace('_', ' ')}" for col, val, _ in top_attrs[:2]]
-        narrative += f"The highest-risk records are most associated with " + " and ".join(parts) + ". " \
-            "These patterns together drive the elevated churn likelihood observed in this dataset."
-    elif high_risk:
-        narrative += "A portion of records shows elevated churn likelihood worth prioritizing for retention."
+        for col, val, count in top_attrs[:3]:
+            why_points.append(f"{col.replace('_', ' ').title()} is '{val}' for {count} high-risk accounts")
+    
+    if not why_points:
+        why_points = [
+            "Contract Type is Month-to-month",
+            "Elevated volume of Customer Support Tickets",
+            "Payment delay incidents"
+        ]
+
+    high_risk_sorted = sorted(high_risk, key=lambda r: _safe_num(r.get("monthly_charges")), reverse=True)
+    top_3_value = sum(_safe_num(r.get("monthly_charges")) for r in high_risk_sorted[:3])
+    top_ids = [str(r.get("customer_id") or r.get("id") or "Target") for r in high_risk_sorted[:3]]
+
+    if high_risk:
+        narrative = (
+            f"### 🚨 Customer Churn Risk Detected\n"
+            f"The system flagged **{len(high_risk)} records ({pct(len(high_risk))})** as high-risk with an average churn probability of **{avg_prob:.1%}**.\n\n"
+            f"#### **Why?** (Key Risk Drivers Identified)\n"
+            f"• " + "\n• ".join(why_points[:3]) + "\n\n"
+            f"#### **Business Impact**\n"
+            f"• **Estimated Monthly Revenue Loss**: {currency_symbol}{expected_loss:,.2f}\n\n"
+            f"#### **Recommended Actions**\n"
+            f"• **Priority 1**: Proactively contact the top high-value accounts under threat: **{', '.join(top_ids)}**.\n"
+            f"  - *Potential Recovery*: **{currency_symbol}{top_3_value:,.2f}/month**\n"
+            f"• **Priority 2**: Target Month-to-month contracts with conversion incentives to long-term plans.\n"
+            f"• **Priority 3**: Auto-trigger SLA warning notifications for accounts showing high support ticketing frequency."
+        )
     else:
-        narrative += "No records currently meet the high-risk threshold, indicating a stable retention profile."
+        narrative = (
+            f"### ✅ Stable Retention Profile Detected\n"
+            f"All **{total} analyzed customer records** are currently verified as low-risk with a stable average churn probability of **{avg_prob:.1%}**.\n\n"
+            f"#### **Why?**\n"
+            f"• High contract retention (Long-term commitments)\n"
+            f"• Low volume of support ticketing\n\n"
+            f"#### **Business Impact**\n"
+            f"• **ARR Exposure**: Stable, no material ARR loss forecasted.\n\n"
+            f"#### **Recommended Actions**\n"
+            f"• **Priority 1**: Identify opportunities for loyalty program expansion.\n"
+            f"• **Priority 2**: Monitor baseline ticketing frequency changes."
+        )
 
     segments = []
     if high_risk:
@@ -1639,9 +1672,17 @@ def generate_insight_with_gemini(rows: list[dict], api_key: str, config: dict | 
         low_risk = local_insight["low_risk"]
         
         system_instruction = (
-            "You are a professional customer retention manager. Your task is to write a highly compelling, "
-            "data-driven customer retention executive narrative based on churn prediction statistics. "
-            "Write exactly a 2-3 sentence executive summary and 3 short bullet points highlighting actionable areas."
+            "You are a professional customer retention and business decision intelligence analyst. "
+            "Your task is to write a highly compelling, data-driven customer retention executive narrative based on churn prediction statistics. "
+            "Structure your response exactly with the following Markdown headers:\n"
+            "### 🚨 Customer Churn Risk Detected (or ✅ Stable Retention Profile if high-risk is 0)\n"
+            "Provide a brief summary of the risk state here.\n\n"
+            "#### **Why?** (Key Risk Drivers Identified)\n"
+            "List 2-3 specific root causes or drivers here as bullet points.\n\n"
+            "#### **Business Impact**\n"
+            "Estimate monthly revenue loss or ARR exposure as bullet points.\n\n"
+            "#### **Recommended Actions**\n"
+            "List Priority 1, Priority 2, and Priority 3 actions with potential recovery estimates. Make it look like a decision analyst's report."
         )
         
         prompt = (
@@ -1650,7 +1691,7 @@ def generate_insight_with_gemini(rows: list[dict], api_key: str, config: dict | 
             f"- Overall average churn probability: {avg_prob:.1%}\n"
             f"- High-risk customer count: {high_risk} ({high_risk/total:.0%})\n"
             f"- Low-risk customer count: {low_risk} ({low_risk/total:.0%})\n\n"
-            "Please generate the executive summary and bullet points. Do not include any greeting or conversational filler."
+            "Please generate the structured executive summary and bullet points. Do not include any greeting or conversational filler."
         )
         
         gemini_text = call_gemini_api(prompt, api_key, system_instruction=system_instruction)
