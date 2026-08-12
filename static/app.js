@@ -1185,33 +1185,13 @@ let activeResolutionLoops = JSON.parse(localStorage.getItem('active_resolution_l
 function updateBusinessDiagnostics() {
     if (!predictionData || !predictionData.length) return;
     
-    // 1. Calculate health status values
+    const ims = document.getElementById('intelligenceModuleSelect');
+    const moduleVal = ims ? ims.value : 'sales';
+    
     const highRiskCount = predictionData.filter(r => r.prediction_label === 'high_risk').length;
     const totalCount = predictionData.length;
     const retentionRate = Math.round(((totalCount - highRiskCount) / totalCount) * 100);
     
-    const retValEl = document.getElementById('health-retention-val');
-    const retIndEl = document.getElementById('health-retention-ind');
-    if (retValEl && retIndEl) {
-        retValEl.textContent = `${retentionRate}% Stable`;
-        retIndEl.className = 'status-indicator';
-        if (retentionRate >= 80) {
-            retIndEl.classList.add('status-green');
-        } else if (retentionRate >= 60) {
-            retIndEl.classList.add('status-yellow');
-        } else {
-            retIndEl.classList.add('status-red');
-        }
-    }
-    
-    const revValEl = document.getElementById('health-revenue-val');
-    const revIndEl = document.getElementById('health-revenue-ind');
-    if (revValEl && revIndEl) {
-        revValEl.textContent = highRiskCount > 5 ? 'At Risk' : 'Stable';
-        revIndEl.className = 'status-indicator ' + (highRiskCount > 5 ? 'status-yellow' : 'status-green');
-    }
-    
-    // 2. Calculate dynamic problems
     const sortedByCharges = [...predictionData].sort((a, b) => (parseFloat(b.monthly_charges) || 0) - (parseFloat(a.monthly_charges) || 0));
     const totalCharges = predictionData.reduce((acc, r) => acc + (parseFloat(r.monthly_charges) || 0), 0);
     const top3Charges = sortedByCharges.slice(0, 3).reduce((acc, r) => acc + (parseFloat(r.monthly_charges) || 0), 0);
@@ -1219,64 +1199,374 @@ function updateBusinessDiagnostics() {
     
     const slowMovingVal = Math.round(740000 * currentCurrencyRate / 83.5);
     const slowMovingStr = `${currentCurrencySymbol}${slowMovingVal.toLocaleString()}`;
-    
-    const problems = [
-        {
-            id: 'rev_concentration',
-            title: '01 — Revenue concentration risk',
-            desc: `${concentrationPct}% of revenue comes from only 3 customers.`,
-            root: 'Inadequate diversification in tier-1 enterprise sales; high key account dependency.',
-            action: 'Proactively assign strategic key account CSMs to top 3 accounts; launch mid-market marketing campaigns.',
-            impact: `Secure ${currentCurrencySymbol}${Math.round(top3Charges * currentCurrencyRate).toLocaleString()}/month ARR renewals; mitigate contract cancellation exposure.`,
-            priority: 'HIGH',
-            owner: 'VP of Customer Success',
-            kpi: 'Key Account Retention Rate'
-        },
-        {
-            id: 'churn_risk',
-            title: '02 — Customer churn risk',
-            desc: `${highRiskCount} customers show high attrition probability.`,
-            root: 'Elevated Month-to-Month contract counts combined with support ticketing spikes.',
-            action: 'Launch customer outreach campaign targeting Month-to-Month subscribers with 15% discount for annual commitment.',
-            impact: `Recover up to ${currentCurrencySymbol}${Math.round(highRiskCount * currentCurrencyRate * 45).toLocaleString()}/month in recurring revenue.`,
-            priority: 'CRITICAL',
-            owner: 'Support Manager',
-            kpi: 'Retention Conversion %'
-        },
-        {
-            id: 'inventory_inefficiency',
-            title: '03 — Inventory inefficiency',
-            desc: `${slowMovingStr} tied up in slow-moving inventory.`,
-            root: 'Over-forecasting product sales leading to surplus safety stock in North warehouse.',
-            action: 'Trigger price markdown clearance event; bundle low-turnover items with popular categories.',
-            impact: `Reclaim up to ${slowMovingStr} in working capital cashflow within 45 days.`,
-            priority: 'MEDIUM',
-            owner: 'Inventory Planner',
-            kpi: 'Stock Turn Ratio'
-        },
-        {
-            id: 'regional_performance',
-            title: '04 — Regional performance decline',
-            desc: 'North region sales conversion dropped 21%.',
-            root: 'New competitor launching localized regional campaigns; outdated marketing collateral.',
-            action: 'Execute competitive product matching promotion; retrain regional sales agents.',
-            impact: 'Restore conversions to historical 35% conversion benchmark.',
-            priority: 'HIGH',
-            owner: 'Regional Sales Director',
-            kpi: 'North Region Conversion Rate'
-        },
-        {
-            id: 'margin_leakage',
-            title: '05 — Margin leakage',
-            desc: 'Product B revenue increased, but gross margin decreased 8%.',
-            root: 'Supplier raw material surcharge inflation not passed onto end-consumers.',
-            action: 'Renegotiate wholesale vendor pricing contract; adjust product B retail price point by 5%.',
-            impact: 'Recapture 8% gross profit margin on Product B unit sales.',
-            priority: 'HIGH',
-            owner: 'Product Manager',
-            kpi: 'Gross Margin %'
+
+    // 1. Update diagnostics console tag title
+    const tagEl = document.getElementById('diagnosticsConsoleTag');
+    if (tagEl) {
+        const moduleNames = {
+            sales: 'Qiplo Sales — Revenue Intelligence Suite',
+            finance: 'Qiplo Finance — CashFlow Intelligence Suite',
+            operations: 'Qiplo Operations — Supply Chain Intelligence Suite',
+            product: 'Qiplo Product — Product Intelligence Suite'
+        };
+        tagEl.textContent = moduleNames[moduleVal] || 'Qiplo Closed-Loop Decision Diagnostics';
+    }
+
+    // 2. Render Business Health list depending on the active module
+    const healthListEl = document.getElementById('businessHealthStatusList');
+    if (healthListEl) {
+        let healthItemsHtml = '';
+        if (moduleVal === 'sales') {
+            healthItemsHtml = `
+                <div class="health-status-item">
+                    <span class="status-indicator ${retentionRate >= 80 ? 'status-green' : (retentionRate >= 60 ? 'status-yellow' : 'status-red')}"></span>
+                    <span class="health-label">Customer Churn</span>
+                    <span class="health-value-sub">${retentionRate}% Stable</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-green"></span>
+                    <span class="health-label">Revenue Leakage</span>
+                    <span class="health-value-sub">0% Leakage</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-green"></span>
+                    <span class="health-label">Sales Forecasting</span>
+                    <span class="health-value-sub">Stable Growth</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-green"></span>
+                    <span class="health-label">Customer Segmentation</span>
+                    <span class="health-value-sub">Optimized</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-green"></span>
+                    <span class="health-label">Opportunity Scoring</span>
+                    <span class="health-value-sub">82% Avg</span>
+                </div>
+            `;
+        } else if (moduleVal === 'finance') {
+            healthItemsHtml = `
+                <div class="health-status-item">
+                    <span class="status-indicator ${highRiskCount > 5 ? 'status-red' : 'status-yellow'}"></span>
+                    <span class="health-label">Receivables</span>
+                    <span class="health-value-sub">Delayed Payments</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-yellow"></span>
+                    <span class="health-label">Payables</span>
+                    <span class="health-value-sub">Due in 15 days</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-green"></span>
+                    <span class="health-label">Cash Forecasting</span>
+                    <span class="health-value-sub">Positive Outlook</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-red"></span>
+                    <span class="health-label">Payment Risk</span>
+                    <span class="health-value-sub">High Exposure</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-yellow"></span>
+                    <span class="health-label">Working Capital</span>
+                    <span class="health-value-sub">Underutilized</span>
+                </div>
+            `;
+        } else if (moduleVal === 'operations') {
+            healthItemsHtml = `
+                <div class="health-status-item">
+                    <span class="status-indicator status-yellow"></span>
+                    <span class="health-label">Supplier Risk</span>
+                    <span class="health-value-sub">Medium Risk</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-red"></span>
+                    <span class="health-label">Inventory Turnover</span>
+                    <span class="health-value-sub">Slow Moving</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-yellow"></span>
+                    <span class="health-label">Demand Forecasting</span>
+                    <span class="health-value-sub">Unaligned</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-red"></span>
+                    <span class="health-label">Logistics Delays</span>
+                    <span class="health-value-sub">Delayed (North)</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-red"></span>
+                    <span class="health-label">Operational Anomalies</span>
+                    <span class="health-value-sub">Spike in defects</span>
+                </div>
+            `;
+        } else if (moduleVal === 'product') {
+            healthItemsHtml = `
+                <div class="health-status-item">
+                    <span class="status-indicator status-red"></span>
+                    <span class="health-label">Feature Adoption</span>
+                    <span class="health-value-sub">Low Adoption</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-yellow"></span>
+                    <span class="health-label">User Retention</span>
+                    <span class="health-value-sub">High Attrition</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-red"></span>
+                    <span class="health-label">User Churn</span>
+                    <span class="health-value-sub">Spike in Day 7 Churn</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-yellow"></span>
+                    <span class="health-label">Funnel Analysis</span>
+                    <span class="health-value-sub">Drop-off at step 2</span>
+                </div>
+                <div class="health-status-item">
+                    <span class="status-indicator status-green"></span>
+                    <span class="health-label">Feature Prioritization</span>
+                    <span class="health-value-sub">ROI-driven</span>
+                </div>
+            `;
         }
-    ];
+        healthListEl.innerHTML = healthItemsHtml;
+    }
+
+    // 3. Set up module-specific problems array
+    let problems = [];
+    if (moduleVal === 'sales') {
+        problems = [
+            {
+                id: 'rev_concentration',
+                title: '01 — Revenue concentration risk',
+                desc: `${concentrationPct}% of revenue comes from only 3 customers.`,
+                root: 'Inadequate diversification in tier-1 enterprise sales; high key account dependency.',
+                action: 'Proactively assign strategic key account CSMs to top 3 accounts; launch mid-market marketing campaigns.',
+                impact: `Secure ${currentCurrencySymbol}${Math.round(top3Charges * currentCurrencyRate).toLocaleString()}/month ARR renewals; mitigate contract cancellation exposure.`,
+                priority: 'HIGH',
+                owner: 'VP of Customer Success',
+                kpi: 'Key Account Retention Rate'
+            },
+            {
+                id: 'churn_risk',
+                title: '02 — Customer churn risk',
+                desc: `${highRiskCount} customers show high attrition probability.`,
+                root: 'Elevated Month-to-Month contract counts combined with support ticketing spikes.',
+                action: 'Launch customer outreach campaign targeting Month-to-Month subscribers with 15% discount for annual commitment.',
+                impact: `Recover up to ${currentCurrencySymbol}${Math.round(highRiskCount * currentCurrencyRate * 45).toLocaleString()}/month in recurring revenue.`,
+                priority: 'CRITICAL',
+                owner: 'Support Manager',
+                kpi: 'Retention Conversion %'
+            },
+            {
+                id: 'regional_performance',
+                title: '03 — Regional performance decline',
+                desc: 'North region sales conversion dropped 21%.',
+                root: 'New competitor launching localized regional campaigns; outdated marketing collateral.',
+                action: 'Execute competitive product matching promotion; retrain regional sales agents.',
+                impact: 'Restore conversions to historical 35% conversion benchmark.',
+                priority: 'HIGH',
+                owner: 'Regional Sales Director',
+                kpi: 'North Region Conversion Rate'
+            },
+            {
+                id: 'margin_leakage',
+                title: '04 — Margin leakage',
+                desc: 'Product B revenue increased, but gross margin decreased 8%.',
+                root: 'Supplier raw material surcharge inflation not passed onto end-consumers.',
+                action: 'Renegotiate wholesale vendor pricing contract; adjust product B retail price point by 5%.',
+                impact: 'Recapture 8% gross profit margin on Product B unit sales.',
+                priority: 'HIGH',
+                owner: 'Product Manager',
+                kpi: 'Gross Margin %'
+            },
+            {
+                id: 'opp_scoring_lag',
+                title: '05 — Opportunity conversion scoring lag',
+                desc: 'Middle funnel lead-to-opportunity score has degraded by 15%.',
+                root: 'Unqualified lead sources polluting the outbound sales workflow.',
+                action: 'Refine Salesforce routing rules and enforce customer profile criteria validation.',
+                impact: 'Boost mid-funnel sales pipeline value by 20% in Q3.',
+                priority: 'MEDIUM',
+                owner: 'VP of Sales Operations',
+                kpi: 'Sales Cycle Duration'
+            }
+        ];
+    } else if (moduleVal === 'finance') {
+        problems = [
+            {
+                id: 'cash_forecast_var',
+                title: '01 — Cash flow forecasting variance',
+                desc: 'Actual cash reserves are 12% lower than forecast due to delayed collections.',
+                root: 'Billing cycles are misaligned with client payment milestone completions.',
+                action: 'Transition invoicing terms to Net-15 for high-volume accounts; enforce automatic late fees.',
+                impact: `Inject ${currentCurrencySymbol}${Math.round(150000 * currentCurrencyRate).toLocaleString()} into immediate operational liquidity.`,
+                priority: 'CRITICAL',
+                owner: 'Chief Financial Officer',
+                kpi: 'Days Sales Outstanding (DSO)'
+            },
+            {
+                id: 'receivables_aging',
+                title: '02 — High billing & receivables aging',
+                desc: 'Accounts receivable past 60 days exceeds acceptable limits.',
+                root: 'Manual invoice tracking systems delaying payment notifications and reminder emails.',
+                action: 'Deploy automated dunning campaigns and integrated payment portals within the customer portal.',
+                impact: 'Reduce total past-due receivables balance by 35% in 30 days.',
+                priority: 'HIGH',
+                owner: 'Accounts Receivable Lead',
+                kpi: 'Collection Efficiency Index'
+            },
+            {
+                id: 'payment_defaults',
+                title: '03 — Payment default risk exposure',
+                desc: 'Three major tier-2 partners show signs of payment delinquency.',
+                root: 'Lack of proactive credit screening controls during the sales contracting cycle.',
+                action: 'Integrate automatic credit rating alerts; transition at-risk clients to prepaid retainers.',
+                impact: 'Prevent potential bad-debt write-offs of up to $50,000.',
+                priority: 'CRITICAL',
+                owner: 'Director of Credit Risk',
+                kpi: 'Bad Debt Write-off %'
+            },
+            {
+                id: 'working_cap_tied',
+                title: '04 — Working capital tied up',
+                desc: 'Excess safety reserves are yielding zero return in checking accounts.',
+                root: 'Conservative treasury management policy with no short-term capital deployment.',
+                action: 'Reallocate 20% of safety funds to high-yield short-term corporate deposits.',
+                impact: `Earn an additional ${currentCurrencySymbol}${Math.round(8500 * currentCurrencyRate).toLocaleString()}/year risk-free.`,
+                priority: 'MEDIUM',
+                owner: 'Treasurer',
+                kpi: 'Working Capital Yield'
+            },
+            {
+                id: 'payables_concentration',
+                title: '05 — Payables concentration exposure',
+                desc: '60% of outstanding payables are concentrated in a single supply partner.',
+                root: 'Single-source procurement policy for critical database computing infrastructure.',
+                action: 'Distribute future cloud server instances across multi-cloud provider platforms.',
+                impact: 'Mitigate supply vendor disruption risk and secure leverage for volume negotiations.',
+                priority: 'HIGH',
+                owner: 'Procurement Director',
+                kpi: 'Vendor Concentration Index'
+            }
+        ];
+    } else if (moduleVal === 'operations') {
+        problems = [
+            {
+                id: 'safety_stock_bloat',
+                title: '01 — Inventory safety stock bloat',
+                desc: `${slowMovingStr} tied up in slow-moving inventory.`,
+                root: 'Over-forecasting product sales leading to surplus safety stock in North warehouse.',
+                action: 'Trigger price markdown clearance event; bundle low-turnover items with popular categories.',
+                impact: `Reclaim up to ${slowMovingStr} in working capital cashflow within 45 days.`,
+                priority: 'HIGH',
+                owner: 'Inventory Planner',
+                kpi: 'Stock Turn Ratio'
+            },
+            {
+                id: 'logistics_delays',
+                title: '02 — Logistics delivery delays',
+                desc: 'Trans-Pacific shipping delays increase average fulfillment times by 4 days.',
+                root: 'Sole dependency on single port logistics operator experiencing labor strikes.',
+                action: 'Reroute 30% of incoming logistics cargo to alternative West Coast port entries.',
+                impact: 'Maintain 98% on-time delivery customer SLA guarantees.',
+                priority: 'CRITICAL',
+                owner: 'VP of Global Logistics',
+                kpi: 'On-Time In-Full (OTIF)'
+            },
+            {
+                id: 'supplier_default_risk',
+                title: '03 — Supplier default risk exposure',
+                desc: 'Core component supplier is facing material production constraints.',
+                root: 'Supplier cash crunch limiting raw material procurement cycles.',
+                action: 'Onboard secondary regional backup component vendor; establish standing production contract.',
+                impact: 'Establish manufacturing continuity and secure production capacity.',
+                priority: 'HIGH',
+                owner: 'Supply Chain Manager',
+                kpi: 'Supplier Reliability Rating'
+            },
+            {
+                id: 'demand_forecast_misalign',
+                title: '04 — Demand forecasting misalignment',
+                desc: 'Operations over-produced category B products by 18%.',
+                root: 'Disconnect between retail checkout sales streams and operations production scheduling.',
+                action: 'Sync Point-of-Sale (POS) data APIs directly with production queue schedulers.',
+                impact: 'Minimize seasonal write-offs by 25% across categories.',
+                priority: 'MEDIUM',
+                owner: 'VP of Manufacturing',
+                kpi: 'Forecast Accuracy Bias'
+            },
+            {
+                id: 'operational_defect_rate',
+                title: '05 — Assembly line defect anomalies',
+                desc: 'Defect rate spiked to 1.8% on Assembly line 4.',
+                root: 'Machine tool calibration drift on primary packaging extruder unit.',
+                action: 'Schedule predictive maintenance calibration service; update sensor warning thresholds.',
+                impact: 'Reduce assembly waste metrics to target 0.2% defect tolerance.',
+                priority: 'HIGH',
+                owner: 'Quality Assurance Lead',
+                kpi: 'First Pass Yield %'
+            }
+        ];
+    } else if (moduleVal === 'product') {
+        problems = [
+            {
+                id: 'day7_dropoff',
+                title: '01 — High Day 7 user drop-off',
+                desc: '38% of new users drop off after first day activation.',
+                root: 'Complicated signup wizard with excessive onboarding profile requirements.',
+                action: 'Simplify the signup onboarding flow; design contextual quick-start templates.',
+                impact: 'Increase customer Day-7 retention metrics by 12% in next cohort.',
+                priority: 'CRITICAL',
+                owner: 'Product Manager (Growth)',
+                kpi: 'Day 7 Retention Rate'
+            },
+            {
+                id: 'feature_adoption_lag',
+                title: '02 — Key feature adoption lag',
+                desc: 'New dashboard export feature adopted by only 5% of users.',
+                root: 'Feature placement is hidden deep inside secondary menu tabs; no UI tooltips.',
+                action: 'Promote the feature to the main workspace header; design interactive walkthrough tooltips.',
+                impact: 'Boost monthly active feature usage to target 45% benchmark.',
+                priority: 'HIGH',
+                owner: 'UX Design Lead',
+                kpi: 'Feature Adoption Rate'
+            },
+            {
+                id: 'billing_funnel_attrition',
+                title: '03 — Signup billing funnel attrition',
+                desc: '24% conversion drop-off on billing signup form.',
+                root: 'Lack of localized pricing structures and alternative payment options (Apple Pay, PayPal).',
+                action: 'Integrate Apple Pay and regional currency checkout configurations.',
+                impact: 'Convert an additional 8% of trial signups to paid subscribers.',
+                priority: 'HIGH',
+                owner: 'Billing Product Lead',
+                kpi: 'Checkout Conversion %'
+            },
+            {
+                id: 'retention_decline',
+                title: '04 — Retention decline following update',
+                desc: 'User return rates dropped 12% following recent system changes.',
+                root: 'Page performance slowdown from bulky database scripts causing layout shifts.',
+                action: 'Refactor database queries and apply client-side local caching optimizations.',
+                impact: 'Restore page load latency to sub-200ms levels and improve user satisfaction.',
+                priority: 'CRITICAL',
+                owner: 'Engineering Director',
+                kpi: 'Core Web Vitals LCP'
+            },
+            {
+                id: 'prioritization_misalign',
+                title: '05 — Backlog priority misalignment',
+                desc: 'Backlog contains 4 high-cost, low-adoption features.',
+                root: 'Feature requests prioritized by sales stakeholder influence rather than real user usage telemetry.',
+                action: 'Enforce RICE (Reach, Impact, Confidence, Effort) prioritization score metrics framework.',
+                impact: 'Reallocate 40% of engineering bandwidth towards high-impact user requests.',
+                priority: 'MEDIUM',
+                owner: 'VP of Product Management',
+                kpi: 'Engineering Resource Efficiency'
+            }
+        ];
+    }
     
     const problemsListEl = document.getElementById('diagnosedProblemsList');
     if (problemsListEl) {
@@ -1296,6 +1586,47 @@ function updateBusinessDiagnostics() {
                 </div>
             `;
         }).join('');
+    }
+
+    // 4. Update Presentation Q&A cards dynamically
+    const qaChipsEl = document.getElementById('presentationQaChipsList');
+    if (qaChipsEl) {
+        let chipsHtml = '';
+        if (moduleVal === 'sales') {
+            chipsHtml = `
+                <button class="chip qa-btn" type="button" data-question="What is our total monthly revenue at risk?"><i data-lucide="dollar-sign" class="lucide-icon"></i> Revenue Exposure</button>
+                <button class="chip qa-btn" type="button" data-question="Draft an executive board summary."><i data-lucide="file-text" class="lucide-icon"></i> Executive Summary</button>
+                <button class="chip qa-btn" type="button" data-question="What is the main contract driver of churn?"><i data-lucide="key" class="lucide-icon"></i> Drivers Analysis</button>
+            `;
+        } else if (moduleVal === 'finance') {
+            chipsHtml = `
+                <button class="chip qa-btn" type="button" data-question="How can we optimize our Days Sales Outstanding (DSO)?"><i data-lucide="trending-down" class="lucide-icon"></i> Optimize DSO</button>
+                <button class="chip qa-btn" type="button" data-question="What is our payment default exposure next month?"><i data-lucide="shield-alert" class="lucide-icon"></i> Default Risk</button>
+                <button class="chip qa-btn" type="button" data-question="Show receivables aging breakdown."><i data-lucide="clock" class="lucide-icon"></i> Receivables Aging</button>
+            `;
+        } else if (moduleVal === 'operations') {
+            chipsHtml = `
+                <button class="chip qa-btn" type="button" data-question="How can we reduce slow-moving inventory safety stock?"><i data-lucide="package-minus" class="lucide-icon"></i> Reduce Safety Stock</button>
+                <button class="chip qa-btn" type="button" data-question="What is our On-Time In-Full (OTIF) shipping SLA forecast?"><i data-lucide="truck" class="lucide-icon"></i> OTIF Forecast</button>
+                <button class="chip qa-btn" type="button" data-question="Analyze supply chain operational anomalies."><i data-lucide="activity" class="lucide-icon"></i> Logistics Anomaly</button>
+            `;
+        } else if (moduleVal === 'product') {
+            chipsHtml = `
+                <button class="chip qa-btn" type="button" data-question="How can we improve Day 7 user onboarding retention?"><i data-lucide="user-check" class="lucide-icon"></i> Onboarding Retention</button>
+                <button class="chip qa-btn" type="button" data-question="Analyze signup billing checkout funnel drop-off."><i data-lucide="filter" class="lucide-icon"></i> Checkout Funnel</button>
+                <button class="chip qa-btn" type="button" data-question="Which features should we prioritize in the backlog?"><i data-lucide="list-ordered" class="lucide-icon"></i> Backlog Priority</button>
+            `;
+        }
+        qaChipsEl.innerHTML = chipsHtml;
+        if (window.lucide) window.lucide.createIcons();
+        
+        // Re-bind click event listener for Presentation Q&A chips
+        qaChipsEl.querySelectorAll('.qa-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const question = btn.getAttribute('data-question');
+                triggerQuickQA(question);
+            });
+        });
     }
     
     renderActiveResolutionLoops();
@@ -3772,6 +4103,14 @@ window.runSandboxSimulation = function() {
 document.addEventListener('DOMContentLoaded', () => {
     const rs = document.getElementById('roleSelect');
     if (rs) rs.value = currentAuthorizedRole;
+
+    // Listen for specialized intelligence module changes
+    const ims = document.getElementById('intelligenceModuleSelect');
+    if (ims) {
+        ims.addEventListener('change', () => {
+            updateBusinessDiagnostics();
+        });
+    }
 
     setupThemeToggle();
     setupBusinessGuide();

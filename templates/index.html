@@ -49,12 +49,20 @@
             <div class="topbarTitle">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                     <span class="appName" id="brandTitle">Qiplo</span>
+                    <div class="specials-container" style="display: inline-flex; align-items: center;">
+                        <select id="intelligenceModuleSelect" title="Select Specialized Intelligence Suite" style="background: rgba(79, 70, 229, 0.08); border: 1px solid rgba(79, 70, 229, 0.25); color: var(--accent); padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; outline: none; transition: all 0.15s ease;">
+                            <option value="sales" style="background: #11131e; color: #ffffff;" selected>💼 Qiplo Sales (Revenue Intelligence)</option>
+                            <option value="finance" style="background: #11131e; color: #ffffff;">💵 Qiplo Finance (CashFlow Intelligence)</option>
+                            <option value="operations" style="background: #11131e; color: #ffffff;">📦 Qiplo Operations (Supply Chain Intelligence)</option>
+                            <option value="product" style="background: #11131e; color: #ffffff;">⚡ Qiplo Product (Product Intelligence)</option>
+                        </select>
+                    </div>
                     <span class="sloganBadge" style="font-size: 0.72rem; background: rgba(79, 70, 229, 0.12); border: 1px solid rgba(79, 70, 229, 0.2); color: #4F46E5; padding: 3px 8px; border-radius: 999px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; line-height: 1;">
                         <i data-lucide="shield-check" class="lucide-icon" style="width: 12px; height: 12px;"></i> Never lose a customer again
                     </span>
                     <span class="demoBadge" id="demoBadge" style="display: none; background: #e11d48; color: #ffffff; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1;">Demo Sandbox Active</span>
                 </div>
-                <span class="appSub">Business Decision Intelligence Platform</span>
+                <span class="appSub">Horizontal Business Decision Intelligence Engine</span>
             </div>
         </div>
         <div class="topbarRight">
@@ -427,14 +435,14 @@
                                 <i data-lucide="help-circle" class="lucide-icon" style="color: var(--accent-2); width: 22px; height: 22px;"></i>
                                 <span class="console-title">What's wrong with my business?</span>
                             </div>
-                            <span class="console-tag">Qiplo Closed-Loop Decision Diagnostics</span>
+                            <span class="console-tag" id="diagnosticsConsoleTag">Qiplo Closed-Loop Decision Diagnostics</span>
                         </div>
                         
                         <div class="console-body-grid">
                             <!-- Left Pane: Business Health Summary Status -->
                             <div class="health-summary-panel">
                                 <h4>Business Health Status</h4>
-                                <div class="health-status-list">
+                                <div class="health-status-list" id="businessHealthStatusList">
                                     <div class="health-status-item">
                                         <span class="status-indicator status-green" id="health-revenue-ind"></span>
                                         <span class="health-label">Revenue</span>
@@ -947,7 +955,7 @@
                     <div class="presQABlock">
                         <h3>Quick Presentation Q&A Cards</h3>
                         <p class="sectionSub">Instantly generate slide Q&A cards to address typical board meeting queries.</p>
-                        <div class="qaChips">
+                        <div class="qaChips" id="presentationQaChipsList">
                             <button class="chip qa-btn" type="button" data-question="What is our total monthly revenue at risk?"><i data-lucide="dollar-sign" class="lucide-icon"></i> Revenue Exposure</button>
                             <button class="chip qa-btn" type="button" data-question="Draft an executive board summary."><i data-lucide="file-text" class="lucide-icon"></i> Executive Summary</button>
                             <button class="chip qa-btn" type="button" data-question="What is the main contract driver of churn?"><i data-lucide="key" class="lucide-icon"></i> Drivers Analysis</button>
