@@ -145,11 +145,23 @@
 
             <div class="tabBody" id="tab-overview">
                 <div class="aiCard">
-                    <div class="aiCardHead">
-                        <div class="aiBadge">AI</div>
-                        <div>
-                            <h2 id="aiHeadline">Awaiting analysis</h2>
-                            <p class="aiSub">Generated read of your churn risk</p>
+                    <div class="aiCardHead" style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 10px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="aiBadge">AI</div>
+                            <div>
+                                <h2 id="aiHeadline">Awaiting analysis</h2>
+                                <p class="aiSub">Generated read of your churn risk</p>
+                            </div>
+                        </div>
+                        <div class="currencySelector">
+                            <label for="overviewCurrencySelect" style="font-size: 0.8rem; color: var(--muted); font-weight: 600;">Currency: </label>
+                            <select id="overviewCurrencySelect" class="roleSelect" aria-label="Change currency" style="min-height: 32px; height: 32px; padding: 4px 8px; font-size: 0.85rem;">
+                                <option value="USD" data-symbol="$" data-rate="1.0">USD ($)</option>
+                                <option value="EUR" data-symbol="€" data-rate="0.92">EUR (€)</option>
+                                <option value="GBP" data-symbol="£" data-rate="0.78">GBP (£)</option>
+                                <option value="INR" data-symbol="₹" data-rate="83.5">INR (₹)</option>
+                                <option value="JPY" data-symbol="¥" data-rate="158.0">JPY (¥)</option>
+                            </select>
                         </div>
                     </div>
                     <div class="materialTelemetry" style="margin: 18px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
@@ -304,6 +316,22 @@
                     }
                 </style>
                 <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 5px;">
+                        <div>
+                            <h2 style="margin: 0; font-family: var(--font-heading); font-size: 1.3rem; color: var(--text);">Specialized Intelligence Suites</h2>
+                            <p style="margin: 3px 0 0; color: var(--muted); font-size: 0.8rem;">Evaluate financial, operational, revenue, and product margins in real-time.</p>
+                        </div>
+                        <div class="currencySelector">
+                            <label for="specialsCurrencySelect" style="font-size: 0.8rem; color: var(--muted); font-weight: 600;">Currency: </label>
+                            <select id="specialsCurrencySelect" class="roleSelect" aria-label="Change currency" style="min-height: 32px; height: 32px; padding: 4px 8px; font-size: 0.85rem;">
+                                <option value="USD" data-symbol="$" data-rate="1.0">USD ($)</option>
+                                <option value="EUR" data-symbol="€" data-rate="0.92">EUR (€)</option>
+                                <option value="GBP" data-symbol="£" data-rate="0.78">GBP (£)</option>
+                                <option value="INR" data-symbol="₹" data-rate="83.5">INR (₹)</option>
+                                <option value="JPY" data-symbol="¥" data-rate="158.0">JPY (¥)</option>
+                            </select>
+                        </div>
+                    </div>
                     <!-- Top Selector Cards Grid -->
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
                         <!-- Finance -->

@@ -2348,11 +2348,15 @@ window.updateDrillDownChart = function() {
 function updateAllCurrencyMetrics(currencyValue) {
     const bizCurrencySelect = document.getElementById('currencySelect');
     const sandboxCurrencySelect = document.getElementById('sandboxCurrencySelect');
+    const overviewCurrencySelect = document.getElementById('overviewCurrencySelect');
+    const specialsCurrencySelect = document.getElementById('specialsCurrencySelect');
     
     if (bizCurrencySelect && bizCurrencySelect.value !== currencyValue) bizCurrencySelect.value = currencyValue;
     if (sandboxCurrencySelect && sandboxCurrencySelect.value !== currencyValue) sandboxCurrencySelect.value = currencyValue;
+    if (overviewCurrencySelect && overviewCurrencySelect.value !== currencyValue) overviewCurrencySelect.value = currencyValue;
+    if (specialsCurrencySelect && specialsCurrencySelect.value !== currencyValue) specialsCurrencySelect.value = currencyValue;
     
-    const refSelect = bizCurrencySelect || sandboxCurrencySelect;
+    const refSelect = bizCurrencySelect || sandboxCurrencySelect || overviewCurrencySelect || specialsCurrencySelect;
     if (!refSelect) return;
     
     const opt = refSelect.options[refSelect.selectedIndex];
@@ -2364,6 +2368,7 @@ function updateAllCurrencyMetrics(currencyValue) {
     try { renderExecutiveSummary(); } catch (e) {}
     try { renderBusinessAnalytics(); } catch (e) {}
     try { runCampaignSimulation(); } catch (e) {}
+    try { if (typeof currentSpecialSuite !== 'undefined') selectSpecialModule(currentSpecialSuite); } catch (e) {}
 }
 
 function setupBusinessHub() {
@@ -2371,6 +2376,8 @@ function setupBusinessHub() {
     const discountInput = document.getElementById('simDiscount');
     const successInput = document.getElementById('simSuccessRate');
     const currencySelect = document.getElementById('currencySelect');
+    const overviewCurrencySelect = document.getElementById('overviewCurrencySelect');
+    const specialsCurrencySelect = document.getElementById('specialsCurrencySelect');
     
     if (thresholdInput) {
         thresholdInput.addEventListener('input', runCampaignSimulation);
@@ -2383,6 +2390,16 @@ function setupBusinessHub() {
     }
     if (currencySelect) {
         currencySelect.addEventListener('change', (e) => {
+            updateAllCurrencyMetrics(e.target.value);
+        });
+    }
+    if (overviewCurrencySelect) {
+        overviewCurrencySelect.addEventListener('change', (e) => {
+            updateAllCurrencyMetrics(e.target.value);
+        });
+    }
+    if (specialsCurrencySelect) {
+        specialsCurrencySelect.addEventListener('change', (e) => {
             updateAllCurrencyMetrics(e.target.value);
         });
     }
