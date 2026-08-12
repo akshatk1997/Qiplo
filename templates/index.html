@@ -80,6 +80,35 @@
                 <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--success); display: inline-block; box-shadow: 0 0 6px var(--success);"></span>
                 <span>Admin Session</span>
             </div>
+            <!-- Mobile 3-Dot Actions Menu -->
+            <div class="mobile-actions-menu">
+                <button id="mobileMenuBtn" class="ghostBtn mobile-menu-btn" type="button" aria-label="More Actions" title="More Actions">
+                    <i data-lucide="more-vertical" class="lucide-icon"></i>
+                </button>
+                <div id="mobileMenuDropdown" class="mobile-menu-dropdown">
+                    <button class="dropdown-item" onclick="document.getElementById('exportReportBtn').click()">
+                        <i data-lucide="bar-chart-3" class="lucide-icon"></i> Full Analysis Report
+                    </button>
+                    <button class="dropdown-item" onclick="document.getElementById('exportTableauBtn').click()">
+                        <i data-lucide="trending-up" class="lucide-icon"></i> Tableau
+                    </button>
+                    <button class="dropdown-item" onclick="document.getElementById('exportPowerBiBtn').click()">
+                        <i data-lucide="line-chart" class="lucide-icon"></i> Power BI
+                    </button>
+                    <button class="dropdown-item" onclick="document.getElementById('exportExcelBtn').click()">
+                        <i data-lucide="file-spreadsheet" class="lucide-icon"></i> Excel
+                    </button>
+                    <button class="dropdown-item" onclick="openToolInfo()">
+                        <i data-lucide="book-marked" class="lucide-icon"></i> Guide
+                    </button>
+                    <button class="dropdown-item" onclick="reloadData()">
+                        <i data-lucide="refresh-cw" class="lucide-icon"></i> Reload Data
+                    </button>
+                    <button class="dropdown-item" onclick="location.href='/settings'">
+                        <i data-lucide="settings" class="lucide-icon"></i> Settings
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 

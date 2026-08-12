@@ -4703,6 +4703,20 @@ document.addEventListener('DOMContentLoaded', () => {
             sessionStorage.setItem('welcome_shown', 'true');
         });
     }
+
+    // Mobile actions 3-dot menu dropdown toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
+    if (mobileMenuBtn && mobileMenuDropdown) {
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            AudioFeedback.click();
+            mobileMenuDropdown.classList.toggle('visible');
+        });
+        document.addEventListener('click', () => {
+            mobileMenuDropdown.classList.remove('visible');
+        });
+    }
 });
 
 function switchTab(tabId) {

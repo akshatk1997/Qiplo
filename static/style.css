@@ -3223,3 +3223,96 @@ body.dark-theme .ghostBtn:hover {
     0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.9; }
     50% { transform: scale(1.1) rotate(15deg); opacity: 1; }
 }
+
+/* Mobile Actions Dropdown Menu */
+.mobile-actions-menu {
+    display: none;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .mobile-actions-menu {
+        display: inline-block;
+    }
+    
+    /* Hide desktop topbar buttons on mobile, only show text input, dark mode toggle, and 3-dot menu */
+    .topbarRight > button:not(.themeToggleBtn) {
+        display: none !important;
+    }
+    .topbarRight > .userProfileBadge {
+        display: none !important;
+    }
+    .topbarRight {
+        overflow-x: visible !important;
+        width: auto !important;
+        padding: 0 !important;
+        margin-left: auto;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+    .mobile-menu-btn {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        padding: 0 !important;
+        border-radius: 50% !important;
+        background: var(--surface-3) !important;
+        border: 1px solid var(--border) !important;
+        color: var(--text) !important;
+        cursor: pointer;
+    }
+    .mobile-menu-dropdown {
+        position: absolute;
+        top: 46px;
+        right: 0;
+        background: rgba(15, 15, 25, 0.95);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(0, 245, 255, 0.25);
+        box-shadow: 0 10px 30px rgba(0, 245, 255, 0.15);
+        border-radius: 12px;
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 200px;
+        z-index: 1000;
+        transform: translateY(10px);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-menu-dropdown.visible {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+    .dropdown-item {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        width: 100% !important;
+        background: transparent !important;
+        border: none !important;
+        color: var(--text) !important;
+        padding: 10px 14px !important;
+        font-size: 0.85rem !important;
+        text-align: left !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        white-space: nowrap !important;
+        transition: background 0.2s ease !important;
+    }
+    .dropdown-item:hover {
+        background: rgba(255, 255, 255, 0.05) !important;
+        color: var(--accent) !important;
+    }
+    .dropdown-item i {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+    }
+}
