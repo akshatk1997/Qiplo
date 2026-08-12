@@ -3,6 +3,26 @@
     // Generate a fresh session ID on every page load to guarantee starting clean on refresh
     const sessId = 'sess_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
     document.cookie = `qiplo_session_id=${sessId}; path=/; SameSite=Lax`;
+
+    // Global fetch interceptor to inject X-Session-ID and prevent caching on all /api requests
+    const originalFetch = window.fetch;
+    window.fetch = function(url, options = {}) {
+        let cleanUrl = url;
+        if (typeof url === 'string' && url.startsWith('/api/')) {
+            const separator = url.includes('?') ? '&' : '?';
+            cleanUrl = url + separator + '_cb=' + Date.now() + Math.random().toString(36).substring(2, 8);
+            
+            if (!options.headers) {
+                options.headers = {};
+            }
+            if (options.headers instanceof Headers) {
+                options.headers.set('X-Session-ID', sessId);
+            } else {
+                options.headers['X-Session-ID'] = sessId;
+            }
+        }
+        return originalFetch(cleanUrl, options);
+    };
 })();
 
 // Web Audio Synth module disabled by user preference

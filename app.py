@@ -166,6 +166,14 @@ def create_app() -> Flask:
             ensure_database(db_p, SCHEMA_PATH, config=load_config(CONFIG_PATH))
             app.config["DB_INITIALIZED_PATHS"].add(str(db_p))
 
+    @app.after_request
+    def prevent_api_caching(response):
+        if request.path.startswith("/api/"):
+            response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
+        return response
+
     @app.before_request
     def security_waf_filter():
         # Quick request inspection for SQL Injection and Cross-Site Scripting payloads
