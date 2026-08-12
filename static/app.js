@@ -307,7 +307,15 @@ function renderRows() {
         const tds = [`<td><div><strong>${idVal}</strong></div>${assignInfo}${driversHtml}</td>`,
             `<td><span class="badge ${labelClass}">${(item.prediction_label || 'low_risk').replace('_', ' ')}</span></td>`,
             `<td><div><strong>${probability}</strong></div>${ciText}</td>`,
-            ...extra.map(c => `<td>${cell(item[c])}</td>`)].join('');
+            ...extra.map(c => {
+                const val = item[c];
+                const isMonetary = ["charges", "monthly", "total", "adr", "amount", "revenue", "income", "price", "cost", "expense", "spent", "sales", "fee"].some(w => String(c).toLowerCase().includes(w));
+                if (isMonetary && val !== null && val !== undefined && !isNaN(Number(val))) {
+                    const converted = Number(val) * currentCurrencyRate;
+                    return `${currentCurrencySymbol}${converted.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                }
+                return cell(val);
+            }).map(formattedVal => `<td>${formattedVal}</td>`)].join('');
 
         const row = document.createElement('tr');
         row.innerHTML = tds;
@@ -1537,6 +1545,27 @@ window.updateDrillDownChart = function() {
     });
 }
 
+function updateAllCurrencyMetrics(currencyValue) {
+    const bizCurrencySelect = document.getElementById('currencySelect');
+    const sandboxCurrencySelect = document.getElementById('sandboxCurrencySelect');
+    
+    if (bizCurrencySelect && bizCurrencySelect.value !== currencyValue) bizCurrencySelect.value = currencyValue;
+    if (sandboxCurrencySelect && sandboxCurrencySelect.value !== currencyValue) sandboxCurrencySelect.value = currencyValue;
+    
+    const refSelect = bizCurrencySelect || sandboxCurrencySelect;
+    if (!refSelect) return;
+    
+    const opt = refSelect.options[refSelect.selectedIndex];
+    currentCurrencySymbol = opt.getAttribute('data-symbol') || '$';
+    currentCurrencyRate = parseFloat(opt.getAttribute('data-rate') || '1.0');
+    
+    try { updateSandboxChargesLabel(); } catch (e) {}
+    try { renderRows(); } catch (e) {}
+    try { renderExecutiveSummary(); } catch (e) {}
+    try { renderBusinessAnalytics(); } catch (e) {}
+    try { runCampaignSimulation(); } catch (e) {}
+}
+
 function setupBusinessHub() {
     const thresholdInput = document.getElementById('simRiskThreshold');
     const discountInput = document.getElementById('simDiscount');
@@ -1554,16 +1583,7 @@ function setupBusinessHub() {
     }
     if (currencySelect) {
         currencySelect.addEventListener('change', (e) => {
-            const opt = e.target.options[e.target.selectedIndex];
-            currentCurrencySymbol = opt.getAttribute('data-symbol') || '$';
-            currentCurrencyRate = parseFloat(opt.getAttribute('data-rate') || '1.0');
-            
-            // Sync to Sandbox tab currency selector
-            const sandboxCurrencySelect = document.getElementById('sandboxCurrencySelect');
-            if (sandboxCurrencySelect) sandboxCurrencySelect.value = e.target.value;
-            
-            updateSandboxChargesLabel();
-            renderBusinessAnalytics();
+            updateAllCurrencyMetrics(e.target.value);
         });
     }
 }
@@ -3745,16 +3765,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sandboxCurrencySelect = document.getElementById('sandboxCurrencySelect');
     if (sandboxCurrencySelect) {
         sandboxCurrencySelect.addEventListener('change', (e) => {
-            const opt = e.target.options[e.target.selectedIndex];
-            currentCurrencySymbol = opt.getAttribute('data-symbol') || '$';
-            currentCurrencyRate = parseFloat(opt.getAttribute('data-rate') || '1.0');
-            
-            // Sync to Business tab currency selector
-            const bizCurrencySelect = document.getElementById('currencySelect');
-            if (bizCurrencySelect) bizCurrencySelect.value = e.target.value;
-            
-            updateSandboxChargesLabel();
-            renderBusinessAnalytics();
+            updateAllCurrencyMetrics(e.target.value);
         });
     }
 
