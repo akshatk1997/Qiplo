@@ -12,7 +12,23 @@
 
 ---
 
-## 🌟 Key Features
+## 🌟 Key Features & A to Z Dashboard Details
+
+* **Business Decision Intelligence Modules**:
+  Qiplo operates as a centralized decision suite, segmenting operations into four specialized core modules:
+  * **Qiplo Finance (CashFlow)**: Evaluates outstanding Receivables, DSO collection delays, upcoming Payables commitments, and Working Capital cycle efficiency. Includes real-time DSO cash simulation.
+  * **Qiplo Operations (Supply Chain)**: Evaluates Supplier Risk Score, regional safety stock Inventory Capital allocation, logistics delay offsets, and active line tool anomalies.
+  * **Qiplo Sales (Revenue)**: Tracks ML-driven churn rate, monthly Revenue Leakage, next-month sales forecasting, and enterprise customer segments.
+  * **Qiplo Product (Product)**: Tracks week-over-week user Retention Index, feature adoption rates, Day 7 funnel attrition, and RICE feature backlog prioritization.
+
+* **Real-time Telemetry Synchronization Engine (`reloadData()`)**:
+  Features a header sync control that refreshes all dashboard calculations dynamically without hard reload caching. It automatically uses column alias resolution helpers (`getRowCharges`, `getRowTickets`, `getRowUsage`) to scan arbitrary client uploads for synonyms (such as `adr` in travel data or `spend` in financial records), ensuring exact real-time calculations.
+
+* **Enhanced Executive Analysis Audit Report**:
+  Generates a print-optimized, multi-page HTML audit report. Incorporates:
+  1. Detailed tables for **Regional Churn Risk Concentrations** and **Billing/Payment Method Exposure**.
+  2. Financial risk mitigation forecasts mapping out 15% (Tactical CSM), 30% (Migration Offer), and 50% (VIP Onboarding) retention recovery scenarios.
+  3. Interactive Visual Analytics curves matching the active database profiles.
 
 * **SOTA Tabular Hybrid Attention Transformer Classifier**:
   Qiplo features a custom self-attention classification architecture built in NumPy that uses scale projections to capture inter-feature correlations dynamically:
