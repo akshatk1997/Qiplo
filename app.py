@@ -56,15 +56,16 @@ def get_db_path() -> Path:
     if is_serverless:
         writable_dir = Path("/tmp") if os.name != "nt" else Path(tempfile.gettempdir())
         writable_db_path = writable_dir / base_db_name
-        master_template = BASE_DIR / "churn_analysis.db"
-        if not writable_db_path.exists() and master_template.exists():
-            try:
-                temp_path = writable_db_path.with_suffix(".tmp")
-                shutil.copy2(master_template, temp_path)
-                os.chmod(temp_path, 0o666)
-                os.replace(temp_path, writable_db_path)
-            except Exception:
-                pass
+        if not session_suffix:
+            master_template = BASE_DIR / "churn_analysis.db"
+            if not writable_db_path.exists() and master_template.exists():
+                try:
+                    temp_path = writable_db_path.with_suffix(".tmp")
+                    shutil.copy2(master_template, temp_path)
+                    os.chmod(temp_path, 0o666)
+                    os.replace(temp_path, writable_db_path)
+                except Exception:
+                    pass
         return writable_db_path
 
     try:
@@ -75,15 +76,16 @@ def get_db_path() -> Path:
     except (PermissionError, OSError):
         writable_dir = Path("/tmp") if os.name != "nt" else Path(tempfile.gettempdir())
         writable_db_path = writable_dir / base_db_name
-        master_template = BASE_DIR / "churn_analysis.db"
-        if not writable_db_path.exists() and master_template.exists():
-            try:
-                temp_path = writable_db_path.with_suffix(".tmp")
-                shutil.copy2(master_template, temp_path)
-                os.chmod(temp_path, 0o666)
-                os.replace(temp_path, writable_db_path)
-            except Exception:
-                pass
+        if not session_suffix:
+            master_template = BASE_DIR / "churn_analysis.db"
+            if not writable_db_path.exists() and master_template.exists():
+                try:
+                    temp_path = writable_db_path.with_suffix(".tmp")
+                    shutil.copy2(master_template, temp_path)
+                    os.chmod(temp_path, 0o666)
+                    os.replace(temp_path, writable_db_path)
+                except Exception:
+                    pass
         return writable_db_path
 
 
