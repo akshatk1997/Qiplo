@@ -4670,18 +4670,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Mobile Collapsible Sidebars
-    if (window.innerWidth <= 768) {
-        document.querySelectorAll('.sourcesPane, .notesPane').forEach(pane => {
+    // Mobile Collapsible Sidebars (Dynamic & Responsive)
+    document.querySelectorAll('.sourcesPane, .notesPane').forEach(pane => {
+        // Initially collapse on load if screen is small
+        if (window.innerWidth <= 768) {
             pane.classList.add('collapsed');
-            const head = pane.querySelector('.paneHead');
-            if (head) {
-                head.addEventListener('click', () => {
+        }
+        
+        const head = pane.querySelector('.paneHead');
+        if (head) {
+            head.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
                     pane.classList.toggle('collapsed');
-                });
-            }
-        });
-    }
+                }
+            });
+        }
+    });
 });
 
 function switchTab(tabId) {
