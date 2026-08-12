@@ -1183,6 +1183,46 @@ async function loadBusinessAnalytics() {
 
 let activeResolutionLoops = JSON.parse(localStorage.getItem('active_resolution_loops') || '[]');
 
+function getRowCharges(r) {
+    const candidateKeys = ["monthly_charges", "monthly_charge", "charges", "charge", "amount", "spend", "cost", "price", "rate", "value", "revenue", "mrr", "adr"];
+    for (const key of candidateKeys) {
+        if (r[key] !== undefined && r[key] !== null) {
+            const parsed = parseFloat(r[key]);
+            if (!isNaN(parsed)) return parsed;
+        }
+    }
+    for (const key in r) {
+        if (typeof r[key] === 'number') return r[key];
+        const parsed = parseFloat(r[key]);
+        if (!isNaN(parsed) && key !== 'customer_id' && key !== 'tenure_months' && key !== 'support_tickets' && key !== 'payment_delays' && key !== 'churned') {
+            return parsed;
+        }
+    }
+    return 65.0;
+}
+
+function getRowTickets(r) {
+    const candidateKeys = ["support_tickets", "support_ticket", "tickets", "ticket", "complaints", "complaint", "complaint_count", "cases", "issues", "calls", "support_calls"];
+    for (const key of candidateKeys) {
+        if (r[key] !== undefined && r[key] !== null) {
+            const parsed = parseInt(r[key]);
+            if (!isNaN(parsed)) return parsed;
+        }
+    }
+    return 0;
+}
+
+function getRowUsage(r) {
+    const candidateKeys = ["product_usage", "usage", "use_count", "logins", "active_days", "activity", "engagement"];
+    for (const key of candidateKeys) {
+        if (r[key] !== undefined && r[key] !== null) {
+            const parsed = parseFloat(r[key]);
+            if (!isNaN(parsed)) return parsed;
+        }
+    }
+    return 5.0;
+}
+
 function updateBusinessDiagnostics() {
     if (!predictionData || !predictionData.length) return;
     
@@ -1192,9 +1232,9 @@ function updateBusinessDiagnostics() {
     const totalCount = predictionData.length;
     const retentionRate = Math.round(((totalCount - highRiskCount) / totalCount) * 100);
     
-    const sortedByCharges = [...predictionData].sort((a, b) => (parseFloat(b.monthly_charges) || 0) - (parseFloat(a.monthly_charges) || 0));
-    const totalCharges = predictionData.reduce((acc, r) => acc + (parseFloat(r.monthly_charges) || 0), 0);
-    const top3Charges = sortedByCharges.slice(0, 3).reduce((acc, r) => acc + (parseFloat(r.monthly_charges) || 0), 0);
+    const sortedByCharges = [...predictionData].sort((a, b) => getRowCharges(b) - getRowCharges(a));
+    const totalCharges = predictionData.reduce((acc, r) => acc + getRowCharges(r), 0);
+    const top3Charges = sortedByCharges.slice(0, 3).reduce((acc, r) => acc + getRowCharges(r), 0);
     const concentrationPct = totalCharges > 0 ? Math.round((top3Charges / totalCharges) * 100) : 42;
     
     const slowMovingVal = Math.round(740000 * currentCurrencyRate / 83.5);
@@ -3853,10 +3893,10 @@ window.closeToolInfo = function() {
 
 function applyRolePermissions(role) {
     const tabAccess = {
-        executive: ['overview', 'actions', 'customers', 'sandbox', 'business', 'presentation', 'guide', 'copilot'],
-        manager: ['overview', 'actions', 'customers', 'sandbox', 'business', 'presentation', 'guide', 'copilot'],
-        sales: ['overview', 'actions', 'customers', 'sandbox', 'business', 'presentation', 'guide', 'copilot'],
-        support: ['overview', 'actions', 'customers', 'sandbox', 'business', 'presentation', 'guide', 'copilot']
+        executive: ['overview', 'specials', 'actions', 'customers', 'sandbox', 'business', 'presentation', 'guide', 'copilot'],
+        manager: ['overview', 'specials', 'actions', 'customers', 'sandbox', 'business', 'presentation', 'guide', 'copilot'],
+        sales: ['overview', 'specials', 'actions', 'customers', 'sandbox', 'business', 'presentation', 'guide', 'copilot'],
+        support: ['overview', 'specials', 'actions', 'customers', 'sandbox', 'business', 'presentation', 'guide', 'copilot']
     };
     const routeMap = {
         '/dashboard': 'overview',
