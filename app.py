@@ -87,6 +87,23 @@ def get_db_path() -> Path:
         return writable_db_path
 
 
+def cleanup_old_sessions():
+    """Delete session-specific database files older than 2 hours to prevent disk bloating."""
+    try:
+        is_serverless = bool(os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"))
+        writable_dir = Path("/tmp") if is_serverless and os.name != "nt" else Path(tempfile.gettempdir() if is_serverless else BASE_DIR)
+        
+        now = time.time()
+        for p in writable_dir.glob("churn_analysis_sess_*.db*"):
+            try:
+                if now - p.stat().st_mtime > 7200:
+                    p.unlink()
+            except Exception:
+                pass
+    except Exception:
+        pass
+
+
 def get_model_path() -> Path:
     if "CHURN_MODEL" in os.environ:
         return Path(os.environ["CHURN_MODEL"])
@@ -122,6 +139,14 @@ def create_app() -> Flask:
 
     @app.before_request
     def initialize_database() -> None:
+        # Periodically trigger session cleanup on requests
+        import random
+        if random.randint(1, 40) == 1:
+            try:
+                threading.Thread(target=cleanup_old_sessions, daemon=True).start()
+            except Exception:
+                pass
+
         db_p = get_db_path()
         needs_init = str(db_p) not in app.config["DB_INITIALIZED_PATHS"] or not db_p.exists()
         if not needs_init:

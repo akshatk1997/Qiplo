@@ -1,17 +1,8 @@
 // Ensure session ID is initialized and set as a cookie for backend database isolation
 (function() {
-    function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-    }
-    let sessId = getCookie('qiplo_session_id');
-    if (!sessId) {
-        sessId = 'sess_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
-        const expiry = new Date();
-        expiry.setDate(expiry.getDate() + 30);
-        document.cookie = `qiplo_session_id=${sessId}; expires=${expiry.toUTCString()}; path=/; SameSite=Lax`;
-    }
+    // Generate a fresh session ID on every page load to guarantee starting clean on refresh
+    const sessId = 'sess_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
+    document.cookie = `qiplo_session_id=${sessId}; path=/; SameSite=Lax`;
 })();
 
 // Web Audio Synth module disabled by user preference
@@ -2015,6 +2006,16 @@ window.runSpecialSim = function(suite) {
 
 window.reloadData = async function() {
     AudioFeedback.click();
+    
+    // Generate a fresh session ID on manual reload to reset all uploaded data
+    const sessId = 'sess_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
+    document.cookie = `qiplo_session_id=${sessId}; path=/; SameSite=Lax`;
+    
+    // Clear local active closed-loop resolutions
+    localStorage.removeItem('active_resolution_loops');
+    activeResolutionLoops = [];
+    try { renderActiveResolutionLoops(); } catch (e) {}
+
     const btn = document.getElementById('headerReloadBtn');
     let originalHtml = '';
     if (btn) {
@@ -2034,7 +2035,7 @@ window.reloadData = async function() {
         // Show a temporary banner/toast
         const toast = document.createElement('div');
         toast.className = 'telemetry-toast';
-        toast.innerHTML = `<i data-lucide="check-circle" style="color: var(--success); width: 16px; height: 16px; vertical-align: middle;"></i> Telemetry synchronized successfully!`;
+        toast.innerHTML = `<i data-lucide="check-circle" style="color: var(--success); width: 16px; height: 16px; vertical-align: middle;"></i> Session reset. Data refreshed successfully!`;
         document.body.appendChild(toast);
         if (window.lucide) window.lucide.createIcons();
         
