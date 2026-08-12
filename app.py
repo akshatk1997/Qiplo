@@ -1989,7 +1989,7 @@ def create_app() -> Flask:
                 "connections": [
                     {
                         "details": {
-                            "protocol": "web-contents",
+                            "protocol": "web",
                             "address": {
                                 "url": f"{request.url_root}api/export/csv"
                             }

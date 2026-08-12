@@ -76,8 +76,7 @@ def test_bi_exports(tmp_path):
         assert pbi_res.status_code == 200
         assert "json" in pbi_res.content_type
         pbi_payload = json.loads(pbi_res.data)
-        assert "connections" in pbi_payload
-        assert pbi_payload["connections"][0]["details"]["protocol"] == "web-contents"
+        assert pbi_payload["connections"][0]["details"]["protocol"] == "web"
     finally:
         if old_db is not None:
             os.environ["CHURN_DB"] = old_db
