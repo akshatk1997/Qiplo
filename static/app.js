@@ -2148,6 +2148,7 @@ function renderActiveResolutionLoops() {
             
         return `
             <div class="loop-item-card ${resolvedClass}">
+                <button class="delete-loop-btn" onclick="removeResolutionLoop(${idx}, event)" title="Remove resolution loop" style="position: absolute; top: 12px; right: 12px; background: transparent; border: none; color: var(--muted); font-size: 1.15rem; cursor: pointer; line-height: 1; padding: 2px 6px; transition: color 0.15s ease; z-index: 10;">&times;</button>
                 ${badgeHtml}
                 <div class="loop-title-row">
                     <strong>${loop.title}</strong>
@@ -2165,6 +2166,18 @@ function renderActiveResolutionLoops() {
         `;
     }).join('');
 }
+
+window.removeResolutionLoop = function(idx, event) {
+    if (event) event.stopPropagation();
+    AudioFeedback.click();
+    if (activeResolutionLoops[idx]) {
+        const title = activeResolutionLoops[idx].title;
+        activeResolutionLoops.splice(idx, 1);
+        localStorage.setItem('active_resolution_loops', JSON.stringify(activeResolutionLoops));
+        renderActiveResolutionLoops();
+        updateBusinessDiagnostics();
+    }
+};
 
 window.completeResolutionLoop = function(idx) {
     if (activeResolutionLoops[idx]) {
