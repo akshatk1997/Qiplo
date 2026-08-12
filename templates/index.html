@@ -69,11 +69,8 @@
             <button id="exportPowerBiBtn" class="ghostBtn" type="button">Power BI</button>
             <button id="exportPdfBtn" class="ghostBtn" type="button">PDF</button>
             <button id="exportExcelBtn" class="ghostBtn" type="button">Excel</button>
-            <button id="headerGuideBtn" class="ghostBtn" onclick="switchTab('guide')" type="button" style="display: inline-flex; align-items: center; gap: 6px;">
+            <button id="headerGuideBtn" class="ghostBtn" onclick="openToolInfo()" type="button" style="display: inline-flex; align-items: center; gap: 6px;">
                 <i data-lucide="book-marked" class="lucide-icon" style="width: 14px; height: 14px;"></i> Guide
-            </button>
-            <button id="headerSpecialsBtn" class="ghostBtn" onclick="switchTab('specials')" type="button" style="display: inline-flex; align-items: center; gap: 6px;">
-                <i data-lucide="layers" class="lucide-icon" style="width: 14px; height: 14px;"></i> Specials
             </button>
             <button id="settingsBtn" class="ghostBtn" onclick="location.href='/settings'" type="button" style="display: inline-flex; align-items: center; gap: 6px;">
                 <i data-lucide="settings" class="lucide-icon" style="width: 14px; height: 14px;"></i> Settings
@@ -140,7 +137,6 @@
                 <button class="tab" data-tab="business" type="button">Business</button>
                 <button class="tab" data-tab="sandbox" type="button"><i data-lucide="flask-conical" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Sandbox</button>
                 <button class="tab" data-tab="presentation" type="button">Presentation</button>
-                <button class="tab" data-tab="guide" type="button"><i data-lucide="book-marked" class="lucide-icon"></i> Guide</button>
                 <button class="tab" data-tab="copilot" type="button"><i data-lucide="brain-circuit" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Qiplo Copilot</button>
             </div>
 
@@ -1100,7 +1096,7 @@
             </div>
 
             <!-- Business Terms & Corporate Policies Knowledge Guide -->
-            <div class="tabBody hidden" id="tab-guide">
+            <div class="tabBody hidden" id="tab-guide" style="display: none !important;">
                 <div class="guideHub" style="display: flex; flex-direction: column; gap: 20px;">
                     <!-- Guide Header & Search Filter -->
                     <div class="guideHeaderCard" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 24px; box-shadow: var(--shadow);">
