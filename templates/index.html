@@ -54,7 +54,7 @@
                     </span>
                     <span class="demoBadge" id="demoBadge" style="display: none; background: #e11d48; color: #ffffff; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1;">Demo Sandbox Active</span>
                 </div>
-                <span class="appSub">Horizontal Business Decision Intelligence Engine</span>
+                <span class="appSub">Business Decision Intelligence</span>
             </div>
         </div>
         <div class="topbarRight">
@@ -71,6 +71,9 @@
             <button id="exportExcelBtn" class="ghostBtn" type="button">Excel</button>
             <button id="headerGuideBtn" class="ghostBtn" onclick="openToolInfo()" type="button" style="display: inline-flex; align-items: center; gap: 6px;">
                 <i data-lucide="book-marked" class="lucide-icon" style="width: 14px; height: 14px;"></i> Guide
+            </button>
+            <button id="headerReloadBtn" class="ghostBtn" onclick="reloadData()" type="button" style="display: inline-flex; align-items: center; gap: 6px;" title="Refresh & Sync Telemetry Data">
+                <i data-lucide="refresh-cw" class="lucide-icon" style="width: 14px; height: 14px;"></i> Reload Data
             </button>
             <button id="settingsBtn" class="ghostBtn" onclick="location.href='/settings'" type="button" style="display: inline-flex; align-items: center; gap: 6px;">
                 <i data-lucide="settings" class="lucide-icon" style="width: 14px; height: 14px;"></i> Settings
@@ -1520,10 +1523,33 @@
                     Converts plain natural language questions into accurate SQL queries and text summaries of your datasets in real-time.
                 </p>
                 
-                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">📖 Guide Book</h4>
-                <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
-                    Provides terms definition glossaries, legal CCPA/GDPR compliance checklists, and training models details.
-                </p>
+                <h4 style="color: var(--accent-2); margin: 15px 0 6px; font-family: var(--font-heading); font-size: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 4px;">📖 A to Z Corporate Operational Guide Book</h4>
+                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 15px; border-radius: 6px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px;">
+                    <div>
+                        <strong style="color: var(--accent); font-size: 0.82rem; display: block; margin-bottom: 2px;">A to Z Glossary</strong>
+                        <ul style="margin: 0; padding-left: 15px; font-size: 0.76rem; color: var(--muted); line-height: 1.5; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 15px;">
+                            <li><strong>ADR</strong>: Avg Daily Rate. Billing index in travel/hotel data sheets.</li>
+                            <li><strong>ARR</strong>: Annual Recurring Revenue. MRR projected for 12 months.</li>
+                            <li><strong>CAC</strong>: Customer Acquisition Cost. Standard marketing acquisition spend.</li>
+                            <li><strong>CLV</strong>: Customer Lifetime Value. Total projected customer income.</li>
+                            <li><strong>DSO</strong>: Days Sales Outstanding. Receivables collection latency index.</li>
+                            <li><strong>GDPR/CCPA</strong>: Global regulatory compliance regarding data masking.</li>
+                            <li><strong>MRR</strong>: Monthly Recurring Revenue. Active billing revenue.</li>
+                            <li><strong>SLA</strong>: Service Level Agreement. Customer ticket resolution response speed.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <strong style="color: var(--accent-2); font-size: 0.82rem; display: block; margin-bottom: 2px;">Workspace Sections Checklist</strong>
+                        <ul style="margin: 0; padding-left: 15px; font-size: 0.76rem; color: var(--muted); line-height: 1.5;">
+                            <li><strong>Overview</strong>: Tracks global cohort warnings, SHAP importance weights, and alert cards.</li>
+                            <li><strong>Specials</strong>: Dynamic modules (Finance, Operations, Sales, Product) with ARR margin simulators.</li>
+                            <li><strong>Actions</strong>: Initiates automated outbound recovery email templates and tasks list.</li>
+                            <li><strong>Customers</strong>: Evaluates detailed risk factors, confidence intervals, and region distributions.</li>
+                            <li><strong>Sandbox</strong>: Runs interactive test simulations using the Tabular Hybrid Transformer.</li>
+                            <li><strong>Presentation</strong>: Generates corporate PowerPoint PPTX slide decks from live database telemetry.</li>
+                        </ul>
+                    </div>
+                </div>
 
                 <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">📜 Licensing & Data Privacy</h4>
                 <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">

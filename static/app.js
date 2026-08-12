@@ -1975,6 +1975,94 @@ window.runSpecialSim = function(suite) {
     }
 };
 
+window.reloadData = async function() {
+    AudioFeedback.click();
+    const btn = document.getElementById('headerReloadBtn');
+    let originalHtml = '';
+    if (btn) {
+        originalHtml = btn.innerHTML;
+        btn.innerHTML = `<i data-lucide="refresh-cw" class="lucide-icon spin-anim" style="width: 14px; height: 14px; vertical-align: middle;"></i> Syncing...`;
+        if (window.lucide) window.lucide.createIcons();
+    }
+
+    try {
+        await loadDashboard();
+        await fetchSources();
+        if (typeof selectSpecialModule === 'function') {
+            selectSpecialModule(currentSpecialSuite);
+        }
+        AudioFeedback.success();
+        
+        // Show a temporary banner/toast
+        const toast = document.createElement('div');
+        toast.className = 'telemetry-toast';
+        toast.innerHTML = `<i data-lucide="check-circle" style="color: var(--success); width: 16px; height: 16px; vertical-align: middle;"></i> Telemetry synchronized successfully!`;
+        document.body.appendChild(toast);
+        if (window.lucide) window.lucide.createIcons();
+        
+        setTimeout(() => {
+            toast.classList.add('visible');
+        }, 10);
+        
+        setTimeout(() => {
+            toast.classList.remove('visible');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000);
+        
+    } catch (err) {
+        console.error('Failed to sync telemetry:', err);
+        AudioFeedback.delete();
+        alert('Telemetry reload failed: ' + err.message);
+    } finally {
+        if (btn) {
+            btn.innerHTML = originalHtml;
+            if (window.lucide) window.lucide.createIcons();
+        }
+    }
+};
+
+// Inject reload/toast specific styles
+(function() {
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes spinAround {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spin-anim {
+            animation: spinAround 0.8s linear infinite;
+        }
+        .telemetry-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--surface-1);
+            border: 1px solid var(--border);
+            padding: 12px 18px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            color: var(--text);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 99999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            backdrop-filter: blur(10px);
+        }
+        .telemetry-toast.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    `;
+    document.head.appendChild(style);
+})();
+
 window.openResolutionWizard = function(problemObj) {
     document.getElementById('wizardProblemId').value = problemObj.id;
     document.getElementById('wizardProblemTitle').textContent = problemObj.title;
