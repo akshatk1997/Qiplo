@@ -237,6 +237,14 @@ class TabularHybridTransformerEnsembleClassifier(BaseEstimator, ClassifierMixin)
         self.rf_ = RandomForestClassifier(n_estimators=self.n_estimators * 10, max_depth=8, random_state=self.random_state)
         self.rf_.fit(X, y)
         
+        # Optimize transformer training to prevent execution timeouts on large datasets
+        max_transformer_samples = min(200, self.n_samples_)
+        if self.n_samples_ > max_transformer_samples:
+            indices = np.random.RandomState(self.random_state).choice(self.n_samples_, size=max_transformer_samples, replace=False)
+            X_trans, y_trans = X[indices], y[indices]
+        else:
+            X_trans, y_trans = X, y
+            
         self.transformer_ = TabularAttentionTransformerClassifier(
             d_model=self.d_model,
             n_heads=self.n_heads,
@@ -245,7 +253,7 @@ class TabularHybridTransformerEnsembleClassifier(BaseEstimator, ClassifierMixin)
             n_estimators=self.n_estimators,
             random_state=self.random_state
         )
-        self.transformer_.fit(X, y)
+        self.transformer_.fit(X_trans, y_trans)
         
         self.transformer_weight_ = min(0.85, max(0.15, self.n_samples_ / 300.0))
         

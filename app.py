@@ -1099,16 +1099,18 @@ def create_app() -> Flask:
                     warnings.append(f"Column '{matched_col}' contains {non_numeric_count} non-numeric values. These malformed values will be treated as zero or imputed.")
 
         # Auto-detect and standardize target churn column to binary labels
+        target_col_name = config.get("target_column", DEFAULT_TARGET)
+        target_aliases = {str(a).lower() for a in aliases.get(target_col_name, [])}
+        
         target_col_found = None
         for col in frame.columns:
-            if str(col).lower() in {"churn", "churned", "churn_label", "attrition", "left", "exited", "cancelled", "status", "class", "target"}:
+            if str(col).lower() in target_aliases or str(col).lower() in {"churn", "churned", "churn_label", "attrition", "left", "exited", "cancelled", "status", "class", "target"}:
                 target_col_found = col
                 break
             if str(col).lower() in {"active", "is_active", "status_active"}:
                 target_col_found = col
                 break
 
-        target_col_name = config.get("target_column", DEFAULT_TARGET)
         if target_col_found:
             if target_col_found != target_col_name:
                 frame.rename(columns={target_col_found: target_col_name}, inplace=True)
@@ -1120,9 +1122,14 @@ def create_app() -> Flask:
                     pass
             else:
                 try:
-                    frame[target_col_name] = frame[target_col_name].apply(lambda x: 1 if str(x).strip().lower() in {"1", "true", "yes", "churned", "churn", "exited", "left", "cancelled"} else 0)
+                    frame[target_col_name] = frame[target_col_name].apply(lambda x: 1 if str(x).strip().lower() in {"1", "true", "yes", "churned", "churn", "exited", "left", "cancelled", "is_canceled", "is_cancelled", "canceled", "cancelled", "cancellation"} else 0)
                 except Exception:
                     pass
+        else:
+            # Generate a heuristic target column using cost/value indicators if none exists
+            from churn_analysis import generate_heuristic_target
+            frame[target_col_name] = generate_heuristic_target(frame)
+            warnings.append(f"No explicit target column was found. A heuristic target column '{target_col_name}' was generated based on cost/value parameters.")
 
         try:
             rows = import_frame_to_sql(frame, get_db_path(), replace=True, config=config, filename=uploaded.filename)
