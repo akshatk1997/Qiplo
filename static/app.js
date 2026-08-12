@@ -889,16 +889,7 @@ document.getElementById('exportReportBtn').addEventListener('click', () => {
     const currency = currencySelect ? encodeURIComponent(currencySelect.value) : 'USD';
     window.open(`/api/export/report?company=${company}&currency=${currency}`, '_blank');
 });
-document.getElementById('exportPdfBtn').addEventListener('click', () => {
-    if (!predictionData || !predictionData.length) {
-        alert("No prediction data available to export. Please upload a customer file first.");
-        return;
-    }
-    const company = encodeURIComponent(document.getElementById('companyNameInput').value.trim() || '');
-    const currencySelect = document.getElementById('currencySelect');
-    const currency = currencySelect ? encodeURIComponent(currencySelect.value) : 'USD';
-    window.open(`/api/export/report?company=${company}&currency=${currency}`, '_blank');
-});
+
 document.getElementById('companyNameInput').addEventListener('input', debounce(() => {
     const name = document.getElementById('companyNameInput').value.trim();
     if (name) document.getElementById('brandTitle').textContent = name;

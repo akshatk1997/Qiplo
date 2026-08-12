@@ -546,7 +546,7 @@ def ensure_database(db_path: Path, schema_path: Path, config: dict | None = None
     import sys
     import os
     is_testing = "pytest" in sys.modules or os.environ.get("TESTING") == "True" or config.get("TESTING") == True
-    if result == 0:
+    if result == 0 and is_testing:
         data = {
             "customer_id": [f"CUST_{i+1:05d}" for i in range(25)],
             "tenure_months": [12, 24, 36, 4, 8, 48, 1, 15, 60, 3, 10, 20, 30, 40, 50, 6, 18, 32, 44, 55, 9, 21, 33, 45, 11],
