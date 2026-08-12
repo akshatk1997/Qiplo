@@ -1,5 +1,12 @@
 // Ensure session ID is initialized and set as a cookie for backend database isolation
 (function() {
+    // Helper to extract cookie values
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
     // Generate a fresh session ID on every page load to guarantee starting clean on refresh
     const sessId = 'sess_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
     document.cookie = `qiplo_session_id=${sessId}; path=/; SameSite=Lax`;
@@ -15,10 +22,12 @@
             if (!options.headers) {
                 options.headers = {};
             }
+            
+            const currentSessId = getCookie('qiplo_session_id') || sessId;
             if (options.headers instanceof Headers) {
-                options.headers.set('X-Session-ID', sessId);
+                options.headers.set('X-Session-ID', currentSessId);
             } else {
-                options.headers['X-Session-ID'] = sessId;
+                options.headers['X-Session-ID'] = currentSessId;
             }
         }
         return originalFetch(cleanUrl, options);
