@@ -4686,6 +4686,23 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    // Show Welcome Modal on first visit of the session
+    const welcomeModal = document.getElementById('welcomeModal');
+    const closeWelcomeBtn = document.getElementById('closeWelcomeBtn');
+    if (welcomeModal && closeWelcomeBtn) {
+        if (!sessionStorage.getItem('welcome_shown')) {
+            setTimeout(() => {
+                welcomeModal.classList.add('visible');
+                AudioFeedback.success();
+            }, 600);
+        }
+        closeWelcomeBtn.addEventListener('click', () => {
+            AudioFeedback.click();
+            welcomeModal.classList.remove('visible');
+            sessionStorage.setItem('welcome_shown', 'true');
+        });
+    }
 });
 
 function switchTab(tabId) {

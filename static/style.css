@@ -3054,6 +3054,146 @@ body.dark-theme .ghostBtn:hover {
     }
     .financialStatsGrid {
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
-        gap: 12px !important;
     }
+}
+
+/* Glassmorphic Welcome Modal Overlay */
+.welcome-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.welcome-modal-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Modal Card */
+.welcome-modal-card {
+    background: rgba(20, 20, 30, 0.7);
+    border: 1px solid rgba(0, 245, 255, 0.25);
+    box-shadow: 0 20px 50px rgba(0, 245, 255, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 34px;
+    width: 90%;
+    max-width: 460px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.welcome-modal-overlay.visible .welcome-modal-card {
+    transform: scale(1) translateY(0);
+}
+
+/* Glowing Ambient Sphere */
+.welcome-glow-circle {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(0, 245, 255, 0.4) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(10px);
+}
+
+/* Header & Icon */
+.welcome-icon {
+    width: 44px;
+    height: 44px;
+    color: #00f5ff;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 0 8px rgba(0, 245, 255, 0.6));
+    animation: welcome-pulse 2s infinite ease-in-out;
+}
+.welcome-header h2 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text);
+    margin: 8px 0 14px 0;
+    background: linear-gradient(135deg, #ffffff 30%, #00f5ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Body Text */
+.welcome-body p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0 0 20px 0;
+}
+
+/* Bullets */
+.welcome-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 26px;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 14px 18px;
+    border-radius: 12px;
+}
+.bullet-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--text);
+    font-weight: 500;
+}
+.bullet-item i {
+    width: 16px;
+    height: 16px;
+    color: #00f5ff;
+}
+
+/* Enter Workspace Button */
+.welcome-enter-btn {
+    background: linear-gradient(135deg, #00f5ff 0%, #0055ff 100%);
+    border: none;
+    color: #ffffff;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 245, 255, 0.3);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.welcome-enter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 245, 255, 0.5);
+}
+.welcome-enter-btn:active {
+    transform: translateY(0);
+}
+
+@keyframes welcome-pulse {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.9; }
+    50% { transform: scale(1.1) rotate(15deg); opacity: 1; }
 }
