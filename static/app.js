@@ -1943,23 +1943,23 @@ window.selectSpecialModule = function(suite) {
         let actionsHtml = '';
         if (suite === 'finance') {
             actionsHtml = `
-                <button class="primaryBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('How can we optimize our Days Sales Outstanding (DSO)?')"><i data-lucide="mail" style="width: 14px; height: 14px;"></i> Automate collections reminders</button>
-                <button class="ghostBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; border: 1px solid var(--border); text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('Show receivables aging breakdown.')"><i data-lucide="file-text" style="width: 14px; height: 14px;"></i> Audit Receivables Aging ledger</button>
+                <button class="primaryBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerBriefingCopilot('How can we optimize our Days Sales Outstanding (DSO)?')"><i data-lucide="mail" style="width: 14px; height: 14px;"></i> Automate collections reminders</button>
+                <button class="ghostBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; border: 1px solid var(--border); text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerBriefingCopilot('Show receivables aging breakdown.')"><i data-lucide="file-text" style="width: 14px; height: 14px;"></i> Audit Receivables Aging ledger</button>
             `;
         } else if (suite === 'operations') {
             actionsHtml = `
-                <button class="primaryBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('How can we reduce slow-moving inventory safety stock?')"><i data-lucide="refresh-cw" style="width: 14px; height: 14px;"></i> Run inventory markdown markdown</button>
-                <button class="ghostBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; border: 1px solid var(--border); text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('What is our On-Time In-Full (OTIF) shipping SLA forecast?')"><i data-lucide="truck" style="width: 14px; height: 14px;"></i> View route transit performance</button>
+                <button class="primaryBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerBriefingCopilot('How can we reduce slow-moving inventory safety stock?')"><i data-lucide="refresh-cw" style="width: 14px; height: 14px;"></i> Run inventory markdown</button>
+                <button class="ghostBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; border: 1px solid var(--border); text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerBriefingCopilot('What is our On-Time In-Full (OTIF) shipping SLA forecast?')"><i data-lucide="truck" style="width: 14px; height: 14px;"></i> View route transit performance</button>
             `;
         } else if (suite === 'sales') {
             actionsHtml = `
-                <button class="primaryBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('How can we improve Month-to-Month retention?')"><i data-lucide="gift" style="width: 14px; height: 14px;"></i> Offer Annual Commitment Discount</button>
-                <button class="ghostBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; border: 1px solid var(--border); text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('What is our total monthly revenue at risk?')"><i data-lucide="alert-triangle" style="width: 14px; height: 14px;"></i> Check Revenue Leakage details</button>
+                <button class="primaryBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerBriefingCopilot('How can we improve Month-to-Month retention?')"><i data-lucide="gift" style="width: 14px; height: 14px;"></i> Offer Annual Commitment Discount</button>
+                <button class="ghostBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; border: 1px solid var(--border); text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerBriefingCopilot('What is our total monthly revenue at risk?')"><i data-lucide="alert-triangle" style="width: 14px; height: 14px;"></i> Check Revenue Leakage details</button>
             `;
         } else if (suite === 'product') {
             actionsHtml = `
-                <button class="primaryBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('How can we improve Day 7 user onboarding retention?')"><i data-lucide="sparkles" style="width: 14px; height: 14px;"></i> Simplify onboarding wizard forms</button>
-                <button class="ghostBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; border: 1px solid var(--border); text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('Which features should we prioritize in the backlog?')"><i data-lucide="bar-chart-2" style="width: 14px; height: 14px;"></i> Audit product backlog priorities</button>
+                <button class="primaryBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerBriefingCopilot('How can we improve Day 7 user onboarding retention?')"><i data-lucide="sparkles" style="width: 14px; height: 14px;"></i> Simplify onboarding wizard forms</button>
+                <button class="ghostBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; border: 1px solid var(--border); text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerBriefingCopilot('Which features should we prioritize in the backlog?')"><i data-lucide="bar-chart-2" style="width: 14px; height: 14px;"></i> Audit product backlog priorities</button>
             `;
         }
         actionsEl.innerHTML = actionsHtml;
@@ -3908,6 +3908,29 @@ async function triggerQuickQA(question) {
     }
 }
 window.triggerQuickQA = triggerQuickQA;
+
+window.triggerBriefingCopilot = async function(question) {
+    AudioFeedback.click();
+    
+    // Switch workspace tab to Copilot tab
+    const copilotTab = document.querySelector('.tab[data-tab="copilot"]');
+    const copilotBody = document.getElementById('tab-copilot');
+    if (copilotTab && copilotBody) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tabBody').forEach(b => b.classList.add('hidden'));
+        copilotTab.classList.add('active');
+        copilotBody.classList.remove('hidden');
+    }
+    
+    // Populate chat box and run handler
+    const input = document.getElementById('chatInput');
+    if (input) {
+        input.value = question;
+        if (typeof handleChatMessage === 'function') {
+            await handleChatMessage();
+        }
+    }
+};
 
 setupCopilot();
 
