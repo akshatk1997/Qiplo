@@ -2392,6 +2392,8 @@ function setupBusinessHub() {
         currencySelect.addEventListener('change', (e) => {
             updateAllCurrencyMetrics(e.target.value);
         });
+        // Initial setup trigger
+        updateAllCurrencyMetrics(currencySelect.value);
     }
     if (overviewCurrencySelect) {
         overviewCurrencySelect.addEventListener('change', (e) => {
@@ -2891,7 +2893,7 @@ function generateLocalSlides(numSlides, customPrompt, shouldShuffle) {
             "layout": "journey_workflow",
             "title": "Interactive Customer Journey Workflow",
             "steps": [
-                {"title": "Predictive Audit", "description": "Qiplo Copilot scans database records for risk scores."},
+                {"title": "Predictive Audit", "description": "Copilot scans database records for risk scores."},
                 {"title": "Strategy Design", "description": "Formulate billing recovery & proactive support incentives."},
                 {"title": "Manager Outreach", "description": "CSMs initiate outreach using pre-compiled templates."},
                 {"title": "ARR Preservation", "description": "Contracts successfully extended; customer retention maximized."}
