@@ -49,14 +49,6 @@
             <div class="topbarTitle">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                     <span class="appName" id="brandTitle">Qiplo</span>
-                    <div class="specials-container" style="display: inline-flex; align-items: center;">
-                        <select id="intelligenceModuleSelect" title="Select Specialized Intelligence Suite" style="background: rgba(79, 70, 229, 0.08); border: 1px solid rgba(79, 70, 229, 0.25); color: var(--accent); padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; outline: none; transition: all 0.15s ease;">
-                            <option value="sales" style="background: #11131e; color: #ffffff;" selected>💼 Qiplo Sales (Revenue Intelligence)</option>
-                            <option value="finance" style="background: #11131e; color: #ffffff;">💵 Qiplo Finance (CashFlow Intelligence)</option>
-                            <option value="operations" style="background: #11131e; color: #ffffff;">📦 Qiplo Operations (Supply Chain Intelligence)</option>
-                            <option value="product" style="background: #11131e; color: #ffffff;">⚡ Qiplo Product (Product Intelligence)</option>
-                        </select>
-                    </div>
                     <span class="sloganBadge" style="font-size: 0.72rem; background: rgba(79, 70, 229, 0.12); border: 1px solid rgba(79, 70, 229, 0.2); color: #4F46E5; padding: 3px 8px; border-radius: 999px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; line-height: 1;">
                         <i data-lucide="shield-check" class="lucide-icon" style="width: 12px; height: 12px;"></i> Never lose a customer again
                     </span>
@@ -136,6 +128,7 @@
         <section class="studioPane">
             <div class="studioTabs">
                 <button class="tab active" data-tab="overview" type="button">Overview</button>
+                <button class="tab" data-tab="specials" type="button"><i data-lucide="layers" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Specials</button>
                 <button class="tab" data-tab="actions" type="button">Actions</button>
                 <button class="tab" data-tab="customers" type="button">Customers</button>
                 <button class="tab" data-tab="business" type="button">Business</button>
@@ -252,6 +245,139 @@
                         <h3>Global Feature Importance (SHAP weights)</h3>
                         <div class="chartArea tall">
                             <canvas id="importanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabBody hidden" id="tab-specials">
+                <style>
+                    .special-module-card {
+                        background: var(--surface-1);
+                        border: 1px solid var(--border);
+                        padding: 18px;
+                        border-radius: var(--radius-md);
+                        cursor: pointer;
+                        position: relative;
+                        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+                        backdrop-filter: blur(10px);
+                    }
+                    .special-module-card:hover {
+                        transform: translateY(-2px);
+                        background: var(--surface-2);
+                        border-color: var(--accent);
+                        box-shadow: 0 4px 20px rgba(79, 70, 229, 0.12);
+                    }
+                    .special-module-card.active {
+                        background: var(--surface-2);
+                        border: 2px solid var(--accent) !important;
+                        box-shadow: 0 0 15px rgba(79, 70, 229, 0.2) !important;
+                    }
+                    
+                    .framer-range {
+                        -webkit-appearance: none;
+                        appearance: none;
+                        height: 6px;
+                        border-radius: 5px;
+                        background: var(--border);
+                        outline: none;
+                        margin: 10px 0;
+                    }
+                    .framer-range::-webkit-slider-thumb {
+                        -webkit-appearance: none;
+                        appearance: none;
+                        width: 14px;
+                        height: 14px;
+                        border-radius: 50%;
+                        background: var(--accent);
+                        cursor: pointer;
+                        box-shadow: 0 0 8px var(--accent);
+                        transition: transform 0.1s ease;
+                    }
+                    .framer-range::-webkit-slider-thumb:hover {
+                        transform: scale(1.2);
+                    }
+                </style>
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Top Selector Cards Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px;">
+                        <!-- Finance -->
+                        <div class="special-module-card active" id="btn-module-finance" onclick="selectSpecialModule('finance')">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <i data-lucide="dollar-sign" style="color: var(--accent); width: 22px; height: 22px;"></i>
+                                <h3 style="margin: 0; font-family: var(--font-heading); font-size: 1.05rem;">Qiplo Finance</h3>
+                            </div>
+                            <span style="font-size: 0.8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">CashFlow Intelligence</span>
+                        </div>
+                        <!-- Operations -->
+                        <div class="special-module-card" id="btn-module-operations" onclick="selectSpecialModule('operations')">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <i data-lucide="package" style="color: var(--accent-2); width: 22px; height: 22px;"></i>
+                                <h3 style="margin: 0; font-family: var(--font-heading); font-size: 1.05rem;">Qiplo Operations</h3>
+                            </div>
+                            <span style="font-size: 0.8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Supply Chain Intelligence</span>
+                        </div>
+                        <!-- Sales -->
+                        <div class="special-module-card" id="btn-module-sales" onclick="selectSpecialModule('sales')">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <i data-lucide="line-chart" style="color: var(--accent); width: 22px; height: 22px;"></i>
+                                <h3 style="margin: 0; font-family: var(--font-heading); font-size: 1.05rem;">Qiplo Sales</h3>
+                            </div>
+                            <span style="font-size: 0.8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Revenue Intelligence</span>
+                        </div>
+                        <!-- Product -->
+                        <div class="special-module-card" id="btn-module-product" onclick="selectSpecialModule('product')">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <i data-lucide="zap" style="color: var(--success); width: 22px; height: 22px;"></i>
+                                <h3 style="margin: 0; font-family: var(--font-heading); font-size: 1.05rem;">Qiplo Product</h3>
+                            </div>
+                            <span style="font-size: 0.8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Product Intelligence</span>
+                        </div>
+                    </div>
+
+                    <!-- Active Suite Workspace -->
+                    <div class="framer-card" style="padding: 22px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
+                            <div>
+                                <h2 id="specialSuiteTitle" style="margin: 0 0 4px; font-family: var(--font-heading); font-size: 1.35rem; color: var(--text);">CashFlow Intelligence Suite</h2>
+                                <p id="specialSuiteDesc" style="margin: 0; font-size: 0.85rem; color: var(--muted);">Real-time tracking of receivables, payables, and working capital risk metrics.</p>
+                            </div>
+                            <div class="userProfileBadge" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.2); padding: 5px 12px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; color: var(--success);">
+                                <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--success); display: inline-block; box-shadow: 0 0 6px var(--success);"></span>
+                                <span>Live Tracking Sync Active</span>
+                            </div>
+                        </div>
+
+                        <!-- Grid: Left side: Dynamic metric items list, Right side: interactive simulator & AI Advisor -->
+                        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; align-items: start;">
+                            <!-- Metric Items -->
+                            <div style="display: flex; flex-direction: column; gap: 15px;" id="specialSuiteMetricsList">
+                                <!-- Rendered dynamically -->
+                            </div>
+
+                            <!-- Simulator & AI Quick actions -->
+                            <div style="display: flex; flex-direction: column; gap: 20px;">
+                                <!-- Live Simulator -->
+                                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 18px; border-radius: var(--radius-md);">
+                                    <h3 id="specialSimTitle" style="margin: 0 0 15px; font-family: var(--font-heading); font-size: 0.95rem; display: flex; align-items: center; gap: 6px;"><i data-lucide="sliders" style="width: 16px; height: 16px; color: var(--accent);"></i> Real-Time Liquidity Simulator</h3>
+                                    <div style="display: flex; flex-direction: column; gap: 18px;" id="specialSimSlidersContainer">
+                                        <!-- Sliders populated dynamically -->
+                                    </div>
+                                    <div style="margin-top: 18px; padding-top: 12px; border-top: 1px dashed var(--border); display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="font-size: 0.82rem; color: var(--muted); font-weight: 600;">Projected Suite Impact:</span>
+                                        <strong id="specialSimImpactText" style="font-size: 1.05rem; color: var(--success);">+$12,400 / mo</strong>
+                                    </div>
+                                </div>
+
+                                <!-- AI Advisors suggestions -->
+                                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 18px; border-radius: var(--radius-md);">
+                                    <h3 style="margin: 0 0 10px; font-family: var(--font-heading); font-size: 0.95rem; display: flex; align-items: center; gap: 6px;"><i data-lucide="message-square" style="width: 16px; height: 16px; color: var(--success);"></i> Suite Copilot Briefing</h3>
+                                    <p id="specialAiBriefingText" style="margin: 0 0 15px; font-size: 0.82rem; color: var(--muted); line-height: 1.5;"></p>
+                                    <div style="display: flex; flex-direction: column; gap: 10px;" id="specialAiActionsContainer">
+                                        <!-- Actions populated dynamically -->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

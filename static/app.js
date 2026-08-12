@@ -160,6 +160,7 @@ async function loadDashboard() {
         try { await fetchSources(); } catch (e) { console.error('fetchSources failed', e); }
         try { await fetchNotes(); } catch (e) { console.error('fetchNotes failed', e); }
         try { await loadBusinessAnalytics(); } catch (e) { console.error('loadBusinessAnalytics failed', e); }
+        try { selectSpecialModule(currentSpecialSuite || 'finance'); } catch (e) { console.error('selectSpecialModule failed', e); }
     } catch (error) {
         console.error('Dashboard load failed', error);
     }
@@ -1185,8 +1186,7 @@ let activeResolutionLoops = JSON.parse(localStorage.getItem('active_resolution_l
 function updateBusinessDiagnostics() {
     if (!predictionData || !predictionData.length) return;
     
-    const ims = document.getElementById('intelligenceModuleSelect');
-    const moduleVal = ims ? ims.value : 'sales';
+    const moduleVal = currentSpecialSuite || 'finance';
     
     const highRiskCount = predictionData.filter(r => r.prediction_label === 'high_risk').length;
     const totalCount = predictionData.length;
@@ -1631,6 +1631,309 @@ function updateBusinessDiagnostics() {
     
     renderActiveResolutionLoops();
 }
+
+let currentSpecialSuite = 'finance';
+
+function calculateSpecialModuleMetrics(suite) {
+    const totalCount = predictionData.length || 25;
+    const highRiskCount = predictionData.filter(r => r.prediction_label === 'high_risk').length;
+    const churnRate = totalCount > 0 ? (highRiskCount / totalCount) : 0.28;
+    const retentionRate = Math.round((1 - churnRate) * 100);
+
+    const sortedByCharges = [...predictionData].sort((a, b) => (parseFloat(b.monthly_charges) || 0) - (parseFloat(a.monthly_charges) || 0));
+    const totalCharges = predictionData.reduce((acc, r) => acc + (parseFloat(r.monthly_charges) || 0), 0);
+    const avgMonthlyCharges = totalCount > 0 ? (totalCharges / totalCount) : 65.0;
+
+    const rate = currentCurrencyRate;
+    const sym = currentCurrencySymbol;
+
+    if (suite === 'finance') {
+        const dsoDays = Math.round(38 + (churnRate * 15));
+        const receivablesVal = Math.round(totalCharges * rate * 0.45);
+        const payablesVal = Math.round(totalCharges * rate * 0.28);
+        const forecastedCash = Math.round(totalCharges * rate * 12 * (1 - churnRate * 0.5));
+        const paymentRiskVal = Math.round(highRiskCount * avgMonthlyCharges * rate * 1.5);
+        const workingCapitalVal = Math.round((receivablesVal - payablesVal) * 1.8);
+
+        return [
+            { label: 'Receivables', value: `${sym}${receivablesVal.toLocaleString()}`, desc: `Outstanding invoice balances. Average collection latency: ${dsoDays} days.`, status: 'yellow' },
+            { label: 'Payables', value: `${sym}${payablesVal.toLocaleString()}`, desc: 'Total upcoming vendor commitments due within 15 days.', status: 'green' },
+            { label: 'Cash Forecasting (Next 12M)', value: `${sym}${forecastedCash.toLocaleString()}`, desc: 'Forecasted annual operating cash reserves based on customer churn rate.', status: 'green' },
+            { label: 'Payment Risk', value: `${sym}${paymentRiskVal.toLocaleString()}`, desc: 'Financial exposure tied to high-attrition/delinquent client accounts.', status: highRiskCount > 5 ? 'red' : 'yellow' },
+            { label: 'Working Capital', value: `${sym}${workingCapitalVal.toLocaleString()}`, desc: 'Net current operational asset availability and cash cycle efficiency.', status: 'green' }
+        ];
+    } else if (suite === 'operations') {
+        const totalTickets = predictionData.reduce((acc, r) => acc + (parseInt(r.support_tickets) || 0), 0);
+        const supplierRiskPct = Math.min(100, Math.round(35 + (totalTickets / (totalCount * 2)) * 30));
+        const totalUsage = predictionData.reduce((acc, r) => acc + (parseFloat(r.product_usage) || 0), 0);
+        const inventoryVal = Math.round(totalUsage * rate * 120);
+        const forecastVariance = Math.round(8 + (churnRate * 12));
+        const delayVal = Math.round(2 + (highRiskCount / 4));
+        const anomaliesCount = Math.round(totalTickets / 8);
+
+        return [
+            { label: 'Supplier Risk Score', value: `${supplierRiskPct}% Risk`, desc: 'Supplier dependency index and component quality health checks.', status: supplierRiskPct > 65 ? 'red' : 'yellow' },
+            { label: 'Inventory Capital', value: `${sym}${inventoryVal.toLocaleString()}`, desc: 'Safety surplus capital tied up across regional fulfillment hubs.', status: 'red' },
+            { label: 'Demand Forecasting Variance', value: `±${forecastVariance}%`, desc: 'Product sales tracking variance against assembly line production schedules.', status: 'yellow' },
+            { label: 'Logistics Fulfillment Latency', value: `+${delayVal} days`, desc: 'Average shipping delays logged from ports and transit routes.', status: 'red' },
+            { label: 'Operational Defects & Anomalies', value: `${anomaliesCount} Extruder Anomalies`, desc: 'Active line tool miscalibrations flagged in production logs.', status: 'yellow' }
+        ];
+    } else if (suite === 'sales') {
+        const churnRateVal = Math.round(churnRate * 100);
+        const leakageVal = Math.round(predictionData.filter(r => r.prediction_label === 'high_risk').reduce((acc, r) => acc + (parseFloat(r.monthly_charges) || 0), 0) * rate);
+        const nextMonthSales = Math.round(totalCharges * rate * (1 - churnRate));
+        const highTierSegments = predictionData.filter(r => (parseFloat(r.monthly_charges) || 0) > avgMonthlyCharges).length;
+        const opportunityScore = Math.round(85 - (churnRate * 10));
+
+        return [
+            { label: 'Customer Churn Rate', value: `${churnRateVal}% Churn`, desc: 'Active customer attrition rate calculated from machine learning telemetry.', status: churnRateVal > 25 ? 'red' : 'yellow' },
+            { label: 'Revenue Leakage Exposure', value: `${sym}${leakageVal.toLocaleString()}/mo`, desc: 'Monthly recurring revenue at immediate threat of cancellation.', status: leakageVal > 0 ? 'red' : 'green' },
+            { label: 'Sales Forecasting (Next Month)', value: `${sym}${nextMonthSales.toLocaleString()}`, desc: 'Projected monthly revenue taking into account churn probabilities.', status: 'green' },
+            { label: 'Enterprise/High-Tier Customer Segments', value: `${highTierSegments} Accounts`, desc: 'Number of strategic high-value accounts exceeding average spend.', status: 'green' },
+            { label: 'Opportunity Scoring Index', value: `${opportunityScore}% Score`, desc: 'Average probability of closing current active sales opportunities.', status: 'green' }
+        ];
+    } else if (suite === 'product') {
+        const totalUsage = predictionData.reduce((acc, r) => acc + (parseFloat(r.product_usage) || 0), 0);
+        const adoptionRate = Math.min(100, Math.round(35 + (totalUsage / (totalCount * 10)) * 25));
+        const retentionRateVal = retentionRate;
+        const day7ChurnVal = Math.round(100 - retentionRateVal * 0.95);
+        const funnelAttrition = Math.round(32 + (churnRate * 15));
+        const riceScore = Math.round(72 + (retentionRateVal / 10));
+
+        return [
+            { label: 'Feature Adoption Rate', value: `${adoptionRate}% Active`, desc: 'Percentage of user base adopting advanced platform analytics features.', status: 'yellow' },
+            { label: 'User Retention Index', value: `${retentionRateVal}% Stable`, desc: 'Percentage of users returning to the dashboard week-over-week.', status: 'green' },
+            { label: 'Day 7 Funnel Churn', value: `${day7ChurnVal}% Drop-off`, desc: 'Attrition rate observed within the first week of signup.', status: 'red' },
+            { label: 'Funnel Checkout Attrition', value: `${funnelAttrition}% Attrition`, desc: 'User drop-off registered during billing onboarding stages.', status: 'yellow' },
+            { label: 'Backlog Feature Prioritization Index', value: `${riceScore} Avg RICE`, desc: 'Telemetry-driven backlog prioritization score alignment.', status: 'green' }
+        ];
+    }
+}
+
+window.selectSpecialModule = function(suite) {
+    currentSpecialSuite = suite;
+    
+    // Highlight selector cards
+    document.querySelectorAll('.special-module-card').forEach(card => {
+        card.classList.remove('active');
+    });
+    const activeCard = document.getElementById(`btn-module-${suite}`);
+    if (activeCard) {
+        activeCard.classList.add('active');
+    }
+
+    const titles = {
+        finance: {
+            title: 'Qiplo Finance — CashFlow Intelligence Suite',
+            desc: 'Real-time tracking of receivables, payables, and working capital risk metrics.',
+            sim: 'Real-Time CashFlow & DSO Simulator'
+        },
+        operations: {
+            title: 'Qiplo Operations — Supply Chain Intelligence Suite',
+            desc: 'Real-time monitoring of supplier risk indices, inventory levels, and logistics delays.',
+            sim: 'Real-Time Inventory & Shipping SLA Simulator'
+        },
+        sales: {
+            title: 'Qiplo Sales — Revenue Intelligence Suite',
+            desc: 'Real-time analytics for customer churn rate, revenue leakage, and opportunity conversion.',
+            sim: 'Real-Time Revenue Leakage & Forecast Simulator'
+        },
+        product: {
+            title: 'Qiplo Product — Product Intelligence Suite',
+            desc: 'Real-time tracking of feature adoption, Day 7 user drop-offs, and product backlog priorities.',
+            sim: 'Real-Time User Retention & Funnel Simulator'
+        }
+    };
+
+    const details = titles[suite];
+    document.getElementById('specialSuiteTitle').textContent = details.title;
+    document.getElementById('specialSuiteDesc').textContent = details.desc;
+    document.getElementById('specialSimTitle').innerHTML = `<i data-lucide="sliders" style="width: 16px; height: 16px; color: var(--accent);"></i> ${details.sim}`;
+
+    // Render metrics
+    const metrics = calculateSpecialModuleMetrics(suite);
+    const metricsListEl = document.getElementById('specialSuiteMetricsList');
+    if (metricsListEl) {
+        metricsListEl.innerHTML = metrics.map(m => {
+            const indColor = m.status === 'red' ? 'var(--danger)' : (m.status === 'yellow' ? 'var(--warning)' : 'var(--success)');
+            return `
+                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 18px; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; transition: transform 0.15s ease;">
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <h4 style="margin: 0; font-family: var(--font-heading); font-size: 0.95rem; color: var(--text);">${m.label}</h4>
+                        <p style="margin: 0; font-size: 0.82rem; color: var(--muted); line-height: 1.4;">${m.desc}</p>
+                    </div>
+                    <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+                        <span style="font-size: 1.15rem; font-family: var(--font-heading); font-weight: 700; color: ${indColor};">${m.value}</span>
+                        <div style="display: flex; align-items: center; gap: 4px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: ${indColor}; display: inline-block;"></span>
+                            <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--muted); font-weight: 600;">${m.status === 'red' ? 'Critical' : (m.status === 'yellow' ? 'Warning' : 'Normal')}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // Render Sliders
+    const slidersEl = document.getElementById('specialSimSlidersContainer');
+    if (slidersEl) {
+        let slidersHtml = '';
+        if (suite === 'finance') {
+            slidersHtml = `
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.8rem;">
+                        <span style="color: var(--muted);">Target Invoicing Terms:</span>
+                        <strong id="val-terms-slider" style="color: var(--text);">30 Days</strong>
+                    </div>
+                    <input type="range" min="10" max="60" value="30" class="framer-range" id="terms-slider" oninput="runSpecialSim('finance')" style="width: 100%;">
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.8rem;">
+                        <span style="color: var(--muted);">Automated Reminders Push:</span>
+                        <strong id="val-reminders-slider" style="color: var(--text);">20%</strong>
+                    </div>
+                    <input type="range" min="0" max="100" value="20" class="framer-range" id="reminders-slider" oninput="runSpecialSim('finance')" style="width: 100%;">
+                </div>
+            `;
+        } else if (suite === 'operations') {
+            slidersHtml = `
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.8rem;">
+                        <span style="color: var(--muted);">Safety Stock Buffer:</span>
+                        <strong id="val-safety-slider" style="color: var(--text);">20%</strong>
+                    </div>
+                    <input type="range" min="5" max="50" value="20" class="framer-range" id="safety-slider" oninput="runSpecialSim('operations')" style="width: 100%;">
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.8rem;">
+                        <span style="color: var(--muted);">Route Reroute Rate:</span>
+                        <strong id="val-route-slider" style="color: var(--text);">0%</strong>
+                    </div>
+                    <input type="range" min="0" max="100" value="0" class="framer-range" id="route-slider" oninput="runSpecialSim('operations')" style="width: 100%;">
+                </div>
+            `;
+        } else if (suite === 'sales') {
+            slidersHtml = `
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.8rem;">
+                        <span style="color: var(--muted);">Expansion Upsell Push:</span>
+                        <strong id="val-expansion-slider" style="color: var(--text);">10%</strong>
+                    </div>
+                    <input type="range" min="0" max="100" value="10" class="framer-range" id="expansion-slider" oninput="runSpecialSim('sales')" style="width: 100%;">
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.8rem;">
+                        <span style="color: var(--muted);">Annual Renewal Discount:</span>
+                        <strong id="val-discount-slider" style="color: var(--text);">15%</strong>
+                    </div>
+                    <input type="range" min="0" max="30" value="15" class="framer-range" id="discount-slider" oninput="runSpecialSim('sales')" style="width: 100%;">
+                </div>
+            `;
+        } else if (suite === 'product') {
+            slidersHtml = `
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.8rem;">
+                        <span style="color: var(--muted);">Onboarding Simplification:</span>
+                        <strong id="val-onboarding-slider" style="color: var(--text);">20%</strong>
+                    </div>
+                    <input type="range" min="0" max="100" value="20" class="framer-range" id="onboarding-slider" oninput="runSpecialSim('product')" style="width: 100%;">
+                </div>
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.8rem;">
+                        <span style="color: var(--muted);">Mobile Telemetry Optimization:</span>
+                        <strong id="val-mobile-slider" style="color: var(--text);">0%</strong>
+                    </div>
+                    <input type="range" min="0" max="100" value="0" class="framer-range" id="mobile-slider" oninput="runSpecialSim('product')" style="width: 100%;">
+                </div>
+            `;
+        }
+        slidersEl.innerHTML = slidersHtml;
+    }
+
+    runSpecialSim(suite);
+
+    const briefings = {
+        finance: 'Strategic advisory for Cash Flow health. Receivables past due are exposing your ARR to default risk. We suggest automating invoice reminders.',
+        operations: 'Supply Chain Operations telemetry. Safety stock buffers are over-allocated, causing excess working capital lockup.',
+        sales: 'Revenue Intelligence dashboard. Month-to-Month contracts represent the highest density of churn, check commitment outreach.',
+        product: 'Product Retention logs. High Day 7 attrition is strongly correlated with user onboarding form complexity, focus on onboarding setup.'
+    };
+    document.getElementById('specialAiBriefingText').textContent = briefings[suite];
+
+    const actionsEl = document.getElementById('specialAiActionsContainer');
+    if (actionsEl) {
+        let actionsHtml = '';
+        if (suite === 'finance') {
+            actionsHtml = `
+                <button class="primaryBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('How can we optimize our Days Sales Outstanding (DSO)?')"><i data-lucide="mail" style="width: 14px; height: 14px;"></i> Automate collections reminders</button>
+                <button class="ghostBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; border: 1px solid var(--border); text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('Show receivables aging breakdown.')"><i data-lucide="file-text" style="width: 14px; height: 14px;"></i> Audit Receivables Aging ledger</button>
+            `;
+        } else if (suite === 'operations') {
+            actionsHtml = `
+                <button class="primaryBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('How can we reduce slow-moving inventory safety stock?')"><i data-lucide="refresh-cw" style="width: 14px; height: 14px;"></i> Run inventory markdown markdown</button>
+                <button class="ghostBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; border: 1px solid var(--border); text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('What is our On-Time In-Full (OTIF) shipping SLA forecast?')"><i data-lucide="truck" style="width: 14px; height: 14px;"></i> View route transit performance</button>
+            `;
+        } else if (suite === 'sales') {
+            actionsHtml = `
+                <button class="primaryBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('How can we improve Month-to-Month retention?')"><i data-lucide="gift" style="width: 14px; height: 14px;"></i> Offer Annual Commitment Discount</button>
+                <button class="ghostBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; border: 1px solid var(--border); text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('What is our total monthly revenue at risk?')"><i data-lucide="alert-triangle" style="width: 14px; height: 14px;"></i> Check Revenue Leakage details</button>
+            `;
+        } else if (suite === 'product') {
+            actionsHtml = `
+                <button class="primaryBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('How can we improve Day 7 user onboarding retention?')"><i data-lucide="sparkles" style="width: 14px; height: 14px;"></i> Simplify onboarding wizard forms</button>
+                <button class="ghostBtn" style="padding: 8px 12px; font-size: 0.78rem; width: 100%; border: 1px solid var(--border); text-align: left; display: inline-flex; align-items: center; gap: 6px;" onclick="triggerQuickQA('Which features should we prioritize in the backlog?')"><i data-lucide="bar-chart-2" style="width: 14px; height: 14px;"></i> Audit product backlog priorities</button>
+            `;
+        }
+        actionsEl.innerHTML = actionsHtml;
+    }
+    
+    
+    updateBusinessDiagnostics();
+};
+
+window.runSpecialSim = function(suite) {
+    const rate = currentCurrencyRate;
+    const sym = currentCurrencySymbol;
+    const totalCharges = predictionData.reduce((acc, r) => acc + (parseFloat(r.monthly_charges) || 0), 0);
+
+    let impactVal = 0;
+    if (suite === 'finance') {
+        const terms = parseInt(document.getElementById('terms-slider').value);
+        const reminders = parseInt(document.getElementById('reminders-slider').value);
+        document.getElementById('val-terms-slider').textContent = `${terms} Days`;
+        document.getElementById('val-reminders-slider').textContent = `${reminders}%`;
+
+        impactVal = Math.round(((30 - terms) * (totalCharges / 30) + reminders * 85) * rate);
+    } else if (suite === 'operations') {
+        const safety = parseInt(document.getElementById('safety-slider').value);
+        const route = parseInt(document.getElementById('route-slider').value);
+        document.getElementById('val-safety-slider').textContent = `${safety}%`;
+        document.getElementById('val-route-slider').textContent = `${route}%`;
+
+        impactVal = Math.round(((20 - safety) * 120 + route * 95) * rate);
+    } else if (suite === 'sales') {
+        const expansion = parseInt(document.getElementById('expansion-slider').value);
+        const discount = parseInt(document.getElementById('discount-slider').value);
+        document.getElementById('val-expansion-slider').textContent = `${expansion}%`;
+        document.getElementById('val-discount-slider').textContent = `${discount}%`;
+
+        impactVal = Math.round((expansion * 180 - discount * 60) * rate);
+    } else if (suite === 'product') {
+        const onboarding = parseInt(document.getElementById('onboarding-slider').value);
+        const mobile = parseInt(document.getElementById('mobile-slider').value);
+        document.getElementById('val-onboarding-slider').textContent = `${onboarding}%`;
+        document.getElementById('val-mobile-slider').textContent = `${mobile}%`;
+
+        impactVal = Math.round((onboarding * 140 + mobile * 110) * rate);
+    }
+
+    const impactTextEl = document.getElementById('specialSimImpactText');
+    if (impactTextEl) {
+        const sign = impactVal >= 0 ? '+' : '';
+        impactTextEl.textContent = `${sign}${sym}${impactVal.toLocaleString()} / mo`;
+        impactTextEl.style.color = impactVal >= 0 ? 'var(--success)' : 'var(--danger)';
+    }
+};
 
 window.openResolutionWizard = function(problemObj) {
     document.getElementById('wizardProblemId').value = problemObj.id;
@@ -4104,13 +4407,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rs = document.getElementById('roleSelect');
     if (rs) rs.value = currentAuthorizedRole;
 
-    // Listen for specialized intelligence module changes
-    const ims = document.getElementById('intelligenceModuleSelect');
-    if (ims) {
-        ims.addEventListener('change', () => {
-            updateBusinessDiagnostics();
-        });
-    }
+
 
     setupThemeToggle();
     setupBusinessGuide();
