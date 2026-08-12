@@ -2081,23 +2081,44 @@ def create_app() -> Flask:
             curr_symbol = curr_info["symbol"]
             curr_rate = curr_info["rate"]
             curr_name = curr_info["name"]
+            cursor = conn.execute("PRAGMA table_info(customer_churn)")
+            db_cols = [col[1] for col in cursor.fetchall()]
+
+            def resolve_col_name(target_col, default):
+                aliases = {
+                    "monthly_charges": ["monthly_charges", "monthly_charge", "charges", "charge", "amount", "spend", "cost", "price", "rate", "value", "revenue", "mrr", "adr"],
+                    "tenure_months": ["tenure_months", "tenure", "months", "length", "stay", "duration", "period", "lead_time"],
+                    "contract_type": ["contract_type", "contract", "term", "agreement", "type", "market_segment", "customer_type"],
+                    "region": ["region", "country", "state", "city", "location", "zone", "hotel"],
+                    "payment_method": ["payment_method", "payment", "method", "billing", "card"]
+                }
+                for alias in aliases.get(target_col, []):
+                    for db_col in db_cols:
+                        if db_col.lower() == alias.lower():
+                            return db_col
+                return default
+
+            charges_col = resolve_col_name("monthly_charges", "monthly_charges")
+            tenure_col = resolve_col_name("tenure_months", "tenure_months")
+            contract_col = resolve_col_name("contract_type", "contract_type")
+            region_col = resolve_col_name("region", "region")
+            payment_col = resolve_col_name("payment_method", "payment_method")
 
             # Stats query
-            stats = conn.execute(
-                """
+            stats_query = f"""
                 SELECT 
                     COUNT(*) as total_customers,
                     SUM(CASE WHEN cp.prediction_label = 'high_risk' THEN 1 ELSE 0 END) as high_risk_count,
                     SUM(CASE WHEN cp.prediction_label = 'low_risk' THEN 1 ELSE 0 END) as low_risk_count,
                     AVG(cp.predicted_probability) as avg_prob,
-                    SUM(cc.monthly_charges) as total_mrr,
-                    SUM(CASE WHEN cp.prediction_label = 'high_risk' THEN cc.monthly_charges ELSE 0 END) as risk_mrr
+                    SUM(CAST(COALESCE(cc.{charges_col}, 0) AS REAL)) as total_mrr,
+                    SUM(CASE WHEN cp.prediction_label = 'high_risk' THEN CAST(COALESCE(cc.{charges_col}, 0) AS REAL) ELSE 0 END) as risk_mrr
                 FROM churn_predictions cp
                 LEFT JOIN customer_churn cc ON cp.customer_id = cc.customer_id
                 JOIN data_sources ds ON cc.source_id = ds.source_id
                 WHERE ds.is_active = 1
-                """
-            ).fetchone()
+            """
+            stats = conn.execute(stats_query).fetchone()
 
             total_cust = stats["total_customers"] or 0
             high_risk = stats["high_risk_count"] or 0
@@ -2113,43 +2134,42 @@ def create_app() -> Flask:
             conv_risk_arr = conv_risk_mrr * 12
 
             # Top vulnerable rows
-            rows = conn.execute(
-                """
+            rows_query = f"""
                 SELECT cp.customer_id, cp.predicted_probability, cp.prediction_label,
-                       cc.monthly_charges, cc.tenure_months, cc.contract_type, cc.payment_method, cc.region
+                       cc.{charges_col} as monthly_charges, cc.{tenure_col} as tenure_months, 
+                       cc.{contract_col} as contract_type, cc.{payment_col} as payment_method, 
+                       cc.{region_col} as region
                 FROM churn_predictions cp
                 LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id
                 JOIN data_sources ds ON cc.source_id = ds.source_id
                 WHERE ds.is_active = 1
                 ORDER BY cp.predicted_probability DESC
                 LIMIT 25
-                """
-            ).fetchall()
+            """
+            rows = conn.execute(rows_query).fetchall()
 
             # Contract breakdown for charts
-            contract_rows = conn.execute(
-                """
+            contract_query = f"""
                 SELECT 
-                    COALESCE(cc.contract_type, 'unknown') as contract,
+                    COALESCE(cc.{contract_col}, 'unknown') as contract,
                     COUNT(*) as cnt,
                     SUM(CASE WHEN cp.prediction_label = 'high_risk' THEN 1 ELSE 0 END) as high_risk_cnt
                 FROM churn_predictions cp
                 LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id
                 JOIN data_sources ds ON cc.source_id = ds.source_id
                 WHERE ds.is_active = 1
-                GROUP BY cc.contract_type
-                """
-            ).fetchall()
+                GROUP BY cc.{contract_col}
+            """
+            contract_rows = conn.execute(contract_query).fetchall()
 
             # Tenure breakdown for charts
-            tenure_rows = conn.execute(
-                """
+            tenure_query = f"""
                 SELECT 
                     CASE 
-                        WHEN cc.tenure_months <= 3 THEN '0-3 Months'
-                        WHEN cc.tenure_months <= 6 THEN '4-6 Months'
-                        WHEN cc.tenure_months <= 12 THEN '7-12 Months'
-                        WHEN cc.tenure_months <= 24 THEN '13-24 Months'
+                        WHEN CAST(COALESCE(cc.{tenure_col}, 0) AS INTEGER) <= 3 THEN '0-3 Months'
+                        WHEN CAST(COALESCE(cc.{tenure_col}, 0) AS INTEGER) <= 6 THEN '4-6 Months'
+                        WHEN CAST(COALESCE(cc.{tenure_col}, 0) AS INTEGER) <= 12 THEN '7-12 Months'
+                        WHEN CAST(COALESCE(cc.{tenure_col}, 0) AS INTEGER) <= 24 THEN '13-24 Months'
                         ELSE '25+ Months'
                     END as tenure_bucket,
                     COUNT(*) as cnt,
@@ -2159,8 +2179,40 @@ def create_app() -> Flask:
                 JOIN data_sources ds ON cc.source_id = ds.source_id
                 WHERE ds.is_active = 1
                 GROUP BY tenure_bucket
-                """
-            ).fetchall()
+            """
+            tenure_rows = conn.execute(tenure_query).fetchall()
+
+            # Regional Cohort Risk Table
+            region_query = f"""
+                SELECT 
+                    COALESCE(cc.{region_col}, 'Unknown') as region,
+                    COUNT(*) as cnt,
+                    SUM(CASE WHEN cp.prediction_label = 'high_risk' THEN 1 ELSE 0 END) as high_risk_cnt,
+                    AVG(cp.predicted_probability) as avg_prob
+                FROM churn_predictions cp
+                LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id
+                JOIN data_sources ds ON cc.source_id = ds.source_id
+                WHERE ds.is_active = 1
+                GROUP BY cc.{region_col}
+                ORDER BY cnt DESC
+            """
+            region_rows = conn.execute(region_query).fetchall()
+
+            # Payment Method Attrition Table
+            payment_query = f"""
+                SELECT 
+                    COALESCE(cc.{payment_col}, 'Unknown') as payment_method,
+                    COUNT(*) as cnt,
+                    SUM(CASE WHEN cp.prediction_label = 'high_risk' THEN 1 ELSE 0 END) as high_risk_cnt,
+                    AVG(cp.predicted_probability) as avg_prob
+                FROM churn_predictions cp
+                LEFT JOIN customer_churn cc ON cc.customer_id = cp.customer_id
+                JOIN data_sources ds ON cc.source_id = ds.source_id
+                WHERE ds.is_active = 1
+                GROUP BY cc.{payment_col}
+                ORDER BY cnt DESC
+            """
+            payment_rows = conn.execute(payment_query).fetchall()
             conn.close()
 
             contract_labels_json = json.dumps([(r["contract"] or "Unknown").replace("_", " ").title() for r in contract_rows])
@@ -2169,6 +2221,35 @@ def create_app() -> Flask:
 
             tenure_labels_json = json.dumps([r["tenure_bucket"] for r in tenure_rows])
             tenure_prob_json = json.dumps([round((r["avg_prob"] or 0.0) * 100, 1) for r in tenure_rows])
+
+            # Format region and payment tables
+            region_rows_html = ""
+            for r in region_rows:
+                r_pct = (r["high_risk_cnt"] / r["cnt"] * 100) if r["cnt"] > 0 else 0
+                avg_p = (r["avg_prob"] or 0) * 100
+                region_rows_html += f"""
+                <tr>
+                    <td><strong>{r['region']}</strong></td>
+                    <td>{r['cnt']}</td>
+                    <td>{r['high_risk_cnt']}</td>
+                    <td><strong>{r_pct:.1f}%</strong></td>
+                    <td>{avg_p:.1f}%</td>
+                </tr>
+                """
+
+            payment_rows_html = ""
+            for r in payment_rows:
+                p_pct = (r["high_risk_cnt"] / r["cnt"] * 100) if r["cnt"] > 0 else 0
+                avg_p = (r["avg_prob"] or 0) * 100
+                payment_rows_html += f"""
+                <tr>
+                    <td><strong>{r['payment_method']}</strong></td>
+                    <td>{r['cnt']}</td>
+                    <td>{r['high_risk_cnt']}</td>
+                    <td><strong>{p_pct:.1f}%</strong></td>
+                    <td>{avg_p:.1f}%</td>
+                </tr>
+                """
 
             # Format rows table
             table_rows_html = ""
@@ -2473,8 +2554,91 @@ def create_app() -> Flask:
             </div>
         </div>
 
-        <!-- Interactive Visual Analytics & Charts Section -->
-        <h2 class="section-title">3. Interactive Visual Analytics & Telemetry Charts</h2>
+        <!-- Section 3: Cohort Segment Breakdown Analysis -->
+        <h2 class="section-title">3. Cohort Segment Breakdown Analysis</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+            <div class="report-card" style="margin-bottom: 0;">
+                <h3 style="margin-top:0; font-family:'Outfit', sans-serif; font-size: 1.05rem;">Regional Risk Concentration</h3>
+                <p style="color: var(--muted); font-size: 0.8rem; margin-top: 0;">Attritions and risk scores mapped across active business regions:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Region</th>
+                            <th>Total Accounts</th>
+                            <th>High Risk Accounts</th>
+                            <th>Cohort Churn %</th>
+                            <th>Avg Risk Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {region_rows_html}
+                    </tbody>
+                </table>
+            </div>
+            <div class="report-card" style="margin-bottom: 0;">
+                <h3 style="margin-top:0; font-family:'Outfit', sans-serif; font-size: 1.05rem;">Billing / Payment Method Exposure</h3>
+                <p style="color: var(--muted); font-size: 0.8rem; margin-top: 0;">Risk segmentation mapping based on active payment structures:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Payment Method</th>
+                            <th>Total Accounts</th>
+                            <th>High Risk Accounts</th>
+                            <th>Cohort Churn %</th>
+                            <th>Avg Risk Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {payment_rows_html}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 4: Strategic Revenue Recovery Scenarios -->
+        <h2 class="section-title">4. Strategic Revenue Recovery Scenarios ({currency_code})</h2>
+        <div class="report-card">
+            <p style="margin-top:0; color: var(--muted); font-size: 0.88rem;">
+                Projected ARR savings and monthly operating margins recovered based on proactive retention playbooks:
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Recovery Scenario</th>
+                        <th>Target Recovery Rate</th>
+                        <th>Projected Monthly Recovery ({curr_symbol})</th>
+                        <th>Projected Annualized Savings ({curr_symbol})</th>
+                        <th>Prescribed Core Action Plan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Tactical Retention Outreach</strong></td>
+                        <td>15% Churn Recovery</td>
+                        <td>{curr_symbol}{conv_risk_mrr * 0.15:,.2f}</td>
+                        <td style="color: var(--success); font-weight: 700;">{curr_symbol}{conv_risk_arr * 0.15:,.2f}</td>
+                        <td>Initiate automated CSM email alerts and fast check-in calls.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Strategic Migration Campaign</strong></td>
+                        <td>30% Churn Recovery</td>
+                        <td>{curr_symbol}{conv_risk_mrr * 0.30:,.2f}</td>
+                        <td style="color: var(--success); font-weight: 700;">{curr_symbol}{conv_risk_arr * 0.30:,.2f}</td>
+                        <td>Offer month-to-month users a 15% discount for 1-year commitments.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Optimal VIP Onboarding</strong></td>
+                        <td>50% Churn Recovery</td>
+                        <td>{curr_symbol}{conv_risk_mrr * 0.50:,.2f}</td>
+                        <td style="color: var(--success); font-weight: 700;">{curr_symbol}{conv_risk_arr * 0.50:,.2f}</td>
+                        <td>Redesign onboarding walkthroughs and simplify forms.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 5: Interactive Visual Analytics & Charts Section -->
+        <h2 class="section-title">5. Interactive Visual Analytics & Telemetry Charts</h2>
         <div class="report-card">
             <p style="margin-top:0; color: var(--muted); font-size: 0.88rem;">
                 Visual cohort risk distribution, financial loss exposure in {curr_name} ({curr_symbol}), contract risk concentration, and tenure lifecycle progression curve:
@@ -2507,8 +2671,8 @@ def create_app() -> Flask:
             </div>
         </div>
 
-        <!-- Section 4: Actionable Solutions -->
-        <h2 class="section-title">4. Prescriptive Solutions & Retention Playbook</h2>
+        <!-- Section 6: Actionable Solutions -->
+        <h2 class="section-title">6. Prescriptive Solutions & Retention Playbook</h2>
         <div class="report-card">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                 <div class="cause-box" style="border-left: 3px solid var(--success);">
@@ -2530,8 +2694,8 @@ def create_app() -> Flask:
             </div>
         </div>
 
-        <!-- Section 5: Data Directory -->
-        <h2 class="section-title">5. Vulnerable Accounts Evidence & Action Directory</h2>
+        <!-- Section 7: Data Directory -->
+        <h2 class="section-title">7. Vulnerable Accounts Evidence & Action Directory</h2>
         <div class="report-card">
             <p style="margin-top:0; color: var(--muted); font-size: 0.88rem;">
                 Showing the top {len(rows)} most vulnerable customer accounts requiring immediate intervention:
