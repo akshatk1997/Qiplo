@@ -3055,6 +3055,32 @@ body.dark-theme .ghostBtn:hover {
     .financialStatsGrid {
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
     }
+    .problem-card {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        align-items: stretch !important;
+        text-align: left !important;
+    }
+    .fix-problem-btn {
+        width: 100% !important;
+        text-align: center !important;
+    }
+    .copilotBox {
+        height: 420px !important;
+    }
+    .msg {
+        max-width: 90% !important;
+        font-size: 0.88rem !important;
+        padding: 10px 14px !important;
+    }
+    #tab-copilot .paneHead {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+    .apiKeyWrapper input[type="password"] {
+        width: 100% !important;
+    }
 }
 
 /* Glassmorphic Welcome Modal Overlay */
