@@ -86,6 +86,28 @@ async function loadDashboard() {
 
         predictionData = payload.predictions || [];
         
+        // Filter out active closed loop resolutions belonging to previous sessions or different datasets
+        if (activeResolutionLoops && activeResolutionLoops.length > 0) {
+            const currentCustomerIds = new Set(predictionData.map(c => c.customer_id));
+            const validProblemIds = new Set([
+                'rev_concentration', 'churn_risk', 'regional_performance', 'margin_leakage', 'opp_scoring_lag',
+                'cash_forecast_var', 'receivables_aging', 'payment_defaults', 'working_cap_tied', 'payables_concentration',
+                'safety_stock_bloat', 'logistics_delays', 'supplier_default_risk', 'demand_forecast_misalign', 'operational_defect_rate',
+                'day7_dropoff', 'feature_adoption_lag', 'billing_funnel_attrition', 'retention_decline', 'prioritization_misalign'
+            ]);
+
+            const beforeLen = activeResolutionLoops.length;
+            activeResolutionLoops = activeResolutionLoops.filter(loop => {
+                if (loop.id && !validProblemIds.has(loop.id) && loop.id !== 'GLOBAL') {
+                    return currentCustomerIds.has(loop.id);
+                }
+                return validProblemIds.has(loop.id) || loop.id === 'GLOBAL';
+            });
+            if (activeResolutionLoops.length !== beforeLen) {
+                localStorage.setItem('active_resolution_loops', JSON.stringify(activeResolutionLoops));
+            }
+        }
+        
         // Render model metrics
         if (payload.model_metrics) {
             const acc = document.getElementById('modelAccuracy');
