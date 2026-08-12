@@ -32,34 +32,41 @@ CONFIG_PATH = BASE_DIR / "config" / "company_config.json"
 
 
 def get_db_path() -> Path:
-    """Resolve the database path per call, supporting Vercel serverless & read-only filesystems."""
+    """Resolve the database path per call, supporting Vercel serverless & session isolation."""
     if "CHURN_DB" in os.environ:
         return Path(os.environ["CHURN_DB"])
 
-    base_db_path = BASE_DIR / "churn_analysis.db"
+    session_suffix = ""
+    try:
+        from flask import request
+        if request:
+            sess_id = request.cookies.get("qiplo_session_id") or request.headers.get("X-Session-ID") or request.args.get("session_id")
+            if sess_id:
+                clean_sess = "".join(c for c in sess_id if c.isalnum() or c in ("-", "_"))
+                if clean_sess:
+                    session_suffix = f"_{clean_sess}"
+    except Exception:
+        pass
+
+    base_db_name = f"churn_analysis{session_suffix}.db"
+    base_db_path = BASE_DIR / base_db_name
     
-    # Detect Vercel / AWS Lambda / Serverless read-only environments
     is_serverless = bool(os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"))
     
     if is_serverless:
         writable_dir = Path("/tmp") if os.name != "nt" else Path(tempfile.gettempdir())
-        writable_db_path = writable_dir / "churn_analysis.db"
-        if not writable_db_path.exists() and base_db_path.exists():
+        writable_db_path = writable_dir / base_db_name
+        master_template = BASE_DIR / "churn_analysis.db"
+        if not writable_db_path.exists() and master_template.exists():
             try:
                 temp_path = writable_db_path.with_suffix(".tmp")
-                shutil.copy2(base_db_path, temp_path)
+                shutil.copy2(master_template, temp_path)
                 os.chmod(temp_path, 0o666)
                 os.replace(temp_path, writable_db_path)
             except Exception:
                 pass
-        if writable_db_path.exists():
-            try:
-                os.chmod(writable_db_path, 0o666)
-            except Exception:
-                pass
         return writable_db_path
 
-    # Test if project directory is writable; fallback to temp dir if read-only
     try:
         test_file = BASE_DIR / ".writable_test"
         test_file.touch()
@@ -67,18 +74,14 @@ def get_db_path() -> Path:
         return base_db_path
     except (PermissionError, OSError):
         writable_dir = Path("/tmp") if os.name != "nt" else Path(tempfile.gettempdir())
-        writable_db_path = writable_dir / "churn_analysis.db"
-        if not writable_db_path.exists() and base_db_path.exists():
+        writable_db_path = writable_dir / base_db_name
+        master_template = BASE_DIR / "churn_analysis.db"
+        if not writable_db_path.exists() and master_template.exists():
             try:
                 temp_path = writable_db_path.with_suffix(".tmp")
-                shutil.copy2(base_db_path, temp_path)
+                shutil.copy2(master_template, temp_path)
                 os.chmod(temp_path, 0o666)
                 os.replace(temp_path, writable_db_path)
-            except Exception:
-                pass
-        if writable_db_path.exists():
-            try:
-                os.chmod(writable_db_path, 0o666)
             except Exception:
                 pass
         return writable_db_path
@@ -115,12 +118,12 @@ def get_connection() -> sqlite3.Connection:
 
 def create_app() -> Flask:
     app = Flask(__name__, template_folder=str(BASE_DIR / "templates"), static_folder=str(BASE_DIR / "static"))
-    app.config["DB_INITIALIZED"] = False
+    app.config["DB_INITIALIZED_PATHS"] = set()
 
     @app.before_request
     def initialize_database() -> None:
         db_p = get_db_path()
-        needs_init = not app.config.get("DB_INITIALIZED") or not db_p.exists()
+        needs_init = str(db_p) not in app.config["DB_INITIALIZED_PATHS"] or not db_p.exists()
         if not needs_init:
             try:
                 conn = sqlite3.connect(db_p)
@@ -134,7 +137,7 @@ def create_app() -> Flask:
 
         if needs_init:
             ensure_database(db_p, SCHEMA_PATH, config=load_config(CONFIG_PATH))
-            app.config["DB_INITIALIZED"] = True
+            app.config["DB_INITIALIZED_PATHS"].add(str(db_p))
 
     @app.before_request
     def security_waf_filter():

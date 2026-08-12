@@ -1,3 +1,19 @@
+// Ensure session ID is initialized and set as a cookie for backend database isolation
+(function() {
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+    let sessId = getCookie('qiplo_session_id');
+    if (!sessId) {
+        sessId = 'sess_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
+        const expiry = new Date();
+        expiry.setDate(expiry.getDate() + 30);
+        document.cookie = `qiplo_session_id=${sessId}; expires=${expiry.toUTCString()}; path=/; SameSite=Lax`;
+    }
+})();
+
 // Web Audio Synth module disabled by user preference
 const AudioFeedback = {
     toggle: () => {},
@@ -3891,6 +3907,7 @@ async function triggerQuickQA(question) {
         box.innerHTML = `<div class="status error">Could not connect to database analyst: ${e}</div>`;
     }
 }
+window.triggerQuickQA = triggerQuickQA;
 
 setupCopilot();
 
