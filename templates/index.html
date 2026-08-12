@@ -79,54 +79,7 @@
         </div>
     </header>
 
-    <!-- Decision Intelligence Pipeline Flowchart -->
-    <div class="decision-pipeline-bar">
-        <div class="pipeline-title">
-            <i data-lucide="layers" class="lucide-icon" style="color: var(--accent-2); width: 14px; height: 14px;"></i>
-            <span>DECISION PIPELINE</span>
-        </div>
-        <div class="pipeline-flow">
-            <div class="pipeline-step" onclick="focusPipelineStep('data')" title="Click to view Customer Data Sources">
-                <span class="step-num">01</span>
-                <span class="step-label">DATA</span>
-            </div>
-            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
-            <div class="pipeline-step" onclick="focusPipelineStep('ai_analysis')" title="Click to view Machine Learning Model metrics">
-                <span class="step-num">02</span>
-                <span class="step-label">AI ANALYSIS</span>
-            </div>
-            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
-            <div class="pipeline-step" onclick="focusPipelineStep('problem_detection')" title="Click to view High Risk Customer Segments">
-                <span class="step-num">03</span>
-                <span class="step-label">PROBLEM DETECTION</span>
-            </div>
-            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
-            <div class="pipeline-step" onclick="focusPipelineStep('root_cause')" title="Click to view Key Risk Drivers">
-                <span class="step-num">04</span>
-                <span class="step-label">ROOT CAUSE</span>
-            </div>
-            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
-            <div class="pipeline-step" onclick="focusPipelineStep('business_impact')" title="Click to view expected ARR loss and ROI Simulator">
-                <span class="step-num">05</span>
-                <span class="step-label">BUSINESS IMPACT</span>
-            </div>
-            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
-            <div class="pipeline-step" onclick="focusPipelineStep('recommendation')" title="Click to view Playbooks & AI advisor recommendations">
-                <span class="step-num">06</span>
-                <span class="step-label">RECOMMENDATION</span>
-            </div>
-            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
-            <div class="pipeline-step" onclick="focusPipelineStep('action')" title="Click to view CSM Task Assignments & Campaigns">
-                <span class="step-num">07</span>
-                <span class="step-label">ACTION</span>
-            </div>
-            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="lucide-icon"></i></div>
-            <div class="pipeline-step" onclick="focusPipelineStep('measure_result')" title="Click to view Compliance Logs & Audit Trail">
-                <span class="step-num">08</span>
-                <span class="step-label">MEASURE RESULT</span>
-            </div>
-        </div>
-    </div>
+
 
     <main class="studio">
         <aside class="sourcesPane">
@@ -1346,65 +1299,99 @@
 
     <!-- Tool Information Modal -->
     <div id="toolInfoModal" class="magnificZoomModal hidden" onclick="closeToolInfo()">
-        <div class="magnificZoomContent" onclick="event.stopPropagation()" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; text-align: left; box-shadow: var(--shadow);">
+        <div class="magnificZoomContent" onclick="event.stopPropagation()" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; max-width: 700px; width: 95%; max-height: 90vh; overflow-y: auto; text-align: left; box-shadow: var(--shadow);">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 18px;">
-                <h3 style="margin: 0; font-family: var(--font-heading); font-size: 1.3rem; color: var(--accent); display: flex; align-items: center; gap: 8px;"><i data-lucide="info" class="lucide-icon"></i> Qiplo — Business Decision Intelligence Guide A to Z</h3>
+                <h3 style="margin: 0; font-family: var(--font-heading); font-size: 1.3rem; color: var(--accent); display: flex; align-items: center; gap: 8px;"><i data-lucide="info" class="lucide-icon"></i> Qiplo — Platform Operations & Intelligence Guide</h3>
                 <button onclick="closeToolInfo()" style="background: transparent; border: none; color: var(--muted); font-size: 1.6rem; cursor: pointer; line-height: 1;">&times;</button>
             </div>
             
             <div style="font-size: 0.88rem; line-height: 1.55; color: var(--text);">
-                <p style="margin-top: 0; margin-bottom: 12px;">
-                    <strong>Qiplo</strong> is a Business Decision Intelligence Platform. It enables customer success managers, finance directors, and executives to proactively predict which accounts are about to cancel their subscriptions, assess the associated financial impact, and trigger recovery campaigns.
+                <p style="margin-top: 0; margin-bottom: 18px;">
+                    <strong>Qiplo</strong> is a state-of-the-art Business Decision Intelligence Platform. It leverages advanced predictive models to evaluate risk, identify revenue leakages, prioritize root-cause segments, and drive automated closed-loop resolution playbooks.
                 </p>
 
-                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">📊 1. Overview Dashboard</h4>
-                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
-                    <strong>Capabilities:</strong> Real-time risk distribution metrics, at-risk MRR tracking, service performance charts, and Tabular Hybrid Transformer machine learning model metrics (Accuracy, Precision, Recall, and ROC AUC).<br/>
-                    <strong>Usecase:</strong> Provides executives with a single-pane-of-glass overview of company revenue health and predictions reliability.
+                <!-- Decision Intelligence Pipeline Section -->
+                <h3 style="color: var(--accent-2); margin: 0 0 12px; font-family: var(--font-heading); font-size: 1.05rem; display: flex; align-items: center; gap: 6px;">
+                    <i data-lucide="layers" class="lucide-icon" style="width: 16px; height: 16px;"></i> Interactive 8-Step Decision Pipeline
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('data')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">01 — DATA</span>
+                        <span style="font-size: 0.78rem; color: var(--muted);">Import spreadsheet files, clean PII credentials, and standardize column currencies.</span>
+                    </div>
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('ai_analysis')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">02 — AI ANALYSIS</span>
+                        <span style="font-size: 0.78rem; color: var(--muted);">Run ML models to predict customer churn risks and compile accuracy telemetry.</span>
+                    </div>
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('problem_detection')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">03 — PROBLEM DETECTION</span>
+                        <span style="font-size: 0.78rem; color: var(--muted);">Scan for top business health alerts (Revenue concentration, churn risk, inventory).</span>
+                    </div>
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('root_cause')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">04 — ROOT CAUSE</span>
+                        <span style="font-size: 0.78rem; color: var(--muted);">Isolate leading friction drivers (e.g. Month-to-Month contracts, regional conversion drops).</span>
+                    </div>
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('business_impact')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">05 — BUSINESS IMPACT</span>
+                        <span style="font-size: 0.78rem; color: var(--muted);">Quantify expected ARR loss and simulate target loyalty coupon campaigns.</span>
+                    </div>
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('recommendation')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">06 — RECOMMENDATION</span>
+                        <span style="font-size: 0.78rem; color: var(--muted);">Generate prescriptive playbooks and simulate sandbox scenario outcomes.</span>
+                    </div>
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('action')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">07 — ACTION</span>
+                        <span style="font-size: 0.78rem; color: var(--muted);">Assign account task owners, fast-track SLAs, and dispatch CRM webhook triggers.</span>
+                    </div>
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('measure_result')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">08 — MEASURE RESULT</span>
+                        <span style="font-size: 0.78rem; color: var(--muted);">Export compliance audit trails, generate PowerPoint slide decks, and track logs.</span>
+                    </div>
+                </div>
+
+                <!-- Platform Capabilities Section -->
+                <h3 style="color: var(--accent-2); margin: 0 0 12px; font-family: var(--font-heading); font-size: 1.05rem; display: flex; align-items: center; gap: 6px;">
+                    <i data-lucide="layout-grid" class="lucide-icon" style="width: 16px; height: 16px;"></i> Workspace Hub Capabilities & Architecture
+                </h3>
+                
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">📊 Overview Dashboard</h4>
+                <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
+                    Monitors overall business health status cards (Revenue, Customer Retention, Inventory, Receivables) and lists critical problem alerts with one-click prescriptive resolution pathways.
                 </p>
 
-                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">🎯 2. Actions Hub</h4>
-                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
-                    <strong>Capabilities:</strong> Role-based (Sales, Support, Executive, Manager) retention strategy panels displaying live analyzed diagnostics and performance recommendations based on dataset statistics.<br/>
-                    <strong>Usecase:</strong> Aligns cross-functional departments on recovery campaigns to prevent voluntary and involuntary churn.
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">🎯 Actions & Resolution Hub</h4>
+                <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
+                    Empowers cross-functional team roles (Sales, Support, Executive, Manager) with dedicated action panels, automatic email dispatchers, and task managers.
                 </p>
 
-                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">👥 3. Customers Database</h4>
-                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
-                    <strong>Capabilities:</strong> Granular results database viewer with live customer name/ID text filtering and risk classification indicators.<br/>
-                    <strong>Usecase:</strong> Allows Customer Success Managers to query specific accounts, review history, and view active manager assignments.
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">👥 Customers Database</h4>
+                <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
+                    Real-time tabular grid populated with active customer risk scores, confidence intervals, risk driver tags, and owner allocations.
                 </p>
 
-                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">💼 4. Business Hub (Simulator & CRM Sync)</h4>
-                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
-                    <strong>Capabilities:</strong> Interactive ROI campaign simulator sliders, CRM webhook connectors (Salesforce, HubSpot, Stripe), and automated CSV report delivery schedulers.<br/>
-                    <strong>Usecase:</strong> Models retention coupon payout margins, automates CRM software streams, and schedules deliveries.
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">💼 Business Hub & ROI Simulator</h4>
+                <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
+                    Houses the interactive campaign simulator, Webhook connector registers (Salesforce, Stripe), and automated report delivery options.
                 </p>
 
-                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">✨ 5. Presentation Slide Exporter</h4>
-                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
-                    <strong>Capabilities:</strong> Automated slide exporter translating raw analytics summaries into high-quality PowerPoint PPTX decks with responsive layouts.<br/>
-                    <strong>Usecase:</strong> Empowers corporate directors to present polished retention pitches to board members and stakeholders.
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">✨ Slide Presentation Exporter</h4>
+                <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
+                    Compiles dynamic presentation slide layouts based on your current database metrics and exports PowerPoint PPTX files.
                 </p>
 
-                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">🧠 6. Qiplo Copilot</h4>
-                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
-                    <strong>Capabilities:</strong> Interactive AI assistant responding to natural language questions with SQL queries.<br/>
-                    <strong>Usecase:</strong> Accelerates analytical lookups by removing SQL coding barriers for business users.
-                </p>
-
-                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">📖 7. Guide Book</h4>
-                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
-                    <strong>Capabilities:</strong> Reference glossary defining standard business parameters (MRR, ARR, LTV, CAC, NRR), legal checklists, and growth playbooks.<br/>
-                    <strong>Usecase:</strong> Keeps team members aligned on corporate standards and regulatory compliance policies.
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">🧠 AI Advisor Copilot</h4>
+                <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
+                    Converts plain natural language questions into accurate SQL queries and text summaries of your datasets in real-time.
                 </p>
                 
-                <h4 style="color: var(--accent-2); margin: 12px 0 4px; font-family: var(--font-heading); font-size: 0.95rem;">📜 8. Licensing & Privacy-by-Design</h4>
-                <p style="margin: 0 0 10px; color: var(--muted); font-size: 0.82rem;">
-                    <strong>MIT Open Source License:</strong> Qiplo is released under the MIT License—100% free, royalty-free, and claims-free for commercial or enterprise-wide usage.<br/>
-                    <strong>Data Sovereignty & Privacy:</strong> Supports GDPR/CCPA readiness through local storage (no remote tracking), data minimization, and cascading SQL deletion pathways.<br/>
-                    <strong>Deployment Hardening:</strong> Outbound AI requests can be routed through an authenticated proxy pool to shield the host IP, supporting standard SOC 2/ISO 27001 deployment requirements.<br/>
-                    <strong>Anonymization Tooling:</strong> Automatically drops candidate PII column fields during file import and replaces them with anonymous identifier hashes.
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">📖 Guide Book</h4>
+                <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
+                    Provides terms definition glossaries, legal CCPA/GDPR compliance checklists, and training models details.
+                </p>
+
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">📜 Licensing & Data Privacy</h4>
+                <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
+                    Released under the MIT License — free for enterprise-wide use. Outbound API requests can be routed through an authenticated proxy pool to shield the host IP.
                 </p>
             </div>
             
