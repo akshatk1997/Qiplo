@@ -2113,11 +2113,33 @@ async function generatePresentationDeck() {
         const slideCountEl = document.getElementById('presSlideCount');
         const numSlides = slideCountEl ? parseInt(slideCountEl.value) : 5;
 
-        // Instant dynamic client-side generation using loaded database metrics
-        const fallbackSlides = generateLocalSlides(numSlides, customPrompt, true);
-        presentationSlides = fallbackSlides;
+        // Try calling the AI enabled presentation generator on the backend
+        try {
+            const res = await safeFetch('/api/presentation/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    custom_prompt: customPrompt,
+                    num_slides: numSlides
+                })
+            });
+            if (res.ok) {
+                const payload = await res.json();
+                if (payload && payload.slides && payload.slides.length > 0) {
+                    presentationSlides = payload.slides;
+                } else {
+                    presentationSlides = generateLocalSlides(numSlides, customPrompt, true);
+                }
+            } else {
+                presentationSlides = generateLocalSlides(numSlides, customPrompt, true);
+            }
+        } catch (apiErr) {
+            console.warn("AI presentation API failed, falling back to local dataset generator:", apiErr);
+            presentationSlides = generateLocalSlides(numSlides, customPrompt, true);
+        }
+
         currentSlideIndex = 0;
-        renderSlides(fallbackSlides);
+        renderSlides(presentationSlides);
 
         viewport.classList.remove('hidden');
         prevBtn.classList.remove('hidden');
@@ -2133,7 +2155,7 @@ async function generatePresentationDeck() {
         status.classList.add('hidden');
         updateSlideView();
     } catch (e) {
-        console.error("Instant presentation generation failed:", e);
+        console.error("Presentation generation failed:", e);
     } finally {
         genBtn.disabled = false;
         genBtn.textContent = 'Generate AI Deck';
