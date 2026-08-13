@@ -2966,6 +2966,7 @@ body.dark-theme .ghostBtn:hover {
         padding: 0 !important;
         margin-left: auto;
         flex-wrap: nowrap !important;
+        flex-shrink: 0 !important;
     }
     .sloganBadge, .appSub {
         display: none !important;
@@ -2981,6 +2982,7 @@ body.dark-theme .ghostBtn:hover {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
+        flex-shrink: 0 !important;
     }
     #companyNameInput {
         order: 1 !important;
@@ -2993,6 +2995,8 @@ body.dark-theme .ghostBtn:hover {
     }
     .mobile-actions-menu {
         order: 3 !important;
+        flex-shrink: 0 !important;
+        display: inline-block !important;
     }
     .themeToggleBtn svg, .mobile-menu-btn svg {
         width: 18px !important;
