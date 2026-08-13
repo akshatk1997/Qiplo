@@ -2994,6 +2994,11 @@ body.dark-theme .ghostBtn:hover {
     .mobile-actions-menu {
         order: 3 !important;
     }
+    .themeToggleBtn svg, .mobile-menu-btn svg {
+        width: 18px !important;
+        height: 18px !important;
+        display: block !important;
+    }
     
     /* Make sidebars and tables space-efficient for mobile layout */
     .sourcesPane .chartBlock {
