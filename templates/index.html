@@ -67,7 +67,7 @@
             <button id="exportTableauBtn" class="ghostBtn" type="button">Tableau</button>
             <button id="exportPowerBiBtn" class="ghostBtn" type="button">Power BI</button>
             <button id="exportExcelBtn" class="ghostBtn" type="button">Excel</button>
-            <button id="headerGuideBtn" class="ghostBtn" onclick="openToolInfo()" type="button" style="display: inline-flex; align-items: center; gap: 6px;">
+            <button id="headerGuideBtn" class="ghostBtn" onclick="switchTab('guide')" type="button" style="display: inline-flex; align-items: center; gap: 6px;">
                 <i data-lucide="book-marked" class="lucide-icon" style="width: 14px; height: 14px;"></i> Guide
             </button>
             <button id="headerReloadBtn" class="ghostBtn" onclick="reloadData()" type="button" style="display: inline-flex; align-items: center; gap: 6px;" title="Refresh & Sync Telemetry Data">
@@ -98,7 +98,7 @@
                     <button class="dropdown-item" onclick="document.getElementById('exportExcelBtn').click()">
                         <i data-lucide="file-spreadsheet" class="lucide-icon"></i> Excel
                     </button>
-                    <button class="dropdown-item" onclick="openToolInfo()">
+                    <button class="dropdown-item" onclick="switchTab('guide')">
                         <i data-lucide="book-marked" class="lucide-icon"></i> Guide
                     </button>
                     <button class="dropdown-item" onclick="reloadData()">
@@ -168,6 +168,7 @@
                 <button class="tab" data-tab="sandbox" type="button"><i data-lucide="flask-conical" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Sandbox</button>
                 <button class="tab" data-tab="presentation" type="button">Presentation</button>
                 <button class="tab" data-tab="copilot" type="button"><i data-lucide="brain-circuit" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Copilot</button>
+                <button class="tab" data-tab="guide" type="button"><i data-lucide="book-open" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Guide</button>
             </div>
 
             <div class="tabBody" id="tab-overview">
@@ -1154,7 +1155,7 @@
             </div>
 
             <!-- Business Terms & Corporate Policies Knowledge Guide -->
-            <div class="tabBody hidden" id="tab-guide" style="display: none !important;">
+            <div class="tabBody hidden" id="tab-guide">
                 <div class="guideHub" style="display: flex; flex-direction: column; gap: 20px;">
                     <!-- Guide Header & Search Filter -->
                     <div class="guideHeaderCard" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 24px; box-shadow: var(--shadow);">
