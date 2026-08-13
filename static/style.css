@@ -2946,7 +2946,8 @@ body.dark-theme .ghostBtn:hover {
         justify-content: space-between !important;
         gap: 10px !important;
         padding: 10px 16px !important;
-        height: 62px !important;
+        min-height: 62px !important;
+        height: auto !important;
         overflow: visible !important;
     }
     .topbarLeft {
@@ -2982,9 +2983,38 @@ body.dark-theme .ghostBtn:hover {
         justify-content: center !important;
     }
     #companyNameInput {
-        width: 100px !important;
-        font-size: 0.8rem !important;
+        order: 1 !important;
+        width: 110px !important;
+        font-size: 0.78rem !important;
         height: 38px !important;
+    }
+    .themeToggleBtn {
+        order: 2 !important;
+    }
+    .mobile-actions-menu {
+        order: 3 !important;
+    }
+    
+    /* Make sidebars and tables space-efficient for mobile layout */
+    .sourcesPane .chartBlock {
+        display: none !important;
+    }
+    .sourcesPane .sourceMeta {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 6px !important;
+        margin-top: 12px !important;
+        padding-top: 12px !important;
+    }
+    .sourcesPane .sourceMetaRow {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        padding: 6px 4px !important;
+        font-size: 0.7rem !important;
+        justify-content: center !important;
+    }
+    .sourcesPane .sourceMetaRow strong {
+        font-size: 0.8rem !important;
     }
     
     /* Studio layout stacked view */
@@ -3378,4 +3408,10 @@ body.light-theme .dropdown-item {
 body.light-theme .dropdown-item:hover {
     background: rgba(79, 70, 229, 0.05) !important;
     color: var(--accent) !important;
+}
+
+@media (max-width: 375px) {
+    #companyNameInput {
+        width: 85px !important;
+    }
 }
