@@ -3134,11 +3134,11 @@ body.dark-theme .ghostBtn:hover {
     pointer-events: auto;
 }
 
-/* Modal Card */
+/* Modal Card - Dark Mode (Default) */
 .welcome-modal-card {
-    background: rgba(20, 20, 30, 0.7);
+    background: #0b0f19;
     border: 1px solid rgba(0, 245, 255, 0.25);
-    box-shadow: 0 20px 50px rgba(0, 245, 255, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 245, 255, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.05);
     border-radius: 20px;
     padding: 34px;
     width: 90%;
@@ -3189,7 +3189,7 @@ body.dark-theme .ghostBtn:hover {
 
 /* Body Text */
 .welcome-body p {
-    color: var(--muted);
+    color: #94a3b8;
     font-size: 0.9rem;
     line-height: 1.6;
     margin: 0 0 20px 0;
@@ -3202,7 +3202,7 @@ body.dark-theme .ghostBtn:hover {
     gap: 10px;
     margin-bottom: 26px;
     text-align: left;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
     padding: 14px 18px;
     border-radius: 12px;
@@ -3212,7 +3212,7 @@ body.dark-theme .ghostBtn:hover {
     align-items: center;
     gap: 10px;
     font-size: 0.85rem;
-    color: var(--text);
+    color: #f8fafc;
     font-weight: 500;
 }
 .bullet-item i {
@@ -3250,6 +3250,43 @@ body.dark-theme .ghostBtn:hover {
 @keyframes welcome-pulse {
     0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.9; }
     50% { transform: scale(1.1) rotate(15deg); opacity: 1; }
+}
+
+/* Light Theme Overrides for Welcome Modal */
+body.light-theme .welcome-modal-overlay {
+    background: rgba(243, 244, 246, 0.85);
+}
+body.light-theme .welcome-modal-card {
+    background: #ffffff;
+    border: 1px solid rgba(79, 70, 229, 0.2);
+    box-shadow: 0 20px 50px rgba(79, 70, 229, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+body.light-theme .welcome-header h2 {
+    background: linear-gradient(135deg, #0f172a 30%, #4f46e5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+body.light-theme .welcome-body p {
+    color: #475569;
+}
+body.light-theme .welcome-bullets {
+    background: #f3f4f6;
+    border: 1px solid rgba(17, 24, 39, 0.08);
+}
+body.light-theme .bullet-item {
+    color: #0f172a;
+}
+body.light-theme .welcome-enter-btn {
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.2);
+    color: #ffffff;
+}
+body.light-theme .welcome-icon {
+    color: #4f46e5;
+    filter: drop-shadow(0 0 6px rgba(79, 70, 229, 0.3));
+}
+body.light-theme .bullet-item i {
+    color: #4f46e5;
 }
 
 /* Mobile Actions Dropdown Menu */
