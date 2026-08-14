@@ -219,6 +219,36 @@ async function loadDashboard() {
         try { await fetchNotes(); } catch (e) { console.error('fetchNotes failed', e); }
         try { await loadBusinessAnalytics(); } catch (e) { console.error('loadBusinessAnalytics failed', e); }
         try { selectSpecialModule(currentSpecialSuite || 'finance'); } catch (e) { console.error('selectSpecialModule failed', e); }
+
+        // Initialize sandbox sliders with actual averages of the active dataset
+        if (payload.sandbox_averages) {
+            const avgs = payload.sandbox_averages;
+            const updateSlider = (sliderId, valId, val, suffix = '') => {
+                const slider = document.getElementById(sliderId);
+                if (slider) {
+                    slider.value = Math.round(val);
+                    const valEl = document.getElementById(valId);
+                    if (valEl) valEl.textContent = Math.round(val) + suffix;
+                }
+            };
+            updateSlider('sandboxTenure', 'valSandboxTenure', avgs.tenure_months, ' months');
+            updateSlider('sandboxTickets', 'valSandboxTickets', avgs.support_tickets, ' tickets');
+            updateSlider('sandboxSatisfaction', 'valSandboxSatisfaction', avgs.customer_satisfaction_score, ' / 5');
+            updateSlider('sandboxDelays', 'valSandboxDelays', avgs.payment_delays, ' days');
+            updateSlider('sandboxUsage', 'valSandboxUsage', avgs.product_usage, ' hours');
+            updateSlider('sandboxComplaints', 'valSandboxComplaints', avgs.complaint_count, ' complaints');
+            const chargesSlider = document.getElementById('sandboxCharges');
+            if (chargesSlider) {
+                chargesSlider.value = Math.round(avgs.monthly_charges);
+                const chargesValEl = document.getElementById('valSandboxCharges');
+                if (chargesValEl) {
+                    chargesValEl.textContent = currentCurrencySymbol + (Number(chargesSlider.value) * currentCurrencyRate).toFixed(2);
+                }
+            }
+            if (typeof runSandboxSimulation === 'function') {
+                runSandboxSimulation();
+            }
+        }
     } catch (error) {
         console.error('Dashboard load failed', error);
     }

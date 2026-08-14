@@ -679,6 +679,38 @@ def create_app() -> Flask:
 
         model_metrics = load_model_metrics()
 
+        # Calculate averages for sandbox initialization from the active source
+        sandbox_averages = {}
+        try:
+            conn_avg = get_connection()
+            cols_avg = customer_columns(conn_avg)
+            defaults = {
+                "tenure_months": 24.0,
+                "monthly_charges": 70.0,
+                "support_tickets": 0.0,
+                "customer_satisfaction_score": 4.0,
+                "payment_delays": 0.0,
+                "product_usage": 15.0,
+                "complaint_count": 0.0
+            }
+            for col_name in ("tenure_months", "monthly_charges", "support_tickets", 
+                             "customer_satisfaction_score", "payment_delays", "product_usage", "complaint_count"):
+                if col_name in cols_avg:
+                    avg_val = conn_avg.execute(
+                        f"""
+                        SELECT AVG(CAST(cc."{col_name}" AS REAL))
+                        FROM customer_churn cc
+                        JOIN data_sources ds ON cc.source_id = ds.source_id
+                        WHERE ds.is_active = 1
+                        """
+                    ).fetchone()[0]
+                    sandbox_averages[col_name] = round(float(avg_val), 1) if avg_val is not None else defaults.get(col_name, 0.0)
+                else:
+                    sandbox_averages[col_name] = defaults.get(col_name, 0.0)
+            conn_avg.close()
+        except Exception:
+            pass
+
         return jsonify({
             "summary": summary_data,
             "predictions": predictions_data,
@@ -690,7 +722,8 @@ def create_app() -> Flask:
             "is_demo": is_demo,
             "feature_importance": feature_importance,
             "model_version": model_version,
-            "model_last_trained": model_last_trained
+            "model_last_trained": model_last_trained,
+            "sandbox_averages": sandbox_averages
         })
 
     def load_model_metrics() -> dict:
