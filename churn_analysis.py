@@ -355,17 +355,30 @@ def load_config(config_path: Path | None = None) -> dict:
 
 def save_config(config: dict, config_path: Path | None = None) -> None:
     writable_path = get_writable_config_path(config_path)
+    target_path = config_path or DEFAULT_CONFIG_PATH
+    
+    existing = {}
+    for p in (target_path, writable_path):
+        try:
+            if p.exists():
+                with p.open("r", encoding="utf-8") as handle:
+                    existing.update(json.load(handle))
+        except Exception:
+            pass
+            
+    merged = existing.copy()
+    merged.update(config)
+    
     try:
         with writable_path.open("w", encoding="utf-8") as handle:
-            json.dump(config, handle, indent=2)
+            json.dump(merged, handle, indent=2)
     except Exception as e:
         print(f"Warning: Failed to save config to writable path: {e}")
         
-    target_path = config_path or DEFAULT_CONFIG_PATH
     if target_path != writable_path:
         try:
             with target_path.open("w", encoding="utf-8") as handle:
-                json.dump(config, handle, indent=2)
+                json.dump(merged, handle, indent=2)
         except Exception:
             pass
 
@@ -910,12 +923,22 @@ def train_model(db_path: Path, model_path: Path, config: dict | None = None) -> 
     else:
         training_df = df
 
+    # If the training dataset is too small or lacks target class variance, concatenate with sample_data to ensure a robust ML model gets trained
+    if len(training_df) < 10 or (target_column in training_df.columns and training_df[target_column].nunique() < 2):
+        conn = connect_db(db_path)
+        sample_df = pd.read_sql_query(
+            "SELECT cc.* FROM customer_churn cc JOIN data_sources ds ON cc.source_id = ds.source_id WHERE ds.source_id = 'sample_data'",
+            conn
+        )
+        conn.close()
+        training_df = pd.concat([training_df, sample_df], ignore_index=True)
+
     feature_columns = [col for col in get_feature_columns(training_df, config) if col in df.columns]
     if not feature_columns:
         feature_columns = [col for col in get_feature_columns(df, config) if col in training_df.columns]
         
     X = training_df[feature_columns]
-    y = training_df[target_column]
+    y = training_df[target_column].astype(int)
 
     # Stratified subsampling for big datasets to prevent web timeout
     if len(X) > 1000:
@@ -937,7 +960,7 @@ def train_model(db_path: Path, model_path: Path, config: dict | None = None) -> 
                 X = X.iloc[sampled_indices]
                 y = y.iloc[sampled_indices]
 
-    use_fallback = len(df) < 10 or y.nunique() < 2
+    use_fallback = len(training_df) < 10 or y.nunique() < 2
     
     best_engine = "hybrid"
     best_acc = -1.0
