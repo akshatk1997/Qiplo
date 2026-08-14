@@ -1014,22 +1014,60 @@ def create_app() -> Flask:
             sim_dict = {}
             for col in feature_cols:
                 val = None
-                for k, v in data.items():
-                    if k.lower().replace("_", "") == col.lower().replace("_", ""):
-                        val = v
-                        break
+                # Dynamically calculate total_charges to scale with tenure and monthly charges
+                if col.lower().replace("_", "") == "totalcharges":
+                    try:
+                        tenure = float(data.get("tenure_months", 12))
+                        charges = float(data.get("monthly_charges", 70.0))
+                        val = tenure * charges
+                    except Exception:
+                        val = 0.0
+                else:
+                    for k, v in data.items():
+                        if k.lower().replace("_", "") == col.lower().replace("_", ""):
+                            val = v
+                            break
                 
                 if val is None:
-                    if "charge" in col.lower() or "usage" in col.lower() or "delays" in col.lower():
+                    # Dynamically query mode from active DB source
+                    try:
+                        conn = get_connection()
+                        mode_row = conn.execute(
+                            f"""
+                            SELECT cc."{col}", COUNT(*) as cnt
+                            FROM customer_churn cc
+                            JOIN data_sources ds ON cc.source_id = ds.source_id
+                            WHERE ds.is_active = 1
+                            GROUP BY cc."{col}"
+                            ORDER BY cnt DESC
+                            LIMIT 1
+                            """
+                        ).fetchone()
+                        conn.close()
+                        if mode_row and mode_row[0] is not None:
+                            val = mode_row[0]
+                    except Exception:
+                        pass
+                
+                if val is None:
+                    # Fallback to realistic category values from the sample dataset if not found in DB
+                    defaults = {
+                        "contract_type": "Month-to-month",
+                        "internet_service": "Fiber optic",
+                        "payment_method": "Electronic check",
+                        "region": "North"
+                    }
+                    col_key = col.lower().replace("_", "")
+                    if "charge" in col_key or "usage" in col_key or "delays" in col_key:
                         val = 0.0
-                    elif "tenure" in col.lower():
+                    elif "tenure" in col_key:
                         val = 12
-                    elif "satisfaction" in col.lower():
+                    elif "satisfaction" in col_key:
                         val = 4
-                    elif "ticket" in col.lower() or "complaint" in col.lower():
+                    elif "ticket" in col_key or "complaint" in col_key:
                         val = 0
                     else:
-                        val = "No"
+                        val = defaults.get(col_key, "unknown")
                         
                 sim_dict[col] = [val]
                 
