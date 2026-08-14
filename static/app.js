@@ -245,52 +245,12 @@ async function loadDashboard() {
                     chargesValEl.textContent = currentCurrencySymbol + (Number(chargesSlider.value) * currentCurrencyRate).toFixed(2);
                 }
             }
+            if (typeof runSandboxSimulation === 'function') {
+                runSandboxSimulation();
             }
-        }
-        
-        if (predictionData.length === 0) {
-            toggleNoDataOverlay(true);
-        } else {
-            toggleNoDataOverlay(false);
         }
     } catch (error) {
         console.error('Dashboard load failed', error);
-    }
-}
-
-function toggleNoDataOverlay(isEmpty) {
-    const overlay = document.getElementById('noDataContainer');
-    const tabs = document.querySelector('.studioTabs');
-    const tabBodies = document.querySelectorAll('.tabBody');
-    const chartBlock = document.querySelector('.sourcesPane .chartBlock');
-    
-    const activeTab = localStorage.getItem('active_tab') || 'overview';
-    if (isEmpty && activeTab !== 'guide') {
-        if (overlay) {
-            overlay.classList.remove('hidden');
-            overlay.style.display = 'flex';
-        }
-        if (tabs) tabs.style.display = 'none';
-        tabBodies.forEach(b => b.style.display = 'none');
-        if (chartBlock) chartBlock.style.display = 'none';
-    } else {
-        if (overlay) {
-            overlay.classList.add('hidden');
-            overlay.style.display = 'none';
-        }
-        if (tabs) tabs.style.display = '';
-        tabBodies.forEach(b => b.style.display = '');
-        if (chartBlock) chartBlock.style.display = '';
-        
-        tabBodies.forEach(b => {
-            if (b.id === `tab-${activeTab}`) {
-                b.classList.remove('hidden');
-                b.style.display = '';
-            } else {
-                b.classList.add('hidden');
-                b.style.display = 'none';
-            }
-        });
     }
 }
 
@@ -883,12 +843,10 @@ function setupTabs() {
             const routePath = routeMapInverse[target] || '/';
             window.history.pushState(null, '', routePath);
             try { syncPipelineWithTab(target); } catch (e) {}
-            try { toggleNoDataOverlay(predictionData.length === 0); } catch (e) {}
         });
     });
 
     try { syncPipelineWithTab(initialTab); } catch (e) {}
-    try { toggleNoDataOverlay(predictionData ? predictionData.length === 0 : true); } catch (e) {}
 }
 
 // Theme toggle removed - Dark theme default with Fire & Lightning colors
