@@ -205,6 +205,18 @@ async function loadDashboard() {
             demoBadge.style.display = payload.is_demo ? 'inline-block' : 'none';
         }
 
+        const toggleDemoBtn = document.getElementById('toggleDemoBtn');
+        const toggleCustomBtn = document.getElementById('toggleCustomBtn');
+        if (toggleDemoBtn && toggleCustomBtn) {
+            if (payload.is_demo) {
+                toggleDemoBtn.classList.add('active');
+                toggleCustomBtn.classList.remove('active');
+            } else {
+                toggleDemoBtn.classList.remove('active');
+                toggleCustomBtn.classList.add('active');
+            }
+        }
+
         try { renderSourceMeta(); } catch (e) { console.error('renderSourceMeta failed', e); }
         try { renderRows(); } catch (e) { console.error('renderRows failed', e); }
         lastChartsData = chartsData;
@@ -1819,11 +1831,11 @@ function calculateSpecialModuleMetrics(suite) {
         const workingCapitalVal = Math.round((receivablesVal - payablesVal) * 1.8);
 
         return [
-            { label: 'Receivables', value: `${sym}${receivablesVal.toLocaleString()}`, desc: `Outstanding invoice balances. Average collection latency: ${dsoDays} days.`, status: 'yellow' },
-            { label: 'Payables', value: `${sym}${payablesVal.toLocaleString()}`, desc: 'Total upcoming vendor commitments due within 15 days.', status: 'green' },
-            { label: 'Cash Forecasting (Next 12M)', value: `${sym}${forecastedCash.toLocaleString()}`, desc: 'Forecasted annual operating cash reserves based on customer churn rate.', status: 'green' },
-            { label: 'Payment Risk', value: `${sym}${paymentRiskVal.toLocaleString()}`, desc: 'Financial exposure tied to high-attrition/delinquent client accounts.', status: highRiskCount > 5 ? 'red' : 'yellow' },
-            { label: 'Working Capital', value: `${sym}${workingCapitalVal.toLocaleString()}`, desc: 'Net current operational asset availability and cash cycle efficiency.', status: 'green' }
+            { label: 'Receivables', value: `${sym}${receivablesVal.toLocaleString()}`, desc: `Outstanding invoice balances. Average collection latency: ${dsoDays} days.`, status: 'yellow', progress: 55, actionLabel: 'Trigger Reminders', actionId: 'finance_reminders' },
+            { label: 'Payables', value: `${sym}${payablesVal.toLocaleString()}`, desc: 'Total upcoming vendor commitments due within 15 days.', status: 'green', progress: 72, actionLabel: 'Schedule Payments', actionId: 'finance_payables' },
+            { label: 'Cash Forecasting (Next 12M)', value: `${sym}${forecastedCash.toLocaleString()}`, desc: 'Forecasted annual operating cash reserves based on customer churn rate.', status: 'green', progress: 85, actionLabel: 'Run Cash Simulation', actionId: 'finance_cash' },
+            { label: 'Payment Risk', value: `${sym}${paymentRiskVal.toLocaleString()}`, desc: 'Financial exposure tied to high-attrition/delinquent client accounts.', status: highRiskCount > 5 ? 'red' : 'yellow', progress: highRiskCount > 5 ? 75 : 25, actionLabel: 'Contact Delinquent Accounts', actionId: 'finance_payment_risk' },
+            { label: 'Working Capital', value: `${sym}${workingCapitalVal.toLocaleString()}`, desc: 'Net current operational asset availability and cash cycle efficiency.', status: 'green', progress: 64, actionLabel: 'Optimize Working Cap', actionId: 'finance_working_cap' }
         ];
     } else if (suite === 'operations') {
         const totalTickets = predictionData.reduce((acc, r) => acc + getRecordValue(r, 'support_tickets'), 0);
@@ -1835,11 +1847,11 @@ function calculateSpecialModuleMetrics(suite) {
         const anomaliesCount = Math.round(totalTickets / 8);
 
         return [
-            { label: 'Supplier Risk Score', value: `${supplierRiskPct}% Risk`, desc: 'Supplier dependency index and component quality health checks.', status: supplierRiskPct > 65 ? 'red' : 'yellow' },
-            { label: 'Inventory Capital', value: `${sym}${inventoryVal.toLocaleString()}`, desc: 'Safety surplus capital tied up across regional fulfillment hubs.', status: 'red' },
-            { label: 'Demand Forecasting Variance', value: `±${forecastVariance}%`, desc: 'Product sales tracking variance against assembly line production schedules.', status: 'yellow' },
-            { label: 'Logistics Fulfillment Latency', value: `+${delayVal} days`, desc: 'Average shipping delays logged from ports and transit routes.', status: 'red' },
-            { label: 'Operational Defects & Anomalies', value: `${anomaliesCount} Extruder Anomalies`, desc: 'Active line tool miscalibrations flagged in production logs.', status: 'yellow' }
+            { label: 'Supplier Risk Score', value: `${supplierRiskPct}% Risk`, desc: 'Supplier dependency index and component quality health checks.', status: supplierRiskPct > 65 ? 'red' : 'yellow', progress: supplierRiskPct, actionLabel: 'Audit Suppliers', actionId: 'ops_audit_suppliers' },
+            { label: 'Inventory Capital', value: `${sym}${inventoryVal.toLocaleString()}`, desc: 'Safety surplus capital tied up across regional fulfillment hubs.', status: 'red', progress: 78, actionLabel: 'Optimize Stock Levels', actionId: 'ops_inventory_opt' },
+            { label: 'Demand Forecasting Variance', value: `±${forecastVariance}%`, desc: 'Product sales tracking variance against assembly line production schedules.', status: 'yellow', progress: Math.min(100, forecastVariance * 5), actionLabel: 'Adjust Assembly Lines', actionId: 'ops_adjust_assembly' },
+            { label: 'Logistics Fulfillment Latency', value: `+${delayVal} days`, desc: 'Average shipping delays logged from ports and transit routes.', status: 'red', progress: Math.min(100, delayVal * 10), actionLabel: 'Reroute Shipments', actionId: 'ops_reroute' },
+            { label: 'Operational Defects & Anomalies', value: `${anomaliesCount} Extruder Anomalies`, desc: 'Active line tool miscalibrations flagged in production logs.', status: 'yellow', progress: Math.min(100, anomaliesCount * 8), actionLabel: 'Recalibrate Extruders', actionId: 'ops_recalibrate' }
         ];
     } else if (suite === 'sales') {
         const churnRateVal = Math.round(churnRate * 100);
@@ -1849,11 +1861,11 @@ function calculateSpecialModuleMetrics(suite) {
         const opportunityScore = Math.round(85 - (churnRate * 10));
 
         return [
-            { label: 'Customer Churn Rate', value: `${churnRateVal}% Churn`, desc: 'Active customer attrition rate calculated from machine learning telemetry.', status: churnRateVal > 25 ? 'red' : 'yellow' },
-            { label: 'Revenue Leakage Exposure', value: `${sym}${leakageVal.toLocaleString()}/mo`, desc: 'Monthly recurring revenue at immediate threat of cancellation.', status: leakageVal > 0 ? 'red' : 'green' },
-            { label: 'Sales Forecasting (Next Month)', value: `${sym}${nextMonthSales.toLocaleString()}`, desc: 'Projected monthly revenue taking into account churn probabilities.', status: 'green' },
-            { label: 'Enterprise/High-Tier Customer Segments', value: `${highTierSegments} Accounts`, desc: 'Number of strategic high-value accounts exceeding average spend.', status: 'green' },
-            { label: 'Opportunity Scoring Index', value: `${opportunityScore}% Score`, desc: 'Average probability of closing current active sales opportunities.', status: 'green' }
+            { label: 'Customer Churn Rate', value: `${churnRateVal}% Churn`, desc: 'Active customer attrition rate calculated from machine learning telemetry.', status: churnRateVal > 25 ? 'red' : 'yellow', progress: churnRateVal, actionLabel: 'Launch Retention Campaigns', actionId: 'sales_retention' },
+            { label: 'Revenue Leakage Exposure', value: `${sym}${leakageVal.toLocaleString()}/mo`, desc: 'Monthly recurring revenue at immediate threat of cancellation.', status: leakageVal > 0 ? 'red' : 'green', progress: leakageVal > 0 ? 80 : 10, actionLabel: 'Apply Extension Discounts', actionId: 'sales_discounts' },
+            { label: 'Sales Forecasting (Next Month)', value: `${sym}${nextMonthSales.toLocaleString()}`, desc: 'Projected monthly revenue taking into account churn probabilities.', status: 'green', progress: 75, actionLabel: 'Audit Active Pipelines', actionId: 'sales_pipeline' },
+            { label: 'Enterprise/High-Tier Customer Segments', value: `${highTierSegments} Accounts`, desc: 'Number of strategic high-value accounts exceeding average spend.', status: 'green', progress: 60, actionLabel: 'Assign Key Account CSMs', actionId: 'sales_assign_csm' },
+            { label: 'Opportunity Scoring Index', value: `${opportunityScore}% Score`, desc: 'Average probability of closing current active sales opportunities.', status: 'green', progress: opportunityScore, actionLabel: 'Close Active Opportunities', actionId: 'sales_close_deals' }
         ];
     } else if (suite === 'product') {
         const totalUsage = predictionData.reduce((acc, r) => acc + getRecordValue(r, 'product_usage'), 0);
@@ -1864,11 +1876,11 @@ function calculateSpecialModuleMetrics(suite) {
         const riceScore = Math.round(72 + (retentionRateVal / 10));
 
         return [
-            { label: 'Feature Adoption Rate', value: `${adoptionRate}% Active`, desc: 'Percentage of user base adopting advanced platform analytics features.', status: 'yellow' },
-            { label: 'User Retention Index', value: `${retentionRateVal}% Stable`, desc: 'Percentage of users returning to the dashboard week-over-week.', status: 'green' },
-            { label: 'Day 7 Funnel Churn', value: `${day7ChurnVal}% Drop-off`, desc: 'Attrition rate observed within the first week of signup.', status: 'red' },
-            { label: 'Funnel Checkout Attrition', value: `${funnelAttrition}% Attrition`, desc: 'User drop-off registered during billing onboarding stages.', status: 'yellow' },
-            { label: 'Backlog Feature Prioritization Index', value: `${riceScore} Avg RICE`, desc: 'Telemetry-driven backlog prioritization score alignment.', status: 'green' }
+            { label: 'Feature Adoption Rate', value: `${adoptionRate}% Active`, desc: 'Percentage of user base adopting advanced platform analytics features.', status: 'yellow', progress: adoptionRate, actionLabel: 'Send Feature Announcement', actionId: 'prod_announce' },
+            { label: 'User Retention Index', value: `${retentionRateVal}% Stable`, desc: 'Percentage of users returning to the dashboard week-over-week.', status: 'green', progress: retentionRateVal, actionLabel: 'Send Satisfaction Survey', actionId: 'prod_survey' },
+            { label: 'Day 7 Funnel Churn', value: `${day7ChurnVal}% Drop-off`, desc: 'Attrition rate observed within the first week of signup.', status: 'red', progress: day7ChurnVal, actionLabel: 'Simplify Onboarding Flow', actionId: 'prod_simplify' },
+            { label: 'Funnel Checkout Attrition', value: `${funnelAttrition}% Attrition`, desc: 'User drop-off registered during billing onboarding stages.', status: 'yellow', progress: funnelAttrition, actionLabel: 'Optimize Payment Form', actionId: 'prod_optimize_payment' },
+            { label: 'Backlog Feature Prioritization Index', value: `${riceScore} Avg RICE`, desc: 'Telemetry-driven backlog prioritization score alignment.', status: 'green', progress: riceScore, actionLabel: 'Prune Backlog Queue', actionId: 'prod_prune_backlog' }
         ];
     }
 }
@@ -1957,19 +1969,39 @@ window.selectSpecialModule = function(suite) {
             const statusLabel = m.status === 'red' ? 'Critical' : (m.status === 'yellow' ? 'Warning' : 'Healthy');
             const bgCol = m.status === 'red' ? 'rgba(255, 0, 127, 0.1)' : (m.status === 'yellow' ? 'rgba(255, 159, 10, 0.1)' : 'rgba(0, 255, 135, 0.1)');
             const borderCol = m.status === 'red' ? 'rgba(255, 0, 127, 0.25)' : (m.status === 'yellow' ? 'rgba(255, 159, 10, 0.25)' : 'rgba(0, 255, 135, 0.25)');
+            
+            const progressHtml = m.progress !== undefined ? `
+                <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 99px; margin-top: 10px; overflow: hidden; position: relative;">
+                    <div style="width: ${m.progress}%; height: 100%; background: ${indColor}; border-radius: 99px; box-shadow: 0 0 8px ${indColor}; transition: width 0.3s ease;"></div>
+                </div>
+            ` : '';
+
+            const actionHtml = m.actionLabel ? `
+                <div style="margin-top: 12px; border-top: 1px dashed var(--border); padding-top: 10px; display: flex; justify-content: flex-end;">
+                    <button class="primaryBtn" style="padding: 6px 12px; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 5px;" onclick="triggerSpecialAction('${m.actionId}', '${m.label}')">
+                        <i data-lucide="play" style="width: 11px; height: 11px;"></i>
+                        <span>${m.actionLabel}</span>
+                    </button>
+                </div>
+            ` : '';
+
             return `
-                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 18px; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; transition: transform 0.15s ease;">
-                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                        <h4 style="margin: 0; font-family: var(--font-heading); font-size: 0.95rem; color: var(--text);">${m.label}</h4>
-                        <p style="margin: 0; font-size: 0.82rem; color: var(--muted); line-height: 1.4;">${m.desc}</p>
-                    </div>
-                    <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
-                        <span style="font-size: 1.25rem; font-family: var(--font-heading); font-weight: 700; color: var(--text);">${m.value}</span>
-                        <div style="display: inline-flex; align-items: center; gap: 6px; background: ${bgCol}; border: 1px solid ${borderCol}; padding: 3px 10px; border-radius: 999px; font-size: 0.68rem; font-weight: 700; color: ${indColor}; text-transform: uppercase; letter-spacing: 0.03em;">
-                            <span style="width: 5px; height: 5px; border-radius: 50%; background: ${indColor}; display: inline-block;"></span>
-                            <span>${statusLabel}</span>
+                <div class="framer-card" style="padding: 18px; display: flex; flex-direction: column; gap: 4px; transition: transform 0.15s ease, border-color 0.15s ease;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 200px;">
+                            <h4 style="margin: 0; font-family: var(--font-heading); font-size: 0.98rem; color: var(--text); font-weight: 700;">${m.label}</h4>
+                            <p style="margin: 4px 0 0; font-size: 0.82rem; color: var(--muted); line-height: 1.45;">${m.desc}</p>
+                        </div>
+                        <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+                            <span style="font-size: 1.35rem; font-family: var(--font-heading); font-weight: 800; color: var(--text); letter-spacing: -0.02em;">${m.value}</span>
+                            <div style="display: inline-flex; align-items: center; gap: 6px; background: ${bgCol}; border: 1px solid ${borderCol}; padding: 3px 10px; border-radius: 999px; font-size: 0.68rem; font-weight: 700; color: ${indColor}; text-transform: uppercase; letter-spacing: 0.03em;">
+                                <span style="width: 5px; height: 5px; border-radius: 50%; background: ${indColor}; display: inline-block;"></span>
+                                <span>${statusLabel}</span>
+                            </div>
                         </div>
                     </div>
+                    ${progressHtml}
+                    ${actionHtml}
                 </div>
             `;
         }).join('');
@@ -2143,18 +2175,29 @@ window.runSpecialSim = function(suite) {
     }
 };
 
+window.triggerSpecialAction = async function(actionId, label) {
+    AudioFeedback.success();
+    alert(`Intelligence Action Triggered:\n"${label}" execution has been initiated.\nLogged in Compliance Audit Trails.`);
+    
+    // Log action to compliance audit logs
+    try {
+        await safeFetch('/api/compliance/audit/log', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                action: 'SPECIAL_SUITE_INTERVENTION',
+                details: `Executive triggered action: "${label}" (ID: ${actionId}) via Specialized Intelligence Suite.`
+            })
+        });
+        await loadDashboard(); // Refresh to reflect any changes if needed
+    } catch (e) {
+        console.error('Audit logging failed', e);
+    }
+};
+
 window.reloadData = async function() {
     AudioFeedback.click();
     
-    // Generate a fresh session ID on manual reload to reset all uploaded data
-    const sessId = 'sess_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
-    document.cookie = `qiplo_session_id=${sessId}; path=/; SameSite=Lax`;
-    
-    // Clear local active closed-loop resolutions
-    localStorage.removeItem('active_resolution_loops');
-    activeResolutionLoops = [];
-    try { renderActiveResolutionLoops(); } catch (e) {}
-
     const btn = document.getElementById('headerReloadBtn');
     let originalHtml = '';
     if (btn) {
@@ -2174,7 +2217,7 @@ window.reloadData = async function() {
         // Show a temporary banner/toast
         const toast = document.createElement('div');
         toast.className = 'telemetry-toast';
-        toast.innerHTML = `<i data-lucide="check-circle" style="color: var(--success); width: 16px; height: 16px; vertical-align: middle;"></i> Session reset. Data refreshed successfully!`;
+        toast.innerHTML = `<i data-lucide="check-circle" style="color: var(--success); width: 16px; height: 16px; vertical-align: middle;"></i> Telemetry synced successfully!`;
         document.body.appendChild(toast);
         if (window.lucide) window.lucide.createIcons();
         

@@ -572,9 +572,10 @@ def ensure_database(db_path: Path, schema_path: Path, config: dict | None = None
         df["source_id"] = "sample_data"
         ensure_customer_table_columns(conn, config, frame=df)
         
+        is_active_val = 0 if "_sess_" in db_path.name else 1
         conn.execute(
-            "INSERT OR IGNORE INTO data_sources (source_id, filename, row_count, created_at, is_active) VALUES ('sample_data', 'churn_sample.csv', ?, ?, 1)",
-            (len(df), datetime.now().isoformat())
+            "INSERT OR IGNORE INTO data_sources (source_id, filename, row_count, created_at, is_active) VALUES ('sample_data', 'churn_sample.csv', ?, ?, ?)",
+            (len(df), datetime.now().isoformat(), is_active_val)
         )
         df.to_sql("customer_churn", conn, if_exists="append", index=False)
 
