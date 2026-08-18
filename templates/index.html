@@ -35,8 +35,8 @@
                 <svg class="logoSvg" viewBox="0 0 32 32" width="32" height="32" role="img" style="display: block;">
                     <defs>
                         <linearGradient id="qiploGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#6366F1" />
-                            <stop offset="100%" stop-color="#38BDF8" />
+                            <stop offset="0%" stop-color="#8B5CF6" />
+                            <stop offset="100%" stop-color="#D946EF" />
                         </linearGradient>
                     </defs>
                     <rect width="32" height="32" rx="8" fill="#11131E" stroke="url(#qiploGrad)" stroke-width="1.5" />
@@ -572,9 +572,18 @@
                         
                         <div style="position: relative; width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; margin: 20px 0;">
                             <!-- Circular Progress Indicator -->
-                            <svg width="180" height="180" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                            <svg width="180" height="180" viewBox="0 0 100 100" style="transform: rotate(-90deg); overflow: visible;">
+                                <defs>
+                                    <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+                                        <feGaussianBlur stdDeviation="4" result="blur" />
+                                        <feMerge>
+                                            <feMergeNode in="blur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
                                 <circle cx="50" cy="50" r="40" stroke="var(--border)" stroke-width="8" fill="transparent" />
-                                <circle id="sandboxGaugeCircle" cx="50" cy="50" r="40" stroke="var(--accent)" stroke-width="8" fill="transparent" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2" style="transition: stroke-dashoffset 0.35s ease;" />
+                                <circle id="sandboxGaugeCircle" cx="50" cy="50" r="40" stroke="var(--accent)" stroke-width="8" fill="transparent" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2" style="transition: stroke-dashoffset 0.35s ease; filter: url(#neonGlow);" />
                             </svg>
                             <div style="position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                                 <span id="sandboxProbabilityText" style="font-size: 1.8rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: var(--text);">0.0%</span>
