@@ -1115,6 +1115,7 @@ async function toggleSource(sourceId, isChecked) {
         });
         if (res.ok) {
             await loadDashboard();
+            await fetchSources();
         }
     } catch (e) {
         console.error("Failed to toggle source", e);
@@ -1754,9 +1755,12 @@ function updateBusinessDiagnostics() {
 let currentSpecialSuite = 'finance';
 
 function calculateSpecialModuleMetrics(suite) {
-    const totalCount = predictionData.length || 25;
+    if (!predictionData || predictionData.length === 0) {
+        return [];
+    }
+    const totalCount = predictionData.length;
     const highRiskCount = predictionData.filter(r => r.prediction_label === 'high_risk').length;
-    const churnRate = totalCount > 0 ? (highRiskCount / totalCount) : 0.28;
+    const churnRate = totalCount > 0 ? (highRiskCount / totalCount) : 0.0;
     const retentionRate = Math.round((1 - churnRate) * 100);
 
     const sortedByCharges = [...predictionData].sort((a, b) => (parseFloat(b.monthly_charges) || 0) - (parseFloat(a.monthly_charges) || 0));
@@ -1864,14 +1868,49 @@ window.selectSpecialModule = function(suite) {
         }
     };
 
-    const details = titles[suite];
-    document.getElementById('specialSuiteTitle').textContent = details.title;
     document.getElementById('specialSuiteDesc').textContent = details.desc;
     document.getElementById('specialSimTitle').innerHTML = `<i data-lucide="sliders" style="width: 16px; height: 16px; color: var(--accent);"></i> ${details.sim}`;
 
+    const metricsListEl = document.getElementById('specialSuiteMetricsList');
+    const slidersEl = document.getElementById('specialSimSlidersContainer');
+    const actionsEl = document.getElementById('specialAiActionsContainer');
+    const resultsCard = document.getElementById('specialSimResultsCard');
+
+    if (!predictionData || predictionData.length === 0) {
+        if (metricsListEl) {
+            metricsListEl.innerHTML = `
+                <div style="grid-column: 1 / -1; padding: 40px; text-align: center; border: 1px dashed var(--border); border-radius: var(--radius); background: var(--surface);">
+                    <p style="color: var(--muted); font-size: 0.9rem; margin: 0; font-weight: 500;">No customer records available. Upload a dataset to view specialized diagnostics.</p>
+                </div>
+            `;
+        }
+        if (slidersEl) {
+            slidersEl.innerHTML = `
+                <div style="padding: 20px; text-align: center; color: var(--muted); font-size: 0.85rem;">
+                    Simulation disabled. Requires active dataset.
+                </div>
+            `;
+        }
+        if (resultsCard) {
+            resultsCard.style.opacity = '0.5';
+        }
+        document.getElementById('specialAiBriefingText').textContent = "No active customer data loaded. Please import a database file to display AI business recommendations.";
+        if (actionsEl) {
+            actionsEl.innerHTML = `
+                <div style="padding: 20px; text-align: center; color: var(--muted); font-size: 0.85rem;">
+                    Actions unavailable.
+                </div>
+            `;
+        }
+        return;
+    }
+
+    if (resultsCard) {
+        resultsCard.style.opacity = '1';
+    }
+
     // Render metrics
     const metrics = calculateSpecialModuleMetrics(suite);
-    const metricsListEl = document.getElementById('specialSuiteMetricsList');
     if (metricsListEl) {
         metricsListEl.innerHTML = metrics.map(m => {
             const indColor = m.status === 'red' ? 'var(--danger)' : (m.status === 'yellow' ? 'var(--warning)' : 'var(--success)');
@@ -1894,7 +1933,6 @@ window.selectSpecialModule = function(suite) {
     }
 
     // Render Sliders
-    const slidersEl = document.getElementById('specialSimSlidersContainer');
     if (slidersEl) {
         let slidersHtml = '';
         if (suite === 'finance') {
@@ -2011,6 +2049,14 @@ window.selectSpecialModule = function(suite) {
 };
 
 window.runSpecialSim = function(suite) {
+    if (!predictionData || predictionData.length === 0) {
+        const impactTextEl = document.getElementById('specialSimImpactText');
+        if (impactTextEl) {
+            impactTextEl.textContent = `${currentCurrencySymbol}0 / mo`;
+            impactTextEl.style.color = 'var(--muted)';
+        }
+        return;
+    }
     const rate = currentCurrencyRate;
     const sym = currentCurrencySymbol;
     const totalCharges = predictionData.reduce((acc, r) => acc + (parseFloat(r.monthly_charges) || 0), 0);
