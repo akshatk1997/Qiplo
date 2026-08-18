@@ -1757,6 +1757,43 @@ function updateBusinessDiagnostics() {
 
 let currentSpecialSuite = 'finance';
 
+function getRecordValue(record, keyType, defaultVal = 0) {
+    if (!record) return defaultVal;
+    
+    const aliasMap = {
+        monthly_charges: ['monthly_charges', 'monthlycharges', 'charges', 'monthly_charge', 'monthlycharge', 'amount', 'monthly', 'charge', 'price'],
+        tenure_months: ['tenure_months', 'tenuremonths', 'tenure', 'months', 'month', 'period'],
+        support_tickets: ['support_tickets', 'supporttickets', 'tickets', 'support_ticket', 'ticket', 'support'],
+        customer_satisfaction_score: ['customer_satisfaction_score', 'customersatisfactionscore', 'satisfaction', 'score', 'satisfaction_score', 'rating', 'feedback'],
+        payment_delays: ['payment_delays', 'paymentdelays', 'delays', 'payment_delay', 'delay', 'delinquency'],
+        product_usage: ['product_usage', 'productusage', 'usage', 'hours', 'activity'],
+        complaint_count: ['complaint_count', 'complaintcount', 'complaints', 'complaint', 'issues']
+    };
+    
+    const candidates = aliasMap[keyType] || [keyType];
+    const recordKeys = Object.keys(record);
+    
+    // Try exact matching candidates
+    for (const candidate of candidates) {
+        const foundKey = recordKeys.find(k => k.toLowerCase().replace(/[\s_-]/g, '') === candidate.toLowerCase().replace(/[\s_-]/g, ''));
+        if (foundKey && record[foundKey] !== undefined && record[foundKey] !== null) {
+            const val = parseFloat(record[foundKey]);
+            if (!isNaN(val)) return val;
+        }
+    }
+    
+    // Try fuzzy matches
+    for (const candidate of candidates) {
+        const foundKey = recordKeys.find(k => k.toLowerCase().includes(candidate.toLowerCase()));
+        if (foundKey && record[foundKey] !== undefined && record[foundKey] !== null) {
+            const val = parseFloat(record[foundKey]);
+            if (!isNaN(val)) return val;
+        }
+    }
+    
+    return defaultVal;
+}
+
 function calculateSpecialModuleMetrics(suite) {
     if (!predictionData || predictionData.length === 0) {
         return [];
@@ -1766,8 +1803,8 @@ function calculateSpecialModuleMetrics(suite) {
     const churnRate = totalCount > 0 ? (highRiskCount / totalCount) : 0.0;
     const retentionRate = Math.round((1 - churnRate) * 100);
 
-    const sortedByCharges = [...predictionData].sort((a, b) => (parseFloat(b.monthly_charges) || 0) - (parseFloat(a.monthly_charges) || 0));
-    const totalCharges = predictionData.reduce((acc, r) => acc + (parseFloat(r.monthly_charges) || 0), 0);
+    const sortedByCharges = [...predictionData].sort((a, b) => getRecordValue(b, 'monthly_charges') - getRecordValue(a, 'monthly_charges'));
+    const totalCharges = predictionData.reduce((acc, r) => acc + getRecordValue(r, 'monthly_charges'), 0);
     const avgMonthlyCharges = totalCount > 0 ? (totalCharges / totalCount) : 65.0;
 
     const rate = currentCurrencyRate;
@@ -1789,9 +1826,9 @@ function calculateSpecialModuleMetrics(suite) {
             { label: 'Working Capital', value: `${sym}${workingCapitalVal.toLocaleString()}`, desc: 'Net current operational asset availability and cash cycle efficiency.', status: 'green' }
         ];
     } else if (suite === 'operations') {
-        const totalTickets = predictionData.reduce((acc, r) => acc + (parseInt(r.support_tickets) || 0), 0);
+        const totalTickets = predictionData.reduce((acc, r) => acc + getRecordValue(r, 'support_tickets'), 0);
         const supplierRiskPct = Math.min(100, Math.round(35 + (totalTickets / (totalCount * 2)) * 30));
-        const totalUsage = predictionData.reduce((acc, r) => acc + (parseFloat(r.product_usage) || 0), 0);
+        const totalUsage = predictionData.reduce((acc, r) => acc + getRecordValue(r, 'product_usage'), 0);
         const inventoryVal = Math.round(totalUsage * rate * 120);
         const forecastVariance = Math.round(8 + (churnRate * 12));
         const delayVal = Math.round(2 + (highRiskCount / 4));
@@ -1806,9 +1843,9 @@ function calculateSpecialModuleMetrics(suite) {
         ];
     } else if (suite === 'sales') {
         const churnRateVal = Math.round(churnRate * 100);
-        const leakageVal = Math.round(predictionData.filter(r => r.prediction_label === 'high_risk').reduce((acc, r) => acc + (parseFloat(r.monthly_charges) || 0), 0) * rate);
+        const leakageVal = Math.round(predictionData.filter(r => r.prediction_label === 'high_risk').reduce((acc, r) => acc + getRecordValue(r, 'monthly_charges'), 0) * rate);
         const nextMonthSales = Math.round(totalCharges * rate * (1 - churnRate));
-        const highTierSegments = predictionData.filter(r => (parseFloat(r.monthly_charges) || 0) > avgMonthlyCharges).length;
+        const highTierSegments = predictionData.filter(r => getRecordValue(r, 'monthly_charges') > avgMonthlyCharges).length;
         const opportunityScore = Math.round(85 - (churnRate * 10));
 
         return [
@@ -1819,7 +1856,7 @@ function calculateSpecialModuleMetrics(suite) {
             { label: 'Opportunity Scoring Index', value: `${opportunityScore}% Score`, desc: 'Average probability of closing current active sales opportunities.', status: 'green' }
         ];
     } else if (suite === 'product') {
-        const totalUsage = predictionData.reduce((acc, r) => acc + (parseFloat(r.product_usage) || 0), 0);
+        const totalUsage = predictionData.reduce((acc, r) => acc + getRecordValue(r, 'product_usage'), 0);
         const adoptionRate = Math.min(100, Math.round(35 + (totalUsage / (totalCount * 10)) * 25));
         const retentionRateVal = retentionRate;
         const day7ChurnVal = Math.round(100 - retentionRateVal * 0.95);
@@ -2065,7 +2102,7 @@ window.runSpecialSim = function(suite) {
     }
     const rate = currentCurrencyRate;
     const sym = currentCurrencySymbol;
-    const totalCharges = predictionData.reduce((acc, r) => acc + (parseFloat(r.monthly_charges) || 0), 0);
+    const totalCharges = predictionData.reduce((acc, r) => acc + getRecordValue(r, 'monthly_charges'), 0);
 
     let impactVal = 0;
     if (suite === 'finance') {
