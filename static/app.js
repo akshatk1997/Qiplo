@@ -1835,6 +1835,39 @@ function calculateSpecialModuleMetrics(suite) {
     const churnRate = totalCount > 0 ? (highRiskCount / totalCount) : 0.0;
     const retentionRate = Math.round((1 - churnRate) * 100);
 
+    let terms = 30;
+    let reminders = 20;
+    let safety = 20;
+    let route = 0;
+    let expansion = 10;
+    let discount = 15;
+    let onboarding = 20;
+    let mobile = 0;
+
+    const termsEl = document.getElementById('terms-slider');
+    if (termsEl) terms = parseInt(termsEl.value);
+    
+    const remindersEl = document.getElementById('reminders-slider');
+    if (remindersEl) reminders = parseInt(remindersEl.value);
+    
+    const safetyEl = document.getElementById('safety-slider');
+    if (safetyEl) safety = parseInt(safetyEl.value);
+    
+    const routeEl = document.getElementById('route-slider');
+    if (routeEl) route = parseInt(routeEl.value);
+    
+    const expansionEl = document.getElementById('expansion-slider');
+    if (expansionEl) expansion = parseInt(expansionEl.value);
+    
+    const discountEl = document.getElementById('discount-slider');
+    if (discountEl) discount = parseInt(discountEl.value);
+    
+    const onboardingEl = document.getElementById('onboarding-slider');
+    if (onboardingEl) onboarding = parseInt(onboardingEl.value);
+    
+    const mobileEl = document.getElementById('mobile-slider');
+    if (mobileEl) mobile = parseInt(mobileEl.value);
+
     const sortedByCharges = [...activeData].sort((a, b) => getRecordValue(b, 'monthly_charges') - getRecordValue(a, 'monthly_charges'));
     const totalCharges = activeData.reduce((acc, r) => acc + getRecordValue(r, 'monthly_charges'), 0);
     const avgMonthlyCharges = totalCount > 0 ? (totalCharges / totalCount) : 65.0;
@@ -1843,42 +1876,42 @@ function calculateSpecialModuleMetrics(suite) {
     const sym = currentCurrencySymbol;
 
     if (suite === 'finance') {
-        const dsoDays = Math.round(38 + (churnRate * 15));
-        const receivablesVal = Math.round(totalCharges * rate * 0.45);
+        const dsoDays = Math.max(1, Math.round(38 + (churnRate * 15) - (30 - terms)));
+        const receivablesVal = Math.round(totalCharges * rate * 0.45 * (terms / 30) * (1 - (reminders - 20) / 200));
         const payablesVal = Math.round(totalCharges * rate * 0.28);
-        const forecastedCash = Math.round(totalCharges * rate * 12 * (1 - churnRate * 0.5));
-        const paymentRiskVal = Math.round(highRiskCount * avgMonthlyCharges * rate * 1.5);
-        const workingCapitalVal = Math.round((receivablesVal - payablesVal) * 1.8);
+        const forecastedCash = Math.round(totalCharges * rate * 12 * (1 - churnRate * 0.5) + (reminders * 100 * rate));
+        const paymentRiskVal = Math.round(highRiskCount * avgMonthlyCharges * rate * 1.5 * (1 - (reminders - 20) / 100));
+        const workingCapitalVal = Math.round((receivablesVal - payablesVal) * 1.8 + (30 - terms) * 150 * rate);
 
         return [
-            { label: 'Receivables', value: `${sym}${receivablesVal.toLocaleString()}`, desc: `Outstanding invoice balances. Average collection latency: ${dsoDays} days.`, status: 'yellow', progress: 55, actionLabel: 'Trigger Reminders', actionId: 'finance_reminders' },
+            { label: 'Receivables', value: `${sym}${receivablesVal.toLocaleString()}`, desc: `Outstanding invoice balances. Average collection latency: ${dsoDays} days.`, status: 'yellow', progress: Math.min(100, Math.round((receivablesVal / (totalCharges * rate || 1)) * 100)), actionLabel: 'Trigger Reminders', actionId: 'finance_reminders' },
             { label: 'Payables', value: `${sym}${payablesVal.toLocaleString()}`, desc: 'Total upcoming vendor commitments due within 15 days.', status: 'green', progress: 72, actionLabel: 'Schedule Payments', actionId: 'finance_payables' },
             { label: 'Cash Forecasting (Next 12M)', value: `${sym}${forecastedCash.toLocaleString()}`, desc: 'Forecasted annual operating cash reserves based on customer churn rate.', status: 'green', progress: 85, actionLabel: 'Run Cash Simulation', actionId: 'finance_cash' },
-            { label: 'Payment Risk', value: `${sym}${paymentRiskVal.toLocaleString()}`, desc: 'Financial exposure tied to high-attrition/delinquent client accounts.', status: highRiskCount > 5 ? 'red' : 'yellow', progress: highRiskCount > 5 ? 75 : 25, actionLabel: 'Contact Delinquent Accounts', actionId: 'finance_payment_risk' },
+            { label: 'Payment Risk', value: `${sym}${paymentRiskVal.toLocaleString()}`, desc: 'Financial exposure tied to high-attrition/delinquent client accounts.', status: paymentRiskVal > 5000 * rate ? 'red' : 'yellow', progress: Math.min(100, Math.round((paymentRiskVal / (totalCharges * rate || 1)) * 150)), actionLabel: 'Contact Delinquent Accounts', actionId: 'finance_payment_risk' },
             { label: 'Working Capital', value: `${sym}${workingCapitalVal.toLocaleString()}`, desc: 'Net current operational asset availability and cash cycle efficiency.', status: 'green', progress: 64, actionLabel: 'Optimize Working Cap', actionId: 'finance_working_cap' }
         ];
     } else if (suite === 'operations') {
         const totalTickets = activeData.reduce((acc, r) => acc + getRecordValue(r, 'support_tickets'), 0);
-        const supplierRiskPct = Math.min(100, Math.round(35 + (totalTickets / (totalCount * 2)) * 30));
+        const supplierRiskPct = Math.max(0, Math.min(100, Math.round(35 + (totalTickets / (totalCount * 2)) * 30 - (safety - 20))));
         const totalUsage = activeData.reduce((acc, r) => acc + getRecordValue(r, 'product_usage'), 0);
-        const inventoryVal = Math.round(totalUsage * rate * 120);
-        const forecastVariance = Math.round(8 + (churnRate * 12));
-        const delayVal = Math.round(2 + (highRiskCount / 4));
-        const anomaliesCount = Math.round(totalTickets / 8);
+        const inventoryVal = Math.round(totalUsage * rate * 120 * (safety / 20));
+        const forecastVariance = Math.max(0, Math.round(8 + (churnRate * 12) - (route * 0.1)));
+        const delayVal = Math.max(0, Math.round(2 + (highRiskCount / 4) - (route * 0.05)));
+        const anomaliesCount = Math.max(0, Math.round(totalTickets / 8 - (safety - 20) * 0.1));
 
         return [
             { label: 'Supplier Risk Score', value: `${supplierRiskPct}% Risk`, desc: 'Supplier dependency index and component quality health checks.', status: supplierRiskPct > 65 ? 'red' : 'yellow', progress: supplierRiskPct, actionLabel: 'Audit Suppliers', actionId: 'ops_audit_suppliers' },
-            { label: 'Inventory Capital', value: `${sym}${inventoryVal.toLocaleString()}`, desc: 'Safety surplus capital tied up across regional fulfillment hubs.', status: 'red', progress: 78, actionLabel: 'Optimize Stock Levels', actionId: 'ops_inventory_opt' },
+            { label: 'Inventory Capital', value: `${sym}${inventoryVal.toLocaleString()}`, desc: 'Safety surplus capital tied up across regional fulfillment hubs.', status: 'red', progress: Math.min(100, safety * 2), actionLabel: 'Optimize Stock Levels', actionId: 'ops_inventory_opt' },
             { label: 'Demand Forecasting Variance', value: `±${forecastVariance}%`, desc: 'Product sales tracking variance against assembly line production schedules.', status: 'yellow', progress: Math.min(100, forecastVariance * 5), actionLabel: 'Adjust Assembly Lines', actionId: 'ops_adjust_assembly' },
             { label: 'Logistics Fulfillment Latency', value: `+${delayVal} days`, desc: 'Average shipping delays logged from ports and transit routes.', status: 'red', progress: Math.min(100, delayVal * 10), actionLabel: 'Reroute Shipments', actionId: 'ops_reroute' },
             { label: 'Operational Defects & Anomalies', value: `${anomaliesCount} Extruder Anomalies`, desc: 'Active line tool miscalibrations flagged in production logs.', status: 'yellow', progress: Math.min(100, anomaliesCount * 8), actionLabel: 'Recalibrate Extruders', actionId: 'ops_recalibrate' }
         ];
     } else if (suite === 'sales') {
-        const churnRateVal = Math.round(churnRate * 100);
-        const leakageVal = Math.round(activeData.filter(isHighRisk).reduce((acc, r) => acc + getRecordValue(r, 'monthly_charges'), 0) * rate);
-        const nextMonthSales = Math.round(totalCharges * rate * (1 - churnRate));
+        const churnRateVal = Math.max(0, Math.round(churnRate * 100 - (discount * 0.5)));
+        const leakageVal = Math.max(0, Math.round(activeData.filter(isHighRisk).reduce((acc, r) => acc + getRecordValue(r, 'monthly_charges'), 0) * rate * (1 - (discount / 30))));
+        const nextMonthSales = Math.round(totalCharges * rate * (1 - (churnRateVal / 100)) + (expansion * 150 * rate));
         const highTierSegments = activeData.filter(r => getRecordValue(r, 'monthly_charges') > avgMonthlyCharges).length;
-        const opportunityScore = Math.round(85 - (churnRate * 10));
+        const opportunityScore = Math.min(100, Math.round(85 - (churnRate * 10) + expansion));
 
         return [
             { label: 'Customer Churn Rate', value: `${churnRateVal}% Churn`, desc: 'Active customer attrition rate calculated from machine learning telemetry.', status: churnRateVal > 25 ? 'red' : 'yellow', progress: churnRateVal, actionLabel: 'Launch Retention Campaigns', actionId: 'sales_retention' },
@@ -1889,11 +1922,11 @@ function calculateSpecialModuleMetrics(suite) {
         ];
     } else if (suite === 'product') {
         const totalUsage = activeData.reduce((acc, r) => acc + getRecordValue(r, 'product_usage'), 0);
-        const adoptionRate = Math.min(100, Math.round(35 + (totalUsage / (totalCount * 10)) * 25));
-        const retentionRateVal = retentionRate;
-        const day7ChurnVal = Math.round(100 - retentionRateVal * 0.95);
-        const funnelAttrition = Math.round(32 + (churnRate * 15));
-        const riceScore = Math.round(72 + (retentionRateVal / 10));
+        const adoptionRate = Math.min(100, Math.round(35 + (totalUsage / (totalCount * 10)) * 25 + mobile));
+        const retentionRateVal = Math.min(100, Math.round(retentionRate + onboarding * 0.2));
+        const day7ChurnVal = Math.max(0, Math.round(100 - retentionRateVal * 0.95));
+        const funnelAttrition = Math.max(0, Math.round(32 + (churnRate * 15) - onboarding * 0.3));
+        const riceScore = Math.min(100, Math.round(72 + (retentionRateVal / 10) + mobile * 2));
 
         return [
             { label: 'Feature Adoption Rate', value: `${adoptionRate}% Active`, desc: 'Percentage of user base adopting advanced platform analytics features.', status: 'yellow', progress: adoptionRate, actionLabel: 'Send Feature Announcement', actionId: 'prod_announce' },
@@ -1904,6 +1937,55 @@ function calculateSpecialModuleMetrics(suite) {
         ];
     }
 }
+
+window.renderSpecialsMetricsList = function(suite) {
+    const metricsListEl = document.getElementById('specialSuiteMetricsList');
+    if (!metricsListEl) return;
+    
+    const metrics = calculateSpecialModuleMetrics(suite);
+    metricsListEl.innerHTML = metrics.map(m => {
+        const indColor = m.status === 'red' ? 'var(--danger)' : (m.status === 'yellow' ? 'var(--warning)' : 'var(--success)');
+        const statusLabel = m.status === 'red' ? 'Critical' : (m.status === 'yellow' ? 'Warning' : 'Healthy');
+        const bgCol = m.status === 'red' ? 'rgba(255, 0, 127, 0.1)' : (m.status === 'yellow' ? 'rgba(255, 159, 10, 0.1)' : 'rgba(0, 255, 135, 0.1)');
+        const borderCol = m.status === 'red' ? 'rgba(255, 0, 127, 0.25)' : (m.status === 'yellow' ? 'rgba(255, 159, 10, 0.25)' : 'rgba(0, 255, 135, 0.25)');
+        
+        const progressHtml = m.progress !== undefined ? `
+            <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 99px; margin-top: 10px; overflow: hidden; position: relative;">
+                <div style="width: ${m.progress}%; height: 100%; background: ${indColor}; border-radius: 99px; box-shadow: 0 0 8px ${indColor}; transition: width 0.3s ease;"></div>
+            </div>
+        ` : '';
+
+        const actionHtml = m.actionLabel ? `
+            <div style="margin-top: 12px; border-top: 1px dashed var(--border); padding-top: 10px; display: flex; justify-content: flex-end;">
+                <button class="primaryBtn" style="padding: 6px 12px; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 5px;" onclick="triggerSpecialAction('${m.actionId}', '${m.label}')">
+                    <i data-lucide="play" style="width: 11px; height: 11px;"></i>
+                    <span>${m.actionLabel}</span>
+                </button>
+            </div>
+        ` : '';
+
+        return `
+            <div class="framer-card" style="padding: 18px; display: flex; flex-direction: column; gap: 4px; transition: transform 0.15s ease, border-color 0.15s ease;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <h4 style="margin: 0; font-family: var(--font-heading); font-size: 0.98rem; color: var(--text); font-weight: 700;">${m.label}</h4>
+                        <p style="margin: 4px 0 0; font-size: 0.82rem; color: var(--muted); line-height: 1.45;">${m.desc}</p>
+                    </div>
+                    <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+                        <span style="font-size: 1.35rem; font-family: var(--font-heading); font-weight: 800; color: var(--text); letter-spacing: -0.02em;">${m.value}</span>
+                        <div style="display: inline-flex; align-items: center; gap: 6px; background: ${bgCol}; border: 1px solid ${borderCol}; padding: 3px 10px; border-radius: 999px; font-size: 0.68rem; font-weight: 700; color: ${indColor}; text-transform: uppercase; letter-spacing: 0.03em;">
+                            <span style="width: 5px; height: 5px; border-radius: 50%; background: ${indColor}; display: inline-block;"></span>
+                            <span>${statusLabel}</span>
+                        </div>
+                    </div>
+                </div>
+                ${progressHtml}
+                ${actionHtml}
+            </div>
+        `;
+    }).join('');
+    if (window.lucide) window.lucide.createIcons();
+};
 
 window.selectSpecialModule = function(suite) {
     currentSpecialSuite = suite;
@@ -1958,50 +2040,7 @@ window.selectSpecialModule = function(suite) {
     }
 
     // Render metrics
-    const metrics = calculateSpecialModuleMetrics(suite);
-    if (metricsListEl) {
-        metricsListEl.innerHTML = metrics.map(m => {
-            const indColor = m.status === 'red' ? 'var(--danger)' : (m.status === 'yellow' ? 'var(--warning)' : 'var(--success)');
-            const statusLabel = m.status === 'red' ? 'Critical' : (m.status === 'yellow' ? 'Warning' : 'Healthy');
-            const bgCol = m.status === 'red' ? 'rgba(255, 0, 127, 0.1)' : (m.status === 'yellow' ? 'rgba(255, 159, 10, 0.1)' : 'rgba(0, 255, 135, 0.1)');
-            const borderCol = m.status === 'red' ? 'rgba(255, 0, 127, 0.25)' : (m.status === 'yellow' ? 'rgba(255, 159, 10, 0.25)' : 'rgba(0, 255, 135, 0.25)');
-            
-            const progressHtml = m.progress !== undefined ? `
-                <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 99px; margin-top: 10px; overflow: hidden; position: relative;">
-                    <div style="width: ${m.progress}%; height: 100%; background: ${indColor}; border-radius: 99px; box-shadow: 0 0 8px ${indColor}; transition: width 0.3s ease;"></div>
-                </div>
-            ` : '';
-
-            const actionHtml = m.actionLabel ? `
-                <div style="margin-top: 12px; border-top: 1px dashed var(--border); padding-top: 10px; display: flex; justify-content: flex-end;">
-                    <button class="primaryBtn" style="padding: 6px 12px; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 5px;" onclick="triggerSpecialAction('${m.actionId}', '${m.label}')">
-                        <i data-lucide="play" style="width: 11px; height: 11px;"></i>
-                        <span>${m.actionLabel}</span>
-                    </button>
-                </div>
-            ` : '';
-
-            return `
-                <div class="framer-card" style="padding: 18px; display: flex; flex-direction: column; gap: 4px; transition: transform 0.15s ease, border-color 0.15s ease;">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 15px; flex-wrap: wrap;">
-                        <div style="flex: 1; min-width: 200px;">
-                            <h4 style="margin: 0; font-family: var(--font-heading); font-size: 0.98rem; color: var(--text); font-weight: 700;">${m.label}</h4>
-                            <p style="margin: 4px 0 0; font-size: 0.82rem; color: var(--muted); line-height: 1.45;">${m.desc}</p>
-                        </div>
-                        <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
-                            <span style="font-size: 1.35rem; font-family: var(--font-heading); font-weight: 800; color: var(--text); letter-spacing: -0.02em;">${m.value}</span>
-                            <div style="display: inline-flex; align-items: center; gap: 6px; background: ${bgCol}; border: 1px solid ${borderCol}; padding: 3px 10px; border-radius: 999px; font-size: 0.68rem; font-weight: 700; color: ${indColor}; text-transform: uppercase; letter-spacing: 0.03em;">
-                                <span style="width: 5px; height: 5px; border-radius: 50%; background: ${indColor}; display: inline-block;"></span>
-                                <span>${statusLabel}</span>
-                            </div>
-                        </div>
-                    </div>
-                    ${progressHtml}
-                    ${actionHtml}
-                </div>
-            `;
-        }).join('');
-    }
+    window.renderSpecialsMetricsList(suite);
 
     // Render Sliders
     if (slidersEl) {
@@ -2162,6 +2201,9 @@ window.runSpecialSim = function(suite) {
         impactTextEl.textContent = `${sign}${sym}${impactVal.toLocaleString()} / mo`;
         impactTextEl.style.color = impactVal >= 0 ? 'var(--success)' : 'var(--danger)';
     }
+
+    // Refresh dynamic metrics list view in real-time on slider changes
+    window.renderSpecialsMetricsList(suite);
 };
 
 window.triggerSpecialAction = async function(actionId, label) {
