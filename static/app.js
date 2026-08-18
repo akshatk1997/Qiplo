@@ -2020,7 +2020,7 @@ window.selectSpecialModule = function(suite) {
     };
     document.getElementById('specialAiBriefingText').textContent = briefings[suite];
 
-    const actionsEl = document.getElementById('specialAiActionsContainer');
+    // Reuse actionsEl declared above
     if (actionsEl) {
         let actionsHtml = '';
         if (suite === 'finance') {
