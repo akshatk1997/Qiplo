@@ -3469,3 +3469,163 @@ body.light-theme .dropdown-item:hover {
         width: 85px !important;
     }
 }
+
+/* ============================================================
+   A-TO-Z MOBILE RESPONSIVENESS AND VISIBILITY IMPROVEMENTS
+   ============================================================ */
+@media (max-width: 768px) {
+    .appContainer {
+        flex-direction: column !important;
+        height: auto !important;
+        min-height: 100vh !important;
+    }
+    
+    .sidebar {
+        width: 100% !important;
+        height: auto !important;
+        border-right: none !important;
+        border-bottom: 1px solid var(--border) !important;
+        padding: 15px !important;
+    }
+
+    .mainContent {
+        height: auto !important;
+        padding: 15px !important;
+        overflow-y: visible !important;
+    }
+
+    #sandboxSplitLayout {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    .modelMetricsGrid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    .presContainer {
+        aspect-ratio: auto !important;
+        min-height: 480px !important;
+        height: auto !important;
+    }
+
+    .slide {
+        padding: 24px 20px !important;
+        height: auto !important;
+        min-height: 480px !important;
+        position: relative !important;
+        opacity: 0 !important;
+        display: none !important;
+    }
+
+    .slide.active {
+        opacity: 1 !important;
+        display: flex !important;
+    }
+
+    .slideContent {
+        height: auto !important;
+        min-height: 400px !important;
+        justify-content: space-between !important;
+        gap: 15px;
+    }
+
+    .slideContent h1 {
+        font-size: 1.6rem !important;
+    }
+
+    .slideContent h2 {
+        font-size: 1.25rem !important;
+    }
+
+    .slideSubtitle {
+        font-size: 0.9rem !important;
+    }
+
+    .slideContent p, 
+    .slideContent li, 
+    .slideContent span, 
+    .slideContent div {
+        font-size: 0.85rem !important;
+    }
+
+    .slideSplitBody {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 15px !important;
+    }
+
+    .slideLeftPane {
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 10px !important;
+        flex-wrap: wrap !important;
+    }
+
+    .slideLeftPane > div {
+        flex: 1 1 120px !important;
+        margin-bottom: 0 !important;
+    }
+
+    .slideHeroPhoto {
+        display: none !important;
+    }
+
+    .slideDecor {
+        display: none !important;
+    }
+
+    .guideResponsiveGrid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .editorFields {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    .presentationToolbar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .presentationToolbar select, 
+    .presentationToolbar input, 
+    .presentationToolbar button {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .presActionButtons {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 8px !important;
+    }
+
+    .presActionButtons button {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .modelMetricsGrid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .slideContent h1 {
+        font-size: 1.35rem !important;
+    }
+
+    .slideContent h2 {
+        font-size: 1.1rem !important;
+    }
+
+    .navSlideBtn {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 1.2rem !important;
+    }
+}
