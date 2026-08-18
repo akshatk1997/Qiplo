@@ -7,9 +7,12 @@
         if (parts.length === 2) return parts.pop().split(';').shift();
     }
 
-    // Generate a fresh session ID on every page load to guarantee starting clean on refresh
-    const sessId = 'sess_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
-    document.cookie = `qiplo_session_id=${sessId}; path=/; SameSite=Lax`;
+    // Retrieve existing session ID or generate a new one if not present to ensure session persistence across navigation
+    let sessId = getCookie('qiplo_session_id');
+    if (!sessId) {
+        sessId = 'sess_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
+        document.cookie = `qiplo_session_id=${sessId}; path=/; SameSite=Lax; max-age=31536000`;
+    }
 
     // Global fetch interceptor to inject X-Session-ID and prevent caching on all /api requests
     const originalFetch = window.fetch;
