@@ -1,22 +1,24 @@
 :root {
-    /* 3-Color Palette Tokens - Enhanced Premium Midnight Dark Mode */
-    --bg: #030712;          /* Rich Slate 950 Base */
-    --surface: #0B0F19;     /* Deep Midnight Surface */
-    --surface-2: #151B2C;   /* Slate Navy Surface 2 */
-    --surface-3: #1F2942;   /* Highlight Navy Surface 3 */
-    --border: rgba(99, 102, 241, 0.12); /* Subtle Indigo Glow Border */
-    --border-strong: rgba(0, 245, 255, 0.2); /* Neon Cyan Highlight Border */
+    /* Enhanced Ultra-Premium Cyberpunk Midnight Dark Mode Palette */
+    --bg: #050614;          /* Deep Cyberpunk Space Black */
+    --surface: #0B0C22;     /* Neon Midnight Blue Surface */
+    --surface-2: #141738;   /* Indigo Midnight Surface 2 */
+    --surface-3: #1E2254;   /* Indigo Highlight Navy Surface 3 */
+    --border: rgba(139, 92, 246, 0.15); /* Subtle Amethyst Border */
+    --border-strong: rgba(0, 245, 255, 0.35); /* Neon Cyan Highlight Border */
     --text: #F8FAFC;        /* Soft White Slate 50 */
     --muted: #94A3B8;       /* Slate 400 */
-    --accent: #6366F1;      /* Vibrant Indigo-Violet */
-    --accent-2: #00F5FF;    /* Glowing Electric Cyan */
-    --accent-soft: rgba(99, 102, 241, 0.16);
-    --danger: #FF3B30;      /* Vibrant Neon Red */
-    --warning: #FF9500;     /* Vibrant Neon Amber */
-    --success: #34C759;     /* Vibrant Neon Green */
-    --radius: 12px;         /* Sleeker, premium rounded borders */
+    --accent: #8B5CF6;      /* Electric Violet Accent */
+    --accent-2: #00F5FF;    /* Glowing Cyber Cyan */
+    --accent-soft: rgba(139, 92, 246, 0.18);
+    --danger: #FF007F;      /* Sizzling Hot Pink / Neon Magenta */
+    --warning: #FF9F0A;     /* Neon Amber */
+    --success: #00FF87;     /* Acid Neon Green / Emerald */
+    --accent-gradient: linear-gradient(135deg, #8B5CF6 0%, #D946EF 100%); /* Amethyst-Violet to Neon Magenta */
+    --accent-cyan-grad: linear-gradient(135deg, #00F5FF 0%, #3B82F6 100%); /* Neon Cyan to Electric Blue */
+    --radius: 12px;
     --radius-sm: 8px;
-    --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 1px rgba(99, 102, 241, 0.3);
+    --shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.65), 0 0 15px rgba(139, 92, 246, 0.18);
     --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-mono: 'JetBrains Mono', 'Space Mono', monospace;
@@ -2192,10 +2194,53 @@ body.dark-theme .notesPane {
 }
 
 /* Premium Gradient Card Overlays (High-performance solid backgrounds) */
-body.dark-theme .aiCard,
+body.dark-theme {
+    background: radial-gradient(circle at 50% 50%, #0c0e2b 0%, #03040e 100%) !important;
+}
+
+body.dark-theme .appName {
+    background: var(--accent-cyan-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: -0.5px;
+    text-shadow: 0 0 10px rgba(0, 245, 255, 0.2);
+}
+
+body.dark-theme .tab.active {
+    color: var(--accent-2) !important;
+    border-bottom: 2px solid var(--accent-2) !important;
+    background: linear-gradient(180deg, transparent 60%, rgba(0, 245, 255, 0.08) 100%) !important;
+}
+
+body.dark-theme .aiCard {
+    background: linear-gradient(135deg, #0B0C22 0%, #121436 100%) !important;
+    border: 1px solid rgba(139, 92, 246, 0.18) !important;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5), 0 0 2px rgba(139, 92, 246, 0.2) !important;
+    transition: all 0.25s ease;
+}
+body.dark-theme .aiCard:hover {
+    border-color: rgba(217, 70, 239, 0.4) !important;
+    box-shadow: 0 12px 40px rgba(139, 92, 246, 0.3), 0 0 15px rgba(217, 70, 239, 0.15) !important;
+}
+
+body.dark-theme .telemetryCard {
+    background: #0D0E22 !important;
+    border: 1px solid rgba(139, 92, 246, 0.15) !important;
+    border-top: 3px solid var(--accent) !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45), 0 0 1px rgba(139, 92, 246, 0.2) !important;
+    transition: all 0.25s ease;
+}
+body.dark-theme .telemetryCard:hover {
+    border-color: rgba(0, 245, 255, 0.3) !important;
+    border-top: 3px solid var(--accent-2) !important;
+    box-shadow: 0 10px 35px rgba(139, 92, 246, 0.25), 0 0 15px rgba(0, 245, 255, 0.15) !important;
+    transform: translateY(-2px);
+}
+
 body.dark-theme .signalsBlock,
 body.dark-theme .noteCard,
-body.dark-theme .telemetryCard,
 body.dark-theme .riskComparisonCard,
 body.dark-theme .workflowStepCard,
 body.dark-theme .sourceMetaRow,
@@ -2203,19 +2248,19 @@ body.dark-theme .chatMsg,
 body.dark-theme .insightBox,
 body.dark-theme .aiSegment,
 body.dark-theme .slideEditorPanel {
-    background: #101424 !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    background: #0B0C22 !important;
+    border: 1px solid rgba(139, 92, 246, 0.12) !important;
     box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.2) !important;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-body.dark-theme .aiCard:hover,
-body.dark-theme .telemetryCard:hover,
+body.dark-theme .signalsBlock:hover,
+body.dark-theme .noteCard:hover,
 body.dark-theme .riskComparisonCard:hover,
 body.dark-theme .workflowStepCard:hover,
 body.dark-theme .sourceMetaRow:hover {
-    border-color: rgba(99, 102, 241, 0.4) !important;
-    box-shadow: 0 8px 24px 0 rgba(79, 70, 229, 0.15) !important;
+    border-color: rgba(139, 92, 246, 0.4) !important;
+    box-shadow: 0 8px 24px 0 rgba(139, 92, 246, 0.15) !important;
 }
 
 /* Slick inputs, selects and textareas */
@@ -2237,15 +2282,15 @@ body.dark-theme textarea:focus {
 
 /* Premium Gradient Buttons */
 body.dark-theme .primaryBtn {
-    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%) !important;
+    background: var(--accent-gradient) !important;
     border: none !important;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.35) !important;
     transition: all 0.2s ease;
 }
 
 body.dark-theme .primaryBtn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45) !important;
+    box-shadow: 0 6px 20px rgba(217, 70, 239, 0.45) !important;
 }
 
 body.dark-theme .ghostBtn {
