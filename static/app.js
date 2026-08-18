@@ -1940,8 +1940,9 @@ window.selectSpecialModule = function(suite) {
         }
     };
 
-    document.getElementById('specialSuiteDesc').textContent = details.desc;
-    document.getElementById('specialSimTitle').innerHTML = `<i data-lucide="sliders" style="width: 16px; height: 16px; color: var(--accent);"></i> ${details.sim}`;
+    document.getElementById('specialSuiteTitle').textContent = titles[suite].title;
+    document.getElementById('specialSuiteDesc').textContent = titles[suite].desc;
+    document.getElementById('specialSimTitle').innerHTML = `<i data-lucide="sliders" style="width: 16px; height: 16px; color: var(--accent);"></i> ${titles[suite].sim}`;
 
     const metricsListEl = document.getElementById('specialSuiteMetricsList');
     const slidersEl = document.getElementById('specialSimSlidersContainer');
