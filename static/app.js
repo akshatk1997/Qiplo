@@ -1917,17 +1917,20 @@ window.selectSpecialModule = function(suite) {
     if (metricsListEl) {
         metricsListEl.innerHTML = metrics.map(m => {
             const indColor = m.status === 'red' ? 'var(--danger)' : (m.status === 'yellow' ? 'var(--warning)' : 'var(--success)');
+            const statusLabel = m.status === 'red' ? 'Critical' : (m.status === 'yellow' ? 'Warning' : 'Healthy');
+            const bgCol = m.status === 'red' ? 'rgba(255, 0, 127, 0.1)' : (m.status === 'yellow' ? 'rgba(255, 159, 10, 0.1)' : 'rgba(0, 255, 135, 0.1)');
+            const borderCol = m.status === 'red' ? 'rgba(255, 0, 127, 0.25)' : (m.status === 'yellow' ? 'rgba(255, 159, 10, 0.25)' : 'rgba(0, 255, 135, 0.25)');
             return `
                 <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 18px; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; transition: transform 0.15s ease;">
                     <div style="display: flex; flex-direction: column; gap: 4px;">
                         <h4 style="margin: 0; font-family: var(--font-heading); font-size: 0.95rem; color: var(--text);">${m.label}</h4>
                         <p style="margin: 0; font-size: 0.82rem; color: var(--muted); line-height: 1.4;">${m.desc}</p>
                     </div>
-                    <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
-                        <span style="font-size: 1.15rem; font-family: var(--font-heading); font-weight: 700; color: ${indColor};">${m.value}</span>
-                        <div style="display: flex; align-items: center; gap: 4px;">
-                            <span style="width: 6px; height: 6px; border-radius: 50%; background: ${indColor}; display: inline-block;"></span>
-                            <span style="font-size: 0.7rem; text-transform: uppercase; color: var(--muted); font-weight: 600;">${m.status === 'red' ? 'Critical' : (m.status === 'yellow' ? 'Warning' : 'Normal')}</span>
+                    <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+                        <span style="font-size: 1.25rem; font-family: var(--font-heading); font-weight: 700; color: var(--text);">${m.value}</span>
+                        <div style="display: inline-flex; align-items: center; gap: 6px; background: ${bgCol}; border: 1px solid ${borderCol}; padding: 3px 10px; border-radius: 999px; font-size: 0.68rem; font-weight: 700; color: ${indColor}; text-transform: uppercase; letter-spacing: 0.03em;">
+                            <span style="width: 5px; height: 5px; border-radius: 50%; background: ${indColor}; display: inline-block;"></span>
+                            <span>${statusLabel}</span>
                         </div>
                     </div>
                 </div>
