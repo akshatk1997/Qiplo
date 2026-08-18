@@ -3145,6 +3145,10 @@ function generateLocalSlides(numSlides, customPrompt, shouldShuffle) {
                 {"title": "Manager Outreach", "description": "CSMs initiate outreach using pre-compiled templates."},
                 {"title": "ARR Preservation", "description": "Contracts successfully extended; customer retention maximized."}
             ]
+        },
+        {
+            "layout": "live_risk_distribution",
+            "title": "Live Dataset Churn Risk Distribution Audit"
         }
     ];
     
@@ -3306,6 +3310,76 @@ function renderSlides(slides) {
                     </div>
                     <div class="slideFooter">
                         <span>Executive Business Decision Intelligence Briefing</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
+        } else if (slide.layout === 'live_risk_distribution') {
+            const activeData = (predictionData && predictionData.length > 0) ? predictionData : getFallbackSpecialsData();
+            const total = activeData.length;
+            const lowRisk = activeData.filter(r => (parseFloat(r.predicted_probability) || 0) < 0.2).length;
+            const medRisk = activeData.filter(r => {
+                const p = parseFloat(r.predicted_probability) || 0;
+                return p >= 0.2 && p < 0.5;
+            }).length;
+            const highRisk = activeData.filter(r => (parseFloat(r.predicted_probability) || 0) >= 0.5).length;
+
+            const lowPct = total > 0 ? Math.round((lowRisk / total) * 100) : 60;
+            const medPct = total > 0 ? Math.round((medRisk / total) * 100) : 25;
+            const highPct = total > 0 ? Math.round((highRisk / total) * 100) : 15;
+
+            contentHtml = `
+                <div class="slideContent layout-split">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Live Dataset Risk Distribution Audit</span>
+                    </div>
+                    <div style="display: flex; gap: 24px; margin: 14px 0; align-items: center; justify-content: space-between; width: 100%;">
+                        <div style="flex: 1; text-align: left;">
+                            <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin-top: 0; font-size: 1.3rem; color: var(--text);">${slide.title || 'Live Attrition Risk Distribution'}</h2>
+                            <p style="font-size: 0.82rem; color: var(--muted); margin: 0 0 16px;">Real-time analysis of client account portfolios categorized by churn probability bands.</p>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600;">
+                                    <span style="color: var(--success);">🟢 Low Risk (&lt;20%)</span>
+                                    <span>${lowRisk} accounts (${lowPct}%)</span>
+                                </div>
+                                <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 99px; overflow: hidden;">
+                                    <div style="width: ${lowPct}%; height: 100%; background: var(--success); border-radius: 99px;"></div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; margin-top: 4px;">
+                                    <span style="color: var(--warning);">🟡 Medium Risk (20%-50%)</span>
+                                    <span>${medRisk} accounts (${medPct}%)</span>
+                                </div>
+                                <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 99px; overflow: hidden;">
+                                    <div style="width: ${medPct}%; height: 100%; background: var(--warning); border-radius: 99px;"></div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; margin-top: 4px;">
+                                    <span style="color: var(--danger);">🔴 High Risk (&gt;50%)</span>
+                                    <span>${highRisk} accounts (${highPct}%)</span>
+                                </div>
+                                <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 99px; overflow: hidden;">
+                                    <div style="width: ${highPct}%; height: 100%; background: var(--danger); border-radius: 99px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="flex: 0 0 200px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;">
+                            <div style="position: relative; width: 140px; height: 140px;">
+                                <svg width="100%" height="100%" viewBox="0 0 36 36" style="transform: rotate(-90deg);">
+                                    <circle cx="18" cy="18" r="15.915" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="3"></circle>
+                                    <circle cx="18" cy="18" r="15.915" fill="none" stroke="var(--success)" stroke-width="3" stroke-dasharray="${lowPct} ${100 - lowPct}" stroke-dashoffset="0"></circle>
+                                    <circle cx="18" cy="18" r="15.915" fill="none" stroke="var(--warning)" stroke-width="3" stroke-dasharray="${medPct} ${100 - medPct}" stroke-dashoffset="-${lowPct}"></circle>
+                                    <circle cx="18" cy="18" r="15.915" fill="none" stroke="var(--danger)" stroke-width="3" stroke-dasharray="${highPct} ${100 - highPct}" stroke-dashoffset="-${lowPct + medPct}"></circle>
+                                </svg>
+                                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                                    <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase;">Total</span>
+                                    <div style="font-size: 1.15rem; font-weight: 800; font-family: var(--font-heading); color: var(--text);">${total}</div>
+                                </div>
+                            </div>
+                            <span style="font-size: 0.72rem; color: var(--muted); font-weight: 600;">Real-time Telemetry Status</span>
+                        </div>
+                    </div>
+                    <div class="slideFooter">
+                        <span>Live Dataset Risk Distribution Audit</span>
                         <span>Slide ${idx+1} of ${slides.length}</span>
                     </div>
                 </div>
