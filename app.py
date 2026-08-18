@@ -704,6 +704,10 @@ def create_app() -> Flask:
                         WHERE ds.is_active = 1
                         """
                     ).fetchone()[0]
+                    if avg_val is None:
+                        avg_val = conn_avg.execute(
+                            f'SELECT AVG(CAST(cc."{col_name}" AS REAL)) FROM customer_churn cc WHERE cc.source_id = "sample_data"'
+                        ).fetchone()[0]
                     sandbox_averages[col_name] = round(float(avg_val), 1) if avg_val is not None else defaults.get(col_name, 0.0)
                 else:
                     sandbox_averages[col_name] = defaults.get(col_name, 0.0)

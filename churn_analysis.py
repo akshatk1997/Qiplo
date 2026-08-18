@@ -831,6 +831,15 @@ def load_training_data(db_path: Path, config: dict | None = None) -> pd.DataFram
         ORDER BY cc.customer_id
     """
     df = pd.read_sql_query(query, conn)
+    if df.empty:
+        # Fallback to sample_data if no active sources are found, so sandbox/ML engines are always operational!
+        query = """
+            SELECT cc.* 
+            FROM customer_churn cc
+            WHERE cc.source_id = 'sample_data'
+            ORDER BY cc.customer_id
+        """
+        df = pd.read_sql_query(query, conn)
     conn.close()
     return df
 
