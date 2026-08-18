@@ -1119,6 +1119,26 @@ function renderSourcesList(sources) {
             </div>
         `;
     }).join('');
+
+    const sandboxSelect = document.getElementById('sandboxSourceSelect');
+    if (sandboxSelect) {
+        const currentVal = sandboxSelect.value;
+        let optionsHtml = `
+            <option value="all_active">All Active Datasets</option>
+            <option value="sample_data">Global Sample Dataset</option>
+        `;
+        sources.forEach(src => {
+            if (src.source_id !== 'sample_data') {
+                optionsHtml += `<option value="${src.source_id}">Custom: ${src.filename} (${src.row_count} rows)</option>`;
+            }
+        });
+        sandboxSelect.innerHTML = optionsHtml;
+        if (Array.from(sandboxSelect.options).some(opt => opt.value === currentVal)) {
+            sandboxSelect.value = currentVal;
+        } else {
+            sandboxSelect.value = 'all_active';
+        }
+    }
 }
 
 async function toggleSource(sourceId, isChecked) {
@@ -4772,6 +4792,46 @@ function setupDemoToggle() {
 
 window.exportAuditLogs = function() {
     window.location.href = `/api/compliance/audit/export?role=${currentAuthorizedRole}`;
+};
+
+window.changeSandboxSource = async function() {
+    const sandboxSelect = document.getElementById('sandboxSourceSelect');
+    if (!sandboxSelect) return;
+    
+    const sourceId = sandboxSelect.value;
+    try {
+        const res = await fetch(`/api/dashboard-state?source_id=${encodeURIComponent(sourceId)}`);
+        const payload = await res.json();
+        
+        if (payload.sandbox_averages) {
+            const avgs = payload.sandbox_averages;
+            
+            const updateSlider = (id, valId, val, suffix) => {
+                const slider = document.getElementById(id);
+                if (slider) {
+                    slider.value = val;
+                    updateSandboxVal(valId.substring(3), val + suffix);
+                }
+            };
+            
+            updateSlider('sandboxTenure', 'valSandboxTenure', avgs.tenure_months, ' months');
+            updateSlider('sandboxTickets', 'valSandboxTickets', avgs.support_tickets, ' tickets');
+            updateSlider('sandboxSatisfaction', 'valSandboxSatisfaction', avgs.customer_satisfaction_score, ' / 5');
+            updateSlider('sandboxDelays', 'valSandboxDelays', avgs.payment_delays, ' days');
+            updateSlider('sandboxUsage', 'valSandboxUsage', avgs.product_usage, ' hours');
+            updateSlider('sandboxComplaints', 'valSandboxComplaints', avgs.complaint_count, ' complaints');
+            
+            const chargesSlider = document.getElementById('sandboxCharges');
+            if (chargesSlider) {
+                chargesSlider.value = avgs.monthly_charges;
+                updateSandboxChargesLabel();
+            }
+            
+            runSandboxSimulation();
+        }
+    } catch (e) {
+        console.error("Failed to load averages for selected sandbox reference dataset source:", e);
+    }
 };
 
 window.updateSandboxVal = function(id, val) {

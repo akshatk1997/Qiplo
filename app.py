@@ -682,6 +682,7 @@ def create_app() -> Flask:
         # Calculate averages for sandbox initialization from the active source
         sandbox_averages = {}
         try:
+            source_id = request.args.get("source_id", "all_active")
             conn_avg = get_connection()
             cols_avg = customer_columns(conn_avg)
             defaults = {
@@ -696,15 +697,27 @@ def create_app() -> Flask:
             for col_name in ("tenure_months", "monthly_charges", "support_tickets", 
                              "customer_satisfaction_score", "payment_delays", "product_usage", "complaint_count"):
                 if col_name in cols_avg:
-                    avg_val = conn_avg.execute(
-                        f"""
-                        SELECT AVG(CAST(cc."{col_name}" AS REAL))
-                        FROM customer_churn cc
-                        JOIN data_sources ds ON cc.source_id = ds.source_id
-                        WHERE ds.is_active = 1
+                    if source_id == "sample_data":
+                        query = f'SELECT AVG(CAST(cc."{col_name}" AS REAL)) FROM customer_churn cc WHERE cc.source_id = "sample_data"'
+                        params = []
+                    elif source_id == "all_active":
+                        query = f"""
+                            SELECT AVG(CAST(cc."{col_name}" AS REAL))
+                            FROM customer_churn cc
+                            JOIN data_sources ds ON cc.source_id = ds.source_id
+                            WHERE ds.is_active = 1
                         """
-                    ).fetchone()[0]
-                    if avg_val is None:
+                        params = []
+                    else:
+                        query = f"""
+                            SELECT AVG(CAST(cc."{col_name}" AS REAL))
+                            FROM customer_churn cc
+                            WHERE cc.source_id = ?
+                        """
+                        params = [source_id]
+                        
+                    avg_val = conn_avg.execute(query, params).fetchone()[0]
+                    if avg_val is None and source_id == "all_active":
                         avg_val = conn_avg.execute(
                             f'SELECT AVG(CAST(cc."{col_name}" AS REAL)) FROM customer_churn cc WHERE cc.source_id = "sample_data"'
                         ).fetchone()[0]

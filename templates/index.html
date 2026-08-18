@@ -493,15 +493,24 @@
                         <h2>Sandbox</h2>
                         <span style="font-size: 0.78rem; color: var(--muted);">Simulate account parameters to test dynamic churn probability</span>
                     </div>
-                    <div class="currencySelector">
-                        <label for="sandboxCurrencySelect">Currency: </label>
-                        <select id="sandboxCurrencySelect" class="roleSelect" aria-label="Change currency">
-                            <option value="USD" data-symbol="$" data-rate="1.0">USD ($)</option>
-                            <option value="EUR" data-symbol="€" data-rate="0.92">EUR (€)</option>
-                            <option value="GBP" data-symbol="£" data-rate="0.78">GBP (£)</option>
-                            <option value="INR" data-symbol="₹" data-rate="83.5">INR (₹)</option>
-                            <option value="JPY" data-symbol="¥" data-rate="158.0">JPY (¥)</option>
-                        </select>
+                    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                        <div class="currencySelector">
+                            <label for="sandboxSourceSelect">Dataset Reference: </label>
+                            <select id="sandboxSourceSelect" class="roleSelect" style="max-width: 250px;" onchange="changeSandboxSource()">
+                                <option value="all_active">All Active Datasets</option>
+                                <option value="sample_data">Global Sample Dataset</option>
+                            </select>
+                        </div>
+                        <div class="currencySelector">
+                            <label for="sandboxCurrencySelect">Currency: </label>
+                            <select id="sandboxCurrencySelect" class="roleSelect" aria-label="Change currency">
+                                <option value="USD" data-symbol="$" data-rate="1.0">USD ($)</option>
+                                <option value="EUR" data-symbol="€" data-rate="0.92">EUR (€)</option>
+                                <option value="GBP" data-symbol="£" data-rate="0.78">GBP (£)</option>
+                                <option value="INR" data-symbol="₹" data-rate="83.5">INR (₹)</option>
+                                <option value="JPY" data-symbol="¥" data-rate="158.0">JPY (¥)</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div id="sandboxSplitLayout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 14px;">
