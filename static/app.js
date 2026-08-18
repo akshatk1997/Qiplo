@@ -1823,7 +1823,15 @@ function getFallbackSpecialsData() {
 function calculateSpecialModuleMetrics(suite) {
     const activeData = (predictionData && predictionData.length > 0) ? predictionData : getFallbackSpecialsData();
     const totalCount = activeData.length;
-    const highRiskCount = activeData.filter(r => r.prediction_label === 'high_risk').length;
+    
+    // Robust high-risk matching logic
+    const isHighRisk = r => {
+        const lbl = String(r.prediction_label || '').toLowerCase().replace(/[\s_-]/g, '');
+        const targetLbl = String(labelMapping.high_risk || 'high_risk').toLowerCase().replace(/[\s_-]/g, '');
+        return lbl === 'highrisk' || lbl === targetLbl || (parseFloat(r.predicted_probability) >= 0.5);
+    };
+
+    const highRiskCount = activeData.filter(isHighRisk).length;
     const churnRate = totalCount > 0 ? (highRiskCount / totalCount) : 0.0;
     const retentionRate = Math.round((1 - churnRate) * 100);
 
@@ -1850,9 +1858,9 @@ function calculateSpecialModuleMetrics(suite) {
             { label: 'Working Capital', value: `${sym}${workingCapitalVal.toLocaleString()}`, desc: 'Net current operational asset availability and cash cycle efficiency.', status: 'green', progress: 64, actionLabel: 'Optimize Working Cap', actionId: 'finance_working_cap' }
         ];
     } else if (suite === 'operations') {
-        const totalTickets = predictionData.reduce((acc, r) => acc + getRecordValue(r, 'support_tickets'), 0);
+        const totalTickets = activeData.reduce((acc, r) => acc + getRecordValue(r, 'support_tickets'), 0);
         const supplierRiskPct = Math.min(100, Math.round(35 + (totalTickets / (totalCount * 2)) * 30));
-        const totalUsage = predictionData.reduce((acc, r) => acc + getRecordValue(r, 'product_usage'), 0);
+        const totalUsage = activeData.reduce((acc, r) => acc + getRecordValue(r, 'product_usage'), 0);
         const inventoryVal = Math.round(totalUsage * rate * 120);
         const forecastVariance = Math.round(8 + (churnRate * 12));
         const delayVal = Math.round(2 + (highRiskCount / 4));
@@ -1867,9 +1875,9 @@ function calculateSpecialModuleMetrics(suite) {
         ];
     } else if (suite === 'sales') {
         const churnRateVal = Math.round(churnRate * 100);
-        const leakageVal = Math.round(predictionData.filter(r => r.prediction_label === 'high_risk').reduce((acc, r) => acc + getRecordValue(r, 'monthly_charges'), 0) * rate);
+        const leakageVal = Math.round(activeData.filter(isHighRisk).reduce((acc, r) => acc + getRecordValue(r, 'monthly_charges'), 0) * rate);
         const nextMonthSales = Math.round(totalCharges * rate * (1 - churnRate));
-        const highTierSegments = predictionData.filter(r => getRecordValue(r, 'monthly_charges') > avgMonthlyCharges).length;
+        const highTierSegments = activeData.filter(r => getRecordValue(r, 'monthly_charges') > avgMonthlyCharges).length;
         const opportunityScore = Math.round(85 - (churnRate * 10));
 
         return [
@@ -1880,7 +1888,7 @@ function calculateSpecialModuleMetrics(suite) {
             { label: 'Opportunity Scoring Index', value: `${opportunityScore}% Score`, desc: 'Average probability of closing current active sales opportunities.', status: 'green', progress: opportunityScore, actionLabel: 'Close Active Opportunities', actionId: 'sales_close_deals' }
         ];
     } else if (suite === 'product') {
-        const totalUsage = predictionData.reduce((acc, r) => acc + getRecordValue(r, 'product_usage'), 0);
+        const totalUsage = activeData.reduce((acc, r) => acc + getRecordValue(r, 'product_usage'), 0);
         const adoptionRate = Math.min(100, Math.round(35 + (totalUsage / (totalCount * 10)) * 25));
         const retentionRateVal = retentionRate;
         const day7ChurnVal = Math.round(100 - retentionRateVal * 0.95);
