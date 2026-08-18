@@ -5003,13 +5003,14 @@ def audit_logs_api():
         return jsonify({"error": f"Failed to fetch audit logs: {e}"}), 500
 
 
+@app.route("/api/compliance/audit/log", methods=["POST"])
 @app.route("/api/audit/create", methods=["POST"])
 def audit_logs_create():
     """Create a compliance audit entry."""
     data = request.json or {}
-    role = data.get("user_role", "CSM")
+    role = data.get("user_role") or data.get("role") or "CSM"
     action = data.get("action", "")
-    target = data.get("target_customer")
+    target = data.get("target_customer") or data.get("details")
     
     if not action:
         return jsonify({"error": "Action field is required."}), 400
