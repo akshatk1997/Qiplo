@@ -3400,6 +3400,28 @@ body.light-theme .bullet-item i {
         align-items: center !important;
         gap: 8px !important;
     }
+    
+    /* Company Name Input - Crisp Styling */
+    #companyNameInput {
+        border-radius: var(--radius-sm) !important;
+        border: 1px solid rgba(197, 160, 89, 0.4) !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        color: var(--text) !important;
+        padding: 0 10px !important;
+    }
+    
+    /* Dark Mode Theme Switcher and 3-Dots Button */
+    .themeToggleBtn {
+        background: rgba(197, 160, 89, 0.1) !important;
+        border: 1px solid #c5a059 !important;
+        color: #c5a059 !important;
+        box-shadow: 0 0 10px rgba(197, 160, 89, 0.2) !important;
+    }
+    .themeToggleBtn:hover {
+        background: rgba(197, 160, 89, 0.2) !important;
+        transform: scale(1.05);
+    }
+    
     .mobile-menu-btn {
         display: inline-flex !important;
         align-items: center;
@@ -3408,20 +3430,26 @@ body.light-theme .bullet-item i {
         height: 38px;
         padding: 0 !important;
         border-radius: 50% !important;
-        background: var(--surface-3) !important;
-        border: 1px solid var(--border) !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
         color: var(--text) !important;
         cursor: pointer;
     }
+    .mobile-menu-btn:hover, .mobile-menu-btn.active {
+        background: rgba(197, 160, 89, 0.1) !important;
+        border-color: #c5a059 !important;
+        color: #c5a059 !important;
+    }
+    
     .mobile-menu-dropdown {
         position: absolute;
         top: 46px;
         right: 0;
-        background: rgba(15, 15, 25, 0.95);
+        background: rgba(15, 15, 25, 0.96);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(0, 245, 255, 0.25);
-        box-shadow: 0 10px 30px rgba(0, 245, 255, 0.15);
+        border: 1px solid rgba(197, 160, 89, 0.35);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(197, 160, 89, 0.15);
         border-radius: 12px;
         padding: 8px;
         display: flex;
@@ -3459,7 +3487,7 @@ body.light-theme .bullet-item i {
     }
     .dropdown-item:hover {
         background: rgba(255, 255, 255, 0.05) !important;
-        color: var(--accent) !important;
+        color: #c5a059 !important;
     }
     .dropdown-item i {
         width: 16px;
@@ -3468,7 +3496,7 @@ body.light-theme .bullet-item i {
     }
 }
 
-/* Light Theme Overrides for Mobile Actions Dropdown Menu */
+/* Light Theme Overrides for Mobile Actions Dropdown Menu & Topbar Inputs */
 body.light-theme .mobile-menu-dropdown {
     background: rgba(255, 255, 255, 0.98) !important;
     border-color: rgba(79, 70, 229, 0.2) !important;
@@ -3479,6 +3507,26 @@ body.light-theme .dropdown-item {
 }
 body.light-theme .dropdown-item:hover {
     background: rgba(79, 70, 229, 0.05) !important;
+    color: var(--accent) !important;
+}
+body.light-theme #companyNameInput {
+    background: #ffffff !important;
+    border: 1px solid var(--border-strong) !important;
+}
+body.light-theme .themeToggleBtn {
+    background: rgba(79, 70, 229, 0.05) !important;
+    border: 1px solid var(--accent) !important;
+    color: var(--accent) !important;
+    box-shadow: 0 0 10px rgba(79, 70, 229, 0.1) !important;
+}
+body.light-theme .mobile-menu-btn {
+    background: #ffffff !important;
+    border: 1px solid var(--border-strong) !important;
+    color: var(--text) !important;
+}
+body.light-theme .mobile-menu-btn:hover, body.light-theme .mobile-menu-btn.active {
+    background: rgba(79, 70, 229, 0.05) !important;
+    border-color: var(--accent) !important;
     color: var(--accent) !important;
 }
 
