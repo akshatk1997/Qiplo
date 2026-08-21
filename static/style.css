@@ -3647,3 +3647,101 @@ body.light-theme .dropdown-item:hover {
         font-size: 1.2rem !important;
     }
 }
+
+/* ============================================================
+   GUIDED TOUR WALKTHROUGH STYLES
+   ============================================================ */
+.tour-overlay-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 15, 0.4);
+    pointer-events: none;
+    z-index: 99999;
+    transition: opacity 0.3s ease;
+}
+.tour-overlay-backdrop.hidden {
+    display: none !important;
+}
+
+.tour-highlight-box {
+    position: absolute;
+    border: 3px solid #c5a059;
+    border-radius: 8px;
+    box-shadow: 0 0 0 9999px rgba(10, 10, 15, 0.75), 0 0 15px rgba(197, 160, 89, 0.5);
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 99998;
+}
+
+.tour-card {
+    position: absolute;
+    width: 320px;
+    background: #0d111d;
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    border-radius: 12px;
+    padding: 20px;
+    pointer-events: auto;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 99999;
+}
+body.light-theme .tour-card {
+    background: #fdfdfb;
+    border-color: rgba(184, 145, 75, 0.4);
+    box-shadow: 0 15px 40px rgba(184, 145, 75, 0.15);
+}
+
+.tour-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.tour-badge {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #c5a059;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.tour-close-x {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+}
+.tour-close-x:hover {
+    color: var(--text);
+}
+
+.tour-card h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--text);
+    margin: 0 0 8px 0;
+}
+.tour-card p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+}
+.tour-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.tour-card-footer button {
+    padding: 6px 14px !important;
+    font-size: 0.76rem !important;
+    border-radius: 4px !important;
+}

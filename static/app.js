@@ -5050,6 +5050,155 @@ window.runSandboxSimulation = function() {
     }, 150);
 };
 
+let currentTourStep = 0;
+const tourSteps = [
+    {
+        elementId: '.sidebar',
+        title: 'Workspace Navigation',
+        desc: 'Easily navigate between the Main Dashboard, Strategy SLA Actions, Specialized Business Suites, Presentation Generator, and API Docs.',
+        tab: 'dashboard'
+    },
+    {
+        elementId: '.dataIngestionBlock',
+        title: 'Telemetry & Ingestion',
+        desc: 'Select from global reference datasets or upload your own CSV records to refresh ML predictions instantly.',
+        tab: 'dashboard'
+    },
+    {
+        elementId: '.modelPerformanceCard',
+        title: 'ML Performance Telemetry',
+        desc: 'Real-time classification accuracy, precision, recall, and ROC AUC metrics parsed from active models.',
+        tab: 'dashboard'
+    },
+    {
+        elementId: '.sandboxContainer',
+        title: 'Interactive Sandbox Simulator',
+        desc: 'Simulate customer behaviors! Slide tenure, support tickets, and monthly billing charges to predict churn on-the-fly.',
+        tab: 'dashboard'
+    },
+    {
+        elementId: '#tab-actions',
+        title: 'Closed-Loop SLA Actions',
+        desc: 'Set automatic notifications, alerts threshold parameters, and priority response plans for at-risk accounts.',
+        tab: 'actions'
+    },
+    {
+        elementId: '#tab-business',
+        title: 'Specialized Business Suites',
+        desc: 'Explore drilldowns focused on Finance margins, Operations delays, Sales revenues, and Product usage insights.',
+        tab: 'business'
+    },
+    {
+        elementId: '#tab-presentation',
+        title: 'AI Slide Presentation Hub',
+        desc: 'Compile bespoke PowerPoint decks featuring live data charts, customized styles, and direct PPTX downloads.',
+        tab: 'presentation'
+    }
+];
+
+window.closeWelcomeModalAndStartTour = function() {
+    const modal = document.getElementById('welcomeModal');
+    if (modal) modal.classList.remove('visible');
+    sessionStorage.setItem('welcome_shown', 'true');
+    startTour();
+};
+
+window.startTour = function() {
+    const overlay = document.getElementById('tourOverlay');
+    if (!overlay) return;
+    
+    currentTourStep = 0;
+    overlay.classList.remove('hidden');
+    showTourStep(0);
+};
+
+window.endTour = function() {
+    const overlay = document.getElementById('tourOverlay');
+    if (overlay) overlay.classList.add('hidden');
+    switchTab('dashboard');
+};
+
+window.prevTourStep = function() {
+    if (currentTourStep > 0) {
+        currentTourStep--;
+        showTourStep(currentTourStep);
+    }
+};
+
+window.nextTourStep = function() {
+    if (currentTourStep < tourSteps.length - 1) {
+        currentTourStep++;
+        showTourStep(currentTourStep);
+    } else {
+        endTour();
+    }
+};
+
+function showTourStep(index) {
+    const step = tourSteps[index];
+    if (!step) return;
+    
+    if (step.tab) {
+        switchTab(step.tab);
+    }
+    
+    setTimeout(() => {
+        const element = document.querySelector(step.elementId);
+        const overlay = document.getElementById('tourOverlay');
+        const highlight = document.getElementById('tourHighlightBox');
+        const card = document.getElementById('tourCard');
+        const badge = document.getElementById('tourStepBadge');
+        const title = document.getElementById('tourStepTitle');
+        const desc = document.getElementById('tourStepDescription');
+        
+        if (!overlay || !highlight || !card || !badge || !title || !desc) return;
+        
+        badge.textContent = `Step ${index + 1} of ${tourSteps.length}`;
+        title.textContent = step.title;
+        desc.textContent = step.desc;
+        
+        const prevBtn = document.getElementById('tourPrevBtn');
+        if (prevBtn) {
+            prevBtn.style.display = index === 0 ? 'none' : 'inline-flex';
+        }
+        
+        const nextBtn = document.getElementById('tourNextBtn');
+        if (nextBtn) {
+            if (index === tourSteps.length - 1) {
+                nextBtn.innerHTML = 'Finish <i class="lucide-icon" data-lucide="check" style="width: 14px; height: 14px;"></i>';
+            } else {
+                nextBtn.innerHTML = 'Next <i class="lucide-icon" data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>';
+            }
+        }
+        if (window.lucide) lucide.createIcons();
+        
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            const rect = element.getBoundingClientRect();
+            
+            highlight.style.display = 'block';
+            highlight.style.top = (rect.top + window.scrollY - 4) + 'px';
+            highlight.style.left = (rect.left + window.scrollX - 4) + 'px';
+            highlight.style.width = (rect.width + 8) + 'px';
+            highlight.style.height = (rect.height + 8) + 'px';
+            
+            const spaceUnder = window.innerHeight - rect.bottom;
+            if (spaceUnder > 260) {
+                card.style.top = (rect.bottom + window.scrollY + 12) + 'px';
+                card.style.left = Math.max(10, Math.min(window.innerWidth - 340, rect.left + window.scrollX + (rect.width/2) - 160)) + 'px';
+            } else {
+                card.style.top = Math.max(10, (rect.top + window.scrollY - 220)) + 'px';
+                card.style.left = Math.max(10, Math.min(window.innerWidth - 340, rect.left + window.scrollX + (rect.width/2) - 160)) + 'px';
+            }
+        } else {
+            highlight.style.display = 'none';
+            card.style.top = (window.innerHeight / 2 + window.scrollY - 100) + 'px';
+            card.style.left = (window.innerWidth / 2 - 160) + 'px';
+        }
+    }, 200);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const rs = document.getElementById('roleSelect');
     if (rs) rs.value = currentAuthorizedRole;

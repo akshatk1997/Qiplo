@@ -67,6 +67,9 @@
             <button id="exportTableauBtn" class="ghostBtn" type="button">Tableau</button>
             <button id="exportPowerBiBtn" class="ghostBtn" type="button">Power BI</button>
             <button id="exportExcelBtn" class="ghostBtn" type="button">Excel</button>
+            <button id="headerTourBtn" class="ghostBtn" onclick="startTour()" type="button" style="display: inline-flex; align-items: center; gap: 6px;" title="Take guided walkthrough tour">
+                <i data-lucide="help-circle" class="lucide-icon" style="width: 14px; height: 14px;"></i> Tour
+            </button>
             <button id="headerGuideBtn" class="ghostBtn" onclick="switchTab('guide')" type="button" style="display: inline-flex; align-items: center; gap: 6px;">
                 <i data-lucide="book-marked" class="lucide-icon" style="width: 14px; height: 14px;"></i> Guide
             </button>
@@ -97,6 +100,9 @@
                     </button>
                     <button class="dropdown-item" onclick="document.getElementById('exportExcelBtn').click()">
                         <i data-lucide="file-spreadsheet" class="lucide-icon"></i> Excel
+                    </button>
+                    <button class="dropdown-item" onclick="startTour()">
+                        <i data-lucide="help-circle" class="lucide-icon"></i> Tour Walkthrough
                     </button>
                     <button class="dropdown-item" onclick="switchTab('guide')">
                         <i data-lucide="book-marked" class="lucide-icon"></i> Guide
@@ -1739,6 +1745,23 @@
         </div>
     </div>
 
+    <!-- Guided Tour Overlay Step Card -->
+    <div id="tourOverlay" class="tour-overlay-backdrop hidden">
+        <div id="tourHighlightBox" class="tour-highlight-box"></div>
+        <div id="tourCard" class="tour-card">
+            <div class="tour-card-header">
+                <span id="tourStepBadge" class="tour-badge">Step 1 of 7</span>
+                <button type="button" class="tour-close-x" onclick="endTour()">&times;</button>
+            </div>
+            <h3 id="tourStepTitle">Tour Step Title</h3>
+            <p id="tourStepDescription">Tour step explanation goes here.</p>
+            <div class="tour-card-footer">
+                <button id="tourPrevBtn" class="ghostBtn" onclick="prevTourStep()"><i data-lucide="chevron-left" class="lucide-icon" style="width: 14px; height: 14px; vertical-align: middle;"></i> Back</button>
+                <button id="tourNextBtn" class="primaryBtn" onclick="nextTourStep()">Next <i data-lucide="chevron-right" class="lucide-icon" style="width: 14px; height: 14px; vertical-align: middle;"></i></button>
+            </div>
+        </div>
+    </div>
+
     <!-- Glassmorphic Welcome Modal Popup -->
     <div id="welcomeModal" class="welcome-modal-overlay">
         <div class="welcome-modal-card">
@@ -1755,10 +1778,13 @@
                     <div class="bullet-item"><i data-lucide="brain"></i> Copilot AI Agent</div>
                 </div>
             </div>
-            <div class="welcome-footer">
-                <button id="closeWelcomeBtn" class="welcome-enter-btn" type="button">
-                    <span>Enter Workspace</span>
-                    <i data-lucide="arrow-right"></i>
+            <div class="welcome-footer" style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                <button id="startWelcomeTourBtn" class="welcome-enter-btn" type="button" onclick="closeWelcomeModalAndStartTour()">
+                    <span>Start Guided Tour</span>
+                    <i data-lucide="compass"></i>
+                </button>
+                <button id="closeWelcomeBtn" class="ghostBtn" style="border: none; background: transparent; color: var(--muted); padding: 8px; font-size: 0.82rem; font-weight: 600; cursor: pointer; text-decoration: underline; width: 100%; text-align: center;" type="button">
+                    Skip Tour & Enter Workspace
                 </button>
             </div>
         </div>
