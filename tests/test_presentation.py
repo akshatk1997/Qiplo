@@ -112,3 +112,36 @@ def test_custom_slide_count_presentation(tmp_path):
             os.environ["CHURN_DB"] = old_db
         elif "CHURN_DB" in os.environ:
             del os.environ["CHURN_DB"]
+
+
+def test_presentation_requires_user_data(tmp_path):
+    import sqlite3
+    db_path = tmp_path / "empty_presentation_test.db"
+    old_db = os.environ.get("CHURN_DB")
+    os.environ["CHURN_DB"] = str(db_path)
+    try:
+        flask_app = app_module.create_app()
+        flask_app.config.update(TESTING=True)
+        client = flask_app.test_client()
+
+        # Trigger DB initialization
+        client.get("/api/health")
+
+        # Disable active data sources to simulate zero dataset data inserted
+        conn = sqlite3.connect(db_path)
+        conn.execute("UPDATE data_sources SET is_active = 0")
+        conn.commit()
+        conn.close()
+
+        response = client.post("/api/presentation/generate", json={})
+        assert response.status_code == 400
+        payload = response.get_json()
+        assert "error" in payload
+        assert payload.get("has_data") is False
+        assert len(payload.get("slides", [])) == 0
+    finally:
+        if old_db is not None:
+            os.environ["CHURN_DB"] = old_db
+        elif "CHURN_DB" in os.environ:
+            del os.environ["CHURN_DB"]
+

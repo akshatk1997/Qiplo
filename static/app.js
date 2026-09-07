@@ -3265,25 +3265,32 @@ function setupPresentation() {
 }
 
 function generateLocalSlides(numSlides, customPrompt, shouldShuffle) {
-    let total_cust = '1,000+';
-    let avg_risk_str = '26.8%';
+    let total_cust = '0';
+    let avg_risk_str = '0%';
+    let hasData = false;
     
     try {
         if (typeof predictionData !== 'undefined' && predictionData && predictionData.length > 0) {
             const total = predictionData.length;
             total_cust = total.toLocaleString();
+            hasData = true;
             
             const sum = predictionData.reduce((acc, curr) => acc + (parseFloat(curr.predicted_probability) || 0), 0);
             const avg_risk_val = (sum / total) * 100;
             avg_risk_str = `${avg_risk_val.toFixed(1)}%`;
         } else {
             const metaTotal = document.getElementById('metaTotal');
-            if (metaTotal && metaTotal.textContent !== '—' && metaTotal.textContent !== '') {
+            if (metaTotal && metaTotal.textContent !== '—' && metaTotal.textContent !== '' && parseInt(metaTotal.textContent) > 0) {
                 total_cust = metaTotal.textContent;
+                hasData = true;
             }
         }
     } catch (err) {
         console.error("Error reading metrics for fallback slides", err);
+    }
+
+    if (!hasData) {
+        return [];
     }
     
     let localPool = [
@@ -3387,11 +3394,64 @@ async function generatePresentationDeck() {
                     presentationSlides = generateLocalSlides(numSlides, customPrompt, true);
                 }
             } else {
+                const errData = await res.json().catch(() => ({}));
+                if (errData.error) {
+                    presentationSlides = [];
+                    status.innerHTML = `
+                        <div style="padding: 24px; text-align: center; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 12px; color: var(--text); margin-top: 15px;">
+                            <i data-lucide="alert-circle" class="lucide-icon" style="width: 32px; height: 32px; color: #ef4444; margin-bottom: 8px;"></i>
+                            <h3 style="margin: 0 0 6px 0; font-size: 1.1rem; color: #ef4444;">Dataset Data Required</h3>
+                            <p style="margin: 0; font-size: 0.88rem; color: var(--muted);">${errData.error}</p>
+                        </div>
+                    `;
+                    if (window.lucide) lucide.createIcons();
+                    status.classList.remove('hidden');
+                    viewport.classList.add('hidden');
+                    prevBtn.classList.add('hidden');
+                    nextBtn.classList.add('hidden');
+                    if (fullscreenBtn) fullscreenBtn.classList.add('hidden');
+                    const printBtn = document.getElementById('printPresBtn');
+                    if (printBtn) printBtn.classList.add('hidden');
+                    if (downloadBtn) downloadBtn.classList.add('hidden');
+                    const downloadPptxBtn = document.getElementById('downloadPresPptxBtn');
+                    if (downloadPptxBtn) downloadPptxBtn.classList.add('hidden');
+                    const editorPanel = document.getElementById('slideEditorPanel');
+                    if (editorPanel) editorPanel.classList.add('hidden');
+                    const visualThemeControls = document.getElementById('presVisualThemeControls');
+                    if (visualThemeControls) visualThemeControls.classList.add('hidden');
+                    return;
+                }
                 presentationSlides = generateLocalSlides(numSlides, customPrompt, true);
             }
         } catch (apiErr) {
-            console.warn("AI presentation API failed, falling back to local dataset generator:", apiErr);
+            console.warn("AI presentation API failed:", apiErr);
             presentationSlides = generateLocalSlides(numSlides, customPrompt, true);
+        }
+
+        if (!presentationSlides || presentationSlides.length === 0) {
+            status.innerHTML = `
+                <div style="padding: 24px; text-align: center; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 12px; color: var(--text); margin-top: 15px;">
+                    <i data-lucide="alert-circle" class="lucide-icon" style="width: 32px; height: 32px; color: #ef4444; margin-bottom: 8px;"></i>
+                    <h3 style="margin: 0 0 6px 0; font-size: 1.1rem; color: #ef4444;">Dataset Data Required</h3>
+                    <p style="margin: 0; font-size: 0.88rem; color: var(--muted);">Presentation decks cannot be created without dataset data. Please upload or insert customer data first.</p>
+                </div>
+            `;
+            if (window.lucide) lucide.createIcons();
+            status.classList.remove('hidden');
+            viewport.classList.add('hidden');
+            prevBtn.classList.add('hidden');
+            nextBtn.classList.add('hidden');
+            if (fullscreenBtn) fullscreenBtn.classList.add('hidden');
+            const printBtn = document.getElementById('printPresBtn');
+            if (printBtn) printBtn.classList.add('hidden');
+            if (downloadBtn) downloadBtn.classList.add('hidden');
+            const downloadPptxBtn = document.getElementById('downloadPresPptxBtn');
+            if (downloadPptxBtn) downloadPptxBtn.classList.add('hidden');
+            const editorPanel = document.getElementById('slideEditorPanel');
+            if (editorPanel) editorPanel.classList.add('hidden');
+            const visualThemeControls = document.getElementById('presVisualThemeControls');
+            if (visualThemeControls) visualThemeControls.classList.add('hidden');
+            return;
         }
 
         currentSlideIndex = 0;

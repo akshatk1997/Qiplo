@@ -3613,6 +3613,14 @@ window.addEventListener('DOMContentLoaded', function() {{
         except Exception as e:
             print("Database query failed in presentation API, using defaults:", e)
         
+        # Enforce strict requirement: No presentation deck generation without user data inserted
+        if total_cust == 0:
+            return jsonify({
+                "error": "No data provided or inserted. Presentation decks cannot be generated without dataset data. Please upload or insert a dataset (CSV/XLSX/JSON) first.",
+                "slides": [],
+                "has_data": False
+            }), 400
+
         custom_prompt = data.get("custom_prompt")
         
         # Fallbacks for copy
