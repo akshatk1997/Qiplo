@@ -4649,10 +4649,14 @@ function setupThemeToggle() {
         document.body.classList.remove('dark-theme');
         document.body.classList.add('light-theme');
         toggleBtn.innerHTML = '<i data-lucide="sun" class="lucide-icon"></i>';
+        toggleBtn.setAttribute('title', 'Light Mode Active (Click for Dark Mode)');
+        toggleBtn.setAttribute('aria-label', 'Switch to Dark Mode');
     } else {
         document.body.classList.remove('light-theme');
         document.body.classList.add('dark-theme');
         toggleBtn.innerHTML = '<i data-lucide="moon" class="lucide-icon"></i>';
+        toggleBtn.setAttribute('title', 'Dark Mode Active (Click for Light Mode)');
+        toggleBtn.setAttribute('aria-label', 'Switch to Light Mode');
     }
     if (window.lucide) lucide.createIcons();
 
@@ -4662,11 +4666,15 @@ function setupThemeToggle() {
             document.body.classList.add('dark-theme');
             localStorage.setItem('theme', 'dark');
             toggleBtn.innerHTML = '<i data-lucide="moon" class="lucide-icon"></i>';
+            toggleBtn.setAttribute('title', 'Dark Mode Active (Click for Light Mode)');
+            toggleBtn.setAttribute('aria-label', 'Switch to Light Mode');
         } else {
             document.body.classList.remove('dark-theme');
             document.body.classList.add('light-theme');
             localStorage.setItem('theme', 'light');
             toggleBtn.innerHTML = '<i data-lucide="sun" class="lucide-icon"></i>';
+            toggleBtn.setAttribute('title', 'Light Mode Active (Click for Dark Mode)');
+            toggleBtn.setAttribute('aria-label', 'Switch to Dark Mode');
         }
         if (window.lucide) lucide.createIcons();
         if (typeof lastChartsData !== 'undefined' && lastChartsData) {
