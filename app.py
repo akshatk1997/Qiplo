@@ -2499,6 +2499,14 @@ def create_app() -> Flask:
         try:
             df = build_enriched_predictions_dataframe()
             total_cust = len(df)
+            if total_cust == 0:
+                return jsonify({
+                    "status": "error",
+                    "error": "No data provided or inserted. Upload a dataset file (CSV/XLSX/JSON) first to generate BI insights.",
+                    "has_data": False,
+                    "kpis": {}
+                }), 400
+
             high_risk_df = df[df["predicted_probability"] >= 0.65]
             high_risk_count = len(high_risk_df)
             high_risk_pct = round((high_risk_count / total_cust * 100), 1) if total_cust else 0.0
@@ -3493,6 +3501,17 @@ window.addEventListener('DOMContentLoaded', function() {{
         total_cust = stats["total_customers"] or 0
         total_charges = stats["total_charges"] or 0.0
         expected_loss = stats["expected_loss"] or 0.0
+
+        if total_cust == 0:
+            conn.close()
+            return jsonify({
+                "error": "No data provided or inserted. Specials and Business Intelligence modules require dataset data to calculate details.",
+                "has_data": False,
+                "total_customers": 0,
+                "total_monthly_charges": 0.0,
+                "total_expected_loss": 0.0,
+                "top_vulnerable_segments": []
+            }), 400
         
         # 2. Segment-based risks
         segments = []
