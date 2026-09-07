@@ -3749,7 +3749,7 @@ body.light-theme .tour-card {
     margin-bottom: 10px;
 }
 .tour-badge {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-heading);
     font-size: 0.68rem;
     font-weight: 700;
     color: #c5a059;
@@ -3770,15 +3770,17 @@ body.light-theme .tour-card {
 }
 
 .tour-card h3 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
-    font-size: 1.2rem;
+    font-family: var(--font-heading);
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.15rem;
     color: var(--text);
     margin: 0 0 8px 0;
+    letter-spacing: -0.01em;
 }
 .tour-card p {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.8rem;
+    font-family: var(--font-body);
+    font-size: 0.82rem;
     color: var(--muted);
     line-height: 1.5;
     margin: 0 0 16px 0;
