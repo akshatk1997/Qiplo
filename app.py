@@ -1454,6 +1454,27 @@ def create_app() -> Flask:
         if not user_message:
             return jsonify({"error": "Message is required."}), 400
 
+        # Check if dataset data exists in system
+        try:
+            conn = get_connection()
+            stats = conn.execute("""
+                SELECT COUNT(*) as total_customers
+                FROM customer_churn cc
+                JOIN data_sources ds ON cc.source_id = ds.source_id
+                WHERE ds.is_active = 1
+            """).fetchone()
+            conn.close()
+            total_cust = stats["total_customers"] if stats else 0
+        except Exception:
+            total_cust = 0
+
+        if total_cust == 0:
+            return jsonify({
+                "error": "Dataset Data Required: No customer dataset has been provided or inserted into the system. Please upload or insert customer dataset data to use the AI Copilot Advisor.",
+                "has_data": False,
+                "response": "### ⚠️ Dataset Data Required\n\nNo customer dataset has been provided or inserted into the system. Please upload or insert customer dataset data using **+ Add Source** to analyze dataset files and interact with the AI Copilot Advisor."
+            }), 400
+
         # Strategy 1: Active Key with Cloud Model
         if model_key:
             try:

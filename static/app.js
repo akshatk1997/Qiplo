@@ -1193,6 +1193,13 @@ async function handleChatMessage(event) {
     const text = input.value.trim();
     if (!text) return;
 
+    if (!predictionData || !predictionData.length) {
+        input.value = '';
+        appendMessage('user', text);
+        appendMessage('bot', '### ⚠️ Dataset Data Required\n\nNo customer dataset has been provided or inserted into the system. Please upload or insert customer dataset data using **+ Add Source** to analyze dataset files and interact with the AI Copilot Advisor.', true);
+        return;
+    }
+
     input.value = '';
     appendMessage('user', text);
 
@@ -1225,7 +1232,8 @@ async function handleChatMessage(event) {
                 chatHistory.shift();
             }
         } else {
-            appendMessage('bot', payload.error || payload.response || 'An error occurred. Please try again.');
+            const errorMsg = payload.response || payload.error || 'Dataset Data Required: Please upload or insert customer data to interact with the AI Copilot Advisor.';
+            appendMessage('bot', errorMsg, true);
         }
     } catch (error) {
         removeMessage(loadingId);
