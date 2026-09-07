@@ -1054,13 +1054,16 @@ document.getElementById('exportPowerBiBtn').addEventListener('click', () => {
     openBiExportModal('powerbi');
     showBiToast("Power BI Report Template (.pbit) downloaded! Auto-creates visuals inside Power BI Desktop.", "line-chart");
 });
-document.getElementById('exportExcelBtn').addEventListener('click', () => {
-    if (!predictionData || !predictionData.length) {
-        alert("No prediction data available to export. Please upload a customer file first.");
-        return;
-    }
-    window.open('/api/export/excel', '_blank');
-});
+const excelBtn = document.getElementById('exportExcelBtn');
+if (excelBtn) {
+    excelBtn.addEventListener('click', () => {
+        if (!predictionData || !predictionData.length) {
+            alert("No prediction data available to export. Please upload a customer file first.");
+            return;
+        }
+        window.open('/api/export/excel', '_blank');
+    });
+}
 document.getElementById('exportReportBtn').addEventListener('click', () => {
     if (!predictionData || !predictionData.length) {
         alert("No prediction data available to analyze. Please upload a customer file first.");
