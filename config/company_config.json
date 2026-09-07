@@ -18,13 +18,7 @@
   ],
   "numeric_features": [
     "tenure_months",
-    "monthly_charges",
-    "total_charges",
-    "support_tickets",
-    "payment_delays",
-    "product_usage",
-    "complaint_count",
-    "customer_satisfaction_score"
+    "monthly_charges"
   ],
   "categorical_features": [
     "contract_type",
@@ -74,5 +68,6 @@
   "model_engine": "hybrid",
   "model_engine_name": "Tabular Hybrid Transformer",
   "slack_webhook_url": "https://hooks.slack.com/services/test/web",
-  "alert_email_recipient": "csm@company.com"
+  "alert_email_recipient": "csm@company.com",
+  "TESTING": true
 }
