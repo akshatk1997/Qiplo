@@ -489,17 +489,28 @@ a { color: inherit; text-decoration: none; }
 }
 
 .themeToggleBtn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
     background: var(--surface-2) !important;
     color: var(--text) !important;
     border: 1px solid var(--border-strong) !important;
-    padding: 0 14px !important;
     cursor: pointer !important;
-    border-radius: 999px !important;
+    flex-shrink: 0 !important;
+    box-shadow: var(--shadow-sm) !important;
+    transition: all 0.2s ease !important;
 }
 .themeToggleBtn:hover {
-    background: var(--surface-3) !important;
+    background: var(--surface-hover) !important;
     border-color: var(--accent) !important;
-    transform: translateY(-1px) !important;
+    color: var(--accent) !important;
+    transform: scale(1.05) !important;
 }
 
 .liveTrackingBadge {
