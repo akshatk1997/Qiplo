@@ -1,4 +1,4 @@
-// Ensure session ID is initialized and set as a cookie for backend database isolation
+// Ensure session ID is initialized and set as a cookie and localStorage for backend database isolation & persistence across reloads
 (function() {
     // Helper to extract cookie values
     function getCookie(name) {
@@ -7,12 +7,15 @@
         if (parts.length === 2) return parts.pop().split(';').shift();
     }
 
-    // Retrieve existing session ID or generate a new one if not present to ensure session persistence across navigation
-    let sessId = getCookie('qiplo_session_id');
+    // Retrieve existing session ID from localStorage or cookie, or generate a new one if not present to ensure session persistence across page reloads
+    let sessId = localStorage.getItem('qiplo_session_id') || getCookie('qiplo_session_id');
     if (!sessId) {
         sessId = 'sess_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now();
-        document.cookie = `qiplo_session_id=${sessId}; path=/; SameSite=Lax; max-age=31536000`;
     }
+    try {
+        localStorage.setItem('qiplo_session_id', sessId);
+        document.cookie = `qiplo_session_id=${sessId}; path=/; SameSite=Lax; max-age=31536000`;
+    } catch (e) {}
 
     // Global fetch interceptor to inject X-Session-ID and prevent caching on all /api requests
     const originalFetch = window.fetch;
@@ -26,7 +29,7 @@
                 options.headers = {};
             }
             
-            const currentSessId = getCookie('qiplo_session_id') || sessId;
+            const currentSessId = localStorage.getItem('qiplo_session_id') || getCookie('qiplo_session_id') || sessId;
             if (options.headers instanceof Headers) {
                 options.headers.set('X-Session-ID', currentSessId);
             } else {

@@ -184,6 +184,12 @@ def create_app() -> Flask:
             response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
             response.headers["Pragma"] = "no-cache"
             response.headers["Expires"] = "0"
+            
+        sess_id = request.cookies.get("qiplo_session_id") or request.headers.get("X-Session-ID") or request.args.get("session_id")
+        if sess_id:
+            clean_sess = "".join(c for c in sess_id if c.isalnum() or c in ("-", "_"))
+            if clean_sess:
+                response.set_cookie("qiplo_session_id", clean_sess, max_age=31536000, path="/", samesite="Lax")
         return response
 
     @app.before_request
