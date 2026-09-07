@@ -2028,22 +2028,25 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
         grid-column: auto !important;
     }
     .topbar {
-        padding: 12px 16px !important;
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 12px !important;
-    }
-    .topbarLeft, .topbarRight {
-        width: 100% !important;
+        padding: 10px 16px !important;
+        flex-direction: row !important;
+        align-items: center !important;
         justify-content: space-between !important;
+        gap: 10px !important;
+    }
+    .topbarLeft {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        width: auto !important;
     }
     .topbarRight {
-        flex-wrap: wrap !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        width: auto !important;
+        margin-left: auto !important;
         gap: 8px !important;
-    }
-    .topbarRight input[type="text"] {
-        flex: 1 !important;
-        min-width: 120px !important;
     }
 }
 
@@ -3579,37 +3582,45 @@ body.light-theme .bullet-item i {
         padding: 0 10px !important;
     }
     
-    /* Theme Toggle & 3-Dots Action Menu Buttons - 100% Visible Pill Styling */
+    /* Theme Toggle & 3-Line Action Menu Buttons - 100% Visible Pill Styling */
     .themeToggleBtn, .mobile-menu-btn {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        min-height: 36px !important;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
         padding: 0 !important;
         border-radius: 50% !important;
-        background: var(--surface-2) !important;
-        border: 1px solid var(--border-strong) !important;
-        color: var(--text) !important;
+        background: var(--surface-2, rgba(255, 255, 255, 0.08)) !important;
+        border: 1px solid var(--border-strong, rgba(255, 255, 255, 0.18)) !important;
+        color: var(--text, #ffffff) !important;
         cursor: pointer !important;
         flex-shrink: 0 !important;
         box-shadow: var(--shadow-sm) !important;
-        z-index: 20 !important;
+        z-index: 50 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
         transition: all 0.2s ease !important;
     }
     .themeToggleBtn:hover, .mobile-menu-btn:hover, .mobile-menu-btn.active {
-        background: var(--surface-hover) !important;
-        border-color: var(--accent) !important;
-        color: var(--accent) !important;
+        background: var(--surface-hover, rgba(255, 255, 255, 0.15)) !important;
+        border-color: var(--accent, #6366f1) !important;
+        color: var(--accent, #6366f1) !important;
         transform: scale(1.05);
     }
-    .themeToggleBtn i, .themeToggleBtn svg, .mobile-menu-btn i, .mobile-menu-btn svg {
-        width: 18px !important;
-        height: 18px !important;
+    .themeToggleBtn i, .themeToggleBtn svg,
+    .mobile-menu-btn i, .mobile-menu-btn svg {
+        width: 20px !important;
+        height: 20px !important;
+        min-width: 20px !important;
+        min-height: 20px !important;
         stroke: currentColor !important;
+        stroke-width: 2.2px !important;
+        fill: none !important;
         display: block !important;
+        margin: auto !important;
     }
     
     /* Dropdown Actions Container */
