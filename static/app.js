@@ -1087,6 +1087,8 @@ function animateLogo() {
         i = (i + 1) % glyphs.length;
         el.textContent = glyphs[i];
     }, 2500);
+}
+
 let lastTelemetryHash = null;
 let isSyncingLiveData = false;
 
