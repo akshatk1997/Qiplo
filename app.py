@@ -432,7 +432,7 @@ def create_app() -> Flask:
                         f"Protect {low_count} lower-risk records with loyalty offers and regular engagement. Schedule monthly email updates highlighting new product releases."
                     )
         else:
-            recommendations.append("No churn activity detected yet; upload more customer data to generate insights.")
+            return []
 
         return recommendations
 
@@ -915,7 +915,14 @@ def create_app() -> Flask:
         ).fetchall()
         conn.close()
 
-        return jsonify({"predictions": [dict(row) for row in rows]})
+        if not rows:
+            return jsonify({
+                "predictions": [],
+                "has_data": False,
+                "message": "No dataset data provided or inserted. Upload dataset to view customer prediction action items."
+            })
+
+        return jsonify({"predictions": [dict(row) for row in rows], "has_data": True})
 
     @app.route("/api/download-template")
     def download_template_api():

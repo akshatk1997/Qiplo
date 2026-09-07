@@ -670,8 +670,20 @@ function renderInsights(insightsData) {
     if (!panel) return;
     const recommendations = (insightsData && insightsData.recommendations) || [];
 
-    if (!recommendations.length) {
-        panel.innerHTML = '<p style="color: var(--muted); font-size: 0.85rem; margin: 0;">No active recommendations available.</p>';
+    if (!predictionData || !predictionData.length || !recommendations.length) {
+        panel.innerHTML = `
+            <div style="padding: 24px; text-align: center; background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; color: var(--text);">
+                <i data-lucide="alert-circle" class="lucide-icon" style="width: 32px; height: 32px; color: #ef4444; margin-bottom: 8px;"></i>
+                <h3 style="margin: 0 0 6px 0; font-size: 1.1rem; color: #ef4444;">Dataset Data Required</h3>
+                <p style="margin: 0; font-size: 0.88rem; color: var(--muted);">Action details and recommendations cannot be displayed without dataset data. Please upload or insert customer data using <strong>+ Add Source</strong> to view action details.</p>
+            </div>
+        `;
+        if (window.lucide) lucide.createIcons();
+
+        const roleSelect = document.getElementById('roleSelect');
+        const role = roleSelect ? roleSelect.value : (currentAuthorizedRole || 'manager');
+        renderAnalyzedTips(role);
+        return;
     } else {
         panel.innerHTML = recommendations.map(item => {
             let title = 'Strategic Recommendation';
