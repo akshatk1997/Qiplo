@@ -212,6 +212,37 @@ def run_atoz_verification():
         print(f"  [ERROR] POST /api/chat -> FAILED ({res.status_code})")
         success = False
 
+    # 13. Test BI Exports & Insights Endpoints (Tableau & Power BI)
+    print("\n[INFO] Testing Tableau & Power BI Dashboard Generation Endpoints...")
+    res = client.get("/api/export/tableau")
+    if res.status_code == 200 and b"<workbook" in res.data:
+        print("  [OK] GET /api/export/tableau -> 200 OK (Tableau Workbook .twb generated cleanly)")
+    else:
+        print(f"  [ERROR] GET /api/export/tableau -> FAILED ({res.status_code})")
+        success = False
+
+    res = client.get("/api/export/powerbi")
+    if res.status_code == 200 and "json" in res.mimetype:
+        print("  [OK] GET /api/export/powerbi -> 200 OK (Power BI Datasource .pbids generated cleanly)")
+    else:
+        print(f"  [ERROR] GET /api/export/powerbi -> FAILED ({res.status_code})")
+        success = False
+
+    res = client.get("/api/export/powerbi/m")
+    if res.status_code == 200:
+        print("  [OK] GET /api/export/powerbi/m -> 200 OK (Power BI M Script generated cleanly)")
+    else:
+        print(f"  [ERROR] GET /api/export/powerbi/m -> FAILED ({res.status_code})")
+        success = False
+
+    res = client.get("/api/export/bi/insights")
+    if res.status_code == 200:
+        data = res.get_json()
+        print(f"  [OK] GET /api/export/bi/insights -> 200 OK (Loaded KPIs: {data.get('kpis')})")
+    else:
+        print(f"  [ERROR] GET /api/export/bi/insights -> FAILED ({res.status_code})")
+        success = False
+
     # Clean up verification database file
     try:
         db_file = Path("churn_verify.db")

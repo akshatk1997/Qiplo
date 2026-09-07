@@ -1910,14 +1910,105 @@ def create_app() -> Flask:
         except Exception as ex:
             return jsonify({"response": f"Factual fallback mode error: {ex}"})
 
-    @app.route("/api/export/csv")
-    def export_csv_api():
-        try:
-            conn = get_connection()
-            has_preds = conn.execute("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='churn_predictions'").fetchone()[0]
-            if not has_preds:
-                conn.close()
-                mock_data = [
+    def build_enriched_predictions_dataframe():
+        """Fetches SQLite churn predictions (or fallbacks) and enriches with 7 derived AI insight columns for Tableau & Power BI."""
+        conn = get_connection()
+        has_preds = conn.execute("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='churn_predictions'").fetchone()[0]
+        if not has_preds:
+            conn.close()
+            mock_data = [
+                {
+                    "customer_id": "1423-BMP12",
+                    "predicted_probability": 0.842,
+                    "prediction_label": "high_risk",
+                    "gender": "Female",
+                    "SeniorCitizen": 0,
+                    "Partner": "No",
+                    "Dependents": "No",
+                    "tenure": 2,
+                    "PhoneService": "Yes",
+                    "MultipleLines": "No",
+                    "InternetService": "Fiber optic",
+                    "OnlineSecurity": "No",
+                    "OnlineBackup": "No",
+                    "DeviceProtection": "No",
+                    "TechSupport": "No",
+                    "StreamingTV": "Yes",
+                    "StreamingMovies": "No",
+                    "Contract": "Month-to-month",
+                    "PaperlessBilling": "Yes",
+                    "PaymentMethod": "Electronic check",
+                    "MonthlyCharges": 70.05,
+                    "TotalCharges": 140.10
+                },
+                {
+                    "customer_id": "9088-XZP88",
+                    "predicted_probability": 0.125,
+                    "prediction_label": "low_risk",
+                    "gender": "Male",
+                    "SeniorCitizen": 0,
+                    "Partner": "Yes",
+                    "Dependents": "Yes",
+                    "tenure": 45,
+                    "PhoneService": "Yes",
+                    "MultipleLines": "Yes",
+                    "InternetService": "DSL",
+                    "OnlineSecurity": "Yes",
+                    "OnlineBackup": "Yes",
+                    "DeviceProtection": "Yes",
+                    "TechSupport": "Yes",
+                    "StreamingTV": "No",
+                    "StreamingMovies": "Yes",
+                    "Contract": "Two year",
+                    "PaperlessBilling": "No",
+                    "PaymentMethod": "Credit card (automatic)",
+                    "MonthlyCharges": 84.50,
+                    "TotalCharges": 3802.50
+                },
+                {
+                    "customer_id": "3199-ZGP02",
+                    "predicted_probability": 0.687,
+                    "prediction_label": "high_risk",
+                    "gender": "Male",
+                    "SeniorCitizen": 1,
+                    "Partner": "No",
+                    "Dependents": "No",
+                    "tenure": 12,
+                    "PhoneService": "Yes",
+                    "MultipleLines": "Yes",
+                    "InternetService": "Fiber optic",
+                    "OnlineSecurity": "No",
+                    "OnlineBackup": "Yes",
+                    "DeviceProtection": "No",
+                    "TechSupport": "No",
+                    "StreamingTV": "Yes",
+                    "StreamingMovies": "Yes",
+                    "Contract": "Month-to-month",
+                    "PaperlessBilling": "Yes",
+                    "PaymentMethod": "Electronic check",
+                    "MonthlyCharges": 95.45,
+                    "TotalCharges": 1145.40
+                }
+            ]
+            frame = pd.DataFrame(mock_data)
+        else:
+            cols = [c for c in customer_columns(conn) if c != "customer_id"]
+            cc_cols = ", ".join(f'cc."{c}"' for c in cols) if cols else ""
+            if cc_cols:
+                cc_cols = ", " + cc_cols
+            query = f"""
+            SELECT cp.customer_id, cp.predicted_probability, cp.prediction_label{cc_cols}
+            FROM churn_predictions cp
+            LEFT JOIN customer_churn cc ON cp.customer_id = cc.customer_id
+            JOIN data_sources ds ON cc.source_id = ds.source_id
+            WHERE ds.is_active = 1
+            ORDER BY cp.predicted_probability DESC
+            """
+            frame = pd.read_sql_query(query, conn)
+            conn.close()
+
+            if frame.empty:
+                frame = pd.DataFrame([
                     {
                         "customer_id": "1423-BMP12",
                         "predicted_probability": 0.842,
@@ -1941,102 +2032,83 @@ def create_app() -> Flask:
                         "PaymentMethod": "Electronic check",
                         "MonthlyCharges": 70.05,
                         "TotalCharges": 140.10
-                    },
-                    {
-                        "customer_id": "9088-XZP88",
-                        "predicted_probability": 0.125,
-                        "prediction_label": "low_risk",
-                        "gender": "Male",
-                        "SeniorCitizen": 0,
-                        "Partner": "Yes",
-                        "Dependents": "Yes",
-                        "tenure": 45,
-                        "PhoneService": "Yes",
-                        "MultipleLines": "Yes",
-                        "InternetService": "DSL",
-                        "OnlineSecurity": "Yes",
-                        "OnlineBackup": "Yes",
-                        "DeviceProtection": "Yes",
-                        "TechSupport": "Yes",
-                        "StreamingTV": "No",
-                        "StreamingMovies": "Yes",
-                        "Contract": "Two year",
-                        "PaperlessBilling": "No",
-                        "PaymentMethod": "Credit card (automatic)",
-                        "MonthlyCharges": 84.50,
-                        "TotalCharges": 3802.50
-                    },
-                    {
-                        "customer_id": "3199-ZGP02",
-                        "predicted_probability": 0.687,
-                        "prediction_label": "high_risk",
-                        "gender": "Male",
-                        "SeniorCitizen": 1,
-                        "Partner": "No",
-                        "Dependents": "No",
-                        "tenure": 12,
-                        "PhoneService": "Yes",
-                        "MultipleLines": "Yes",
-                        "InternetService": "Fiber optic",
-                        "OnlineSecurity": "No",
-                        "OnlineBackup": "Yes",
-                        "DeviceProtection": "No",
-                        "TechSupport": "No",
-                        "StreamingTV": "Yes",
-                        "StreamingMovies": "Yes",
-                        "Contract": "Month-to-month",
-                        "PaperlessBilling": "Yes",
-                        "PaymentMethod": "Electronic check",
-                        "MonthlyCharges": 95.45,
-                        "TotalCharges": 1145.40
                     }
-                ]
-                frame = pd.DataFrame(mock_data)
+                ])
+
+        # Enforce numeric & add calculated AI intelligence columns
+        if "predicted_probability" not in frame.columns:
+            frame["predicted_probability"] = 0.5
+        frame["predicted_probability"] = pd.to_numeric(frame["predicted_probability"], errors="coerce").fillna(0.0)
+        frame["churn_risk_score"] = (frame["predicted_probability"] * 100).round(1)
+
+        def calc_risk_level(prob):
+            if prob >= 0.65:
+                return "High Risk"
+            elif prob >= 0.35:
+                return "Medium Risk"
             else:
-                cols = [c for c in customer_columns(conn) if c != "customer_id"]
-                cc_cols = ", ".join(f'cc."{c}"' for c in cols) if cols else ""
-                if cc_cols:
-                    cc_cols = ", " + cc_cols
-                query = f"""
-                SELECT cp.customer_id, cp.predicted_probability, cp.prediction_label{cc_cols}
-                FROM churn_predictions cp
-                LEFT JOIN customer_churn cc ON cp.customer_id = cc.customer_id
-                JOIN data_sources ds ON cc.source_id = ds.source_id
-                WHERE ds.is_active = 1
-                ORDER BY cp.predicted_probability DESC
-                """
-                frame = pd.read_sql_query(query, conn)
-                conn.close()
+                return "Low Risk"
 
-                if frame.empty:
-                    # Return fallback even if database exists but records are empty
-                    frame = pd.DataFrame([
-                        {
-                            "customer_id": "1423-BMP12",
-                            "predicted_probability": 0.842,
-                            "prediction_label": "high_risk",
-                            "gender": "Female",
-                            "SeniorCitizen": 0,
-                            "Partner": "No",
-                            "Dependents": "No",
-                            "tenure": 2,
-                            "PhoneService": "Yes",
-                            "MultipleLines": "No",
-                            "InternetService": "Fiber optic",
-                            "OnlineSecurity": "No",
-                            "OnlineBackup": "No",
-                            "DeviceProtection": "No",
-                            "TechSupport": "No",
-                            "StreamingTV": "Yes",
-                            "StreamingMovies": "No",
-                            "Contract": "Month-to-month",
-                            "PaperlessBilling": "Yes",
-                            "PaymentMethod": "Electronic check",
-                            "MonthlyCharges": 70.05,
-                            "TotalCharges": 140.10
-                        }
-                    ])
+        frame["risk_level"] = frame["predicted_probability"].apply(calc_risk_level)
 
+        if "MonthlyCharges" not in frame.columns:
+            frame["MonthlyCharges"] = 65.0
+        else:
+            frame["MonthlyCharges"] = pd.to_numeric(frame["MonthlyCharges"], errors="coerce").fillna(65.0)
+
+        frame["annual_charges"] = (frame["MonthlyCharges"] * 12).round(2)
+        frame["revenue_at_risk"] = frame.apply(lambda r: r["annual_charges"] if r["predicted_probability"] >= 0.4 else 0.0, axis=1)
+
+        def calc_priority(r):
+            prob = r["predicted_probability"]
+            if prob >= 0.75:
+                return "Tier 1 - Executive SLA Outreach"
+            elif prob >= 0.40:
+                return "Tier 2 - Proactive Campaign"
+            elif prob >= 0.20:
+                return "Tier 3 - Standard Support"
+            else:
+                return "Tier 4 - Organic Monitoring"
+
+        frame["retention_priority"] = frame.apply(calc_priority, axis=1)
+
+        def calc_strategy(r):
+            prob = r["predicted_probability"]
+            contract = str(r.get("Contract", "Month-to-month"))
+            support = str(r.get("TechSupport", "No"))
+            if prob >= 0.65:
+                if "Month-to-month" in contract:
+                    return "Convert to 1-Year Contract with 15% billing discount"
+                elif support == "No":
+                    return "Attach free 6-month Premium Tech Support & Concierge SLA"
+                else:
+                    return "Immediate Executive Account Review & Loyalty Upgrade"
+            elif prob >= 0.35:
+                return "Send Proactive Feature Usage Guide & Discount Offer"
+            else:
+                return "Maintain Regular Engagement & Monitor Usage"
+
+        frame["recommended_retention_strategy"] = frame.apply(calc_strategy, axis=1)
+
+        def calc_ai_insight(r):
+            cid = r.get("customer_id", "N/A")
+            prob = r["predicted_probability"]
+            score = r["churn_risk_score"]
+            rev = r["revenue_at_risk"]
+            if prob >= 0.65:
+                return f"Customer {cid} has a critical {score}% churn risk representing ${rev:,.2f}/yr revenue exposure. Urgent outreach required."
+            elif prob >= 0.35:
+                return f"Customer {cid} shows moderate friction ({score}% risk score). Recommended for targeted retention campaign."
+            else:
+                return f"Customer {cid} is stable ({score}% risk score). Low churn probability."
+
+        frame["ai_executive_insight"] = frame.apply(calc_ai_insight, axis=1)
+        return frame
+
+    @app.route("/api/export/csv")
+    def export_csv_api():
+        try:
+            frame = build_enriched_predictions_dataframe()
             output = BytesIO()
             frame.to_csv(output, index=False, encoding="utf-8-sig")
             output.seek(0)
@@ -2051,23 +2123,89 @@ def create_app() -> Flask:
     @app.route("/api/export/tableau")
     def export_tableau_api():
         try:
-            csv_dir = f"{request.url_root}api/export"
-            filename = "csv"
+            csv_feed_url = f"{request.url_root}api/export/csv"
             twb_content = f"""<?xml version='1.0' encoding='utf-8' ?>
 <workbook version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
   <preferences />
   <datasources>
-    <datasource caption='Qiplo Live Churn Feed' name='web_csv_ds' version='18.1'>
-      <connection class='textscan' directory='{csv_dir}' filename='{filename}' password='' server='' username='' />
+    <datasource caption='Qiplo AI Live Churn Predictions' inline='true' name='qiplo_churn_ds' version='18.1'>
+      <connection class='textscan' directory='{request.url_root}api/export' filename='csv' password='' server='' username='' />
+      <aliases enabled='yes' />
+      <column datatype='string' name='[customer_id]' role='dimension' type='nominal' />
+      <column datatype='real' name='[predicted_probability]' role='measure' type='quantitative' />
+      <column datatype='string' name='[prediction_label]' role='dimension' type='nominal' />
+      <column datatype='real' name='[churn_risk_score]' role='measure' type='quantitative' />
+      <column datatype='string' name='[risk_level]' role='dimension' type='nominal' />
+      <column datatype='real' name='[MonthlyCharges]' role='measure' type='quantitative' />
+      <column datatype='real' name='[annual_charges]' role='measure' type='quantitative' />
+      <column datatype='real' name='[revenue_at_risk]' role='measure' type='quantitative' />
+      <column datatype='string' name='[retention_priority]' role='dimension' type='nominal' />
+      <column datatype='string' name='[recommended_retention_strategy]' role='dimension' type='nominal' />
+      <column datatype='string' name='[ai_executive_insight]' role='dimension' type='nominal' />
+      <column datatype='string' name='[Contract]' role='dimension' type='nominal' />
+      <column datatype='string' name='[InternetService]' role='dimension' type='nominal' />
+      <column datatype='integer' name='[tenure]' role='measure' type='quantitative' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.5' measure-ordering='alphabetic' measure-percentage='0.5' show-structure='true' />
     </datasource>
   </datasources>
   <worksheets>
-    <worksheet name='Executive Overview'>
+    <worksheet name='Executive Overview &amp; KPIs'>
       <table>
-        <rows>[web_csv_ds].[customer_id]</rows>
+        <view>
+          <datasources>
+            <datasource caption='Qiplo AI Live Churn Predictions' name='qiplo_churn_ds' />
+          </datasources>
+          <datasource-dependencies datasource='qiplo_churn_ds'>
+            <column datatype='string' name='[risk_level]' role='dimension' type='nominal' />
+            <column datatype='real' name='[revenue_at_risk]' role='measure' type='quantitative' />
+            <column-instance column='[risk_level]' derivation='None' name='[none:risk_level:nk]' pivot='key' type='nominal' />
+            <column-instance column='[revenue_at_risk]' derivation='Sum' name='[sum:revenue_at_risk:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane>
+            <slice>
+              <element type='field' />
+            </slice>
+            <encodings>
+              <color column='[qiplo_churn_ds].[none:risk_level:nk]' />
+            </encodings>
+          </pane>
+        </panes>
+        <rows>[qiplo_churn_ds].[none:risk_level:nk]</rows>
+        <cols>[qiplo_churn_ds].[sum:revenue_at_risk:qk]</cols>
+      </table>
+    </worksheet>
+    <worksheet name='High Risk Action Table'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Qiplo AI Live Churn Predictions' name='qiplo_churn_ds' />
+          </datasources>
+        </view>
+        <rows>[qiplo_churn_ds].[customer_id]</rows>
       </table>
     </worksheet>
   </worksheets>
+  <dashboards>
+    <dashboard name='Qiplo AI Executive Dashboard'>
+      <style />
+      <size maxheight='900' maxwidth='1400' minheight='600' minwidth='800' />
+      <zones>
+        <zone h='100000' id='1' type-static='layout-basic' w='100000' x='0' y='0'>
+          <zone h='49000' id='2' name='Executive Overview &amp; KPIs' w='98000' x='1000' y='1000' />
+          <zone h='48000' id='3' name='High Risk Action Table' w='98000' x='1000' y='51000' />
+        </zone>
+      </zones>
+    </dashboard>
+  </dashboards>
+  <windows version='18.1'>
+    <window class='dashboard' maximized='true' name='Qiplo AI Executive Dashboard'>
+      <active pane='0' />
+    </window>
+  </windows>
 </workbook>"""
             return Response(
                 twb_content,
@@ -2080,6 +2218,7 @@ def create_app() -> Flask:
     @app.route("/api/export/powerbi")
     def export_powerbi_api():
         try:
+            csv_url = f"{request.url_root}api/export/csv"
             pbids_data = {
                 "version": "0.1",
                 "connections": [
@@ -2087,10 +2226,12 @@ def create_app() -> Flask:
                         "details": {
                             "protocol": "web",
                             "address": {
-                                "url": f"{request.url_root}api/export/csv"
+                                "url": csv_url
                             }
                         },
-                        "options": {},
+                        "options": {
+                            "name": "Qiplo Live Churn Predictions Feed"
+                        },
                         "mode": None
                     }
                 ]
@@ -2102,6 +2243,83 @@ def create_app() -> Flask:
             )
         except Exception as e:
             return jsonify({"error": f"Failed to generate Power BI datasource: {e}"}), 500
+
+    @app.route("/api/export/powerbi/m")
+    def export_powerbi_m_script():
+        try:
+            csv_url = f"{request.url_root}api/export/csv"
+            m_code = (
+                "// Power Query M Script for Power BI Desktop\n"
+                "// Paste into Power Query Advanced Editor\n\n"
+                "let\n"
+                f'    Source = Csv.Document(Web.Contents("{csv_url}"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.None]),\n'
+                '    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),\n'
+                '    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{\n'
+                '        {"customer_id", type text},\n'
+                '        {"predicted_probability", type number},\n'
+                '        {"prediction_label", type text},\n'
+                '        {"churn_risk_score", type number},\n'
+                '        {"risk_level", type text},\n'
+                '        {"MonthlyCharges", type number},\n'
+                '        {"annual_charges", type number},\n'
+                '        {"revenue_at_risk", type number},\n'
+                '        {"retention_priority", type text},\n'
+                '        {"recommended_retention_strategy", type text},\n'
+                '        {"ai_executive_insight", type text}\n'
+                '    })\n'
+                "in\n"
+                '    #"Changed Type"\n'
+            )
+            return Response(
+                m_code,
+                mimetype="text/plain",
+                headers={"Content-Disposition": "attachment; filename=Qiplo_PowerBI_M_Query.m"}
+            )
+        except Exception as e:
+            return jsonify({"error": f"Failed to generate Power BI M Script: {e}"}), 500
+
+    @app.route("/api/export/bi/insights")
+    def export_bi_insights():
+        try:
+            df = build_enriched_predictions_dataframe()
+            total_cust = len(df)
+            high_risk_df = df[df["predicted_probability"] >= 0.65]
+            high_risk_count = len(high_risk_df)
+            high_risk_pct = round((high_risk_count / total_cust * 100), 1) if total_cust else 0.0
+            total_revenue_at_risk = round(df["revenue_at_risk"].sum(), 2)
+            avg_risk_score = round(df["churn_risk_score"].mean(), 1) if total_cust else 0.0
+
+            dax_measures = {
+                "Total Customers": "Total Customers = COUNT(Qiplo_Churn_Predictions[customer_id])",
+                "High Risk Customers": 'High Risk Customers = CALCULATE(COUNT(Qiplo_Churn_Predictions[customer_id]), Qiplo_Churn_Predictions[prediction_label] = "high_risk")',
+                "Churn Risk Rate %": "Churn Risk Rate % = DIVIDE([High Risk Customers], [Total Customers], 0) * 100",
+                "Total Revenue at Risk": "Total Revenue at Risk = SUM(Qiplo_Churn_Predictions[revenue_at_risk])",
+                "Average Risk Score": "Average Risk Score = AVERAGE(Qiplo_Churn_Predictions[churn_risk_score])"
+            }
+
+            tableau_formulas = {
+                "Calculated Risk Level": "IF [predicted_probability] >= 0.65 THEN 'High Risk' ELSEIF [predicted_probability] >= 0.35 THEN 'Medium Risk' ELSE 'Low Risk' END",
+                "Revenue At Risk Formula": "IF [predicted_probability] >= 0.40 THEN [MonthlyCharges] * 12 ELSE 0 END",
+                "Executive Priority": "IF [predicted_probability] >= 0.75 THEN 'Tier 1 - Executive Outreach' ELSE 'Standard Retention' END"
+            }
+
+            return jsonify({
+                "status": "success",
+                "kpis": {
+                    "total_customers": total_cust,
+                    "high_risk_customers": high_risk_count,
+                    "high_risk_percentage": high_risk_pct,
+                    "total_revenue_at_risk": total_revenue_at_risk,
+                    "average_risk_score": avg_risk_score
+                },
+                "dax_measures": dax_measures,
+                "tableau_formulas": tableau_formulas,
+                "powerbi_export_url": f"{request.url_root}api/export/powerbi",
+                "tableau_export_url": f"{request.url_root}api/export/tableau",
+                "csv_feed_url": f"{request.url_root}api/export/csv"
+            })
+        except Exception as e:
+            return jsonify({"error": f"Failed to fetch BI insights: {e}"}), 500
 
     @app.route("/api/export/excel")
     def export_excel_api():

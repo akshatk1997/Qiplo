@@ -911,11 +911,26 @@ document.getElementById('roleSelect').addEventListener('change', async (e) => {
     localStorage.setItem('user_role', targetRole);
     await loadDashboard();
 });
+function showBiToast(msg, iconName = 'check-circle') {
+    const toast = document.createElement('div');
+    toast.className = 'telemetry-toast';
+    toast.innerHTML = `<i data-lucide="${iconName}" style="color: var(--accent); width: 16px; height: 16px; vertical-align: middle;"></i> ${msg}`;
+    document.body.appendChild(toast);
+    if (window.lucide) window.lucide.createIcons();
+    setTimeout(() => { toast.classList.add('visible'); }, 10);
+    setTimeout(() => {
+        toast.classList.remove('visible');
+        setTimeout(() => { toast.remove(); }, 300);
+    }, 4000);
+}
+
 document.getElementById('exportTableauBtn').addEventListener('click', () => {
     window.open('/api/export/tableau', '_blank');
+    showBiToast("Tableau Workbook (.twb) downloaded! Pre-loaded with executive layout & AI risk fields.", "trending-up");
 });
 document.getElementById('exportPowerBiBtn').addEventListener('click', () => {
     window.open('/api/export/powerbi', '_blank');
+    showBiToast("Power BI Datasource (.pbids) downloaded! Connects directly to live AI predictions feed.", "line-chart");
 });
 document.getElementById('exportExcelBtn').addEventListener('click', () => {
     if (!predictionData || !predictionData.length) {
