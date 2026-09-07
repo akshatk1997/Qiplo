@@ -976,6 +976,8 @@ function showBiToast(msg, iconName = 'check-circle') {
         toast.classList.remove('visible');
         setTimeout(() => { toast.remove(); }, 300);
     }, 4000);
+}
+
 function openBiExportModal(target = 'powerbi') {
     const modal = document.getElementById('biExportModal');
     if (!modal) return;
@@ -1825,6 +1827,16 @@ function updateBusinessDiagnostics() {
         ];
     }
     
+    window.diagnosedProblemsMap = {};
+    problems.forEach(p => { window.diagnosedProblemsMap[p.id] = p; });
+
+    window.openResolutionWizardById = function(probId) {
+        const problemObj = window.diagnosedProblemsMap ? window.diagnosedProblemsMap[probId] : null;
+        if (problemObj) {
+            openResolutionWizard(problemObj);
+        }
+    };
+
     const problemsListEl = document.getElementById('diagnosedProblemsList');
     if (problemsListEl) {
         problemsListEl.innerHTML = problems.map(p => {
@@ -1837,7 +1849,7 @@ function updateBusinessDiagnostics() {
                         <span class="problem-title">${p.title}</span>
                         <span class="problem-desc">${p.desc}</span>
                     </div>
-                    <button class="fix-problem-btn" style="${btnStyle}" onclick='openResolutionWizard(${JSON.stringify(p).replace(/'/g, "&apos;")})'>
+                    <button class="fix-problem-btn" style="${btnStyle}" onclick="openResolutionWizardById('${p.id}')">
                         ${btnText}
                     </button>
                 </div>

@@ -18,7 +18,13 @@
   ],
   "numeric_features": [
     "tenure_months",
-    "monthly_charges"
+    "monthly_charges",
+    "total_charges",
+    "support_tickets",
+    "payment_delays",
+    "product_usage",
+    "complaint_count",
+    "customer_satisfaction_score"
   ],
   "categorical_features": [
     "contract_type",
