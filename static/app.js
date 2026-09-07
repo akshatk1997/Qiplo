@@ -454,27 +454,40 @@ function renderRows() {
 }
 
 function renderCharts(chartPayload, featureImportance) {
+    if (typeof Chart === 'undefined') {
+        console.warn('Chart.js library not loaded yet. Skipping chart render.');
+        return;
+    }
+
+    const riskCanvas = document.getElementById('riskChart');
+    const signalCanvas = document.getElementById('signalChart');
+    const importanceCanvas = document.getElementById('importanceChart');
+
+    if (!riskCanvas || !signalCanvas || !importanceCanvas) return;
+
     const riskLabels = (chartPayload.charts || []).map(item => item.label);
     const riskValues = (chartPayload.charts || []).map(item => item.value);
     const signalLabels = (chartPayload.signals || []).map(item => item.label);
     const signalValues = (chartPayload.signals || []).map(item => item.value);
 
-    if (riskChart) riskChart.destroy();
-    if (signalChart) signalChart.destroy();
-    if (importanceChart) importanceChart.destroy();
+    try { if (riskChart) riskChart.destroy(); } catch (e) {}
+    try { if (signalChart) signalChart.destroy(); } catch (e) {}
+    try { if (importanceChart) importanceChart.destroy(); } catch (e) {}
 
     const bodyStyles = getComputedStyle(document.body);
     const labelColor = bodyStyles.getPropertyValue('--muted').trim() || '#475467';
     const gridColor = bodyStyles.getPropertyValue('--border').trim() || 'rgba(16, 24, 40, 0.08)';
 
-    riskChart = new Chart(document.getElementById('riskChart'), {
-        type: 'doughnut',
-        data: {
-            labels: riskLabels.length ? riskLabels : ['No data'],
-            datasets: [{ data: riskValues.length ? riskValues : [1], backgroundColor: ['#FF007F', '#00F5FF', '#FFE600'] }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, cutout: '62%', plugins: { legend: { labels: { color: labelColor } } } }
-    });
+    try {
+        riskChart = new Chart(riskCanvas, {
+            type: 'doughnut',
+            data: {
+                labels: riskLabels.length ? riskLabels : ['No data'],
+                datasets: [{ data: riskValues.length ? riskValues : [1], backgroundColor: ['#FF007F', '#00F5FF', '#FFE600'] }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, cutout: '62%', plugins: { legend: { labels: { color: labelColor } } } }
+        });
+    } catch (e) { console.error('Error creating riskChart:', e); }
 
     const signalColors = (signalLabels.length ? signalLabels : ['No retention signals']).map(lbl => {
         const l = lbl.toLowerCase();
@@ -484,21 +497,23 @@ function renderCharts(chartPayload, featureImportance) {
         return '#FF007F'; // Magenta
     });
 
-    signalChart = new Chart(document.getElementById('signalChart'), {
-        type: 'bar',
-        data: {
-            labels: signalLabels.length ? signalLabels : ['No retention signals'],
-            datasets: [{ label: 'Customers', data: signalValues.length ? signalValues : [0], backgroundColor: signalColors }]
-        },
-        options: {
-            responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                y: { beginAtZero: true, ticks: { color: labelColor }, grid: { color: gridColor } },
-                x: { ticks: { color: labelColor }, grid: { color: gridColor } }
+    try {
+        signalChart = new Chart(signalCanvas, {
+            type: 'bar',
+            data: {
+                labels: signalLabels.length ? signalLabels : ['No retention signals'],
+                datasets: [{ label: 'Customers', data: signalValues.length ? signalValues : [0], backgroundColor: signalColors }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, ticks: { color: labelColor }, grid: { color: gridColor } },
+                    x: { ticks: { color: labelColor }, grid: { color: gridColor } }
+                }
             }
-        }
-    });
+        });
+    } catch (e) { console.error('Error creating signalChart:', e); }
 
     const sortedFeatures = Object.entries(featureImportance || {})
         .sort((a, b) => b[1] - a[1]);
@@ -506,33 +521,38 @@ function renderCharts(chartPayload, featureImportance) {
     const importanceLabels = sortedFeatures.map(item => item[0]);
     const importanceValues = sortedFeatures.map(item => item[1]);
 
-    importanceChart = new Chart(document.getElementById('importanceChart'), {
-        type: 'bar',
-        data: {
-            labels: importanceLabels.length ? importanceLabels : ['No metrics'],
-            datasets: [{ label: 'Feature weight', data: importanceValues.length ? importanceValues : [0], backgroundColor: '#FF007F' }]
-        },
-        options: {
-            indexAxis: 'y',
-            responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                x: { beginAtZero: true, max: 1.0, ticks: { color: labelColor }, grid: { color: gridColor } },
-                y: { ticks: { color: labelColor }, grid: { color: gridColor } }
+    try {
+        importanceChart = new Chart(importanceCanvas, {
+            type: 'bar',
+            data: {
+                labels: importanceLabels.length ? importanceLabels : ['No metrics'],
+                datasets: [{ label: 'Feature weight', data: importanceValues.length ? importanceValues : [0], backgroundColor: '#FF007F' }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { beginAtZero: true, max: 1.0, ticks: { color: labelColor }, grid: { color: gridColor } },
+                    y: { ticks: { color: labelColor }, grid: { color: gridColor } }
+                }
             }
-        }
-    });
+        });
+    } catch (e) { console.error('Error creating importanceChart:', e); }
 }
 
 function renderExecutiveSummary(insightsData) {
-    const highRisk = predictionData.filter(item => item.prediction_label === labelMapping.high_risk).length;
-    const lowRisk = predictionData.length - highRisk;
-    const avgProbability = predictionData.length
+    const summaryEl = document.getElementById('executiveSummary');
+    if (!summaryEl) return;
+
+    const highRisk = predictionData ? predictionData.filter(item => item.prediction_label === labelMapping.high_risk).length : 0;
+    const lowRisk = predictionData ? (predictionData.length - highRisk) : 0;
+    const avgProbability = predictionData && predictionData.length
         ? (predictionData.reduce((acc, item) => acc + Number(item.predicted_probability || 0), 0) / predictionData.length).toFixed(3)
         : '0.000';
-    const actions = (insightsData.recommendations || []).length;
+    const actions = (insightsData && insightsData.recommendations || []).length;
 
-    document.getElementById('executiveSummary').innerHTML = `
+    summaryEl.innerHTML = `
         <div><strong>Risk mix</strong><p>${highRisk} high / ${lowRisk} low</p></div>
         <div><strong>Avg churn probability</strong><p>${avgProbability}</p></div>
         <div><strong>AI recommendations</strong><p>${actions} prioritized actions</p></div>
@@ -555,7 +575,7 @@ function renderAnalyzedTips(role) {
     const totalChargesAtRisk = highRiskCustomers.reduce((sum, item) => {
         const val = item.monthly_charges !== undefined && item.monthly_charges !== null ? Number(item.monthly_charges) : 100;
         return sum + val;
-    }, 0) * currentCurrencyRate;
+    }, 0) * (typeof currentCurrencyRate !== 'undefined' ? currentCurrencyRate : 1.0);
 
     const ticketHeavyCount = highRiskCustomers.filter(item => {
         const tickets = item.support_tickets !== undefined && item.support_tickets !== null ? Number(item.support_tickets) : 0;
@@ -577,13 +597,14 @@ function renderAnalyzedTips(role) {
     const projectedNetSaved = Math.max(0, projectedGrossSaved - projectedCost);
 
     let tipsHtml = '';
+    const currSym = typeof currentCurrencySymbol !== 'undefined' ? currentCurrencySymbol : '$';
 
     if (role === 'executive') {
         tipsHtml = `
             <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; border-left: 4px solid var(--accent-2);">
                 <p style="margin: 0 0 4px; font-size: 0.88rem; font-weight: 700; color: var(--text);">💰 Financial Exposure Alert</p>
                 <p style="margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.45;">
-                    Churn risk is threatening a total of <strong>${currentCurrencySymbol}${Math.round(totalChargesAtRisk).toLocaleString()}</strong> in active monthly recurring contract value. Recommending executive funding allocation of targeted loyalty discounts to protect key accounts.
+                    Churn risk is threatening a total of <strong>${currSym}${Math.round(totalChargesAtRisk).toLocaleString()}</strong> in active monthly recurring contract value. Recommending executive funding allocation of targeted loyalty discounts to protect key accounts.
                 </p>
             </div>
             <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; border-left: 4px solid var(--danger);">
@@ -598,7 +619,7 @@ function renderAnalyzedTips(role) {
             <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; border-left: 4px solid var(--success);">
                 <p style="margin: 0 0 4px; font-size: 0.88rem; font-weight: 700; color: var(--text);">📈 Proactive Renewal Strategy</p>
                 <p style="margin: 0; font-size: 0.8rem; color: var(--muted); line-height: 1.45;">
-                    Targeting the <strong>${totalHighRisk}</strong> high-risk customers with proactive contract extension plans is estimated to save a net monthly contract value of <strong>${currentCurrencySymbol}${Math.round(projectedNetSaved).toLocaleString()}</strong>.
+                    Targeting the <strong>${totalHighRisk}</strong> high-risk customers with proactive contract extension plans is estimated to save a net monthly contract value of <strong>${currSym}${Math.round(projectedNetSaved).toLocaleString()}</strong>.
                 </p>
             </div>
             <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px; border-left: 4px solid var(--warning);">
@@ -646,12 +667,19 @@ function renderAnalyzedTips(role) {
 
 function renderInsights(insightsData) {
     const panel = document.getElementById('insightPanel');
-    const recommendations = insightsData.recommendations || [];
+    if (!panel) return;
+    const recommendations = (insightsData && insightsData.recommendations) || [];
     panel.innerHTML = recommendations.length
-        ? recommendations.map(item => `<p>${item}</p>`).join('')
-        : '<p>No insights available yet.</p>';
+        ? recommendations.map(item => `
+            <div class="insightCard">
+                <h4>${item.title || 'Recommendation'}</h4>
+                <p>${item.action || item.detail || ''}</p>
+            </div>
+        `).join('')
+        : '<p style="color: var(--muted); font-size: 0.85rem;">No active recommendations.</p>';
 
-    const role = document.getElementById('roleSelect').value;
+    const roleSelect = document.getElementById('roleSelect');
+    const role = roleSelect ? roleSelect.value : (currentAuthorizedRole || 'manager');
     renderAnalyzedTips(role);
 }
 
