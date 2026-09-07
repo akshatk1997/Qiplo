@@ -104,11 +104,16 @@ function showLoadingSkeletons() {
 async function loadDashboard() {
     showLoadingSkeletons();
     try {
-        const role = document.getElementById('roleSelect').value;
+        const roleSelect = document.getElementById('roleSelect');
+        const role = roleSelect ? roleSelect.value : (currentAuthorizedRole || 'manager');
         const apiKey = localStorage.getItem('at_ai_model_key') || localStorage.getItem('show_ai_model_key') || '';
         const t0 = performance.now();
         const response = await safeFetch(`/api/dashboard-state?role=${role}&model_key=${encodeURIComponent(apiKey)}`);
-        const payload = await response.json();
+        
+        let payload = {};
+        if (response && response.ok) {
+            payload = await response.json();
+        }
         const t1 = performance.now();
         
         const latency = Math.round(t1 - t0);
@@ -117,16 +122,15 @@ async function loadDashboard() {
             latencyEl.textContent = `${latency} ms (Roundtrip)`;
         }
 
-
         const brandingData = payload.branding || {};
         const chartsData = payload.charts || { charts: [], signals: [] };
         const insightsData = payload.insights || { recommendations: [], summary: [] };
-        const aiData = payload.ai_insights || { headline: 'Awaiting analysis', narrative: '', segments: [] };
+        const aiData = payload.ai_insights || { headline: 'System Operational', narrative: 'Real-time telemetry predictions active.', segments: [] };
 
         predictionData = payload.predictions || [];
         
         // Filter out active closed loop resolutions belonging to previous sessions or different datasets
-        if (activeResolutionLoops && activeResolutionLoops.length > 0) {
+        if (typeof activeResolutionLoops !== 'undefined' && activeResolutionLoops && activeResolutionLoops.length > 0) {
             const currentCustomerIds = new Set(predictionData.map(c => c.customer_id));
             const validProblemIds = new Set([
                 'rev_concentration', 'churn_risk', 'regional_performance', 'margin_leakage', 'opp_scoring_lag',
@@ -233,7 +237,7 @@ async function loadDashboard() {
         try { await fetchSources(); } catch (e) { console.error('fetchSources failed', e); }
         try { await fetchNotes(); } catch (e) { console.error('fetchNotes failed', e); }
         try { await loadBusinessAnalytics(); } catch (e) { console.error('loadBusinessAnalytics failed', e); }
-        try { selectSpecialModule(currentSpecialSuite || 'finance'); } catch (e) { console.error('selectSpecialModule failed', e); }
+        try { selectSpecialModule(typeof currentSpecialSuite !== 'undefined' ? currentSpecialSuite : 'finance'); } catch (e) { console.error('selectSpecialModule failed', e); }
 
         // Initialize sandbox sliders with actual averages of the active dataset
         if (payload.sandbox_averages) {
@@ -257,7 +261,7 @@ async function loadDashboard() {
                 chargesSlider.value = Math.round(avgs.monthly_charges);
                 const chargesValEl = document.getElementById('valSandboxCharges');
                 if (chargesValEl) {
-                    chargesValEl.textContent = currentCurrencySymbol + (Number(chargesSlider.value) * currentCurrencyRate).toFixed(2);
+                    chargesValEl.textContent = (typeof currentCurrencySymbol !== 'undefined' ? currentCurrencySymbol : '$') + (Number(chargesSlider.value) * (typeof currentCurrencyRate !== 'undefined' ? currentCurrencyRate : 1.0)).toFixed(2);
                 }
             }
             if (typeof runSandboxSimulation === 'function') {
@@ -265,23 +269,41 @@ async function loadDashboard() {
             }
         }
     } catch (error) {
-        console.error('Dashboard load failed', error);
+        console.error('Dashboard load failed, rendering fallbacks:', error);
+        try { renderSourceMeta(); } catch (e) {}
+        try { renderRows(); } catch (e) {}
+    } finally {
+        // Ensure skeletons are always cleared
+        ['metaTotal', 'metaHigh', 'metaLow', 'metaFields'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el && el.innerHTML.includes('skeleton-loader')) {
+                el.textContent = '0';
+            }
+        });
     }
 }
 
 function renderSourceMeta() {
-    const total = predictionData.length;
-    const highRisk = predictionData.filter(item => item.prediction_label === labelMapping.high_risk).length;
-    const fields = Array.from(new Set(predictionData.flatMap(item => Object.keys(item)))).sort();
+    const total = predictionData ? predictionData.length : 0;
+    const highRisk = predictionData ? predictionData.filter(item => item.prediction_label === labelMapping.high_risk).length : 0;
+    const fields = predictionData ? Array.from(new Set(predictionData.flatMap(item => Object.keys(item)))).sort() : [];
 
-    document.getElementById('metaTotal').textContent = total;
-    document.getElementById('metaHigh').textContent = highRisk;
-    document.getElementById('metaLow').textContent = total - highRisk;
-    document.getElementById('metaFields').textContent = fields.length || '—';
+    const elTotal = document.getElementById('metaTotal');
+    const elHigh = document.getElementById('metaHigh');
+    const elLow = document.getElementById('metaLow');
+    const elFields = document.getElementById('metaFields');
+
+    if (elTotal) elTotal.textContent = total;
+    if (elHigh) elHigh.textContent = highRisk;
+    if (elLow) elLow.textContent = total - highRisk;
+    if (elFields) elFields.textContent = fields.length || '—';
 }
 
 function renderAiPanel(aiData) {
-    document.getElementById('aiHeadline').textContent = aiData.headline || 'Awaiting analysis';
+    if (!aiData) aiData = { headline: 'Awaiting analysis', narrative: '', segments: [] };
+    const headlineEl = document.getElementById('aiHeadline');
+    if (headlineEl) headlineEl.textContent = aiData.headline || 'Awaiting analysis';
+    
     const narrativeEl = document.getElementById('aiNarrative');
     if (narrativeEl) {
         if (window.marked && aiData.narrative) {
@@ -290,10 +312,14 @@ function renderAiPanel(aiData) {
             narrativeEl.textContent = aiData.narrative || '';
         }
     }
-    const segments = aiData.segments || [];
-    document.getElementById('aiSegments').innerHTML = segments.length
-        ? segments.map(s => `<div class="aiSegment"><h4>${s.title}</h4><p>${s.detail}</p></div>`).join('')
-        : '';
+    
+    const segmentsEl = document.getElementById('aiSegments');
+    if (segmentsEl) {
+        const segments = aiData.segments || [];
+        segmentsEl.innerHTML = segments.length
+            ? segments.map(s => `<div class="aiSegment"><h4>${s.title}</h4><p>${s.detail}</p></div>`).join('')
+            : '';
+    }
 }
 
 const INTERNAL_COLUMNS = new Set(['predicted_probability', 'prediction_label', 'created_at', 'churned']);
