@@ -163,6 +163,17 @@ def create_app() -> Flask:
             except Exception:
                 needs_init = True
 
+        try:
+            if db_p.exists():
+                c_idx = sqlite3.connect(db_p)
+                c_idx.execute("CREATE INDEX IF NOT EXISTS idx_ds_active ON data_sources (is_active)")
+                c_idx.execute("CREATE INDEX IF NOT EXISTS idx_cp_cust_prob ON churn_predictions (customer_id, predicted_probability)")
+                c_idx.execute("CREATE INDEX IF NOT EXISTS idx_cc_source ON customer_churn (source_id)")
+                c_idx.commit()
+                c_idx.close()
+        except Exception:
+            pass
+
         if needs_init:
             ensure_database(db_p, SCHEMA_PATH, config=load_config(CONFIG_PATH))
             app.config["DB_INITIALIZED_PATHS"].add(str(db_p))
@@ -3375,6 +3386,38 @@ window.addEventListener('DOMContentLoaded', function() {{
             pass
 
         return jsonify({"status": "ok"})
+
+    @app.route("/api/live/tracking/status")
+    def live_tracking_status():
+        try:
+            conn = get_connection()
+            active_sources = conn.execute("SELECT source_id, filename, row_count, created_at FROM data_sources WHERE is_active = 1").fetchall()
+            total_records = conn.execute(
+                """
+                SELECT COUNT(*) FROM churn_predictions cp
+                JOIN customer_churn cc ON cp.customer_id = cc.customer_id
+                JOIN data_sources ds ON cc.source_id = ds.source_id
+                WHERE ds.is_active = 1
+                """
+            ).fetchone()[0]
+            conn.close()
+
+            sources_summary = [dict(s) for s in active_sources]
+            import hashlib
+            raw_hash = f"{len(sources_summary)}:{total_records}:" + "|".join(f"{s['source_id']}_{s['row_count']}_{s['created_at']}" for s in sources_summary)
+            telemetry_hash = hashlib.md5(raw_hash.encode("utf-8")).hexdigest()
+
+            return jsonify({
+                "status": "active",
+                "mode": "live_file_tracking",
+                "telemetry_hash": telemetry_hash,
+                "total_active_records": total_records,
+                "active_sources_count": len(sources_summary),
+                "sources": sources_summary,
+                "timestamp": datetime.now(timezone.utc).isoformat()
+            })
+        except Exception as e:
+            return jsonify({"status": "error", "message": str(e)}), 500
 
     # Notes endpoints
     @app.route("/api/notes")

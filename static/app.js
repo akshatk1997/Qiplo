@@ -1087,11 +1087,45 @@ function animateLogo() {
         i = (i + 1) % glyphs.length;
         el.textContent = glyphs[i];
     }, 2500);
+let lastTelemetryHash = null;
+let isSyncingLiveData = false;
+
+function initLiveDataTracker() {
+    const checkTrackingStatus = async () => {
+        if (isSyncingLiveData) return;
+        try {
+            const res = await safeFetch('/api/live/tracking/status', {}, 1, 200);
+            if (!res || !res.ok) return;
+            const data = await res.json();
+            if (data.status === 'active' && data.telemetry_hash) {
+                const liveBadgeText = document.getElementById('liveTrackingText');
+                if (liveBadgeText) {
+                    liveBadgeText.textContent = `Live Tracking (${data.total_active_records || 0})`;
+                }
+                if (lastTelemetryHash && lastTelemetryHash !== data.telemetry_hash) {
+                    isSyncingLiveData = true;
+                    try {
+                        showBiToast('Live data file change detected. Syncing telemetry...', 'refresh-cw');
+                        await loadDashboard();
+                    } finally {
+                        isSyncingLiveData = false;
+                    }
+                }
+                lastTelemetryHash = data.telemetry_hash;
+            }
+        } catch (e) {
+            console.debug('Live tracking check:', e);
+        }
+    };
+
+    checkTrackingStatus();
+    setInterval(checkTrackingStatus, 5000);
 }
 
 setupTabs();
 animateLogo();
 loadDashboard();
+initLiveDataTracker();
 
 // AI Copilot Integration
 let chatHistory = [];
