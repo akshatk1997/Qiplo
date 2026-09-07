@@ -222,10 +222,17 @@ def run_atoz_verification():
         success = False
 
     res = client.get("/api/export/powerbi")
-    if res.status_code == 200 and "json" in res.mimetype:
-        print("  [OK] GET /api/export/powerbi -> 200 OK (Power BI Datasource .pbids generated cleanly)")
+    if res.status_code == 200 and res.data.startswith(b"PK"):
+        print("  [OK] GET /api/export/powerbi -> 200 OK (Power BI Template .pbit generated cleanly)")
     else:
         print(f"  [ERROR] GET /api/export/powerbi -> FAILED ({res.status_code})")
+        success = False
+
+    res_pbids = client.get("/api/export/powerbi?type=pbids")
+    if res_pbids.status_code == 200 and "json" in res_pbids.mimetype:
+        print("  [OK] GET /api/export/powerbi?type=pbids -> 200 OK (Power BI Datasource .pbids generated cleanly)")
+    else:
+        print(f"  [ERROR] GET /api/export/powerbi?type=pbids -> FAILED ({res_pbids.status_code})")
         success = False
 
     res = client.get("/api/export/powerbi/m")

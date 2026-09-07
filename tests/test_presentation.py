@@ -71,11 +71,16 @@ def test_bi_exports(tmp_path):
         assert "xml" in tab_res.content_type
         assert b"<workbook" in tab_res.data
 
-        # Test Power BI Export
+        # Test Power BI Export (.pbit binary template)
         pbi_res = client.get("/api/export/powerbi")
         assert pbi_res.status_code == 200
-        assert "json" in pbi_res.content_type
-        pbi_payload = json.loads(pbi_res.data)
+        assert pbi_res.data.startswith(b"PK")
+
+        # Test Power BI Export (.pbids JSON connector)
+        pbids_res = client.get("/api/export/powerbi?type=pbids")
+        assert pbids_res.status_code == 200
+        assert "json" in pbids_res.content_type
+        pbi_payload = json.loads(pbids_res.data)
         assert pbi_payload["connections"][0]["details"]["protocol"] == "web"
     finally:
         if old_db is not None:

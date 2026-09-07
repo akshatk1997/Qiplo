@@ -1790,6 +1790,84 @@
         </div>
     </div>
 
+    <!-- Dedicated Power BI & Tableau BI Dashboard Modal -->
+    <div id="biExportModal" class="magnificZoomModal hidden" onclick="if(event.target===this) closeBiExportModal()">
+        <div class="zoomModalContent" style="max-width: 680px; padding: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 14px; margin-bottom: 18px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i data-lucide="layout-grid" class="lucide-icon" style="width: 22px; height: 22px; color: var(--accent-2);"></i>
+                    <h3 id="biModalTitle" style="margin: 0; font-size: 1.2rem; font-weight: 700; color: var(--text);">Power BI &amp; Tableau Dashboard Connectors</h3>
+                </div>
+                <button type="button" class="tour-close-x" onclick="closeBiExportModal()">&times;</button>
+            </div>
+            <div id="biModalBody">
+                <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.5; margin-bottom: 16px;">
+                    Instantly export pre-configured interactive dashboards with complete KPIs, risk score cards, revenue exposure matrices, and automated DAX measures directly to Power BI Desktop or Tableau.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 20px;">
+                    <!-- Power BI Template card -->
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #F2C811; margin-bottom: 6px; font-size: 0.95rem;">
+                                <i data-lucide="line-chart" style="width: 18px; height: 18px;"></i> Power BI Template (.pbit)
+                            </div>
+                            <p style="font-size: 0.78rem; color: var(--muted); margin: 0 0 12px 0;">Auto-creates complete report with cards, bar charts, risk tables &amp; DAX measures inside Power BI Desktop.</p>
+                        </div>
+                        <button type="button" class="primaryBtn" onclick="window.open('/api/export/powerbi?type=pbit', '_blank')" style="width: 100%; justify-content: center;">
+                            <i data-lucide="download" style="width: 14px; height: 14px;"></i> Download .pbit Template
+                        </button>
+                    </div>
+                    <!-- Power BI Connector card -->
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--accent); margin-bottom: 6px; font-size: 0.95rem;">
+                                <i data-lucide="share-2" style="width: 18px; height: 18px;"></i> Power BI Data Source (.pbids)
+                            </div>
+                            <p style="font-size: 0.78rem; color: var(--muted); margin: 0 0 12px 0;">Direct connection file to link Power BI Desktop directly to your live SQLite predictions feed.</p>
+                        </div>
+                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/powerbi?type=pbids', '_blank')" style="width: 100%; justify-content: center;">
+                            <i data-lucide="download" style="width: 14px; height: 14px;"></i> Download .pbids Connector
+                        </button>
+                    </div>
+                    <!-- Tableau Workbook card -->
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #E97627; margin-bottom: 6px; font-size: 0.95rem;">
+                                <i data-lucide="trending-up" style="width: 18px; height: 18px;"></i> Tableau Workbook (.twb)
+                            </div>
+                            <p style="font-size: 0.78rem; color: var(--muted); margin: 0 0 12px 0;">Complete Tableau workbook pre-configured with Executive AI Churn Dashboard layout &amp; calculated fields.</p>
+                        </div>
+                        <button type="button" class="primaryBtn" onclick="window.open('/api/export/tableau', '_blank')" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #E97627 0%, #D946EF 100%);">
+                            <i data-lucide="download" style="width: 14px; height: 14px;"></i> Download .twb Workbook
+                        </button>
+                    </div>
+                    <!-- Power Query M-Script card -->
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--accent-2); margin-bottom: 6px; font-size: 0.95rem;">
+                                <i data-lucide="code" style="width: 18px; height: 18px;"></i> Power Query M-Script (.m)
+                            </div>
+                            <p style="font-size: 0.78rem; color: var(--muted); margin: 0 0 12px 0;">Raw M-Code script for pasting into Power Query Advanced Editor.</p>
+                        </div>
+                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/powerbi/m', '_blank')" style="width: 100%; justify-content: center;">
+                            <i data-lucide="file-code" style="width: 14px; height: 14px;"></i> Download M-Script
+                        </button>
+                    </div>
+                </div>
+                <!-- Live Feed Copy Box -->
+                <div style="background: var(--surface-3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                    <div>
+                        <span style="font-size: 0.75rem; font-weight: 700; color: var(--muted); display: block; text-transform: uppercase; letter-spacing: 0.05em;">Live Telemetry Feed URL (Web Connector)</span>
+                        <code id="biFeedUrlCode" style="font-size: 0.8rem; color: var(--accent-2); word-break: break-all;">/api/export/csv</code>
+                    </div>
+                    <button type="button" class="ghostBtn" onclick="copyBiFeedUrl()" style="white-space: nowrap; font-size: 0.76rem; padding: 6px 12px;">
+                        <i data-lucide="copy" style="width: 12px; height: 12px;"></i> Copy URL
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="/static/app.js?v=2.6.0" defer></script>
 </body>
 </html>

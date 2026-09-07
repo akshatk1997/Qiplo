@@ -922,15 +922,48 @@ function showBiToast(msg, iconName = 'check-circle') {
         toast.classList.remove('visible');
         setTimeout(() => { toast.remove(); }, 300);
     }, 4000);
+function openBiExportModal(target = 'powerbi') {
+    const modal = document.getElementById('biExportModal');
+    if (!modal) return;
+    const title = document.getElementById('biModalTitle');
+    if (title) {
+        title.textContent = target === 'tableau' ? 'Tableau Executive Dashboard Integration' : 'Power BI Executive Dashboard Integration';
+    }
+    const codeEl = document.getElementById('biFeedUrlCode');
+    if (codeEl) {
+        codeEl.textContent = `${window.location.origin}/api/export/csv`;
+    }
+    modal.classList.remove('hidden');
+    if (window.lucide) window.lucide.createIcons();
+}
+
+function closeBiExportModal() {
+    const modal = document.getElementById('biExportModal');
+    if (modal) modal.classList.add('hidden');
+}
+
+function copyBiFeedUrl() {
+    const url = `${window.location.origin}/api/export/csv`;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+            showBiToast("Live CSV Feed URL copied to clipboard!", "copy");
+        }).catch(() => {
+            prompt("Copy Live Feed URL:", url);
+        });
+    } else {
+        prompt("Copy Live Feed URL:", url);
+    }
 }
 
 document.getElementById('exportTableauBtn').addEventListener('click', () => {
     window.open('/api/export/tableau', '_blank');
+    openBiExportModal('tableau');
     showBiToast("Tableau Workbook (.twb) downloaded! Pre-loaded with executive layout & AI risk fields.", "trending-up");
 });
 document.getElementById('exportPowerBiBtn').addEventListener('click', () => {
-    window.open('/api/export/powerbi', '_blank');
-    showBiToast("Power BI Datasource (.pbids) downloaded! Connects directly to live AI predictions feed.", "line-chart");
+    window.open('/api/export/powerbi?type=pbit', '_blank');
+    openBiExportModal('powerbi');
+    showBiToast("Power BI Report Template (.pbit) downloaded! Auto-creates visuals inside Power BI Desktop.", "line-chart");
 });
 document.getElementById('exportExcelBtn').addEventListener('click', () => {
     if (!predictionData || !predictionData.length) {

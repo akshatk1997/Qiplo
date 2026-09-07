@@ -6,6 +6,7 @@ import sqlite3
 import secrets
 import threading
 import time
+import zipfile
 from io import BytesIO
 from pathlib import Path
 from collections import deque
@@ -2215,34 +2216,231 @@ def create_app() -> Flask:
         except Exception as e:
             return jsonify({"error": f"Failed to generate Tableau template: {e}"}), 500
 
+    def generate_powerbi_pbit_bytes(csv_url: str) -> bytes:
+        """Generates a native Power BI Template (.pbit) ZIP package containing DataModelSchema and Report Layout visuals."""
+        content_types_xml = (
+            '<?xml version="1.0" encoding="utf-8"?>\n'
+            '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">\n'
+            '  <Default Extension="xml" ContentType="application/xml" />\n'
+            '  <Default Extension="json" ContentType="application/json" />\n'
+            '  <Default Extension="png" ContentType="image/png" />\n'
+            '  <Override PartName="/Version" ContentType="text/plain" />\n'
+            '</Types>'
+        )
+        version_str = "1.2"
+        settings_json = json.dumps({"Version": 3, "IsSampleDataAllowed": True}, indent=2)
+        metadata_json = json.dumps({
+            "Version": 1,
+            "CreatedBy": "Qiplo AI Business Decision Intelligence Engine",
+            "Type": "ReportTemplate"
+        }, indent=2)
+
+        datamodel_schema = {
+            "name": "QiploDataModel",
+            "compatibilityLevel": 1550,
+            "createdDate": "2026-09-07T00:00:00Z",
+            "tables": [
+                {
+                    "name": "Qiplo_Churn_Predictions",
+                    "columns": [
+                        {"name": "customer_id", "dataType": "string", "sourceColumn": "customer_id"},
+                        {"name": "predicted_probability", "dataType": "double", "sourceColumn": "predicted_probability"},
+                        {"name": "prediction_label", "dataType": "string", "sourceColumn": "prediction_label"},
+                        {"name": "churn_risk_score", "dataType": "double", "sourceColumn": "churn_risk_score"},
+                        {"name": "risk_level", "dataType": "string", "sourceColumn": "risk_level"},
+                        {"name": "MonthlyCharges", "dataType": "double", "sourceColumn": "MonthlyCharges"},
+                        {"name": "annual_charges", "dataType": "double", "sourceColumn": "annual_charges"},
+                        {"name": "revenue_at_risk", "dataType": "double", "sourceColumn": "revenue_at_risk"},
+                        {"name": "retention_priority", "dataType": "string", "sourceColumn": "retention_priority"},
+                        {"name": "recommended_retention_strategy", "dataType": "string", "sourceColumn": "recommended_retention_strategy"},
+                        {"name": "ai_executive_insight", "dataType": "string", "sourceColumn": "ai_executive_insight"}
+                    ],
+                    "partitions": [
+                        {
+                            "name": "Qiplo_Partition",
+                            "mode": "import",
+                            "source": {
+                                "type": "m",
+                                "expression": [
+                                    "let",
+                                    f'    Source = Csv.Document(Web.Contents("{csv_url}"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.None]),',
+                                    '    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),',
+                                    '    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"customer_id", type text}, {"predicted_probability", type number}, {"prediction_label", type text}, {"churn_risk_score", type number}, {"risk_level", type text}, {"MonthlyCharges", type number}, {"annual_charges", type number}, {"revenue_at_risk", type number}, {"retention_priority", type text}, {"recommended_retention_strategy", type text}, {"ai_executive_insight", type text}})',
+                                    "in",
+                                    '    #"Changed Type"'
+                                ]
+                            }
+                        }
+                    ],
+                    "measures": [
+                        {
+                            "name": "Total Customers",
+                            "expression": "COUNT(Qiplo_Churn_Predictions[customer_id])"
+                        },
+                        {
+                            "name": "High Risk Customers",
+                            "expression": 'CALCULATE(COUNT(Qiplo_Churn_Predictions[customer_id]), Qiplo_Churn_Predictions[prediction_label] = "high_risk")'
+                        },
+                        {
+                            "name": "Churn Rate %",
+                            "expression": "DIVIDE([High Risk Customers], [Total Customers], 0) * 100",
+                            "formatString": '0.0"%"'
+                        },
+                        {
+                            "name": "Total Revenue At Risk",
+                            "expression": "SUM(Qiplo_Churn_Predictions[revenue_at_risk])",
+                            "formatString": '"$"#,0.00'
+                        },
+                        {
+                            "name": "Average Risk Score",
+                            "expression": "AVERAGE(Qiplo_Churn_Predictions[churn_risk_score])",
+                            "formatString": "0.0"
+                        }
+                    ]
+                }
+            ]
+        }
+
+        report_layout = {
+            "id": 0,
+            "resourcePackage": {
+                "name": "SharedResources",
+                "type": 1,
+                "items": []
+            },
+            "sections": [
+                {
+                    "name": "ExecutiveSummaryPage",
+                    "displayName": "Executive AI Churn Dashboard",
+                    "filters": "[]",
+                    "ordinal": 0,
+                    "visualContainers": [
+                        {
+                            "x": 20, "y": 20, "z": 0, "width": 260, "height": 120,
+                            "config": json.dumps({
+                                "name": "KPICard1",
+                                "singleVisual": {
+                                    "visualType": "card",
+                                    "projections": {"Values": [{"queryRef": "Qiplo_Churn_Predictions.Total Customers"}]}
+                                }
+                            })
+                        },
+                        {
+                            "x": 300, "y": 20, "z": 1, "width": 260, "height": 120,
+                            "config": json.dumps({
+                                "name": "KPICard2",
+                                "singleVisual": {
+                                    "visualType": "card",
+                                    "projections": {"Values": [{"queryRef": "Qiplo_Churn_Predictions.High Risk Customers"}]}
+                                }
+                            })
+                        },
+                        {
+                            "x": 580, "y": 20, "z": 2, "width": 260, "height": 120,
+                            "config": json.dumps({
+                                "name": "KPICard3",
+                                "singleVisual": {
+                                    "visualType": "card",
+                                    "projections": {"Values": [{"queryRef": "Qiplo_Churn_Predictions.Total Revenue At Risk"}]}
+                                }
+                            })
+                        },
+                        {
+                            "x": 860, "y": 20, "z": 3, "width": 260, "height": 120,
+                            "config": json.dumps({
+                                "name": "KPICard4",
+                                "singleVisual": {
+                                    "visualType": "card",
+                                    "projections": {"Values": [{"queryRef": "Qiplo_Churn_Predictions.Average Risk Score"}]}
+                                }
+                            })
+                        },
+                        {
+                            "x": 20, "y": 160, "z": 4, "width": 540, "height": 380,
+                            "config": json.dumps({
+                                "name": "BarChartVisual",
+                                "singleVisual": {
+                                    "visualType": "barChart",
+                                    "projections": {
+                                        "Category": [{"queryRef": "Qiplo_Churn_Predictions.risk_level"}],
+                                        "Y": [{"queryRef": "Qiplo_Churn_Predictions.Total Revenue At Risk"}]
+                                    }
+                                }
+                            })
+                        },
+                        {
+                            "x": 580, "y": 160, "z": 5, "width": 540, "height": 380,
+                            "config": json.dumps({
+                                "name": "TableVisual",
+                                "singleVisual": {
+                                    "visualType": "table",
+                                    "projections": {
+                                        "Values": [
+                                            {"queryRef": "Qiplo_Churn_Predictions.customer_id"},
+                                            {"queryRef": "Qiplo_Churn_Predictions.risk_level"},
+                                            {"queryRef": "Qiplo_Churn_Predictions.revenue_at_risk"},
+                                            {"queryRef": "Qiplo_Churn_Predictions.recommended_retention_strategy"}
+                                        ]
+                                    }
+                                }
+                            })
+                        }
+                    ]
+                }
+            ]
+        }
+
+        buf = BytesIO()
+        with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+            z.writestr("[Content_Types].xml", content_types_xml)
+            z.writestr("Version", version_str)
+            z.writestr("Settings", settings_json)
+            z.writestr("Metadata", metadata_json)
+            z.writestr("DataModelSchema", json.dumps(datamodel_schema, indent=2))
+            z.writestr("Report/Layout", json.dumps(report_layout, indent=2))
+
+        buf.seek(0)
+        return buf.getvalue()
+
     @app.route("/api/export/powerbi")
     def export_powerbi_api():
         try:
             csv_url = f"{request.url_root}api/export/csv"
-            pbids_data = {
-                "version": "0.1",
-                "connections": [
-                    {
-                        "details": {
-                            "protocol": "web",
-                            "address": {
-                                "url": csv_url
-                            }
-                        },
-                        "options": {
-                            "name": "Qiplo Live Churn Predictions Feed"
-                        },
-                        "mode": None
-                    }
-                ]
-            }
+            export_type = request.args.get("type", "pbit").lower()
+
+            if export_type == "pbids":
+                pbids_data = {
+                    "version": "0.1",
+                    "connections": [
+                        {
+                            "details": {
+                                "protocol": "web",
+                                "address": {
+                                    "url": csv_url
+                                }
+                            },
+                            "options": {
+                                "name": "Qiplo Live Churn Predictions Feed"
+                            },
+                            "mode": None
+                        }
+                    ]
+                }
+                return Response(
+                    json.dumps(pbids_data, indent=2),
+                    mimetype="application/json",
+                    headers={"Content-Disposition": "attachment; filename=Qiplo_PowerBI_Source.pbids"}
+                )
+
+            # Default: Return Power BI Template (.pbit) file
+            pbit_bytes = generate_powerbi_pbit_bytes(csv_url)
             return Response(
-                json.dumps(pbids_data, indent=2),
-                mimetype="application/json",
-                headers={"Content-Disposition": "attachment; filename=Qiplo_PowerBI_Source.pbids"}
+                pbit_bytes,
+                mimetype="application/octet-stream",
+                headers={"Content-Disposition": "attachment; filename=Qiplo_PowerBI_Dashboard.pbit"}
             )
         except Exception as e:
-            return jsonify({"error": f"Failed to generate Power BI datasource: {e}"}), 500
+            return jsonify({"error": f"Failed to generate Power BI export: {e}"}), 500
 
     @app.route("/api/export/powerbi/m")
     def export_powerbi_m_script():
