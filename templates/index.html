@@ -55,23 +55,35 @@
                 </div>
                 <span class="appSub">Business Decision Intelligence</span>
             </div>
+            <input id="companyNameInput" type="text" placeholder="Company name (optional)" autocomplete="off" />
         </div>
+
+        <!-- Middle Feature Option Capsules -->
+        <div class="topbarCenter">
+            <div class="capsule-group">
+                <button id="exportReportBtn" class="primaryBtn" type="button">
+                    <i data-lucide="bar-chart-3" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Full Analysis Report</span>
+                </button>
+                <button id="exportTableauBtn" class="ghostBtn" type="button">
+                    <i data-lucide="trending-up" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Tableau</span>
+                </button>
+                <button id="exportPowerBiBtn" class="ghostBtn" type="button">
+                    <i data-lucide="line-chart" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Power BI</span>
+                </button>
+                <button id="exportExcelBtn" class="ghostBtn" type="button">
+                    <i data-lucide="file-spreadsheet" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Excel</span>
+                </button>
+            </div>
+            <div id="liveTrackingBadge" class="liveTrackingBadge" title="Live Data File Telemetry Engine Active">
+                <span class="live-pulse-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #22c55e; display: inline-block; box-shadow: 0 0 8px #22c55e; animation: livePulse 2s infinite;"></span>
+                <span id="liveTrackingText">Live Tracking</span>
+            </div>
+        </div>
+
+        <!-- Right Utility & Settings Capsules -->
         <div class="topbarRight">
             <button id="themeToggleBtn" class="themeToggleBtn" type="button" aria-label="Toggle Theme" title="Switch Dark/Light Mode">
                 <i data-lucide="moon" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Dark Mode</span>
-            </button>
-            <input id="companyNameInput" type="text" placeholder="Company name (optional)" autocomplete="off" />
-            <button id="exportReportBtn" class="primaryBtn" type="button">
-                <i data-lucide="bar-chart-3" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Full Analysis Report</span>
-            </button>
-            <button id="exportTableauBtn" class="ghostBtn" type="button">
-                <i data-lucide="trending-up" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Tableau</span>
-            </button>
-            <button id="exportPowerBiBtn" class="ghostBtn" type="button">
-                <i data-lucide="line-chart" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Power BI</span>
-            </button>
-            <button id="exportExcelBtn" class="ghostBtn" type="button">
-                <i data-lucide="file-spreadsheet" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Excel</span>
             </button>
             <button id="headerTourBtn" class="ghostBtn" onclick="startTour()" type="button" title="Take guided walkthrough tour">
                 <i data-lucide="help-circle" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Tour</span>
@@ -85,10 +97,6 @@
             <button id="settingsBtn" class="ghostBtn" onclick="location.href='/settings'" type="button">
                 <i data-lucide="settings" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Settings</span>
             </button>
-            <div id="liveTrackingBadge" class="liveTrackingBadge" title="Live Data File Telemetry Engine Active">
-                <span class="live-pulse-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #22c55e; display: inline-block; box-shadow: 0 0 8px #22c55e; animation: livePulse 2s infinite;"></span>
-                <span id="liveTrackingText">Live Tracking</span>
-            </div>
             <!-- Mobile 3-Dot Actions Menu -->
             <div class="mobile-actions-menu">
                 <button id="mobileMenuBtn" class="ghostBtn mobile-menu-btn" type="button" aria-label="More Actions" title="More Actions">
