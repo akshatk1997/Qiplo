@@ -58,28 +58,34 @@
         </div>
         <div class="topbarRight">
             <button id="themeToggleBtn" class="themeToggleBtn" type="button" aria-label="Toggle Theme" title="Switch Dark/Light Mode">
-                <i data-lucide="moon" class="lucide-icon"></i> <span>Dark Mode</span>
+                <i data-lucide="moon" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Dark Mode</span>
             </button>
             <input id="companyNameInput" type="text" placeholder="Company name (optional)" autocomplete="off" />
-            <button id="exportReportBtn" class="primaryBtn" type="button" style="display: inline-flex; align-items: center; gap: 6px;">
-                <i data-lucide="bar-chart-3" class="lucide-icon"></i> Full Analysis Report
+            <button id="exportReportBtn" class="primaryBtn" type="button">
+                <i data-lucide="bar-chart-3" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Full Analysis Report</span>
             </button>
-            <button id="exportTableauBtn" class="ghostBtn" type="button">Tableau</button>
-            <button id="exportPowerBiBtn" class="ghostBtn" type="button">Power BI</button>
-            <button id="exportExcelBtn" class="ghostBtn" type="button">Excel</button>
-            <button id="headerTourBtn" class="ghostBtn" onclick="startTour()" type="button" style="display: inline-flex; align-items: center; gap: 6px;" title="Take guided walkthrough tour">
-                <i data-lucide="help-circle" class="lucide-icon" style="width: 14px; height: 14px;"></i> Tour
+            <button id="exportTableauBtn" class="ghostBtn" type="button">
+                <i data-lucide="trending-up" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Tableau</span>
             </button>
-            <button id="headerGuideBtn" class="ghostBtn" onclick="switchTab('guide')" type="button" style="display: inline-flex; align-items: center; gap: 6px;">
-                <i data-lucide="book-marked" class="lucide-icon" style="width: 14px; height: 14px;"></i> Guide
+            <button id="exportPowerBiBtn" class="ghostBtn" type="button">
+                <i data-lucide="line-chart" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Power BI</span>
             </button>
-            <button id="headerReloadBtn" class="ghostBtn" onclick="reloadData()" type="button" style="display: inline-flex; align-items: center; gap: 6px;" title="Refresh & Sync Telemetry Data">
-                <i data-lucide="refresh-cw" class="lucide-icon" style="width: 14px; height: 14px;"></i> Reload Data
+            <button id="exportExcelBtn" class="ghostBtn" type="button">
+                <i data-lucide="file-spreadsheet" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Excel</span>
             </button>
-            <button id="settingsBtn" class="ghostBtn" onclick="location.href='/settings'" type="button" style="display: inline-flex; align-items: center; gap: 6px;">
-                <i data-lucide="settings" class="lucide-icon" style="width: 14px; height: 14px;"></i> Settings
+            <button id="headerTourBtn" class="ghostBtn" onclick="startTour()" type="button" title="Take guided walkthrough tour">
+                <i data-lucide="help-circle" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Tour</span>
             </button>
-            <div id="liveTrackingBadge" class="liveTrackingBadge" title="Live Data File Telemetry Engine Active" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.25); padding: 5px 12px; border-radius: 999px; font-size: 0.76rem; font-weight: 600; color: #22c55e;">
+            <button id="headerGuideBtn" class="ghostBtn" onclick="switchTab('guide')" type="button">
+                <i data-lucide="book-marked" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Guide</span>
+            </button>
+            <button id="headerReloadBtn" class="ghostBtn" onclick="reloadData()" type="button" title="Refresh & Sync Telemetry Data">
+                <i data-lucide="refresh-cw" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Reload Data</span>
+            </button>
+            <button id="settingsBtn" class="ghostBtn" onclick="location.href='/settings'" type="button">
+                <i data-lucide="settings" class="lucide-icon" style="width: 14px; height: 14px;"></i> <span>Settings</span>
+            </button>
+            <div id="liveTrackingBadge" class="liveTrackingBadge" title="Live Data File Telemetry Engine Active">
                 <span class="live-pulse-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #22c55e; display: inline-block; box-shadow: 0 0 8px #22c55e; animation: livePulse 2s infinite;"></span>
                 <span id="liveTrackingText">Live Tracking</span>
             </div>
