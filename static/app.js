@@ -669,14 +669,47 @@ function renderInsights(insightsData) {
     const panel = document.getElementById('insightPanel');
     if (!panel) return;
     const recommendations = (insightsData && insightsData.recommendations) || [];
-    panel.innerHTML = recommendations.length
-        ? recommendations.map(item => `
-            <div class="insightCard">
-                <h4>${item.title || 'Recommendation'}</h4>
-                <p>${item.action || item.detail || ''}</p>
-            </div>
-        `).join('')
-        : '<p style="color: var(--muted); font-size: 0.85rem;">No active recommendations.</p>';
+
+    if (!recommendations.length) {
+        panel.innerHTML = '<p style="color: var(--muted); font-size: 0.85rem; margin: 0;">No active recommendations available.</p>';
+    } else {
+        panel.innerHTML = recommendations.map(item => {
+            let title = 'Strategic Recommendation';
+            let detail = '';
+
+            if (typeof item === 'string') {
+                detail = item;
+                const lower = item.toLowerCase();
+                if (lower.includes('high-risk') || lower.includes('intervention') || lower.includes('mitigation')) {
+                    title = '🚨 High-Risk Account Intervention';
+                } else if (lower.includes('support') || lower.includes('ticket') || lower.includes('sla')) {
+                    title = '🛠️ Support SLA & Ticket Escalation';
+                } else if (lower.includes('complaint')) {
+                    title = '⚖️ High Complaint Resolution';
+                } else if (lower.includes('satisfaction') || lower.includes('csat')) {
+                    title = '💬 Customer Satisfaction Recovery';
+                } else if (lower.includes('billing') || lower.includes('payment') || lower.includes('delay')) {
+                    title = '💳 Billing & Payment Audit';
+                } else if (lower.includes('contract') || lower.includes('arr') || lower.includes('renewal')) {
+                    title = '📈 Contract Renewal & ARR Protection';
+                } else if (lower.includes('loyalty') || lower.includes('lower-risk') || lower.includes('low-risk')) {
+                    title = '⭐ Proactive Retention & Loyalty';
+                } else {
+                    title = '💡 Strategic Recommendation';
+                }
+            } else if (typeof item === 'object' && item !== null) {
+                title = item.title || item.heading || 'Strategic Recommendation';
+                detail = item.action || item.detail || item.description || item.text || '';
+            }
+
+            return `
+                <div class="insightCard">
+                    <h4>${title}</h4>
+                    <p>${detail}</p>
+                </div>
+            `;
+        }).join('');
+    }
 
     const roleSelect = document.getElementById('roleSelect');
     const role = roleSelect ? roleSelect.value : (currentAuthorizedRole || 'manager');
@@ -956,15 +989,15 @@ const custSearch = document.getElementById('customerSearchInput');
 if (custSearch) {
     custSearch.addEventListener('input', renderRows);
 }
-document.getElementById('roleSelect').addEventListener('change', async (e) => {
-    const rs = document.getElementById('roleSelect');
-    const targetRole = rs.value;
-    if (targetRole === currentAuthorizedRole) return;
-
-    currentAuthorizedRole = targetRole;
-    localStorage.setItem('user_role', targetRole);
-    await loadDashboard();
-});
+const roleSelectEl = document.getElementById('roleSelect');
+if (roleSelectEl) {
+    roleSelectEl.addEventListener('change', async (e) => {
+        const targetRole = e.target.value;
+        currentAuthorizedRole = targetRole;
+        localStorage.setItem('user_role', targetRole);
+        await loadDashboard();
+    });
+}
 function showBiToast(msg, iconName = 'check-circle') {
     const toast = document.createElement('div');
     toast.className = 'telemetry-toast';

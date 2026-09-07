@@ -634,8 +634,33 @@ button.tab[data-tab="copilot"].active {
     border-radius: var(--radius-sm);
     padding: 16px 18px;
     border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
-.insightBox p { margin: 0 0 10px; line-height: 1.55; font-size: 0.92rem; color: var(--text); }
+.insightCard {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    border-left: 4px solid var(--accent);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.insightCard:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.insightCard h4 {
+    margin: 0 0 6px 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+}
+.insightCard p {
+    margin: 0;
+    line-height: 1.55;
+    font-size: 0.88rem;
+    color: var(--muted);
+}
 
 .executiveSummary {
     display: grid;
