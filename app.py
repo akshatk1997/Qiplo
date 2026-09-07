@@ -1012,6 +1012,26 @@ def create_app() -> Flask:
         try:
             data = request.json or {}
             
+            # Check if dataset data exists in system
+            try:
+                conn = get_connection()
+                stats = conn.execute("""
+                    SELECT COUNT(*) as total_customers
+                    FROM customer_churn cc
+                    JOIN data_sources ds ON cc.source_id = ds.source_id
+                    WHERE ds.is_active = 1
+                """).fetchone()
+                conn.close()
+                total_cust = stats["total_customers"] if stats else 0
+            except Exception:
+                total_cust = 0
+                
+            if total_cust == 0:
+                return jsonify({
+                    "error": "Dataset Data Required: No customer dataset has been provided or inserted into the system. Please upload or insert a dataset to run sandbox simulations.",
+                    "has_data": False
+                }), 400
+            
             model_path = get_model_path()
             if not model_path.exists():
                 # Let's train a model if it doesn't exist

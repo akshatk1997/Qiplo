@@ -34,3 +34,41 @@ def test_sandbox_predict():
     assert "label" in payload
     assert "recommendations" in payload
     assert len(payload["recommendations"]) > 0
+
+
+def test_sandbox_predict_no_data(tmp_path):
+    import os
+    import sqlite3
+    db_path = tmp_path / "empty_sandbox.db"
+    old_db = os.environ.get("CHURN_DB")
+    os.environ["CHURN_DB"] = str(db_path)
+    try:
+        flask_app = app_module.create_app()
+        flask_app.config.update(TESTING=True)
+        client = flask_app.test_client()
+
+        # Trigger initial request so before_request runs ensure_database once
+        client.get("/api/health")
+
+        # Now clear customer_churn table and mark db initialized so it won't re-seed
+        flask_app.config["DB_INITIALIZED_PATHS"].add(str(db_path))
+        conn = sqlite3.connect(db_path)
+        conn.execute("DELETE FROM customer_churn")
+        conn.commit()
+        conn.close()
+
+        res = client.post(
+            "/api/sandbox/predict",
+            data=json.dumps({"tenure_months": 12}),
+            content_type="application/json"
+        )
+        assert res.status_code == 400
+        payload = res.get_json()
+        assert payload["has_data"] is False
+        assert "Dataset Data Required" in payload["error"]
+    finally:
+        if old_db is not None:
+            os.environ["CHURN_DB"] = old_db
+        elif "CHURN_DB" in os.environ:
+            del os.environ["CHURN_DB"]
+

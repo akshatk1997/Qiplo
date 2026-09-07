@@ -5278,6 +5278,34 @@ let sandboxTimeout = null;
 window.runSandboxSimulation = function() {
     if (sandboxTimeout) clearTimeout(sandboxTimeout);
     sandboxTimeout = setTimeout(async () => {
+        if (!predictionData || !predictionData.length) {
+            const probEl = document.getElementById('sandboxProbabilityText');
+            if (probEl) probEl.textContent = 'N/A';
+            const circle = document.getElementById('sandboxGaugeCircle');
+            if (circle) {
+                circle.style.strokeDashoffset = '251.2';
+                circle.style.stroke = '#ef4444';
+            }
+            const statusBadge = document.getElementById('sandboxStatusBadge');
+            if (statusBadge) {
+                statusBadge.style.borderColor = '#ef4444';
+                statusBadge.style.color = '#ef4444';
+                statusBadge.textContent = '⚠️ DATASET DATA REQUIRED';
+            }
+            const list = document.getElementById('sandboxRecommendationsList');
+            if (list) {
+                list.innerHTML = `
+                    <div style="padding: 16px; text-align: center; background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 10px; color: var(--text);">
+                        <i data-lucide="alert-circle" class="lucide-icon" style="width: 28px; height: 28px; color: #ef4444; margin-bottom: 6px;"></i>
+                        <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; color: #ef4444;">Dataset Data Required</h4>
+                        <p style="margin: 0; font-size: 0.8rem; color: var(--muted);">Sandbox scenario simulations and account details require dataset data. Please upload or insert customer data using <strong>+ Add Source</strong> to run scenario simulations.</p>
+                    </div>
+                `;
+                if (window.lucide) window.lucide.createIcons();
+            }
+            return;
+        }
+
         const tenure = parseInt(document.getElementById('sandboxTenure').value);
         const charges = parseFloat(document.getElementById('sandboxCharges').value);
         const tickets = parseInt(document.getElementById('sandboxTickets').value);
@@ -5301,7 +5329,7 @@ window.runSandboxSimulation = function() {
                 })
             });
             const payload = await res.json();
-            if (payload.status === 'ok') {
+            if (res.ok && payload.status === 'ok') {
                 const probPct = (payload.probability * 100).toFixed(1);
                 document.getElementById('sandboxProbabilityText').textContent = probPct + '%';
                 
@@ -5326,6 +5354,32 @@ window.runSandboxSimulation = function() {
                 const list = document.getElementById('sandboxRecommendationsList');
                 if (list && payload.recommendations) {
                     list.innerHTML = payload.recommendations.map(r => `<div>${r}</div>`).join('');
+                }
+            } else {
+                const errorMsg = payload.error || 'Dataset Data Required: No customer dataset has been provided or inserted into the system.';
+                const probEl = document.getElementById('sandboxProbabilityText');
+                if (probEl) probEl.textContent = 'N/A';
+                const circle = document.getElementById('sandboxGaugeCircle');
+                if (circle) {
+                    circle.style.strokeDashoffset = '251.2';
+                    circle.style.stroke = '#ef4444';
+                }
+                const statusBadge = document.getElementById('sandboxStatusBadge');
+                if (statusBadge) {
+                    statusBadge.style.borderColor = '#ef4444';
+                    statusBadge.style.color = '#ef4444';
+                    statusBadge.textContent = '⚠️ DATASET DATA REQUIRED';
+                }
+                const list = document.getElementById('sandboxRecommendationsList');
+                if (list) {
+                    list.innerHTML = `
+                        <div style="padding: 16px; text-align: center; background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 10px; color: var(--text);">
+                            <i data-lucide="alert-circle" class="lucide-icon" style="width: 28px; height: 28px; color: #ef4444; margin-bottom: 6px;"></i>
+                            <h4 style="margin: 0 0 4px 0; font-size: 0.95rem; color: #ef4444;">Dataset Data Required</h4>
+                            <p style="margin: 0; font-size: 0.8rem; color: var(--muted);">${errorMsg}</p>
+                        </div>
+                    `;
+                    if (window.lucide) window.lucide.createIcons();
                 }
             }
         } catch (e) {
