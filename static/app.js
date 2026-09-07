@@ -1105,7 +1105,7 @@ function initLiveDataTracker() {
             if (data.status === 'active' && data.telemetry_hash) {
                 const liveBadgeText = document.getElementById('liveTrackingText');
                 if (liveBadgeText) {
-                    liveBadgeText.textContent = `Live Tracking (${data.total_active_records || 0})`;
+                    liveBadgeText.textContent = `Live (${data.total_active_records || 0})`;
                 }
                 if (lastTelemetryHash && lastTelemetryHash !== data.telemetry_hash) {
                     isSyncingLiveData = true;
