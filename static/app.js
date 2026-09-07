@@ -4640,6 +4640,9 @@ function setupBusinessGuide() {
     }
 }
 
+const SUN_ICON_SVG = `<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`;
+const MOON_ICON_SVG = `<svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"/></svg>`;
+
 function setupThemeToggle() {
     const toggleBtn = document.getElementById('themeToggleBtn');
     if (!toggleBtn) return;
@@ -4648,35 +4651,33 @@ function setupThemeToggle() {
     if (savedTheme === 'light') {
         document.body.classList.remove('dark-theme');
         document.body.classList.add('light-theme');
-        toggleBtn.innerHTML = '<i data-lucide="sun" class="lucide-icon"></i>';
+        toggleBtn.innerHTML = SUN_ICON_SVG;
         toggleBtn.setAttribute('title', 'Light Mode Active (Click for Dark Mode)');
         toggleBtn.setAttribute('aria-label', 'Switch to Dark Mode');
     } else {
         document.body.classList.remove('light-theme');
         document.body.classList.add('dark-theme');
-        toggleBtn.innerHTML = '<i data-lucide="moon" class="lucide-icon"></i>';
+        toggleBtn.innerHTML = MOON_ICON_SVG;
         toggleBtn.setAttribute('title', 'Dark Mode Active (Click for Light Mode)');
         toggleBtn.setAttribute('aria-label', 'Switch to Light Mode');
     }
-    if (window.lucide) lucide.createIcons();
 
     toggleBtn.addEventListener('click', () => {
         if (document.body.classList.contains('light-theme')) {
             document.body.classList.remove('light-theme');
             document.body.classList.add('dark-theme');
             localStorage.setItem('theme', 'dark');
-            toggleBtn.innerHTML = '<i data-lucide="moon" class="lucide-icon"></i>';
+            toggleBtn.innerHTML = MOON_ICON_SVG;
             toggleBtn.setAttribute('title', 'Dark Mode Active (Click for Light Mode)');
             toggleBtn.setAttribute('aria-label', 'Switch to Light Mode');
         } else {
             document.body.classList.remove('dark-theme');
             document.body.classList.add('light-theme');
             localStorage.setItem('theme', 'light');
-            toggleBtn.innerHTML = '<i data-lucide="sun" class="lucide-icon"></i>';
+            toggleBtn.innerHTML = SUN_ICON_SVG;
             toggleBtn.setAttribute('title', 'Light Mode Active (Click for Dark Mode)');
             toggleBtn.setAttribute('aria-label', 'Switch to Dark Mode');
         }
-        if (window.lucide) lucide.createIcons();
         if (typeof lastChartsData !== 'undefined' && lastChartsData) {
             renderCharts(lastChartsData);
         }

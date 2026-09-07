@@ -240,26 +240,28 @@ body.light-theme .sourceName {
 }
 
 .themeToggleBtn {
-    background: rgba(99, 102, 241, 0.08);
-    border: 1px solid var(--accent);
-    color: var(--text);
-    padding: 6px 14px;
-    border-radius: 999px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    font-weight: 600;
-    font-size: 0.8rem;
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.15);
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    background: var(--surface-2) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border-strong) !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+    box-shadow: var(--shadow-sm) !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .themeToggleBtn:hover {
-    background: rgba(99, 102, 241, 0.16);
-    border-color: var(--accent-2);
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
-    transform: scale(1.05);
+    background: var(--surface-hover) !important;
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+    transform: scale(1.08) !important;
 }
 
 /* Framer Motion Spring Micro-Animations */
