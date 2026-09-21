@@ -5619,6 +5619,14 @@ document.addEventListener('DOMContentLoaded', () => {
             mobileMenuDropdown.classList.remove('visible');
         });
     }
+
+    // Initialize High-Density View preference
+    if (localStorage.getItem('high_density') === 'true') {
+        document.body.classList.add('high-density');
+    }
+
+    // Initialize Command Palette and Hotkeys
+    initCommandPaletteAndHotkeys();
 });
 
 function switchTab(tabId) {
@@ -5626,6 +5634,124 @@ function switchTab(tabId) {
     if (tab) {
         tab.click();
     }
+}
+
+/* ------------------------------------------------------------- */
+/* Command Palette & Toast Notification Engine                   */
+/* ------------------------------------------------------------- */
+window.openCommandPalette = function() {
+    const modal = document.getElementById('commandPaletteModal');
+    const input = document.getElementById('cmdSearchInput');
+    if (modal) {
+        modal.classList.remove('hidden');
+        if (input) {
+            input.value = '';
+            input.focus();
+        }
+        if (window.lucide) window.lucide.createIcons();
+    }
+};
+
+window.closeCommandPalette = function() {
+    const modal = document.getElementById('commandPaletteModal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+};
+
+window.toggleHighDensityView = function() {
+    const isDense = document.body.classList.toggle('high-density');
+    localStorage.setItem('high_density', isDense ? 'true' : 'false');
+    showToast(isDense ? 'High-Density View Active' : 'Spacious View Active', 'Layout density preference updated.', 'info');
+};
+
+window.showToast = function(title, message, type = 'info', duration = 3500) {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = `toast-item toast-${type}`;
+    
+    let iconName = 'info';
+    if (type === 'success') iconName = 'check-circle';
+    else if (type === 'warning') iconName = 'alert-triangle';
+    else if (type === 'error') iconName = 'alert-circle';
+
+    toast.innerHTML = `
+        <i data-lucide="${iconName}" style="width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;"></i>
+        <div>
+            <div class="toast-title">${title}</div>
+            <div class="toast-msg">${message}</div>
+        </div>
+    `;
+
+    container.appendChild(toast);
+    if (window.lucide) window.lucide.createIcons();
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        setTimeout(() => toast.remove(), 250);
+    }, duration);
+};
+
+function initCommandPaletteAndHotkeys() {
+    const input = document.getElementById('cmdSearchInput');
+    if (input) {
+        input.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            const items = document.querySelectorAll('#cmdList .cmd-item');
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeCommandPalette();
+            }
+        });
+    }
+
+    // Global Hotkey Listener
+    document.addEventListener('keydown', (e) => {
+        // Ctrl+K or Cmd+K
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            const modal = document.getElementById('commandPaletteModal');
+            if (modal && !modal.classList.contains('hidden')) {
+                closeCommandPalette();
+            } else {
+                openCommandPalette();
+            }
+            return;
+        }
+
+        // Ignore hotkeys when typing inside inputs/textareas
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        if (['input', 'textarea', 'select'].includes(activeTag) || (document.activeElement && document.activeElement.isContentEditable)) {
+            if (e.key === 'Escape') {
+                closeCommandPalette();
+            }
+            return;
+        }
+
+        // Quick Key Tab Navigation
+        if (e.key === '1') switchTab('overview');
+        else if (e.key === '2') switchTab('specials');
+        else if (e.key === '3') switchTab('actions');
+        else if (e.key === '4') switchTab('customers');
+        else if (e.key === '5') switchTab('sandbox');
+        else if (e.key === '6') switchTab('business');
+        else if (e.key === '7') switchTab('presentation');
+        else if (e.key === '8') switchTab('guide');
+        else if (e.key === '9') switchTab('copilot');
+        else if (e.key === '/') {
+            e.preventDefault();
+            openCommandPalette();
+        }
+    });
 }
 
 window.focusPipelineStep = function(step) {

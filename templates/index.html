@@ -79,6 +79,12 @@
 
         <!-- Right Utility & Settings Capsules -->
         <div class="topbarRight">
+            <button id="cmdPaletteBtn" class="ghostBtn" onclick="openCommandPalette()" type="button" title="Open Command Palette (Ctrl+K)">
+                <i data-lucide="terminal" class="lucide-icon"></i> <span style="font-family: var(--font-mono); font-size: 0.72rem; opacity: 0.85;">Ctrl+K</span>
+            </button>
+            <button id="densityToggleBtn" class="ghostBtn" onclick="toggleHighDensityView()" type="button" title="Toggle Compact High-Density View">
+                <i data-lucide="layout-grid" class="lucide-icon"></i>
+            </button>
             <button id="themeToggleBtn" class="themeToggleBtn" type="button" aria-label="Toggle Theme" title="Switch Dark/Light Mode">
                 <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
             </button>
@@ -1878,6 +1884,58 @@
             </div>
         </div>
     </div>
+
+    <!-- Executive Command Palette Modal -->
+    <div id="commandPaletteModal" class="cmd-modal-backdrop hidden" onclick="if(event.target===this) closeCommandPalette()">
+        <div class="cmd-dialog">
+            <div class="cmd-header">
+                <i data-lucide="search" style="width: 18px; height: 18px; color: var(--accent-2);"></i>
+                <input id="cmdSearchInput" class="cmd-search-input" type="text" placeholder="Type a command or search section (e.g. Overview, Sandbox, Copilot, Reload)..." autocomplete="off" />
+                <span class="cmd-kbd">ESC</span>
+            </div>
+            <div id="cmdList" class="cmd-list">
+                <div class="cmd-item" onclick="switchTab('overview'); closeCommandPalette();">
+                    <div class="cmd-item-left"><i data-lucide="layout-dashboard" style="width: 16px; height: 16px;"></i> <span>Jump to Main Executive Dashboard</span></div>
+                    <span class="cmd-kbd">Key 1</span>
+                </div>
+                <div class="cmd-item" onclick="switchTab('specials'); closeCommandPalette();">
+                    <div class="cmd-item-left"><i data-lucide="sparkles" style="width: 16px; height: 16px;"></i> <span>Jump to Specials & BI Suite</span></div>
+                    <span class="cmd-kbd">Key 2</span>
+                </div>
+                <div class="cmd-item" onclick="switchTab('actions'); closeCommandPalette();">
+                    <div class="cmd-item-left"><i data-lucide="zap" style="width: 16px; height: 16px;"></i> <span>Jump to Strategic SLA Actions</span></div>
+                    <span class="cmd-kbd">Key 3</span>
+                </div>
+                <div class="cmd-item" onclick="switchTab('sandbox'); closeCommandPalette();">
+                    <div class="cmd-item-left"><i data-lucide="flask-conical" style="width: 16px; height: 16px;"></i> <span>Jump to What-If Scenario Sandbox</span></div>
+                    <span class="cmd-kbd">Key 5</span>
+                </div>
+                <div class="cmd-item" onclick="switchTab('copilot'); closeCommandPalette();">
+                    <div class="cmd-item-left"><i data-lucide="brain-circuit" style="width: 16px; height: 16px;"></i> <span>Consult AI Advisor Copilot</span></div>
+                    <span class="cmd-kbd">Key 9</span>
+                </div>
+                <div class="cmd-item" onclick="toggleTheme(); closeCommandPalette();">
+                    <div class="cmd-item-left"><i data-lucide="sun-moon" style="width: 16px; height: 16px;"></i> <span>Toggle Dark / Light Theme</span></div>
+                    <span class="cmd-kbd">Theme</span>
+                </div>
+                <div class="cmd-item" onclick="toggleHighDensityView(); closeCommandPalette();">
+                    <div class="cmd-item-left"><i data-lucide="layout-grid" style="width: 16px; height: 16px;"></i> <span>Toggle Compact High-Density View</span></div>
+                    <span class="cmd-kbd">Density</span>
+                </div>
+                <div class="cmd-item" onclick="reloadData(); closeCommandPalette();">
+                    <div class="cmd-item-left"><i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i> <span>Reload Telemetry & Database State</span></div>
+                    <span class="cmd-kbd">Sync</span>
+                </div>
+            </div>
+            <div class="cmd-footer">
+                <span>Navigate with <kbd class="cmd-kbd">↑</kbd> <kbd class="cmd-kbd">↓</kbd> and <kbd class="cmd-kbd">Enter</kbd></span>
+                <span>Press <kbd class="cmd-kbd">ESC</kbd> to exit</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
     <script src="/static/app.js?v=2.6.0" defer></script>
 </body>
