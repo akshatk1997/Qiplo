@@ -345,8 +345,9 @@ body.light-theme .settings-topbar {
     border-bottom-color: rgba(15, 23, 42, 0.12);
 }
 
-/* Mobile Settings Page Responsiveness */
-@media (max-width: 768px) {
+/* Device Mode Override & Touch Optimization Rules */
+body.device-mobile .settings-grid,
+@media (max-width: 640px) {
     .settings-topbar {
         flex-direction: column !important;
         align-items: flex-start !important;
@@ -376,8 +377,28 @@ body.light-theme .settings-topbar {
     .settings-form {
         gap: 10px !important;
     }
+    .settings-select, .settings-form input[type="text"], .primary-btn {
+        min-height: 44px;
+        font-size: 0.95rem;
+    }
     .settings-table th, .settings-table td {
         padding: 8px 10px !important;
         font-size: 0.78rem !important;
     }
 }
+
+body.device-tablet .settings-grid {
+    grid-template-columns: 1fr !important;
+}
+
+body.device-desktop .settings-grid {
+    grid-template-columns: 340px 1fr !important;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    max-width: 100%;
+}
+

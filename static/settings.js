@@ -170,6 +170,48 @@ document.addEventListener('DOMContentLoaded', function () {
         renderPool();
     });
 
+    function initDeviceMode() {
+        const deviceSelect = document.getElementById('deviceModeSelect');
+        const activeBadge = document.getElementById('activeDeviceBadge');
+        if (!deviceSelect || !activeBadge) return;
+
+        function getDeviceType() {
+            const width = window.innerWidth;
+            if (width <= 640) return 'mobile';
+            if (width <= 1024) return 'tablet';
+            return 'desktop';
+        }
+
+        function applyDeviceMode() {
+            const savedMode = localStorage.getItem('device_mode_override') || 'auto';
+            deviceSelect.value = savedMode;
+
+            const effectiveType = savedMode === 'auto' ? getDeviceType() : savedMode;
+
+            document.body.classList.remove('device-mobile', 'device-tablet', 'device-desktop');
+            document.body.classList.add('device-' + effectiveType);
+
+            const isAuto = savedMode === 'auto';
+            const label = effectiveType.charAt(0).toUpperCase() + effectiveType.slice(1);
+            activeBadge.textContent = (isAuto ? 'Auto: ' : 'Override: ') + label;
+        }
+
+        deviceSelect.addEventListener('change', function () {
+            localStorage.setItem('device_mode_override', deviceSelect.value);
+            applyDeviceMode();
+        });
+
+        window.addEventListener('resize', function () {
+            if ((localStorage.getItem('device_mode_override') || 'auto') === 'auto') {
+                applyDeviceMode();
+            }
+        });
+
+        applyDeviceMode();
+    }
+
     loadConfig();
     renderPool();
+    initDeviceMode();
 });
+

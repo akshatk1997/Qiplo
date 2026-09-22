@@ -34,6 +34,23 @@
 
     <main class="settings-container">
         <section class="settings-grid">
+            <div class="settings-card" id="deviceModeCard">
+                <div class="settings-card-head">
+                    <h2>Device View Mode</h2>
+                    <span id="activeDeviceBadge" class="badge badge-success">Auto: Desktop</span>
+                </div>
+                <p class="settings-desc">Adapt settings alignment and visibility based on your device screen size or set a manual view override.</p>
+                <div class="settings-row">
+                    <label class="control-label" for="deviceModeSelect">Layout Mode</label>
+                    <select id="deviceModeSelect" class="settings-select">
+                        <option value="auto">Auto Detect (Device Default)</option>
+                        <option value="mobile">Mobile Mode (&le; 640px)</option>
+                        <option value="tablet">Tablet Mode (641px &ndash; 1024px)</option>
+                        <option value="desktop">Desktop Mode (&gt; 1024px)</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="settings-card">
                 <div class="settings-card-head">
                     <h2>Proxy Engine</h2>
