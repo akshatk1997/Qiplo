@@ -4164,6 +4164,10 @@ body.light-theme .cmd-footer {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     color: var(--text);
     font-size: 0.85rem;
+    position: relative;
+    overflow: hidden;
+    will-change: transform, opacity;
+    transform: translateZ(0);
     animation: toastSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     transition: all 0.2s ease;
 }
@@ -4171,6 +4175,26 @@ body.light-theme .cmd-footer {
 @keyframes toastSlideIn {
     from { opacity: 0; transform: translateY(20px) scale(0.95); }
     to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent-2);
+    width: 100%;
+    animation: toastProgress linear forwards;
+}
+
+.toast-success .toast-progress { background: var(--success); }
+.toast-warning .toast-progress { background: var(--warning); }
+.toast-error .toast-progress { background: var(--danger); }
+.toast-info .toast-progress { background: var(--accent-2); }
+
+@keyframes toastProgress {
+    from { width: 100%; }
+    to { width: 0%; }
 }
 
 .toast-item.toast-success {

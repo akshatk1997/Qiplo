@@ -5679,10 +5679,11 @@ window.showToast = function(title, message, type = 'info', duration = 3500) {
 
     toast.innerHTML = `
         <i data-lucide="${iconName}" style="width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px;"></i>
-        <div>
+        <div style="flex: 1;">
             <div class="toast-title">${title}</div>
             <div class="toast-msg">${message}</div>
         </div>
+        <div class="toast-progress" style="animation-duration: ${duration}ms;"></div>
     `;
 
     container.appendChild(toast);
@@ -5695,6 +5696,19 @@ window.showToast = function(title, message, type = 'info', duration = 3500) {
     }, duration);
 };
 
+let selectedCmdIndex = 0;
+
+function updateCmdSelection(visibleItems) {
+    visibleItems.forEach((item, idx) => {
+        if (idx === selectedCmdIndex) {
+            item.classList.add('selected');
+            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        } else {
+            item.classList.remove('selected');
+        }
+    });
+}
+
 function initCommandPaletteAndHotkeys() {
     const input = document.getElementById('cmdSearchInput');
     if (input) {
@@ -5705,10 +5719,31 @@ function initCommandPaletteAndHotkeys() {
                 const text = item.textContent.toLowerCase();
                 item.style.display = text.includes(query) ? 'flex' : 'none';
             });
+            selectedCmdIndex = 0;
+            const visibleItems = Array.from(document.querySelectorAll('#cmdList .cmd-item')).filter(el => el.style.display !== 'none');
+            updateCmdSelection(visibleItems);
         });
 
         input.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
+            const visibleItems = Array.from(document.querySelectorAll('#cmdList .cmd-item')).filter(el => el.style.display !== 'none');
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (visibleItems.length > 0) {
+                    selectedCmdIndex = (selectedCmdIndex + 1) % visibleItems.length;
+                    updateCmdSelection(visibleItems);
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (visibleItems.length > 0) {
+                    selectedCmdIndex = (selectedCmdIndex - 1 + visibleItems.length) % visibleItems.length;
+                    updateCmdSelection(visibleItems);
+                }
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (visibleItems.length > 0 && visibleItems[selectedCmdIndex]) {
+                    visibleItems[selectedCmdIndex].click();
+                }
+            } else if (e.key === 'Escape') {
                 closeCommandPalette();
             }
         });
