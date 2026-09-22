@@ -2977,7 +2977,12 @@ let currentSlideIndex = 0;
 function setupPresentation() {
     const genBtn = document.getElementById('generatePresBtn');
     if (genBtn) {
-        genBtn.addEventListener('click', generatePresentationDeck);
+        genBtn.addEventListener('click', () => generatePresentationDeck(false));
+    }
+
+    const surpriseBtn = document.getElementById('surprisePresBtn');
+    if (surpriseBtn) {
+        surpriseBtn.addEventListener('click', surpriseMePresentation);
     }
 
     const prevBtn = document.getElementById('prevSlideBtn');
@@ -3399,7 +3404,28 @@ function generateLocalSlides(numSlides, customPrompt, shouldShuffle) {
     return slides.slice(0, numSlides);
 }
 
-async function generatePresentationDeck() {
+function surpriseMePresentation() {
+    const themes = [
+        "indigo", "emerald", "amber", "crimson", "cyan", "violet",
+        "midnight_gold", "slate_dark", "rose_quartz", "vibrant_neon", "clean_light", "monochrome_pro"
+    ];
+    const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+    const themeSelect = document.getElementById('presThemeColor');
+    if (themeSelect) themeSelect.value = randomTheme;
+
+    const counts = [5, 8, 10];
+    const randomCount = counts[Math.floor(Math.random() * counts.length)];
+    const countSelect = document.getElementById('presSlideCount');
+    if (countSelect) countSelect.value = randomCount;
+
+    if (typeof applyVisualTheme === 'function') {
+        applyVisualTheme(randomTheme);
+    }
+
+    generatePresentationDeck(true);
+}
+
+async function generatePresentationDeck(shuffle = false) {
     const genBtn = document.getElementById('generatePresBtn');
     const status = document.getElementById('deckStatus');
     const viewport = document.getElementById('slideViewport');
@@ -3415,6 +3441,8 @@ async function generatePresentationDeck() {
         const customPrompt = document.getElementById('presCustomPrompt') ? document.getElementById('presCustomPrompt').value : '';
         const slideCountEl = document.getElementById('presSlideCount');
         const numSlides = slideCountEl ? parseInt(slideCountEl.value) : 5;
+        const themeEl = document.getElementById('presThemeColor');
+        const theme = themeEl ? themeEl.value : 'indigo';
 
         // Try calling the AI enabled presentation generator on the backend
         try {
@@ -3423,7 +3451,9 @@ async function generatePresentationDeck() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     custom_prompt: customPrompt,
-                    num_slides: numSlides
+                    num_slides: numSlides,
+                    theme: theme,
+                    shuffle: shuffle
                 })
             });
             if (res.ok) {

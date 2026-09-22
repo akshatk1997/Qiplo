@@ -4790,6 +4790,83 @@ THEME_PALETTES = {
         "warning": "#FCD34D",
         "danger": "#FCA5A5",
     },
+    "violet": {
+        "bg": "#0F0921",
+        "surface": "#1A1038",
+        "accent": "#8B5CF6",
+        "accent_2": "#A78BFA",
+        "text": "#F5F3FF",
+        "muted": "#DDD6FE",
+        "success": "#34D399",
+        "warning": "#FBBF24",
+        "danger": "#F87171",
+    },
+    "midnight_gold": {
+        "bg": "#0A1128",
+        "surface": "#121E42",
+        "accent": "#F59E0B",
+        "accent_2": "#FBBF24",
+        "text": "#F8FAFC",
+        "muted": "#94A3B8",
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "danger": "#EF4444",
+    },
+    "slate_dark": {
+        "bg": "#0F172A",
+        "surface": "#1E293B",
+        "accent": "#38BDF8",
+        "accent_2": "#7DD3FC",
+        "text": "#F8FAFC",
+        "muted": "#94A3B8",
+        "success": "#34D399",
+        "warning": "#FBBF24",
+        "danger": "#F87171",
+    },
+    "rose_quartz": {
+        "bg": "#1F1118",
+        "surface": "#331C28",
+        "accent": "#FB7185",
+        "accent_2": "#FDA4AF",
+        "text": "#FFF1F2",
+        "muted": "#FECDD3",
+        "success": "#34D399",
+        "warning": "#FBBF24",
+        "danger": "#F87171",
+    },
+    "vibrant_neon": {
+        "bg": "#09090E",
+        "surface": "#141420",
+        "accent": "#00F5FF",
+        "accent_2": "#FF007F",
+        "text": "#FFFFFF",
+        "muted": "#A1A1AA",
+        "success": "#00FF87",
+        "warning": "#FFD700",
+        "danger": "#FF2A6D",
+    },
+    "clean_light": {
+        "bg": "#FFFFFF",
+        "surface": "#F1F5F9",
+        "accent": "#2563EB",
+        "accent_2": "#3B82F6",
+        "text": "#0F172A",
+        "muted": "#475569",
+        "success": "#059669",
+        "warning": "#D97706",
+        "danger": "#DC2626",
+    },
+    "monochrome_pro": {
+        "bg": "#121212",
+        "surface": "#242424",
+        "accent": "#E2E8F0",
+        "accent_2": "#94A3B8",
+        "text": "#FFFFFF",
+        "muted": "#CBD5E1",
+        "success": "#6EE7B7",
+        "warning": "#FCD34D",
+        "danger": "#FCA5A5",
+    },
     "light": {
         "bg": "#FFFFFF",
         "surface": "#F3F4F6",
@@ -4826,10 +4903,6 @@ def _get_image_stream(url):
 def _apply_pptx_theme(prs, palette_name="indigo"):
     palette = THEME_PALETTES.get(palette_name, THEME_PALETTES["indigo"])
     from pptx.dml.color import RGBColor
-    from pptx.enum.text import PP_ALIGN
-
-    slide_width = prs.slide_width
-    slide_height = prs.slide_height
 
     for slide in prs.slides:
         background = slide.background
@@ -4837,291 +4910,492 @@ def _apply_pptx_theme(prs, palette_name="indigo"):
         fill.solid()
         fill.fore_color.rgb = RGBColor(*_hex_to_rgb(palette["bg"]))
 
-        for shape in slide.shapes:
-            if not shape.has_text_frame:
-                continue
-            for paragraph in shape.text_frame.paragraphs:
-                for run in paragraph.runs:
-                    run.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
-
 
 def _add_pptx_slide(prs, layout_type, data, palette_name="indigo"):
-    from pptx import Presentation
-    from pptx.util import Inches, Pt, Emu
+    from pptx.util import Inches, Pt
     from pptx.dml.color import RGBColor
-    from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+    from pptx.enum.text import PP_ALIGN
     from pptx.enum.shapes import MSO_SHAPE
 
     palette = THEME_PALETTES.get(palette_name, THEME_PALETTES["indigo"])
+    bg_rgb = RGBColor(*_hex_to_rgb(palette["bg"]))
+    surface_rgb = RGBColor(*_hex_to_rgb(palette["surface"]))
+    accent_rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
+    accent2_rgb = RGBColor(*_hex_to_rgb(palette["accent_2"]))
+    text_rgb = RGBColor(*_hex_to_rgb(palette["text"]))
+    muted_rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
+
     slide = prs.slides.add_slide(prs.slide_layouts[6])
+
+    background = slide.background
+    fill = background.fill
+    fill.solid()
+    fill.fore_color.rgb = bg_rgb
 
     image_url = data.get("imgUrl") or data.get("image_url")
     img_stream = _get_image_stream(image_url) if image_url else None
 
+    def _render_header(badge_label, title_text):
+        # Header strip box
+        hdr = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(13.333), Inches(1.15))
+        hdr.fill.solid()
+        hdr.fill.fore_color.rgb = surface_rgb
+        hdr.line.color.rgb = accent_rgb
+        hdr.line.width = Pt(1.5)
+
+        # Left color block bar
+        block = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(0.2), Inches(1.15))
+        block.fill.solid()
+        block.fill.fore_color.rgb = accent_rgb
+        block.line.fill.background()
+
+        # Category Badge
+        b_box = slide.shapes.add_textbox(Inches(0.6), Inches(0.12), Inches(12), Inches(0.3))
+        tf = b_box.text_frame
+        tf.word_wrap = True
+        p = tf.paragraphs[0]
+        p.text = (badge_label or "QIPLO EXECUTIVE RETENTION AUDIT").upper()
+        p.font.size = Pt(9)
+        p.font.bold = True
+        p.font.color.rgb = accent2_rgb
+
+        # Slide Main Title
+        t_box = slide.shapes.add_textbox(Inches(0.6), Inches(0.38), Inches(12), Inches(0.65))
+        tf2 = t_box.text_frame
+        tf2.word_wrap = True
+        p2 = tf2.paragraphs[0]
+        p2.text = title_text or "Executive Briefing"
+        p2.font.size = Pt(22)
+        p2.font.bold = True
+        p2.font.color.rgb = text_rgb
+
     if layout_type == "title":
-        title = data.get("title", "")
-        subtitle = data.get("subtitle", "")
-        content = data.get("content", "")
+        title = data.get("title", "Executive Retention Briefing")
+        subtitle = data.get("subtitle", "Generated by Qiplo AI Engine")
+
+        # Left geometric vertical bar
+        v_bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(0.4), Inches(7.5))
+        v_bar.fill.solid()
+        v_bar.fill.fore_color.rgb = accent_rgb
+        v_bar.line.fill.background()
+
+        # Card container box
+        card_w = Inches(6.2) if img_stream else Inches(11.8)
+        card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(1.2), card_w, Inches(5.1))
+        card.fill.solid()
+        card.fill.fore_color.rgb = surface_rgb
+        card.line.color.rgb = accent_rgb
+        card.line.width = Pt(1.5)
+
+        # Title Text
+        t_box = slide.shapes.add_textbox(Inches(1.2), Inches(1.8), card_w - Inches(0.8), Inches(2.2))
+        tf = t_box.text_frame
+        tf.word_wrap = True
+        p = tf.paragraphs[0]
+        p.text = title
+        p.font.size = Pt(40)
+        p.font.bold = True
+        p.font.color.rgb = accent2_rgb
+
+        # Subtitle Text
+        s_box = slide.shapes.add_textbox(Inches(1.2), Inches(4.0), card_w - Inches(0.8), Inches(1.2))
+        tf2 = s_box.text_frame
+        tf2.word_wrap = True
+        p2 = tf2.paragraphs[0]
+        p2.text = subtitle
+        p2.font.size = Pt(18)
+        p2.font.color.rgb = muted_rgb
+
+        # Metadata chip
+        meta_chip = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.2), Inches(5.3), Inches(4.5), Inches(0.6))
+        meta_chip.fill.solid()
+        meta_chip.fill.fore_color.rgb = bg_rgb
+        meta_chip.line.color.rgb = accent2_rgb
+        meta_chip.line.width = Pt(1)
+        tf_m = meta_chip.text_frame
+        p_m = tf_m.paragraphs[0]
+        p_m.text = "⚡ Qiplo SOTA Prediction Telemetry"
+        p_m.font.size = Pt(10)
+        p_m.font.bold = True
+        p_m.font.color.rgb = text_rgb
+        p_m.alignment = PP_ALIGN.CENTER
+
         if img_stream:
-            if title:
-                shape = slide.shapes.add_textbox(Inches(0.8), Inches(1.8), Inches(6.0), Inches(1.8))
-                tf = shape.text_frame
-                tf.word_wrap = True
-                p = tf.paragraphs[0]
-                p.text = title
-                p.font.size = Pt(36)
-                p.font.bold = True
-                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
-            if subtitle:
-                shape = slide.shapes.add_textbox(Inches(0.8), Inches(3.8), Inches(6.0), Inches(1.2))
-                tf = shape.text_frame
-                tf.word_wrap = True
-                p = tf.paragraphs[0]
-                p.text = subtitle
-                p.font.size = Pt(18)
-                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
             try:
-                slide.shapes.add_picture(img_stream, Inches(7.2), Inches(1.8), width=Inches(5.3), height=Inches(4.2))
+                slide.shapes.add_picture(img_stream, Inches(7.4), Inches(1.2), width=Inches(5.2), height=Inches(5.1))
             except Exception:
                 pass
-        else:
-            if title:
-                shape = slide.shapes.add_textbox(Inches(0.8), Inches(2.2), Inches(11.7), Inches(1.4))
-                tf = shape.text_frame
-                tf.word_wrap = True
-                p = tf.paragraphs[0]
-                p.text = title
-                p.font.size = Pt(48)
-                p.font.bold = True
-                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
-                p.alignment = PP_ALIGN.CENTER
-            if subtitle:
-                shape = slide.shapes.add_textbox(Inches(0.8), Inches(3.7), Inches(11.7), Inches(1.2))
-                tf = shape.text_frame
-                tf.word_wrap = True
-                p = tf.paragraphs[0]
-                p.text = subtitle
-                p.font.size = Pt(20)
-                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
-                p.alignment = PP_ALIGN.CENTER
 
-    elif layout_type == "content":
-        title = data.get("title", "")
+    elif layout_type in ("split_metrics", "live_risk_distribution", "kpi_grid"):
+        title = data.get("title", "Key Metrics & Risk Distribution")
+        _render_header("KEY PERFORMANCE INDICATORS", title)
+
         bullets = data.get("bullets", [])
-        subtitle = data.get("subtitle", "")
-        if title:
-            shape = slide.shapes.add_textbox(Inches(0.7), Inches(0.6), Inches(12.0), Inches(1.0))
-            tf = shape.text_frame
-            p = tf.paragraphs[0]
-            p.text = title
-            p.font.size = Pt(36)
-            p.font.bold = True
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
-        if subtitle:
-            shape = slide.shapes.add_textbox(Inches(0.7), Inches(1.4), Inches(12.0), Inches(0.5))
-            tf = shape.text_frame
-            p = tf.paragraphs[0]
-            p.text = subtitle
-            p.font.size = Pt(16)
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
-            
-        text_width = Inches(7.2) if img_stream else Inches(12.0)
-        if bullets:
-            shape = slide.shapes.add_textbox(Inches(0.7), Inches(2.1), text_width, Inches(5.0))
-            tf = shape.text_frame
-            tf.word_wrap = True
-            for idx, bullet in enumerate(bullets):
-                p = tf.paragraphs[0] if idx == 0 else tf.add_paragraph()
-                p.text = bullet
-                p.font.size = Pt(18)
-                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
-                p.space_after = Pt(10)
-        if img_stream:
-            try:
-                slide.shapes.add_picture(img_stream, Inches(8.3), Inches(2.1), width=Inches(4.3), height=Inches(4.5))
-            except Exception:
-                pass
+        left_items = data.get("left_items") or bullets or ["High risk customer telemetry active.", "Automated SLA alerts configured."]
+        left_title = data.get("left_title") or "Key Insights & Audit Signals"
 
-    elif layout_type == "two_column":
-        title = data.get("title", "")
-        left_title = data.get("left_title", "")
-        left_items = data.get("left_items", [])
-        right_title = data.get("right_title", "")
-        right_items = data.get("right_items", [])
-        if title:
-            shape = slide.shapes.add_textbox(Inches(0.7), Inches(0.5), Inches(12.0), Inches(0.8))
-            tf = shape.text_frame
-            p = tf.paragraphs[0]
-            p.text = title
-            p.font.size = Pt(32)
-            p.font.bold = True
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
-        if left_title:
-            shape = slide.shapes.add_textbox(Inches(0.7), Inches(1.4), Inches(5.5), Inches(0.5))
-            tf = shape.text_frame
-            p = tf.paragraphs[0]
-            p.text = left_title
-            p.font.size = Pt(20)
-            p.font.bold = True
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent_2"]))
-            
-        left_height = Inches(2.6) if img_stream else Inches(5.2)
-        if left_items:
-            shape = slide.shapes.add_textbox(Inches(0.7), Inches(2.0), Inches(5.5), left_height)
-            tf = shape.text_frame
-            tf.word_wrap = True
-            for idx, item in enumerate(left_items):
-                p = tf.paragraphs[0] if idx == 0 else tf.add_paragraph()
-                p.text = item
-                p.font.size = Pt(16)
-                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
-                p.space_after = Pt(8)
-                
-        if img_stream:
-            try:
-                slide.shapes.add_picture(img_stream, Inches(0.7), Inches(4.6), width=Inches(5.5), height=Inches(2.3))
-            except Exception:
-                pass
-                
-        if right_title:
-            shape = slide.shapes.add_textbox(Inches(7.0), Inches(1.4), Inches(5.5), Inches(0.5))
-            tf = shape.text_frame
-            p = tf.paragraphs[0]
-            p.text = right_title
-            p.font.size = Pt(20)
-            p.font.bold = True
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent_2"]))
-        if right_items:
-            shape = slide.shapes.add_textbox(Inches(7.0), Inches(2.0), Inches(5.5), Inches(5.2))
-            tf = shape.text_frame
-            tf.word_wrap = True
-            for idx, item in enumerate(right_items):
-                p = tf.paragraphs[0] if idx == 0 else tf.add_paragraph()
-                p.text = item
-                p.font.size = Pt(16)
-                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
-                p.space_after = Pt(8)
+        # Left Container Card
+        left_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.7), Inches(1.5), Inches(5.7), Inches(5.3))
+        left_card.fill.solid()
+        left_card.fill.fore_color.rgb = surface_rgb
+        left_card.line.color.rgb = accent_rgb
+        left_card.line.width = Pt(1.5)
 
-    elif layout_type == "image_right":
-        title = data.get("title", "")
-        bullets = data.get("bullets", [])
-        image_url = data.get("image_url")
-        if title:
-            shape = slide.shapes.add_textbox(Inches(0.7), Inches(0.5), Inches(7.5), Inches(0.8))
-            tf = shape.text_frame
-            p = tf.paragraphs[0]
-            p.text = title
-            p.font.size = Pt(32)
-            p.font.bold = True
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
-        if bullets:
-            shape = slide.shapes.add_textbox(Inches(0.7), Inches(1.4), Inches(7.5), Inches(5.5))
-            tf = shape.text_frame
-            tf.word_wrap = True
-            for idx, bullet in enumerate(bullets):
-                p = tf.paragraphs[0] if idx == 0 else tf.add_paragraph()
-                p.text = bullet
-                p.font.size = Pt(16)
-                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
-                p.space_after = Pt(8)
-        if image_url:
-            try:
-                slide.shapes.add_picture(image_url, Inches(8.5), Inches(1.8), width=Inches(4.2))
-            except Exception:
-                pass
+        # Left Header
+        lt_box = slide.shapes.add_textbox(Inches(0.9), Inches(1.7), Inches(5.3), Inches(0.5))
+        tf_lt = lt_box.text_frame
+        p_lt = tf_lt.paragraphs[0]
+        p_lt.text = left_title
+        p_lt.font.size = Pt(18)
+        p_lt.font.bold = True
+        p_lt.font.color.rgb = accent2_rgb
+
+        # Left Bullets
+        l_box = slide.shapes.add_textbox(Inches(0.9), Inches(2.3), Inches(5.3), Inches(4.3))
+        tf_l = l_box.text_frame
+        tf_l.word_wrap = True
+        for idx, item in enumerate(left_items):
+            p = tf_l.paragraphs[0] if idx == 0 else tf_l.add_paragraph()
+            p.text = f"• {item}"
+            p.font.size = Pt(15)
+            p.font.color.rgb = text_rgb
+            p.space_after = Pt(10)
+
+        # Right Container Card
+        right_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(6.8), Inches(1.5), Inches(5.8), Inches(5.3))
+        right_card.fill.solid()
+        right_card.fill.fore_color.rgb = surface_rgb
+        right_card.line.color.rgb = accent2_rgb
+        right_card.line.width = Pt(1.5)
+
+        rt_box = slide.shapes.add_textbox(Inches(7.0), Inches(1.7), Inches(5.4), Inches(0.5))
+        tf_rt = rt_box.text_frame
+        p_rt = tf_rt.paragraphs[0]
+        p_rt.text = data.get("right_title") or "Live KPI Metrics Callout"
+        p_rt.font.size = Pt(18)
+        p_rt.font.bold = True
+        p_rt.font.color.rgb = accent2_rgb
+
+        # KPI metric cards inside right card
+        right_items = data.get("right_items") or [
+            f"Evaluated Customers: {data.get('total_cust', '1,000+')}",
+            f"Average Risk Score: {data.get('avg_risk_str', '26.8%')}",
+            "SLA Alert Triggers: Connected",
+            "Model Accuracy: 94.2%"
+        ]
+
+        for i, kpi in enumerate(right_items[:4]):
+            y_pos = Inches(2.3 + i * 1.05)
+            kpi_box = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(7.0), y_pos, Inches(5.4), Inches(0.9))
+            kpi_box.fill.solid()
+            kpi_box.fill.fore_color.rgb = bg_rgb
+            kpi_box.line.color.rgb = accent_rgb
+            kpi_box.line.width = Pt(1)
+
+            tf_k = kpi_box.text_frame
+            tf_k.word_wrap = True
+            p_k = tf_k.paragraphs[0]
+            p_k.text = kpi
+            p_k.font.size = Pt(14)
+            p_k.font.bold = True
+            p_k.font.color.rgb = text_rgb
+            p_k.alignment = PP_ALIGN.LEFT
+
+    elif layout_type in ("segment_comparison", "two_column"):
+        title = data.get("title", "Segment Comparison & Risk Drivers")
+        _render_header("COMPARATIVE ANALYSIS", title)
+
+        left_title = data.get("left_title", "Vulnerable Segments")
+        left_items = data.get("left_items") or data.get("bullets", [])[:2] or ["Month-to-month billing cycles carry higher churn.", "Paper check payment delays."]
+        right_title = data.get("right_title", "Sensitivity & Retention Factors")
+        right_items = data.get("right_items") or data.get("bullets", [])[2:] or ["Autopay discounts reduce churn by 3.4x.", "Annual contract migration restores ARR."]
+
+        # Left Card
+        left_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.7), Inches(1.5), Inches(5.7), Inches(5.3))
+        left_card.fill.solid()
+        left_card.fill.fore_color.rgb = surface_rgb
+        left_card.line.color.rgb = accent_rgb
+        left_card.line.width = Pt(1.5)
+
+        lt_box = slide.shapes.add_textbox(Inches(0.9), Inches(1.7), Inches(5.3), Inches(0.5))
+        tf_lt = lt_box.text_frame
+        p_lt = tf_lt.paragraphs[0]
+        p_lt.text = left_title
+        p_lt.font.size = Pt(18)
+        p_lt.font.bold = True
+        p_lt.font.color.rgb = accent_rgb
+
+        l_box = slide.shapes.add_textbox(Inches(0.9), Inches(2.3), Inches(5.3), Inches(4.3))
+        tf_l = l_box.text_frame
+        tf_l.word_wrap = True
+        for idx, item in enumerate(left_items):
+            p = tf_l.paragraphs[0] if idx == 0 else tf_l.add_paragraph()
+            p.text = f"• {item}"
+            p.font.size = Pt(15)
+            p.font.color.rgb = text_rgb
+            p.space_after = Pt(12)
+
+        # Right Card
+        right_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(6.8), Inches(1.5), Inches(5.8), Inches(5.3))
+        right_card.fill.solid()
+        right_card.fill.fore_color.rgb = surface_rgb
+        right_card.line.color.rgb = accent2_rgb
+        right_card.line.width = Pt(1.5)
+
+        rt_box = slide.shapes.add_textbox(Inches(7.0), Inches(1.7), Inches(5.4), Inches(0.5))
+        tf_rt = rt_box.text_frame
+        p_rt = tf_rt.paragraphs[0]
+        p_rt.text = right_title
+        p_rt.font.size = Pt(18)
+        p_rt.font.bold = True
+        p_rt.font.color.rgb = accent2_rgb
+
+        r_box = slide.shapes.add_textbox(Inches(7.0), Inches(2.3), Inches(5.4), Inches(4.3))
+        tf_r = r_box.text_frame
+        tf_r.word_wrap = True
+        for idx, item in enumerate(right_items):
+            p = tf_r.paragraphs[0] if idx == 0 else tf_r.add_paragraph()
+            p.text = f"• {item}"
+            p.font.size = Pt(15)
+            p.font.color.rgb = text_rgb
+            p.space_after = Pt(12)
+
+    elif layout_type in ("prescriptive_playbook", "playbook"):
+        title = data.get("title", "Prescriptive Action Playbook")
+        _render_header("EXECUTIVE ACTION MATRIX", title)
+
+        playbook = data.get("playbook", [
+            {"title": "Annual Plan Migration", "desc": "Offer 15-20% billing discount for switching to 12-month terms.", "type": "success"},
+            {"title": "Autopay Setup Credit", "desc": "$25 account credit for enabling automatic credit card billing.", "type": "primary"},
+            {"title": "CSAT Follow-Up SLA", "desc": "Mandatory senior manager phone call for low satisfaction scores.", "type": "warning"},
+            {"title": "VIP Onboarding Check-Ins", "desc": "Structured 30/60/90-day milestone reviews for new accounts.", "type": "accent"}
+        ])
+
+        positions = [
+            (Inches(0.7), Inches(1.5)),
+            (Inches(6.8), Inches(1.5)),
+            (Inches(0.7), Inches(4.2)),
+            (Inches(6.8), Inches(4.2))
+        ]
+
+        for i, item in enumerate(playbook[:4]):
+            x, y = positions[i]
+            box = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, Inches(5.8), Inches(2.4))
+            box.fill.solid()
+            box.fill.fore_color.rgb = surface_rgb
+            box.line.color.rgb = accent2_rgb if i % 2 == 1 else accent_rgb
+            box.line.width = Pt(1.5)
+
+            # Badge inside card
+            badge = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x + Inches(0.3), y + Inches(0.25), Inches(1.6), Inches(0.4))
+            badge.fill.solid()
+            badge.fill.fore_color.rgb = bg_rgb
+            badge.line.color.rgb = accent_rgb
+            badge.line.width = Pt(1)
+            tf_b = badge.text_frame
+            p_b = tf_b.paragraphs[0]
+            p_b.text = f"ACTION 0{i+1}"
+            p_b.font.size = Pt(9)
+            p_b.font.bold = True
+            p_b.font.color.rgb = accent2_rgb
+            p_b.alignment = PP_ALIGN.CENTER
+
+            # Title
+            t_box = slide.shapes.add_textbox(x + Inches(0.3), y + Inches(0.75), Inches(5.2), Inches(0.5))
+            tf_t = t_box.text_frame
+            p_t = tf_t.paragraphs[0]
+            p_t.text = item.get("title", f"Action Item {i+1}")
+            p_t.font.size = Pt(16)
+            p_t.font.bold = True
+            p_t.font.color.rgb = text_rgb
+
+            # Desc
+            d_box = slide.shapes.add_textbox(x + Inches(0.3), y + Inches(1.25), Inches(5.2), Inches(0.95))
+            tf_d = d_box.text_frame
+            tf_d.word_wrap = True
+            p_d = tf_d.paragraphs[0]
+            p_d.text = item.get("desc") or item.get("description") or ""
+            p_d.font.size = Pt(13)
+            p_d.font.color.rgb = muted_rgb
+
+    elif layout_type in ("journey_workflow", "timeline"):
+        title = data.get("title", "Strategic Recovery Timeline")
+        _render_header("WORKFLOW & TIMELINE", title)
+
+        steps = data.get("steps", [
+            {"title": "Risk Detection", "description": "AI engine flags account crossing 65% churn risk threshold."},
+            {"title": "Template Selection", "description": "CSM selects tailored retention outreach offer."},
+            {"title": "Incentive Dispatch", "description": "Direct communication sent via phone and priority email."},
+            {"title": "Contract Renewal", "description": "Client agrees to annual contract; ARR preserved."}
+        ])
+
+        # Connecting line across middle
+        conn_line = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.8), Inches(3.7), Inches(11.7), Inches(0.08))
+        conn_line.fill.solid()
+        conn_line.fill.fore_color.rgb = accent_rgb
+        conn_line.line.fill.background()
+
+        box_width = Inches(2.7)
+        box_height = Inches(4.8)
+        start_x = Inches(0.7)
+        gap = Inches(0.3)
+
+        for idx, step in enumerate(steps[:4]):
+            x = start_x + idx * (box_width + gap)
+
+            card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, Inches(1.6), box_width, box_height)
+            card.fill.solid()
+            card.fill.fore_color.rgb = surface_rgb
+            card.line.color.rgb = accent2_rgb if idx % 2 == 1 else accent_rgb
+            card.line.width = Pt(1.5)
+
+            # Step Badge Number
+            num_chip = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x + Inches(0.2), Inches(1.85), Inches(0.9), Inches(0.4))
+            num_chip.fill.solid()
+            num_chip.fill.fore_color.rgb = bg_rgb
+            num_chip.line.color.rgb = accent_rgb
+            num_chip.line.width = Pt(1)
+            tf_n = num_chip.text_frame
+            p_n = tf_n.paragraphs[0]
+            p_n.text = f"0{idx + 1}"
+            p_n.font.size = Pt(11)
+            p_n.font.bold = True
+            p_n.font.color.rgb = accent2_rgb
+            p_n.alignment = PP_ALIGN.CENTER
+
+            # Title
+            t_box = slide.shapes.add_textbox(x + Inches(0.2), Inches(2.4), box_width - Inches(0.4), Inches(0.8))
+            tf_t = t_box.text_frame
+            tf_t.word_wrap = True
+            p_t = tf_t.paragraphs[0]
+            p_t.text = step.get("title", f"Stage {idx+1}")
+            p_t.font.size = Pt(15)
+            p_t.font.bold = True
+            p_t.font.color.rgb = text_rgb
+
+            # Desc
+            d_box = slide.shapes.add_textbox(x + Inches(0.2), Inches(3.3), box_width - Inches(0.4), Inches(2.8))
+            tf_d = d_box.text_frame
+            tf_d.word_wrap = True
+            p_d = tf_d.paragraphs[0]
+            p_d.text = step.get("description") or step.get("desc") or ""
+            p_d.font.size = Pt(12)
+            p_d.font.color.rgb = muted_rgb
 
     elif layout_type == "quote":
-        quote = data.get("quote", "")
-        attribution = data.get("attribution", "")
-        if quote:
-            shape = slide.shapes.add_textbox(Inches(1.0), Inches(2.5), Inches(11.3), Inches(2.5))
-            tf = shape.text_frame
-            tf.word_wrap = True
-            p = tf.paragraphs[0]
-            p.text = f'"{quote}"'
-            p.font.size = Pt(32)
-            p.font.italic = True
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent_2"]))
-            p.alignment = PP_ALIGN.CENTER
-        if attribution:
-            shape = slide.shapes.add_textbox(Inches(1.0), Inches(5.0), Inches(11.3), Inches(0.8))
-            tf = shape.text_frame
-            p = tf.paragraphs[0]
-            p.text = f"— {attribution}"
-            p.font.size = Pt(16)
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
-            p.alignment = PP_ALIGN.CENTER
+        quote = data.get("quote", "Proactive customer retention is 5x more cost-effective than new account acquisition.")
+        attribution = data.get("attribution", "Qiplo Retention Intelligence")
+        _render_header("EXECUTIVE QUOTE & INSIGHT", "Strategic Takeaway")
 
-    elif layout_type == "timeline":
-        title = data.get("title", "")
-        steps = data.get("steps", [])
-        if title:
-            shape = slide.shapes.add_textbox(Inches(0.7), Inches(0.5), Inches(12.0), Inches(0.8))
-            tf = shape.text_frame
-            p = tf.paragraphs[0]
-            p.text = title
-            p.font.size = Pt(32)
-            p.font.bold = True
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
-        if steps:
-            box_width = Inches(2.6)
-            box_height = Inches(1.6)
-            start_x = Inches(0.8)
-            y = Inches(2.0)
-            gap = Inches(0.4)
-            for idx, step in enumerate(steps):
-                x = start_x + idx * (box_width + gap)
-                rect = slide.shapes.add_shape(
-                    MSO_SHAPE.ROUNDED_RECTANGLE, x, y, box_width, box_height
-                )
-                rect.fill.solid()
-                rect.fill.fore_color.rgb = RGBColor(*_hex_to_rgb(palette["surface"]))
-                rect.line.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
-                rect.line.width = Pt(1.5)
-                tf = rect.text_frame
-                tf.word_wrap = True
-                p = tf.paragraphs[0]
-                p.text = step.get("title", f"Step {idx + 1}")
-                p.font.size = Pt(14)
-                p.font.bold = True
-                p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["text"]))
-                desc = step.get("description", "")
-                if desc:
-                    p2 = tf.add_paragraph()
-                    p2.text = desc
-                    p2.font.size = Pt(12)
-                    p2.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
-                    p2.space_before = Pt(6)
+        q_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.2), Inches(1.8), Inches(10.9), Inches(4.8))
+        q_card.fill.solid()
+        q_card.fill.fore_color.rgb = surface_rgb
+        q_card.line.color.rgb = accent_rgb
+        q_card.line.width = Pt(2)
+
+        # Quotation mark
+        qm_box = slide.shapes.add_textbox(Inches(1.5), Inches(2.0), Inches(10), Inches(0.8))
+        tf_qm = qm_box.text_frame
+        p_qm = tf_qm.paragraphs[0]
+        p_qm.text = "“"
+        p_qm.font.size = Pt(64)
+        p_qm.font.bold = True
+        p_qm.font.color.rgb = accent2_rgb
+
+        # Quote Text
+        q_box = slide.shapes.add_textbox(Inches(1.6), Inches(2.8), Inches(10.1), Inches(2.2))
+        tf_q = q_box.text_frame
+        tf_q.word_wrap = True
+        p_q = tf_q.paragraphs[0]
+        p_q.text = f'"{quote}"'
+        p_q.font.size = Pt(24)
+        p_q.font.italic = True
+        p_q.font.color.rgb = text_rgb
+
+        # Attribution
+        a_box = slide.shapes.add_textbox(Inches(1.6), Inches(5.1), Inches(10.1), Inches(0.8))
+        tf_a = a_box.text_frame
+        p_a = tf_a.paragraphs[0]
+        p_a.text = f"— {attribution}"
+        p_a.font.size = Pt(16)
+        p_a.font.bold = True
+        p_a.font.color.rgb = accent2_rgb
 
     elif layout_type == "closing":
-        title = data.get("title", "")
+        title = data.get("title", "Thank You & Next Steps")
+        subtitle = data.get("subtitle", "Initiate Proactive Retention Workflows Today")
+        contact = data.get("contact", "contact@company.com | Qiplo Enterprise Platform")
+
+        v_bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0), Inches(0), Inches(0.4), Inches(7.5))
+        v_bar.fill.solid()
+        v_bar.fill.fore_color.rgb = accent_rgb
+        v_bar.line.fill.background()
+
+        card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.2), Inches(1.5), Inches(10.9), Inches(4.8))
+        card.fill.solid()
+        card.fill.fore_color.rgb = surface_rgb
+        card.line.color.rgb = accent_rgb
+        card.line.width = Pt(1.5)
+
+        t_box = slide.shapes.add_textbox(Inches(1.5), Inches(2.2), Inches(10.3), Inches(1.2))
+        tf = t_box.text_frame
+        tf.word_wrap = True
+        p = tf.paragraphs[0]
+        p.text = title
+        p.font.size = Pt(40)
+        p.font.bold = True
+        p.font.color.rgb = accent2_rgb
+        p.alignment = PP_ALIGN.CENTER
+
+        s_box = slide.shapes.add_textbox(Inches(1.5), Inches(3.6), Inches(10.3), Inches(0.8))
+        tf2 = s_box.text_frame
+        tf2.word_wrap = True
+        p2 = tf2.paragraphs[0]
+        p2.text = subtitle
+        p2.font.size = Pt(18)
+        p2.font.color.rgb = muted_rgb
+        p2.alignment = PP_ALIGN.CENTER
+
+        c_box = slide.shapes.add_textbox(Inches(1.5), Inches(4.6), Inches(10.3), Inches(0.8))
+        tf3 = c_box.text_frame
+        p3 = tf3.paragraphs[0]
+        p3.text = contact
+        p3.font.size = Pt(14)
+        p3.font.bold = True
+        p3.font.color.rgb = accent_rgb
+        p3.alignment = PP_ALIGN.CENTER
+
+    else:
+        # Standard Content Slide
+        title = data.get("title", "Executive Overview")
         subtitle = data.get("subtitle", "")
-        contact = data.get("contact", "")
-        if title:
-            shape = slide.shapes.add_textbox(Inches(0.8), Inches(2.6), Inches(11.7), Inches(1.2))
-            tf = shape.text_frame
-            p = tf.paragraphs[0]
-            p.text = title
-            p.font.size = Pt(44)
-            p.font.bold = True
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent"]))
-            p.alignment = PP_ALIGN.CENTER
-        if subtitle:
-            shape = slide.shapes.add_textbox(Inches(0.8), Inches(4.0), Inches(11.7), Inches(0.8))
-            tf = shape.text_frame
-            p = tf.paragraphs[0]
-            p.text = subtitle
-            p.font.size = Pt(18)
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["muted"]))
-            p.alignment = PP_ALIGN.CENTER
-        if contact:
-            shape = slide.shapes.add_textbox(Inches(0.8), Inches(5.0), Inches(11.7), Inches(0.8))
-            tf = shape.text_frame
-            p = tf.paragraphs[0]
-            p.text = contact
-            p.font.size = Pt(14)
-            p.font.color.rgb = RGBColor(*_hex_to_rgb(palette["accent_2"]))
-            p.alignment = PP_ALIGN.CENTER
+        _render_header("EXECUTIVE SUMMARY", title)
+
+        card_w = Inches(7.0) if img_stream else Inches(11.8)
+        main_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.7), Inches(1.5), card_w, Inches(5.3))
+        main_card.fill.solid()
+        main_card.fill.fore_color.rgb = surface_rgb
+        main_card.line.color.rgb = accent_rgb
+        main_card.line.width = Pt(1.5)
+
+        bullets = data.get("bullets", [])
+        if bullets:
+            b_box = slide.shapes.add_textbox(Inches(0.9), Inches(1.7), card_w - Inches(0.4), Inches(4.9))
+            tf_b = b_box.text_frame
+            tf_b.word_wrap = True
+            for idx, bullet in enumerate(bullets):
+                p = tf_b.paragraphs[0] if idx == 0 else tf_b.add_paragraph()
+                p.text = f"▶  {bullet}"
+                p.font.size = Pt(16)
+                p.font.color.rgb = text_rgb
+                p.space_after = Pt(12)
+
+        if img_stream:
+            try:
+                slide.shapes.add_picture(img_stream, Inches(8.1), Inches(1.5), width=Inches(4.4), height=Inches(5.3))
+            except Exception:
+                pass
+
 
 
 def build_gamma_pptx(slides_data, palette_name="indigo", author="Qiplo AI"):
