@@ -25,6 +25,12 @@
     --font: var(--font-body);
 }
 
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 body.light-theme {
     /* 3-Color Palette Tokens - High Contrast Light Mode */
     --bg: #F9FAFB;          /* Gray 50 */
@@ -2434,17 +2440,19 @@ body.dark-theme .aiCard:hover {
 }
 
 body.dark-theme .telemetryCard {
-    background: #0D0E22 !important;
-    border: 1px solid rgba(139, 92, 246, 0.15) !important;
-    border-top: 3px solid var(--accent) !important;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45), 0 0 1px rgba(139, 92, 246, 0.2) !important;
-    transition: all 0.25s ease;
+    background: linear-gradient(135deg, rgba(13, 14, 34, 0.95) 0%, rgba(20, 23, 56, 0.95) 100%) !important;
+    border: 1px solid rgba(0, 245, 255, 0.22) !important;
+    border-top: 3px solid var(--accent-2) !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 245, 255, 0.12) !important;
+    will-change: transform, box-shadow;
+    transform: translateZ(0);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 body.dark-theme .telemetryCard:hover {
-    border-color: rgba(0, 245, 255, 0.3) !important;
+    border-color: rgba(0, 245, 255, 0.5) !important;
     border-top: 3px solid var(--accent-2) !important;
-    box-shadow: 0 10px 35px rgba(139, 92, 246, 0.25), 0 0 15px rgba(0, 245, 255, 0.15) !important;
-    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 245, 255, 0.25), 0 0 20px rgba(139, 92, 246, 0.2) !important;
+    transform: translateY(-3px);
 }
 
 body.dark-theme .signalsBlock,
