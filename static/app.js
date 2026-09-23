@@ -3334,9 +3334,12 @@ function generateLocalSlides(numSlides, customPrompt, shouldShuffle) {
         console.error("Error reading metrics for fallback slides", err);
     }
 
-    if (!hasData) {
+    if (!hasData && !customPrompt) {
         return [];
     }
+
+    const titleTopic = customPrompt ? customPrompt.trim() : "Qiplo Executive Presentation";
+    const titleCap = titleTopic.charAt(0).toUpperCase() + titleTopic.slice(1);
     
     let localPool = [
         {

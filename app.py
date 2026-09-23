@@ -136,6 +136,326 @@ def get_connection() -> sqlite3.Connection:
     return conn
 
 
+def _generate_prompt_driven_gamma_deck(custom_prompt, num_slides=5, api_key=None, total_cust=0, avg_risk=0.0):
+    custom_lower = (custom_prompt or "").strip().lower()
+    
+    # Try calling Gemini AI if key is present
+    if api_key:
+        try:
+            from churn_analysis import call_gemini_api
+            system_instruction = (
+                "You are an elite Gamma App presentation designer. "
+                "Write structured, executive, highly engaging slide content matching the user's prompt requirements. "
+                "Output MUST be a raw JSON object with key 'slides' containing an array of slide objects. "
+                "Each slide object must have 'layout' (one of: 'title', 'split_metrics', 'segment_comparison', 'prescriptive_playbook', 'journey_workflow', 'quote', 'closing'), "
+                "'title', and layout-specific fields: "
+                "- 'title' layout: 'subtitle' "
+                "- 'split_metrics' layout: 'bullets' (list of strings), 'right_title', 'right_items' (list of KPI strings) "
+                "- 'segment_comparison' layout: 'left_title', 'left_items' (list of strings), 'right_title', 'right_items' (list of strings) "
+                "- 'prescriptive_playbook' layout: 'playbook' (list of objects with 'title', 'desc', 'type') "
+                "- 'journey_workflow' layout: 'steps' (list of objects with 'title', 'description') "
+                "- 'quote' layout: 'quote', 'attribution' "
+                "Do NOT output markdown backticks, write raw JSON string only."
+            )
+            prompt_str = f"Create a {num_slides}-slide presentation based on user prompt: '{custom_prompt}'"
+            res_text = call_gemini_api(prompt_str, api_key, system_instruction=system_instruction)
+            cleaned = res_text.strip()
+            if cleaned.startswith("```"):
+                lines = cleaned.splitlines()
+                if lines[0].startswith("```"): lines = lines[1:]
+                if lines[-1].startswith("```"): lines = lines[:-1]
+                cleaned = "\n".join(lines).strip()
+            parsed = json.loads(cleaned)
+            if isinstance(parsed, dict) and "slides" in parsed and len(parsed["slides"]) > 0:
+                return parsed["slides"][:num_slides]
+        except Exception as ex:
+            print("Gemini API presentation prompt generation error:", ex)
+
+    # Built-in Smart Prompt Synthesizer
+    title_topic = custom_prompt.strip() if custom_prompt else "Executive Presentation"
+    if len(title_topic) > 65:
+        title_topic = title_topic[:62] + "..."
+
+    # Pitch Deck / Startup
+    if any(k in custom_lower for k in ("pitch", "startup", "investor", "fundraising", "venture", "deck")):
+        return [
+            {
+                "layout": "title",
+                "title": title_topic.title(),
+                "subtitle": "Investor Pitch Deck & Growth Opportunity"
+            },
+            {
+                "layout": "split_metrics",
+                "title": "Market Opportunity & Traction",
+                "left_title": "Market Dynamics",
+                "bullets": [
+                    "Addressing a massive, rapidly expanding target addressable market (TAM).",
+                    "Strong unit economics with high customer lifetime value (LTV) and efficient CAC payback.",
+                    "Proprietary technology stack delivering immediate competitive defensibility."
+                ],
+                "right_title": "Key Traction Metrics",
+                "right_items": [
+                    "Annual Recurring Revenue: $1.2M+ ARR",
+                    "Year-over-Year Growth: +145% YoY",
+                    "Net Revenue Retention: 122% NRR",
+                    "Active Account Base: 1,500+ Clients"
+                ]
+            },
+            {
+                "layout": "segment_comparison",
+                "title": "Problem vs. Solution Matrix",
+                "left_title": "Current Market Pain Points",
+                "left_items": [
+                    "Legacy workflows are fragmented, slow, and lack real-time decision intelligence.",
+                    "High operational overhead and manual processes leading to margin leakage.",
+                    "Poor data visibility resulting in delayed strategic responses."
+                ],
+                "right_title": "Our Proprietary Platform Solution",
+                "right_items": [
+                    "Unified AI decision engine powering real-time automated workflows.",
+                    "Automated SLA monitoring with 10x faster insight delivery.",
+                    "Seamless API connectors enabling instant integration across enterprise systems."
+                ]
+            },
+            {
+                "layout": "prescriptive_playbook",
+                "title": "Go-To-Market & Execution Playbook",
+                "playbook": [
+                    {"title": "Direct Enterprise Sales", "desc": "Target mid-market & enterprise accounts with dedicated success managers.", "type": "success"},
+                    {"title": "Product-Led Growth", "desc": "Self-serve onboarding funnels converting free trials to paid tiers.", "type": "primary"},
+                    {"title": "Partner Ecosystem", "desc": "Strategic integrations with major Cloud & CRM platforms.", "type": "warning"},
+                    {"title": "Global Expansion", "desc": "Scale localized sales & support coverage into key regional markets.", "type": "accent"}
+                ]
+            },
+            {
+                "layout": "journey_workflow",
+                "title": "Growth Roadmap & Milestone Schedule",
+                "steps": [
+                    {"title": "Phase 1: Seed Launch", "description": "Validate product-market fit and scale initial ARR to $1M."},
+                    {"title": "Phase 2: Product Expansion", "description": "Launch enterprise AI connectors and workflow automation features."},
+                    {"title": "Phase 3: Market Scaling", "description": "Expand sales team and accelerate channel partner distribution."},
+                    {"title": "Phase 4: Market Leadership", "description": "Achieve $10M+ ARR and establish industry domain dominance."}
+                ]
+            }
+        ][:num_slides]
+
+    # Security & IT Audit
+    elif any(k in custom_lower for k in ("security", "cyber", "audit", "compliance", "threat", "soc2", "risk")):
+        return [
+            {
+                "layout": "title",
+                "title": title_topic.title(),
+                "subtitle": "Enterprise Cybersecurity Audit & Threat Governance"
+            },
+            {
+                "layout": "split_metrics",
+                "title": "Threat Telemetry & Risk Exposure",
+                "left_title": "Executive Summary",
+                "bullets": [
+                    "Continuous real-time monitoring across network infrastructure and cloud endpoints.",
+                    "Zero-trust architecture enforcement preventing unauthorized access vectors.",
+                    "Automated SOC incident response SLA keeping system availability at 99.99%."
+                ],
+                "right_title": "Security Metrics",
+                "right_items": [
+                    "System Availability: 99.99% Uptime",
+                    "Threat Mitigation SLA: < 5 mins",
+                    "Compliance Rating: SOC2 Type II Certified",
+                    "Audited Vulnerabilities: 0 Critical Open"
+                ]
+            },
+            {
+                "layout": "segment_comparison",
+                "title": "Vulnerability Analysis & Countermeasures",
+                "left_title": "Identified Risk Vectors",
+                "left_items": [
+                    "Legacy API endpoints lacking granular rate limits and token verification.",
+                    "Third-party vendor access controls needing centralized privilege governance.",
+                    "Unencrypted data streams in transient internal storage queues."
+                ],
+                "right_title": "Implemented Defense Guardrails",
+                "right_items": [
+                    "Enforced AES-256 encryption at rest and TLS 1.3 in transit.",
+                    "Centralized Identity & Access Management (IAM) with mandatory hardware MFA.",
+                    "Automated patch management deploying zero-day fixes within 24 hours."
+                ]
+            },
+            {
+                "layout": "prescriptive_playbook",
+                "title": "Security Remediation Playbook",
+                "playbook": [
+                    {"title": "Zero-Trust Access Control", "desc": "Mandatory role-based access review across all corporate repositories.", "type": "success"},
+                    {"title": "Automated SIEM Logging", "desc": "Centralized tamper-proof log auditing with real-time anomaly alerts.", "type": "primary"},
+                    {"title": "Penetration Testing SLA", "desc": "Bi-annual third-party red team audits and code vulnerability scans.", "type": "warning"},
+                    {"title": "Employee Security Training", "desc": "Continuous phishing simulation and compliance certification program.", "type": "accent"}
+                ]
+            },
+            {
+                "layout": "journey_workflow",
+                "title": "Incident Response & Governance Timeline",
+                "steps": [
+                    {"title": "Detection & Flagging", "description": "SIEM engine flags anomalous API payload crossing risk threshold."},
+                    {"title": "Immediate Isolation", "description": "Automated firewall rules quarantine affected network segments."},
+                    {"title": "Root Cause Audit", "description": "Security engineering analyzes vector logs and deploys hotfix."},
+                    {"title": "Post-Mortem Review", "description": "Publish compliance audit report and update threat definitions."}
+                ]
+            }
+        ][:num_slides]
+
+    # Marketing / Sales / Launch
+    elif any(k in custom_lower for k in ("market", "sales", "launch", "campaign", "growth", "product")):
+        return [
+            {
+                "layout": "title",
+                "title": title_topic.title(),
+                "subtitle": "Go-To-Market Strategy & Revenue Acceleration"
+            },
+            {
+                "layout": "split_metrics",
+                "title": "Campaign Performance & Conversion Funnel",
+                "left_title": "Strategic Growth Pillars",
+                "bullets": [
+                    "Multi-channel acquisition targeting high-intent buyer personas across digital touchpoints.",
+                    "Optimized conversion funnels increasing trial-to-paid conversion rates.",
+                    "Strategic customer success onboarding driving long-term expansion revenue."
+                ],
+                "right_title": "Growth KPIs",
+                "right_items": [
+                    "Customer Acquisition Cost: Optimized CAC",
+                    "Trial-to-Paid Conversion: 24.5%",
+                    "Monthly Qualified Leads: 3,500+",
+                    "Pipeline Revenue Velocity: +68% QoQ"
+                ]
+            },
+            {
+                "layout": "segment_comparison",
+                "title": "Customer Segmentation & Messaging Matrix",
+                "left_title": "Target Audience Cohorts",
+                "left_items": [
+                    "Enterprise Buyers requiring custom integrations, SLA guarantees, and security compliance.",
+                    "Mid-Market Teams seeking rapid ROI, ease of setup, and team collaboration."
+                ],
+                "right_title": "Value Proposition Messaging",
+                "right_items": [
+                    "Highlight 10x workflow efficiency gains and automated decision intelligence.",
+                    "Deliver clear ROI proof points with customer case studies and live demos."
+                ]
+            },
+            {
+                "layout": "prescriptive_playbook",
+                "title": "Sales & Marketing Execution Matrix",
+                "playbook": [
+                    {"title": "Inbound Content Engine", "desc": "Publish high-ranking SEO industry benchmarks and whitepapers.", "type": "success"},
+                    {"title": "Targeted ABM Outreach", "desc": "Personalized account-based marketing for top 100 enterprise prospects.", "type": "primary"},
+                    {"title": "Partner Channel Co-Selling", "desc": "Joint webinars and marketplace listings with cloud platform partners.", "type": "warning"},
+                    {"title": "Customer Advocacy Program", "desc": "Turn satisfied clients into case studies, reviews, and referral partners.", "type": "accent"}
+                ]
+            },
+            {
+                "layout": "journey_workflow",
+                "title": "Campaign Rollout & Execution Timeline",
+                "steps": [
+                    {"title": "Week 1: Teaser Phase", "description": "Launch brand awareness ads and landing page signups."},
+                    {"title": "Week 2: Official Launch", "description": "Host live keynote broadcast and press release distribution."},
+                    {"title": "Week 4: Sales Blitz", "description": "Activate direct outreach team for qualified lead demo booking."},
+                    {"title": "Month 2: Review & Scale", "description": "Analyze acquisition metrics and reallocate budget to top channels."}
+                ]
+            }
+        ][:num_slides]
+
+    # Universal / Custom Prompt Synthesizer
+    else:
+        slides = [
+            {
+                "layout": "title",
+                "title": title_topic.title(),
+                "subtitle": "Executive Briefing & Strategic Overview"
+            },
+            {
+                "layout": "split_metrics",
+                "title": f"Key Analysis: {title_topic.title()}",
+                "left_title": "Strategic Insights",
+                "bullets": [
+                    f"Comprehensive assessment of requirements for '{title_topic}'.",
+                    "Data-driven evaluation highlighting primary performance drivers and opportunities.",
+                    "Actionable recommendations formulated to optimize execution outcomes."
+                ],
+                "right_title": "Core Performance Indicators",
+                "right_items": [
+                    "Execution Efficiency: 96.8%",
+                    "Operational Impact: High",
+                    "Resource Optimization: +35%",
+                    "Strategic Alignment: 100%"
+                ]
+            },
+            {
+                "layout": "segment_comparison",
+                "title": "Comparative Assessment & Strategic Drivers",
+                "left_title": "Primary Challenges & Factors",
+                "left_items": [
+                    "Navigating operational complexity and aligning multi-department workflows.",
+                    "Mitigating risk vectors while maintaining execution speed."
+                ],
+                "right_title": "Recommended Solutions",
+                "right_items": [
+                    "Deploy standardized automated frameworks to eliminate manual friction.",
+                    "Establish clear governance metrics and weekly performance reviews."
+                ]
+            },
+            {
+                "layout": "prescriptive_playbook",
+                "title": "Execution Matrix & Action Items",
+                "playbook": [
+                    {"title": "Phase 1 Initialization", "desc": "Establish core objectives, assign team leads, and align resources.", "type": "success"},
+                    {"title": "Workflow Automation", "desc": "Deploy digital tools to streamline task tracking and SLA reporting.", "type": "primary"},
+                    {"title": "Performance Monitoring", "desc": "Conduct continuous audit reviews to track progress against KPIs.", "type": "warning"},
+                    {"title": "Strategic Scaling", "desc": "Expand proven practices across all organization operational units.", "type": "accent"}
+                ]
+            },
+            {
+                "layout": "journey_workflow",
+                "title": "Implementation Roadmap & Milestones",
+                "steps": [
+                    {"title": "Stage 1: Discovery", "description": "Complete initial audit and stakeholder alignment."},
+                    {"title": "Stage 2: Deployment", "description": "Roll out core framework tools and process automation."},
+                    {"title": "Stage 3: Optimization", "description": "Refine execution metrics based on initial feedback loops."},
+                    {"title": "Stage 4: Achievement", "description": "Full target milestone realization and executive signoff."}
+                ]
+            }
+        ]
+
+        if num_slides > 5:
+            extra_pool = [
+                {
+                    "layout": "quote",
+                    "quote": f"Excellence in {title_topic} is achieved through continuous innovation, clear accountability, and disciplined execution.",
+                    "attribution": "Qiplo Executive Intelligence"
+                },
+                {
+                    "layout": "split_metrics",
+                    "title": "Governance & Quality Safeguards",
+                    "bullets": [
+                        "Continuous metric tracking ensures adherence to strict quality SLAs.",
+                        "Transparent reporting channels empower leadership decision-making.",
+                        "Proactive risk mitigation minimizes operational delays."
+                    ],
+                    "right_title": "Quality Benchmarks",
+                    "right_items": ["SLA Compliance: 99.2%", "Audit Integrity: Verified", "Risk Factor: Low", "Target ROI: Exceeded"]
+                },
+                {
+                    "layout": "closing",
+                    "title": "Summary & Next Steps",
+                    "subtitle": f"Initiate Execution for '{title_topic}'",
+                    "contact": "Qiplo AI Platform | Enterprise Executive Suite"
+                }
+            ]
+            while len(slides) < num_slides:
+                slides.extend(extra_pool)
+            slides = slides[:num_slides]
+
+        return slides
+
+
 def create_app() -> Flask:
     app = Flask(__name__, template_folder=str(BASE_DIR / "templates"), static_folder=str(BASE_DIR / "static"))
     app.config["DB_INITIALIZED_PATHS"] = set()
@@ -3616,6 +3936,9 @@ window.addEventListener('DOMContentLoaded', function() {{
     def presentation_api():
         data = request.json or {}
         api_key = data.get("api_key") or os.environ.get("GEMINI_API_KEY")
+        custom_prompt = (data.get("custom_prompt") or data.get("prompt") or "").strip()
+        requested_num_slides = int(data.get("num_slides") or 5)
+        should_shuffle = data.get("shuffle", False)
         
         # 1. Fetch current database stats with exception handling for empty databases
         total_cust = 0
@@ -3686,15 +4009,30 @@ window.addEventListener('DOMContentLoaded', function() {{
         except Exception as e:
             print("Database query failed in presentation API, using defaults:", e)
         
-        # Enforce strict requirement: No presentation deck generation without user data inserted
-        if total_cust == 0:
+        # Enforce strict requirement: No default presentation deck generation without user data or prompt
+        if total_cust == 0 and not custom_prompt:
             return jsonify({
-                "error": "No data provided or inserted. Presentation decks cannot be generated without dataset data. Please upload or insert a dataset (CSV/XLSX/JSON) first.",
+                "error": "No data provided or inserted. Presentation decks cannot be generated without dataset data or prompt requirements. Please upload a dataset or provide a prompt requirement.",
                 "slides": [],
                 "has_data": False
             }), 400
 
-        custom_prompt = data.get("custom_prompt")
+        # If custom prompt is provided, generate prompt-driven Gamma presentation deck!
+        if custom_prompt:
+            slides = _generate_prompt_driven_gamma_deck(
+                custom_prompt,
+                num_slides=requested_num_slides,
+                api_key=api_key,
+                total_cust=total_cust,
+                avg_risk=avg_risk
+            )
+            if should_shuffle and len(slides) > 1:
+                import random
+                t_slide = slides[0]
+                rest = slides[1:]
+                random.shuffle(rest)
+                slides = [t_slide] + rest
+            return jsonify({"slides": slides, "status": "ok", "prompt": custom_prompt})
         
         # Fallbacks for copy
         slide1_title = "Qiplo Executive Presentation"
