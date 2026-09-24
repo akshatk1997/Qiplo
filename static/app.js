@@ -3850,6 +3850,61 @@ function renderSlides(slides) {
                     </div>
                 </div>
             `;
+        } else if (slide.layout === 'quote') {
+            contentHtml = `
+                <div class="slideContent layout-quote" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: center; padding: 10px;">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Executive Leadership Vision & Summary</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 10px 30px;">
+                        <div style="font-size: 3.5rem; color: var(--accent); opacity: 0.35; font-family: Georgia, serif; line-height: 0.8; margin-bottom: 6px;">“</div>
+                        <blockquote contenteditable="true" data-slide-index="${idx}" data-field="quote" style="font-size: 1.2rem; font-style: italic; color: var(--text); font-family: var(--font-heading); margin: 0 0 14px; line-height: 1.4; max-width: 600px;">${slide.quote || slide.title || 'Excellence in customer retention is achieved through continuous innovation and disciplined execution.'}</blockquote>
+                        <div class="attribution" contenteditable="true" data-slide-index="${idx}" data-field="attribution" style="font-size: 0.82rem; color: var(--accent); font-weight: 700; background: rgba(99, 102, 241, 0.1); padding: 4px 16px; border-radius: 20px; border: 1px solid var(--border); display: inline-block;">— ${slide.attribution || 'Qiplo Executive Intelligence'}</div>
+                    </div>
+                    <div class="slideFooter">
+                        <span>Executive Leadership Vision</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
+        } else if (slide.layout === 'closing') {
+            contentHtml = `
+                <div class="slideContent layout-closing" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: center;">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Summary & Execution Briefing</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; gap: 12px; padding: 10px;">
+                        <h1 contenteditable="true" data-slide-index="${idx}" data-field="title" style="font-size: 2.1rem; margin: 0; background: linear-gradient(135deg, var(--accent), #FF007F); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${slide.title || 'Summary & Next Steps'}</h1>
+                        <p contenteditable="true" data-slide-index="${idx}" data-field="subtitle" style="font-size: 0.95rem; color: var(--muted); margin: 0; max-width: 520px;">${slide.subtitle || 'Initiate proactive churn mitigation and account retention workflows today.'}</p>
+                        <div style="margin-top: 8px; font-size: 0.82rem; color: var(--text); font-weight: 600; background: var(--surface-2); padding: 8px 20px; border-radius: 20px; border: 1px solid var(--border);" contenteditable="true" data-slide-index="${idx}" data-field="contact">${slide.contact || 'Qiplo Business Decision Intelligence Platform'}</div>
+                    </div>
+                    <div class="slideFooter">
+                        <span>Executive Summary & Next Steps</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
+        } else {
+            const listHtml = (slide.bullets || []).map((b, bIdx) => `<li contenteditable="true" data-slide-index="${idx}" data-field="bullet" data-bullet-index="${bIdx}">${b}</li>`).join('');
+            contentHtml = `
+                <div class="slideContent layout-split">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Executive Briefing</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: center; flex: 1; text-align: left; padding: 10px 0;">
+                        <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin: 0 0 10px; font-size: 1.4rem; color: var(--text);">${slide.title}</h2>
+                        <p contenteditable="true" data-slide-index="${idx}" data-field="subtitle" style="margin: 0 0 12px; font-size: 0.9rem; color: var(--muted);">${slide.subtitle || ''}</p>
+                        ${listHtml ? `<ul style="line-height: 1.6; font-size: 0.9rem; color: var(--muted); padding-left: 20px;">${listHtml}</ul>` : ''}
+                    </div>
+                    <div class="slideFooter">
+                        <span>Executive Briefing</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
         }
 
         return `
@@ -3858,6 +3913,8 @@ function renderSlides(slides) {
             </div>
         `;
     }).join('');
+
+    bindSlideContentEditableListeners();
 
     try {
         if (window.lucide) window.lucide.createIcons();
@@ -3935,9 +3992,24 @@ function updateSlideView() {
     populateSlideEditor();
     renderSlideSorterTimeline();
 
+    const badge = document.getElementById('gammaCardCounterBadge');
+    if (badge && presentationSlides.length) {
+        badge.textContent = `CARD ${currentSlideIndex + 1} OF ${presentationSlides.length}`;
+    }
+
+    const cardLayoutSelect = document.getElementById('gammaCardLayoutSelect');
+    if (cardLayoutSelect && presentationSlides[currentSlideIndex]) {
+        cardLayoutSelect.value = presentationSlides[currentSlideIndex].layout || 'title';
+    }
+
     const layoutSelect = document.getElementById('slideLayoutSelect');
     if (layoutSelect && presentationSlides[currentSlideIndex]) {
         layoutSelect.value = presentationSlides[currentSlideIndex].layout || 'title';
+    }
+
+    const modal = document.getElementById('gammaLivePresenter');
+    if (modal && !modal.classList.contains('hidden')) {
+        updateGammaPresenterSlide();
     }
 }
 
@@ -4137,6 +4209,226 @@ window.deleteLastBulletPoint = function() {
         current.bullets.pop();
         renderSlides(presentationSlides);
         updateSlideView();
+    }
+};
+
+function bindSlideContentEditableListeners() {
+    const viewport = document.getElementById('slideViewport');
+    if (!viewport) return;
+    viewport.querySelectorAll('[contenteditable="true"]').forEach(elem => {
+        elem.oninput = function() {
+            const slideIdx = parseInt(elem.getAttribute('data-slide-index'));
+            const field = elem.getAttribute('data-field');
+            if (isNaN(slideIdx) || !presentationSlides[slideIdx]) return;
+            const slide = presentationSlides[slideIdx];
+
+            if (field === 'title') {
+                slide.title = elem.innerText;
+            } else if (field === 'subtitle') {
+                slide.subtitle = elem.innerText;
+            } else if (field === 'bullet') {
+                const bIdx = parseInt(elem.getAttribute('data-bullet-index'));
+                if (slide.bullets && !isNaN(bIdx)) {
+                    slide.bullets[bIdx] = elem.innerText;
+                }
+            } else if (field === 'playbook-title') {
+                const pIdx = parseInt(elem.getAttribute('data-playbook-index'));
+                if (slide.playbook && !isNaN(pIdx)) {
+                    slide.playbook[pIdx].title = elem.innerText;
+                }
+            } else if (field === 'playbook-desc') {
+                const pIdx = parseInt(elem.getAttribute('data-playbook-index'));
+                if (slide.playbook && !isNaN(pIdx)) {
+                    slide.playbook[pIdx].desc = elem.innerText;
+                }
+            } else if (field === 'step-title') {
+                const sIdx = parseInt(elem.getAttribute('data-step-index'));
+                if (slide.steps && !isNaN(sIdx)) {
+                    slide.steps[sIdx].title = elem.innerText;
+                }
+            } else if (field === 'step-desc') {
+                const sIdx = parseInt(elem.getAttribute('data-step-index'));
+                if (slide.steps && !isNaN(sIdx)) {
+                    slide.steps[sIdx].description = elem.innerText;
+                    slide.steps[sIdx].desc = elem.innerText;
+                }
+            } else if (field === 'quote') {
+                slide.quote = elem.innerText;
+            } else if (field === 'attribution') {
+                slide.attribution = elem.innerText;
+            } else if (field === 'contact') {
+                slide.contact = elem.innerText;
+            }
+
+            renderSlideSorterTimeline();
+        };
+    });
+}
+
+window.moveCurrentCardUp = function() {
+    if (currentSlideIndex <= 0 || !presentationSlides.length) return;
+    const temp = presentationSlides[currentSlideIndex];
+    presentationSlides[currentSlideIndex] = presentationSlides[currentSlideIndex - 1];
+    presentationSlides[currentSlideIndex - 1] = temp;
+    currentSlideIndex--;
+    renderSlides(presentationSlides);
+    updateSlideView();
+    showNotification("⬆️ Card moved up in sequence");
+};
+
+window.moveCurrentCardDown = function() {
+    if (currentSlideIndex >= presentationSlides.length - 1 || !presentationSlides.length) return;
+    const temp = presentationSlides[currentSlideIndex];
+    presentationSlides[currentSlideIndex] = presentationSlides[currentSlideIndex + 1];
+    presentationSlides[currentSlideIndex + 1] = temp;
+    currentSlideIndex++;
+    renderSlides(presentationSlides);
+    updateSlideView();
+    showNotification("⬇️ Card moved down in sequence");
+};
+
+window.aiPolishCurrentCard = function() {
+    if (!presentationSlides.length) return;
+    const slide = presentationSlides[currentSlideIndex];
+    if (!slide) return;
+
+    if (slide.title) {
+        slide.title = slide.title.replace(/\s+/g, ' ').trim();
+    }
+    if (slide.subtitle) {
+        slide.subtitle = slide.subtitle.startsWith('✨') ? slide.subtitle : "✨ " + slide.subtitle;
+    }
+    if (slide.bullets && slide.bullets.length) {
+        slide.bullets = slide.bullets.map(b => b.trim().startsWith('•') ? b.trim() : '• ' + b.trim());
+    }
+    renderSlides(presentationSlides);
+    updateSlideView();
+    showNotification("✨ Card copy polished with Gamma AI formatting!");
+};
+
+window.copyDeckOutline = function() {
+    if (!presentationSlides || !presentationSlides.length) {
+        showNotification("⚠️ No presentation slides to copy.");
+        return;
+    }
+    const outline = presentationSlides.map((s, idx) => {
+        let text = `## Slide ${idx + 1}: ${s.title || 'Untitled'}\n`;
+        if (s.subtitle) text += `*${s.subtitle}*\n`;
+        if (s.bullets && s.bullets.length) {
+            text += s.bullets.map(b => `- ${b}`).join('\n') + '\n';
+        }
+        if (s.playbook && s.playbook.length) {
+            text += s.playbook.map(p => `- **${p.title}**: ${p.desc}`).join('\n') + '\n';
+        }
+        if (s.steps && s.steps.length) {
+            text += s.steps.map(st => `1. **${st.title}**: ${st.description || st.desc || ''}`).join('\n') + '\n';
+        }
+        return text;
+    }).join('\n---\n\n');
+
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(outline).then(() => {
+            showNotification("📋 Deck outline copied to clipboard in Markdown format!");
+        }).catch(() => {
+            showNotification("⚠️ Clipboard write failed.");
+        });
+    }
+};
+
+let laserPointerActive = false;
+window.toggleLaserPointer = function() {
+    laserPointerActive = !laserPointerActive;
+    const btn = document.getElementById('presenterLaserBtn');
+    const dot = document.getElementById('laserPointerCircle');
+    if (btn) btn.classList.toggle('active', laserPointerActive);
+    if (dot) dot.classList.toggle('hidden', !laserPointerActive);
+    showNotification(laserPointerActive ? "🎯 Laser pointer activated!" : "🎯 Laser pointer disabled");
+};
+
+window.enterGammaLivePresenter = function() {
+    if (!presentationSlides || !presentationSlides.length) {
+        showNotification("⚠️ Please generate a presentation deck first!");
+        return;
+    }
+    const modal = document.getElementById('gammaLivePresenter');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+
+    const titleElem = document.getElementById('presenterDeckTitle');
+    const customPrompt = document.getElementById('presCustomPrompt');
+    if (titleElem) {
+        titleElem.textContent = (customPrompt && customPrompt.value.trim()) ? customPrompt.value.trim() : (presentationSlides[0].title || 'Executive Presentation');
+    }
+
+    updateGammaPresenterSlide();
+
+    modal.onmousemove = function(e) {
+        if (!laserPointerActive) return;
+        const dot = document.getElementById('laserPointerCircle');
+        if (dot) {
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+        }
+    };
+
+    window.gammaKeyHandler = function(e) {
+        if (modal.classList.contains('hidden')) return;
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+            e.preventDefault();
+            changeSlide(1);
+            updateGammaPresenterSlide();
+        } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+            e.preventDefault();
+            changeSlide(-1);
+            updateGammaPresenterSlide();
+        } else if (e.key === 'Escape') {
+            exitGammaLivePresenter();
+        } else if (e.key === 'l' || e.key === 'L') {
+            toggleLaserPointer();
+        }
+    };
+    window.addEventListener('keydown', window.gammaKeyHandler);
+};
+
+function updateGammaPresenterSlide() {
+    const canvas = document.getElementById('presenterSlideCanvas');
+    const viewport = document.getElementById('slideViewport');
+    if (!canvas || !viewport) return;
+
+    canvas.innerHTML = viewport.innerHTML;
+
+    const slides = canvas.querySelectorAll('.slide');
+    slides.forEach((s, idx) => {
+        if (idx === currentSlideIndex) {
+            s.classList.add('active');
+            s.style.opacity = '1';
+            s.style.pointerEvents = 'auto';
+            s.style.transform = 'scale(1)';
+        } else {
+            s.classList.remove('active');
+            s.style.opacity = '0';
+            s.style.pointerEvents = 'none';
+        }
+    });
+
+    const counter = document.getElementById('presenterCardCounter');
+    if (counter) counter.textContent = `Card ${currentSlideIndex + 1} of ${presentationSlides.length}`;
+
+    const fill = document.getElementById('presenterProgressFill');
+    if (fill) {
+        const pct = Math.round(((currentSlideIndex + 1) / presentationSlides.length) * 100);
+        fill.style.width = pct + '%';
+    }
+}
+
+window.exitGammaLivePresenter = function() {
+    const modal = document.getElementById('gammaLivePresenter');
+    if (modal) modal.classList.add('hidden');
+    laserPointerActive = false;
+    const dot = document.getElementById('laserPointerCircle');
+    if (dot) dot.classList.add('hidden');
+    if (window.gammaKeyHandler) {
+        window.removeEventListener('keydown', window.gammaKeyHandler);
     }
 };
 
