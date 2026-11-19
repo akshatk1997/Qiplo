@@ -79,6 +79,12 @@
 
         <!-- Right Utility & Settings Capsules -->
         <div class="topbarRight">
+            <button id="toggleSourcesBtn" class="ghostBtn" onclick="toggleSourcesSidebar()" type="button" title="Toggle Datasets Sidebar ([)">
+                <i data-lucide="panel-left-close" class="lucide-icon"></i> <span class="hide-mobile">Data</span> <kbd class="kbd-hint">[</kbd>
+            </button>
+            <button id="toggleNotesBtn" class="ghostBtn" onclick="toggleNotesSidebar()" type="button" title="Toggle Notes Sidebar (])">
+                <i data-lucide="panel-right-close" class="lucide-icon"></i> <span class="hide-mobile">Notes</span> <kbd class="kbd-hint">]</kbd>
+            </button>
             <button id="cmdPaletteBtn" class="ghostBtn" onclick="openCommandPalette()" type="button" title="Open Command Palette (Ctrl+K)">
                 <i data-lucide="terminal" class="lucide-icon"></i> <span style="font-family: var(--font-mono); font-size: 0.72rem; opacity: 0.85;">Ctrl+K</span>
             </button>
@@ -137,11 +143,26 @@
 
 
 
-    <main class="studio">
-        <aside class="sourcesPane">
+    <main class="studio" id="mainStudio">
+        <!-- Floating Sidebar Rail Expand Triggers (Active when sidebars are collapsed) -->
+        <button id="expandSourcesRailBtn" class="sidebar-rail-btn rail-left" onclick="toggleSourcesSidebar()" type="button" title="Expand Datasets Sidebar ([)">
+            <i data-lucide="chevron-right" class="lucide-icon"></i>
+            <span>Datasets</span>
+        </button>
+        <button id="expandNotesRailBtn" class="sidebar-rail-btn rail-right" onclick="toggleNotesSidebar()" type="button" title="Expand Notes Sidebar (])">
+            <i data-lucide="chevron-left" class="lucide-icon"></i>
+            <span>Notes</span>
+        </button>
+
+        <aside class="sourcesPane" id="sourcesPane">
             <div class="paneHead" style="display: flex; flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 12px; border-bottom: none; padding-bottom: 0;">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h2>Sources</h2>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <h2>Sources</h2>
+                        <button id="collapseSourcesPaneBtn" class="pane-collapse-btn" onclick="toggleSourcesSidebar()" type="button" title="Collapse Datasets Sidebar ([)">
+                            <i data-lucide="chevron-left" class="lucide-icon" style="width: 14px; height: 14px;"></i>
+                        </button>
+                    </div>
                     <button id="addSourceBtn" class="ghostBtn" type="button">+ Add</button>
                     <input id="fileInput" type="file" accept=".csv,text/csv,.xlsx,.json" hidden />
                 </div>
@@ -226,6 +247,53 @@
             </div>
 
             <div class="tabBody" id="tab-overview">
+                <!-- Executive High-Impact KPI Metric Strip -->
+                <div class="executiveKpiStrip" id="executiveKpiStrip">
+                    <div class="executiveKpiCard" title="Total active accounts analyzed in current telemetry window">
+                        <div class="kpiCardTop">
+                            <span class="kpiLabel">Monitored Accounts</span>
+                            <span class="kpiBadge normal"><i data-lucide="users" class="lucide-icon" style="width: 12px; height: 12px;"></i> Synced</span>
+                        </div>
+                        <div class="kpiValueContainer">
+                            <strong id="overviewKpiTotal" class="kpiValue stat-total-val"><span class="skeleton-loader"></span></strong>
+                        </div>
+                        <div class="kpiFooter">Active database & ingested profiles</div>
+                    </div>
+
+                    <div class="executiveKpiCard dangerCard" title="Customers with churn probability exceeding risk threshold requiring immediate SLA triage">
+                        <div class="kpiCardTop">
+                            <span class="kpiLabel">Immediate Triage Risk</span>
+                            <span class="kpiBadge danger"><i data-lucide="alert-triangle" class="lucide-icon" style="width: 12px; height: 12px;"></i> Attention</span>
+                        </div>
+                        <div class="kpiValueContainer">
+                            <strong id="overviewKpiHigh" class="kpiValue stat-high-val danger"><span class="skeleton-loader"></span></strong>
+                        </div>
+                        <div class="kpiFooter">Accounts requiring proactive retention</div>
+                    </div>
+
+                    <div class="executiveKpiCard successCard" title="Accounts maintaining healthy retention metrics and low attrition risk">
+                        <div class="kpiCardTop">
+                            <span class="kpiLabel">Healthy Baseline</span>
+                            <span class="kpiBadge success"><i data-lucide="shield-check" class="lucide-icon" style="width: 12px; height: 12px;"></i> Stable</span>
+                        </div>
+                        <div class="kpiValueContainer">
+                            <strong id="overviewKpiLow" class="kpiValue stat-low-val success"><span class="skeleton-loader"></span></strong>
+                        </div>
+                        <div class="kpiFooter">Low risk & high loyalty cohorts</div>
+                    </div>
+
+                    <div class="executiveKpiCard" title="Active behavioral and billing attributes monitored by Tabular Hybrid Transformer">
+                        <div class="kpiCardTop">
+                            <span class="kpiLabel">Feature Dimensions</span>
+                            <span class="kpiBadge accent"><i data-lucide="sliders" class="lucide-icon" style="width: 12px; height: 12px;"></i> Real-time ML</span>
+                        </div>
+                        <div class="kpiValueContainer">
+                            <strong id="overviewKpiFields" class="kpiValue stat-fields-val"><span class="skeleton-loader"></span></strong>
+                        </div>
+                        <div class="kpiFooter">Tenure, spend, usage & tickets</div>
+                    </div>
+                </div>
+
                 <div class="aiCard">
                     <div class="aiCardHead" style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 10px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
@@ -1561,7 +1629,12 @@
 
         <aside class="notesPane" id="notesPane">
             <div class="paneHead">
-                <h2>Notes</h2>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <h2>Notes</h2>
+                    <button id="collapseNotesPaneBtn" class="pane-collapse-btn" onclick="toggleNotesSidebar()" type="button" title="Collapse Notes Sidebar (])">
+                        <i data-lucide="chevron-right" class="lucide-icon" style="width: 14px; height: 14px;"></i>
+                    </button>
+                </div>
                 <button id="createNoteBtn" class="ghostBtn" type="button">+</button>
             </div>
             <div class="notesList" id="notesList">
@@ -1950,6 +2023,14 @@
                 <div class="cmd-item" onclick="toggleHighDensityView(); closeCommandPalette();">
                     <div class="cmd-item-left"><i data-lucide="layout-grid" style="width: 16px; height: 16px;"></i> <span>Toggle Compact High-Density View</span></div>
                     <span class="cmd-kbd">Density</span>
+                </div>
+                <div class="cmd-item" onclick="toggleSourcesSidebar(); closeCommandPalette();">
+                    <div class="cmd-item-left"><i data-lucide="panel-left" style="width: 16px; height: 16px;"></i> <span>Toggle Datasets Sidebar</span></div>
+                    <span class="cmd-kbd">[</span>
+                </div>
+                <div class="cmd-item" onclick="toggleNotesSidebar(); closeCommandPalette();">
+                    <div class="cmd-item-left"><i data-lucide="panel-right" style="width: 16px; height: 16px;"></i> <span>Toggle Notes Sidebar</span></div>
+                    <span class="cmd-kbd">]</span>
                 </div>
                 <div class="cmd-item" onclick="reloadData(); closeCommandPalette();">
                     <div class="cmd-item-left"><i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i> <span>Reload Telemetry & Database State</span></div>
