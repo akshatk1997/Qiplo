@@ -195,6 +195,7 @@
                         <div class="workflowStepTitle"><i data-lucide="database" style="width: 15px; height: 15px; color: var(--accent);"></i> Ingestion & Telemetry</div>
                         <p class="workflowStepSub">Active records, billing distribution & dataset sync</p>
                     </div>
+                    <div class="workflowStepPill active" id="workflowStepPill1">Active Step</div>
                 </div>
                 <div class="workflowStepCard" data-step="2" onclick="switchTab('sandbox')">
                     <div class="workflowStepBadge" style="background: linear-gradient(135deg, #f59e0b 0%, #ff007f 100%);">02</div>
@@ -202,6 +203,7 @@
                         <div class="workflowStepTitle"><i data-lucide="flask-conical" style="width: 15px; height: 15px; color: var(--warning);"></i> Predictive AI & Sandbox</div>
                         <p class="workflowStepSub">Test retention levers & simulate churn outlooks</p>
                     </div>
+                    <div class="workflowStepPill" id="workflowStepPill2">Explore</div>
                 </div>
                 <div class="workflowStepCard" data-step="3" onclick="switchTab('actions')">
                     <div class="workflowStepBadge" style="background: linear-gradient(135deg, #10b981 0%, #00f5ff 100%);">03</div>
@@ -209,6 +211,7 @@
                         <div class="workflowStepTitle"><i data-lucide="zap" style="width: 15px; height: 15px; color: var(--success);"></i> Prescriptive SLA Actions</div>
                         <p class="workflowStepSub">Automated triage, CSM assignments & Gamma pitch decks</p>
                     </div>
+                    <div class="workflowStepPill" id="workflowStepPill3">Explore</div>
                 </div>
             </div>
 
@@ -219,9 +222,9 @@
                 <button class="tab" data-tab="customers" type="button"><i data-lucide="users" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Customers</button>
                 <button class="tab" data-tab="business" type="button"><i data-lucide="briefcase" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Business</button>
                 <button class="tab" data-tab="sandbox" type="button"><i data-lucide="flask-conical" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Sandbox</button>
-                <button class="tab" data-tab="presentation" type="button"><i data-lucide="file-presentation" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Presentation</button>
+                <button class="tab" data-tab="presentation" type="button"><i data-lucide="presentation" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Presentation</button>
                 <button class="tab" data-tab="copilot" type="button"><i data-lucide="brain-circuit" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Copilot</button>
-                <button class="tab" data-tab="guide" type="button" style="display: none !important;"><i data-lucide="book-open" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Guide</button>
+                <button class="tab" data-tab="guide" type="button"><i data-lucide="book-open" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Guide</button>
             </div>
 
             <div class="tabBody" id="tab-overview">
@@ -278,20 +281,20 @@
                     <div class="modelPerformanceCard" style="background: linear-gradient(135deg, var(--surface-2) 0%, var(--surface-3) 100%); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 14px; margin: 18px 0; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 20px rgba(0, 245, 255, 0.08);">
                         <h4 style="margin: 0; font-size: 0.78rem; color: var(--accent-2); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;"><i data-lucide="gauge" class="lucide-icon" style="width: 14px; height: 14px;"></i> Model Performance Telemetry</h4>
                         <div class="modelMetricsGrid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center;">
-                            <div style="background: var(--surface); padding: 10px 8px; border-radius: 8px; border: 1px solid rgba(0, 245, 255, 0.2);">
-                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Accuracy</span>
+                            <div style="background: var(--surface); padding: 10px 8px; border-radius: 8px; border: 1px solid rgba(0, 245, 255, 0.2); cursor: help;" title="Percentage of overall correct churn classifications (TP + TN) / Total">
+                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Accuracy ℹ️</span>
                                 <strong style="font-size: 1.05rem; color: var(--accent-2); font-family: 'JetBrains Mono', monospace;" id="modelAccuracy"><span class="skeleton-loader"></span></strong>
                             </div>
-                            <div style="background: var(--surface); padding: 10px 8px; border-radius: 8px; border: 1px solid rgba(0, 255, 135, 0.2);">
-                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Precision</span>
+                            <div style="background: var(--surface); padding: 10px 8px; border-radius: 8px; border: 1px solid rgba(0, 255, 135, 0.2); cursor: help;" title="Proportion of predicted churners that actually churned — minimizes false positive alerts">
+                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Precision ℹ️</span>
                                 <strong style="font-size: 1.05rem; color: var(--success); font-family: 'JetBrains Mono', monospace;" id="modelPrecision"><span class="skeleton-loader"></span></strong>
                             </div>
-                            <div style="background: var(--surface); padding: 10px 8px; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.2);">
-                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Recall</span>
+                            <div style="background: var(--surface); padding: 10px 8px; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.2); cursor: help;" title="Proportion of actual churners successfully identified by the model — minimizes missed churn">
+                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Recall ℹ️</span>
                                 <strong style="font-size: 1.05rem; color: var(--accent); font-family: 'JetBrains Mono', monospace;" id="modelRecall"><span class="skeleton-loader"></span></strong>
                             </div>
-                            <div style="background: var(--surface); padding: 10px 8px; border-radius: 8px; border: 1px solid rgba(217, 70, 239, 0.2);">
-                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">ROC AUC</span>
+                            <div style="background: var(--surface); padding: 10px 8px; border-radius: 8px; border: 1px solid rgba(217, 70, 239, 0.2); cursor: help;" title="Receiver Operating Characteristic Area Under Curve — measures overall discriminative capability (1.0 = perfect)">
+                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">ROC AUC ℹ️</span>
                                 <strong style="font-size: 1.05rem; color: #D946EF; font-family: 'JetBrains Mono', monospace;" id="modelAuc"><span class="skeleton-loader"></span></strong>
                             </div>
                         </div>
@@ -307,22 +310,22 @@
                             
                             <!-- Act Negative Row -->
                             <div style="font-weight: 700; color: var(--muted); text-align: left; display: flex; align-items: center; font-size: 0.65rem; text-transform: uppercase;">Act Neg</div>
-                            <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.15); padding: 6px; border-radius: 6px; color: var(--success); font-family: 'JetBrains Mono', monospace;">
+                            <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.15); padding: 6px; border-radius: 6px; color: var(--success); font-family: 'JetBrains Mono', monospace; cursor: help;" title="True Negative (TN): Loyal accounts correctly classified as low-risk">
                                 <strong style="display: block; font-size: 0.95rem;" id="valTN">0</strong>
                                 <span style="font-size: 0.58rem; color: var(--muted); display: block;">True Neg (TN)</span>
                             </div>
-                            <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.15); padding: 6px; border-radius: 6px; color: var(--danger); font-family: 'JetBrains Mono', monospace;">
+                            <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.15); padding: 6px; border-radius: 6px; color: var(--danger); font-family: 'JetBrains Mono', monospace; cursor: help;" title="False Positive (FP): Loyal accounts incorrectly predicted to churn (false alarms)">
                                 <strong style="display: block; font-size: 0.95rem;" id="valFP">0</strong>
                                 <span style="font-size: 0.58rem; color: var(--muted); display: block;">False Pos (FP)</span>
                             </div>
 
                             <!-- Act Positive Row -->
                             <div style="font-weight: 700; color: var(--muted); text-align: left; display: flex; align-items: center; font-size: 0.65rem; text-transform: uppercase;">Act Pos</div>
-                            <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.15); padding: 6px; border-radius: 6px; color: var(--danger); font-family: 'JetBrains Mono', monospace;">
+                            <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.15); padding: 6px; border-radius: 6px; color: var(--danger); font-family: 'JetBrains Mono', monospace; cursor: help;" title="False Negative (FN): Churned accounts missed by the model (undetected risk)">
                                 <strong style="display: block; font-size: 0.95rem;" id="valFN">0</strong>
                                 <span style="font-size: 0.58rem; color: var(--muted); display: block;">False Neg (FN)</span>
                             </div>
-                            <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.15); padding: 6px; border-radius: 6px; color: var(--success); font-family: 'JetBrains Mono', monospace;">
+                            <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.15); padding: 6px; border-radius: 6px; color: var(--success); font-family: 'JetBrains Mono', monospace; cursor: help;" title="True Positive (TP): At-risk accounts successfully detected and flagged for retention">
                                 <strong style="display: block; font-size: 0.95rem;" id="valTP">0</strong>
                                 <span style="font-size: 0.58rem; color: var(--muted); display: block;">True Pos (TP)</span>
                             </div>
@@ -569,7 +572,15 @@
                 <div id="sandboxSplitLayout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 14px;">
                     <!-- Left Column: Inputs -->
                     <div class="aiCard" style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
-                        <h3 style="margin: 0; font-size: 0.95rem; color: var(--accent); text-transform: uppercase;">1. Account Parameters</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                            <h3 style="margin: 0; font-size: 0.95rem; color: var(--accent); text-transform: uppercase;">1. Account Parameters</h3>
+                            <div class="sandboxPresetsBar" style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                <button type="button" class="presetBtn" onclick="applySandboxPreset('loyal')" title="Simulate low-churn enterprise account" style="font-size: 0.72rem; padding: 4px 8px; border-radius: 6px; background: rgba(0, 255, 135, 0.1); border: 1px solid rgba(0, 255, 135, 0.3); color: var(--success); cursor: pointer; font-weight: 600;">🟢 Loyal Account</button>
+                                <button type="button" class="presetBtn" onclick="applySandboxPreset('moderate')" title="Simulate mid-risk customer" style="font-size: 0.72rem; padding: 4px 8px; border-radius: 6px; background: rgba(255, 159, 10, 0.1); border: 1px solid rgba(255, 159, 10, 0.3); color: var(--warning); cursor: pointer; font-weight: 600;">🟡 Moderate Risk</button>
+                                <button type="button" class="presetBtn" onclick="applySandboxPreset('critical')" title="Simulate acute churn escalation" style="font-size: 0.72rem; padding: 4px 8px; border-radius: 6px; background: rgba(255, 0, 127, 0.1); border: 1px solid rgba(255, 0, 127, 0.3); color: var(--danger); cursor: pointer; font-weight: 600;">🔴 Critical Risk</button>
+                                <button type="button" class="presetBtn" onclick="applySandboxPreset('reset')" title="Restore active dataset averages" style="font-size: 0.72rem; padding: 4px 8px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--border); color: var(--muted); cursor: pointer; font-weight: 600;">🔄 Reset</button>
+                            </div>
+                        </div>
                         
                         <div>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.8rem;">
@@ -1132,7 +1143,7 @@
                             <button id="fullscreenPresBtn" class="ghostBtn hidden"><i data-lucide="maximize" class="lucide-icon"></i> Fullscreen Mode</button>
                             <button id="printPresBtn" class="ghostBtn hidden" onclick="window.print()"><i data-lucide="printer" class="lucide-icon"></i> Print / Save PDF Deck</button>
                             <button id="downloadPresBtn" class="ghostBtn hidden"><i data-lucide="download" class="lucide-icon"></i> Download Clean HTML Deck</button>
-                            <button id="downloadPresPptxBtn" class="ghostBtn hidden"><i data-lucide="file-presentation" class="lucide-icon"></i> Download PPTX Deck</button>
+                            <button id="downloadPresPptxBtn" class="ghostBtn hidden"><i data-lucide="presentation" class="lucide-icon"></i> Download PPTX Deck</button>
                         </div>
                     </div>
                     

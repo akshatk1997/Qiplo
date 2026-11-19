@@ -926,8 +926,14 @@ function syncPipelineWithTab(activeTab) {
                        (activeTab === 'sandbox' || activeTab === 'business') ? 2 : 3;
     document.querySelectorAll('.workflowStepCard').forEach(card => {
         const cStep = parseInt(card.getAttribute('data-step') || '0', 10);
-        card.classList.toggle('step-active', cStep === stepNumber);
-        card.classList.toggle('active', cStep === stepNumber);
+        const isActive = cStep === stepNumber;
+        card.classList.toggle('step-active', isActive);
+        card.classList.toggle('active', isActive);
+        const pill = card.querySelector('.workflowStepPill');
+        if (pill) {
+            pill.textContent = isActive ? 'Active Step' : (cStep < stepNumber ? 'Completed' : 'Explore');
+            pill.className = 'workflowStepPill ' + (isActive ? 'active' : (cStep < stepNumber ? 'done' : ''));
+        }
     });
 }
 
@@ -959,6 +965,7 @@ function setupTabs() {
             const targetBody = document.getElementById(`tab-${target}`);
             if (targetBody) {
                 targetBody.classList.remove('hidden');
+                if (window.lucide) window.lucide.createIcons();
                 // Trigger Waves-at-Home fluid motion wave transition
                 if (window.QiploWaves && typeof window.QiploWaves.trigger === 'function') {
                     const paletteMap = {
@@ -4520,7 +4527,7 @@ async function downloadPresentationAsPptx() {
         const downloadPptxBtn = document.getElementById('downloadPresPptxBtn');
         if (downloadPptxBtn) {
             downloadPptxBtn.disabled = false;
-            downloadPptxBtn.innerHTML = '<i data-lucide="file-presentation" class="lucide-icon"></i> Download PPTX Deck';
+            downloadPptxBtn.innerHTML = '<i data-lucide="presentation" class="lucide-icon"></i> Download PPTX Deck';
             if (window.lucide) window.lucide.createIcons();
         }
     }
@@ -5645,6 +5652,62 @@ window.updateSandboxVal = function(id, val) {
     if (el) el.textContent = val;
 };
 
+window.applySandboxPreset = function(type) {
+    const setVal = (sliderId, valId, val, suffix = '') => {
+        const slider = document.getElementById(sliderId);
+        if (slider) {
+            slider.value = val;
+            const valEl = document.getElementById(valId);
+            if (valEl) valEl.textContent = val + suffix;
+        }
+    };
+
+    if (type === 'loyal') {
+        setVal('sandboxTenure', 'valSandboxTenure', 48, ' months');
+        setVal('sandboxCharges', 'valSandboxCharges', 60, '');
+        const cEl = document.getElementById('valSandboxCharges');
+        if (cEl) cEl.textContent = (typeof currentCurrencySymbol !== 'undefined' ? currentCurrencySymbol : '$') + (60 * (typeof currentCurrencyRate !== 'undefined' ? currentCurrencyRate : 1.0)).toFixed(2);
+        setVal('sandboxTickets', 'valSandboxTickets', 0, ' tickets');
+        setVal('sandboxSatisfaction', 'valSandboxSatisfaction', 5, ' / 5');
+        setVal('sandboxDelays', 'valSandboxDelays', 0, ' days');
+        setVal('sandboxUsage', 'valSandboxUsage', 40, ' hours');
+        setVal('sandboxComplaints', 'valSandboxComplaints', 0, ' complaints');
+        if (typeof showToast === 'function') showToast('Preset: Loyal Account', 'Simulating low-churn, high CSAT account.', 'success');
+    } else if (type === 'moderate') {
+        setVal('sandboxTenure', 'valSandboxTenure', 12, ' months');
+        setVal('sandboxCharges', 'valSandboxCharges', 85, '');
+        const cEl = document.getElementById('valSandboxCharges');
+        if (cEl) cEl.textContent = (typeof currentCurrencySymbol !== 'undefined' ? currentCurrencySymbol : '$') + (85 * (typeof currentCurrencyRate !== 'undefined' ? currentCurrencyRate : 1.0)).toFixed(2);
+        setVal('sandboxTickets', 'valSandboxTickets', 2, ' tickets');
+        setVal('sandboxSatisfaction', 'valSandboxSatisfaction', 3, ' / 5');
+        setVal('sandboxDelays', 'valSandboxDelays', 4, ' days');
+        setVal('sandboxUsage', 'valSandboxUsage', 14, ' hours');
+        setVal('sandboxComplaints', 'valSandboxComplaints', 1, ' complaints');
+        if (typeof showToast === 'function') showToast('Preset: Moderate Risk', 'Simulating mid-tenure account with minor friction.', 'warning');
+    } else if (type === 'critical') {
+        setVal('sandboxTenure', 'valSandboxTenure', 3, ' months');
+        setVal('sandboxCharges', 'valSandboxCharges', 135, '');
+        const cEl = document.getElementById('valSandboxCharges');
+        if (cEl) cEl.textContent = (typeof currentCurrencySymbol !== 'undefined' ? currentCurrencySymbol : '$') + (135 * (typeof currentCurrencyRate !== 'undefined' ? currentCurrencyRate : 1.0)).toFixed(2);
+        setVal('sandboxTickets', 'valSandboxTickets', 6, ' tickets');
+        setVal('sandboxSatisfaction', 'valSandboxSatisfaction', 1, ' / 5');
+        setVal('sandboxDelays', 'valSandboxDelays', 16, ' days');
+        setVal('sandboxUsage', 'valSandboxUsage', 3, ' hours');
+        setVal('sandboxComplaints', 'valSandboxComplaints', 4, ' complaints');
+        if (typeof showToast === 'function') showToast('Preset: Critical Escalation', 'Simulating high-charge, multi-complaint account requiring immediate triage.', 'error');
+    } else if (type === 'reset') {
+        if (typeof changeSandboxSource === 'function') {
+            changeSandboxSource();
+        }
+        if (typeof showToast === 'function') showToast('Sandbox Reset', 'Restored sliders to baseline dataset averages.', 'info');
+        return;
+    }
+
+    if (typeof runSandboxSimulation === 'function') {
+        runSandboxSimulation();
+    }
+};
+
 let sandboxTimeout = null;
 window.runSandboxSimulation = function() {
     if (sandboxTimeout) clearTimeout(sandboxTimeout);
@@ -5772,28 +5835,22 @@ window.runSandboxSimulation = function() {
 let currentTourStep = 0;
 const tourSteps = [
     {
-        elementId: '.sidebar',
-        title: 'Workspace Navigation',
-        desc: 'Easily navigate between the Main Dashboard, Strategy SLA Actions, Specialized Business Suites, Presentation Generator, and API Docs.',
-        tab: 'dashboard'
-    },
-    {
-        elementId: '.dataIngestionBlock',
-        title: 'Telemetry & Ingestion',
-        desc: 'Select from global reference datasets or upload your own CSV records to refresh ML predictions instantly.',
-        tab: 'dashboard'
+        elementId: '#executiveWorkflowBanner',
+        title: '3-Step Executive Decision Pipeline',
+        desc: 'Qiplo organizes churn prevention into 3 clear steps: 01 Ingestion & Telemetry, 02 Predictive AI & Sandbox, and 03 Prescriptive SLA Actions.',
+        tab: 'overview'
     },
     {
         elementId: '.modelPerformanceCard',
         title: 'ML Performance Telemetry',
         desc: 'Real-time classification accuracy, precision, recall, and ROC AUC metrics parsed from active models.',
-        tab: 'dashboard'
+        tab: 'overview'
     },
     {
-        elementId: '.sandboxContainer',
+        elementId: '#sandboxSplitLayout',
         title: 'Interactive Sandbox Simulator',
-        desc: 'Simulate customer behaviors! Slide tenure, support tickets, and monthly billing charges to predict churn on-the-fly.',
-        tab: 'dashboard'
+        desc: 'Simulate customer behaviors in real-time! Adjust tenure, tickets, and billing charges to predict churn and test retention levers.',
+        tab: 'sandbox'
     },
     {
         elementId: '#tab-actions',
@@ -5802,16 +5859,22 @@ const tourSteps = [
         tab: 'actions'
     },
     {
-        elementId: '#tab-business',
+        elementId: '#tab-specials',
         title: 'Specialized Business Suites',
-        desc: 'Explore drilldowns focused on Finance margins, Operations delays, Sales revenues, and Product usage insights.',
-        tab: 'business'
+        desc: 'Explore drilldowns focused on Finance cashflow, Operations supplier delays, and Sales revenue pipeline metrics.',
+        tab: 'specials'
     },
     {
         elementId: '#tab-presentation',
         title: 'AI Slide Presentation Hub',
-        desc: 'Compile bespoke PowerPoint decks featuring live data charts, customized styles, and direct PPTX downloads.',
+        desc: 'Compile bespoke Gamma-style PowerPoint decks featuring live data charts, interactive slide editing, and direct PPTX downloads.',
         tab: 'presentation'
+    },
+    {
+        elementId: '#tab-copilot',
+        title: 'AI Advisor Copilot',
+        desc: 'Consult your intelligent executive retention advisor for instant data-driven strategies, cohort insights, and churn mitigation steps.',
+        tab: 'copilot'
     }
 ];
 
@@ -5834,7 +5897,7 @@ window.startTour = function() {
 window.endTour = function() {
     const overlay = document.getElementById('tourOverlay');
     if (overlay) overlay.classList.add('hidden');
-    switchTab('dashboard');
+    switchTab('overview');
 };
 
 window.prevTourStep = function() {
@@ -6000,6 +6063,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function switchTab(tabId) {
+    if (tabId === 'dashboard') tabId = 'overview';
     const tab = document.querySelector(`.tab[data-tab="${tabId}"]`);
     if (tab) {
         tab.click();
