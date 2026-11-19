@@ -1,4 +1,65 @@
+/* ==========================================================================
+   WAVES AT HOME & INTER TYPOGRAPHY SYSTEM (Local High-Performance Fonts)
+   ========================================================================== */
+@font-face {
+    font-family: 'Inter';
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url('/static/fonts/Inter-Regular.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Inter';
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+    src: url('/static/fonts/Inter-Medium.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Inter';
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+    src: url('/static/fonts/Inter-SemiBold.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src: url('/static/fonts/Inter-Bold.woff2') format('woff2');
+}
+
 :root {
+    /* Waves at Home Palette Tokens */
+    --wave-aurora-0: #ff5fa8;
+    --wave-aurora-1: #ff9a5a;
+    --wave-aurora-2: #ffd76a;
+    --wave-aurora-3: #4fd8e8;
+    --wave-aurora-4: #4d8dff;
+    --wave-aurora-5: #a45cff;
+
+    --wave-ember-0: #ff6a3d;
+    --wave-ember-1: #ffb347;
+    --wave-ember-2: #ffe08a;
+    --wave-ember-3: #ff8c42;
+    --wave-ember-4: #ff3d81;
+    --wave-ember-5: #ffc46b;
+
+    --wave-ocean-0: #3b82f6;
+    --wave-ocean-1: #22d3ee;
+    --wave-ocean-2: #a5c8ff;
+    --wave-ocean-3: #2563eb;
+    --wave-ocean-4: #38bdf8;
+    --wave-ocean-5: #6f7bff;
+
+    --wave-violet-0: #a855f7;
+    --wave-violet-1: #ec4899;
+    --wave-violet-2: #f0abfc;
+    --wave-violet-3: #6366f1;
+    --wave-violet-4: #8b5cf6;
+    --wave-violet-5: #ff7ac2;
+
     /* Enhanced Ultra-Premium Cyberpunk Midnight Dark Mode Palette */
     --bg: #050614;          /* Deep Cyberpunk Space Black */
     --surface: #0B0C22;     /* Neon Midnight Blue Surface */
@@ -4430,5 +4491,130 @@ body.high-density .kpi-val {
 .slide [contenteditable="true"]:focus {
     background: rgba(99, 102, 241, 0.12);
     box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4);
+}
+
+/* ==========================================================================
+   WAVES AT HOME CARD & MOTION RECONSTRUCTION SYSTEM
+   ========================================================================== */
+.qiplo-card-wave-canvas {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    z-index: 15;
+}
+
+/* Executive 3-Step Decision Pipeline Flow Banner */
+.executiveWorkflowBanner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 0 0 18px 0;
+    width: 100%;
+    position: relative;
+}
+
+.workflowStepCard {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    position: relative;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.workflowStepCard:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.25);
+}
+
+.workflowStepCard.step-active {
+    border-color: var(--accent-2);
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(0, 245, 255, 0.05) 100%);
+}
+
+.workflowStepBadge {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.35);
+}
+
+.workflowStepInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.workflowStepTitle {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 3px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.workflowStepSub {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.35;
+}
+
+.heroWaveContainer {
+    position: relative;
+    width: 100%;
+    height: 52px;
+    margin-bottom: 12px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 100%, rgba(99, 102, 241, 0.12) 0%, transparent 80%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.heroWaveCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+}
+
+/* Card tactile feel */
+.aiCard, .framer-card, .bizCard, .special-module-card, .termBox, .telemetryCard {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.aiCard:hover, .framer-card:hover, .bizCard:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(139, 92, 246, 0.15);
+}
+
+/* Responsive adjustment for Workflow banner */
+@media (max-width: 900px) {
+    .executiveWorkflowBanner {
+        grid-template-columns: 1fr;
+    }
 }
 

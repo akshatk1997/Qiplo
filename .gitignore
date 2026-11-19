@@ -15,3 +15,7 @@ __pycache__/
 .pytest_cache/
 .kilo/
 files/
+artifacts/
+cookies.txt
+company_config.json
+data/company_config.json

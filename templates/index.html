@@ -182,14 +182,44 @@
         </aside>
 
         <section class="studioPane">
+            <!-- Living Telemetry Wave Flow -->
+            <div class="heroWaveContainer" title="Living Telemetry Wave Flow — Real-Time Churn Telemetry Ripple">
+                <canvas id="heroWaveCanvas" class="heroWaveCanvas"></canvas>
+            </div>
+
+            <!-- Executive 3-Step Decision Workflow Navigator Banner -->
+            <div class="executiveWorkflowBanner" id="executiveWorkflowBanner">
+                <div class="workflowStepCard step-active" data-step="1" onclick="switchTab('overview')">
+                    <div class="workflowStepBadge">01</div>
+                    <div class="workflowStepInfo">
+                        <div class="workflowStepTitle"><i data-lucide="database" style="width: 15px; height: 15px; color: var(--accent);"></i> Ingestion & Telemetry</div>
+                        <p class="workflowStepSub">Active records, billing distribution & dataset sync</p>
+                    </div>
+                </div>
+                <div class="workflowStepCard" data-step="2" onclick="switchTab('sandbox')">
+                    <div class="workflowStepBadge" style="background: linear-gradient(135deg, #f59e0b 0%, #ff007f 100%);">02</div>
+                    <div class="workflowStepInfo">
+                        <div class="workflowStepTitle"><i data-lucide="flask-conical" style="width: 15px; height: 15px; color: var(--warning);"></i> Predictive AI & Sandbox</div>
+                        <p class="workflowStepSub">Test retention levers & simulate churn outlooks</p>
+                    </div>
+                </div>
+                <div class="workflowStepCard" data-step="3" onclick="switchTab('actions')">
+                    <div class="workflowStepBadge" style="background: linear-gradient(135deg, #10b981 0%, #00f5ff 100%);">03</div>
+                    <div class="workflowStepInfo">
+                        <div class="workflowStepTitle"><i data-lucide="zap" style="width: 15px; height: 15px; color: var(--success);"></i> Prescriptive SLA Actions</div>
+                        <p class="workflowStepSub">Automated triage, CSM assignments & Gamma pitch decks</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="studioTabs">
-                <button class="tab active" data-tab="overview" type="button">Overview</button>
+                <button class="tab active" data-tab="overview" type="button"><i data-lucide="layout-dashboard" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Overview</button>
                 <button class="tab" data-tab="specials" type="button"><i data-lucide="layers" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Specials</button>
-                <button class="tab" data-tab="actions" type="button">Actions</button>
-                <button class="tab" data-tab="customers" type="button">Customers</button>
-                <button class="tab" data-tab="business" type="button">Business</button>
+                <button class="tab" data-tab="actions" type="button"><i data-lucide="zap" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Actions</button>
+                <button class="tab" data-tab="customers" type="button"><i data-lucide="users" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Customers</button>
+                <button class="tab" data-tab="business" type="button"><i data-lucide="briefcase" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Business</button>
                 <button class="tab" data-tab="sandbox" type="button"><i data-lucide="flask-conical" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Sandbox</button>
-                <button class="tab" data-tab="presentation" type="button">Presentation</button>
+                <button class="tab" data-tab="presentation" type="button"><i data-lucide="file-presentation" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Presentation</button>
                 <button class="tab" data-tab="copilot" type="button"><i data-lucide="brain-circuit" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Copilot</button>
                 <button class="tab" data-tab="guide" type="button" style="display: none !important;"><i data-lucide="book-open" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Guide</button>
             </div>
@@ -1986,6 +2016,7 @@
         </div>
     </div>
 
+    <script src="/static/waves.js?v=1.0.0" defer></script>
     <script src="/static/app.js?v=2.6.0" defer></script>
 </body>
 </html>

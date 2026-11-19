@@ -920,6 +920,15 @@ function syncPipelineWithTab(activeTab) {
         const activeEl = document.querySelector(`.pipeline-step[onclick*="'${step}'"]`);
         if (activeEl) activeEl.classList.add('active-step');
     }
+
+    // Sync Executive 3-Step Decision Workflow Banner
+    const stepNumber = (activeTab === 'overview' || activeTab === 'specials' || activeTab === 'customers') ? 1 :
+                       (activeTab === 'sandbox' || activeTab === 'business') ? 2 : 3;
+    document.querySelectorAll('.workflowStepCard').forEach(card => {
+        const cStep = parseInt(card.getAttribute('data-step') || '0', 10);
+        card.classList.toggle('step-active', cStep === stepNumber);
+        card.classList.toggle('active', cStep === stepNumber);
+    });
 }
 
 function setupTabs() {
@@ -948,7 +957,27 @@ function setupTabs() {
             document.querySelectorAll('.tabBody').forEach(b => b.classList.add('hidden'));
             tab.classList.add('active');
             const targetBody = document.getElementById(`tab-${target}`);
-            if (targetBody) targetBody.classList.remove('hidden');
+            if (targetBody) {
+                targetBody.classList.remove('hidden');
+                // Trigger Waves-at-Home fluid motion wave transition
+                if (window.QiploWaves && typeof window.QiploWaves.trigger === 'function') {
+                    const paletteMap = {
+                        overview: 'ocean',
+                        specials: 'aurora',
+                        customers: 'ocean',
+                        sandbox: 'violet',
+                        business: 'ember',
+                        actions: 'ember',
+                        copilot: 'violet',
+                        presentation: 'cyber',
+                        guide: 'ocean'
+                    };
+                    window.QiploWaves.trigger(targetBody, {
+                        palette: paletteMap[target] || 'ocean',
+                        duration: 700
+                    });
+                }
+            }
             
             const routeMapInverse = {
                 'overview': '/dashboard',
@@ -2243,6 +2272,9 @@ window.selectSpecialModule = function(suite) {
     const activeCard = document.getElementById(`btn-module-${suite}`);
     if (activeCard) {
         activeCard.classList.add('active');
+        if (window.QiploWaves && typeof window.QiploWaves.trigger === 'function') {
+            window.QiploWaves.trigger(activeCard, { palette: 'aurora', duration: 550 });
+        }
     }
 
     const titles = {
@@ -3975,6 +4007,9 @@ function updateSlideView() {
         slide.classList.remove('active', 'previous', 'next');
         if (idx === currentSlideIndex) {
             slide.classList.add('active');
+            if (window.QiploWaves && typeof window.QiploWaves.trigger === 'function') {
+                window.QiploWaves.trigger(slide, { palette: 'cyber', duration: 480 });
+            }
         } else if (idx === currentSlideIndex - 1) {
             slide.classList.add('previous');
         } else if (idx === currentSlideIndex + 1) {
@@ -5690,6 +5725,16 @@ window.runSandboxSimulation = function() {
                 const list = document.getElementById('sandboxRecommendationsList');
                 if (list && payload.recommendations) {
                     list.innerHTML = payload.recommendations.map(r => `<div>${r}</div>`).join('');
+                }
+
+                if (window.QiploWaves && typeof window.QiploWaves.trigger === 'function') {
+                    const gaugeEl = document.querySelector('.sandbox-gauge-card') || document.getElementById('sandboxProbabilityText');
+                    if (gaugeEl) {
+                        window.QiploWaves.trigger(gaugeEl.closest('.card') || gaugeEl, {
+                            palette: payload.probability >= payload.threshold ? 'ember' : 'aurora',
+                            duration: 650
+                        });
+                    }
                 }
             } else {
                 const errorMsg = payload.error || 'Dataset Data Required: No customer dataset has been provided or inserted into the system.';
