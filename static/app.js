@@ -4979,18 +4979,49 @@ async function triggerQuickQA(question) {
 }
 window.triggerQuickQA = triggerQuickQA;
 
-window.triggerBriefingCopilot = async function(question) {
-    AudioFeedback.click();
-    
-    // Switch workspace tab to Copilot tab
-    const copilotTab = document.querySelector('.tab[data-tab="copilot"]');
-    const copilotBody = document.getElementById('tab-copilot');
-    if (copilotTab && copilotBody) {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tabBody').forEach(b => b.classList.add('hidden'));
-        copilotTab.classList.add('active');
-        copilotBody.classList.remove('hidden');
+window.toggleFloatingCopilot = function(forceOpen) {
+    const copilot = document.getElementById('tab-copilot');
+    const launcher = document.getElementById('copilotLauncherBtn');
+    if (!copilot) return;
+
+    const isCurrentlyOpen = !copilot.classList.contains('hidden');
+    const shouldOpen = (typeof forceOpen === 'boolean') ? forceOpen : !isCurrentlyOpen;
+
+    if (shouldOpen) {
+        copilot.classList.remove('hidden');
+        if (launcher) launcher.classList.add('active');
+        if (window.AudioFeedback) AudioFeedback.click();
+        const chatInput = document.getElementById('chatInput');
+        if (chatInput) chatInput.focus();
+        if (window.lucide) window.lucide.createIcons();
+        if (window.QiploWaves && typeof window.QiploWaves.trigger === 'function') {
+            window.QiploWaves.trigger(copilot, { palette: 'violet', duration: 400 });
+        }
+        const messages = document.getElementById('chatMessages');
+        if (messages) messages.scrollTop = messages.scrollHeight;
+    } else {
+        copilot.classList.add('hidden');
+        if (launcher) launcher.classList.remove('active');
     }
+};
+
+window.clearCopilotChat = function() {
+    const messages = document.getElementById('chatMessages');
+    if (messages) {
+        messages.innerHTML = `
+            <div class="msg bot">
+                <p style="margin: 0 0 6px 0;">👋 Chat conversation reset. How else can I assist your retention workflow today?</p>
+            </div>
+        `;
+        if (window.showToast) showToast('Copilot Reset', 'Conversation history cleared.', 'info');
+    }
+};
+
+window.triggerBriefingCopilot = async function(question) {
+    if (window.AudioFeedback) AudioFeedback.click();
+    
+    // Open floating Copilot dock
+    window.toggleFloatingCopilot(true);
     
     // Populate chat box and run handler
     const input = document.getElementById('chatInput');
@@ -5871,10 +5902,10 @@ const tourSteps = [
         tab: 'presentation'
     },
     {
-        elementId: '#tab-copilot',
+        elementId: '#floatingCopilotDock',
         title: 'AI Advisor Copilot',
-        desc: 'Consult your intelligent executive retention advisor for instant data-driven strategies, cohort insights, and churn mitigation steps.',
-        tab: 'copilot'
+        desc: 'Consult your intelligent executive retention advisor anytime from the bottom-right dock for data-driven strategies, cohort insights, and churn mitigation steps.',
+        tab: 'overview'
     }
 ];
 
@@ -6064,6 +6095,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function switchTab(tabId) {
     if (tabId === 'dashboard') tabId = 'overview';
+    if (tabId === 'copilot') {
+        window.toggleFloatingCopilot(true);
+        return;
+    }
+    if (tabId === 'guide') {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tabBody').forEach(b => b.classList.add('hidden'));
+        const guideBody = document.getElementById('tab-guide');
+        if (guideBody) {
+            guideBody.classList.remove('hidden');
+            if (window.lucide) window.lucide.createIcons();
+        }
+        try { syncPipelineWithTab('guide'); } catch (e) {}
+        return;
+    }
     const tab = document.querySelector(`.tab[data-tab="${tabId}"]`);
     if (tab) {
         tab.click();
@@ -6193,6 +6239,15 @@ function initCommandPaletteAndHotkeys() {
                 closeCommandPalette();
             } else {
                 openCommandPalette();
+            }
+            return;
+        }
+
+        // Ctrl+J or Cmd+J — Toggle Floating AI Copilot
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'j') {
+            e.preventDefault();
+            if (typeof window.toggleFloatingCopilot === 'function') {
+                window.toggleFloatingCopilot();
             }
             return;
         }

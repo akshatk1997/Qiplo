@@ -223,8 +223,6 @@
                 <button class="tab" data-tab="business" type="button"><i data-lucide="briefcase" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Business</button>
                 <button class="tab" data-tab="sandbox" type="button"><i data-lucide="flask-conical" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Sandbox</button>
                 <button class="tab" data-tab="presentation" type="button"><i data-lucide="presentation" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Presentation</button>
-                <button class="tab" data-tab="copilot" type="button"><i data-lucide="brain-circuit" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Copilot</button>
-                <button class="tab" data-tab="guide" type="button"><i data-lucide="book-open" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Guide</button>
             </div>
 
             <div class="tabBody" id="tab-overview">
@@ -1056,35 +1054,7 @@
                 </div>
             </div>
 
-            <div class="tabBody hidden" id="tab-copilot">
-                <div class="paneHead">
-                    <h2>Copilot Agent</h2>
-                    <div class="apiKeyWrapper">
-                        <input id="geminiApiKeyInput" type="password" placeholder="Paste Copilots API Key (Optional)..." autocomplete="off" />
-                    </div>
-                </div>
-                <div class="copilotBox">
-                    <div id="chatMessages" class="chatMessages">
-                        <div class="msg bot">
-                            <p>Hello! I am <strong>Copilot</strong>. I have access to your database details, prediction summaries, and retention records. Ask me any analysis or business queries, such as:</p>
-                            <ul>
-                                <li>"What are the top 3 contract types linked to churn?"</li>
-                                <li>"Draft a personalized recovery email for client C001."</li>
-                                <li>"Give me a breakdown of the monthly charges for high-risk customers."</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="chatSuggestionChips" id="suggestionChips">
-                        <button class="chip" type="button">Show top churn risks</button>
-                        <button class="chip" type="button">Compare regions by risk</button>
-                        <button class="chip" type="button">Retention advice for support-ticket heavy accounts</button>
-                    </div>
-                    <form id="chatForm" class="chatForm" autocomplete="off">
-                        <input id="chatInput" type="text" placeholder="Ask a business or analysis query..." required />
-                        <button id="chatSendButton" type="submit" class="primaryBtn">Send</button>
-                    </form>
-                </div>
-            </div>
+
 
             <div class="tabBody hidden" id="tab-presentation">
                 <div class="presentationHub">
@@ -1991,6 +1961,64 @@
                 <span>Press <kbd class="cmd-kbd">ESC</kbd> to exit</span>
             </div>
         </div>
+    </div>
+
+    <!-- Floating SaaS AI Copilot Widget (Bottom-Right Dock) -->
+    <div id="floatingCopilotDock" class="floatingCopilotDock">
+        <!-- Floating Copilot Window Card -->
+        <div id="tab-copilot" class="floatingCopilotWindow hidden">
+            <div class="floatingCopilotHeader">
+                <div class="floatingCopilotHeaderLeft">
+                    <div class="floatingCopilotBadge">
+                        <i data-lucide="brain-circuit" style="width: 17px; height: 17px; color: #00F5FF;"></i>
+                    </div>
+                    <div>
+                        <div class="floatingCopilotTitle">Qiplo AI Copilot</div>
+                        <div class="floatingCopilotSubtitle"><span class="copilotStatusDot"></span> Online • Telemetry Synced</div>
+                    </div>
+                </div>
+                <div class="floatingCopilotHeaderRight">
+                    <button type="button" class="copilotHeaderBtn" onclick="clearCopilotChat()" title="Reset / Clear Chat History"><i data-lucide="trash-2" style="width: 14px; height: 14px;"></i></button>
+                    <button type="button" class="copilotHeaderBtn" onclick="toggleFloatingCopilot(false)" title="Minimize Copilot"><i data-lucide="x" style="width: 15px; height: 15px;"></i></button>
+                </div>
+            </div>
+
+            <!-- API Key Collapsible Bar -->
+            <div class="apiKeyWrapper" style="padding: 7px 14px; border-bottom: 1px solid var(--border); background: var(--surface-2); display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="key" style="width: 13px; height: 13px; color: var(--muted); flex-shrink: 0;"></i>
+                <input id="geminiApiKeyInput" type="password" placeholder="Gemini API Key (Optional — built-in consultation engine active)..." autocomplete="off" style="font-size: 0.75rem; border: none; background: transparent; width: 100%; outline: none; color: var(--text);" />
+            </div>
+
+            <div class="copilotBox" style="display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden;">
+                <div id="chatMessages" class="chatMessages" style="flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px;">
+                    <div class="msg bot">
+                        <p style="margin: 0 0 6px 0;">👋 Hello! I am your <strong>Qiplo AI Copilot</strong>. I have direct access to your database details, prediction summaries, and retention records. Ask me anything:</p>
+                        <ul style="margin: 0; padding-left: 18px; font-size: 0.8rem; line-height: 1.4;">
+                            <li>"What are the top 3 contract types linked to churn?"</li>
+                            <li>"Draft a personalized recovery email for client C001."</li>
+                            <li>"Give me a breakdown of monthly charges for high-risk accounts."</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="chatSuggestionChips" id="suggestionChips" style="padding: 6px 14px; display: flex; gap: 6px; overflow-x: auto; flex-shrink: 0; border-top: 1px solid var(--border); background: var(--surface);">
+                    <button class="chip" type="button" style="white-space: nowrap; font-size: 0.72rem; padding: 4px 10px;">Show top churn risks</button>
+                    <button class="chip" type="button" style="white-space: nowrap; font-size: 0.72rem; padding: 4px 10px;">Compare regions by risk</button>
+                    <button class="chip" type="button" style="white-space: nowrap; font-size: 0.72rem; padding: 4px 10px;">Retention advice</button>
+                </div>
+                <form id="chatForm" class="chatForm" autocomplete="off" style="padding: 10px 14px; border-top: 1px solid var(--border); display: flex; gap: 8px; background: var(--surface-2); flex-shrink: 0;">
+                    <input id="chatInput" type="text" placeholder="Ask AI Copilot a business or churn query..." required style="flex: 1; padding: 8px 12px; font-size: 0.82rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text);" />
+                    <button id="chatSendButton" type="submit" class="primaryBtn" style="padding: 8px 14px; border-radius: 8px; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 4px;">Send <i data-lucide="sparkles" style="width: 13px; height: 13px;"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Floating Launcher Pill Button -->
+        <button id="copilotLauncherBtn" class="copilotLauncherBtn" onclick="toggleFloatingCopilot()" type="button" title="Open AI Copilot Advisor (Ctrl+J)">
+            <span class="copilotLauncherPulse"></span>
+            <i data-lucide="brain-circuit" class="lucide-icon" style="width: 18px; height: 18px; color: #00F5FF;"></i>
+            <span class="copilotLauncherText">AI Copilot</span>
+            <span class="copilotLauncherKbd">Ctrl+J</span>
+        </button>
     </div>
 
     <!-- Toast Notification Container -->
