@@ -73,27 +73,11 @@
                 <button id="exportPowerBiBtn" class="ghostBtn" type="button" title="Export Power BI Template (.pbit)">
                     <i data-lucide="line-chart" class="lucide-icon"></i> <span>Power BI</span>
                 </button>
-                <button id="exportExcelBtn" class="ghostBtn" type="button" title="Export Excel Report (.xlsx)">
-                    <i data-lucide="file-spreadsheet" class="lucide-icon"></i> <span>Excel</span>
-                </button>
-                <button id="exportPdfBtn" class="ghostBtn" type="button" title="Export Executive Audit PDF">
-                    <i data-lucide="file-text" class="lucide-icon"></i> <span>PDF</span>
-                </button>
-            </div>
-            <div id="liveTrackingBadge" class="liveTrackingBadge" title="Live Data File Telemetry Engine Active">
-                <span class="live-pulse-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #22c55e; display: inline-block; box-shadow: 0 0 8px #22c55e; animation: livePulse 2s infinite;"></span>
-                <span id="liveTrackingText">Live</span>
             </div>
         </div>
 
         <!-- Right Utility & Settings Capsules -->
         <div class="topbarRight">
-            <button id="toggleSourcesBtn" class="ghostBtn" onclick="toggleSourcesSidebar()" type="button" title="Toggle Datasets Sidebar ([)">
-                <i data-lucide="panel-left-close" class="lucide-icon"></i> <span class="hide-mobile">Data</span> <kbd class="kbd-hint">[</kbd>
-            </button>
-            <button id="toggleNotesBtn" class="ghostBtn" onclick="toggleNotesSidebar()" type="button" title="Toggle Notes Sidebar (])">
-                <i data-lucide="panel-right-close" class="lucide-icon"></i> <span class="hide-mobile">Notes</span> <kbd class="kbd-hint">]</kbd>
-            </button>
             <button id="cmdPaletteBtn" class="ghostBtn" onclick="openCommandPalette()" type="button" title="Open Command Palette (Ctrl+K)">
                 <i data-lucide="terminal" class="lucide-icon"></i> <kbd class="kbd-hint">Ctrl+K</kbd>
             </button>
@@ -169,6 +153,10 @@
                 </button>
                 <div id="mobileMenuDropdown" class="mobile-menu-dropdown header-more-dropdown">
                     <div class="dropdown-category-title">📊 Executive Exports & Telemetry</div>
+                    <div id="liveTrackingBadge" class="dropdown-telemetry-badge" title="Live Data File Telemetry Engine Active">
+                        <span class="live-pulse-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #22c55e; display: inline-block; box-shadow: 0 0 8px #22c55e; animation: livePulse 2s infinite;"></span>
+                        <span id="liveTrackingText">Live Telemetry Active</span>
+                    </div>
                     <button class="dropdown-item" onclick="document.getElementById('exportReportBtn').click()">
                         <i data-lucide="bar-chart-3" class="lucide-icon"></i> Full Analysis Report
                     </button>
@@ -178,11 +166,11 @@
                     <button class="dropdown-item" onclick="document.getElementById('exportPowerBiBtn').click()">
                         <i data-lucide="line-chart" class="lucide-icon"></i> Power BI Template (.pbit)
                     </button>
-                    <button class="dropdown-item" onclick="document.getElementById('exportExcelBtn').click()">
-                        <i data-lucide="file-spreadsheet" class="lucide-icon"></i> Excel Dataset (.xlsx)
+                    <button class="dropdown-item" id="exportExcelBtn" onclick="exportExcel()">
+                        <i data-lucide="file-spreadsheet" class="lucide-icon"></i> <span>Excel Dataset (.xlsx)</span>
                     </button>
-                    <button class="dropdown-item" onclick="document.getElementById('exportPdfBtn').click()">
-                        <i data-lucide="file-text" class="lucide-icon"></i> Executive PDF Report
+                    <button class="dropdown-item" id="exportPdfBtn" onclick="exportPdf()">
+                        <i data-lucide="file-text" class="lucide-icon"></i> <span>Executive PDF Report</span>
                     </button>
 
                     <div class="dropdown-category-title">🧭 Workspaces & Sub-header Tabs</div>
@@ -212,11 +200,11 @@
                     </button>
 
                     <div class="dropdown-category-title">🛠️ Sidebars & System Tools</div>
-                    <button class="dropdown-item" onclick="toggleSourcesSidebar()">
-                        <i data-lucide="panel-left-close" class="lucide-icon"></i> Datasets Sidebar <kbd class="kbd-hint">[</kbd>
+                    <button class="dropdown-item" id="toggleSourcesBtn" onclick="toggleSourcesSidebar()">
+                        <i data-lucide="panel-left-close" class="lucide-icon"></i> <span class="hide-mobile">Datasets Sidebar</span> <kbd class="kbd-hint">[</kbd>
                     </button>
-                    <button class="dropdown-item" onclick="toggleNotesSidebar()">
-                        <i data-lucide="panel-right-close" class="lucide-icon"></i> Notes Sidebar <kbd class="kbd-hint">]</kbd>
+                    <button class="dropdown-item" id="toggleNotesBtn" onclick="toggleNotesSidebar()">
+                        <i data-lucide="panel-right-close" class="lucide-icon"></i> <span class="hide-mobile">Notes Sidebar</span> <kbd class="kbd-hint">]</kbd>
                     </button>
                     <button class="dropdown-item" onclick="openCommandPalette()">
                         <i data-lucide="terminal" class="lucide-icon"></i> Command Palette <kbd class="kbd-hint">Ctrl+K</kbd>

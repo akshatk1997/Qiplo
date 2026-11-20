@@ -1132,28 +1132,32 @@ document.getElementById('exportPowerBiBtn').addEventListener('click', () => {
     openBiExportModal('powerbi');
     showBiToast("Power BI Report Template (.pbit) downloaded! Auto-creates visuals inside Power BI Desktop.", "line-chart");
 });
+window.exportExcel = function() {
+    if (!predictionData || !predictionData.length) {
+        alert("No prediction data available to export. Please upload a customer file first.");
+        return;
+    }
+    window.open('/api/export/excel', '_blank');
+};
+
+window.exportPdf = function() {
+    if (!predictionData || !predictionData.length) {
+        alert("No prediction data available to analyze. Please upload a customer file first.");
+        return;
+    }
+    const company = encodeURIComponent(document.getElementById('companyNameInput').value.trim() || '');
+    const currencySelect = document.getElementById('currencySelect');
+    const currency = currencySelect ? encodeURIComponent(currencySelect.value) : 'USD';
+    window.open(`/api/export/pdf?company=${company}&currency=${currency}`, '_blank');
+};
+
 const excelBtn = document.getElementById('exportExcelBtn');
 if (excelBtn) {
-    excelBtn.addEventListener('click', () => {
-        if (!predictionData || !predictionData.length) {
-            alert("No prediction data available to export. Please upload a customer file first.");
-            return;
-        }
-        window.open('/api/export/excel', '_blank');
-    });
+    excelBtn.addEventListener('click', window.exportExcel);
 }
 const pdfBtn = document.getElementById('exportPdfBtn');
 if (pdfBtn) {
-    pdfBtn.addEventListener('click', () => {
-        if (!predictionData || !predictionData.length) {
-            alert("No prediction data available to analyze. Please upload a customer file first.");
-            return;
-        }
-        const company = encodeURIComponent(document.getElementById('companyNameInput').value.trim() || '');
-        const currencySelect = document.getElementById('currencySelect');
-        const currency = currencySelect ? encodeURIComponent(currencySelect.value) : 'USD';
-        window.open(`/api/export/pdf?company=${company}&currency=${currency}`, '_blank');
-    });
+    pdfBtn.addEventListener('click', window.exportPdf);
 }
 document.getElementById('exportReportBtn').addEventListener('click', () => {
     if (!predictionData || !predictionData.length) {
