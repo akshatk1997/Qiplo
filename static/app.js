@@ -3852,6 +3852,237 @@ function renderSlides(slides) {
                     </div>
                 </div>
             `;
+        } else if (slide.layout === 'clv_quadrants') {
+            const listHtml = (slide.bullets || []).map((b, bIdx) => `<li contenteditable="true" data-slide-index="${idx}" data-field="bullet" data-bullet-index="${bIdx}">${b}</li>`).join('');
+            const protectCnt = slide.protect_cnt || '18';
+            const protectMrr = typeof slide.protect_mrr === 'number' ? `$${slide.protect_mrr.toLocaleString()} MRR` : (slide.protect_mrr || '$2,450 MRR');
+            const cultivateCnt = slide.cultivate_cnt || '42';
+            const cultivateMrr = typeof slide.cultivate_mrr === 'number' ? `$${slide.cultivate_mrr.toLocaleString()} MRR` : (slide.cultivate_mrr || '$5,800 MRR');
+            const triageCnt = slide.triage_cnt || '29';
+            const triageMrr = typeof slide.triage_mrr === 'number' ? `$${slide.triage_mrr.toLocaleString()} MRR` : (slide.triage_mrr || '$1,120 MRR');
+            const nurtureCnt = slide.nurture_cnt || '65';
+            const nurtureMrr = typeof slide.nurture_mrr === 'number' ? `$${slide.nurture_mrr.toLocaleString()} MRR` : (slide.nurture_mrr || '$2,900 MRR');
+
+            contentHtml = `
+                <div class="slideContent layout-clv-quadrants">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>CLV 4-Quadrant Retention Architecture</span>
+                    </div>
+                    <div style="display: flex; gap: 20px; margin: 10px 0; align-items: stretch; width: 100%;">
+                        <!-- Left 40% Column -->
+                        <div style="flex: 0 0 38%; display: flex; flex-direction: column; justify-content: space-between; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+                            <div>
+                                <div style="display: inline-block; font-size: 0.68rem; font-weight: 800; color: var(--accent); background: rgba(99, 102, 241, 0.1); padding: 2px 8px; border-radius: 4px; margin-bottom: 6px;">STRATEGIC ALLOCATION</div>
+                                <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin: 0 0 10px; font-size: 1.15rem; color: var(--text);">${slide.title}</h2>
+                                <ul style="line-height: 1.55; font-size: 0.8rem; color: var(--muted); padding-left: 16px; margin: 0;">${listHtml}</ul>
+                            </div>
+                            <div style="margin-top: 10px; padding: 8px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 0.72rem; color: var(--muted);">Preservation Target:</span>
+                                <span style="font-size: 0.78rem; font-weight: 700; color: var(--success);">Top-Tier Protection SLA</span>
+                            </div>
+                        </div>
+
+                        <!-- Right 60% Column: 2x2 Quadrant Grid -->
+                        <div style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <!-- Quadrant 1: Protect (Danger) -->
+                            <div style="background: rgba(239, 68, 68, 0.05); border: 1.5px solid var(--danger); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                    <span style="font-size: 0.68rem; font-weight: 800; color: var(--danger); background: rgba(239, 68, 68, 0.12); padding: 2px 6px; border-radius: 4px;">PROTECT</span>
+                                    <span style="font-size: 0.65rem; color: var(--muted);">High CLV / High Risk</span>
+                                </div>
+                                <div>
+                                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; font-weight: 800; color: var(--text);">${protectCnt} Accounts</div>
+                                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--danger);">${protectMrr} at risk</div>
+                                </div>
+                                <div style="font-size: 0.72rem; color: var(--muted); margin-top: 4px; line-height: 1.3;">Immediate 24h CSM executive outreach & term incentive.</div>
+                            </div>
+
+                            <!-- Quadrant 2: Cultivate (Success) -->
+                            <div style="background: rgba(16, 185, 129, 0.05); border: 1.5px solid var(--success); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                    <span style="font-size: 0.68rem; font-weight: 800; color: var(--success); background: rgba(16, 185, 129, 0.12); padding: 2px 6px; border-radius: 4px;">CULTIVATE</span>
+                                    <span style="font-size: 0.65rem; color: var(--muted);">High CLV / Low Risk</span>
+                                </div>
+                                <div>
+                                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; font-weight: 800; color: var(--text);">${cultivateCnt} Accounts</div>
+                                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--success);">${cultivateMrr} expansion</div>
+                                </div>
+                                <div style="font-size: 0.72rem; color: var(--muted); margin-top: 4px; line-height: 1.3;">Proactive multi-year contract renewals & account expansion.</div>
+                            </div>
+
+                            <!-- Quadrant 3: Triage (Warning) -->
+                            <div style="background: rgba(245, 158, 11, 0.05); border: 1.5px solid var(--warning); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                    <span style="font-size: 0.68rem; font-weight: 800; color: var(--warning); background: rgba(245, 158, 11, 0.12); padding: 2px 6px; border-radius: 4px;">TRIAGE</span>
+                                    <span style="font-size: 0.65rem; color: var(--muted);">Low CLV / High Risk</span>
+                                </div>
+                                <div>
+                                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; font-weight: 800; color: var(--text);">${triageCnt} Accounts</div>
+                                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--warning);">${triageMrr} at risk</div>
+                                </div>
+                                <div style="font-size: 0.72rem; color: var(--muted); margin-top: 4px; line-height: 1.3;">Automated in-app retention promotions & self-serve discounts.</div>
+                            </div>
+
+                            <!-- Quadrant 4: Nurture (Accent) -->
+                            <div style="background: rgba(99, 102, 241, 0.05); border: 1.5px solid var(--accent); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                    <span style="font-size: 0.68rem; font-weight: 800; color: var(--accent); background: rgba(99, 102, 241, 0.12); padding: 2px 6px; border-radius: 4px;">NURTURE</span>
+                                    <span style="font-size: 0.65rem; color: var(--muted);">Low CLV / Low Risk</span>
+                                </div>
+                                <div>
+                                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.05rem; font-weight: 800; color: var(--text);">${nurtureCnt} Accounts</div>
+                                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent);">${nurtureMrr} stable</div>
+                                </div>
+                                <div style="font-size: 0.72rem; color: var(--muted); margin-top: 4px; line-height: 1.3;">Standard automated onboarding milestones & feature check-ins.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slideFooter">
+                        <span>CLV Retention Matrix</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
+        } else if (slide.layout === 'friction_telemetry') {
+            const listHtml = (slide.bullets || []).map((b, bIdx) => `<li contenteditable="true" data-slide-index="${idx}" data-field="bullet" data-bullet-index="${bIdx}">${b}</li>`).join('');
+            const ticketsCnt = slide.high_tickets_cnt || '14';
+            const csatCnt = slide.low_csat_cnt || '8';
+            const m2mCnt = slide.m2m_cnt || '56';
+
+            contentHtml = `
+                <div class="slideContent layout-friction-telemetry">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Operational Friction & Telemetry Audit</span>
+                    </div>
+                    <div style="display: flex; gap: 20px; margin: 10px 0; align-items: stretch; width: 100%;">
+                        <!-- Left 40% Column -->
+                        <div style="flex: 0 0 38%; display: flex; flex-direction: column; justify-content: space-between; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+                            <div>
+                                <div style="display: inline-block; font-size: 0.68rem; font-weight: 800; color: var(--accent); background: rgba(99, 102, 241, 0.1); padding: 2px 8px; border-radius: 4px; margin-bottom: 6px;">BEHAVIORAL SIGNALS</div>
+                                <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin: 0 0 10px; font-size: 1.15rem; color: var(--text);">${slide.title}</h2>
+                                <ul style="line-height: 1.55; font-size: 0.8rem; color: var(--muted); padding-left: 16px; margin: 0;">${listHtml}</ul>
+                            </div>
+                            <div style="margin-top: 10px; padding: 8px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px;">
+                                <div style="font-size: 0.72rem; color: var(--muted);">Critical Threshold: <strong style="color: var(--danger);">&gt;2 Support Tickets or CSAT &le; 2.0</strong></div>
+                            </div>
+                        </div>
+
+                        <!-- Right 60% Column: 4 Telemetry Indicator Strips -->
+                        <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--danger); border-radius: 8px;">
+                                <div>
+                                    <div style="font-size: 0.7rem; font-weight: 800; color: var(--danger); text-transform: uppercase;">Support Ticket Escalations</div>
+                                    <div style="font-size: 0.75rem; color: var(--muted); margin-top: 2px;">Accounts with &gt;2 open tickets exhibit 3.4x higher churn rate.</div>
+                                </div>
+                                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 800; color: var(--danger);">${ticketsCnt} Accounts</div>
+                            </div>
+
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--warning); border-radius: 8px;">
+                                <div>
+                                    <div style="font-size: 0.7rem; font-weight: 800; color: var(--warning); text-transform: uppercase;">CSAT Deterioration Alert</div>
+                                    <div style="font-size: 0.75rem; color: var(--muted); margin-top: 2px;">CSAT rating &le; 2.5 flags immediate priority service intervention.</div>
+                                </div>
+                                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 800; color: var(--warning);">${csatCnt} Clients</div>
+                            </div>
+
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 8px;">
+                                <div>
+                                    <div style="font-size: 0.7rem; font-weight: 800; color: var(--accent); text-transform: uppercase;">Billing Cycle Friction</div>
+                                    <div style="font-size: 0.75rem; color: var(--muted); margin-top: 2px;">Month-to-month contracts drive 78% of observed portfolio attrition.</div>
+                                </div>
+                                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 800; color: var(--text);">${m2mCnt} Month-to-Month</div>
+                            </div>
+
+                            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--success); border-radius: 8px;">
+                                <div>
+                                    <div style="font-size: 0.7rem; font-weight: 800; color: var(--success); text-transform: uppercase;">Tenure Cliff Sensitivity</div>
+                                    <div style="font-size: 0.75rem; color: var(--muted); margin-top: 2px;">Early tenure (0-6 months) represents primary drop-off window.</div>
+                                </div>
+                                <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 800; color: var(--success);">0-6m Cliff</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slideFooter">
+                        <span>Friction Telemetry Audit</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
+        } else if (slide.layout === 'recovery_scenarios') {
+            const listHtml = (slide.bullets || []).map((b, bIdx) => `<li contenteditable="true" data-slide-index="${idx}" data-field="bullet" data-bullet-index="${bIdx}">${b}</li>`).join('');
+            const conservArr = slide.conserv_arr || '$14,500 Saved ARR';
+            const targetArr = slide.target_arr || '$28,200 Saved ARR';
+            const aggressArr = slide.aggress_arr || '$48,900 Saved ARR';
+            const conservCust = slide.conserv_cust || '4';
+            const targetCust = slide.target_cust || '8';
+            const aggressCust = slide.aggress_cust || '14';
+
+            contentHtml = `
+                <div class="slideContent layout-recovery-scenarios">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Financial ARR Preservation & ROI Scenarios</span>
+                    </div>
+                    <div style="display: flex; gap: 20px; margin: 10px 0; align-items: stretch; width: 100%;">
+                        <!-- Left 40% Column -->
+                        <div style="flex: 0 0 38%; display: flex; flex-direction: column; justify-content: space-between; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px;">
+                            <div>
+                                <div style="display: inline-block; font-size: 0.68rem; font-weight: 800; color: var(--accent); background: rgba(99, 102, 241, 0.1); padding: 2px 8px; border-radius: 4px; margin-bottom: 6px;">FINANCIAL MODELING</div>
+                                <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin: 0 0 10px; font-size: 1.15rem; color: var(--text);">${slide.title}</h2>
+                                <ul style="line-height: 1.55; font-size: 0.8rem; color: var(--muted); padding-left: 16px; margin: 0;">${listHtml}</ul>
+                            </div>
+                            <div style="margin-top: 10px; padding: 8px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px;">
+                                <div style="font-size: 0.72rem; color: var(--muted);">Payback Horizon: <strong style="color: var(--success);">&lt; 45 Days Across All Tiers</strong></div>
+                            </div>
+                        </div>
+
+                        <!-- Right 60% Column: 3 Scenario Cards -->
+                        <div style="flex: 1; display: flex; flex-direction: column; gap: 10px; justify-content: space-between;">
+                            <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
+                                <div>
+                                    <div style="display: inline-block; font-size: 0.65rem; font-weight: 800; color: var(--warning); background: rgba(245, 158, 11, 0.1); padding: 2px 6px; border-radius: 4px;">CONSERVATIVE (15% Retained)</div>
+                                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; font-weight: 800; color: var(--text); margin-top: 4px;">${conservArr}</div>
+                                    <div style="font-size: 0.72rem; color: var(--muted);">${conservCust} Accounts Protected</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 0.85rem; font-weight: 800; color: var(--warning);">3.8x ROI</div>
+                                    <div style="font-size: 0.7rem; color: var(--muted);">28-Day Payback</div>
+                                </div>
+                            </div>
+
+                            <div style="background: var(--surface-2); border: 1.5px solid var(--success); border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
+                                <div>
+                                    <div style="display: inline-block; font-size: 0.65rem; font-weight: 800; color: var(--success); background: rgba(16, 185, 129, 0.1); padding: 2px 6px; border-radius: 4px;">TARGET BASELINE (25% Retained)</div>
+                                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; font-weight: 800; color: var(--text); margin-top: 4px;">${targetArr}</div>
+                                    <div style="font-size: 0.72rem; color: var(--muted);">${targetCust} Accounts Protected</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 0.85rem; font-weight: 800; color: var(--success);">6.2x ROI</div>
+                                    <div style="font-size: 0.7rem; color: var(--muted);">42-Day Payback</div>
+                                </div>
+                            </div>
+
+                            <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
+                                <div>
+                                    <div style="display: inline-block; font-size: 0.65rem; font-weight: 800; color: var(--accent); background: rgba(99, 102, 241, 0.1); padding: 2px 6px; border-radius: 4px;">AGGRESSIVE (40% Retained)</div>
+                                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; font-weight: 800; color: var(--text); margin-top: 4px;">${aggressArr}</div>
+                                    <div style="font-size: 0.72rem; color: var(--muted);">${aggressCust} Accounts Protected</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 0.85rem; font-weight: 800; color: var(--accent);">9.5x ROI</div>
+                                    <div style="font-size: 0.7rem; color: var(--muted);">56-Day Payback</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slideFooter">
+                        <span>Preservation Scenarios</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
         } else if (slide.layout === 'segment_comparison') {
             const listHtml = (slide.bullets || []).map((b, bIdx) => `
                 <div class="riskComparisonCard" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px;">
@@ -4791,6 +5022,24 @@ function downloadStandalonePresentation() {
             --pres-accent: #06B6D4;
             --pres-accent-soft: rgba(6, 182, 212, 0.1);
         }
+        .theme-classic_blue { --pres-accent: #2563EB; --pres-accent-soft: rgba(37, 99, 235, 0.1); }
+        .theme-teal_coral { --pres-accent: #E36414; --pres-accent-soft: rgba(227, 100, 20, 0.1); }
+        .theme-bold_red { --pres-accent: #D90429; --pres-accent-soft: rgba(217, 4, 41, 0.1); }
+        .theme-warm_blush { --pres-accent: #C86D51; --pres-accent-soft: rgba(200, 109, 81, 0.1); }
+        .theme-burgundy_luxury { --pres-accent: #B33939; --pres-accent-soft: rgba(179, 57, 57, 0.1); }
+        .theme-deep_purple_emerald { --pres-accent: #2E86AB; --pres-accent-soft: rgba(46, 134, 171, 0.1); }
+        .theme-cream_forest { --pres-accent: #4E7C59; --pres-accent-soft: rgba(78, 124, 89, 0.1); }
+        .theme-pink_purple { --pres-accent: #AF2BBF; --pres-accent-soft: rgba(175, 43, 191, 0.1); }
+        .theme-lime_plum { --pres-accent: #7C9932; --pres-accent-soft: rgba(124, 153, 50, 0.1); }
+        .theme-black_gold { --pres-accent: #C69214; --pres-accent-soft: rgba(198, 146, 20, 0.1); }
+        .theme-sage_terracotta { --pres-accent: #C2593F; --pres-accent-soft: rgba(194, 89, 63, 0.1); }
+        .theme-charcoal_red { --pres-accent: #C53030; --pres-accent-soft: rgba(197, 48, 48, 0.1); }
+        .theme-vibrant_orange { --pres-accent: #F97316; --pres-accent-soft: rgba(249, 115, 22, 0.1); }
+        .theme-forest_green { --pres-accent: #2D6A4F; --pres-accent-soft: rgba(45, 106, 79, 0.1); }
+        .theme-retro_rainbow { --pres-accent: #D90429; --pres-accent-soft: rgba(217, 4, 41, 0.1); }
+        .theme-vintage_earthy { --pres-accent: #995D3F; --pres-accent-soft: rgba(153, 93, 63, 0.1); }
+        .theme-coastal_rose { --pres-accent: #E63946; --pres-accent-soft: rgba(230, 57, 70, 0.1); }
+        .theme-orange_turquoise { --pres-accent: #E07A5F; --pres-accent-soft: rgba(224, 122, 95, 0.1); }
 
         .slideViewport[class*="font-"] h1,
         .slideViewport[class*="font-"] h2,

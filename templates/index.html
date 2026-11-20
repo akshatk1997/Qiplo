@@ -1627,6 +1627,9 @@
                 <div class="presentationHub">
                     <div class="presPromptChips" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; align-items: center;">
                         <span style="font-size: 0.8rem; color: var(--accent); font-weight: 700; display: inline-flex; align-items: center; gap: 4px;"><i data-lucide="sparkles" class="lucide-icon"></i> AI Prompt Magic:</span>
+                        <button type="button" class="chip pres-prompt-chip" data-prompt="Customer Lifetime Value (CLV) & Revenue Risk 4-Quadrant Strategy Deck"><i data-lucide="grid" class="lucide-icon"></i> CLV & ARR Matrix</button>
+                        <button type="button" class="chip pres-prompt-chip" data-prompt="Customer Friction Telemetry & Support Escalation Audit with CSAT and SLA Exposure"><i data-lucide="activity" class="lucide-icon"></i> Friction & Support Telemetry</button>
+                        <button type="button" class="chip pres-prompt-chip" data-prompt="Financial ARR Recovery Scenarios & ROI Payback Executive Forecast"><i data-lucide="dollar-sign" class="lucide-icon"></i> ARR Recovery & ROI Scenarios</button>
                         <button type="button" class="chip pres-prompt-chip" data-prompt="Executive CFO Financial Risk Briefing with ARR Exposure & Revenue Leakage focus"><i data-lucide="briefcase" class="lucide-icon"></i> CFO Financial Risk</button>
                         <button type="button" class="chip pres-prompt-chip" data-prompt="Customer Success CSAT & High Support Ticket Escalation SLA Deck"><i data-lucide="headphones" class="lucide-icon"></i> Support SLA & CSAT</button>
                         <button type="button" class="chip pres-prompt-chip" data-prompt="Annual Contract Migration & Proactive Retention Campaign Deck"><i data-lucide="trending-up" class="lucide-icon"></i> Growth & Renewals</button>
@@ -1649,6 +1652,24 @@
                         </select>
                         <select id="presThemeColor" aria-label="Select Palette" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600;">
                             <option value="indigo" selected>🎨 Slate & Indigo</option>
+                            <option value="classic_blue">🎨 Classic Navy & Blue (Finance & Trust)</option>
+                            <option value="teal_coral">🎨 Dark Teal & Coral (Modern Tech)</option>
+                            <option value="bold_red">🎨 Crimson & Bright Red (Decisive Action)</option>
+                            <option value="warm_blush">🎨 Espresso & Warm Blush (Premium Consumer)</option>
+                            <option value="burgundy_luxury">🎨 Burgundy & Wine Crimson (Executive Luxury)</option>
+                            <option value="deep_purple_emerald">🎨 Deep Plum & Emerald Teal (Analytics & AI)</option>
+                            <option value="cream_forest">🎨 Forest Green & Cream (Sustainability & Bio)</option>
+                            <option value="pink_purple">🎨 Deep Violet & Vivid Purple (Creative Bold)</option>
+                            <option value="lime_plum">🎨 Dark Plum & Lime (Disruptor Tech)</option>
+                            <option value="black_gold">🎨 Jet Black & Executive Gold (VIP Wealth)</option>
+                            <option value="sage_terracotta">🎨 Sage & Warm Terracotta (Wellness Architecture)</option>
+                            <option value="charcoal_red">🎨 Deep Charcoal & Signal Red (High Contrast)</option>
+                            <option value="vibrant_orange">🎨 Dark Slate & Vivid Orange (Action Growth)</option>
+                            <option value="forest_green">🎨 Evergreen & Pine (Longevity & Capital)</option>
+                            <option value="retro_rainbow">🎨 Vintage Navy & Crimson (Design Forward)</option>
+                            <option value="vintage_earthy">🎨 Espresso & Copper Sienna (Heritage Artisanal)</option>
+                            <option value="coastal_rose">🎨 Deep Ocean & Coastal Coral (Clean Maritime)</option>
+                            <option value="orange_turquoise">🎨 Deep Petrol & Sunset (Dynamic SaaS)</option>
                             <option value="emerald">🎨 Forest & Emerald</option>
                             <option value="amber">🎨 Charcoal & Amber</option>
                             <option value="crimson">🎨 Sunset & Crimson</option>
@@ -1691,6 +1712,11 @@
                         <div style="display: flex; align-items: center; gap: 8px;">
                             <span style="font-size: 0.78rem; font-weight: 700; color: var(--muted);">Quick Themes:</span>
                             <button type="button" class="theme-swatch active" data-theme="indigo" style="width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, #6366f1, #4f46e5); border: 2px solid #ffffff; cursor: pointer; transition: transform 0.15s ease;" title="Slate & Indigo" onclick="applyVisualTheme('indigo')"></button>
+                            <button type="button" class="theme-swatch" data-theme="classic_blue" style="width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, #0F2042, #2563EB); border: 2px solid transparent; cursor: pointer; transition: transform 0.15s ease;" title="Classic Navy & Blue" onclick="applyVisualTheme('classic_blue')"></button>
+                            <button type="button" class="theme-swatch" data-theme="teal_coral" style="width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, #0F4C5C, #E36414); border: 2px solid transparent; cursor: pointer; transition: transform 0.15s ease;" title="Dark Teal & Coral" onclick="applyVisualTheme('teal_coral')"></button>
+                            <button type="button" class="theme-swatch" data-theme="black_gold" style="width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, #1A1A1A, #C69214); border: 2px solid transparent; cursor: pointer; transition: transform 0.15s ease;" title="Jet Black & Gold" onclick="applyVisualTheme('black_gold')"></button>
+                            <button type="button" class="theme-swatch" data-theme="forest_green" style="width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, #143628, #2D6A4F); border: 2px solid transparent; cursor: pointer; transition: transform 0.15s ease;" title="Evergreen & Pine" onclick="applyVisualTheme('forest_green')"></button>
+                            <button type="button" class="theme-swatch" data-theme="burgundy_luxury" style="width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, #4A0E17, #B33939); border: 2px solid transparent; cursor: pointer; transition: transform 0.15s ease;" title="Burgundy Luxury" onclick="applyVisualTheme('burgundy_luxury')"></button>
                             <button type="button" class="theme-swatch" data-theme="emerald" style="width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #059669); border: 2px solid transparent; cursor: pointer; transition: transform 0.15s ease;" title="Forest & Emerald" onclick="applyVisualTheme('emerald')"></button>
                             <button type="button" class="theme-swatch" data-theme="amber" style="width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b, #d97706); border: 2px solid transparent; cursor: pointer; transition: transform 0.15s ease;" title="Charcoal & Amber" onclick="applyVisualTheme('amber')"></button>
                             <button type="button" class="theme-swatch" data-theme="crimson" style="width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, #ef4444, #dc2626); border: 2px solid transparent; cursor: pointer; transition: transform 0.15s ease;" title="Sunset & Crimson" onclick="applyVisualTheme('crimson')"></button>
@@ -1723,7 +1749,10 @@
                             <label for="gammaCardLayoutSelect" style="font-size: 0.75rem; font-weight: 700; color: var(--muted);">Layout:</label>
                             <select id="gammaCardLayoutSelect" style="background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 600;" onchange="changeCurrentSlideLayout(this.value)">
                                 <option value="title">Hero Title Page</option>
-                                <option value="split_metrics">Executive Split & Metrics</option>
+                                <option value="split_metrics">Executive Split & Metrics (40/60 Split)</option>
+                                <option value="clv_quadrants">CLV 4-Quadrant Retention Matrix</option>
+                                <option value="friction_telemetry">Behavioral Friction & Support Telemetry</option>
+                                <option value="recovery_scenarios">Financial ARR Preservation & ROI Scenarios</option>
                                 <option value="segment_comparison">Segment Comparison Matrix</option>
                                 <option value="prescriptive_playbook">Action Playbook Grid</option>
                                 <option value="journey_workflow">Process Roadmap Nodes</option>
