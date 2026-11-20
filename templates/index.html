@@ -103,6 +103,45 @@
             <button id="themeToggleBtn" class="themeToggleBtn iconOnlyBtn" type="button" aria-label="Toggle Theme" title="Switch Dark/Light Mode">
                 <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
             </button>
+            <!-- Global Popular Language Switcher -->
+            <div class="langDropdownContainer" id="langDropdownContainer">
+                <button id="langSelectBtn" class="ghostBtn iconOnlyBtn" type="button" aria-label="Change Language" title="Select Global Language">
+                    <i data-lucide="globe" class="lucide-icon"></i>
+                </button>
+                <div id="langDropdownMenu" class="lang-dropdown-menu">
+                    <div class="lang-dropdown-header">🌍 Global Languages</div>
+                    <button class="langOptionItem active" data-lang="en" type="button" onclick="qiploI18n.setLanguage('en')">
+                        <span class="langFlag">🇺🇸</span> <span class="langName">English</span> <span class="langCode">EN</span>
+                    </button>
+                    <button class="langOptionItem" data-lang="es" type="button" onclick="qiploI18n.setLanguage('es')">
+                        <span class="langFlag">🇪🇸</span> <span class="langName">Español</span> <span class="langCode">ES</span>
+                    </button>
+                    <button class="langOptionItem" data-lang="fr" type="button" onclick="qiploI18n.setLanguage('fr')">
+                        <span class="langFlag">🇫🇷</span> <span class="langName">Français</span> <span class="langCode">FR</span>
+                    </button>
+                    <button class="langOptionItem" data-lang="de" type="button" onclick="qiploI18n.setLanguage('de')">
+                        <span class="langFlag">🇩🇪</span> <span class="langName">Deutsch</span> <span class="langCode">DE</span>
+                    </button>
+                    <button class="langOptionItem" data-lang="zh" type="button" onclick="qiploI18n.setLanguage('zh')">
+                        <span class="langFlag">🇨🇳</span> <span class="langName">简体中文</span> <span class="langCode">ZH</span>
+                    </button>
+                    <button class="langOptionItem" data-lang="ja" type="button" onclick="qiploI18n.setLanguage('ja')">
+                        <span class="langFlag">🇯🇵</span> <span class="langName">日本語</span> <span class="langCode">JA</span>
+                    </button>
+                    <button class="langOptionItem" data-lang="pt" type="button" onclick="qiploI18n.setLanguage('pt')">
+                        <span class="langFlag">🇧🇷</span> <span class="langName">Português</span> <span class="langCode">PT</span>
+                    </button>
+                    <button class="langOptionItem" data-lang="ar" type="button" onclick="qiploI18n.setLanguage('ar')">
+                        <span class="langFlag">🇸🇦</span> <span class="langName">العربية</span> <span class="langCode">AR</span>
+                    </button>
+                    <button class="langOptionItem" data-lang="hi" type="button" onclick="qiploI18n.setLanguage('hi')">
+                        <span class="langFlag">🇮🇳</span> <span class="langName">हिन्दी</span> <span class="langCode">HI</span>
+                    </button>
+                    <button class="langOptionItem" data-lang="ru" type="button" onclick="qiploI18n.setLanguage('ru')">
+                        <span class="langFlag">🇷🇺</span> <span class="langName">Русский</span> <span class="langCode">RU</span>
+                    </button>
+                </div>
+            </div>
             <button id="headerTourBtn" class="ghostBtn" onclick="startTour()" type="button" title="Take guided walkthrough tour">
                 <i data-lucide="help-circle" class="lucide-icon"></i> <span class="headerBtnLabel">Tour</span>
             </button>
@@ -152,6 +191,21 @@
                     <button class="dropdown-item" onclick="location.href='/settings'">
                         <i data-lucide="settings" class="lucide-icon"></i> Settings
                     </button>
+                    <div class="mobile-lang-section">
+                        <span class="mobile-lang-title">🌍 Select Language</span>
+                        <div class="mobile-lang-grid">
+                            <button type="button" class="lang-quick-btn active" data-lang="en" onclick="qiploI18n.setLanguage('en')">🇺🇸 EN</button>
+                            <button type="button" class="lang-quick-btn" data-lang="es" onclick="qiploI18n.setLanguage('es')">🇪🇸 ES</button>
+                            <button type="button" class="lang-quick-btn" data-lang="fr" onclick="qiploI18n.setLanguage('fr')">🇫🇷 FR</button>
+                            <button type="button" class="lang-quick-btn" data-lang="de" onclick="qiploI18n.setLanguage('de')">🇩🇪 DE</button>
+                            <button type="button" class="lang-quick-btn" data-lang="zh" onclick="qiploI18n.setLanguage('zh')">🇨🇳 ZH</button>
+                            <button type="button" class="lang-quick-btn" data-lang="ja" onclick="qiploI18n.setLanguage('ja')">🇯🇵 JA</button>
+                            <button type="button" class="lang-quick-btn" data-lang="pt" onclick="qiploI18n.setLanguage('pt')">🇧🇷 PT</button>
+                            <button type="button" class="lang-quick-btn" data-lang="ar" onclick="qiploI18n.setLanguage('ar')">🇸🇦 AR</button>
+                            <button type="button" class="lang-quick-btn" data-lang="hi" onclick="qiploI18n.setLanguage('hi')">🇮🇳 HI</button>
+                            <button type="button" class="lang-quick-btn" data-lang="ru" onclick="qiploI18n.setLanguage('ru')">🇷🇺 RU</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2156,6 +2210,7 @@
         </div>
     </div>
 
+    <script src="/static/i18n.js?v=1.0.0" defer></script>
     <script src="/static/waves.js?v=1.0.0" defer></script>
     <script src="/static/app.js?v=2.6.0" defer></script>
 </body>

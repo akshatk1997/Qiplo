@@ -1289,13 +1289,17 @@ async function handleChatMessage(event) {
 
     try {
         const apiKey = localStorage.getItem('at_ai_model_key') || localStorage.getItem('show_ai_model_key') || '';
+        const currentLanguage = (window.qiploI18n && typeof window.qiploI18n.getCurrentLanguage === 'function') 
+            ? window.qiploI18n.getCurrentLanguage() 
+            : (localStorage.getItem('qiplo_language') || 'en');
         const response = await fetch('/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 message: text,
                 history: chatHistory,
-                model_key: apiKey
+                model_key: apiKey,
+                language: currentLanguage
             })
         });
 
@@ -3539,6 +3543,9 @@ async function generatePresentationDeck(shuffle = false) {
 
         // Try calling the AI enabled presentation generator on the backend
         try {
+            const currentLanguage = (window.qiploI18n && typeof window.qiploI18n.getCurrentLanguage === 'function') 
+                ? window.qiploI18n.getCurrentLanguage() 
+                : (localStorage.getItem('qiplo_language') || 'en');
             const res = await safeFetch('/api/presentation/generate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -3546,7 +3553,8 @@ async function generatePresentationDeck(shuffle = false) {
                     custom_prompt: customPrompt,
                     num_slides: numSlides,
                     theme: theme,
-                    shuffle: shuffle
+                    shuffle: shuffle,
+                    language: currentLanguage
                 })
             });
             if (res.ok) {
@@ -4998,10 +5006,13 @@ async function triggerQuickQA(question) {
 
     try {
         const apiKey = localStorage.getItem('at_ai_model_key') || localStorage.getItem('show_ai_model_key') || '';
+        const currentLanguage = (window.qiploI18n && typeof window.qiploI18n.getCurrentLanguage === 'function') 
+            ? window.qiploI18n.getCurrentLanguage() 
+            : (localStorage.getItem('qiplo_language') || 'en');
         const res = await fetch('/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: question, model_key: apiKey, history: [] })
+            body: JSON.stringify({ message: question, model_key: apiKey, history: [], language: currentLanguage })
         });
         const payload = await res.json();
 
@@ -5837,6 +5848,9 @@ window.runSandboxSimulation = function() {
         const complaints = parseInt(document.getElementById('sandboxComplaints').value);
 
         try {
+            const currentLanguage = (window.qiploI18n && typeof window.qiploI18n.getCurrentLanguage === 'function') 
+                ? window.qiploI18n.getCurrentLanguage() 
+                : (localStorage.getItem('qiplo_language') || 'en');
             const res = await safeFetch('/api/sandbox/predict', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -5847,7 +5861,8 @@ window.runSandboxSimulation = function() {
                     tenure_months: tenure,
                     monthly_charges: charges,
                     product_usage: usage,
-                    complaint_count: complaints
+                    complaint_count: complaints,
+                    language: currentLanguage
                 })
             });
             const payload = await res.json();
@@ -6148,6 +6163,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         document.addEventListener('click', () => {
             mobileMenuDropdown.classList.remove('visible');
+        });
+    }
+
+    // Global Language Selector Dropdown
+    const langSelectBtn = document.getElementById('langSelectBtn');
+    const langDropdownMenu = document.getElementById('langDropdownMenu');
+    const langDropdownContainer = document.getElementById('langDropdownContainer');
+    if (langSelectBtn && langDropdownMenu) {
+        langSelectBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.AudioFeedback) AudioFeedback.click();
+            langDropdownMenu.classList.toggle('show');
+            if (langDropdownContainer) langDropdownContainer.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (langDropdownContainer && !langDropdownContainer.contains(e.target)) {
+                langDropdownMenu.classList.remove('show');
+                langDropdownContainer.classList.remove('open');
+            }
+        });
+
+        // Close dropdown when any langOptionItem or mobile-lang-grid button is clicked
+        document.querySelectorAll('.langOptionItem, .lang-quick-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (window.AudioFeedback) AudioFeedback.click();
+                langDropdownMenu.classList.remove('show');
+                if (langDropdownContainer) langDropdownContainer.classList.remove('open');
+                if (mobileMenuDropdown) mobileMenuDropdown.classList.remove('visible');
+            });
         });
     }
 

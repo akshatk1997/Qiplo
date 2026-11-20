@@ -136,13 +136,14 @@ def get_connection() -> sqlite3.Connection:
     return conn
 
 
-def _generate_prompt_driven_gamma_deck(custom_prompt, num_slides=5, api_key=None, total_cust=0, avg_risk=0.0):
+def _generate_prompt_driven_gamma_deck(custom_prompt, num_slides=5, api_key=None, total_cust=0, avg_risk=0.0, language="en"):
     custom_lower = (custom_prompt or "").strip().lower()
     
     # Try calling Gemini AI if key is present
     if api_key:
         try:
             from churn_analysis import call_gemini_api
+            from i18n_backend import enhance_system_instruction_with_language
             system_instruction = (
                 "You are an elite Gamma App presentation designer. "
                 "Write structured, executive, highly engaging slide content matching the user's prompt requirements. "
@@ -157,7 +158,10 @@ def _generate_prompt_driven_gamma_deck(custom_prompt, num_slides=5, api_key=None
                 "- 'quote' layout: 'quote', 'attribution' "
                 "Do NOT output markdown backticks, write raw JSON string only."
             )
+            system_instruction = enhance_system_instruction_with_language(system_instruction, language)
             prompt_str = f"Create a {num_slides}-slide presentation based on user prompt: '{custom_prompt}'"
+            if language and language != "en":
+                prompt_str += f" (Ensure all slide titles and text are in language: {language})"
             res_text = call_gemini_api(prompt_str, api_key, system_instruction=system_instruction)
             cleaned = res_text.strip()
             if cleaned.startswith("```"):
@@ -1462,23 +1466,15 @@ def create_app() -> Flask:
             
             label = label_mapping["high_risk"] if proba >= threshold else label_mapping["low_risk"]
             
-            recs = []
-            if proba >= threshold:
-                recs.append("⚠️ <strong>HIGH CHURN RISK</strong>: Simulated account parameters indicate high attrition probability.")
-                
-                tickets = data.get("support_tickets", 0)
-                satisfaction = data.get("customer_satisfaction_score", 4)
-                delays = data.get("payment_delays", 0)
-                
-                if int(tickets) > 1:
-                    recs.append(f"• <strong>Resolve Support Issues</strong>: Address {tickets} unresolved support tickets immediately.")
-                if int(satisfaction) <= 2:
-                    recs.append(f"• <strong>CSAT Recovery Program</strong>: Proactively contact customer due to low satisfaction ({satisfaction}/5).")
-                if int(delays) > 2:
-                    recs.append(f"• <strong>Billing Outreach</strong>: Customer has {delays} days of payment delay. Offer flexible billing options.")
-            else:
-                recs.append("✅ <strong>LOW CHURN RISK</strong>: Account parameters reflect a stable customer relation.")
-                recs.append("• <strong>Loyalty Upgrades</strong>: Eligible for standard account growth upgrades.")
+            from i18n_backend import generate_sandbox_recommendations
+            language = data.get("language", "en")
+            recs = generate_sandbox_recommendations(
+                proba, threshold,
+                tickets=int(data.get("support_tickets", 0)),
+                satisfaction=int(data.get("customer_satisfaction_score", 4)),
+                delays=int(data.get("payment_delays", 0)),
+                language=language
+            )
                 
             return jsonify({
                 "status": "ok",
@@ -1776,6 +1772,8 @@ def create_app() -> Flask:
         user_message = data.get("message")
         history = data.get("history", [])
         model_key = data.get("model_key") or data.get("api_key") or os.environ.get("GEMINI_API_KEY")
+        language = data.get("language", "en")
+        from i18n_backend import enhance_system_instruction_with_language, format_localized_chat_response
 
         if not user_message:
             return jsonify({"error": "Message is required."}), 400
@@ -1818,6 +1816,7 @@ def create_app() -> Flask:
                     "'[Download Power BI Datasource (.pbids)](/api/export/powerbi)' and '[Download Tableau Workbook (.twb)](/api/export/tableau)'. "
                     "Keep your tone well-mannered, highly expert, and natural. Format your responses in clean Markdown."
                 )
+                system_instruction = enhance_system_instruction_with_language(system_instruction, language)
 
                 contents = []
                 context_text = f"{db_context}\n\nUse the database context above to answer all related questions."
@@ -1875,9 +1874,11 @@ def create_app() -> Flask:
                 import urllib.request
                 import json as _json
                 ollama_url = config.get("ollama", {}).get("base_url", "http://localhost:11434").rstrip("/") + "/api/generate"
+                ollama_prompt = f"You are @ AI, a Lead Data Scientist. Treat the query professionally. Answer this: {user_message}"
+                ollama_prompt = enhance_system_instruction_with_language(ollama_prompt, language)
                 payload = {
                     "model": config.get("ollama", {}).get("model", "llama3.2"),
-                    "prompt": f"You are @ AI, a Lead Data Scientist. Treat the query professionally. Answer this: {user_message}",
+                    "prompt": ollama_prompt,
                     "stream": False
                 }
                 req = urllib.request.Request(
@@ -1988,37 +1989,58 @@ def create_app() -> Flask:
                     contract = (info["contract_type"] or "unknown").replace("_", " ").title()
                     tickets = info["support_tickets"] if info["support_tickets"] is not None else 0
                     
-                    res_text = (
-                        f"### 📋 Real-time Customer Profile: {target_id}\n\n"
-                        f"| Parameter | Value |\n"
-                        f"| :--- | :--- |\n"
-                        f"| **Customer ID** | `{target_id}` |\n"
-                        f"| **Transformer Risk Score** | `{risk_score}%` ({info['prediction_label'].replace('_', ' ').upper()}) |\n"
-                        f"| **Monthly Recurring Cost** | `{charges}` |\n"
-                        f"| **Contract Duration** | `{contract}` |\n"
-                        f"| **Account Tenure** | `{tenure}` |\n"
-                        f"| **Support Tickets** | `{tickets} open tickets` |\n"
-                        f"| **Assigned Success CSM** | `{csm_name}` |\n"
-                        f"| **SLA Status** | `{status.upper()}` |\n\n"
-                        f"**Collaboration Notes:**\n"
-                        f"> *\"{notes}\"* \n\n"
-                        f"**💡 Recommended Retention Playbook:**\n"
-                    )
-                    if info['prediction_label'] == 'high_risk':
-                        res_text += (
-                            f"1. **Emergency Call**: Direct CSM `{csm_name}` to launch outreach within 24 hours.\n"
-                            f"2. **Billing Incentive**: Offer a 20% discount coupon to secure annual commitment."
-                        )
+                    if language and language != "en":
+                        res_text = format_localized_chat_response("profile_title", {
+                            "target_id": target_id,
+                            "risk_score": risk_score,
+                            "label": info['prediction_label'].replace('_', ' ').upper(),
+                            "charges": charges,
+                            "contract": contract,
+                            "tenure": tenure,
+                            "tickets": tickets,
+                            "csm_name": csm_name,
+                            "status": status.upper(),
+                            "notes": notes
+                        }, language=language)
+                        if info['prediction_label'] == 'high_risk':
+                            res_text += format_localized_chat_response("profile_high", {"csm_name": csm_name}, language=language)
+                        else:
+                            res_text += format_localized_chat_response("profile_low", {}, language=language)
                     else:
-                        res_text += (
-                            f"1. **Proactive Expansion**: Account is stable. Pitch loyalty rewards or feature additions."
+                        res_text = (
+                            f"### 📋 Real-time Customer Profile: {target_id}\n\n"
+                            f"| Parameter | Value |\n"
+                            f"| :--- | :--- |\n"
+                            f"| **Customer ID** | `{target_id}` |\n"
+                            f"| **Transformer Risk Score** | `{risk_score}%` ({info['prediction_label'].replace('_', ' ').upper()}) |\n"
+                            f"| **Monthly Recurring Cost** | `{charges}` |\n"
+                            f"| **Contract Duration** | `{contract}` |\n"
+                            f"| **Account Tenure** | `{tenure}` |\n"
+                            f"| **Support Tickets** | `{tickets} open tickets` |\n"
+                            f"| **Assigned Success CSM** | `{csm_name}` |\n"
+                            f"| **SLA Status** | `{status.upper()}` |\n\n"
+                            f"**Collaboration Notes:**\n"
+                            f"> *\"{notes}\"* \n\n"
+                            f"**💡 Recommended Retention Playbook:**\n"
                         )
+                        if info['prediction_label'] == 'high_risk':
+                            res_text += (
+                                f"1. **Emergency Call**: Direct CSM `{csm_name}` to launch outreach within 24 hours.\n"
+                                f"2. **Billing Incentive**: Offer a 20% discount coupon to secure annual commitment."
+                            )
+                        else:
+                            res_text += (
+                                f"1. **Proactive Expansion**: Account is stable. Pitch loyalty rewards or feature additions."
+                            )
                 else:
-                    res_text = (
-                        f"### ⚠ Customer Not Found\n\n"
-                        f"Customer ID `{target_id}` was not found in the active evaluated dataset. "
-                        f"Please ensure you entered a valid Customer ID (e.g. `C015`, `C007`, `C023`)."
-                    )
+                    if language and language != "en":
+                        res_text = format_localized_chat_response("not_found", {"target_id": target_id}, language=language)
+                    else:
+                        res_text = (
+                            f"### ⚠ Customer Not Found\n\n"
+                            f"Customer ID `{target_id}` was not found in the active evaluated dataset. "
+                            f"Please ensure you entered a valid Customer ID (e.g. `C015`, `C007`, `C023`)."
+                        )
 
             # 2. High-risk customer listing
             elif any(w in msg_lower for w in ("high risk list", "who is high risk", "show high risk", "list of high risk", "which customers are high risk")):
@@ -2041,15 +2063,23 @@ def create_app() -> Flask:
                         contract_val = (r['contract_type'] or "unknown").replace("_", " ").title()
                         table_rows.append(f"| `{r['customer_id']}` | **{risk_val}** | {charges_val} | {contract_val} |")
                     
-                    res_text = (
-                        f"### 🚨 Top High-Risk Customer Attrition List\n\n"
-                        f"Here are the top high-risk accounts currently flagged by the Tabular Hybrid Transformer:\n\n"
-                        f"| Customer ID | Risk Score % | Monthly Bill | Contract Type |\n"
-                        f"| :--- | :--- | :--- | :--- |\n" + "\n".join(table_rows) + "\n\n"
-                        f"**Next Steps:** Assign these accounts to active Success Managers in the **Actions** tab to ensure daily resolution of unresolved tickets."
-                    )
+                    if language and language != "en":
+                        header = format_localized_chat_response("high_risk_header", {}, language=language)
+                        footer = format_localized_chat_response("high_risk_footer", {}, language=language)
+                        res_text = header + "\n".join(table_rows) + footer
+                    else:
+                        res_text = (
+                            f"### 🚨 Top High-Risk Customer Attrition List\n\n"
+                            f"Here are the top high-risk accounts currently flagged by the Tabular Hybrid Transformer:\n\n"
+                            f"| Customer ID | Risk Score % | Monthly Bill | Contract Type |\n"
+                            f"| :--- | :--- | :--- | :--- |\n" + "\n".join(table_rows) + "\n\n"
+                            f"**Next Steps:** Assign these accounts to active Success Managers in the **Actions** tab to ensure daily resolution of unresolved tickets."
+                        )
                 else:
-                    res_text = "### 🟢 No High-Risk Accounts Found\n\nAll customer accounts are currently stable and in the healthy low-risk category."
+                    if language and language != "en":
+                        res_text = format_localized_chat_response("high_risk_empty", {}, language=language)
+                    else:
+                        res_text = "### 🟢 No High-Risk Accounts Found\n\nAll customer accounts are currently stable and in the healthy low-risk category."
 
             # 3. CSM assignments listing
             elif any(w in msg_lower for w in ("csm status", "assigned", "who is assigned", "csm list", "assignments")):
@@ -2067,14 +2097,22 @@ def create_app() -> Flask:
                     for r in ass_list:
                         table_rows.append(f"| `{r['customer_id']}` | **{r['csm_name']}** | `{r['status'].upper()}` | *\"{r['notes']}\"* |")
                     
-                    res_text = (
-                        f"### 👥 Active CSM Customer Assignments & SLA Tasks\n\n"
-                        f"| Customer ID | Success Representative | SLA Outreach Status | Internal Alignment Notes |\n"
-                        f"| :--- | :--- | :--- | :--- |\n" + "\n".join(table_rows) + "\n\n"
-                        f"Go to the **Actions** tab to save notes or update SLA status fields."
-                    )
+                    if language and language != "en":
+                        header = format_localized_chat_response("csm_header", {}, language=language)
+                        footer = format_localized_chat_response("csm_footer", {}, language=language)
+                        res_text = header + "\n".join(table_rows) + footer
+                    else:
+                        res_text = (
+                            f"### 👥 Active CSM Customer Assignments & SLA Tasks\n\n"
+                            f"| Customer ID | Success Representative | SLA Outreach Status | Internal Alignment Notes |\n"
+                            f"| :--- | :--- | :--- | :--- |\n" + "\n".join(table_rows) + "\n\n"
+                            f"Go to the **Actions** tab to save notes or update SLA status fields."
+                        )
                 else:
-                    res_text = "### 👥 No CSM Assignments Recorded\n\nNo accounts have been assigned to Customer Success Managers yet. Select a high-risk account in the **Actions** tab control center to begin tracking."
+                    if language and language != "en":
+                        res_text = format_localized_chat_response("csm_empty", {}, language=language)
+                    else:
+                        res_text = "### 👥 No CSM Assignments Recorded\n\nNo accounts have been assigned to Customer Success Managers yet. Select a high-risk account in the **Actions** tab control center to begin tracking."
 
             # 4. A/B campaigns listing
             elif any(w in msg_lower for w in ("ab test", "campaign results", "retention outcome", "ab list", "a/b test list")):
@@ -2093,14 +2131,21 @@ def create_app() -> Flask:
                         act_rate = f"{round(r['actual_churn_rate'] * 100)}%"
                         table_rows.append(f"| **{r['campaign_name']}** | {r['sample_size']} | {pred_rate} | **{act_rate}** | {r['start_date']} |")
                     
-                    res_text = (
-                        f"### 🧪 Active A/B Retention Campaigns Comparison\n\n"
-                        f"| Campaign | Audience Size | Predicted Churn | Actual Churn | Launch Date |\n"
-                        f"| :--- | :--- | :--- | :--- | :--- |\n" + "\n".join(table_rows) + "\n\n"
-                        f"Compare campaigns to determine the most effective incentive patterns."
-                    )
+                    if language and language != "en":
+                        header = format_localized_chat_response("ab_header", {}, language=language)
+                        res_text = header + "\n".join(table_rows)
+                    else:
+                        res_text = (
+                            f"### 🧪 Active A/B Retention Campaigns Comparison\n\n"
+                            f"| Campaign | Audience Size | Predicted Churn | Actual Churn | Launch Date |\n"
+                            f"| :--- | :--- | :--- | :--- | :--- |\n" + "\n".join(table_rows) + "\n\n"
+                            f"Compare campaigns to determine the most effective incentive patterns."
+                        )
                 else:
-                    res_text = "### 🧪 No Active Campaigns\n\nNo A/B retention campaign results have been logged. Submit a campaign in the **Actions** tab to track outcomes."
+                    if language and language != "en":
+                        res_text = format_localized_chat_response("ab_empty", {}, language=language)
+                    else:
+                        res_text = "### 🧪 No Active Campaigns\n\nNo A/B retention campaign results have been logged. Submit a campaign in the **Actions** tab to track outcomes."
 
             # 5. Model telemetry metrics
             elif any(w in msg_lower for w in ("model accuracy", "metrics", "test size", "train model", "train split", "model metrics")):
@@ -2111,53 +2156,75 @@ def create_app() -> Flask:
                 rec = f"{metrics_data.get('recall', 0.893) * 100:.1f}%"
                 auc = f"{metrics_data.get('roc_auc', 0.965) * 100:.1f}%"
                 
-                res_text = (
-                    f"### ⚙️ Tabular Hybrid Transformer Telemetry Diagnostics\n\n"
-                    f"Our churn model is trained and tested dynamically using the following parameters:\n\n"
-                    f"| Metric | Telemetry Value | Explanation |\n"
-                    f"| :--- | :--- | :--- |\n"
-                    f"| **Accuracy** | **{acc}** | Overall score on the test partition. |\n"
-                    f"| **Precision** | **{prec}** | Purity of high-risk flags, minimizing false positives. |\n"
-                    f"| **Recall** | **{rec}** | Churner coverage, minimizing missed alerts. |\n"
-                    f"| **ROC AUC** | **{auc}** | Ability of the classifier to distinguish between classes. |\n\n"
-                    f"**Training Split**: **80% Train / 20% Test** random partition on active customer records."
-                )
+                if language and language != "en":
+                    res_text = format_localized_chat_response("model_metrics", {
+                        "acc": acc, "prec": prec, "rec": rec, "auc": auc
+                    }, language=language)
+                else:
+                    res_text = (
+                        f"### ⚙️ Tabular Hybrid Transformer Telemetry Diagnostics\n\n"
+                        f"Our churn model is trained and tested dynamically using the following parameters:\n\n"
+                        f"| Metric | Telemetry Value | Explanation |\n"
+                        f"| :--- | :--- | :--- |\n"
+                        f"| **Accuracy** | **{acc}** | Overall score on the test partition. |\n"
+                        f"| **Precision** | **{prec}** | Purity of high-risk flags, minimizing false positives. |\n"
+                        f"| **Recall** | **{rec}** | Churner coverage, minimizing missed alerts. |\n"
+                        f"| **ROC AUC** | **{auc}** | Ability of the classifier to distinguish between classes. |\n\n"
+                        f"**Training Split**: **80% Train / 20% Test** random partition on active customer records."
+                    )
 
             # 6. Greetings & Introductions
             elif any(w in msg_lower for w in ("hi", "hello", "hey", "who are you", "what can you do", "intro", "welcome", "start")):
-                res_text = (
-                    "### Welcome to Qiplo — Senior Data Science Consultation & Retention Assistant!\n\n"
-                    "I am **@ AI**, your dedicated Senior Customer Retention & Data Science Advisory Engine. "
-                    "I am designed to answer all your questions regarding customer churn analysis, financial risk exposure, retention strategies, and machine learning diagnostics.\n\n"
-                    f"**Current System Status:**\n"
-                    f"- **Active Evaluated Customers**: {total_cust:,} records analyzed\n"
-                    f"- **High Risk Cohort**: {high_risk:,} accounts ({high_risk_pct:.1f}%)\n"
-                    f"- **Monthly Recurring Revenue (MRR) at Risk**: ${risk_mrr:,.2f}\n"
-                    f"- **Average Churn Risk Score**: {avg_risk:.1f}%\n\n"
-                    "**How I can assist you right now:**\n"
-                    "1. **Churn Causes & Diagnostics**: Ask *'Why are customers churning?'* or *'What is driving high risk?'*\n"
-                    "2. **Financial Impact & ROI**: Ask *'What is our revenue at risk?'* or *'How to calculate CLV?'*\n"
-                    "3. **Prescriptive Playbooks**: Ask *'Draft an outreach email'* or *'What actions should sales take?'*\n"
-                    "4. **Dashboard Connectors**: Ask for *'Power BI'* or *'Tableau'* export links.\n"
-                    "5. **Reports & Slide Decks**: Ask *'How to generate a presentation deck?'*\n\n"
-                    "Feel free to ask me any question about your data or retention strategy!"
-                )
+                if language and language != "en":
+                    res_text = format_localized_chat_response("welcome_header", {
+                        "total_cust": total_cust,
+                        "high_risk": high_risk,
+                        "high_risk_pct": high_risk_pct,
+                        "risk_mrr": risk_mrr,
+                        "avg_risk": avg_risk
+                    }, language=language)
+                else:
+                    res_text = (
+                        "### Welcome to Qiplo — Senior Data Science Consultation & Retention Assistant!\n\n"
+                        "I am **@ AI**, your dedicated Senior Customer Retention & Data Science Advisory Engine. "
+                        "I am designed to answer all your questions regarding customer churn analysis, financial risk exposure, retention strategies, and machine learning diagnostics.\n\n"
+                        f"**Current System Status:**\n"
+                        f"- **Active Evaluated Customers**: {total_cust:,} records analyzed\n"
+                        f"- **High Risk Cohort**: {high_risk:,} accounts ({high_risk_pct:.1f}%)\n"
+                        f"- **Monthly Recurring Revenue (MRR) at Risk**: ${risk_mrr:,.2f}\n"
+                        f"- **Average Churn Risk Score**: {avg_risk:.1f}%\n\n"
+                        "**How I can assist you right now:**\n"
+                        "1. **Churn Causes & Diagnostics**: Ask *'Why are customers churning?'* or *'What is driving high risk?'*\n"
+                        "2. **Financial Impact & ROI**: Ask *'What is our revenue at risk?'* or *'How to calculate CLV?'*\n"
+                        "3. **Prescriptive Playbooks**: Ask *'Draft an outreach email'* or *'What actions should sales take?'*\n"
+                        "4. **Dashboard Connectors**: Ask for *'Power BI'* or *'Tableau'* export links.\n"
+                        "5. **Reports & Slide Decks**: Ask *'How to generate a presentation deck?'*\n\n"
+                        "Feel free to ask me any question about your data or retention strategy!"
+                    )
 
             # 2. What is Churn / General Retention Concepts & Guidance
             elif any(w in msg_lower for w in ("what is churn", "why churn", "how to stop churn", "prevent churn", "retention strategy", "attrition", "loyalty")):
-                res_text = (
-                    "### 💡 Understanding Customer Churn & High-Impact Retention Strategies\n\n"
-                    "**Customer Churn** is the percentage of subscribers or clients who stop doing business with an entity over a given timeframe. "
-                    "In SaaS and recurring revenue business models, reducing churn is the single most effective lever for driving sustainable ARR growth.\n\n"
-                    f"**Key Findings From Your Uploaded Data ({total_cust:,} Accounts Evaluated):**\n"
-                    f"- **Cohort Risk Concentration**: {high_risk:,} accounts ({high_risk_pct:.1f}%) fall into the high-risk cohort with an average churn probability of {avg_risk:.1f}%.\n"
-                    f"- **Primary Friction Points**: Month-to-month contracts demonstrate 3.4x higher churn risk than annual agreements. High monthly charges without long-term discounts and >3 support tickets are primary drivers.\n\n"
-                    "**4-Step Master Retention Framework:**\n"
-                    "1. **24-Hour Proactive Outreach SLA**: Contact accounts flagged with ≥65% risk score immediately.\n"
-                    "2. **Contract Migration Incentives**: Offer a 15–20% billing discount to convert month-to-month accounts to 1-year plans.\n"
-                    "3. **VIP Support Queue**: Fast-track tickets for high-value clients to resolve service friction before cancellation.\n"
-                    "4. **90-Day Onboarding Workflows**: Establish structured check-ins during the critical first 90 days to ensure product adoption."
-                )
+                if language and language != "en":
+                    res_text = format_localized_chat_response("churn_concepts", {
+                        "total_cust": total_cust,
+                        "high_risk": high_risk,
+                        "high_risk_pct": high_risk_pct,
+                        "avg_risk": avg_risk
+                    }, language=language)
+                else:
+                    res_text = (
+                        "### 💡 Understanding Customer Churn & High-Impact Retention Strategies\n\n"
+                        "**Customer Churn** is the percentage of subscribers or clients who stop doing business with an entity over a given timeframe. "
+                        "In SaaS and recurring revenue business models, reducing churn is the single most effective lever for driving sustainable ARR growth.\n\n"
+                        f"**Key Findings From Your Uploaded Data ({total_cust:,} Accounts Evaluated):**\n"
+                        f"- **Cohort Risk Concentration**: {high_risk:,} accounts ({high_risk_pct:.1f}%) fall into the high-risk cohort with an average churn probability of {avg_risk:.1f}%.\n"
+                        f"- **Primary Friction Points**: Month-to-month contracts demonstrate 3.4x higher churn risk than annual agreements. High monthly charges without long-term discounts and >3 support tickets are primary drivers.\n\n"
+                        "**4-Step Master Retention Framework:**\n"
+                        "1. **24-Hour Proactive Outreach SLA**: Contact accounts flagged with ≥65% risk score immediately.\n"
+                        "2. **Contract Migration Incentives**: Offer a 15–20% billing discount to convert month-to-month accounts to 1-year plans.\n"
+                        "3. **VIP Support Queue**: Fast-track tickets for high-value clients to resolve service friction before cancellation.\n"
+                        "4. **90-Day Onboarding Workflows**: Establish structured check-ins during the critical first 90 days to ensure product adoption."
+                    )
 
 
 
@@ -3939,6 +4006,8 @@ window.addEventListener('DOMContentLoaded', function() {{
         custom_prompt = (data.get("custom_prompt") or data.get("prompt") or "").strip()
         requested_num_slides = int(data.get("num_slides") or 5)
         should_shuffle = data.get("shuffle", False)
+        language = data.get("language", "en")
+        from i18n_backend import enhance_system_instruction_with_language, get_localized_presentation_deck
         
         # 1. Fetch current database stats with exception handling for empty databases
         total_cust = 0
@@ -4024,7 +4093,8 @@ window.addEventListener('DOMContentLoaded', function() {{
                 num_slides=requested_num_slides,
                 api_key=api_key,
                 total_cust=total_cust,
-                avg_risk=avg_risk
+                avg_risk=avg_risk,
+                language=language
             )
             if should_shuffle and len(slides) > 1:
                 import random
@@ -4035,6 +4105,10 @@ window.addEventListener('DOMContentLoaded', function() {{
             return jsonify({"slides": slides, "status": "ok", "prompt": custom_prompt})
         
         # Fallbacks for copy
+        if language and language != "en" and not api_key:
+            slides = get_localized_presentation_deck(total_cust, avg_risk, top_segments, language=language)
+            return jsonify({"slides": slides[:requested_num_slides], "status": "ok"})
+
         slide1_title = "Qiplo Executive Presentation"
         slide1_subtitle = f"Business Decision Intelligence Platform — {total_cust:,} Accounts Evaluated"
         
@@ -4130,6 +4204,7 @@ window.addEventListener('DOMContentLoaded', function() {{
                     '"slide5_title": "...", "slide5_steps": [{"title": "...", "description": "..."}, ...]} '
                     "Do not output markdown code blocks, write only raw JSON string."
                 )
+                system_instruction = enhance_system_instruction_with_language(system_instruction, language)
                 prompt = (
                     f"Retention Data:\n"
                     f"- Total customers: {total_cust}\n"
@@ -4138,6 +4213,8 @@ window.addEventListener('DOMContentLoaded', function() {{
                     f"Custom User Request: {custom_prompt or 'Standard executive churn overview'}\n\n"
                     "Please generate Slide 1 to 5 titles and copy."
                 )
+                if language and language != "en":
+                    prompt += f"\n(Write all slide titles, subtitles, bullets, playbook items, and steps in language: {language})"
                 ai_text = call_gemini_api(prompt, api_key, system_instruction=system_instruction)
                 
                 cleaned = ai_text.strip()
