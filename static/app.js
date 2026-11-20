@@ -6185,6 +6185,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.AudioFeedback) AudioFeedback.click();
             mobileMenuDropdown.classList.toggle('visible');
             mobileMenuBtn.classList.toggle('active', mobileMenuDropdown.classList.contains('visible'));
+            if (mobileMenuDropdown.classList.contains('visible') && window.selectMenuCategory) {
+                const slider = document.getElementById('menuFolderSlider');
+                window.selectMenuCategory(slider ? slider.value : 0, false);
+            }
         });
         document.addEventListener('click', (e) => {
             if (!mobileMenuBtn.contains(e.target) && !mobileMenuDropdown.contains(e.target)) {
@@ -6194,12 +6198,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         mobileMenuDropdown.addEventListener('click', (e) => {
             if (e.target.closest('summary')) return;
+            if (e.target.closest('.menu-slider-wrapper')) return;
             if (e.target.closest('.dropdown-item') || e.target.closest('.lang-quick-btn') || e.target.closest('.lang-grid-card')) {
                 mobileMenuDropdown.classList.remove('visible');
                 mobileMenuBtn.classList.remove('active');
             }
         });
     }
+
+    // Initialize Interactive Category Slider
+    initCategorySlider();
 
     // Global Language Selector Dropdown
     const langSelectBtn = document.getElementById('langSelectBtn');
@@ -6545,3 +6553,122 @@ window.focusPipelineStep = function(step) {
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 };
+
+
+/**
+ * Interactive Category Slider & Filter System for 3-Dot Dropdown
+ */
+function initCategorySlider() {
+    const slider = document.getElementById('menuFolderSlider');
+    const badge = document.getElementById('sliderActiveBadge');
+    const tabs = document.querySelectorAll('.slider-tab-btn');
+    const indicator = document.getElementById('sliderPillIndicator');
+    const folders = document.querySelectorAll('.menu-folder');
+    const ticks = document.querySelectorAll('.step-tick');
+
+    if (!slider || !tabs.length) return;
+
+    const categories = [
+        { id: 'all', name: 'All Categories (25+)' },
+        { id: 'exports', name: 'Exports & Telemetry (6)' },
+        { id: 'workspaces', name: 'Workspaces & Suites (8)' },
+        { id: 'tools', name: 'Platform Tools (5)' },
+        { id: 'system', name: 'Governance & System (4)' },
+        { id: 'languages', name: 'Global Languages (10)' }
+    ];
+
+    function updateIndicator(activeBtn) {
+        if (!activeBtn || !indicator) return;
+        const track = activeBtn.parentElement;
+        if (!track) return;
+        const trackRect = track.getBoundingClientRect();
+        const btnRect = activeBtn.getBoundingClientRect();
+        if (trackRect.width === 0 || btnRect.width === 0) return;
+        const left = btnRect.left - trackRect.left + track.scrollLeft;
+        const width = btnRect.width;
+        indicator.style.left = `${left}px`;
+        indicator.style.width = `${width}px`;
+    }
+
+    function selectCategory(index, animateScroll = true) {
+        index = Math.max(0, Math.min(categories.length - 1, parseInt(index, 10) || 0));
+        const cat = categories[index];
+
+        slider.value = index;
+
+        if (badge) {
+            badge.textContent = cat.name;
+        }
+
+        tabs.forEach((tab, i) => {
+            const isActive = (i === index);
+            tab.classList.toggle('active', isActive);
+            if (isActive) {
+                updateIndicator(tab);
+            }
+        });
+
+        ticks.forEach((tick, i) => {
+            tick.classList.toggle('active', i <= index);
+        });
+
+        folders.forEach(folder => {
+            const folderCat = folder.getAttribute('data-category');
+            if (cat.id === 'all') {
+                folder.style.display = '';
+                folder.classList.remove('filtered-out');
+            } else if (folderCat === cat.id) {
+                folder.style.display = '';
+                folder.classList.remove('filtered-out');
+                folder.open = true;
+                if (animateScroll) {
+                    folder.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            } else {
+                folder.style.display = 'none';
+                folder.classList.add('filtered-out');
+            }
+        });
+
+        if (window.AudioFeedback && window.AudioFeedback.tick) {
+            AudioFeedback.tick();
+        }
+    }
+
+    slider.addEventListener('input', (e) => {
+        selectCategory(e.target.value, false);
+    });
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const idx = parseInt(tab.getAttribute('data-index'), 10) || 0;
+            selectCategory(idx, true);
+        });
+    });
+
+    ticks.forEach(tick => {
+        tick.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const step = parseInt(tick.getAttribute('data-step'), 10) || 0;
+            selectCategory(step, true);
+        });
+    });
+
+    const sliderWrapper = document.getElementById('menuSliderWrapper');
+    if (sliderWrapper) {
+        sliderWrapper.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+
+    const initialActive = document.querySelector('.slider-tab-btn.active') || tabs[0];
+    setTimeout(() => updateIndicator(initialActive), 120);
+
+    window.addEventListener('resize', () => {
+        const active = document.querySelector('.slider-tab-btn.active');
+        if (active) updateIndicator(active);
+    });
+
+    window.selectMenuCategory = selectCategory;
+}
