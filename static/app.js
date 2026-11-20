@@ -1170,6 +1170,18 @@ document.getElementById('exportReportBtn').addEventListener('click', () => {
     window.open(`/api/export/report?company=${company}&currency=${currency}`, '_blank');
 });
 
+window.generateCustomReport = function() {
+    const exportBtn = document.getElementById('exportReportBtn');
+    if (exportBtn) {
+        exportBtn.click();
+    } else {
+        const company = encodeURIComponent(document.getElementById('companyNameInput')?.value.trim() || '');
+        const currencySelect = document.getElementById('currencySelect') || document.getElementById('sandboxCurrencySelect');
+        const currency = currencySelect ? encodeURIComponent(currencySelect.value) : 'USD';
+        window.open(`/api/export/report?company=${company}&currency=${currency}`, '_blank');
+    }
+};
+
 document.getElementById('companyNameInput').addEventListener('input', debounce(() => {
     const name = document.getElementById('companyNameInput').value.trim();
     if (name) document.getElementById('brandTitle').textContent = name;

@@ -1488,7 +1488,42 @@
                             </div>
                             
                             <!-- Scheduler Sub-tab -->
-                            <div id="schedulerSubTabBody" class="hidden" style="display: flex; flex-direction: column; gap: 8px;">
+                            <div id="schedulerSubTabBody" class="hidden" style="display: flex; flex-direction: column; gap: 12px;">
+                                <!-- Instant Data-Driven Audit Report Generator -->
+                                <div class="report-config-card" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 10px;">
+                                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                                        <span style="font-size: 0.84rem; font-weight: 700; color: #FFFFFF; display: flex; align-items: center; gap: 6px;">
+                                            <i data-lucide="file-bar-chart" class="lucide-icon" style="color: var(--primary); width: 16px; height: 16px;"></i>
+                                            Executive Audit Report Generator
+                                        </span>
+                                        <span style="font-size: 0.68rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: rgba(0, 245, 255, 0.15); color: #00F5FF;">Data-Driven</span>
+                                    </div>
+                                    <p style="margin: 0; font-size: 0.78rem; color: var(--muted); line-height: 1.4;">
+                                        Synthesizes an executive-ready audit report directly from your ingested customer dataset, including CLV revenue risk quadrants, CSAT and support friction telemetry, and 30-60-90 day retention playbooks.
+                                    </p>
+                                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; font-size: 0.74rem; color: var(--text);">
+                                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                            <input type="checkbox" id="repOptClv" checked style="accent-color: #00F5FF;"> CLV Risk Matrix
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                            <input type="checkbox" id="repOptFriction" checked style="accent-color: #00F5FF;"> CSAT & Friction Telemetry
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                            <input type="checkbox" id="repOptCauses" checked style="accent-color: #00F5FF;"> Root Cause Weights
+                                        </label>
+                                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                            <input type="checkbox" id="repOptPlaybook" checked style="accent-color: #00F5FF;"> 30-60-90d Playbook
+                                        </label>
+                                    </div>
+                                    <button type="button" id="generateCustomReportBtn" class="primaryBtn" onclick="generateCustomReport()" style="padding: 9px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                        <i data-lucide="external-link" class="lucide-icon" style="width: 14px; height: 14px;"></i>
+                                        <span>Generate & Open Full Audit Report</span>
+                                    </button>
+                                </div>
+
+                                <div style="font-size: 0.76rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;">
+                                    Automated Periodic Dispatch
+                                </div>
                                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                                     <div>
                                         <label style="font-size: 0.75rem; color: var(--muted);">Schedule Interval</label>
