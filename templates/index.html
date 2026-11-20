@@ -344,56 +344,60 @@
                         </div>
                     </div>
                     <!-- Model Performance Metrics Card -->
-                    <div class="modelPerformanceCard" style="background: linear-gradient(135deg, var(--surface-2) 0%, var(--surface-3) 100%); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 14px; margin: 18px 0; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 20px rgba(0, 245, 255, 0.08);">
-                        <h4 style="margin: 0; font-size: 0.78rem; color: var(--accent-2); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;"><i data-lucide="gauge" class="lucide-icon" style="width: 14px; height: 14px;"></i> Model Performance Telemetry</h4>
-                        <div class="modelMetricsGrid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center;">
-                            <div style="background: var(--surface); padding: 10px 8px; border-radius: 8px; border: 1px solid rgba(0, 245, 255, 0.2); cursor: help;" title="Percentage of overall correct churn classifications (TP + TN) / Total">
-                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Accuracy ℹ️</span>
-                                <strong style="font-size: 1.05rem; color: var(--accent-2); font-family: 'JetBrains Mono', monospace;" id="modelAccuracy"><span class="skeleton-loader"></span></strong>
+                    <div class="modelPerformanceCard">
+                        <div class="modelPerformanceHead">
+                            <h4><i data-lucide="gauge" class="lucide-icon"></i> Model Performance Telemetry</h4>
+                        </div>
+                        <div class="modelMetricsGrid">
+                            <div class="modelMetricCard metricCard-accuracy" title="Percentage of overall correct churn classifications (TP + TN) / Total">
+                                <span class="metricCardLabel">Accuracy ℹ️</span>
+                                <strong class="metricCardVal" id="modelAccuracy"><span class="skeleton-loader"></span></strong>
                             </div>
-                            <div style="background: var(--surface); padding: 10px 8px; border-radius: 8px; border: 1px solid rgba(0, 255, 135, 0.2); cursor: help;" title="Proportion of predicted churners that actually churned — minimizes false positive alerts">
-                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Precision ℹ️</span>
-                                <strong style="font-size: 1.05rem; color: var(--success); font-family: 'JetBrains Mono', monospace;" id="modelPrecision"><span class="skeleton-loader"></span></strong>
+                            <div class="modelMetricCard metricCard-precision" title="Proportion of predicted churners that actually churned — minimizes false positive alerts">
+                                <span class="metricCardLabel">Precision ℹ️</span>
+                                <strong class="metricCardVal" id="modelPrecision"><span class="skeleton-loader"></span></strong>
                             </div>
-                            <div style="background: var(--surface); padding: 10px 8px; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.2); cursor: help;" title="Proportion of actual churners successfully identified by the model — minimizes missed churn">
-                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Recall ℹ️</span>
-                                <strong style="font-size: 1.05rem; color: var(--accent); font-family: 'JetBrains Mono', monospace;" id="modelRecall"><span class="skeleton-loader"></span></strong>
+                            <div class="modelMetricCard metricCard-recall" title="Proportion of actual churners successfully identified by the model — minimizes missed churn">
+                                <span class="metricCardLabel">Recall ℹ️</span>
+                                <strong class="metricCardVal" id="modelRecall"><span class="skeleton-loader"></span></strong>
                             </div>
-                            <div style="background: var(--surface); padding: 10px 8px; border-radius: 8px; border: 1px solid rgba(217, 70, 239, 0.2); cursor: help;" title="Receiver Operating Characteristic Area Under Curve — measures overall discriminative capability (1.0 = perfect)">
-                                <span style="font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">ROC AUC ℹ️</span>
-                                <strong style="font-size: 1.05rem; color: #D946EF; font-family: 'JetBrains Mono', monospace;" id="modelAuc"><span class="skeleton-loader"></span></strong>
+                            <div class="modelMetricCard metricCard-auc" title="Receiver Operating Characteristic Area Under Curve — measures overall discriminative capability (1.0 = perfect)">
+                                <span class="metricCardLabel">ROC AUC ℹ️</span>
+                                <strong class="metricCardVal" id="modelAuc"><span class="skeleton-loader"></span></strong>
                             </div>
                         </div>
                     </div>
                     <!-- Confusion Matrix Card -->
-                    <div class="confusionMatrixCard" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; margin: 12px 0; display: flex; flex-direction: column; gap: 10px;">
-                        <h4 style="margin: 0; font-size: 0.78rem; color: var(--accent-2); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;"><i data-lucide="grid" class="lucide-icon" style="width: 14px; height: 14px;"></i> ML Confusion Matrix (Validation Split)</h4>
-                        <div style="display: grid; grid-template-columns: 80px repeat(2, 1fr); gap: 6px; text-align: center; font-size: 0.78rem;">
+                    <div class="confusionMatrixCard">
+                        <div class="confusionMatrixHead">
+                            <h4><i data-lucide="grid" class="lucide-icon"></i> ML Confusion Matrix (Validation Split)</h4>
+                        </div>
+                        <div class="confusionMatrixGrid">
                             <!-- Header Row -->
                             <div></div>
-                            <div style="font-weight: 700; color: var(--muted); font-size: 0.65rem; text-transform: uppercase;">Pred Neg</div>
-                            <div style="font-weight: 700; color: var(--muted); font-size: 0.65rem; text-transform: uppercase;">Pred Pos</div>
+                            <div class="confusionColHeader">Pred Neg</div>
+                            <div class="confusionColHeader">Pred Pos</div>
                             
                             <!-- Act Negative Row -->
-                            <div style="font-weight: 700; color: var(--muted); text-align: left; display: flex; align-items: center; font-size: 0.65rem; text-transform: uppercase;">Act Neg</div>
-                            <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.15); padding: 6px; border-radius: 6px; color: var(--success); font-family: 'JetBrains Mono', monospace; cursor: help;" title="True Negative (TN): Loyal accounts correctly classified as low-risk">
-                                <strong style="display: block; font-size: 0.95rem;" id="valTN">0</strong>
-                                <span style="font-size: 0.58rem; color: var(--muted); display: block;">True Neg (TN)</span>
+                            <div class="confusionRowHeader">Act Neg</div>
+                            <div class="confusionCell confusionCell-tn" title="True Negative (TN): Loyal accounts correctly classified as low-risk">
+                                <strong class="confusionCellVal" id="valTN">0</strong>
+                                <span class="confusionCellSub">True Neg (TN)</span>
                             </div>
-                            <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.15); padding: 6px; border-radius: 6px; color: var(--danger); font-family: 'JetBrains Mono', monospace; cursor: help;" title="False Positive (FP): Loyal accounts incorrectly predicted to churn (false alarms)">
-                                <strong style="display: block; font-size: 0.95rem;" id="valFP">0</strong>
-                                <span style="font-size: 0.58rem; color: var(--muted); display: block;">False Pos (FP)</span>
+                            <div class="confusionCell confusionCell-fp" title="False Positive (FP): Loyal accounts incorrectly predicted to churn (false alarms)">
+                                <strong class="confusionCellVal" id="valFP">0</strong>
+                                <span class="confusionCellSub">False Pos (FP)</span>
                             </div>
 
                             <!-- Act Positive Row -->
-                            <div style="font-weight: 700; color: var(--muted); text-align: left; display: flex; align-items: center; font-size: 0.65rem; text-transform: uppercase;">Act Pos</div>
-                            <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.15); padding: 6px; border-radius: 6px; color: var(--danger); font-family: 'JetBrains Mono', monospace; cursor: help;" title="False Negative (FN): Churned accounts missed by the model (undetected risk)">
-                                <strong style="display: block; font-size: 0.95rem;" id="valFN">0</strong>
-                                <span style="font-size: 0.58rem; color: var(--muted); display: block;">False Neg (FN)</span>
+                            <div class="confusionRowHeader">Act Pos</div>
+                            <div class="confusionCell confusionCell-fn" title="False Negative (FN): Churned accounts missed by the model (undetected risk)">
+                                <strong class="confusionCellVal" id="valFN">0</strong>
+                                <span class="confusionCellSub">False Neg (FN)</span>
                             </div>
-                            <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.15); padding: 6px; border-radius: 6px; color: var(--success); font-family: 'JetBrains Mono', monospace; cursor: help;" title="True Positive (TP): At-risk accounts successfully detected and flagged for retention">
-                                <strong style="display: block; font-size: 0.95rem;" id="valTP">0</strong>
-                                <span style="font-size: 0.58rem; color: var(--muted); display: block;">True Pos (TP)</span>
+                            <div class="confusionCell confusionCell-tp" title="True Positive (TP): At-risk accounts successfully detected and flagged for retention">
+                                <strong class="confusionCellVal" id="valTP">0</strong>
+                                <span class="confusionCellSub">True Pos (TP)</span>
                             </div>
                         </div>
                     </div>
@@ -640,11 +644,11 @@
                     <div class="aiCard" style="padding: 20px; display: flex; flex-direction: column; gap: 16px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                             <h3 style="margin: 0; font-size: 0.95rem; color: var(--accent); text-transform: uppercase;">1. Account Parameters</h3>
-                            <div class="sandboxPresetsBar" style="display: flex; gap: 6px; flex-wrap: wrap;">
-                                <button type="button" class="presetBtn" onclick="applySandboxPreset('loyal')" title="Simulate low-churn enterprise account" style="font-size: 0.72rem; padding: 4px 8px; border-radius: 6px; background: rgba(0, 255, 135, 0.1); border: 1px solid rgba(0, 255, 135, 0.3); color: var(--success); cursor: pointer; font-weight: 600;">🟢 Loyal Account</button>
-                                <button type="button" class="presetBtn" onclick="applySandboxPreset('moderate')" title="Simulate mid-risk customer" style="font-size: 0.72rem; padding: 4px 8px; border-radius: 6px; background: rgba(255, 159, 10, 0.1); border: 1px solid rgba(255, 159, 10, 0.3); color: var(--warning); cursor: pointer; font-weight: 600;">🟡 Moderate Risk</button>
-                                <button type="button" class="presetBtn" onclick="applySandboxPreset('critical')" title="Simulate acute churn escalation" style="font-size: 0.72rem; padding: 4px 8px; border-radius: 6px; background: rgba(255, 0, 127, 0.1); border: 1px solid rgba(255, 0, 127, 0.3); color: var(--danger); cursor: pointer; font-weight: 600;">🔴 Critical Risk</button>
-                                <button type="button" class="presetBtn" onclick="applySandboxPreset('reset')" title="Restore active dataset averages" style="font-size: 0.72rem; padding: 4px 8px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--border); color: var(--muted); cursor: pointer; font-weight: 600;">🔄 Reset</button>
+                            <div class="sandboxPresetsBar">
+                                <button type="button" class="presetBtn presetBtn-loyal" onclick="applySandboxPreset('loyal')" title="Simulate low-churn enterprise account">🟢 Loyal Account</button>
+                                <button type="button" class="presetBtn presetBtn-moderate" onclick="applySandboxPreset('moderate')" title="Simulate mid-risk customer">🟡 Moderate Risk</button>
+                                <button type="button" class="presetBtn presetBtn-critical" onclick="applySandboxPreset('critical')" title="Simulate acute churn escalation">🔴 Critical Risk</button>
+                                <button type="button" class="presetBtn presetBtn-reset" onclick="applySandboxPreset('reset')" title="Restore active dataset averages">🔄 Reset</button>
                             </div>
                         </div>
                         
@@ -1108,7 +1112,7 @@
                                     <button onclick="exportAuditLogs()" class="ghostBtn" style="padding: 4px 8px; font-size: 0.68rem; display: inline-flex; align-items: center; gap: 4px;">
                                         <i data-lucide="download" class="lucide-icon" style="width: 12px; height: 12px;"></i> Export CSV
                                     </button>
-                                    <span style="font-size: 0.65rem; color: var(--accent); background: rgba(0, 245, 255, 0.08); padding: 2px 6px; border-radius: 10px; border: 1px solid var(--accent); font-weight: 700;">SOC 2 / ISO</span>
+                                    <span style="font-size: 0.65rem; color: var(--accent); background: var(--accent-soft); padding: 2px 6px; border-radius: 10px; border: 1px solid var(--accent); font-weight: 700;">SOC 2 / ISO</span>
                                 </div>
                             </div>
                             <p class="sectionSub" style="margin-bottom: 15px;">Real-time tamper-proof activity logs tracking customer touchpoints and configurations.</p>
@@ -1341,7 +1345,7 @@
                                 </h2>
                                 <p style="margin: 4px 0 0; color: var(--muted); font-size: 0.9rem;">Comprehensive guide matching Qiplo's core motive: <em>"Never lose a customer again."</em></p>
                             </div>
-                            <div style="background: rgba(0, 245, 255, 0.08); border: 1px solid var(--accent); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+                            <div style="background: var(--accent-soft); border: 1px solid var(--accent); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; color: var(--accent); font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
                                 <i data-lucide="shield-check" class="lucide-icon"></i> Official Corporate Governance Guide
                             </div>
                         </div>
@@ -1381,7 +1385,7 @@
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                                     <h4 style="margin: 0; font-size: 0.95rem; color: var(--accent); font-family: var(--font-heading);">MRR (Monthly Recurring Revenue)</h4>
-                                    <span style="font-size: 0.7rem; background: rgba(0,245,255,0.1); color: var(--accent); padding: 2px 6px; border-radius: 4px; font-weight: 700;">CORE METRIC</span>
+                                    <span style="font-size: 0.7rem; background: var(--accent-soft); color: var(--accent); padding: 2px 6px; border-radius: 4px; font-weight: 700;">CORE METRIC</span>
                                 </div>
                                 <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Total predictable, normalized monthly income generated by active customer subscriptions.</p>
                                 <div style="font-family: var(--font-mono); font-size: 0.8rem; background: var(--surface-3); padding: 6px 10px; border-radius: 6px; color: var(--text);">
@@ -1392,7 +1396,7 @@
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                                     <h4 style="margin: 0; font-size: 0.95rem; color: var(--accent-2); font-family: var(--font-heading);">ARR (Annual Recurring Revenue)</h4>
-                                    <span style="font-size: 0.7rem; background: rgba(255,0,127,0.1); color: var(--accent-2); padding: 2px 6px; border-radius: 4px; font-weight: 700;">ANNUAL PROJECTION</span>
+                                    <span style="font-size: 0.7rem; background: var(--accent-soft); color: var(--accent-2); padding: 2px 6px; border-radius: 4px; font-weight: 700;">ANNUAL PROJECTION</span>
                                 </div>
                                 <p style="margin: 0 0 8px; font-size: 0.84rem; color: var(--muted);">Annualized valuation of recurring revenue generated by subscription contracts.</p>
                                 <div style="font-family: var(--font-mono); font-size: 0.8rem; background: var(--surface-3); padding: 6px 10px; border-radius: 6px; color: var(--text);">
@@ -1471,7 +1475,7 @@
                                 <p style="margin: 0; font-size: 0.85rem; color: var(--muted);">Provide a <strong>$25 one-time statement credit</strong> to customers switching from paper checks or manual payment methods to automated credit card or ACH direct debit billing.</p>
                             </div>
 
-                            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-left: 4px solid var(--accent); padding: 14px; border-radius: 8px;">
+                            <div style="background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--accent); padding: 14px; border-radius: 8px;">
                                 <h4 style="margin: 0 0 4px; font-size: 0.95rem; color: var(--accent); font-family: 'Outfit', sans-serif;">Policy 4: Priority Support Ticket Fast-Tracking (&lt;2h Response SLA)</h4>
                                 <p style="margin: 0; font-size: 0.85rem; color: var(--muted);">All active support tickets originating from high-risk accounts must be automatically escalated to Senior Tier-3 Technical Engineers with a <strong>guaranteed &lt;2 hour response SLA</strong>.</p>
                             </div>
@@ -2051,7 +2055,7 @@
             <div class="floatingCopilotHeader">
                 <div class="floatingCopilotHeaderLeft">
                     <div class="floatingCopilotBadge">
-                        <i data-lucide="brain-circuit" style="width: 17px; height: 17px; color: #00F5FF;"></i>
+                        <i data-lucide="brain-circuit" class="copilot-brain-icon" style="width: 17px; height: 17px;"></i>
                     </div>
                     <div>
                         <div class="floatingCopilotTitle">Qiplo AI Copilot</div>
@@ -2096,7 +2100,7 @@
         <!-- Floating Launcher Pill Button -->
         <button id="copilotLauncherBtn" class="copilotLauncherBtn" onclick="toggleFloatingCopilot()" type="button" title="Open AI Copilot Advisor (Ctrl+J)">
             <span class="copilotLauncherPulse"></span>
-            <i data-lucide="brain-circuit" class="lucide-icon" style="width: 18px; height: 18px; color: #00F5FF;"></i>
+            <i data-lucide="brain-circuit" class="lucide-icon copilot-brain-icon" style="width: 18px; height: 18px;"></i>
             <span class="copilotLauncherText">AI Copilot</span>
             <span class="copilotLauncherKbd">Ctrl+J</span>
         </button>

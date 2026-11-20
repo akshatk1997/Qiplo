@@ -90,6 +90,7 @@ let cohortTrendChart;
 let currentAuthorizedRole = localStorage.getItem('user_role') || 'manager';
 let labelMapping = { high_risk: 'high_risk', low_risk: 'low_risk' };
 let lastChartsData = null;
+let lastFeatureImportance = null;
 
 function showLoadingSkeletons() {
     const ids = ['metaTotal', 'metaHigh', 'metaLow', 'metaFields', 'simTargetedCount', 'simCampaignCost', 'simSavedRevenue', 'simNetSavedRevenue'];
@@ -227,6 +228,7 @@ async function loadDashboard() {
         try { renderSourceMeta(); } catch (e) { console.error('renderSourceMeta failed', e); }
         try { renderRows(); } catch (e) { console.error('renderRows failed', e); }
         lastChartsData = chartsData;
+        lastFeatureImportance = payload.feature_importance;
         try { renderCharts(chartsData, payload.feature_importance); } catch (e) { console.error('renderCharts failed', e); }
         try { renderInsights(insightsData); } catch (e) { console.error('renderInsights failed', e); }
         try { renderExecutiveSummary(insightsData); } catch (e) { console.error('renderExecutiveSummary failed', e); }
@@ -493,27 +495,35 @@ function renderCharts(chartPayload, featureImportance) {
     try { if (signalChart) signalChart.destroy(); } catch (e) {}
     try { if (importanceChart) importanceChart.destroy(); } catch (e) {}
 
+    const isLight = document.body.classList.contains('light-theme');
     const bodyStyles = getComputedStyle(document.body);
-    const labelColor = bodyStyles.getPropertyValue('--muted').trim() || '#475467';
-    const gridColor = bodyStyles.getPropertyValue('--border').trim() || 'rgba(16, 24, 40, 0.08)';
+    const labelColor = isLight ? '#334155' : (bodyStyles.getPropertyValue('--muted').trim() || '#94A3B8');
+    const gridColor = isLight ? 'rgba(0, 0, 0, 0.08)' : (bodyStyles.getPropertyValue('--border').trim() || 'rgba(255, 255, 255, 0.08)');
+
+    const doughnutColors = isLight 
+        ? ['#DC2626', '#4F46E5', '#D97706'] 
+        : ['#FF007F', '#00F5FF', '#FFE600'];
 
     try {
         riskChart = new Chart(riskCanvas, {
             type: 'doughnut',
             data: {
                 labels: riskLabels.length ? riskLabels : ['No data'],
-                datasets: [{ data: riskValues.length ? riskValues : [1], backgroundColor: ['#FF007F', '#00F5FF', '#FFE600'] }]
+                datasets: [{ data: riskValues.length ? riskValues : [1], backgroundColor: doughnutColors }]
             },
             options: { responsive: true, maintainAspectRatio: false, cutout: '62%', plugins: { legend: { labels: { color: labelColor } } } }
         });
     } catch (e) { console.error('Error creating riskChart:', e); }
 
+    const positiveColor = isLight ? '#059669' : '#10B981';
+    const negativeColor = isLight ? '#DC2626' : '#FF007F';
+
     const signalColors = (signalLabels.length ? signalLabels : ['No retention signals']).map(lbl => {
         const l = lbl.toLowerCase();
         if (l.includes('zero') || l.includes('high satisfaction') || l.includes('low support') || l.includes('loyal')) {
-            return '#10B981'; // Emerald Green
+            return positiveColor;
         }
-        return '#FF007F'; // Magenta
+        return negativeColor;
     });
 
     try {
@@ -539,13 +549,14 @@ function renderCharts(chartPayload, featureImportance) {
         
     const importanceLabels = sortedFeatures.map(item => item[0]);
     const importanceValues = sortedFeatures.map(item => item[1]);
+    const featureBarColor = isLight ? '#4F46E5' : '#FF007F';
 
     try {
         importanceChart = new Chart(importanceCanvas, {
             type: 'bar',
             data: {
                 labels: importanceLabels.length ? importanceLabels : ['No metrics'],
-                datasets: [{ label: 'Feature weight', data: importanceValues.length ? importanceValues : [0], backgroundColor: '#FF007F' }]
+                datasets: [{ label: 'Feature weight', data: importanceValues.length ? importanceValues : [0], backgroundColor: featureBarColor }]
             },
             options: {
                 indexAxis: 'y',
@@ -2248,7 +2259,7 @@ window.renderSpecialsMetricsList = function(suite) {
         const borderCol = m.status === 'red' ? 'rgba(255, 0, 127, 0.25)' : (m.status === 'yellow' ? 'rgba(255, 159, 10, 0.25)' : 'rgba(0, 255, 135, 0.25)');
         
         const progressHtml = m.progress !== undefined ? `
-            <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 99px; margin-top: 10px; overflow: hidden; position: relative;">
+            <div style="width: 100%; height: 6px; background: var(--surface-3); border: 1px solid var(--border); border-radius: 99px; margin-top: 10px; overflow: hidden; position: relative;">
                 <div style="width: ${m.progress}%; height: 100%; background: ${indColor}; border-radius: 99px; box-shadow: 0 0 8px ${indColor}; transition: width 0.3s ease;"></div>
             </div>
         ` : '';
@@ -2772,11 +2783,22 @@ function renderCohortTable() {
     });
 
     const getHeatmapStyle = (pct) => {
-        if (pct >= 90) return 'background-color: rgba(0, 245, 255, 0.40); color: #fff; font-weight: 700;';
-        if (pct >= 80) return 'background-color: rgba(0, 245, 255, 0.30); color: #fff;';
-        if (pct >= 70) return 'background-color: rgba(0, 245, 255, 0.20); color: #fff;';
-        if (pct >= 50) return 'background-color: rgba(0, 245, 255, 0.10); color: var(--text);';
-        return 'background-color: rgba(255, 0, 127, 0.25); color: var(--danger); font-weight: 700;';
+        const isLight = document.body.classList.contains('light-theme');
+        if (pct >= 90) return isLight 
+            ? 'background-color: rgba(79, 70, 229, 0.22); color: #312E81; font-weight: 700;' 
+            : 'background-color: rgba(0, 245, 255, 0.40); color: #ffffff; font-weight: 700;';
+        if (pct >= 80) return isLight 
+            ? 'background-color: rgba(79, 70, 229, 0.16); color: #3730A3; font-weight: 600;' 
+            : 'background-color: rgba(0, 245, 255, 0.30); color: #ffffff; font-weight: 600;';
+        if (pct >= 70) return isLight 
+            ? 'background-color: rgba(79, 70, 229, 0.10); color: var(--text);' 
+            : 'background-color: rgba(0, 245, 255, 0.20); color: var(--text);';
+        if (pct >= 50) return isLight 
+            ? 'background-color: rgba(79, 70, 229, 0.05); color: var(--muted);' 
+            : 'background-color: rgba(0, 245, 255, 0.10); color: var(--text);';
+        return isLight 
+            ? 'background-color: rgba(220, 38, 38, 0.12); color: #B91C1C; font-weight: 700;' 
+            : 'background-color: rgba(255, 0, 127, 0.25); color: var(--danger); font-weight: 700;';
     };
 
     tbody.innerHTML = Object.keys(cohorts).map(ct => {
@@ -3719,21 +3741,21 @@ function renderSlides(slides) {
                                     <span style="color: var(--success);">🟢 Low Risk (&lt;20%)</span>
                                     <span>${lowRisk} accounts (${lowPct}%)</span>
                                 </div>
-                                <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 99px; overflow: hidden;">
+                                <div style="width: 100%; height: 8px; background: var(--surface-3); border: 1px solid var(--border); border-radius: 99px; overflow: hidden;">
                                     <div style="width: ${lowPct}%; height: 100%; background: var(--success); border-radius: 99px;"></div>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; margin-top: 4px;">
                                     <span style="color: var(--warning);">🟡 Medium Risk (20%-50%)</span>
                                     <span>${medRisk} accounts (${medPct}%)</span>
                                 </div>
-                                <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 99px; overflow: hidden;">
+                                <div style="width: 100%; height: 8px; background: var(--surface-3); border: 1px solid var(--border); border-radius: 99px; overflow: hidden;">
                                     <div style="width: ${medPct}%; height: 100%; background: var(--warning); border-radius: 99px;"></div>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; margin-top: 4px;">
                                     <span style="color: var(--danger);">🔴 High Risk (&gt;50%)</span>
                                     <span>${highRisk} accounts (${highPct}%)</span>
                                 </div>
-                                <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 99px; overflow: hidden;">
+                                <div style="width: 100%; height: 8px; background: var(--surface-3); border: 1px solid var(--border); border-radius: 99px; overflow: hidden;">
                                     <div style="width: ${highPct}%; height: 100%; background: var(--danger); border-radius: 99px;"></div>
                                 </div>
                             </div>
@@ -3741,7 +3763,7 @@ function renderSlides(slides) {
                         <div style="flex: 0 0 200px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;">
                             <div style="position: relative; width: 140px; height: 140px;">
                                 <svg width="100%" height="100%" viewBox="0 0 36 36" style="transform: rotate(-90deg);">
-                                    <circle cx="18" cy="18" r="15.915" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="3"></circle>
+                                    <circle cx="18" cy="18" r="15.915" fill="none" stroke="var(--surface-3)" stroke-width="3"></circle>
                                     <circle cx="18" cy="18" r="15.915" fill="none" stroke="var(--success)" stroke-width="3" stroke-dasharray="${lowPct} ${100 - lowPct}" stroke-dashoffset="0"></circle>
                                     <circle cx="18" cy="18" r="15.915" fill="none" stroke="var(--warning)" stroke-width="3" stroke-dasharray="${medPct} ${100 - medPct}" stroke-dashoffset="-${lowPct}"></circle>
                                     <circle cx="18" cy="18" r="15.915" fill="none" stroke="var(--danger)" stroke-width="3" stroke-dasharray="${highPct} ${100 - highPct}" stroke-dashoffset="-${lowPct + medPct}"></circle>
@@ -3775,7 +3797,7 @@ function renderSlides(slides) {
                             </div>
                             <div class="statCallout pink" style="margin-bottom: 8px; padding: 10px; background: rgba(255,0,127,0.1); border: 1px solid var(--accent); border-radius: 10px;">
                                 <span style="font-size:0.68rem; color:var(--muted); text-transform:uppercase;">Evaluated Accounts</span>
-                                <h2 style="margin:2px 0 0; color:#ffffff; font-family:'JetBrains Mono', monospace; font-size:1.35rem;">${slide.total_cust || '1,000+'}</h2>
+                                <h2 style="margin:2px 0 0; color:var(--text); font-family:'JetBrains Mono', monospace; font-size:1.35rem;">${slide.total_cust || '1,000+'}</h2>
                             </div>
                             <div class="statCallout" style="padding: 10px; background: rgba(0,245,255,0.08); border: 1px solid var(--primary); border-radius: 10px;">
                                 <span style="font-size:0.68rem; color:var(--muted); text-transform:uppercase;">Avg Risk Score</span>
@@ -3795,7 +3817,7 @@ function renderSlides(slides) {
             `;
         } else if (slide.layout === 'segment_comparison') {
             const listHtml = (slide.bullets || []).map((b, bIdx) => `
-                <div class="riskComparisonCard" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px;">
+                <div class="riskComparisonCard" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px;">
                     <div class="cardIcon" style="font-size:1.1rem; color: var(--accent);"><i data-lucide="target" class="lucide-icon"></i></div>
                     <div class="cardContent" style="font-size:0.88rem; color:var(--text); flex:1;">
                         <p style="margin:0;" contenteditable="true" data-slide-index="${idx}" data-field="bullet" data-bullet-index="${bIdx}">${b}</p>
@@ -3836,7 +3858,7 @@ function renderSlides(slides) {
             `;
         } else if (slide.layout === 'prescriptive_playbook') {
             const playbookCards = (slide.playbook || []).map((p, pIdx) => `
-                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-left: 4px solid var(--${p.type || 'primary'}); padding: 10px 12px; border-radius: 8px;">
+                <div style="background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--${p.type || 'primary'}); padding: 10px 12px; border-radius: 8px;">
                     <h4 contenteditable="true" data-slide-index="${idx}" data-field="playbook-title" data-playbook-index="${pIdx}" style="margin: 0 0 3px; font-size: 0.88rem; color: var(--${p.type || 'primary'}); font-family: 'Outfit', sans-serif;">${p.title}</h4>
                     <p contenteditable="true" data-slide-index="${idx}" data-field="playbook-desc" data-playbook-index="${pIdx}" style="margin: 0; font-size: 0.8rem; color: var(--muted);">${p.desc}</p>
                 </div>
@@ -3864,10 +3886,10 @@ function renderSlides(slides) {
             `;
         } else if (slide.layout === 'journey_workflow') {
             const stepsHtml = (slide.steps || []).map((st, sIdx) => `
-                <div class="workflowStepCard" style="flex:1; background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 10px; border-radius: 8px;">
+                <div class="workflowStepCard" style="flex:1; background: var(--surface-2); border: 1px solid var(--border); padding: 10px; border-radius: 8px;">
                     <div class="workflowStepNum" style="font-weight:800; color:var(--primary); font-size:0.8rem; margin-bottom:3px;">STAGE 0${sIdx+1}</div>
                     <div class="workflowStepContent">
-                        <h4 contenteditable="true" data-slide-index="${idx}" data-field="step-title" data-step-index="${sIdx}" style="margin:0 0 3px; font-size:0.85rem; color:#ffffff;">${st.title}</h4>
+                        <h4 contenteditable="true" data-slide-index="${idx}" data-field="step-title" data-step-index="${sIdx}" style="margin:0 0 3px; font-size:0.85rem; color:var(--text);">${st.title}</h4>
                         <p contenteditable="true" data-slide-index="${idx}" data-field="step-desc" data-step-index="${sIdx}" style="margin:0; font-size:0.78rem; color:var(--muted);">${st.description || st.desc || ''}</p>
                     </div>
                 </div>
@@ -4669,7 +4691,7 @@ function downloadStandalonePresentation() {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--border);
             padding-bottom: 12px;
             font-size: 0.8rem;
             color: var(--muted);
@@ -4687,7 +4709,7 @@ function downloadStandalonePresentation() {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid var(--border);
             padding-top: 12px;
             font-size: 0.78rem;
             color: var(--muted);
@@ -4831,11 +4853,12 @@ function downloadStandalonePresentation() {
             display: flex;
             gap: 12px;
             align-items: center;
-            background: rgba(10, 11, 14, 0.85);
+            background: var(--surface);
             backdrop-filter: blur(8px);
             padding: 8px 16px;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             z-index: 100;
         }
 
@@ -5121,7 +5144,7 @@ function setupThemeToggle() {
             toggleBtn.setAttribute('aria-label', 'Switch to Dark Mode');
         }
         if (typeof lastChartsData !== 'undefined' && lastChartsData) {
-            renderCharts(lastChartsData);
+            renderCharts(lastChartsData, lastFeatureImportance);
         }
     });
 }

@@ -1,5 +1,8 @@
 import json
 import os
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["OMP_NUM_THREADS"] = "1"
 import sys
 from pathlib import Path
 from io import BytesIO
