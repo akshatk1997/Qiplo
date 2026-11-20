@@ -5047,15 +5047,18 @@ window.toggleFloatingCopilot = function(forceOpen) {
     const launcher = document.getElementById('copilotLauncherBtn');
     if (!copilot) return;
 
-    const isCurrentlyOpen = !copilot.classList.contains('hidden');
+    const isCurrentlyOpen = !copilot.classList.contains('hidden') && !copilot.classList.contains('closing');
     const shouldOpen = (typeof forceOpen === 'boolean') ? forceOpen : !isCurrentlyOpen;
 
     if (shouldOpen) {
         copilot.classList.remove('hidden');
+        copilot.classList.remove('closing');
+        void copilot.offsetWidth; // Force reflow for spring animation
+        copilot.classList.add('open');
         if (launcher) launcher.classList.add('active');
         if (window.AudioFeedback) AudioFeedback.click();
         const chatInput = document.getElementById('chatInput');
-        if (chatInput) chatInput.focus();
+        if (chatInput) setTimeout(() => chatInput.focus(), 120);
         if (window.lucide) window.lucide.createIcons();
         if (window.QiploWaves && typeof window.QiploWaves.trigger === 'function') {
             window.QiploWaves.trigger(copilot, { palette: 'violet', duration: 400 });
@@ -5063,8 +5066,16 @@ window.toggleFloatingCopilot = function(forceOpen) {
         const messages = document.getElementById('chatMessages');
         if (messages) messages.scrollTop = messages.scrollHeight;
     } else {
-        copilot.classList.add('hidden');
-        if (launcher) launcher.classList.remove('active');
+        if (isCurrentlyOpen) {
+            copilot.classList.remove('open');
+            copilot.classList.add('closing');
+            if (launcher) launcher.classList.remove('active');
+            if (window.AudioFeedback) AudioFeedback.click();
+            setTimeout(() => {
+                copilot.classList.add('hidden');
+                copilot.classList.remove('closing');
+            }, 220);
+        }
     }
 };
 
@@ -6152,17 +6163,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Mobile actions 3-dot menu dropdown toggle
+    // Universal 3-dot platform features dropdown toggle
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
     if (mobileMenuBtn && mobileMenuDropdown) {
         mobileMenuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            AudioFeedback.click();
+            if (window.AudioFeedback) AudioFeedback.click();
             mobileMenuDropdown.classList.toggle('visible');
+            mobileMenuBtn.classList.toggle('active', mobileMenuDropdown.classList.contains('visible'));
         });
-        document.addEventListener('click', () => {
-            mobileMenuDropdown.classList.remove('visible');
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuBtn.contains(e.target) && !mobileMenuDropdown.contains(e.target)) {
+                mobileMenuDropdown.classList.remove('visible');
+                mobileMenuBtn.classList.remove('active');
+            }
+        });
+        mobileMenuDropdown.addEventListener('click', (e) => {
+            if (e.target.closest('.dropdown-item') || e.target.closest('.lang-quick-btn')) {
+                mobileMenuDropdown.classList.remove('visible');
+                mobileMenuBtn.classList.remove('active');
+            }
         });
     }
 
@@ -6416,12 +6437,23 @@ function initCommandPaletteAndHotkeys() {
             return;
         }
 
+        // Escape Key handler — Close Command Palette, AI Copilot, or 3-Dot Menu
+        if (e.key === 'Escape') {
+            closeCommandPalette();
+            const copilot = document.getElementById('tab-copilot');
+            if (copilot && !copilot.classList.contains('hidden')) {
+                window.toggleFloatingCopilot(false);
+            }
+            const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
+            if (mobileMenuDropdown) mobileMenuDropdown.classList.remove('visible');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
+            return;
+        }
+
         // Ignore hotkeys when typing inside inputs/textareas
         const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
         if (['input', 'textarea', 'select'].includes(activeTag) || (document.activeElement && document.activeElement.isContentEditable)) {
-            if (e.key === 'Escape') {
-                closeCommandPalette();
-            }
             return;
         }
 

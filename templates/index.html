@@ -158,41 +158,92 @@
                 <span class="user-status-dot"></span>
                 <span class="userProfileRole">Admin Session</span>
             </div>
-            <!-- Mobile 3-Line Actions Menu -->
-            <div class="mobile-actions-menu">
-                <button id="mobileMenuBtn" class="ghostBtn mobile-menu-btn iconOnlyBtn" type="button" aria-label="More Actions" title="More Actions">
-                    <i data-lucide="menu" class="lucide-icon"></i>
+            <!-- Master 3-Dot All Features & Actions Menu -->
+            <div class="header-actions-menu mobile-actions-menu" id="headerMoreMenuContainer">
+                <button id="mobileMenuBtn" class="ghostBtn mobile-menu-btn iconOnlyBtn header-more-btn" type="button" aria-label="All Platform Features & Actions" title="All Platform Features & Actions (More...)">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon">
+                        <circle cx="12" cy="12" r="1.5"></circle>
+                        <circle cx="19" cy="12" r="1.5"></circle>
+                        <circle cx="5" cy="12" r="1.5"></circle>
+                    </svg>
                 </button>
-                <div id="mobileMenuDropdown" class="mobile-menu-dropdown">
+                <div id="mobileMenuDropdown" class="mobile-menu-dropdown header-more-dropdown">
+                    <div class="dropdown-category-title">📊 Executive Exports & Telemetry</div>
                     <button class="dropdown-item" onclick="document.getElementById('exportReportBtn').click()">
                         <i data-lucide="bar-chart-3" class="lucide-icon"></i> Full Analysis Report
                     </button>
                     <button class="dropdown-item" onclick="document.getElementById('exportTableauBtn').click()">
-                        <i data-lucide="trending-up" class="lucide-icon"></i> Tableau
+                        <i data-lucide="trending-up" class="lucide-icon"></i> Tableau Workbook (.twb)
                     </button>
                     <button class="dropdown-item" onclick="document.getElementById('exportPowerBiBtn').click()">
-                        <i data-lucide="line-chart" class="lucide-icon"></i> Power BI
+                        <i data-lucide="line-chart" class="lucide-icon"></i> Power BI Template (.pbit)
                     </button>
                     <button class="dropdown-item" onclick="document.getElementById('exportExcelBtn').click()">
-                        <i data-lucide="file-spreadsheet" class="lucide-icon"></i> Excel
+                        <i data-lucide="file-spreadsheet" class="lucide-icon"></i> Excel Dataset (.xlsx)
                     </button>
                     <button class="dropdown-item" onclick="document.getElementById('exportPdfBtn').click()">
                         <i data-lucide="file-text" class="lucide-icon"></i> Executive PDF Report
                     </button>
-                    <button class="dropdown-item" onclick="startTour()">
-                        <i data-lucide="help-circle" class="lucide-icon"></i> Tour Walkthrough
+
+                    <div class="dropdown-category-title">🧭 Workspaces & Sub-header Tabs</div>
+                    <button class="dropdown-item" onclick="switchTab('overview')">
+                        <i data-lucide="layout-dashboard" class="lucide-icon"></i> Overview Dashboard
+                    </button>
+                    <button class="dropdown-item" onclick="switchTab('specials')">
+                        <i data-lucide="layers" class="lucide-icon"></i> Specials & KPIs
+                    </button>
+                    <button class="dropdown-item" onclick="switchTab('actions')">
+                        <i data-lucide="zap" class="lucide-icon"></i> Prescriptive Actions & SLAs
+                    </button>
+                    <button class="dropdown-item" onclick="switchTab('customers')">
+                        <i data-lucide="users" class="lucide-icon"></i> Customers Explorer
+                    </button>
+                    <button class="dropdown-item" onclick="switchTab('business')">
+                        <i data-lucide="briefcase" class="lucide-icon"></i> Business & Revenue Hub
+                    </button>
+                    <button class="dropdown-item" onclick="switchTab('sandbox')">
+                        <i data-lucide="flask-conical" class="lucide-icon"></i> Sandbox What-If Simulator
+                    </button>
+                    <button class="dropdown-item" onclick="switchTab('presentation')">
+                        <i data-lucide="presentation" class="lucide-icon"></i> Gamma Presentation Engine
                     </button>
                     <button class="dropdown-item" onclick="switchTab('guide')">
-                        <i data-lucide="book-marked" class="lucide-icon"></i> Guide
+                        <i data-lucide="book-marked" class="lucide-icon"></i> Governance & User Guide
+                    </button>
+
+                    <div class="dropdown-category-title">🛠️ Sidebars & System Tools</div>
+                    <button class="dropdown-item" onclick="toggleSourcesSidebar()">
+                        <i data-lucide="panel-left-close" class="lucide-icon"></i> Datasets Sidebar <kbd class="kbd-hint">[</kbd>
+                    </button>
+                    <button class="dropdown-item" onclick="toggleNotesSidebar()">
+                        <i data-lucide="panel-right-close" class="lucide-icon"></i> Notes Sidebar <kbd class="kbd-hint">]</kbd>
+                    </button>
+                    <button class="dropdown-item" onclick="openCommandPalette()">
+                        <i data-lucide="terminal" class="lucide-icon"></i> Command Palette <kbd class="kbd-hint">Ctrl+K</kbd>
+                    </button>
+                    <button class="dropdown-item" onclick="toggleHighDensityView()">
+                        <i data-lucide="layout-grid" class="lucide-icon"></i> Toggle High-Density View
+                    </button>
+                    <button class="dropdown-item" onclick="toggleFloatingCopilot(true)">
+                        <i data-lucide="brain-circuit" class="lucide-icon"></i> Open AI Copilot <kbd class="kbd-hint">Ctrl+J</kbd>
+                    </button>
+
+                    <div class="dropdown-category-title">⚙️ Governance & Utilities</div>
+                    <button class="dropdown-item" onclick="startTour()">
+                        <i data-lucide="help-circle" class="lucide-icon"></i> Guided Tour Walkthrough
                     </button>
                     <button class="dropdown-item" onclick="reloadData()">
-                        <i data-lucide="refresh-cw" class="lucide-icon"></i> Reload Data
+                        <i data-lucide="refresh-cw" class="lucide-icon"></i> Refresh & Sync Data
                     </button>
                     <button class="dropdown-item" onclick="location.href='/settings'">
-                        <i data-lucide="settings" class="lucide-icon"></i> Settings
+                        <i data-lucide="settings" class="lucide-icon"></i> Settings & Role Permissions
                     </button>
+                    <button class="dropdown-item" onclick="document.getElementById('themeToggleBtn').click()">
+                        <i data-lucide="sun-moon" class="lucide-icon"></i> Switch Dark / Light Theme
+                    </button>
+
                     <div class="mobile-lang-section">
-                        <span class="mobile-lang-title">🌍 Select Language</span>
+                        <span class="mobile-lang-title">🌍 Select Global Language</span>
                         <div class="mobile-lang-grid">
                             <button type="button" class="lang-quick-btn active" data-lang="en" onclick="qiploI18n.setLanguage('en')">🇺🇸 EN</button>
                             <button type="button" class="lang-quick-btn" data-lang="es" onclick="qiploI18n.setLanguage('es')">🇪🇸 ES</button>
@@ -314,6 +365,7 @@
                 <button class="tab" data-tab="business" type="button"><i data-lucide="briefcase" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Business</button>
                 <button class="tab" data-tab="sandbox" type="button"><i data-lucide="flask-conical" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Sandbox</button>
                 <button class="tab" data-tab="presentation" type="button"><i data-lucide="presentation" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Presentation</button>
+                <button class="tab" data-tab="guide" type="button"><i data-lucide="book-marked" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Guide</button>
             </div>
 
             <div class="tabBody" id="tab-overview">
@@ -2133,8 +2185,15 @@
                     </div>
                 </div>
                 <div class="floatingCopilotHeaderRight">
-                    <button type="button" class="copilotHeaderBtn" onclick="clearCopilotChat()" title="Reset / Clear Chat History"><i data-lucide="trash-2" style="width: 14px; height: 14px;"></i></button>
-                    <button type="button" class="copilotHeaderBtn" onclick="toggleFloatingCopilot(false)" title="Minimize Copilot"><i data-lucide="x" style="width: 15px; height: 15px;"></i></button>
+                    <button type="button" class="copilotHeaderBtn" onclick="clearCopilotChat()" title="Reset / Clear Chat History" aria-label="Clear Chat History">
+                        <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
+                    </button>
+                    <button type="button" class="copilotCloseBtn" id="copilotCloseBtn" onclick="toggleFloatingCopilot(false)" title="Close AI Copilot (Esc)" aria-label="Close AI Copilot">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="close-x-svg">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
