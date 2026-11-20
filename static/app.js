@@ -5151,36 +5151,45 @@ function setupThemeToggle() {
     const toggleBtn = document.getElementById('themeToggleBtn');
     if (!toggleBtn) return;
 
+    function applyThemeToBtn(isLight) {
+        const label = toggleBtn.querySelector('.themeLabel') || toggleBtn.querySelector('span');
+        if (label) {
+            label.textContent = isLight ? 'Switch to Dark Theme' : 'Switch to Light Theme';
+            const icon = toggleBtn.querySelector('i');
+            if (icon) {
+                icon.setAttribute('data-lucide', isLight ? 'moon' : 'sun');
+                if (window.lucide) window.lucide.createIcons();
+            }
+        } else {
+            toggleBtn.innerHTML = isLight ? SUN_ICON_SVG : MOON_ICON_SVG;
+        }
+        toggleBtn.setAttribute('title', isLight ? 'Light Mode Active (Click for Dark Mode)' : 'Dark Mode Active (Click for Light Mode)');
+        toggleBtn.setAttribute('aria-label', isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode');
+    }
+
     const savedTheme = localStorage.getItem('theme') || 'dark';
     if (savedTheme === 'light') {
         document.body.classList.remove('dark-theme');
         document.body.classList.add('light-theme');
-        toggleBtn.innerHTML = SUN_ICON_SVG;
-        toggleBtn.setAttribute('title', 'Light Mode Active (Click for Dark Mode)');
-        toggleBtn.setAttribute('aria-label', 'Switch to Dark Mode');
+        applyThemeToBtn(true);
     } else {
         document.body.classList.remove('light-theme');
         document.body.classList.add('dark-theme');
-        toggleBtn.innerHTML = MOON_ICON_SVG;
-        toggleBtn.setAttribute('title', 'Dark Mode Active (Click for Light Mode)');
-        toggleBtn.setAttribute('aria-label', 'Switch to Light Mode');
+        applyThemeToBtn(false);
     }
 
     toggleBtn.addEventListener('click', () => {
-        if (document.body.classList.contains('light-theme')) {
+        const isNowDark = document.body.classList.contains('light-theme');
+        if (isNowDark) {
             document.body.classList.remove('light-theme');
             document.body.classList.add('dark-theme');
             localStorage.setItem('theme', 'dark');
-            toggleBtn.innerHTML = MOON_ICON_SVG;
-            toggleBtn.setAttribute('title', 'Dark Mode Active (Click for Light Mode)');
-            toggleBtn.setAttribute('aria-label', 'Switch to Light Mode');
+            applyThemeToBtn(false);
         } else {
             document.body.classList.remove('dark-theme');
             document.body.classList.add('light-theme');
             localStorage.setItem('theme', 'light');
-            toggleBtn.innerHTML = SUN_ICON_SVG;
-            toggleBtn.setAttribute('title', 'Light Mode Active (Click for Dark Mode)');
-            toggleBtn.setAttribute('aria-label', 'Switch to Dark Mode');
+            applyThemeToBtn(true);
         }
         if (typeof lastChartsData !== 'undefined' && lastChartsData) {
             renderCharts(lastChartsData, lastFeatureImportance);

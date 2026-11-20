@@ -554,6 +554,37 @@ body.light-theme .dropdown-telemetry-badge {
     color: #15803D;
 }
 
+.dropdown-user-session {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    margin: 4px 6px 8px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    user-select: none;
+}
+
+body.light-theme .dropdown-user-session {
+    background: #F8FAFC;
+    border-color: #E2E8F0;
+    color: #1E293B;
+}
+
+.dropdown-user-session .user-status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 6px #22c55e;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
 /* Demo Sandbox Active Badge */
 .demoBadge {
     display: none;

@@ -76,72 +76,8 @@
             </div>
         </div>
 
-        <!-- Right Utility & Settings Capsules -->
+        <!-- Right Utility & Settings (All Actions In Master 3-Dot Menu) -->
         <div class="topbarRight">
-            <button id="cmdPaletteBtn" class="ghostBtn" onclick="openCommandPalette()" type="button" title="Open Command Palette (Ctrl+K)">
-                <i data-lucide="terminal" class="lucide-icon"></i> <kbd class="kbd-hint">Ctrl+K</kbd>
-            </button>
-            <button id="densityToggleBtn" class="ghostBtn iconOnlyBtn" onclick="toggleHighDensityView()" type="button" title="Toggle Compact High-Density View">
-                <i data-lucide="layout-grid" class="lucide-icon"></i>
-            </button>
-            <button id="themeToggleBtn" class="themeToggleBtn iconOnlyBtn" type="button" aria-label="Toggle Theme" title="Switch Dark/Light Mode">
-                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-            </button>
-            <!-- Global Popular Language Switcher -->
-            <div class="langDropdownContainer" id="langDropdownContainer">
-                <button id="langSelectBtn" class="ghostBtn iconOnlyBtn" type="button" aria-label="Change Language" title="Select Global Language">
-                    <i data-lucide="globe" class="lucide-icon"></i>
-                </button>
-                <div id="langDropdownMenu" class="lang-dropdown-menu">
-                    <div class="lang-dropdown-header">🌍 Global Languages</div>
-                    <button class="langOptionItem active" data-lang="en" type="button" onclick="qiploI18n.setLanguage('en')">
-                        <span class="langFlag">🇺🇸</span> <span class="langName">English</span> <span class="langCode">EN</span>
-                    </button>
-                    <button class="langOptionItem" data-lang="es" type="button" onclick="qiploI18n.setLanguage('es')">
-                        <span class="langFlag">🇪🇸</span> <span class="langName">Español</span> <span class="langCode">ES</span>
-                    </button>
-                    <button class="langOptionItem" data-lang="fr" type="button" onclick="qiploI18n.setLanguage('fr')">
-                        <span class="langFlag">🇫🇷</span> <span class="langName">Français</span> <span class="langCode">FR</span>
-                    </button>
-                    <button class="langOptionItem" data-lang="de" type="button" onclick="qiploI18n.setLanguage('de')">
-                        <span class="langFlag">🇩🇪</span> <span class="langName">Deutsch</span> <span class="langCode">DE</span>
-                    </button>
-                    <button class="langOptionItem" data-lang="zh" type="button" onclick="qiploI18n.setLanguage('zh')">
-                        <span class="langFlag">🇨🇳</span> <span class="langName">简体中文</span> <span class="langCode">ZH</span>
-                    </button>
-                    <button class="langOptionItem" data-lang="ja" type="button" onclick="qiploI18n.setLanguage('ja')">
-                        <span class="langFlag">🇯🇵</span> <span class="langName">日本語</span> <span class="langCode">JA</span>
-                    </button>
-                    <button class="langOptionItem" data-lang="pt" type="button" onclick="qiploI18n.setLanguage('pt')">
-                        <span class="langFlag">🇧🇷</span> <span class="langName">Português</span> <span class="langCode">PT</span>
-                    </button>
-                    <button class="langOptionItem" data-lang="ar" type="button" onclick="qiploI18n.setLanguage('ar')">
-                        <span class="langFlag">🇸🇦</span> <span class="langName">العربية</span> <span class="langCode">AR</span>
-                    </button>
-                    <button class="langOptionItem" data-lang="hi" type="button" onclick="qiploI18n.setLanguage('hi')">
-                        <span class="langFlag">🇮🇳</span> <span class="langName">हिन्दी</span> <span class="langCode">HI</span>
-                    </button>
-                    <button class="langOptionItem" data-lang="ru" type="button" onclick="qiploI18n.setLanguage('ru')">
-                        <span class="langFlag">🇷🇺</span> <span class="langName">Русский</span> <span class="langCode">RU</span>
-                    </button>
-                </div>
-            </div>
-            <button id="headerTourBtn" class="ghostBtn" onclick="startTour()" type="button" title="Take guided walkthrough tour">
-                <i data-lucide="help-circle" class="lucide-icon"></i> <span class="headerBtnLabel">Tour</span>
-            </button>
-            <button id="headerGuideBtn" class="ghostBtn" onclick="switchTab('guide')" type="button" title="View Business & Governance Guide">
-                <i data-lucide="book-marked" class="lucide-icon"></i> <span class="headerBtnLabel">Guide</span>
-            </button>
-            <button id="headerReloadBtn" class="ghostBtn" onclick="reloadData()" type="button" title="Refresh & Sync Telemetry Data">
-                <i data-lucide="refresh-cw" class="lucide-icon"></i> <span class="headerBtnLabel">Sync</span>
-            </button>
-            <button id="settingsBtn" class="ghostBtn" onclick="location.href='/settings'" type="button" title="System Settings & Role Permissions">
-                <i data-lucide="settings" class="lucide-icon"></i> <span class="headerBtnLabel">Settings</span>
-            </button>
-            <div class="userProfileBadge" id="userProfileBadge" title="Authorized Role: Enterprise Admin Session">
-                <span class="user-status-dot"></span>
-                <span class="userProfileRole">Admin Session</span>
-            </div>
             <!-- Master 3-Dot All Features & Actions Menu -->
             <div class="header-actions-menu mobile-actions-menu" id="headerMoreMenuContainer">
                 <button id="mobileMenuBtn" class="ghostBtn mobile-menu-btn iconOnlyBtn header-more-btn" type="button" aria-label="All Platform Features & Actions" title="All Platform Features & Actions (More...)">
@@ -152,6 +88,12 @@
                     </svg>
                 </button>
                 <div id="mobileMenuDropdown" class="mobile-menu-dropdown header-more-dropdown">
+                    <!-- User Profile / Session Status -->
+                    <div class="dropdown-user-session" id="userProfileBadge" title="Authorized Role: Enterprise Admin Session">
+                        <span class="user-status-dot"></span>
+                        <span class="userProfileRole">Admin Session</span>
+                    </div>
+
                     <div class="dropdown-category-title">📊 Executive Exports & Telemetry</div>
                     <div id="liveTrackingBadge" class="dropdown-telemetry-badge" title="Live Data File Telemetry Engine Active">
                         <span class="live-pulse-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #22c55e; display: inline-block; box-shadow: 0 0 8px #22c55e; animation: livePulse 2s infinite;"></span>
@@ -195,8 +137,8 @@
                     <button class="dropdown-item" onclick="switchTab('presentation')">
                         <i data-lucide="presentation" class="lucide-icon"></i> Gamma Presentation Engine
                     </button>
-                    <button class="dropdown-item" onclick="switchTab('guide')">
-                        <i data-lucide="book-marked" class="lucide-icon"></i> Governance & User Guide
+                    <button class="dropdown-item" id="headerGuideBtn" onclick="switchTab('guide')">
+                        <i data-lucide="book-marked" class="lucide-icon"></i> <span class="headerBtnLabel">Governance & User Guide</span>
                     </button>
 
                     <div class="dropdown-category-title">🛠️ Sidebars & System Tools</div>
@@ -206,33 +148,34 @@
                     <button class="dropdown-item" id="toggleNotesBtn" onclick="toggleNotesSidebar()">
                         <i data-lucide="panel-right-close" class="lucide-icon"></i> <span class="hide-mobile">Notes Sidebar</span> <kbd class="kbd-hint">]</kbd>
                     </button>
-                    <button class="dropdown-item" onclick="openCommandPalette()">
-                        <i data-lucide="terminal" class="lucide-icon"></i> Command Palette <kbd class="kbd-hint">Ctrl+K</kbd>
+                    <button class="dropdown-item" id="cmdPaletteBtn" onclick="openCommandPalette()">
+                        <i data-lucide="terminal" class="lucide-icon"></i> <span>Command Palette</span> <kbd class="kbd-hint">Ctrl+K</kbd>
                     </button>
-                    <button class="dropdown-item" onclick="toggleHighDensityView()">
-                        <i data-lucide="layout-grid" class="lucide-icon"></i> Toggle High-Density View
+                    <button class="dropdown-item" id="densityToggleBtn" onclick="toggleHighDensityView()">
+                        <i data-lucide="layout-grid" class="lucide-icon"></i> <span>Toggle High-Density View</span>
                     </button>
                     <button class="dropdown-item" onclick="toggleFloatingCopilot(true)">
                         <i data-lucide="brain-circuit" class="lucide-icon"></i> Open AI Copilot <kbd class="kbd-hint">Ctrl+J</kbd>
                     </button>
 
                     <div class="dropdown-category-title">⚙️ Governance & Utilities</div>
-                    <button class="dropdown-item" onclick="startTour()">
-                        <i data-lucide="help-circle" class="lucide-icon"></i> Guided Tour Walkthrough
+                    <button class="dropdown-item" id="headerTourBtn" onclick="startTour()">
+                        <i data-lucide="help-circle" class="lucide-icon"></i> <span class="headerBtnLabel">Guided Tour Walkthrough</span>
                     </button>
-                    <button class="dropdown-item" onclick="reloadData()">
-                        <i data-lucide="refresh-cw" class="lucide-icon"></i> Refresh & Sync Data
+                    <button class="dropdown-item" id="headerReloadBtn" onclick="reloadData()">
+                        <i data-lucide="refresh-cw" class="lucide-icon"></i> <span class="headerBtnLabel">Refresh & Sync Data</span>
                     </button>
-                    <button class="dropdown-item" onclick="location.href='/settings'">
-                        <i data-lucide="settings" class="lucide-icon"></i> Settings & Role Permissions
+                    <button class="dropdown-item" id="settingsBtn" onclick="location.href='/settings'">
+                        <i data-lucide="settings" class="lucide-icon"></i> <span class="headerBtnLabel">Settings & Role Permissions</span>
                     </button>
-                    <button class="dropdown-item" onclick="document.getElementById('themeToggleBtn').click()">
-                        <i data-lucide="sun-moon" class="lucide-icon"></i> Switch Dark / Light Theme
+                    <button class="dropdown-item" id="themeToggleBtn" type="button">
+                        <i data-lucide="sun-moon" class="lucide-icon themeIcon"></i> <span class="themeLabel">Switch Dark / Light Theme</span>
                     </button>
 
-                    <div class="mobile-lang-section">
+                    <div class="mobile-lang-section" id="langDropdownContainer">
                         <span class="mobile-lang-title">🌍 Select Global Language</span>
-                        <div class="mobile-lang-grid">
+                        <button id="langSelectBtn" style="display:none;" type="button" aria-label="Change Language"></button>
+                        <div class="mobile-lang-grid" id="langDropdownMenu">
                             <button type="button" class="lang-quick-btn active" data-lang="en" onclick="qiploI18n.setLanguage('en')">🇺🇸 EN</button>
                             <button type="button" class="lang-quick-btn" data-lang="es" onclick="qiploI18n.setLanguage('es')">🇪🇸 ES</button>
                             <button type="button" class="lang-quick-btn" data-lang="fr" onclick="qiploI18n.setLanguage('fr')">🇫🇷 FR</button>
