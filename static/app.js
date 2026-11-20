@@ -6193,7 +6193,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         mobileMenuDropdown.addEventListener('click', (e) => {
-            if (e.target.closest('.dropdown-item') || e.target.closest('.lang-quick-btn')) {
+            if (e.target.closest('summary')) return;
+            if (e.target.closest('.dropdown-item') || e.target.closest('.lang-quick-btn') || e.target.closest('.lang-grid-card')) {
                 mobileMenuDropdown.classList.remove('visible');
                 mobileMenuBtn.classList.remove('active');
             }

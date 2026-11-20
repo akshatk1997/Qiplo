@@ -88,108 +88,289 @@
                     </svg>
                 </button>
                 <div id="mobileMenuDropdown" class="mobile-menu-dropdown header-more-dropdown">
-                    <!-- User Profile / Session Status -->
+                    <!-- Symmetrical User Session Banner -->
                     <div class="dropdown-user-session" id="userProfileBadge" title="Authorized Role: Enterprise Admin Session">
-                        <span class="user-status-dot"></span>
-                        <span class="userProfileRole">Admin Session</span>
-                    </div>
-
-                    <div class="dropdown-category-title">📊 Executive Exports & Telemetry</div>
-                    <div id="liveTrackingBadge" class="dropdown-telemetry-badge" title="Live Data File Telemetry Engine Active">
-                        <span class="live-pulse-dot" style="width: 6px; height: 6px; border-radius: 50%; background: #22c55e; display: inline-block; box-shadow: 0 0 8px #22c55e; animation: livePulse 2s infinite;"></span>
-                        <span id="liveTrackingText">Live Telemetry Active</span>
-                    </div>
-                    <button class="dropdown-item" onclick="document.getElementById('exportReportBtn').click()">
-                        <i data-lucide="bar-chart-3" class="lucide-icon"></i> Full Analysis Report
-                    </button>
-                    <button class="dropdown-item" onclick="document.getElementById('exportTableauBtn').click()">
-                        <i data-lucide="trending-up" class="lucide-icon"></i> Tableau Workbook (.twb)
-                    </button>
-                    <button class="dropdown-item" onclick="document.getElementById('exportPowerBiBtn').click()">
-                        <i data-lucide="line-chart" class="lucide-icon"></i> Power BI Template (.pbit)
-                    </button>
-                    <button class="dropdown-item" id="exportExcelBtn" onclick="exportExcel()">
-                        <i data-lucide="file-spreadsheet" class="lucide-icon"></i> <span>Excel Dataset (.xlsx)</span>
-                    </button>
-                    <button class="dropdown-item" id="exportPdfBtn" onclick="exportPdf()">
-                        <i data-lucide="file-text" class="lucide-icon"></i> <span>Executive PDF Report</span>
-                    </button>
-
-                    <div class="dropdown-category-title">🧭 Workspaces & Sub-header Tabs</div>
-                    <button class="dropdown-item" onclick="switchTab('overview')">
-                        <i data-lucide="layout-dashboard" class="lucide-icon"></i> Overview Dashboard
-                    </button>
-                    <button class="dropdown-item" onclick="switchTab('specials')">
-                        <i data-lucide="layers" class="lucide-icon"></i> Specials & KPIs
-                    </button>
-                    <button class="dropdown-item" onclick="switchTab('actions')">
-                        <i data-lucide="zap" class="lucide-icon"></i> Prescriptive Actions & SLAs
-                    </button>
-                    <button class="dropdown-item" onclick="switchTab('customers')">
-                        <i data-lucide="users" class="lucide-icon"></i> Customers Explorer
-                    </button>
-                    <button class="dropdown-item" onclick="switchTab('business')">
-                        <i data-lucide="briefcase" class="lucide-icon"></i> Business & Revenue Hub
-                    </button>
-                    <button class="dropdown-item" onclick="switchTab('sandbox')">
-                        <i data-lucide="flask-conical" class="lucide-icon"></i> Sandbox What-If Simulator
-                    </button>
-                    <button class="dropdown-item" onclick="switchTab('presentation')">
-                        <i data-lucide="presentation" class="lucide-icon"></i> Gamma Presentation Engine
-                    </button>
-                    <button class="dropdown-item" id="headerGuideBtn" onclick="switchTab('guide')">
-                        <i data-lucide="book-marked" class="lucide-icon"></i> <span class="headerBtnLabel">Governance & User Guide</span>
-                    </button>
-
-                    <div class="dropdown-category-title">🛠️ Sidebars & System Tools</div>
-                    <button class="dropdown-item" id="toggleSourcesBtn" onclick="toggleSourcesSidebar()">
-                        <i data-lucide="panel-left-close" class="lucide-icon"></i> <span class="hide-mobile">Datasets Sidebar</span> <kbd class="kbd-hint">[</kbd>
-                    </button>
-                    <button class="dropdown-item" id="toggleNotesBtn" onclick="toggleNotesSidebar()">
-                        <i data-lucide="panel-right-close" class="lucide-icon"></i> <span class="hide-mobile">Notes Sidebar</span> <kbd class="kbd-hint">]</kbd>
-                    </button>
-                    <button class="dropdown-item" id="cmdPaletteBtn" onclick="openCommandPalette()">
-                        <i data-lucide="terminal" class="lucide-icon"></i> <span>Command Palette</span> <kbd class="kbd-hint">Ctrl+K</kbd>
-                    </button>
-                    <button class="dropdown-item" id="densityToggleBtn" onclick="toggleHighDensityView()">
-                        <i data-lucide="layout-grid" class="lucide-icon"></i> <span>Toggle High-Density View</span>
-                    </button>
-                    <button class="dropdown-item" onclick="toggleFloatingCopilot(true)">
-                        <i data-lucide="brain-circuit" class="lucide-icon"></i> Open AI Copilot <kbd class="kbd-hint">Ctrl+J</kbd>
-                    </button>
-
-                    <div class="dropdown-category-title">⚙️ Governance & Utilities</div>
-                    <button class="dropdown-item" id="headerTourBtn" onclick="startTour()">
-                        <i data-lucide="help-circle" class="lucide-icon"></i> <span class="headerBtnLabel">Guided Tour Walkthrough</span>
-                    </button>
-                    <button class="dropdown-item" id="headerReloadBtn" onclick="reloadData()">
-                        <i data-lucide="refresh-cw" class="lucide-icon"></i> <span class="headerBtnLabel">Refresh & Sync Data</span>
-                    </button>
-                    <button class="dropdown-item" id="settingsBtn" onclick="location.href='/settings'">
-                        <i data-lucide="settings" class="lucide-icon"></i> <span class="headerBtnLabel">Settings & Role Permissions</span>
-                    </button>
-                    <button class="dropdown-item" id="themeToggleBtn" type="button">
-                        <i data-lucide="sun-moon" class="lucide-icon themeIcon"></i> <span class="themeLabel">Switch Dark / Light Theme</span>
-                    </button>
-
-                    <div class="mobile-lang-section" id="langDropdownContainer">
-                        <span class="mobile-lang-title">🌍 Select Global Language</span>
-                        <button id="langSelectBtn" style="display:none;" type="button" aria-label="Change Language"></button>
-                        <div class="mobile-lang-grid" id="langDropdownMenu">
-                            <button type="button" class="lang-quick-btn active" data-lang="en" onclick="qiploI18n.setLanguage('en')">🇺🇸 EN</button>
-                            <button type="button" class="lang-quick-btn" data-lang="es" onclick="qiploI18n.setLanguage('es')">🇪🇸 ES</button>
-                            <button type="button" class="lang-quick-btn" data-lang="fr" onclick="qiploI18n.setLanguage('fr')">🇫🇷 FR</button>
-                            <button type="button" class="lang-quick-btn" data-lang="de" onclick="qiploI18n.setLanguage('de')">🇩🇪 DE</button>
-                            <button type="button" class="lang-quick-btn" data-lang="zh" onclick="qiploI18n.setLanguage('zh')">🇨🇳 ZH</button>
-                            <button type="button" class="lang-quick-btn" data-lang="ja" onclick="qiploI18n.setLanguage('ja')">🇯🇵 JA</button>
-                            <button type="button" class="lang-quick-btn" data-lang="pt" onclick="qiploI18n.setLanguage('pt')">🇧🇷 PT</button>
-                            <button type="button" class="lang-quick-btn" data-lang="ar" onclick="qiploI18n.setLanguage('ar')">🇸🇦 AR</button>
-                            <button type="button" class="lang-quick-btn" data-lang="hi" onclick="qiploI18n.setLanguage('hi')">🇮🇳 HI</button>
-                            <button type="button" class="lang-quick-btn" data-lang="ru" onclick="qiploI18n.setLanguage('ru')">🇷🇺 RU</button>
+                        <div class="user-session-left">
+                            <span class="user-status-dot"></span>
+                            <span class="userProfileRole">Authorized Admin Session</span>
                         </div>
+                        <span class="user-session-pill">Active</span>
                     </div>
-                </div>
-            </div>
+
+                    <!-- Category Folder 1: Executive Telemetry & Exports -->
+                    <details class="menu-folder" open>
+                        <summary class="folder-header">
+                            <div class="folder-header-left">
+                                <span class="folder-icon-box"><i data-lucide="bar-chart-3" class="lucide-icon"></i></span>
+                                <span class="folder-title">Executive Exports & Telemetry</span>
+                            </div>
+                            <div class="folder-header-right">
+                                <span class="folder-pill">6 items</span>
+                                <i data-lucide="chevron-down" class="folder-chevron"></i>
+                            </div>
+                        </summary>
+                        <div class="folder-content">
+                            <button class="dropdown-item" type="button" onclick="document.getElementById('exportReportBtn').click()">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="file-bar-chart" class="lucide-icon"></i></span>
+                                    <span class="item-label">Full Analysis Report</span>
+                                </div>
+                                <span class="item-meta">HTML</span>
+                            </button>
+                            <button class="dropdown-item" type="button" onclick="document.getElementById('exportTableauBtn').click()">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="trending-up" class="lucide-icon"></i></span>
+                                    <span class="item-label">Tableau Workbook</span>
+                                </div>
+                                <span class="item-meta">.twb</span>
+                            </button>
+                            <button class="dropdown-item" type="button" onclick="document.getElementById('exportPowerBiBtn').click()">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="line-chart" class="lucide-icon"></i></span>
+                                    <span class="item-label">Power BI Template</span>
+                                </div>
+                                <span class="item-meta">.pbit</span>
+                            </button>
+                            <button class="dropdown-item" type="button" id="exportExcelBtn" onclick="exportExcel()">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="file-spreadsheet" class="lucide-icon"></i></span>
+                                    <span class="item-label"><span>Excel Dataset</span></span>
+                                </div>
+                                <span class="item-meta">.xlsx</span>
+                            </button>
+                            <button class="dropdown-item" type="button" id="exportPdfBtn" onclick="exportPdf()">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="file-text" class="lucide-icon"></i></span>
+                                    <span class="item-label"><span>Executive Audit Report</span></span>
+                                </div>
+                                <span class="item-meta">.pdf</span>
+                            </button>
+                            <div class="dropdown-item telemetry-item" id="liveTrackingBadge" title="Live Data File Telemetry Engine Active">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="activity" class="lucide-icon"></i></span>
+                                    <span class="item-label">Live Data Stream</span>
+                                </div>
+                                <span class="item-meta telemetry-meta"><span class="live-pulse-dot"></span> <span id="liveTrackingText">Active</span></span>
+                            </div>
+                        </div>
+                    </details>
+
+                    <!-- Category Folder 2: Workspaces & Dashboards -->
+                    <details class="menu-folder" open>
+                        <summary class="folder-header">
+                            <div class="folder-header-left">
+                                <span class="folder-icon-box"><i data-lucide="layout-grid" class="lucide-icon"></i></span>
+                                <span class="folder-title">Workspaces & Suites</span>
+                            </div>
+                            <div class="folder-header-right">
+                                <span class="folder-pill">8 suites</span>
+                                <i data-lucide="chevron-down" class="folder-chevron"></i>
+                            </div>
+                        </summary>
+                        <div class="folder-content">
+                            <button class="dropdown-item" type="button" onclick="switchTab('overview')">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="layout-dashboard" class="lucide-icon"></i></span>
+                                    <span class="item-label">Overview Dashboard</span>
+                                </div>
+                                <kbd class="kbd-hint">1</kbd>
+                            </button>
+                            <button class="dropdown-item" type="button" onclick="switchTab('specials')">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="layers" class="lucide-icon"></i></span>
+                                    <span class="item-label">Specials & KPIs</span>
+                                </div>
+                                <kbd class="kbd-hint">2</kbd>
+                            </button>
+                            <button class="dropdown-item" type="button" onclick="switchTab('actions')">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="zap" class="lucide-icon"></i></span>
+                                    <span class="item-label">Prescriptive Actions & SLAs</span>
+                                </div>
+                                <kbd class="kbd-hint">3</kbd>
+                            </button>
+                            <button class="dropdown-item" type="button" onclick="switchTab('customers')">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="users" class="lucide-icon"></i></span>
+                                    <span class="item-label">Customers Explorer</span>
+                                </div>
+                                <kbd class="kbd-hint">4</kbd>
+                            </button>
+                            <button class="dropdown-item" type="button" onclick="switchTab('business')">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="briefcase" class="lucide-icon"></i></span>
+                                    <span class="item-label">Business & Revenue Hub</span>
+                                </div>
+                                <kbd class="kbd-hint">5</kbd>
+                            </button>
+                            <button class="dropdown-item" type="button" onclick="switchTab('sandbox')">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="flask-conical" class="lucide-icon"></i></span>
+                                    <span class="item-label">Sandbox Simulator</span>
+                                </div>
+                                <kbd class="kbd-hint">6</kbd>
+                            </button>
+                            <button class="dropdown-item" type="button" onclick="switchTab('presentation')">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="presentation" class="lucide-icon"></i></span>
+                                    <span class="item-label">Presentation Engine</span>
+                                </div>
+                                <kbd class="kbd-hint">7</kbd>
+                            </button>
+                            <button class="dropdown-item" type="button" id="headerGuideBtn" onclick="switchTab('guide')">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="book-marked" class="lucide-icon"></i></span>
+                                    <span class="item-label"><span class="headerBtnLabel">Governance & Guide</span></span>
+                                </div>
+                                <kbd class="kbd-hint">8</kbd>
+                            </button>
+                        </div>
+                    </details>
+
+                    <!-- Category Folder 3: Platform Sidebars & Tools -->
+                    <details class="menu-folder" open>
+                        <summary class="folder-header">
+                            <div class="folder-header-left">
+                                <span class="folder-icon-box"><i data-lucide="wrench" class="lucide-icon"></i></span>
+                                <span class="folder-title">Platform Tools & Sidebars</span>
+                            </div>
+                            <div class="folder-header-right">
+                                <span class="folder-pill">5 tools</span>
+                                <i data-lucide="chevron-down" class="folder-chevron"></i>
+                            </div>
+                        </summary>
+                        <div class="folder-content">
+                            <button class="dropdown-item" type="button" id="toggleSourcesBtn" onclick="toggleSourcesSidebar()">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="panel-left-close" class="lucide-icon"></i></span>
+                                    <span class="item-label"><span class="hide-mobile">Datasets Sidebar</span></span>
+                                </div>
+                                <kbd class="kbd-hint">[</kbd>
+                            </button>
+                            <button class="dropdown-item" type="button" id="toggleNotesBtn" onclick="toggleNotesSidebar()">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="panel-right-close" class="lucide-icon"></i></span>
+                                    <span class="item-label"><span class="hide-mobile">Notes Sidebar</span></span>
+                                </div>
+                                <kbd class="kbd-hint">]</kbd>
+                            </button>
+                            <button class="dropdown-item" type="button" id="cmdPaletteBtn" onclick="openCommandPalette()">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="terminal" class="lucide-icon"></i></span>
+                                    <span class="item-label"><span>Command Palette</span></span>
+                                </div>
+                                <kbd class="kbd-hint">Ctrl+K</kbd>
+                            </button>
+                            <button class="dropdown-item" type="button" id="densityToggleBtn" onclick="toggleHighDensityView()">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="layout-grid" class="lucide-icon"></i></span>
+                                    <span class="item-label"><span>High-Density View</span></span>
+                                </div>
+                                <span class="item-meta">Dense</span>
+                            </button>
+                            <button class="dropdown-item" type="button" onclick="toggleFloatingCopilot(true)">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="brain-circuit" class="lucide-icon copilot-brain-icon"></i></span>
+                                    <span class="item-label"><span>AI Copilot Advisor</span></span>
+                                </div>
+                                <kbd class="kbd-hint">Ctrl+J</kbd>
+                            </button>
+                        </div>
+                    </details>
+
+                    <!-- Category Folder 4: Governance & Utilities -->
+                    <details class="menu-folder" open>
+                        <summary class="folder-header">
+                            <div class="folder-header-left">
+                                <span class="folder-icon-box"><i data-lucide="shield-check" class="lucide-icon"></i></span>
+                                <span class="folder-title">Governance & System</span>
+                            </div>
+                            <div class="folder-header-right">
+                                <span class="folder-pill">4 controls</span>
+                                <i data-lucide="chevron-down" class="folder-chevron"></i>
+                            </div>
+                        </summary>
+                        <div class="folder-content">
+                            <button class="dropdown-item" type="button" id="headerTourBtn" onclick="startTour()">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="help-circle" class="lucide-icon"></i></span>
+                                    <span class="item-label"><span class="headerBtnLabel">Guided Walkthrough</span></span>
+                                </div>
+                                <span class="item-meta">Tour</span>
+                            </button>
+                            <button class="dropdown-item" type="button" id="headerReloadBtn" onclick="reloadData()">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="refresh-cw" class="lucide-icon"></i></span>
+                                    <span class="item-label"><span class="headerBtnLabel">Sync Telemetry</span></span>
+                                </div>
+                                <span class="item-meta">Sync</span>
+                            </button>
+                            <button class="dropdown-item" type="button" id="settingsBtn" onclick="location.href='/settings'">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="settings" class="lucide-icon"></i></span>
+                                    <span class="item-label"><span class="headerBtnLabel">Settings & Roles</span></span>
+                                </div>
+                                <span class="item-meta">Config</span>
+                            </button>
+                            <button class="dropdown-item" type="button" id="themeToggleBtn">
+                                <div class="item-left">
+                                    <span class="item-icon-box"><i data-lucide="sun-moon" class="lucide-icon themeIcon"></i></span>
+                                    <span class="item-label"><span class="themeLabel">Switch Dark / Light Theme</span></span>
+                                </div>
+                                <span class="item-meta">Theme</span>
+                            </button>
+                        </div>
+                    </details>
+
+                    <!-- Category Folder 5: Global Localization & Languages -->
+                    <details class="menu-folder" open id="langDropdownContainer">
+                        <summary class="folder-header">
+                            <div class="folder-header-left">
+                                <span class="folder-icon-box"><i data-lucide="globe" class="lucide-icon"></i></span>
+                                <span class="folder-title">Global Languages</span>
+                            </div>
+                            <div class="folder-header-right">
+                                <span class="folder-pill">10 languages</span>
+                                <i data-lucide="chevron-down" class="folder-chevron"></i>
+                            </div>
+                        </summary>
+                        <button id="langSelectBtn" style="display:none;" type="button" aria-label="Change Language"></button>
+                        <div class="folder-content">
+                            <div class="lang-folder-grid mobile-lang-grid" id="langDropdownMenu">
+                                <button type="button" class="lang-grid-card lang-quick-btn active" data-lang="en" onclick="qiploI18n.setLanguage('en')">
+                                    <span class="lang-flag">🇺🇸</span> <span class="lang-name">English</span> <span class="lang-code">EN</span>
+                                </button>
+                                <button type="button" class="lang-grid-card lang-quick-btn" data-lang="es" onclick="qiploI18n.setLanguage('es')">
+                                    <span class="lang-flag">🇪🇸</span> <span class="lang-name">Español</span> <span class="lang-code">ES</span>
+                                </button>
+                                <button type="button" class="lang-grid-card lang-quick-btn" data-lang="fr" onclick="qiploI18n.setLanguage('fr')">
+                                    <span class="lang-flag">🇫🇷</span> <span class="lang-name">Français</span> <span class="lang-code">FR</span>
+                                </button>
+                                <button type="button" class="lang-grid-card lang-quick-btn" data-lang="de" onclick="qiploI18n.setLanguage('de')">
+                                    <span class="lang-flag">🇩🇪</span> <span class="lang-name">Deutsch</span> <span class="lang-code">DE</span>
+                                </button>
+                                <button type="button" class="lang-grid-card lang-quick-btn" data-lang="zh" onclick="qiploI18n.setLanguage('zh')">
+                                    <span class="lang-flag">🇨🇳</span> <span class="lang-name">简体中文</span> <span class="lang-code">ZH</span>
+                                </button>
+                                <button type="button" class="lang-grid-card lang-quick-btn" data-lang="ja" onclick="qiploI18n.setLanguage('ja')">
+                                    <span class="lang-flag">🇯🇵</span> <span class="lang-name">日本語</span> <span class="lang-code">JA</span>
+                                </button>
+                                <button type="button" class="lang-grid-card lang-quick-btn" data-lang="pt" onclick="qiploI18n.setLanguage('pt')">
+                                    <span class="lang-flag">🇧🇷</span> <span class="lang-name">Português</span> <span class="lang-code">PT</span>
+                                </button>
+                                <button type="button" class="lang-grid-card lang-quick-btn" data-lang="ar" onclick="qiploI18n.setLanguage('ar')">
+                                    <span class="lang-flag">🇸🇦</span> <span class="lang-name">العربية</span> <span class="lang-code">AR</span>
+                                </button>
+                                <button type="button" class="lang-grid-card lang-quick-btn" data-lang="hi" onclick="qiploI18n.setLanguage('hi')">
+                                    <span class="lang-flag">🇮🇳</span> <span class="lang-name">हिन्दी</span> <span class="lang-code">HI</span>
+                                </button>
+                                <button type="button" class="lang-grid-card lang-quick-btn" data-lang="ru" onclick="qiploI18n.setLanguage('ru')">
+                                    <span class="lang-flag">🇷🇺</span> <span class="lang-name">Русский</span> <span class="lang-code">RU</span>
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                </div>            </div>
         </div>
     </header>
 
