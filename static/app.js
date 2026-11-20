@@ -1142,6 +1142,19 @@ if (excelBtn) {
         window.open('/api/export/excel', '_blank');
     });
 }
+const pdfBtn = document.getElementById('exportPdfBtn');
+if (pdfBtn) {
+    pdfBtn.addEventListener('click', () => {
+        if (!predictionData || !predictionData.length) {
+            alert("No prediction data available to analyze. Please upload a customer file first.");
+            return;
+        }
+        const company = encodeURIComponent(document.getElementById('companyNameInput').value.trim() || '');
+        const currencySelect = document.getElementById('currencySelect');
+        const currency = currencySelect ? encodeURIComponent(currencySelect.value) : 'USD';
+        window.open(`/api/export/pdf?company=${company}&currency=${currency}`, '_blank');
+    });
+}
 document.getElementById('exportReportBtn').addEventListener('click', () => {
     if (!predictionData || !predictionData.length) {
         alert("No prediction data available to analyze. Please upload a customer file first.");
@@ -5227,6 +5240,11 @@ function applyRolePermissions(role) {
         if (tabBody) tabBody.classList.remove('hidden');
     }
     localStorage.setItem('active_tab', activeTab);
+    const userRoleEl = document.querySelector('.userProfileRole');
+    if (userRoleEl) {
+        const roleLabel = role ? (role.charAt(0).toUpperCase() + role.slice(1)) : 'Admin';
+        userRoleEl.textContent = `${roleLabel} Session`;
+    }
 }
 
 async function loadEnterpriseFeatures() {

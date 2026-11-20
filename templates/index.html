@@ -52,6 +52,9 @@
                     <span class="sloganBadge" style="font-size: 0.72rem; background: rgba(79, 70, 229, 0.12); border: 1px solid rgba(79, 70, 229, 0.2); color: #4F46E5; padding: 3px 8px; border-radius: 999px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; line-height: 1;">
                         <i data-lucide="shield-check" class="lucide-icon" style="width: 12px; height: 12px;"></i> Never lose a customer again
                     </span>
+                    <span class="demoBadge" id="demoBadge" style="display: none;">
+                        <i data-lucide="flask-conical" class="lucide-icon" style="width: 11px; height: 11px;"></i> Demo Sandbox Active
+                    </span>
                 </div>
                 <span class="appSub">Business Decision Intelligence</span>
             </div>
@@ -69,6 +72,12 @@
                 </button>
                 <button id="exportPowerBiBtn" class="ghostBtn" type="button" title="Export Power BI Template (.pbit)">
                     <i data-lucide="line-chart" class="lucide-icon"></i> <span>Power BI</span>
+                </button>
+                <button id="exportExcelBtn" class="ghostBtn" type="button" title="Export Excel Report (.xlsx)">
+                    <i data-lucide="file-spreadsheet" class="lucide-icon"></i> <span>Excel</span>
+                </button>
+                <button id="exportPdfBtn" class="ghostBtn" type="button" title="Export Executive Audit PDF">
+                    <i data-lucide="file-text" class="lucide-icon"></i> <span>PDF</span>
                 </button>
             </div>
             <div id="liveTrackingBadge" class="liveTrackingBadge" title="Live Data File Telemetry Engine Active">
@@ -106,6 +115,10 @@
             <button id="settingsBtn" class="ghostBtn" onclick="location.href='/settings'" type="button" title="System Settings & Role Permissions">
                 <i data-lucide="settings" class="lucide-icon"></i> <span class="headerBtnLabel">Settings</span>
             </button>
+            <div class="userProfileBadge" id="userProfileBadge" title="Authorized Role: Enterprise Admin Session">
+                <span class="user-status-dot"></span>
+                <span class="userProfileRole">Admin Session</span>
+            </div>
             <!-- Mobile 3-Line Actions Menu -->
             <div class="mobile-actions-menu">
                 <button id="mobileMenuBtn" class="ghostBtn mobile-menu-btn iconOnlyBtn" type="button" aria-label="More Actions" title="More Actions">
@@ -123,6 +136,9 @@
                     </button>
                     <button class="dropdown-item" onclick="document.getElementById('exportExcelBtn').click()">
                         <i data-lucide="file-spreadsheet" class="lucide-icon"></i> Excel
+                    </button>
+                    <button class="dropdown-item" onclick="document.getElementById('exportPdfBtn').click()">
+                        <i data-lucide="file-text" class="lucide-icon"></i> Executive PDF Report
                     </button>
                     <button class="dropdown-item" onclick="startTour()">
                         <i data-lucide="help-circle" class="lucide-icon"></i> Tour Walkthrough
