@@ -39,7 +39,7 @@
     <header class="topbar">
         <div class="topbarLeft">
             <div class="logoBox" aria-label="Qiplo Logo">
-                <svg class="logoSvg" viewBox="0 0 32 32" width="32" height="32" role="img" style="display: block;">
+                <svg class="logoSvg" viewBox="0 0 32 32" width="34" height="34" role="img" style="display: block;">
                     <defs>
                         <linearGradient id="qiploGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                             <stop offset="0%" stop-color="#8B5CF6" />
@@ -51,40 +51,105 @@
                     <circle cx="18.5" cy="18.5" r="4" fill="none" stroke="#FFFFFF" stroke-width="2.5" />
                     <circle cx="21" cy="21" r="1.5" fill="url(#qiploGrad)" />
                 </svg>
-                <span class="logoSubLabel">QIPLO</span>
+                <span class="appName logoBrandName" id="brandTitle">Qiplo</span>
             </div>
             <div class="topbarTitle">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                    <span class="appName" id="brandTitle">Qiplo</span>
                     <span class="sloganBadge" style="font-size: 0.72rem; background: rgba(79, 70, 229, 0.12); border: 1px solid rgba(79, 70, 229, 0.2); color: #4F46E5; padding: 3px 8px; border-radius: 999px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; line-height: 1;">
-                        <i data-lucide="shield-check" class="lucide-icon" style="width: 12px; height: 12px;"></i> Never lose a customer again
+                        <i data-lucide="shield-check" class="lucide-icon" style="width: 12px; height: 12px;"></i> <span data-i18n="slogan">Never lose a customer again</span>
                     </span>
                     <span class="demoBadge" id="demoBadge" style="display: none;">
-                        <i data-lucide="flask-conical" class="lucide-icon" style="width: 11px; height: 11px;"></i> Demo Sandbox Active
+                        <i data-lucide="flask-conical" class="lucide-icon" style="width: 11px; height: 11px;"></i> <span data-i18n="demo_badge">Demo Sandbox Active</span>
                     </span>
                 </div>
-                <span class="appSub">Business Decision Intelligence</span>
             </div>
-            <input id="companyNameInput" type="text" placeholder="Company name (optional)" autocomplete="off" />
+            <input id="companyNameInput" type="text" placeholder="Company name (optional)" data-i18n="company_placeholder" autocomplete="off" />
         </div>
 
         <!-- Middle Feature Option Capsules -->
         <div class="topbarCenter">
             <div class="capsule-group">
                 <button id="exportReportBtn" class="primaryBtn" type="button" title="Generate Comprehensive Executive Analysis Report">
-                    <i data-lucide="bar-chart-3" class="lucide-icon"></i> <span>Report</span>
+                    <i data-lucide="bar-chart-3" class="lucide-icon"></i> <span data-i18n="btn_report">Report</span>
                 </button>
                 <button id="exportTableauBtn" class="ghostBtn" type="button" title="Export Tableau Packaged Workbook (.twbx)">
-                    <i data-lucide="trending-up" class="lucide-icon"></i> <span>Tableau</span>
+                    <i data-lucide="trending-up" class="lucide-icon"></i> <span data-i18n="btn_tableau">Tableau</span>
                 </button>
                 <button id="exportPowerBiBtn" class="ghostBtn" type="button" title="Export Power BI Template (.pbit)">
-                    <i data-lucide="line-chart" class="lucide-icon"></i> <span>Power BI</span>
+                    <i data-lucide="line-chart" class="lucide-icon"></i> <span data-i18n="btn_powerbi">Power BI</span>
                 </button>
             </div>
         </div>
 
         <!-- Right Utility & Settings (All Actions In Master 3-Dot Menu) -->
         <div class="topbarRight">
+            <!-- Global Language Switcher Capsule -->
+            <div class="header-lang-wrapper" id="headerLangWrapper">
+                <button type="button" class="ghostBtn header-lang-btn" id="headerLangBtn" onclick="toggleHeaderLangMenu(event)" aria-label="Change Language" title="Select Global Language (10 Available)">
+                    <span class="header-lang-flag" id="headerLangFlag">🇺🇸</span>
+                    <span class="header-lang-code" id="headerLangCode">EN</span>
+                    <i data-lucide="chevron-down" style="width: 12px; height: 12px; margin-left: 2px;"></i>
+                </button>
+                <div class="header-lang-dropdown hidden" id="headerLangDropdown">
+                    <div class="header-lang-dropdown-head">
+                        <i data-lucide="globe" style="width: 14px; height: 14px; color: var(--accent);"></i>
+                        <span data-i18n="lang_select_title">Select Language</span>
+                    </div>
+                    <div class="header-lang-list">
+                        <button type="button" class="header-lang-item active" data-lang="en" onclick="qiploI18n.setLanguage('en'); closeHeaderLangMenu();">
+                            <span class="header-lang-item-flag">🇺🇸</span>
+                            <span class="header-lang-item-name">English</span>
+                            <span class="header-lang-item-code">EN</span>
+                        </button>
+                        <button type="button" class="header-lang-item" data-lang="es" onclick="qiploI18n.setLanguage('es'); closeHeaderLangMenu();">
+                            <span class="header-lang-item-flag">🇪🇸</span>
+                            <span class="header-lang-item-name">Español</span>
+                            <span class="header-lang-item-code">ES</span>
+                        </button>
+                        <button type="button" class="header-lang-item" data-lang="fr" onclick="qiploI18n.setLanguage('fr'); closeHeaderLangMenu();">
+                            <span class="header-lang-item-flag">🇫🇷</span>
+                            <span class="header-lang-item-name">Français</span>
+                            <span class="header-lang-item-code">FR</span>
+                        </button>
+                        <button type="button" class="header-lang-item" data-lang="de" onclick="qiploI18n.setLanguage('de'); closeHeaderLangMenu();">
+                            <span class="header-lang-item-flag">🇩🇪</span>
+                            <span class="header-lang-item-name">Deutsch</span>
+                            <span class="header-lang-item-code">DE</span>
+                        </button>
+                        <button type="button" class="header-lang-item" data-lang="zh" onclick="qiploI18n.setLanguage('zh'); closeHeaderLangMenu();">
+                            <span class="header-lang-item-flag">🇨🇳</span>
+                            <span class="header-lang-item-name">简体中文</span>
+                            <span class="header-lang-item-code">ZH</span>
+                        </button>
+                        <button type="button" class="header-lang-item" data-lang="ja" onclick="qiploI18n.setLanguage('ja'); closeHeaderLangMenu();">
+                            <span class="header-lang-item-flag">🇯🇵</span>
+                            <span class="header-lang-item-name">日本語</span>
+                            <span class="header-lang-item-code">JA</span>
+                        </button>
+                        <button type="button" class="header-lang-item" data-lang="pt" onclick="qiploI18n.setLanguage('pt'); closeHeaderLangMenu();">
+                            <span class="header-lang-item-flag">🇧🇷</span>
+                            <span class="header-lang-item-name">Português</span>
+                            <span class="header-lang-item-code">PT</span>
+                        </button>
+                        <button type="button" class="header-lang-item" data-lang="ar" onclick="qiploI18n.setLanguage('ar'); closeHeaderLangMenu();">
+                            <span class="header-lang-item-flag">🇸🇦</span>
+                            <span class="header-lang-item-name">العربية</span>
+                            <span class="header-lang-item-code">AR</span>
+                        </button>
+                        <button type="button" class="header-lang-item" data-lang="hi" onclick="qiploI18n.setLanguage('hi'); closeHeaderLangMenu();">
+                            <span class="header-lang-item-flag">🇮🇳</span>
+                            <span class="header-lang-item-name">हिन्दी</span>
+                            <span class="header-lang-item-code">HI</span>
+                        </button>
+                        <button type="button" class="header-lang-item" data-lang="ru" onclick="qiploI18n.setLanguage('ru'); closeHeaderLangMenu();">
+                            <span class="header-lang-item-flag">🇷🇺</span>
+                            <span class="header-lang-item-name">Русский</span>
+                            <span class="header-lang-item-code">RU</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Master 3-Dot All Features & Actions Menu -->
             <div class="header-actions-menu mobile-actions-menu" id="headerMoreMenuContainer">
                 <button id="mobileMenuBtn" class="ghostBtn mobile-menu-btn iconOnlyBtn header-more-btn" type="button" aria-label="All Platform Features & Actions" title="All Platform Features & Actions (More...)">

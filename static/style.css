@@ -9070,3 +9070,203 @@ body.light-theme .tabStudioLaunchBtn {
     }
 }
 
+/* ==========================================================================
+   Header Logo Box: Qiplo Centered Under Icon & Language Switcher
+   ========================================================================== */
+.logoBox {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 2px !important;
+    flex-shrink: 0 !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    padding: 2px 4px !important;
+}
+
+.logoSvg {
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+.appName.logoBrandName {
+    font-family: var(--font-heading) !important;
+    font-size: 0.74rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+    display: block !important;
+    line-height: 1 !important;
+    margin: 0 auto !important;
+    background: linear-gradient(135deg, #00F5FF 0%, #D946EF 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+body.light-theme .appName.logoBrandName {
+    background: linear-gradient(135deg, #0284C7 0%, #7C3AED 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+/* Header Global Language Dropdown */
+.header-lang-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.header-lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header-lang-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+body.light-theme .header-lang-btn {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    color: #0F172A;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+body.light-theme .header-lang-btn:hover {
+    background: #F8FAFC;
+    border-color: #94A3B8;
+}
+
+.header-lang-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 220px;
+    max-height: 380px;
+    overflow-y: auto;
+    background: #0D111A;
+    border: 1px solid rgba(0, 245, 255, 0.25);
+    border-radius: 12px;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.65), 0 0 20px rgba(0, 245, 255, 0.1);
+    z-index: 1000;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    backdrop-filter: blur(16px);
+    animation: fadeInSlideDown 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header-lang-dropdown.hidden {
+    display: none !important;
+}
+
+body.light-theme .header-lang-dropdown {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    box-shadow: 0 18px 48px rgba(15, 23, 42, 0.18), 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.header-lang-dropdown-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 4px;
+}
+
+body.light-theme .header-lang-dropdown-head {
+    border-bottom-color: #E2E8F0;
+    color: #64748B;
+}
+
+.header-lang-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.header-lang-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 10px;
+    border-radius: 7px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: #E2E8F0;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: all 0.15s ease;
+}
+
+.header-lang-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
+}
+
+.header-lang-item.active {
+    background: rgba(0, 245, 255, 0.12);
+    border-color: rgba(0, 245, 255, 0.35);
+    color: #00F5FF;
+    font-weight: 700;
+}
+
+body.light-theme .header-lang-item {
+    color: #334155;
+}
+
+body.light-theme .header-lang-item:hover {
+    background: #F1F5F9;
+    color: #0F172A;
+}
+
+body.light-theme .header-lang-item.active {
+    background: rgba(2, 132, 199, 0.1);
+    border-color: rgba(2, 132, 199, 0.3);
+    color: #0284C7;
+    font-weight: 700;
+}
+
+.header-lang-item-flag {
+    font-size: 1.05rem;
+    line-height: 1;
+}
+
+.header-lang-item-name {
+    flex: 1;
+}
+
+.header-lang-item-code {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    opacity: 0.65;
+}
+
+

@@ -622,9 +622,10 @@ function renderRows() {
     if (pagControls) {
         pagControls.innerHTML = '';
         if (totalPages > 1) {
+            const t = window.qiploI18n ? window.qiploI18n.t : (k => k);
             const prevBtn = document.createElement('button');
             prevBtn.className = 'paginationBtn';
-            prevBtn.innerHTML = '&lsaquo; Prev';
+            prevBtn.innerHTML = `&lsaquo; ${t('btn_prev') || 'Prev'}`;
             prevBtn.disabled = resultCurrentPage === 1;
             prevBtn.onclick = () => goToResultPage(resultCurrentPage - 1);
             pagControls.appendChild(prevBtn);
@@ -646,7 +647,7 @@ function renderRows() {
 
             const nextBtn = document.createElement('button');
             nextBtn.className = 'paginationBtn';
-            nextBtn.innerHTML = 'Next &rsaquo;';
+            nextBtn.innerHTML = `${t('btn_next') || 'Next'} &rsaquo;`;
             nextBtn.disabled = resultCurrentPage === totalPages;
             nextBtn.onclick = () => goToResultPage(resultCurrentPage + 1);
             pagControls.appendChild(nextBtn);
@@ -654,13 +655,14 @@ function renderRows() {
     }
 
     // 9. Table Headers
+    const t = window.qiploI18n ? window.qiploI18n.t : (k => k);
     const headers = [
-        'Customer Account',
-        'Risk Status',
-        'Predicted Probability',
-        'Risk Drivers',
+        t('th_account') || 'Customer Account',
+        t('th_risk') || 'Risk Status',
+        t('th_prob') || 'Predicted Probability',
+        t('shap_title') || 'Risk Drivers',
         ...extra.map(c => c.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())),
-        'Actions'
+        t('th_action') || 'Actions'
     ];
 
     let thead = table.querySelector('thead');
@@ -722,7 +724,7 @@ function renderRows() {
         const probBarWidth = Math.min(100, Math.max(4, Math.round(probabilityVal * 100)));
         const isHigh = item.prediction_label === highRiskLabel || probabilityVal >= 0.5;
         const labelClass = isHigh ? 'high' : 'low';
-        const labelText = isHigh ? 'High Risk' : 'Low Risk';
+        const labelText = isHigh ? (t('filter_high_risk') || 'High Risk') : (t('filter_low_risk') || 'Low Risk');
 
         let ciText = '';
         if (item.ci_lower !== undefined && item.ci_upper !== undefined) {
@@ -8153,3 +8155,22 @@ function initCategorySlider() {
 
     window.selectMenuCategory = selectCategory;
 }
+
+// Global Internationalization Event Listener
+window.addEventListener('languageChanged', (e) => {
+    // Re-render prediction results table if data is present
+    if (typeof predictionData !== 'undefined' && predictionData && predictionData.length && typeof renderRows === 'function') {
+        renderRows();
+    }
+    // Re-render BI export studio modal if active
+    const biModal = document.getElementById('biExportModal');
+    if (biModal && !biModal.classList.contains('hidden') && typeof renderPowerBiDashboard === 'function') {
+        renderPowerBiDashboard(window.currentBiTarget || 'powerbi');
+    }
+    // Re-render operational tips for current role
+    const roleSelect = document.getElementById('roleSelect');
+    const role = roleSelect ? roleSelect.value : (window.currentAuthorizedRole || 'manager');
+    if (typeof renderAnalyzedTips === 'function') {
+        renderAnalyzedTips(role);
+    }
+});

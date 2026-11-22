@@ -20,6 +20,51 @@
 
     const TRANSLATIONS = {
         en: {
+            lang_select_title: "Select Language",
+            th_account: "Customer Account",
+            th_name: "Account Name",
+            th_segment: "Segment",
+            th_tenure: "Tenure",
+            th_score: "Churn Score",
+            th_status: "Status",
+            th_revenue: "Revenue (ARR)",
+            pbi_title: "Power BI Executive Intelligence Studio",
+            tab_title: "Tableau Executive Intelligence Studio",
+            pbi_sub: "Live Star-Schema Data Model | Enterprise DAX Measures | Zero Manual Repair Deliverables",
+            tab_sub: "Packaged Workbook (.twbx) | 2023.1 XML Schema | Calculated Fields | REST Cloud Publish",
+            page_exec: "Page 1: Executive Overview",
+            page_risk: "Page 2: Churn Risk & Drivers",
+            page_detail: "Page 3: Slicers & Explorer",
+            page_model_pbi: "Page 4: Star Schema & DAX",
+            page_model_tab: "Page 4: Semantic Model & Calculated Fields",
+            page_connectors: "Page 5: Connectors & Deployment",
+            kpi_rev: "Total Revenue",
+            kpi_cust: "Evaluated Customers",
+            kpi_rate: "Portfolio Churn Rate",
+            kpi_risk: "Revenue at Risk",
+            slicer_all: "All Records",
+            slicer_high: "High Risk (≥70%)",
+            slicer_med: "Moderate Risk (30-70%)",
+            slicer_low: "Low Risk (<30%)",
+            dax_title: "Official DAX Measures Suite",
+            tab_calc_title: "Official Tableau Calculated Fields Suite",
+            live_feed_label: "Live Telemetry Feed URL (Web Connector)",
+            btn_copy_url: "Copy URL",
+            btn_prev: "Prev",
+            btn_next: "Next",
+            btn_download_pbi: "Download Power BI Package (.pbip ZIP)",
+            btn_download_tab: "Download Tableau Package (.twbx)",
+            btn_publish_tab: "Publish to Server",
+            btn_push_pbi: "Push Live REST",
+            btn_upload_cust: "Upload Customer Dataset",
+            btn_reset_filters: "Reset Filters",
+            no_predictions: "No Prediction Results Available",
+            no_predictions_sub: "Import a dataset or click below to run ML inference on active business accounts.",
+            no_filter_match: "No Customers Match Active Filters",
+            no_filter_match_sub: "Try clearing your search query or switching the risk filter.",
+            showing_accounts: "Showing accounts",
+            category_slider: "Category Slider",
+            all_categories: "All Categories (25+)",
             // Header
             slogan: "Never lose a customer again",
             demo_badge: "Demo Sandbox Active",
@@ -171,6 +216,51 @@
             chip_3: "Retention advice for high-risk accounts"
         },
         es: {
+            lang_select_title: "Seleccionar Idioma",
+            th_account: "Cuenta de Cliente",
+            th_name: "Nombre de Cuenta",
+            th_segment: "Segmento",
+            th_tenure: "Antigüedad",
+            th_score: "Puntuación de Cancelación",
+            th_status: "Estado",
+            th_revenue: "Ingresos (ARR)",
+            pbi_title: "Power BI Executive Intelligence Studio",
+            tab_title: "Tableau Executive Intelligence Studio",
+            pbi_sub: "Modelo de Datos Star-Schema en Vivo | Medidas DAX Empresariales | Cero Reparaciones Manuales",
+            tab_sub: "Libro empaquetado (.twbx) | Esquema XML 2023.1 | Campos calculados | Publicación REST en la nube",
+            page_exec: "Página 1: Resumen Ejecutivo",
+            page_risk: "Página 2: Riesgo de Cancelación y Factores",
+            page_detail: "Página 3: Segmentadores y Explorador",
+            page_model_pbi: "Página 4: Esquema en Estrella y DAX",
+            page_model_tab: "Página 4: Modelo Semántico y Campos Calculados",
+            page_connectors: "Página 5: Conectores y Despliegue",
+            kpi_rev: "Ingresos Totales",
+            kpi_cust: "Clientes Evaluados",
+            kpi_rate: "Tasa de Cancelación de Cartera",
+            kpi_risk: "Ingresos en Riesgo",
+            slicer_all: "Todos los Registros",
+            slicer_high: "Alto Riesgo (≥70%)",
+            slicer_med: "Riesgo Moderado (30-70%)",
+            slicer_low: "Bajo Riesgo (<30%)",
+            dax_title: "Suite Oficial de Medidas DAX",
+            tab_calc_title: "Suite Oficial de Campos Calculados de Tableau",
+            live_feed_label: "URL de Telemetría en Vivo (Conector Web)",
+            btn_copy_url: "Copiar URL",
+            btn_prev: "Anterior",
+            btn_next: "Siguiente",
+            btn_download_pbi: "Descargar Paquete Power BI (.pbip ZIP)",
+            btn_download_tab: "Descargar Paquete Tableau (.twbx)",
+            btn_publish_tab: "Publicar en Servidor",
+            btn_push_pbi: "Transmitir REST en Vivo",
+            btn_upload_cust: "Subir Conjunto de Datos de Clientes",
+            btn_reset_filters: "Restablecer Filtros",
+            no_predictions: "No hay resultados de predicción disponibles",
+            no_predictions_sub: "Importe un conjunto de datos para ejecutar inferencia de ML en cuentas activas.",
+            no_filter_match: "Ningún cliente coincide con los filtros activos",
+            no_filter_match_sub: "Intente borrar su búsqueda o cambiar el filtro de riesgo.",
+            showing_accounts: "Mostrando cuentas",
+            category_slider: "Control Deslizante de Categoría",
+            all_categories: "Todas las Categorías (25+)",
             // Header
             slogan: "Nunca vuelva a perder un cliente",
             demo_badge: "Modo Demostración Activo",
@@ -322,6 +412,51 @@
             chip_3: "Consejos para cuentas en riesgo crítico"
         },
         fr: {
+            lang_select_title: "Choisir la Langue",
+            th_account: "Compte Client",
+            th_name: "Nom du Compte",
+            th_segment: "Segment",
+            th_tenure: "Ancienneté",
+            th_score: "Score d'Attrition",
+            th_status: "Statut",
+            th_revenue: "Revenu (ARR)",
+            pbi_title: "Studio d'Intelligence Dirigeante Power BI",
+            tab_title: "Studio d'Intelligence Dirigeante Tableau",
+            pbi_sub: "Modèle de Données en Étoile en Direct | Mesures DAX Entreprise | Sans Réparation Manuelle",
+            tab_sub: "Classeur Empaqueté (.twbx) | Schéma XML 2023.1 | Champs Calculés | Publication Cloud REST",
+            page_exec: "Page 1 : Vue d'Ensemble Dirigeante",
+            page_risk: "Page 2 : Risque d'Attrition & Facteurs",
+            page_detail: "Page 3 : Segmenteurs & Explorateur",
+            page_model_pbi: "Page 4 : Schéma en Étoile & DAX",
+            page_model_tab: "Page 4 : Modèle Sémantique & Champs Calculés",
+            page_connectors: "Page 5 : Connecteurs & Déploiement",
+            kpi_rev: "Revenu Total",
+            kpi_cust: "Clients Évalués",
+            kpi_rate: "Taux d'Attrition du Portefeuille",
+            kpi_risk: "Revenu à Risque",
+            slicer_all: "Tous les Enregistrements",
+            slicer_high: "Risque Élevé (≥70%)",
+            slicer_med: "Risque Modéré (30-70%)",
+            slicer_low: "Faible Risque (<30%)",
+            dax_title: "Suite Officielle de Mesures DAX",
+            tab_calc_title: "Suite Officielle de Champs Calculés Tableau",
+            live_feed_label: "URL du Flux Télémétrique en Direct (Connecteur Web)",
+            btn_copy_url: "Copier l'URL",
+            btn_prev: "Précédent",
+            btn_next: "Suivant",
+            btn_download_pbi: "Télécharger le Package Power BI (.pbip ZIP)",
+            btn_download_tab: "Télécharger le Package Tableau (.twbx)",
+            btn_publish_tab: "Publier sur le Serveur",
+            btn_push_pbi: "Pousser REST en Direct",
+            btn_upload_cust: "Charger un Fichier Client",
+            btn_reset_filters: "Réinitialiser les Filtres",
+            no_predictions: "Aucun résultat de prédiction disponible",
+            no_predictions_sub: "Importez un jeu de données pour exécuter l'inférence ML.",
+            no_filter_match: "Aucun client ne correspond aux filtres actifs",
+            no_filter_match_sub: "Essayez d'effacer votre recherche ou de modifier le filtre.",
+            showing_accounts: "Affichage des comptes",
+            category_slider: "Curseur de Catégories",
+            all_categories: "Toutes les Catégories (25+)",
             slogan: "Ne perdez plus jamais un client",
             demo_badge: "Mode Démo Actif",
             app_sub: "Intelligence Décisionnelle d'Entreprise",
@@ -448,6 +583,51 @@
             chip_3: "Conseils pour comptes à risque élevé"
         },
         de: {
+            lang_select_title: "Sprache Wählen",
+            th_account: "Kundenkonto",
+            th_name: "Kontoname",
+            th_segment: "Segment",
+            th_tenure: "Laufzeit",
+            th_score: "Kündigungsscore",
+            th_status: "Status",
+            th_revenue: "Umsatz (ARR)",
+            pbi_title: "Power BI Executive Intelligence Studio",
+            tab_title: "Tableau Executive Intelligence Studio",
+            pbi_sub: "Live-Sternschema-Datenmodell | Enterprise DAX-Kennzahlen | Sofort Einsatzbereit",
+            tab_sub: "Gepackte Arbeitsmappe (.twbx) | 2023.1 XML-Schema | Berechnete Felder | REST Cloud-Veröffentlichung",
+            page_exec: "Seite 1: Führungskräfte-Übersicht",
+            page_risk: "Seite 2: Kündigungsrisiko & Treiber",
+            page_detail: "Seite 3: Datenschnitte & Explorer",
+            page_model_pbi: "Seite 4: Sternschema & DAX",
+            page_model_tab: "Seite 4: Semantisches Modell & Berechnete Felder",
+            page_connectors: "Seite 5: Konnektoren & Bereitstellung",
+            kpi_rev: "Gesamtumsatz",
+            kpi_cust: "Bewertete Kunden",
+            kpi_rate: "Portfolio-Kündigungsrate",
+            kpi_risk: "Gefährdeter Umsatz",
+            slicer_all: "Alle Datensätze",
+            slicer_high: "Hohes Risiko (≥70%)",
+            slicer_med: "Mäßiges Risiko (30-70%)",
+            slicer_low: "Geringes Risiko (<30%)",
+            dax_title: "Offizielle DAX-Measures-Suite",
+            tab_calc_title: "Offizielle Tableau Berechnete Felder",
+            live_feed_label: "Live-Telemetrie-Feed-URL (Web-Konnektor)",
+            btn_copy_url: "URL kopieren",
+            btn_prev: "Zurück",
+            btn_next: "Weiter",
+            btn_download_pbi: "Power BI-Paket herunterladen (.pbip ZIP)",
+            btn_download_tab: "Tableau-Paket herunterladen (.twbx)",
+            btn_publish_tab: "Auf Server Veröffentlichen",
+            btn_push_pbi: "Live-REST-Push",
+            btn_upload_cust: "Kundendatensatz hochladen",
+            btn_reset_filters: "Filter zurücksetzen",
+            no_predictions: "Keine Prognoseergebnisse verfügbar",
+            no_predictions_sub: "Importieren Sie einen Datensatz, um die ML-Inferenz auszuführen.",
+            no_filter_match: "Keine Kunden entsprechen den aktiven Filtern",
+            no_filter_match_sub: "Löschen Sie Ihre Suchanfrage oder ändern Sie den Risikofilter.",
+            showing_accounts: "Konten werden angezeigt",
+            category_slider: "Kategorie-Schieberegler",
+            all_categories: "Alle Kategorien (25+)",
             slogan: "Verlieren Sie nie wieder einen Kunden",
             demo_badge: "Demo-Modus Aktiv",
             app_sub: "Business Decision Intelligence",
@@ -574,6 +754,51 @@
             chip_3: "Kundenbindung für Risikokonten"
         },
         zh: {
+            lang_select_title: "选择语言",
+            th_account: "客户账户",
+            th_name: "账户名称",
+            th_segment: "市场分群",
+            th_tenure: "在网周期",
+            th_score: "流失风险分",
+            th_status: "状态",
+            th_revenue: "年度经常性收入 (ARR)",
+            pbi_title: "Power BI 高管商业智能工作台",
+            tab_title: "Tableau 高管数据智能工作台",
+            pbi_sub: "实时星型数据模型 | 企业级 DAX 度量值 | 即开即用交付物",
+            tab_sub: "打包工作簿 (.twbx) | 2023.1 XML 架构 | 计算字段 | REST 云端发布",
+            page_exec: "第 1 页：执行管理总览",
+            page_risk: "第 2 页：流失风险与归因",
+            page_detail: "第 3 页：切片筛选与数据透视",
+            page_model_pbi: "第 4 页：星型架构与 DAX 体系",
+            page_model_tab: "第 4 页：语义模型与计算字段",
+            page_connectors: "第 5 页：连接器与云端发布",
+            kpi_rev: "总营收规模",
+            kpi_cust: "已评估客户数",
+            kpi_rate: "组合流失率",
+            kpi_risk: "高危受损金额",
+            slicer_all: "全部数据记录",
+            slicer_high: "高危预警 (≥70%)",
+            slicer_med: "中度风险 (30-70%)",
+            slicer_low: "健康基线 (<30%)",
+            dax_title: "官方标准 DAX 度量公式集",
+            tab_calc_title: "官方标准 Tableau 计算字段集",
+            live_feed_label: "实时遥测订阅 URL（Web 连接器）",
+            btn_copy_url: "复制订阅地址",
+            btn_prev: "上一页",
+            btn_next: "下一页",
+            btn_download_pbi: "下载 Power BI 工程包 (.pbip ZIP)",
+            btn_download_tab: "下载 Tableau 交付包 (.twbx)",
+            btn_publish_tab: "发布至 Tableau 云服务器",
+            btn_push_pbi: "推送到 Power BI 实时服务",
+            btn_upload_cust: "导入客户数据集",
+            btn_reset_filters: "重置筛选条件",
+            no_predictions: "暂无分析预测数据",
+            no_predictions_sub: "导入数据集以运行机器学习智能推理。",
+            no_filter_match: "无匹配该筛选条件的客户账户",
+            no_filter_match_sub: "请尝试清空搜索栏或调整风险等级筛选。",
+            showing_accounts: "显示账户记录",
+            category_slider: "分类滑动导航",
+            all_categories: "全部功能类别 (25+)",
             slogan: "永不流失任何一位客户",
             demo_badge: "沙盒演示模式运行中",
             app_sub: "商业智能与决策分析引擎",
@@ -700,6 +925,51 @@
             chip_3: "工单较多客户的挽留方案"
         },
         ja: {
+            lang_select_title: "言語を選択",
+            th_account: "顧客アカウント",
+            th_name: "アカウント名",
+            th_segment: "セグメント",
+            th_tenure: "契約期間",
+            th_score: "解約スコア",
+            th_status: "ステータス",
+            th_revenue: "年間経常収益 (ARR)",
+            pbi_title: "Power BI エグゼクティブ・インテリジェンス・スタジオ",
+            tab_title: "Tableau エグゼクティブ・インテリジェンス・スタジオ",
+            pbi_sub: "リアルタイム・スタースキーマ | エンタープライズDAXメジャー | 即時利用可能",
+            tab_sub: "パッケージドワークブック (.twbx) | 2023.1 XMLスキーマ | 計算フィールド | RESTクラウド発行",
+            page_exec: "ページ 1: エグゼクティブ概要",
+            page_risk: "ページ 2: 解約リスクと要因分析",
+            page_detail: "ページ 3: スライサーとエクスプローラー",
+            page_model_pbi: "ページ 4: スタースキーマとDAXメジャー",
+            page_model_tab: "ページ 4: セマンティックモデルと計算フィールド",
+            page_connectors: "ページ 5: コネクタと展開",
+            kpi_rev: "総収益規模",
+            kpi_cust: "評価済み顧客数",
+            kpi_rate: "ポートフォリオ解約率",
+            kpi_risk: "解約リスク金額",
+            slicer_all: "すべてのレコード",
+            slicer_high: "高リスク (≥70%)",
+            slicer_med: "中程度リスク (30-70%)",
+            slicer_low: "低リスク (<30%)",
+            dax_title: "公式DAXメジャー集",
+            tab_calc_title: "公式Tableau計算フィールド集",
+            live_feed_label: "リアルタイムテレメトリURL（Webコネクタ）",
+            btn_copy_url: "URLをコピー",
+            btn_prev: "前へ",
+            btn_next: "次へ",
+            btn_download_pbi: "Power BIパッケージのダウンロード (.pbip ZIP)",
+            btn_download_tab: "Tableauパッケージのダウンロード (.twbx)",
+            btn_publish_tab: "Tableau Serverへ公開",
+            btn_push_pbi: "Power BIサービスへプッシュ",
+            btn_upload_cust: "顧客データセットをアップロード",
+            btn_reset_filters: "フィルターをリセット",
+            no_predictions: "予測結果はありません",
+            no_predictions_sub: "顧客データをインポートして機械学習分析を実行してください。",
+            no_filter_match: "条件に一致する顧客アカウントが見つかりません",
+            no_filter_match_sub: "検索ワードをクリアするか、リスクフィルターを変更してください。",
+            showing_accounts: "アカウントを表示中",
+            category_slider: "カテゴリスライダー",
+            all_categories: "すべての機能カテゴリ (25+)",
             slogan: "もう二度と顧客を失わない",
             demo_badge: "デモサンドボックス稼働中",
             app_sub: "ビジネス意思決定インテリジェンス",
@@ -826,6 +1096,51 @@
             chip_3: "サポート件数が多い顧客への対策"
         },
         pt: {
+            lang_select_title: "Selecionar Idioma",
+            th_account: "Conta de Cliente",
+            th_name: "Nome da Conta",
+            th_segment: "Segmento",
+            th_tenure: "Tempo de Casa",
+            th_score: "Pontuação de Churn",
+            th_status: "Status",
+            th_revenue: "Receita (ARR)",
+            pbi_title: "Power BI Executive Intelligence Studio",
+            tab_title: "Tableau Executive Intelligence Studio",
+            pbi_sub: "Modelo Star-Schema em Tempo Real | Medidas DAX Corporativas | Entregáveis Prontos",
+            tab_sub: "Pasta Empacotada (.twbx) | Esquema XML 2023.1 | Campos Calculados | Publicação REST Cloud",
+            page_exec: "Página 1: Visão Geral Executiva",
+            page_risk: "Página 2: Risco de Churn e Fatores",
+            page_detail: "Página 3: Segmentadores e Explorador",
+            page_model_pbi: "Página 4: Esquema em Estrela e DAX",
+            page_model_tab: "Página 4: Modelo Semântico e Campos Calculados",
+            page_connectors: "Página 5: Conectores e Implantação",
+            kpi_rev: "Receita Total",
+            kpi_cust: "Clientes Avaliados",
+            kpi_rate: "Taxa de Churn da Carteira",
+            kpi_risk: "Receita em Risco",
+            slicer_all: "Todos os Registros",
+            slicer_high: "Alto Risco (≥70%)",
+            slicer_med: "Risco Moderado (30-70%)",
+            slicer_low: "Baixo Risco (<30%)",
+            dax_title: "Conjunto Oficial de Medidas DAX",
+            tab_calc_title: "Conjunto Oficial de Campos Calculados Tableau",
+            live_feed_label: "URL do Feed de Telemetria (Conector Web)",
+            btn_copy_url: "Copiar URL",
+            btn_prev: "Anterior",
+            btn_next: "Próximo",
+            btn_download_pbi: "Baixar Pacote Power BI (.pbip ZIP)",
+            btn_download_tab: "Baixar Pacote Tableau (.twbx)",
+            btn_publish_tab: "Publicar no Servidor",
+            btn_push_pbi: "Transmitir REST ao Vivo",
+            btn_upload_cust: "Carregar Conjunto de Clientes",
+            btn_reset_filters: "Redefinir Filtros",
+            no_predictions: "Nenhum resultado de previsão disponível",
+            no_predictions_sub: "Importe um conjunto de dados para executar inferência de ML.",
+            no_filter_match: "Nenhum cliente corresponde aos filtros ativos",
+            no_filter_match_sub: "Tente limpar sua pesquisa ou alterar o filtro de risco.",
+            showing_accounts: "Exibindo contas",
+            category_slider: "Controle Deslizante de Categoria",
+            all_categories: "Todas as Categorias (25+)",
             slogan: "Nunca mais perca um cliente",
             demo_badge: "Modo Demonstração Ativo",
             app_sub: "Inteligência para Decisões de Negócios",
@@ -952,6 +1267,51 @@
             chip_3: "Dicas para contas com muitos chamados"
         },
         ar: {
+            lang_select_title: "اختر اللغة",
+            th_account: "حساب العميل",
+            th_name: "اسم الحساب",
+            th_segment: "شريحة العميل",
+            th_tenure: "مدة الاشتراك",
+            th_score: "درجة التسرب",
+            th_status: "الحالة",
+            th_revenue: "الإيراد السنوي (ARR)",
+            pbi_title: "استوديو الذكاء التنفيذي لـ Power BI",
+            tab_title: "استوديو الذكاء التنفيذي لـ Tableau",
+            pbi_sub: "نموذج بيانات المخطط النجمي المباشر | قياسات DAX المؤسسية | تسليمات جاهزة للاستخدام",
+            tab_sub: "مصنف مجمع (.twbx) | مخطط XML 2023.1 | حقول محسوبة | نشر سحابي عبر REST",
+            page_exec: "الصفحة 1: نظرة عامة تنفيذية",
+            page_risk: "الصفحة 2: مخاطر التسرب والمحركات",
+            page_detail: "الصفحة 3: الفلاتر ومستكشف البيانات",
+            page_model_pbi: "الصفحة 4: المخطط النجمي ومقاييس DAX",
+            page_model_tab: "الصفحة 4: النموذج الدلالي والحقول المحسوبة",
+            page_connectors: "الصفحة 5: الروابط والربط السحابي",
+            kpi_rev: "إجمالي الإيرادات",
+            kpi_cust: "العملاء المقيمون",
+            kpi_rate: "معدل تسرب المحفظة",
+            kpi_risk: "الإيرادات المعرضة للخطر",
+            slicer_all: "جميع السجلات",
+            slicer_high: "مخاطر عالية (≥70%)",
+            slicer_med: "مخاطر متوسطة (30-70%)",
+            slicer_low: "مخاطر منخفضة (<30%)",
+            dax_title: "حزمة مقاييس DAX الرسمية",
+            tab_calc_title: "حزمة حقول Tableau المحسوبة الرسمية",
+            live_feed_label: "رابط بيانات التتبع المباشر (Web Connector)",
+            btn_copy_url: "نسخ الرابط",
+            btn_prev: "السابق",
+            btn_next: "التالي",
+            btn_download_pbi: "تنزيل حزمة Power BI (.pbip ZIP)",
+            btn_download_tab: "تنزيل حزمة Tableau (.twbx)",
+            btn_publish_tab: "نشر إلى الخادم",
+            btn_push_pbi: "إرسال REST المباشر",
+            btn_upload_cust: "رفع بيانات العملاء",
+            btn_reset_filters: "إعادة تعيين الفلاتر",
+            no_predictions: "لا توجد نتائج توقعات متاحة",
+            no_predictions_sub: "استورد ملف بيانات لبدء استنتاج نماذج الذكاء الاصطناعي.",
+            no_filter_match: "لا يوجد عملاء يطابقون الفلاتر المحددة",
+            no_filter_match_sub: "امسح نص البحث أو غيّر فلتر المخاطر.",
+            showing_accounts: "عرض الحسابات",
+            category_slider: "شريط تمرير الفئات",
+            all_categories: "جميع الفئات (25+)",
             slogan: "لا تفقد عميلاً أبداً بعد اليوم",
             demo_badge: "وضع المحاكاة التجريبي نشط",
             app_sub: "ذكاء اتخاذ القرارات التجارية",
@@ -1078,6 +1438,51 @@
             chip_3: "نصائح للحسابات كثيرة التذاكر"
         },
         hi: {
+            lang_select_title: "भाषा चुनें",
+            th_account: "ग्राहक खाता",
+            th_name: "खाते का नाम",
+            th_segment: "सेगमेंट",
+            th_tenure: "अवधि",
+            th_score: "मंथन स्कोर",
+            th_status: "स्थिति",
+            th_revenue: "राजस्व (ARR)",
+            pbi_title: "Power BI कार्यकारी इंटेलिजेंस स्टूडियो",
+            tab_title: "Tableau कार्यकारी इंटेलिजेंस स्टूडियो",
+            pbi_sub: "लाइव स्टार-स्कीमा डेटा मॉडल | एंटरप्राइज DAX माप | तैयार डिलीवरी पैकेज",
+            tab_sub: "पैकेज्ड वर्कबुक (.twbx) | 2023.1 XML स्कीमा | गणना किए गए फील्ड्स | REST क्लाउड पब्लिश",
+            page_exec: "पेज 1: कार्यकारी सारांश",
+            page_risk: "पेज 2: मंथन जोखिम और प्रमुख कारक",
+            page_detail: "पेज 3: स्लाइसर्स और एक्सप्लोरर",
+            page_model_pbi: "पेज 4: स्टार स्कीमा और DAX उपाय",
+            page_model_tab: "पेज 4: सिमेंटिक मॉडल और गणना किए गए फील्ड्स",
+            page_connectors: "पेज 5: कनेक्टर्स और डिप्लॉयमेंट",
+            kpi_rev: "कुल राजस्व",
+            kpi_cust: "मूल्यांकित ग्राहक",
+            kpi_rate: "पोर्टफोलियो मंथन दर",
+            kpi_risk: "जोखिम में राजस्व",
+            slicer_all: "सभी रिकॉर्ड",
+            slicer_high: "उच्च जोखिम (≥70%)",
+            slicer_med: "मध्यम जोखिम (30-70%)",
+            slicer_low: "कम जोखिम (<30%)",
+            dax_title: "आधिकारिक DAX माप संग्रह",
+            tab_calc_title: "आधिकारिक Tableau गणना किए गए फील्ड्स",
+            live_feed_label: "लाइव टेलीमेट्री फीड URL (वेब कनेक्टर)",
+            btn_copy_url: "URL कॉपी करें",
+            btn_prev: "पिछला",
+            btn_next: "अगला",
+            btn_download_pbi: "Power BI पैकेज डाउनलोड करें (.pbip ZIP)",
+            btn_download_tab: "Tableau पैकेज डाउनलोड करें (.twbx)",
+            btn_publish_tab: "सर्वर पर प्रकाशित करें",
+            btn_push_pbi: "लाइव REST पुश करें",
+            btn_upload_cust: "ग्राहक डेटासेट अपलोड करें",
+            btn_reset_filters: "फ़िल्टर रीसेट करें",
+            no_predictions: "कोई भविष्यवाणी परिणाम उपलब्ध नहीं है",
+            no_predictions_sub: "व्यावसायिक खातों पर ML निष्पादित करने के लिए डेटासेट आयात करें।",
+            no_filter_match: "सक्रिय फ़िल्टर से कोई ग्राहक मेल नहीं खाता",
+            no_filter_match_sub: "अपनी खोज साफ़ करें या जोखिम फ़िल्टर बदलें।",
+            showing_accounts: "खाते दिखाए जा रहे हैं",
+            category_slider: "श्रेणी स्लाइडर",
+            all_categories: "सभी श्रेणियां (25+)",
             slogan: "फिर कभी कोई ग्राहक न खोएं",
             demo_badge: "डेमो सैंडबॉक्स सक्रिय",
             app_sub: "व्यापार निर्णय और भविष्यवाणी इंटेलिजेंस",
@@ -1204,6 +1609,51 @@
             chip_3: "सपोर्ट टिकट वाले खातों के लिए सलाह"
         },
         ru: {
+            lang_select_title: "Выберите Язык",
+            th_account: "Аккаунт Клиента",
+            th_name: "Название Аккаунта",
+            th_segment: "Сегмент",
+            th_tenure: "Срок",
+            th_score: "Оценка Оттока",
+            th_status: "Статус",
+            th_revenue: "Выручка (ARR)",
+            pbi_title: "Студия Управленческой Аналитики Power BI",
+            tab_title: "Студия Управленческой Аналитики Tableau",
+            pbi_sub: "Живая модель данных «Звезда» | Корпоративные меры DAX | Без ручной доработки",
+            tab_sub: "Упакованная книга (.twbx) | Схема XML 2023.1 | Вычисляемые поля | REST Публикация",
+            page_exec: "Стр. 1: Исполнительный обзор",
+            page_risk: "Стр. 2: Риск оттока и факторы",
+            page_detail: "Стр. 3: Срезы и проводник данных",
+            page_model_pbi: "Стр. 4: Схема «Звезда» и меры DAX",
+            page_model_tab: "Стр. 4: Семантическая модель и вычисляемые поля",
+            page_connectors: "Стр. 5: Коннекторы и развертывание",
+            kpi_rev: "Общая Выручка",
+            kpi_cust: "Оцененные Клиенты",
+            kpi_rate: "Уровень Оттока Портфеля",
+            kpi_risk: "Выручка под Риском",
+            slicer_all: "Все Записи",
+            slicer_high: "Высокий Риск (≥70%)",
+            slicer_med: "Умеренный Риск (30-70%)",
+            slicer_low: "Низкий Риск (<30%)",
+            dax_title: "Официальный Пакет Мер DAX",
+            tab_calc_title: "Официальный Пакет Вычисляемых Полей Tableau",
+            live_feed_label: "URL Телеметрии в Реальном Времени (Веб-Коннектор)",
+            btn_copy_url: "Скопировать URL",
+            btn_prev: "Назад",
+            btn_next: "Вперед",
+            btn_download_pbi: "Скачать пакет Power BI (.pbip ZIP)",
+            btn_download_tab: "Скачать пакет Tableau (.twbx)",
+            btn_publish_tab: "Опубликовать на Сервере",
+            btn_push_pbi: "Отправить через REST",
+            btn_upload_cust: "Загрузить данные клиентов",
+            btn_reset_filters: "Сбросить фильтры",
+            no_predictions: "Нет доступных прогнозов",
+            no_predictions_sub: "Импортируйте датасет для запуска машинного обучения.",
+            no_filter_match: "Нет клиентов, соответствующих фильтрам",
+            no_filter_match_sub: "Очистите поисковый запрос или измените фильтр риска.",
+            showing_accounts: "Отображаются аккаунты",
+            category_slider: "Слайдер Категорий",
+            all_categories: "Все Категории (25+)",
             slogan: "Больше никогда не теряйте клиентов",
             demo_badge: "Демо-песочница активна",
             app_sub: "Интеллект для принятия бизнес-решений",
@@ -1359,16 +1809,25 @@
                 if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                     el.placeholder = translation;
                 } else {
-                    el.textContent = translation;
+                    const icon = el.querySelector('i, svg');
+                    if (icon && el.childNodes.length > 1) {
+                        Array.from(el.childNodes).forEach(node => {
+                            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                                node.textContent = ' ' + translation;
+                            }
+                        });
+                    } else {
+                        el.textContent = translation;
+                    }
                 }
             }
         });
 
         // 2. Translate explicit core elements by ID or selector
         const updates = [
+            // Header
             { sel: '.sloganBadge span, .sloganBadge', key: 'slogan', isContentWithIcon: true },
             { id: 'demoBadge', key: 'demo_badge', isContentWithIcon: true, iconName: 'flask-conical' },
-            { sel: '.appSub', key: 'app_sub' },
             { id: 'companyNameInput', key: 'company_placeholder', isPlaceholder: true },
             { sel: '#exportReportBtn span', key: 'btn_report' },
             { sel: '#exportTableauBtn span', key: 'btn_tableau' },
@@ -1407,10 +1866,99 @@
             // Sidebar
             { sel: '.sourcesPane .paneHead h2', key: 'sidebar_sources' },
             { id: 'addSourceBtn', key: 'sidebar_add' },
+            { sel: '.schema-info-card h4', key: 'sidebar_schema_title' },
+            { sel: '.schema-info-card p', key: 'sidebar_schema_desc' },
+            { sel: '#downloadTemplateBtn', key: 'sidebar_download_template', isContentWithIcon: true, iconName: 'download' },
             { id: 'customerSearchInput', key: 'cust_search', isPlaceholder: true },
             { id: 'chatInput', key: 'copilot_placeholder', isPlaceholder: true },
             { id: 'chatSendButton', key: 'copilot_send' },
-            { id: 'guideSearchInput', key: 'guide_search', isPlaceholder: true }
+            { id: 'guideSearchInput', key: 'guide_search', isPlaceholder: true },
+
+            // Overview Section
+            { sel: '#kpiMonitored .kpiLabel', key: 'kpi_monitored' },
+            { sel: '#kpiMonitored .kpiSub', key: 'kpi_monitored_sub' },
+            { sel: '#kpiTriage .kpiLabel', key: 'kpi_triage' },
+            { sel: '#kpiTriage .kpiSub', key: 'kpi_triage_sub' },
+            { sel: '#kpiBaseline .kpiLabel', key: 'kpi_baseline' },
+            { sel: '#kpiBaseline .kpiSub', key: 'kpi_baseline_sub' },
+            { sel: '#kpiDimensions .kpiLabel', key: 'kpi_dimensions' },
+            { sel: '#kpiDimensions .kpiSub', key: 'kpi_dimensions_sub' },
+            { sel: '#modelMetricsHead h3', key: 'model_metrics_title' },
+            { sel: '.metricBox:nth-child(1) .metricLabel', key: 'metric_acc' },
+            { sel: '.metricBox:nth-child(2) .metricLabel', key: 'metric_prec' },
+            { sel: '.metricBox:nth-child(3) .metricLabel', key: 'metric_rec' },
+            { sel: '.metricBox:nth-child(4) .metricLabel', key: 'metric_roc' },
+            { sel: '#signalsTitle', key: 'signals_title' },
+            { sel: '#shapTitle', key: 'shap_title' },
+            { sel: '#aiNarrativeCard h3', key: 'ai_narrative_title' },
+
+            // Specials Section
+            { sel: '#specialsHead h2', key: 'specials_title' },
+            { sel: '#specialsHead p', key: 'specials_sub' },
+            { sel: '#specialsCurrencyLabel', key: 'currency_label' },
+            { sel: '.specials-tab[data-module="finance"]', key: 'module_finance' },
+            { sel: '.specials-tab[data-module="operations"]', key: 'module_ops' },
+            { sel: '.specials-tab[data-module="sales"]', key: 'module_sales' },
+            { sel: '.specials-tab[data-module="product"]', key: 'module_product' },
+
+            // Actions Section
+            { sel: '#recommendationsHead h3', key: 'rec_title' },
+            { sel: '#tipsPanelHead h3', key: 'tips_title' },
+
+            // Customers Table Section
+            { sel: '#resultSectionTitle', key: 'cust_title' },
+            { sel: '#filterPillAll .pillText', key: 'filter_all_risks' },
+            { sel: '#filterPillHigh .pillText', key: 'filter_high_risk' },
+            { sel: '#filterPillLow .pillText', key: 'filter_low_risk' },
+
+            // Business Hub Section
+            { sel: '#businessHubTitle', key: 'biz_title' },
+            { sel: '#businessHubQuestion', key: 'biz_question' },
+
+            // Sandbox Section
+            { sel: '#sandboxHead h2', key: 'sandbox_title' },
+            { sel: '#sandboxHead p', key: 'sandbox_sub' },
+            { sel: '#sandboxPresetLoyal', key: 'sandbox_preset_loyal' },
+            { sel: '#sandboxPresetModerate', key: 'sandbox_preset_moderate' },
+            { sel: '#sandboxPresetCritical', key: 'sandbox_preset_critical' },
+            { sel: '#sandboxPresetReset', key: 'sandbox_preset_reset' },
+            { sel: '#sandboxParamsTitle', key: 'sandbox_params_title' },
+            { sel: '#sandboxGaugeTitle', key: 'sandbox_gauge_title' },
+            { sel: '#sandboxRecsTitle', key: 'sandbox_recs_title' },
+
+            // Presentation Section
+            { sel: '#presHead h2', key: 'pres_title' },
+            { sel: '#generatePresBtn span', key: 'pres_generate' },
+            { sel: '#fullscreenPresBtn span', key: 'pres_fullscreen' },
+            { sel: '#printPresBtn span', key: 'pres_print' },
+            { sel: '#downloadPptxBtn span', key: 'pres_pptx' },
+            { sel: '#downloadHtmlDeckBtn span', key: 'pres_html' },
+
+            // Notes Section
+            { sel: '.notesPane .paneHead h2', key: 'notes_title' },
+
+            // Copilot Section
+            { sel: '#copilotToggleBtn span', key: 'copilot_title' },
+            { sel: '.copilotConsultantTag', key: 'copilot_status' },
+            { sel: '.chatChip:nth-child(1)', key: 'chip_1' },
+            { sel: '.chatChip:nth-child(2)', key: 'chip_2' },
+            { sel: '.chatChip:nth-child(3)', key: 'chip_3' },
+
+            // BI Export Modals (Power BI & Tableau)
+            { id: 'pbiTabBtnExec', key: 'page_exec', isContentWithIcon: true, iconName: 'layout-dashboard' },
+            { id: 'pbiTabBtnRisk', key: 'page_risk', isContentWithIcon: true, iconName: 'alert-triangle' },
+            { id: 'pbiTabBtnDetail', key: 'page_detail', isContentWithIcon: true, iconName: 'filter' },
+            { id: 'pbiTabBtnConnectors', key: 'page_connectors', isContentWithIcon: true, iconName: 'link-2' },
+            { sel: '.pbiKpiCard.cyan .pbiKpiLabel', key: 'kpi_rev' },
+            { sel: '.pbiKpiCard.purple .pbiKpiLabel', key: 'kpi_cust' },
+            { sel: '.pbiKpiCard:not(.cyan):not(.purple):not(.danger) .pbiKpiLabel', key: 'kpi_rate' },
+            { sel: '.pbiKpiCard.danger .pbiKpiLabel', key: 'kpi_risk' },
+            { sel: '#pbiFilterPills button:nth-child(1)', key: 'slicer_all' },
+            { sel: '#pbiFilterPills button:nth-child(2)', key: 'slicer_high' },
+            { sel: '#pbiFilterPills button:nth-child(3)', key: 'slicer_med' },
+            { sel: '#pbiFilterPills button:nth-child(4)', key: 'slicer_low' },
+            { sel: '.pbiLiveFeedLabel', key: 'live_feed_label' },
+            { sel: '.pbiLiveFeedBox button span, .pbiLiveFeedBox button', key: 'btn_copy_url', isContentWithIcon: true, iconName: 'copy' }
         ];
 
         updates.forEach(u => {
@@ -1437,7 +1985,54 @@
             }
         });
 
-        // Update active language labels in header
+        // 3. Smart Phrase Table & Badges Translation
+        const phraseMap = {
+            'Customer Account': t('th_account'),
+            'Risk Status': t('th_risk'),
+            'Predicted Probability': t('th_prob'),
+            'Risk Drivers': t('shap_title'),
+            'Actions': t('th_action'),
+            'Customer ID': t('th_id'),
+            'Account Name': t('th_name'),
+            'Segment': t('th_segment'),
+            'Contract': t('th_contract'),
+            'Contract Type': t('th_contract'),
+            'Tenure': t('th_tenure'),
+            'Churn Score': t('th_score'),
+            'Revenue': t('th_revenue'),
+            'Revenue (ARR)': t('th_revenue'),
+            'Status': t('th_status'),
+            'Recommended Action': t('th_action'),
+            'High Risk': t('filter_high_risk'),
+            'Low Risk': t('filter_low_risk'),
+            'All Customers': t('filter_all_risks'),
+            'Category Slider': t('category_slider'),
+            'All Categories (25+)': t('all_categories'),
+            'Select Language': t('lang_select_title')
+        };
+
+        document.querySelectorAll('th, .pillText, .slider-tag-text, .header-lang-dropdown-head span').forEach(el => {
+            const raw = el.textContent.trim();
+            if (phraseMap[raw]) {
+                el.textContent = phraseMap[raw];
+            }
+        });
+
+        // 4. Update Header Language Button & Active Highlighting
+        const hFlag = document.getElementById('headerLangFlag');
+        const hCode = document.getElementById('headerLangCode');
+        if (hFlag) hFlag.textContent = langConfig.flag;
+        if (hCode) hCode.textContent = langConfig.code.toUpperCase();
+
+        document.querySelectorAll('.header-lang-item').forEach(item => {
+            const code = item.getAttribute('data-lang');
+            if (code === currentLang) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+
         document.querySelectorAll('.langCurrentLabel').forEach(el => {
             el.textContent = langConfig.code.toUpperCase();
         });
@@ -1463,7 +2058,7 @@
             }
         });
 
-        // Trigger Lucide icons re-render
+        // Re-render Lucide icons
         if (window.lucide && typeof window.lucide.createIcons === 'function') {
             window.lucide.createIcons();
         }
@@ -1478,10 +2073,15 @@
         localStorage.setItem('qiplo_language', lang);
         translateUI();
 
+        // Premium Toast Feedback
+        const langObj = SUPPORTED_LANGUAGES.find(l => l.code === currentLang);
+        if (window.showBiToast && langObj) {
+            window.showBiToast(`${langObj.flag} Language changed to ${langObj.native} (${langObj.name})`, 'globe');
+        }
+
         // Also update backend session or notify Copilot if chat is visible
         if (window.appendMessage && currentLang !== 'en') {
-            const langObj = SUPPORTED_LANGUAGES.find(l => l.code === currentLang);
-            const notice = `🌐 **Language updated to ${langObj.native} (${langObj.name})**. All dashboard workspaces, predictive AI queries, and presentation decks will now process in ${langObj.name}.`;
+            const notice = `${langObj.flag} **Language updated to ${langObj.native} (${langObj.name})**. All dashboard workspaces, predictive AI queries, and presentation decks will now process in ${langObj.name}.`;
             window.appendMessage('bot', notice, true);
         }
     }
@@ -1493,6 +2093,29 @@
     function getSupportedLanguages() {
         return SUPPORTED_LANGUAGES;
     }
+
+    // Header Language Dropdown Controller
+    window.toggleHeaderLangMenu = function(e) {
+        if (e) e.stopPropagation();
+        const dd = document.getElementById('headerLangDropdown');
+        if (dd) {
+            dd.classList.toggle('hidden');
+        }
+    };
+
+    window.closeHeaderLangMenu = function() {
+        const dd = document.getElementById('headerLangDropdown');
+        if (dd) {
+            dd.classList.add('hidden');
+        }
+    };
+
+    document.addEventListener('click', (e) => {
+        const wrapper = document.getElementById('headerLangWrapper');
+        if (wrapper && !wrapper.contains(e.target)) {
+            window.closeHeaderLangMenu();
+        }
+    });
 
     // Export globally
     window.qiploI18n = {
