@@ -51,7 +51,8 @@
                     <circle cx="18.5" cy="18.5" r="4" fill="none" stroke="#FFFFFF" stroke-width="2.5" />
                     <circle cx="21" cy="21" r="1.5" fill="url(#qiploGrad)" />
                 </svg>
-                <span class="appName logoBrandName" id="brandTitle">Qiplo</span>
+                <span class="logoSubLabel">QIPLO</span>
+                <span id="brandTitle" style="display: none;">Qiplo</span>
             </div>
             <div class="topbarTitle">
                 <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
@@ -196,28 +197,22 @@
                         <div class="menu-category-slider-track" id="sliderNavTrack">
                             <div class="slider-pill-indicator" id="sliderPillIndicator"></div>
                             <button type="button" class="slider-tab-btn active" data-category="all" data-index="0" title="All Features">
-                                <span class="tab-emoji">✨</span>
                                 <span class="tab-text">All</span>
                             </button>
                             <button type="button" class="slider-tab-btn" data-category="exports" data-index="1" title="Executive Exports">
-                                <span class="tab-emoji">📊</span>
                                 <span class="tab-text">Exports</span>
                             </button>
                             <button type="button" class="slider-tab-btn" data-category="workspaces" data-index="2" title="Workspaces & Suites">
-                                <span class="tab-emoji">🧭</span>
                                 <span class="tab-text">Suites</span>
                             </button>
                             <button type="button" class="slider-tab-btn" data-category="tools" data-index="3" title="Platform Tools">
-                                <span class="tab-emoji">🛠️</span>
                                 <span class="tab-text">Tools</span>
                             </button>
                             <button type="button" class="slider-tab-btn" data-category="system" data-index="4" title="System Controls">
-                                <span class="tab-emoji">⚙️</span>
                                 <span class="tab-text">System</span>
                             </button>
                             <button type="button" class="slider-tab-btn" data-category="languages" data-index="5" title="Languages">
-                                <span class="tab-emoji">🌍</span>
-                                <span class="tab-text">Lang</span>
+                                <span class="tab-text">Languages</span>
                             </button>
                         </div>
                     </div>
@@ -832,7 +827,7 @@
                             <div class="aiBadge">AI</div>
                             <div>
                                 <h2 id="aiHeadline">Awaiting analysis</h2>
-                                <p class="aiSub">Generated read of your churn risk</p>
+                                <p class="aiSub" data-i18n="ai_retention_summary">AI-Generated Retention Summary</p>
                             </div>
                         </div>
                         <div class="currencySelector">
@@ -882,19 +877,19 @@
                         </div>
                         <div class="modelMetricsGrid">
                             <div class="modelMetricCard metricCard-accuracy" title="Percentage of overall correct churn classifications (TP + TN) / Total">
-                                <span class="metricCardLabel">Accuracy ℹ️</span>
+                                <span class="metricCardLabel">Accuracy</span>
                                 <strong class="metricCardVal" id="modelAccuracy"><span class="skeleton-loader"></span></strong>
                             </div>
                             <div class="modelMetricCard metricCard-precision" title="Proportion of predicted churners that actually churned — minimizes false positive alerts">
-                                <span class="metricCardLabel">Precision ℹ️</span>
+                                <span class="metricCardLabel">Precision</span>
                                 <strong class="metricCardVal" id="modelPrecision"><span class="skeleton-loader"></span></strong>
                             </div>
                             <div class="modelMetricCard metricCard-recall" title="Proportion of actual churners successfully identified by the model — minimizes missed churn">
-                                <span class="metricCardLabel">Recall ℹ️</span>
+                                <span class="metricCardLabel">Recall</span>
                                 <strong class="metricCardVal" id="modelRecall"><span class="skeleton-loader"></span></strong>
                             </div>
                             <div class="modelMetricCard metricCard-auc" title="Receiver Operating Characteristic Area Under Curve — measures overall discriminative capability (1.0 = perfect)">
-                                <span class="metricCardLabel">ROC AUC ℹ️</span>
+                                <span class="metricCardLabel">ROC AUC</span>
                                 <strong class="metricCardVal" id="modelAuc"><span class="skeleton-loader"></span></strong>
                             </div>
                         </div>
@@ -1208,10 +1203,10 @@
                                 <span class="resultPillDot success"></span> Low Risk <span class="resultPillBadge" id="pillCountLow">0</span>
                             </button>
                             <button type="button" class="resultFilterPill" data-filter="assigned" onclick="setResultFilter('assigned')">
-                                👤 Assigned
+                                <i data-lucide="user-check" style="width: 13px; height: 13px;"></i> Assigned
                             </button>
                             <button type="button" class="resultFilterPill" data-filter="unassigned" onclick="setResultFilter('unassigned')">
-                                ⚠️ Unassigned
+                                <i data-lucide="user-x" style="width: 13px; height: 13px;"></i> Unassigned
                             </button>
                         </div>
                         <!-- Hidden legacy select for full programmatic compatibility -->
@@ -1303,10 +1298,10 @@
                         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                             <h3 style="margin: 0; font-size: 0.95rem; color: var(--accent); text-transform: uppercase;">1. Account Parameters</h3>
                             <div class="sandboxPresetsBar">
-                                <button type="button" class="presetBtn presetBtn-loyal" onclick="applySandboxPreset('loyal')" title="Simulate low-churn enterprise account">🟢 Loyal Account</button>
-                                <button type="button" class="presetBtn presetBtn-moderate" onclick="applySandboxPreset('moderate')" title="Simulate mid-risk customer">🟡 Moderate Risk</button>
-                                <button type="button" class="presetBtn presetBtn-critical" onclick="applySandboxPreset('critical')" title="Simulate acute churn escalation">🔴 Critical Risk</button>
-                                <button type="button" class="presetBtn presetBtn-reset" onclick="applySandboxPreset('reset')" title="Restore active dataset averages">🔄 Reset</button>
+                                <button type="button" class="presetBtn presetBtn-loyal" onclick="applySandboxPreset('loyal')" title="Simulate low-churn enterprise account"><i data-lucide="check-circle" style="width: 12px; height: 12px;"></i> Loyal Account</button>
+                                <button type="button" class="presetBtn presetBtn-moderate" onclick="applySandboxPreset('moderate')" title="Simulate mid-risk customer"><i data-lucide="alert-triangle" style="width: 12px; height: 12px;"></i> Moderate Risk</button>
+                                <button type="button" class="presetBtn presetBtn-critical" onclick="applySandboxPreset('critical')" title="Simulate acute churn escalation"><i data-lucide="alert-octagon" style="width: 12px; height: 12px;"></i> Critical Risk</button>
+                                <button type="button" class="presetBtn presetBtn-reset" onclick="applySandboxPreset('reset')" title="Restore active dataset averages"><i data-lucide="rotate-ccw" style="width: 12px; height: 12px;"></i> Reset</button>
                             </div>
                         </div>
                         
@@ -1873,54 +1868,54 @@
                     <div class="presentationToolbar" style="display: flex; gap: 10px; align-items: center; width: 100%; flex-wrap: wrap; margin-bottom: 15px;">
                         <input id="presCustomPrompt" type="text" placeholder="Enter custom deck instructions (e.g., Focus on support tickets, CFO presentation)..." style="flex: 1; min-width: 250px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 16px; border-radius: var(--radius-sm); font-size: 0.9rem;" />
                         <select id="presImageStyle" aria-label="Select design style" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600;">
-                            <option value="corporate" selected>💼 Corporate Photos</option>
-                            <option value="anime">🎨 Anime Illustration</option>
-                            <option value="minimalist">🌿 Modern Minimalist</option>
-                            <option value="cyberpunk">⚡ High-Tech Cyberpunk</option>
+                            <option value="corporate" selected>Corporate Photography</option>
+                            <option value="anime">Modern Illustration</option>
+                            <option value="minimalist">Clean Minimalist</option>
+                            <option value="cyberpunk">High-Tech Studio</option>
                         </select>
                         <select id="presFontPairing" aria-label="Select Typography Pair" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600;">
-                            <option value="inter_mono" selected>🔤 Inter & Mono</option>
-                            <option value="outfit_jakarta">🔤 Outfit & Jakarta</option>
-                            <option value="playfair_roboto">🔤 Playfair & Roboto</option>
-                            <option value="montserrat_fira">🔤 Montserrat & Fira</option>
+                            <option value="inter_mono" selected>Inter & JetBrains Mono</option>
+                            <option value="outfit_jakarta">Outfit & Plus Jakarta</option>
+                            <option value="playfair_roboto">Playfair & Roboto</option>
+                            <option value="montserrat_fira">Montserrat & Fira Code</option>
                         </select>
                         <select id="presThemeColor" aria-label="Select Palette" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600;">
-                            <option value="indigo" selected>🎨 Slate & Indigo</option>
-                            <option value="classic_blue">🎨 Classic Navy & Blue (Finance & Trust)</option>
-                            <option value="teal_coral">🎨 Dark Teal & Coral (Modern Tech)</option>
-                            <option value="bold_red">🎨 Crimson & Bright Red (Decisive Action)</option>
-                            <option value="warm_blush">🎨 Espresso & Warm Blush (Premium Consumer)</option>
-                            <option value="burgundy_luxury">🎨 Burgundy & Wine Crimson (Executive Luxury)</option>
-                            <option value="deep_purple_emerald">🎨 Deep Plum & Emerald Teal (Analytics & AI)</option>
-                            <option value="cream_forest">🎨 Forest Green & Cream (Sustainability & Bio)</option>
-                            <option value="pink_purple">🎨 Deep Violet & Vivid Purple (Creative Bold)</option>
-                            <option value="lime_plum">🎨 Dark Plum & Lime (Disruptor Tech)</option>
-                            <option value="black_gold">🎨 Jet Black & Executive Gold (VIP Wealth)</option>
-                            <option value="sage_terracotta">🎨 Sage & Warm Terracotta (Wellness Architecture)</option>
-                            <option value="charcoal_red">🎨 Deep Charcoal & Signal Red (High Contrast)</option>
-                            <option value="vibrant_orange">🎨 Dark Slate & Vivid Orange (Action Growth)</option>
-                            <option value="forest_green">🎨 Evergreen & Pine (Longevity & Capital)</option>
-                            <option value="retro_rainbow">🎨 Vintage Navy & Crimson (Design Forward)</option>
-                            <option value="vintage_earthy">🎨 Espresso & Copper Sienna (Heritage Artisanal)</option>
-                            <option value="coastal_rose">🎨 Deep Ocean & Coastal Coral (Clean Maritime)</option>
-                            <option value="orange_turquoise">🎨 Deep Petrol & Sunset (Dynamic SaaS)</option>
-                            <option value="emerald">🎨 Forest & Emerald</option>
-                            <option value="amber">🎨 Charcoal & Amber</option>
-                            <option value="crimson">🎨 Sunset & Crimson</option>
-                            <option value="cyan">🎨 Ocean & Cyan</option>
-                            <option value="violet">🎨 Ultra Violet & Lavender</option>
-                            <option value="midnight_gold">🎨 Midnight Navy & Gold</option>
-                            <option value="slate_dark">🎨 Minimalist Steel Slate</option>
-                            <option value="rose_quartz">🎨 Rose Quartz & Coral</option>
-                            <option value="vibrant_neon">🎨 Cyber Neon Pink & Cyan</option>
-                            <option value="clean_light">🎨 Executive Clean Light</option>
-                            <option value="monochrome_pro">🎨 Platinum & Charcoal</option>
+                            <option value="indigo" selected>Slate & Indigo</option>
+                            <option value="classic_blue">Classic Navy & Blue (Finance & Trust)</option>
+                            <option value="teal_coral">Dark Teal & Coral (Modern Tech)</option>
+                            <option value="bold_red">Crimson & Bright Red (Decisive Action)</option>
+                            <option value="warm_blush">Espresso & Warm Blush (Premium Consumer)</option>
+                            <option value="burgundy_luxury">Burgundy & Wine Crimson (Executive Luxury)</option>
+                            <option value="deep_purple_emerald">Deep Plum & Emerald Teal (Analytics & AI)</option>
+                            <option value="cream_forest">Forest Green & Cream (Sustainability & Bio)</option>
+                            <option value="pink_purple">Deep Violet & Vivid Purple (Creative Bold)</option>
+                            <option value="lime_plum">Dark Plum & Lime (Disruptor Tech)</option>
+                            <option value="black_gold">Jet Black & Executive Gold (VIP Wealth)</option>
+                            <option value="sage_terracotta">Sage & Warm Terracotta (Wellness Architecture)</option>
+                            <option value="charcoal_red">Deep Charcoal & Signal Red (High Contrast)</option>
+                            <option value="vibrant_orange">Dark Slate & Vivid Orange (Action Growth)</option>
+                            <option value="forest_green">Evergreen & Pine (Longevity & Capital)</option>
+                            <option value="retro_rainbow">Vintage Navy & Crimson (Design Forward)</option>
+                            <option value="vintage_earthy">Espresso & Copper Sienna (Heritage Artisanal)</option>
+                            <option value="coastal_rose">Deep Ocean & Coastal Coral (Clean Maritime)</option>
+                            <option value="orange_turquoise">Deep Petrol & Sunset (Dynamic SaaS)</option>
+                            <option value="emerald">Forest & Emerald</option>
+                            <option value="amber">Charcoal & Amber</option>
+                            <option value="crimson">Sunset & Crimson</option>
+                            <option value="cyan">Ocean & Cyan</option>
+                            <option value="violet">Ultra Violet & Lavender</option>
+                            <option value="midnight_gold">Midnight Navy & Gold</option>
+                            <option value="slate_dark">Minimalist Steel Slate</option>
+                            <option value="rose_quartz">Rose Quartz & Coral</option>
+                            <option value="vibrant_neon">Cyber Neon Pink & Cyan</option>
+                            <option value="clean_light">Executive Clean Light</option>
+                            <option value="monochrome_pro">Platinum & Charcoal</option>
                         </select>
                         <select id="presTransition" aria-label="Select Slide Transition" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600;">
-                            <option value="fade" selected>🎬 Smooth Fade</option>
-                            <option value="slide">🎬 Horizontal Slide</option>
-                            <option value="zoom">🎬 Slick Zoom</option>
-                            <option value="flip">🎬 3D Elastic Card Flip</option>
+                            <option value="fade" selected>Smooth Fade</option>
+                            <option value="slide">Horizontal Slide</option>
+                            <option value="zoom">Subtle Zoom</option>
+                            <option value="flip">3D Card Flip</option>
                         </select>
                         <select id="presSlideCount" aria-label="Select slide count" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600;">
                             <option value="3">3 Slides (Quick Executive Brief)</option>
@@ -2051,13 +2046,13 @@
                                 </label>
                                 <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;">
                                     <select id="slideImageSource" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;">
-                                        <option value="all" selected>🌟 All Engines (Unified)</option>
-                                        <option value="unsplash">📷 Unsplash Stock</option>
-                                        <option value="pexels">📸 Pexels Premium</option>
-                                        <option value="pixabay">🎨 Pixabay Vector/Photos</option>
-                                        <option value="pinterest">📌 Pinterest Pins</option>
-                                        <option value="openverse">🔍 Google CC / Openverse</option>
-                                        <option value="lottie">⚡ Lottie Animations & SVGs</option>
+                                        <option value="all" selected>All Engines (Unified)</option>
+                                        <option value="unsplash">Unsplash Stock</option>
+                                        <option value="pexels">Pexels Premium</option>
+                                        <option value="pixabay">Pixabay Vector & Photos</option>
+                                        <option value="pinterest">Pinterest Visuals</option>
+                                        <option value="openverse">Openverse Creative Commons</option>
+                                        <option value="lottie">Lottie Vector Animations</option>
                                     </select>
                                     <input id="slideCustomImagePrompt" type="text" placeholder="Describe photo, illustration, or animation..." style="flex: 1; min-width: 180px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px;" />
                                     <button id="generateSlideImageBtn" class="ghostBtn" type="button" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px;">
@@ -2271,7 +2266,7 @@
                             </div>
                         </div>
                         <div style="background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--accent); padding: 14px; border-radius: 8px;">
-                            <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--text); font-family: var(--font-heading);">📈 5 Rules of Cohort Analysis</h4>
+                            <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--text); font-family: var(--font-heading);"><i data-lucide="trending-up" class="lucide-icon" style="width: 14px; height: 14px;"></i> 5 Rules of Cohort Analysis</h4>
                             <ul style="margin: 0; padding-left: 20px; font-size: 0.84rem; color: var(--muted); line-height: 1.6;">
                                 <li><strong>1. Align by Signup Month</strong>: Analyze customers signing up in the same calendar month to prevent tenure bias.</li>
                                 <li><strong>2. Track Contract Value (MRR) separately</strong>: Customer count retention can be high while contract value drops, or vice versa.</li>
@@ -2292,7 +2287,7 @@
                         </p>
                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px;">
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent); font-family: var(--font-heading);">👥 CSM & Account Assignments</h4>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent); font-family: var(--font-heading);"><i data-lucide="users" class="lucide-icon" style="width: 14px; height: 14px;"></i> CSM & Account Assignments</h4>
                                 <p style="margin: 0 0 8px; font-size: 0.82rem; color: var(--muted); line-height: 1.45;">
                                     <strong>What it is:</strong> A collaboration module to assign dedicated Customer Success Managers (CSMs) to accounts flagged with churn risks.
                                 </p>
@@ -2304,7 +2299,7 @@
                                 </p>
                             </div>
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent-2); font-family: var(--font-heading);">🔗 CRM Connections & Reports</h4>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent-2); font-family: var(--font-heading);"><i data-lucide="link" class="lucide-icon" style="width: 14px; height: 14px;"></i> CRM Connections & Reports</h4>
                                 <p style="margin: 0 0 8px; font-size: 0.82rem; color: var(--muted); line-height: 1.45;">
                                     <strong>What it is:</strong> Active integration framework for Salesforce/Hubspot webhooks and automated reporting cron schedulers.
                                 </p>
@@ -2316,7 +2311,7 @@
                                 </p>
                             </div>
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--success); font-family: var(--font-heading);">🧪 A/B Test Retention Tracker</h4>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--success); font-family: var(--font-heading);"><i data-lucide="flask-conical" class="lucide-icon" style="width: 14px; height: 14px;"></i> A/B Test Retention Tracker</h4>
                                 <p style="margin: 0 0 8px; font-size: 0.82rem; color: var(--muted); line-height: 1.45;">
                                     <strong>What it is:</strong> An experimental sandbox to log, track, and measure the effectiveness of active customer retention campaigns.
                                 </p>
@@ -2328,7 +2323,7 @@
                                 </p>
                             </div>
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--warning); font-family: var(--font-heading);">🛡 Compliance Audit History</h4>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--warning); font-family: var(--font-heading);"><i data-lucide="shield-check" class="lucide-icon" style="width: 14px; height: 14px;"></i> Compliance Audit History</h4>
                                 <p style="margin: 0 0 8px; font-size: 0.82rem; color: var(--muted); line-height: 1.45;">
                                     <strong>What it is:</strong> A tamper-evident activities ledger tracking configurations, alert triggers, and manager updates.
                                 </p>
@@ -2352,7 +2347,7 @@
                         </p>
                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px;">
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent); font-family: var(--font-heading);">📊 Churn Rate Optimization</h4>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent); font-family: var(--font-heading);"><i data-lucide="bar-chart-2" class="lucide-icon" style="width: 14px; height: 14px;"></i> Churn Rate Optimization</h4>
                                 <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5;">
                                     <li><strong>Quarterly Health Audits</strong>: Run proactive health checks on high-risk accounts to resolve setup friction.</li>
                                     <li><strong>Extend Support Access</strong>: Fast-track open support tickets for accounts showing >65% risk.</li>
@@ -2360,7 +2355,7 @@
                                 </ul>
                             </div>
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent-2); font-family: var(--font-heading);">💡 Revenue Recovery & Billing Churn</h4>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--accent-2); font-family: var(--font-heading);"><i data-lucide="dollar-sign" class="lucide-icon" style="width: 14px; height: 14px;"></i> Revenue Recovery & Billing Churn</h4>
                                 <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5;">
                                     <li><strong>Involuntary Churn Checks</strong>: Enforce card retries and custom email alerts when invoice charging fails.</li>
                                     <li><strong>Automated Statement Credits</strong>: Offer statement credits to customers switching from manual to auto-pay.</li>
@@ -2368,7 +2363,7 @@
                                 </ul>
                             </div>
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--success); font-family: var(--font-heading);">🚀 Customer Success Lifecycle Alignment</h4>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--success); font-family: var(--font-heading);"><i data-lucide="compass" class="lucide-icon" style="width: 14px; height: 14px;"></i> Customer Success Lifecycle Alignment</h4>
                                 <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5;">
                                     <li><strong>90-Day Critical Window</strong>: Enforce structured training check-ins during the first 90 days after signup.</li>
                                     <li><strong>Usage Milestone Alerts</strong>: Set alerts for accounts that demonstrate sudden drop-offs in product usage.</li>
@@ -2376,7 +2371,7 @@
                                 </ul>
                             </div>
                             <div class="termBox" style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;">
-                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--warning); font-family: var(--font-heading);">🎯 Retention Scaling (CSM KPI Alignment)</h4>
+                                <h4 style="margin: 0 0 6px; font-size: 0.95rem; color: var(--warning); font-family: var(--font-heading);"><i data-lucide="target" class="lucide-icon" style="width: 14px; height: 14px;"></i> Retention Scaling (CSM KPI Alignment)</h4>
                                 <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--muted); line-height: 1.5;">
                                     <li><strong>Tied Compensations</strong>: Link Customer Success Manager (CSM) performance bonuses directly to Net Revenue Retention (NRR).</li>
                                     <li><strong>Predictive Playbooks</strong>: Trigger proactive check-ins based on predictive risk alerts rather than waiting for cancel requests.</li>
@@ -2490,37 +2485,37 @@
                     <i data-lucide="layout-grid" class="lucide-icon" style="width: 16px; height: 16px;"></i> Workspace Hub Capabilities & Architecture
                 </h3>
                 
-                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">📊 Overview Dashboard</h4>
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;"><i data-lucide="bar-chart-2" class="lucide-icon" style="width: 14px; height: 14px;"></i> Overview Dashboard</h4>
                 <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
                     Monitors overall business health status cards (Revenue, Customer Retention, Inventory, Receivables) and lists critical problem alerts with one-click prescriptive resolution pathways.
                 </p>
 
-                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">🎯 Actions & Resolution Hub</h4>
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;"><i data-lucide="check-square" class="lucide-icon" style="width: 14px; height: 14px;"></i> Actions & Resolution Hub</h4>
                 <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
                     Empowers cross-functional team roles (Sales, Support, Executive, Manager) with dedicated action panels, automatic email dispatchers, and task managers.
                 </p>
 
-                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">👥 Customers Database</h4>
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;"><i data-lucide="users" class="lucide-icon" style="width: 14px; height: 14px;"></i> Customers Database</h4>
                 <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
                     Real-time tabular grid populated with active customer risk scores, confidence intervals, risk driver tags, and owner allocations.
                 </p>
 
-                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">💼 Business Hub & ROI Simulator</h4>
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;"><i data-lucide="briefcase" class="lucide-icon" style="width: 14px; height: 14px;"></i> Business Hub & ROI Simulator</h4>
                 <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
                     Houses the interactive campaign simulator, Webhook connector registers (Salesforce, Stripe), and automated report delivery options.
                 </p>
 
-                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">✨ Slide Presentation Exporter</h4>
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;"><i data-lucide="presentation" class="lucide-icon" style="width: 14px; height: 14px;"></i> Slide Presentation Exporter</h4>
                 <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
                     Compiles dynamic presentation slide layouts based on your current database metrics and exports PowerPoint PPTX files.
                 </p>
 
-                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">🧠 AI Advisor Copilot</h4>
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;"><i data-lucide="sparkles" class="lucide-icon" style="width: 14px; height: 14px;"></i> AI Advisor Copilot</h4>
                 <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
                     Converts plain natural language questions into accurate SQL queries and text summaries of your datasets in real-time.
                 </p>
                 
-                <h4 style="color: var(--accent-2); margin: 15px 0 6px; font-family: var(--font-heading); font-size: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 4px;">📖 A to Z Corporate Operational Guide Book</h4>
+                <h4 style="color: var(--accent-2); margin: 15px 0 6px; font-family: var(--font-heading); font-size: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 4px;"><i data-lucide="book-open" class="lucide-icon" style="width: 14px; height: 14px;"></i> Corporate Operational Reference Manual</h4>
                 <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 15px; border-radius: 6px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px;">
                     <div>
                         <strong style="color: var(--accent); font-size: 0.82rem; display: block; margin-bottom: 2px;">A to Z Glossary</strong>
@@ -2548,7 +2543,7 @@
                     </div>
                 </div>
 
-                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;">📜 Licensing & Data Privacy</h4>
+                <h4 style="color: var(--accent-2); margin: 10px 0 2px; font-family: var(--font-heading); font-size: 0.9rem;"><i data-lucide="shield" class="lucide-icon" style="width: 14px; height: 14px;"></i> Licensing & Data Privacy</h4>
                 <p style="margin: 0 0 8px; color: var(--muted); font-size: 0.8rem;">
                     Released under the MIT License — free for enterprise-wide use. Outbound API requests can be routed through an authenticated proxy pool to shield the host IP.
                 </p>
@@ -2597,9 +2592,9 @@
                     <div>
                         <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 4px; font-weight: 600;">PRIORITY</label>
                         <select id="wizardPriority" class="roleSelect" style="width: 100%;">
-                            <option value="CRITICAL">🔴 CRITICAL</option>
-                            <option value="HIGH">🟡 HIGH</option>
-                            <option value="MEDIUM">🟢 MEDIUM</option>
+                            <option value="CRITICAL">Critical</option>
+                            <option value="HIGH">High</option>
+                            <option value="MEDIUM">Medium</option>
                         </select>
                     </div>
                     <div>
@@ -3160,7 +3155,7 @@
             <div class="copilotBox" style="display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden;">
                 <div id="chatMessages" class="chatMessages" style="flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px;">
                     <div class="msg bot">
-                        <p style="margin: 0 0 6px 0;">👋 Hello! I am your <strong>Qiplo AI Copilot</strong>. I have direct access to your database details, prediction summaries, and retention records. Ask me anything:</p>
+                        <p style="margin: 0 0 6px 0;">Hello! I am your <strong>Qiplo AI Copilot</strong>. I have direct access to your database details, prediction summaries, and retention records. Ask me anything:</p>
                         <ul style="margin: 0; padding-left: 18px; font-size: 0.8rem; line-height: 1.4;">
                             <li>"What are the top 3 contract types linked to churn?"</li>
                             <li>"Draft a personalized recovery email for client C001."</li>

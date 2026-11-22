@@ -9079,16 +9079,45 @@ body.light-theme .tabStudioLaunchBtn {
     align-items: center !important;
     justify-content: center !important;
     text-align: center !important;
-    gap: 2px !important;
+    gap: 3px !important;
     flex-shrink: 0 !important;
     line-height: 1 !important;
     text-decoration: none !important;
-    padding: 2px 4px !important;
+    padding: 0 !important;
+    cursor: pointer !important;
 }
 
 .logoSvg {
     display: block !important;
     margin: 0 auto !important;
+}
+
+.logoSubLabel {
+    font-family: 'Outfit', 'Plus Jakarta Sans', var(--font-heading), sans-serif !important;
+    font-size: 0.68rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+    display: block !important;
+    line-height: 1 !important;
+    margin: 0 auto !important;
+    background: linear-gradient(135deg, #00F5FF 0%, #D946EF 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: 0 0 10px rgba(0, 245, 255, 0.25);
+    transition: transform 0.2s ease, text-shadow 0.2s ease;
+}
+
+body.light-theme .logoSubLabel {
+    background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: none !important;
+}
+
+.logoBox:hover .logoSubLabel {
+    transform: scale(1.05);
 }
 
 .appName.logoBrandName {
