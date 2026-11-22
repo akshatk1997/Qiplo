@@ -27,14 +27,23 @@ from flask import Flask, jsonify, render_template, request, Response, redirect
 
 from churn_analysis import (ensure_database, import_frame_to_sql, load_config, save_config, predict_from_frame,
                              train_model, generate_ai_insight_with_llm, DEFAULT_TARGET)
-from powerbi_exporter import (
-    build_star_schema,
-    generate_powerbi_pbip_package,
-    generate_fallback_package,
-    generate_pbit_bytes,
-    validate_powerbi_package,
-    push_to_powerbi_rest_api,
-)
+try:
+    from powerbi_exporter import (
+        build_star_schema,
+        generate_powerbi_pbip_package,
+        generate_fallback_package,
+        generate_pbit_bytes,
+        validate_powerbi_package,
+        push_to_powerbi_rest_api,
+    )
+except Exception as _pbi_imp_err:
+    print(f"Warning: Failed to import powerbi_exporter: {_pbi_imp_err}")
+    build_star_schema = None
+    generate_powerbi_pbip_package = None
+    generate_fallback_package = None
+    generate_pbit_bytes = None
+    validate_powerbi_package = None
+    push_to_powerbi_rest_api = None
 
 SCHEMA_PATH = BASE_DIR / "sql" / "schema.sql"
 CONFIG_PATH = BASE_DIR / "config" / "company_config.json"

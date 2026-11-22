@@ -11,7 +11,79 @@ import os
 import zipfile
 from datetime import datetime, timedelta
 import pandas as pd
-import requests
+try:
+    import requests
+except ImportError:
+    requests = None
+
+
+def _send_http_request(url: str, method: str = "GET", headers: dict | None = None, data: dict | None = None, json_body: dict | None = None, timeout: int = 20):
+    """
+    Universal HTTP request dispatcher.
+    Uses requests if available, falling back gracefully to urllib.request standard library.
+    """
+    if requests is not None:
+        try:
+            m = method.upper()
+            if m == "GET":
+                return requests.get(url, headers=headers, timeout=timeout)
+            elif m == "POST":
+                if json_body is not None:
+                    return requests.post(url, headers=headers, json=json_body, timeout=timeout)
+                return requests.post(url, headers=headers, data=data, timeout=timeout)
+        except Exception:
+            pass
+
+    import urllib.request
+    import urllib.parse
+    import json as _json
+    import ssl
+
+    ctx = ssl.create_default_context()
+    encoded_data = None
+    req_headers = dict(headers or {})
+    if json_body is not None:
+        encoded_data = _json.dumps(json_body).encode("utf-8")
+        if "Content-Type" not in req_headers:
+            req_headers["Content-Type"] = "application/json"
+    elif data is not None:
+        encoded_data = urllib.parse.urlencode(data).encode("utf-8")
+        if "Content-Type" not in req_headers:
+            req_headers["Content-Type"] = "application/x-www-form-urlencoded"
+
+    req = urllib.request.Request(url, data=encoded_data, headers=req_headers, method=method.upper())
+    try:
+        with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
+            status_code = resp.getcode()
+            body = resp.read().decode("utf-8", errors="replace")
+            
+            class _SimpleResponse:
+                def __init__(self, sc, b):
+                    self.status_code = sc
+                    self.text = b
+                def json(self):
+                    return _json.loads(self.text)
+            return _SimpleResponse(status_code, body)
+    except urllib.error.HTTPError as he:
+        err_body = he.read().decode("utf-8", errors="replace") if he.fp else str(he)
+        class _SimpleErrResponse:
+            def __init__(self, sc, b):
+                self.status_code = sc
+                self.text = b
+            def json(self):
+                try:
+                    return _json.loads(self.text)
+                except Exception:
+                    return {}
+        return _SimpleErrResponse(he.code, err_body)
+    except Exception as exc:
+        class _SimpleFailResponse:
+            def __init__(self, err):
+                self.status_code = 500
+                self.text = str(err)
+            def json(self):
+                return {}
+        return _SimpleFailResponse(exc)
 
 
 def build_star_schema(enriched_df: pd.DataFrame):
@@ -1194,7 +1266,7 @@ def push_to_powerbi_rest_api(enriched_df: pd.DataFrame) -> dict:
             "client_secret": client_secret,
             "scope": "https://analysis.windows.net/powerbi/api/.default"
         }
-        token_res = requests.post(token_url, data=token_data, timeout=15)
+        token_res = _send_http_request(token_url, method="POST", data=token_data, timeout=15)
         if token_res.status_code != 200:
             return {
                 "ok": False,
@@ -1212,7 +1284,7 @@ def push_to_powerbi_rest_api(enriched_df: pd.DataFrame) -> dict:
         tables_data = build_star_schema(enriched_df)
         dataset_name = "Qiplo Live Churn Intelligence"
         list_ds_url = f"https://api.powerbi.com/v1.0/myorg/groups/{workspace_id}/datasets"
-        ds_res = requests.get(list_ds_url, headers=headers, timeout=15)
+        ds_res = _send_http_request(list_ds_url, method="GET", headers=headers, timeout=15)
         
         target_ds_id = None
         if ds_res.status_code == 200:
@@ -1245,7 +1317,7 @@ def push_to_powerbi_rest_api(enriched_df: pd.DataFrame) -> dict:
                     }
                 ]
             }
-            create_res = requests.post(list_ds_url, headers=headers, json=schema_payload, timeout=20)
+            create_res = _send_http_request(list_ds_url, method="POST", headers=headers, json_body=schema_payload, timeout=20)
             if create_res.status_code not in (200, 201, 202):
                 return {
                     "ok": False,
@@ -1261,7 +1333,7 @@ def push_to_powerbi_rest_api(enriched_df: pd.DataFrame) -> dict:
         
         for i in range(0, len(fact_records), batch_size):
             batch = fact_records[i:i + batch_size]
-            rows_res = requests.post(push_url, headers=headers, json={"rows": batch}, timeout=25)
+            rows_res = _send_http_request(push_url, method="POST", headers=headers, json_body={"rows": batch}, timeout=25)
             if rows_res.status_code not in (200, 201, 202):
                 return {
                     "ok": False,
