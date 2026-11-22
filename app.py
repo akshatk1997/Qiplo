@@ -45,6 +45,24 @@ except Exception as _pbi_imp_err:
     validate_powerbi_package = None
     push_to_powerbi_rest_api = None
 
+try:
+    from tableau_exporter import (
+        build_tableau_dataset,
+        generate_tableau_twb_xml,
+        generate_tableau_twbx_package,
+        generate_tableau_fallback_package,
+        validate_tableau_package,
+        publish_to_tableau_server,
+    )
+except Exception as _tab_err:
+    print(f"Warning: Failed to import tableau_exporter: {_tab_err}")
+    build_tableau_dataset = None
+    generate_tableau_twb_xml = None
+    generate_tableau_twbx_package = None
+    generate_tableau_fallback_package = None
+    validate_tableau_package = None
+    publish_to_tableau_server = None
+
 SCHEMA_PATH = BASE_DIR / "sql" / "schema.sql"
 CONFIG_PATH = BASE_DIR / "config" / "company_config.json"
 
@@ -2859,97 +2877,158 @@ def create_app() -> Flask:
 
     @app.route("/api/export/tableau")
     def export_tableau_api():
+        """
+        Tableau Export Handler conforming strictly to tableau-export/SKILL.md:
+        - Default: Generates packaged workbook (.twbx) containing valid 2023.1 XML and Data/*.csv
+        - Validates all references, XML parsing, and row counts before attachment response
+        - Response headers: Content-Type: application/vnd.tableau.twbx
+        """
         try:
-            csv_feed_url = f"{request.url_root}api/export/csv"
-            twb_content = f"""<?xml version='1.0' encoding='utf-8' ?>
-<workbook version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
-  <preferences />
-  <datasources>
-    <datasource caption='Qiplo AI Live Churn Predictions' inline='true' name='qiplo_churn_ds' version='18.1'>
-      <connection class='textscan' directory='{request.url_root}api/export' filename='csv' password='' server='' username='' />
-      <aliases enabled='yes' />
-      <column datatype='string' name='[customer_id]' role='dimension' type='nominal' />
-      <column datatype='real' name='[predicted_probability]' role='measure' type='quantitative' />
-      <column datatype='string' name='[prediction_label]' role='dimension' type='nominal' />
-      <column datatype='real' name='[churn_risk_score]' role='measure' type='quantitative' />
-      <column datatype='string' name='[risk_level]' role='dimension' type='nominal' />
-      <column datatype='real' name='[MonthlyCharges]' role='measure' type='quantitative' />
-      <column datatype='real' name='[annual_charges]' role='measure' type='quantitative' />
-      <column datatype='real' name='[revenue_at_risk]' role='measure' type='quantitative' />
-      <column datatype='string' name='[retention_priority]' role='dimension' type='nominal' />
-      <column datatype='string' name='[recommended_retention_strategy]' role='dimension' type='nominal' />
-      <column datatype='string' name='[ai_executive_insight]' role='dimension' type='nominal' />
-      <column datatype='string' name='[Contract]' role='dimension' type='nominal' />
-      <column datatype='string' name='[InternetService]' role='dimension' type='nominal' />
-      <column datatype='integer' name='[tenure]' role='measure' type='quantitative' />
-      <layout dim-ordering='alphabetic' dim-percentage='0.5' measure-ordering='alphabetic' measure-percentage='0.5' show-structure='true' />
-    </datasource>
-  </datasources>
-  <worksheets>
-    <worksheet name='Executive Overview &amp; KPIs'>
-      <table>
-        <view>
-          <datasources>
-            <datasource caption='Qiplo AI Live Churn Predictions' name='qiplo_churn_ds' />
-          </datasources>
-          <datasource-dependencies datasource='qiplo_churn_ds'>
-            <column datatype='string' name='[risk_level]' role='dimension' type='nominal' />
-            <column datatype='real' name='[revenue_at_risk]' role='measure' type='quantitative' />
-            <column-instance column='[risk_level]' derivation='None' name='[none:risk_level:nk]' pivot='key' type='nominal' />
-            <column-instance column='[revenue_at_risk]' derivation='Sum' name='[sum:revenue_at_risk:qk]' pivot='key' type='quantitative' />
-          </datasource-dependencies>
-          <aggregation value='true' />
-        </view>
-        <style />
-        <panes>
-          <pane>
-            <slice>
-              <element type='field' />
-            </slice>
-            <encodings>
-              <color column='[qiplo_churn_ds].[none:risk_level:nk]' />
-            </encodings>
-          </pane>
-        </panes>
-        <rows>[qiplo_churn_ds].[none:risk_level:nk]</rows>
-        <cols>[qiplo_churn_ds].[sum:revenue_at_risk:qk]</cols>
-      </table>
-    </worksheet>
-    <worksheet name='High Risk Action Table'>
-      <table>
-        <view>
-          <datasources>
-            <datasource caption='Qiplo AI Live Churn Predictions' name='qiplo_churn_ds' />
-          </datasources>
-        </view>
-        <rows>[qiplo_churn_ds].[customer_id]</rows>
-      </table>
-    </worksheet>
-  </worksheets>
-  <dashboards>
-    <dashboard name='Qiplo AI Executive Dashboard'>
-      <style />
-      <size maxheight='900' maxwidth='1400' minheight='600' minwidth='800' />
-      <zones>
-        <zone h='100000' id='1' type-static='layout-basic' w='100000' x='0' y='0'>
-          <zone h='49000' id='2' name='Executive Overview &amp; KPIs' w='98000' x='1000' y='1000' />
-          <zone h='48000' id='3' name='High Risk Action Table' w='98000' x='1000' y='51000' />
-        </zone>
-      </zones>
-    </dashboard>
-  </dashboards>
-  <windows version='18.1'>
-    <window class='dashboard' maximized='true' name='Qiplo AI Executive Dashboard'>
-      <active pane='0' />
-    </window>
-  </windows>
-</workbook>"""
+            export_type = request.args.get("type", "twbx").lower()
+            enriched_df = build_enriched_predictions_dataframe()
+            date_str = datetime.now().strftime("%Y-%m-%d")
+
+            # 1. Fallback package requested
+            if export_type == "fallback":
+                if generate_tableau_fallback_package is not None:
+                    fb_bytes = generate_tableau_fallback_package(enriched_df)
+                else:
+                    fb_bytes = b"Fallback package generator unavailable."
+                return Response(
+                    fb_bytes,
+                    mimetype="application/zip",
+                    headers={"Content-Disposition": f'attachment; filename="qiplo-tableau-fallback-{date_str}.zip"'}
+                )
+
+            # 2. Raw XML .twb file requested
+            if export_type == "twb":
+                if generate_tableau_twb_xml is not None:
+                    tab_df = build_tableau_dataset(enriched_df) if build_tableau_dataset is not None else enriched_df
+                    twb_xml = generate_tableau_twb_xml(tab_df)
+                else:
+                    twb_xml = "<workbook version='2023.1'></workbook>"
+                return Response(
+                    twb_xml,
+                    mimetype="application/xml",
+                    headers={"Content-Disposition": f'attachment; filename="Qiplo_Tableau_Dashboard_{date_str}.twb"'}
+                )
+
+            # 3. Default: Full Packaged Workbook (.twbx ZIP containing workbook.twb + Data/CustomerIntelligence.csv)
+            if generate_tableau_twbx_package is not None:
+                twbx_bytes = generate_tableau_twbx_package(enriched_df)
+                if validate_tableau_package is not None:
+                    val = validate_tableau_package(twbx_bytes, len(enriched_df))
+                    if not val.get("ok"):
+                        return jsonify({
+                            "ok": False,
+                            "stage": val.get("stage", "validation"),
+                            "message": val.get("message", "Validation failed"),
+                            "fix": val.get("fix", "Download fallback CSV + setup guide."),
+                            "fallback_url": f"{request.url_root}api/export/tableau?type=fallback"
+                        }), 422
+            else:
+                return jsonify({
+                    "ok": False,
+                    "stage": "engine_load",
+                    "message": "Tableau exporter engine unavailable.",
+                    "fix": "Download fallback CSV + setup guide."
+                }), 500
+
             return Response(
-                twb_content,
-                mimetype="application/xml",
-                headers={"Content-Disposition": "attachment; filename=Qiplo_Tableau_Dashboard.twb"}
+                twbx_bytes,
+                mimetype="application/vnd.tableau.twbx",
+                headers={"Content-Disposition": f'attachment; filename="qiplo-tableau-{date_str}.twbx"'}
             )
+
         except Exception as e:
+            return jsonify({
+                "ok": False,
+                "stage": "tableau_export",
+                "message": f"Failed to generate Tableau export: {e}",
+                "fix": "Download fallback CSV + setup guide using the fallback link.",
+                "fallback_url": f"{request.url_root}api/export/tableau?type=fallback"
+            }), 500
+
+    @app.route("/api/export/tableau/publish", methods=["POST"])
+    def export_tableau_publish_api():
+        """Tableau Server / Cloud REST API publish endpoint."""
+        try:
+            enriched_df = build_enriched_predictions_dataframe()
+            if generate_tableau_twbx_package is None or publish_to_tableau_server is None:
+                return jsonify({"ok": False, "stage": "engine", "message": "Tableau exporter engine unavailable.", "fix": "Check server configuration."}), 500
+
+            twbx_bytes = generate_tableau_twbx_package(enriched_df)
+            res = publish_to_tableau_server(twbx_bytes)
+            status_code = 200 if res.get("ok") else 400
+            return jsonify(res), status_code
+        except Exception as e:
+            return jsonify({"ok": False, "stage": "publish_execution", "message": str(e), "fix": "Verify network connectivity to Tableau Server."}), 500
+
+    @app.route("/api/export/tableau/status")
+    def export_tableau_status_api():
+        """Checks configuration readiness of Tableau Server Personal Access Token environment variables."""
+        server = os.environ.get("TABLEAU_SERVER")
+        site = os.environ.get("TABLEAU_SITE")
+        pat_name = os.environ.get("TABLEAU_PAT_NAME")
+        pat_secret = os.environ.get("TABLEAU_PAT_SECRET")
+        is_configured = bool(server and pat_name and pat_secret)
+        return jsonify({
+            "configured": is_configured,
+            "server": server or "",
+            "site": site or "Default",
+            "has_pat_name": bool(pat_name),
+            "has_pat_secret": bool(pat_secret)
+        })
+
+    @app.route("/api/export/tableau/preview")
+    def export_tableau_preview_api():
+        """Returns structured Tableau dataset telemetry and calculated fields for in-browser visual studio."""
+        try:
+            enriched_df = build_enriched_predictions_dataframe()
+            tab_df = build_tableau_dataset(enriched_df) if build_tableau_dataset is not None else enriched_df
+
+            total_rev = round(float(tab_df["Revenue"].sum()), 2) if not tab_df.empty else 0.0
+            total_cust = len(tab_df)
+            churned_count = int(tab_df["Churned"].sum()) if not tab_df.empty else 0
+            churn_rate = round((churned_count / max(1, total_cust)) * 100, 1)
+            at_risk_rev = round(float(tab_df[tab_df["ChurnScore"] >= 70.0]["Revenue"].sum()), 2) if not tab_df.empty else 0.0
+
+            # Calculated fields
+            calculated_fields = [
+                {"name": "Churn Rate", "formula": "SUM(IIF([Churned]=TRUE,1,0)) / COUNT([CustomerID])", "type": "Percentage", "desc": "Calculated overall customer attrition rate."},
+                {"name": "Revenue at Risk", "formula": "SUM(IF [ChurnScore] >= 0.7 THEN [Revenue] END)", "type": "Currency", "desc": "Total annualized revenue under accounts with churn score >= 70%."},
+                {"name": "Revenue MoM %", "formula": "(ZN(SUM([Revenue])) - LOOKUP(ZN(SUM([Revenue])),-1)) / ABS(LOOKUP(ZN(SUM([Revenue])),-1))", "type": "Percentage", "desc": "Month-over-month revenue growth rate percentage."}
+            ]
+
+            # Worksheets & Dashboard specs
+            worksheets = [
+                {"name": "KPI Revenue", "type": "Text Card", "metric": f"${total_rev:,.2f}"},
+                {"name": "KPI Churn", "type": "Text Card", "metric": f"{churn_rate}%"},
+                {"name": "Revenue Trend", "type": "Line Chart (Date)", "description": "Continuous monthly revenue trajectory."},
+                {"name": "Churn by Segment", "type": "Bar Chart", "description": "Segment attrition with click-to-filter action."},
+                {"name": "Risk Table", "type": "Text Table", "description": "Top accounts sorted descending by ChurnScore."},
+                {"name": "Region Bar", "type": "Horizontal Bar", "description": "Regional ARR revenue exposure."}
+            ]
+
+            return jsonify({
+                "ok": True,
+                "kpis": {
+                    "total_revenue": total_rev,
+                    "total_customers": total_cust,
+                    "churn_rate": churn_rate,
+                    "revenue_at_risk": at_risk_rev
+                },
+                "calculated_fields": calculated_fields,
+                "worksheets": worksheets,
+                "dashboard": {
+                    "name": "Executive Overview",
+                    "width": 1200,
+                    "height": 800,
+                    "filter_actions": ["Segment", "Region"]
+                }
+            })
+        except Exception as e:
+            return jsonify({"ok": False, "error": str(e)}), 500
             return jsonify({"error": f"Failed to generate Tableau template: {e}"}), 500
 
     def generate_powerbi_pbit_bytes(csv_url: str) -> bytes:

@@ -65,11 +65,16 @@ def test_bi_exports(tmp_path):
         flask_app.config.update(TESTING=True)
         client = flask_app.test_client()
 
-        # Test Tableau Export
+        # Test Tableau Export (.twbx package & .twb XML)
         tab_res = client.get("/api/export/tableau")
         assert tab_res.status_code == 200
-        assert "xml" in tab_res.content_type
-        assert b"<workbook" in tab_res.data
+        assert "application/vnd.tableau.twbx" in tab_res.content_type
+        assert tab_res.data.startswith(b"PK")
+
+        tab_xml_res = client.get("/api/export/tableau?type=twb")
+        assert tab_xml_res.status_code == 200
+        assert "xml" in tab_xml_res.content_type
+        assert b"<workbook" in tab_xml_res.data
 
         # Test Power BI Export (.pbit binary template)
         pbi_res = client.get("/api/export/powerbi")

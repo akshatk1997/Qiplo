@@ -218,8 +218,9 @@ def run_atoz_verification():
     # 13. Test BI Exports & Insights Endpoints (Tableau & Power BI)
     print("\n[INFO] Testing Tableau & Power BI Dashboard Generation Endpoints...")
     res = client.get("/api/export/tableau")
-    if res.status_code == 200 and b"<workbook" in res.data:
-        print("  [OK] GET /api/export/tableau -> 200 OK (Tableau Workbook .twb generated cleanly)")
+    res_twb = client.get("/api/export/tableau?type=twb")
+    if res.status_code == 200 and res.data.startswith(b"PK") and res_twb.status_code == 200 and b"<workbook" in res_twb.data:
+        print("  [OK] GET /api/export/tableau -> 200 OK (Tableau Packaged Workbook .twbx & .twb generated cleanly)")
     else:
         print(f"  [ERROR] GET /api/export/tableau -> FAILED ({res.status_code})")
         success = False
