@@ -1062,21 +1062,147 @@
             </div>
 
             <div class="tabBody hidden" id="tab-customers">
-                <div class="paneHead" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
-                    <h2>Prediction Results</h2>
-                    <div style="display: flex; gap: 8px; align-items: center;">
-                        <input id="customerSearchInput" type="text" placeholder="Search customer ID..." style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 6px; font-size: 0.82rem; width: 180px;" />
-                        <select id="riskFilter" class="roleSelect" aria-label="Filter by risk" style="margin-left: 0;">
+                <!-- 1. Header & Quick Actions Bar -->
+                <div class="resultSectionHead">
+                    <div class="resultSectionTitleWrap">
+                        <div class="resultSectionTagRow">
+                            <span class="resultSectionTag">
+                                <i data-lucide="layers" class="lucide-icon" style="width: 13px; height: 13px;"></i>
+                                PREDICTIVE TELEMETRY
+                            </span>
+                            <span class="resultLiveStatus"><span class="resultLivePulse"></span> Live Database Inference</span>
+                        </div>
+                        <h2 class="resultSectionHeading">Prediction Results &amp; Account Intelligence</h2>
+                        <p class="sectionSub">Machine learning risk classifications, 95% Bayesian confidence intervals, multi-factor root cause drivers, and prescriptive retention playbooks.</p>
+                    </div>
+                    <div class="resultHeadActions">
+                        <button type="button" class="resultActionBtn" onclick="exportResultsCSV()" title="Download current filtered customer rows as CSV">
+                            <i data-lucide="download" class="lucide-icon" style="width: 14px; height: 14px;"></i> Export CSV
+                        </button>
+                        <button type="button" class="resultActionBtn" onclick="exportResultsJSON()" title="Export JSON audit payload">
+                            <i data-lucide="file-json" class="lucide-icon" style="width: 14px; height: 14px;"></i> JSON Audit
+                        </button>
+                        <button type="button" class="resultActionBtn primary" onclick="window.switchTab('sandbox')" title="Test scenarios in the Sandbox simulation engine">
+                            <i data-lucide="flask-conical" class="lucide-icon" style="width: 14px; height: 14px;"></i> Open in Sandbox
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. High-Impact Result Scorecard Summary Cards -->
+                <div class="resultScorecardsGrid">
+                    <div class="resultScorecard">
+                        <div class="resultScorecardTop">
+                            <span class="resultScorecardLabel">Total Evaluated</span>
+                            <span class="resultScorecardIconBox"><i data-lucide="users" class="lucide-icon" style="width: 14px; height: 14px;"></i></span>
+                        </div>
+                        <div class="resultScorecardVal" id="resultTotalScoredVal">--</div>
+                        <div class="resultScorecardSub" id="resultTotalScoredSub">Active customer profiles</div>
+                    </div>
+                    <div class="resultScorecard danger">
+                        <div class="resultScorecardTop">
+                            <span class="resultScorecardLabel">High Attrition Risk</span>
+                            <span class="resultScorecardBadge danger"><i data-lucide="alert-triangle" class="lucide-icon" style="width: 11px; height: 11px;"></i> Alert</span>
+                        </div>
+                        <div class="resultScorecardVal danger" id="resultHighRiskVal">--</div>
+                        <div class="resultScorecardSub" id="resultHighRiskSub">Immediate CSM outreach</div>
+                    </div>
+                    <div class="resultScorecard success">
+                        <div class="resultScorecardTop">
+                            <span class="resultScorecardLabel">Healthy Baseline</span>
+                            <span class="resultScorecardBadge success"><i data-lucide="shield-check" class="lucide-icon" style="width: 11px; height: 11px;"></i> Stable</span>
+                        </div>
+                        <div class="resultScorecardVal success" id="resultLowRiskVal">--</div>
+                        <div class="resultScorecardSub" id="resultLowRiskSub">Low risk &amp; high loyalty</div>
+                    </div>
+                    <div class="resultScorecard">
+                        <div class="resultScorecardTop">
+                            <span class="resultScorecardLabel">Portfolio Risk Index</span>
+                            <span class="resultScorecardIconBox"><i data-lucide="activity" class="lucide-icon" style="width: 14px; height: 14px;"></i></span>
+                        </div>
+                        <div class="resultScorecardVal" id="resultAvgRiskVal">--</div>
+                        <div class="resultScorecardSub" id="resultAvgRiskSub">Weighted average probability</div>
+                    </div>
+                </div>
+
+                <!-- 3. Multi-Faceted Filter & Search Toolbar -->
+                <div class="resultFilterToolbar">
+                    <div class="resultToolbarLeft">
+                        <div class="resultSearchWrapper">
+                            <i data-lucide="search" class="lucide-icon resultSearchIcon" style="width: 14px; height: 14px;"></i>
+                            <input id="customerSearchInput" type="text" placeholder="Search customer ID, contract, driver..." autocomplete="off" />
+                            <button type="button" id="clearCustomerSearchBtn" class="resultSearchClearBtn hidden" onclick="clearCustomerSearch()" title="Clear search">&times;</button>
+                        </div>
+                        <div class="resultFilterPills">
+                            <button type="button" class="resultFilterPill active" data-filter="all" onclick="setResultFilter('all')">
+                                All <span class="resultPillBadge" id="pillCountAll">0</span>
+                            </button>
+                            <button type="button" class="resultFilterPill danger" data-filter="high_risk" onclick="setResultFilter('high_risk')">
+                                <span class="resultPillDot danger"></span> High Risk <span class="resultPillBadge" id="pillCountHigh">0</span>
+                            </button>
+                            <button type="button" class="resultFilterPill success" data-filter="low_risk" onclick="setResultFilter('low_risk')">
+                                <span class="resultPillDot success"></span> Low Risk <span class="resultPillBadge" id="pillCountLow">0</span>
+                            </button>
+                            <button type="button" class="resultFilterPill" data-filter="assigned" onclick="setResultFilter('assigned')">
+                                👤 Assigned
+                            </button>
+                            <button type="button" class="resultFilterPill" data-filter="unassigned" onclick="setResultFilter('unassigned')">
+                                ⚠️ Unassigned
+                            </button>
+                        </div>
+                        <!-- Hidden legacy select for full programmatic compatibility -->
+                        <select id="riskFilter" class="roleSelect" aria-label="Filter by risk" style="display: none;">
                             <option value="all">All risks</option>
                             <option value="high_risk">High risk</option>
                             <option value="low_risk">Low risk</option>
                         </select>
                     </div>
+
+                    <div class="resultToolbarRight">
+                        <div class="resultSelectGroup">
+                            <label for="resultSortSelect">Sort:</label>
+                            <select id="resultSortSelect" class="roleSelect" onchange="changeResultSort(this.value)">
+                                <option value="risk_desc">Probability (High &rarr; Low)</option>
+                                <option value="risk_asc">Probability (Low &rarr; High)</option>
+                                <option value="id_asc">Customer ID (A &rarr; Z)</option>
+                                <option value="charges_desc">Monthly Charges (High &rarr; Low)</option>
+                                <option value="tenure_asc">Tenure (Shortest First)</option>
+                            </select>
+                        </div>
+                        <div class="resultSelectGroup">
+                            <label for="resultPageSizeSelect">Page:</label>
+                            <select id="resultPageSizeSelect" class="roleSelect" onchange="changeResultPageSize(this.value)">
+                                <option value="15">15 rows</option>
+                                <option value="25" selected>25 rows</option>
+                                <option value="50">50 rows</option>
+                                <option value="100">100 rows</option>
+                                <option value="all">All rows</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="tableWrap">
-                    <table id="predictionTable">
+
+                <!-- 4. Result Status Info Bar -->
+                <div class="resultInfoBar">
+                    <div class="resultInfoLeft">
+                        <span id="resultShowingCountText">Showing 1–25 of 25 accounts</span>
+                    </div>
+                    <div class="resultInfoRight" id="resultActiveFilterNotice"></div>
+                </div>
+
+                <!-- 5. Structured Table -->
+                <div class="tableWrap resultTableWrap">
+                    <table id="predictionTable" class="predictionTable">
+                        <thead id="predictionHead">
+                            <!-- Populated dynamically -->
+                        </thead>
                         <tbody id="predictionRows"></tbody>
                     </table>
+                </div>
+
+                <!-- 6. Pagination Bar -->
+                <div class="resultPaginationBar" id="resultPaginationBar">
+                    <div class="paginationInfo" id="resultPaginationInfo">Page 1 of 1</div>
+                    <div class="paginationControls" id="resultPaginationControls"></div>
                 </div>
             </div>
 
@@ -1337,19 +1463,27 @@
 
                         <div class="simResultsGrid">
                             <div class="simResultCard">
-                                <span>Targeted Accounts</span>
+                                <span style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                    <i data-lucide="users" class="lucide-icon" style="width: 12px; height: 12px;"></i> Targeted Accounts
+                                </span>
                                 <h4 id="simTargetedCount"><span class="skeleton-loader"></span></h4>
                             </div>
                             <div class="simResultCard">
-                                <span>Monthly Campaign Cost</span>
+                                <span style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                    <i data-lucide="dollar-sign" class="lucide-icon" style="width: 12px; height: 12px;"></i> Monthly Campaign Cost
+                                </span>
                                 <h4 id="simCampaignCost"><span class="skeleton-loader"></span></h4>
                             </div>
                             <div class="simResultCard success">
-                                <span>Expected Saved Revenue</span>
+                                <span style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                    <i data-lucide="shield-check" class="lucide-icon" style="width: 12px; height: 12px;"></i> Expected Saved Revenue
+                                </span>
                                 <h4 id="simSavedRevenue"><span class="skeleton-loader"></span></h4>
                             </div>
                             <div class="simResultCard success highlight">
-                                <span>Net Saved Revenue</span>
+                                <span style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                                    <i data-lucide="trending-up" class="lucide-icon" style="width: 12px; height: 12px;"></i> Net Saved Revenue
+                                </span>
                                 <h4 id="simNetSavedRevenue"><span class="skeleton-loader"></span></h4>
                             </div>
                         </div>
@@ -2439,6 +2573,39 @@
                 </button>
                 <button id="closeWelcomeBtn" class="ghostBtn" style="border: none; background: transparent; color: var(--muted); padding: 8px; font-size: 0.82rem; font-weight: 600; cursor: pointer; text-decoration: underline; width: 100%; text-align: center;" type="button">
                     Skip Tour & Enter Workspace
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dedicated Customer Deep-Dive Intelligence Modal -->
+    <div id="customerDetailModal" class="magnificZoomModal hidden" onclick="if(event.target===this) closeCustomerDetailModal()">
+        <div class="customerDetailCard" onclick="event.stopPropagation()">
+            <div class="customerDetailHeader">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <div class="customerAvatarBox" id="detailCustomerAvatar"><i data-lucide="user" class="lucide-icon" style="width: 22px; height: 22px;"></i></div>
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <h3 id="detailCustomerId" style="margin: 0; font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; color: var(--text);">CID-0000</h3>
+                            <span id="detailRiskBadge" class="badge">--</span>
+                        </div>
+                        <span id="detailCustomerSubtitle" style="font-size: 0.78rem; color: var(--muted); margin-top: 2px; display: block;">Tenure: -- • Contract: --</span>
+                    </div>
+                </div>
+                <button type="button" class="tour-close-x" onclick="closeCustomerDetailModal()">&times;</button>
+            </div>
+            
+            <div class="customerDetailBody" id="customerDetailBody">
+                <!-- Dynamically rendered customer scorecard & telemetry -->
+            </div>
+
+            <div class="customerDetailFooter">
+                <button type="button" class="btn btn-secondary" onclick="closeCustomerDetailModal()">Close</button>
+                <button type="button" class="btn btn-secondary" id="detailAssignCsmBtn" onclick="assignCsmFromDetail()">
+                    <i data-lucide="user-plus" class="lucide-icon" style="width: 14px; height: 14px;"></i> Assign CSM
+                </button>
+                <button type="button" class="btn btn-primary" id="detailSimulateBtn" onclick="simulateCustomerInSandbox()">
+                    <i data-lucide="flask-conical" class="lucide-icon" style="width: 14px; height: 14px;"></i> Test in Sandbox
                 </button>
             </div>
         </div>

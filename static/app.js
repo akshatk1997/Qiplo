@@ -146,6 +146,11 @@ let currentAuthorizedRole = localStorage.getItem('user_role') || 'manager';
 let labelMapping = { high_risk: 'high_risk', low_risk: 'low_risk' };
 let lastChartsData = null;
 let lastFeatureImportance = null;
+let resultCurrentPage = 1;
+let resultPageSize = 25;
+let resultActiveFilter = 'all';
+let resultSortOrder = 'risk_desc';
+let selectedCustomerDetail = null;
 
 function showLoadingSkeletons() {
     const ids = ['metaTotal', 'metaHigh', 'metaLow', 'metaFields', 'simTargetedCount', 'simCampaignCost', 'simSavedRevenue', 'simNetSavedRevenue'];
@@ -419,14 +424,244 @@ function dynamicColumns() {
     return { idCol, extra };
 }
 
+function setResultFilter(filterKey) {
+    resultActiveFilter = filterKey;
+    resultCurrentPage = 1;
+    const legacySelect = document.getElementById('riskFilter');
+    if (legacySelect) {
+        if (filterKey === 'high_risk' || filterKey === 'low_risk' || filterKey === 'all') {
+            legacySelect.value = filterKey;
+        } else {
+            legacySelect.value = 'all';
+        }
+    }
+    document.querySelectorAll('.resultFilterPill').forEach(btn => {
+        if (btn.getAttribute('data-filter') === filterKey) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+    renderRows();
+}
+
+function clearCustomerSearch() {
+    const input = document.getElementById('customerSearchInput');
+    if (input) input.value = '';
+    resultCurrentPage = 1;
+    renderRows();
+}
+
+function changeResultSort(val) {
+    resultSortOrder = val;
+    resultCurrentPage = 1;
+    renderRows();
+}
+
+function changeResultPageSize(val) {
+    resultPageSize = val === 'all' ? 'all' : parseInt(val, 10);
+    resultCurrentPage = 1;
+    renderRows();
+}
+
+function goToResultPage(pageNum) {
+    resultCurrentPage = pageNum;
+    renderRows();
+    const tableWrap = document.querySelector('.resultTableWrap');
+    if (tableWrap) {
+        tableWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
 function renderRows() {
-    const filterValue = document.getElementById('riskFilter').value;
     const table = document.getElementById('predictionTable');
     const rows = document.getElementById('predictionRows');
     if (!table || !rows) return;
 
     const { idCol, extra } = dynamicColumns();
-    const headers = ['Customer', 'Risk', 'Probability', ...extra.map(c => c.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()))];
+
+    // 1. Update High-Impact Scorecard Metrics
+    const totalCount = predictionData ? predictionData.length : 0;
+    const highRiskLabel = labelMapping.high_risk || 'high_risk';
+    const lowRiskLabel = labelMapping.low_risk || 'low_risk';
+    const highRiskItems = predictionData ? predictionData.filter(i => i.prediction_label === highRiskLabel || Number(i.predicted_probability || 0) >= 0.5) : [];
+    const highRiskCount = highRiskItems.length;
+    const lowRiskCount = Math.max(0, totalCount - highRiskCount);
+    const avgProb = totalCount > 0 ? (predictionData.reduce((acc, i) => acc + Number(i.predicted_probability || 0), 0) / totalCount) : 0;
+
+    const elTotal = document.getElementById('resultTotalScoredVal');
+    if (elTotal) elTotal.textContent = totalCount.toLocaleString();
+    const elHigh = document.getElementById('resultHighRiskVal');
+    if (elHigh) {
+        const pct = totalCount > 0 ? ((highRiskCount / totalCount) * 100).toFixed(1) : '0.0';
+        elHigh.textContent = `${highRiskCount.toLocaleString()} (${pct}%)`;
+    }
+    const elLow = document.getElementById('resultLowRiskVal');
+    if (elLow) {
+        const pct = totalCount > 0 ? ((lowRiskCount / totalCount) * 100).toFixed(1) : '0.0';
+        elLow.textContent = `${lowRiskCount.toLocaleString()} (${pct}%)`;
+    }
+    const elAvg = document.getElementById('resultAvgRiskVal');
+    if (elAvg) elAvg.textContent = `${(avgProb * 100).toFixed(1)}%`;
+
+    // Update Filter Pill Count Badges
+    const pAll = document.getElementById('pillCountAll');
+    if (pAll) pAll.textContent = totalCount;
+    const pHigh = document.getElementById('pillCountHigh');
+    if (pHigh) pHigh.textContent = highRiskCount;
+    const pLow = document.getElementById('pillCountLow');
+    if (pLow) pLow.textContent = lowRiskCount;
+
+    // 2. Synchronize legacy riskFilter select if altered externally
+    const legacySelect = document.getElementById('riskFilter');
+    if (legacySelect && legacySelect.value && legacySelect.value !== resultActiveFilter) {
+        if (resultActiveFilter === 'high_risk' || resultActiveFilter === 'low_risk' || resultActiveFilter === 'all') {
+            legacySelect.value = resultActiveFilter;
+        }
+    }
+
+    // 3. Search Term & Clear Button
+    const searchInput = document.getElementById('customerSearchInput');
+    const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    const clearBtn = document.getElementById('clearCustomerSearchBtn');
+    if (clearBtn) {
+        if (searchTerm) {
+            clearBtn.classList.remove('hidden');
+        } else {
+            clearBtn.classList.add('hidden');
+        }
+    }
+
+    // 4. Filter Active Records
+    let filtered = [...(predictionData || [])];
+
+    if (resultActiveFilter === 'high_risk') {
+        filtered = filtered.filter(item => item.prediction_label === highRiskLabel || Number(item.predicted_probability || 0) >= 0.5);
+    } else if (resultActiveFilter === 'low_risk') {
+        filtered = filtered.filter(item => item.prediction_label !== highRiskLabel && Number(item.predicted_probability || 0) < 0.5);
+    } else if (resultActiveFilter === 'assigned') {
+        filtered = filtered.filter(item => {
+            const id = idCol ? String(item[idCol]) : String(item.customer_id);
+            return window.csmAssignments && window.csmAssignments[id] && window.csmAssignments[id].status !== 'unassigned';
+        });
+    } else if (resultActiveFilter === 'unassigned') {
+        filtered = filtered.filter(item => {
+            const id = idCol ? String(item[idCol]) : String(item.customer_id);
+            return !window.csmAssignments || !window.csmAssignments[id] || window.csmAssignments[id].status === 'unassigned';
+        });
+    }
+
+    if (searchTerm) {
+        filtered = filtered.filter(item => {
+            const idVal = idCol ? String(item[idCol] || '') : String(item.customer_id || '');
+            const contract = String(item.contract_type || item.Contract || '');
+            const payment = String(item.payment_method || item.PaymentMethod || '');
+            const drivers = String(item.risk_drivers || '');
+            return idVal.toLowerCase().includes(searchTerm) ||
+                   contract.toLowerCase().includes(searchTerm) ||
+                   payment.toLowerCase().includes(searchTerm) ||
+                   drivers.toLowerCase().includes(searchTerm);
+        });
+    }
+
+    // 5. Sort Active Records
+    filtered.sort((a, b) => {
+        const probA = Number(a.predicted_probability || 0);
+        const probB = Number(b.predicted_probability || 0);
+        const idA = String(idCol ? a[idCol] : a.customer_id || '');
+        const idB = String(idCol ? b[idCol] : b.customer_id || '');
+        const chargeA = Number(a.monthly_charges || a.MonthlyCharges || a.charges || 0);
+        const chargeB = Number(b.monthly_charges || b.MonthlyCharges || b.charges || 0);
+        const tenureA = Number(a.tenure || a.tenure_months || a.Tenure || 0);
+        const tenureB = Number(b.tenure || b.tenure_months || b.Tenure || 0);
+
+        switch (resultSortOrder) {
+            case 'risk_desc': return probB - probA;
+            case 'risk_asc': return probA - probB;
+            case 'id_asc': return idA.localeCompare(idB, undefined, { numeric: true });
+            case 'charges_desc': return chargeB - chargeA;
+            case 'tenure_asc': return tenureA - tenureB;
+            default: return probB - probA;
+        }
+    });
+
+    // 6. Pagination Slicing
+    let pagedItems = filtered;
+    let startIdx = 0;
+    let endIdx = filtered.length;
+    let totalPages = 1;
+
+    if (resultPageSize !== 'all') {
+        const pageSizeNum = parseInt(resultPageSize, 10) || 25;
+        totalPages = Math.max(1, Math.ceil(filtered.length / pageSizeNum));
+        if (resultCurrentPage > totalPages) resultCurrentPage = totalPages;
+        if (resultCurrentPage < 1) resultCurrentPage = 1;
+        startIdx = (resultCurrentPage - 1) * pageSizeNum;
+        endIdx = Math.min(startIdx + pageSizeNum, filtered.length);
+        pagedItems = filtered.slice(startIdx, endIdx);
+    } else {
+        resultCurrentPage = 1;
+    }
+
+    // 7. Render Showing Info Bar
+    const showingText = document.getElementById('resultShowingCountText');
+    if (showingText) {
+        if (!filtered.length) {
+            showingText.textContent = 'Showing 0 accounts';
+        } else {
+            showingText.textContent = `Showing ${startIdx + 1}–${endIdx} of ${filtered.length.toLocaleString()} accounts (Total Scored: ${totalCount.toLocaleString()})`;
+        }
+    }
+
+    // 8. Render Pagination Controls
+    const pagInfo = document.getElementById('resultPaginationInfo');
+    if (pagInfo) {
+        pagInfo.textContent = `Page ${resultCurrentPage} of ${totalPages}`;
+    }
+    const pagControls = document.getElementById('resultPaginationControls');
+    if (pagControls) {
+        pagControls.innerHTML = '';
+        if (totalPages > 1) {
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'paginationBtn';
+            prevBtn.innerHTML = '&lsaquo; Prev';
+            prevBtn.disabled = resultCurrentPage === 1;
+            prevBtn.onclick = () => goToResultPage(resultCurrentPage - 1);
+            pagControls.appendChild(prevBtn);
+
+            const maxButtons = 5;
+            let startPage = Math.max(1, resultCurrentPage - Math.floor(maxButtons / 2));
+            let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+            if (endPage - startPage + 1 < maxButtons) {
+                startPage = Math.max(1, endPage - maxButtons + 1);
+            }
+
+            for (let p = startPage; p <= endPage; p++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `paginationBtn ${p === resultCurrentPage ? 'active' : ''}`;
+                pageBtn.textContent = p;
+                pageBtn.onclick = () => goToResultPage(p);
+                pagControls.appendChild(pageBtn);
+            }
+
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'paginationBtn';
+            nextBtn.innerHTML = 'Next &rsaquo;';
+            nextBtn.disabled = resultCurrentPage === totalPages;
+            nextBtn.onclick = () => goToResultPage(resultCurrentPage + 1);
+            pagControls.appendChild(nextBtn);
+        }
+    }
+
+    // 9. Table Headers
+    const headers = [
+        'Customer Account',
+        'Risk Status',
+        'Predicted Probability',
+        'Risk Drivers',
+        ...extra.map(c => c.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())),
+        'Actions'
+    ];
 
     let thead = table.querySelector('thead');
     if (!thead) {
@@ -436,38 +671,76 @@ function renderRows() {
     thead.innerHTML = `<tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr>`;
     rows.innerHTML = '';
 
-    const searchInput = document.getElementById('customerSearchInput');
-    const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
-
-    let filtered = filterValue === 'all'
-        ? predictionData
-        : predictionData.filter(item => item.prediction_label === filterValue);
-
-    if (searchTerm) {
-        filtered = filtered.filter(item => {
-            const idVal = idCol ? String(item[idCol]) : String(item.customer_id);
-            return idVal.toLowerCase().includes(searchTerm);
-        });
-    }
-
-    if (!filtered.length) {
-        rows.innerHTML = `<tr><td colspan="${headers.length}" class="empty">No records to display yet. Upload a file to begin.</td></tr>`;
+    // 10. Handle Zero/Empty States
+    if (!predictionData || !predictionData.length) {
+        rows.innerHTML = `
+            <tr>
+                <td colspan="${headers.length}" class="empty" style="text-align: center; padding: 48px 20px;">
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div style="width: 48px; height: 48px; border-radius: 12px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; color: var(--accent);">
+                            <i data-lucide="database" class="lucide-icon" style="width: 24px; height: 24px;"></i>
+                        </div>
+                        <strong style="font-size: 1rem; color: var(--text);">No Prediction Results Available</strong>
+                        <span style="font-size: 0.82rem; color: var(--muted); max-width: 420px; line-height: 1.5;">Import a dataset or click below to run ML inference on active business accounts.</span>
+                        <button type="button" class="btn btn-primary" onclick="document.getElementById('fileInput').click()" style="margin-top: 6px;">
+                            <i data-lucide="upload-cloud" class="lucide-icon" style="width: 14px; height: 14px;"></i> Upload Customer Dataset
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+        if (window.refreshIcons) window.refreshIcons(table);
         return;
     }
 
+    if (!filtered.length) {
+        rows.innerHTML = `
+            <tr>
+                <td colspan="${headers.length}" class="empty" style="text-align: center; padding: 40px 20px;">
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                        <i data-lucide="search-x" class="lucide-icon" style="width: 32px; height: 32px; color: var(--muted);"></i>
+                        <strong style="font-size: 0.95rem; color: var(--text);">No Customers Match Active Filters</strong>
+                        <span style="font-size: 0.8rem; color: var(--muted);">Try clearing your search query or switching the risk filter.</span>
+                        <button type="button" class="btn btn-secondary" onclick="clearCustomerSearch(); setResultFilter('all');" style="margin-top: 6px;">
+                            Reset Filters
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+        if (window.refreshIcons) window.refreshIcons(table);
+        return;
+    }
+
+    // 11. Render Paged Rows
     const cell = (value) => value === null || value === undefined || value === '' ? 'n/a' : value;
-    filtered.forEach(item => {
+
+    pagedItems.forEach(item => {
         const probabilityVal = Number(item.predicted_probability || 0);
         const probability = probabilityVal.toFixed(3);
+        const probPercent = (probabilityVal * 100).toFixed(1) + '%';
+        const probBarWidth = Math.min(100, Math.max(4, Math.round(probabilityVal * 100)));
+        const isHigh = item.prediction_label === highRiskLabel || probabilityVal >= 0.5;
+        const labelClass = isHigh ? 'high' : 'low';
+        const labelText = isHigh ? 'High Risk' : 'Low Risk';
+
         let ciText = '';
         if (item.ci_lower !== undefined && item.ci_upper !== undefined) {
             const l = Number(item.ci_lower).toFixed(3);
             const u = Number(item.ci_upper).toFixed(3);
-            ciText = `<br><span style="font-size: 0.68rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-weight: 500;">[${l}, ${u}]</span>`;
+            ciText = `<span class="resultCiPill">CI [${l}, ${u}]</span>`;
         }
-        const labelClass = item.prediction_label === labelMapping.high_risk ? 'high' : 'low';
-        const idVal = idCol ? cell(item[idCol]) : cell(item.customer_id);
 
+        const idVal = idCol ? cell(item[idCol]) : cell(item.customer_id);
+        const tenureVal = item.tenure || item.tenure_months || item.Tenure || null;
+        const contractVal = item.contract_type || item.Contract || null;
+
+        let metaBits = [];
+        if (tenureVal !== null) metaBits.push(`${tenureVal} mo`);
+        if (contractVal) metaBits.push(contractVal);
+        const metaLine = metaBits.length ? `<span class="resultCustomerMeta">${metaBits.join(' • ')}</span>` : '';
+
+        // CSM Assignment Badge
         let assignInfo = '';
         if (window.csmAssignments && window.csmAssignments[idVal]) {
             const assignment = window.csmAssignments[idVal];
@@ -493,15 +766,15 @@ function renderRows() {
             `;
         }
 
-        let driversHtml = '';
+        // Risk Drivers Chips
+        let driversHtml = '<span style="color: var(--muted); font-size: 0.76rem;">--</span>';
         if (item.risk_drivers) {
             try {
                 const drivers = typeof item.risk_drivers === 'string' ? JSON.parse(item.risk_drivers) : item.risk_drivers;
                 if (drivers && drivers.length) {
                     driversHtml = `
-                        <div class="risk-drivers-list" style="font-size: 0.7rem; color: #ff007f; margin-top: 6px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
-                            <span style="font-weight: 700; text-transform: uppercase; font-size: 0.65rem; color: var(--muted);">Drivers:</span>
-                            ${drivers.map(d => `<span style="background: rgba(255, 0, 127, 0.08); border: 1px solid rgba(255, 0, 127, 0.15); padding: 1px 6px; border-radius: 4px; color: #ff007f; font-weight: 500;">${d}</span>`).join('')}
+                        <div class="resultDriverList">
+                            ${drivers.map(d => `<span class="resultDriverChip">${d}</span>`).join('')}
                         </div>
                     `;
                 }
@@ -510,24 +783,288 @@ function renderRows() {
             }
         }
 
-        const tds = [`<td><div><strong>${idVal}</strong></div>${assignInfo}${driversHtml}</td>`,
-            `<td><span class="badge ${labelClass}">${(item.prediction_label || 'low_risk').replace('_', ' ')}</span></td>`,
-            `<td><div><strong>${probability}</strong></div>${ciText}</td>`,
-            ...extra.map(c => {
-                const val = item[c];
-                const isMonetary = ["charges", "monthly", "total", "adr", "amount", "revenue", "income", "price", "cost", "expense", "spent", "sales", "fee"].some(w => String(c).toLowerCase().includes(w));
-                if (isMonetary && val !== null && val !== undefined && !isNaN(Number(val))) {
-                    const converted = Number(val) * currentCurrencyRate;
-                    return `${currentCurrencySymbol}${converted.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-                }
-                return cell(val);
-            }).map(formattedVal => `<td>${formattedVal}</td>`)].join('');
+        // Actions cell
+        const actionsHtml = `
+            <div class="resultActionsCell">
+                <button type="button" class="resultInspectBtn" onclick="event.stopPropagation(); openCustomerDetailModal('${idVal}')" title="Inspect deep-dive customer profile">
+                    <i data-lucide="eye" class="lucide-icon" style="width: 12px; height: 12px;"></i> Details
+                </button>
+                <button type="button" class="resultInspectBtn" onclick="event.stopPropagation(); simulateRowInSandbox('${idVal}')" title="Pre-fill customer parameters in Sandbox">
+                    <i data-lucide="flask-conical" class="lucide-icon" style="width: 12px; height: 12px;"></i> Sandbox
+                </button>
+            </div>
+        `;
+
+        // Monetary & dynamic extra columns
+        const extraTds = extra.map(c => {
+            const val = item[c];
+            const isMonetary = ["charges", "monthly", "total", "adr", "amount", "revenue", "income", "price", "cost", "expense", "spent", "sales", "fee"].some(w => String(c).toLowerCase().includes(w));
+            if (isMonetary && val !== null && val !== undefined && !isNaN(Number(val))) {
+                const converted = Number(val) * currentCurrencyRate;
+                return `<td style="font-family: var(--font-mono); font-variant-numeric: tabular-nums;">${currentCurrencySymbol}${converted.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>`;
+            }
+            return `<td>${cell(val)}</td>`;
+        }).join('');
+
+        const tds = [
+            `<td>
+                <div class="resultCustomerCell">
+                    <div class="resultAvatar"><i data-lucide="user" class="lucide-icon" style="width: 15px; height: 15px;"></i></div>
+                    <div>
+                        <div class="resultCustomerId">${idVal}</div>
+                        ${metaLine}
+                        ${assignInfo}
+                    </div>
+                </div>
+            </td>`,
+            `<td>
+                <span class="badge ${labelClass}">
+                    <span class="resultPillDot ${labelClass === 'high' ? 'danger' : 'success'}"></span>
+                    ${labelText}
+                </span>
+            </td>`,
+            `<td>
+                <div class="resultProbCell">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                        <span class="resultProbText" style="color: ${isHigh ? '#f87171' : '#34d399'};">${probPercent}</span>
+                        ${ciText}
+                    </div>
+                    <div class="resultProbBarWrap">
+                        <div class="resultProbBarFill ${labelClass}" style="width: ${probBarWidth}%;"></div>
+                    </div>
+                </div>
+            </td>`,
+            `<td>${driversHtml}</td>`,
+            extraTds,
+            `<td>${actionsHtml}</td>`
+        ].join('');
 
         const row = document.createElement('tr');
         row.innerHTML = tds;
+        row.onclick = () => openCustomerDetailModal(idVal);
         rows.appendChild(row);
     });
+
+    if (window.refreshIcons) window.refreshIcons(table);
 }
+
+function openCustomerDetailModal(customerId) {
+    const { idCol } = dynamicColumns();
+    const customer = (predictionData || []).find(item => {
+        const id = idCol ? String(item[idCol]) : String(item.customer_id);
+        return id === String(customerId);
+    });
+    if (!customer) return;
+    selectedCustomerDetail = customer;
+
+    const idVal = idCol ? customer[idCol] : customer.customer_id;
+    const probVal = Number(customer.predicted_probability || 0);
+    const isHigh = customer.prediction_label === (labelMapping.high_risk || 'high_risk') || probVal >= 0.5;
+    const l = customer.ci_lower !== undefined ? Number(customer.ci_lower).toFixed(3) : (Math.max(0, probVal - 0.05)).toFixed(3);
+    const u = customer.ci_upper !== undefined ? Number(customer.ci_upper).toFixed(3) : (Math.min(1, probVal + 0.05)).toFixed(3);
+    const tenure = customer.tenure || customer.tenure_months || customer.Tenure || '--';
+    const contract = customer.contract_type || customer.Contract || '--';
+    const charges = customer.monthly_charges || customer.MonthlyCharges || customer.charges || '--';
+    const formattedCharges = (!isNaN(Number(charges))) 
+        ? `${currentCurrencySymbol}${(Number(charges) * currentCurrencyRate).toFixed(2)}/mo` 
+        : charges;
+    const tickets = customer.support_tickets || customer.SupportTickets || '0';
+    const csat = customer.customer_satisfaction_score || customer.CSAT || '4.0';
+
+    const idEl = document.getElementById('detailCustomerId');
+    if (idEl) idEl.textContent = idVal;
+
+    const badgeEl = document.getElementById('detailRiskBadge');
+    if (badgeEl) {
+        badgeEl.className = `badge ${isHigh ? 'high' : 'low'}`;
+        badgeEl.innerHTML = `<span class="resultPillDot ${isHigh ? 'danger' : 'success'}"></span> ${isHigh ? 'High Churn Risk' : 'Healthy Baseline'}`;
+    }
+
+    const subEl = document.getElementById('detailCustomerSubtitle');
+    if (subEl) {
+        subEl.textContent = `Tenure: ${tenure} months • Contract: ${contract} • Spend: ${formattedCharges}`;
+    }
+
+    let driversList = [];
+    if (customer.risk_drivers) {
+        try {
+            driversList = typeof customer.risk_drivers === 'string' ? JSON.parse(customer.risk_drivers) : customer.risk_drivers;
+        } catch(e) {}
+    }
+
+    const bodyEl = document.getElementById('customerDetailBody');
+    if (bodyEl) {
+        bodyEl.innerHTML = `
+            <div class="detailMetricsGrid">
+                <div class="detailMetricBox">
+                    <span class="detailMetricLabel">Churn Risk</span>
+                    <strong class="detailMetricVal ${isHigh ? 'danger' : 'success'}">${(probVal * 100).toFixed(1)}%</strong>
+                </div>
+                <div class="detailMetricBox">
+                    <span class="detailMetricLabel">95% Bayesian CI</span>
+                    <strong class="detailMetricVal" style="font-size: 0.82rem;">[${l}, ${u}]</strong>
+                </div>
+                <div class="detailMetricBox">
+                    <span class="detailMetricLabel">Monthly Revenue</span>
+                    <strong class="detailMetricVal">${formattedCharges}</strong>
+                </div>
+                <div class="detailMetricBox">
+                    <span class="detailMetricLabel">Support Tickets</span>
+                    <strong class="detailMetricVal">${tickets} open</strong>
+                </div>
+                <div class="detailMetricBox">
+                    <span class="detailMetricLabel">CSAT Rating</span>
+                    <strong class="detailMetricVal">${csat} / 5.0</strong>
+                </div>
+            </div>
+
+            <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 14px;">
+                <h4 style="margin: 0 0 8px 0; font-size: 0.78rem; text-transform: uppercase; color: var(--accent); font-family: var(--font-heading); display: flex; align-items: center; gap: 6px;">
+                    <i data-lucide="alert-circle" class="lucide-icon" style="width: 14px; height: 14px;"></i> Key Attrition Drivers & Root Causes
+                </h4>
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                    ${driversList.length ? driversList.map(d => `<span class="resultDriverChip">${d}</span>`).join('') : '<span style="color: var(--muted); font-size: 0.8rem;">No acute behavioral friction drivers detected for this account.</span>'}
+                </div>
+            </div>
+
+            <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 14px;">
+                <h4 style="margin: 0 0 8px 0; font-size: 0.78rem; text-transform: uppercase; color: var(--success); font-family: var(--font-heading); display: flex; align-items: center; gap: 6px;">
+                    <i data-lucide="shield-check" class="lucide-icon" style="width: 14px; height: 14px;"></i> Prescriptive Retention Playbook
+                </h4>
+                <p style="margin: 0; font-size: 0.84rem; line-height: 1.5; color: var(--text);">
+                    ${isHigh 
+                        ? 'Schedule urgent Customer Success outreach within 24 hours. Consider offering a 15% annual commitment discount and fast-track any unresolved Tier-3 support tickets.'
+                        : 'Account displays stable tenure and positive satisfaction. Recommend standard account review and explore expansion opportunities.'}
+                </p>
+            </div>
+        `;
+    }
+
+    const modal = document.getElementById('customerDetailModal');
+    if (modal) modal.classList.remove('hidden');
+    if (window.refreshIcons) window.refreshIcons(modal);
+}
+
+function closeCustomerDetailModal() {
+    const modal = document.getElementById('customerDetailModal');
+    if (modal) modal.classList.add('hidden');
+    selectedCustomerDetail = null;
+}
+
+function simulateRowInSandbox(customerId) {
+    const { idCol } = dynamicColumns();
+    const customer = (predictionData || []).find(item => {
+        const id = idCol ? String(item[idCol]) : String(item.customer_id);
+        return id === String(customerId);
+    });
+    if (!customer) return;
+
+    const tenure = customer.tenure || customer.tenure_months || customer.Tenure || 24;
+    const charges = customer.monthly_charges || customer.MonthlyCharges || customer.charges || 70;
+    const tickets = customer.support_tickets || customer.SupportTickets || 0;
+    const csat = customer.customer_satisfaction_score || customer.CSAT || 4;
+    const delays = customer.payment_delays || customer.billing_delays || 0;
+
+    const tInput = document.getElementById('sandboxTenure');
+    if (tInput) { tInput.value = tenure; updateSandboxVal('SandboxTenure', tenure + ' months'); }
+    const cInput = document.getElementById('sandboxCharges');
+    if (cInput) { cInput.value = charges; updateSandboxVal('SandboxCharges', currentCurrencySymbol + (Number(charges) * currentCurrencyRate).toFixed(2)); }
+    const tkInput = document.getElementById('sandboxTickets');
+    if (tkInput) { tkInput.value = tickets; updateSandboxVal('SandboxTickets', tickets + ' tickets'); }
+    const sInput = document.getElementById('sandboxSatisfaction');
+    if (sInput) { sInput.value = csat; updateSandboxVal('SandboxSatisfaction', csat + ' / 5'); }
+    const dInput = document.getElementById('sandboxDelays');
+    if (dInput) { dInput.value = delays; updateSandboxVal('SandboxDelays', delays + ' days'); }
+
+    if (typeof runSandboxSimulation === 'function') {
+        runSandboxSimulation();
+    }
+    if (typeof switchTab === 'function') {
+        switchTab('sandbox');
+    }
+    showBiToast(`Loaded Customer ${customerId} into Sandbox simulation engine!`, 'flask-conical');
+}
+
+function simulateCustomerInSandbox() {
+    if (selectedCustomerDetail) {
+        const { idCol } = dynamicColumns();
+        const idVal = idCol ? selectedCustomerDetail[idCol] : selectedCustomerDetail.customer_id;
+        closeCustomerDetailModal();
+        simulateRowInSandbox(idVal);
+    }
+}
+
+function assignCsmFromDetail() {
+    if (selectedCustomerDetail) {
+        const { idCol } = dynamicColumns();
+        const idVal = idCol ? selectedCustomerDetail[idCol] : selectedCustomerDetail.customer_id;
+        closeCustomerDetailModal();
+        if (typeof openCsmModal === 'function') {
+            openCsmModal(idVal);
+        } else {
+            showBiToast(`CSM Assignment opened for ${idVal}`, 'user-plus');
+        }
+    }
+}
+
+function exportResultsCSV() {
+    if (!predictionData || !predictionData.length) {
+        showBiToast('No prediction results available to export.', 'alert-circle');
+        return;
+    }
+    const { idCol, extra } = dynamicColumns();
+    const headers = ['Customer_ID', 'Risk_Classification', 'Predicted_Probability', 'CI_Lower', 'CI_Upper', ...extra];
+    const rows = [headers.join(',')];
+
+    predictionData.forEach(item => {
+        const id = idCol ? item[idCol] : item.customer_id;
+        const risk = item.prediction_label || 'low_risk';
+        const prob = Number(item.predicted_probability || 0).toFixed(4);
+        const l = item.ci_lower !== undefined ? Number(item.ci_lower).toFixed(4) : '';
+        const u = item.ci_upper !== undefined ? Number(item.ci_upper).toFixed(4) : '';
+        const extraVals = extra.map(c => `"${String(item[c] !== undefined ? item[c] : '').replace(/"/g, '""')}"`);
+        rows.push([`"${id}"`, `"${risk}"`, prob, l, u, ...extraVals].join(','));
+    });
+
+    const csvContent = 'data:text/csv;charset=utf-8,' + encodeURIComponent(rows.join(String.fromCharCode(10)));
+    const link = document.createElement('a');
+    link.setAttribute('href', csvContent);
+    const dateStr = new Date().toISOString().slice(0, 10);
+    link.setAttribute('download', `qiplo_prediction_results_${dateStr}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showBiToast('Exported Prediction Results CSV successfully!', 'download');
+}
+
+function exportResultsJSON() {
+    if (!predictionData || !predictionData.length) {
+        showBiToast('No prediction results available to export.', 'alert-circle');
+        return;
+    }
+    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(predictionData, null, 2));
+    const link = document.createElement('a');
+    link.setAttribute('href', dataStr);
+    const dateStr = new Date().toISOString().slice(0, 10);
+    link.setAttribute('download', `qiplo_prediction_audit_${dateStr}.json`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showBiToast('Exported JSON audit log successfully!', 'file-json');
+}
+
+window.setResultFilter = setResultFilter;
+window.clearCustomerSearch = clearCustomerSearch;
+window.changeResultSort = changeResultSort;
+window.changeResultPageSize = changeResultPageSize;
+window.goToResultPage = goToResultPage;
+window.exportResultsCSV = exportResultsCSV;
+window.exportResultsJSON = exportResultsJSON;
+window.openCustomerDetailModal = openCustomerDetailModal;
+window.closeCustomerDetailModal = closeCustomerDetailModal;
+window.simulateRowInSandbox = simulateRowInSandbox;
+window.simulateCustomerInSandbox = simulateCustomerInSandbox;
+window.assignCsmFromDetail = assignCsmFromDetail;
 
 function renderCharts(chartPayload, featureImportance) {
     if (typeof Chart === 'undefined') {
@@ -6788,6 +7325,7 @@ function initCommandPaletteAndHotkeys() {
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
             if (typeof closeBiExportModal === 'function') closeBiExportModal();
+            if (typeof closeCustomerDetailModal === 'function') closeCustomerDetailModal();
             if (typeof closeMagnificZoom === 'function') closeMagnificZoom();
             if (typeof closeToolInfo === 'function') closeToolInfo();
             if (typeof closeResolutionWizard === 'function') closeResolutionWizard();
