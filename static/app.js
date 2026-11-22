@@ -1724,6 +1724,14 @@ function switchPbiPage(pageName) {
             }
         }
     });
+    // Trigger chart resize on next tick so newly displayed canvases calculate layout correctly
+    setTimeout(() => {
+        Object.keys(pbiCharts).forEach(k => {
+            if (pbiCharts[k] && typeof pbiCharts[k].resize === 'function') {
+                try { pbiCharts[k].resize(); } catch (e) {}
+            }
+        });
+    }, 50);
     if (window.lucide) window.lucide.createIcons();
 }
 window.switchPbiPage = switchPbiPage;
@@ -1731,14 +1739,11 @@ window.switchPbiPage = switchPbiPage;
 function filterPbiMatrix(filterType, btnEl) {
     const pills = document.querySelectorAll('#pbiFilterPills button');
     pills.forEach(p => {
-        p.style.background = 'rgba(255, 255, 255, 0.04)';
-        p.style.color = '#E2E8F0';
-        p.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+        p.classList.remove('active');
+        p.removeAttribute('style');
     });
     if (btnEl) {
-        btnEl.style.background = 'rgba(242, 200, 17, 0.15)';
-        btnEl.style.color = '#F2C811';
-        btnEl.style.borderColor = 'rgba(242, 200, 17, 0.4)';
+        btnEl.classList.add('active');
     }
 
     const allRecords = (window.pbiPreviewCache && window.pbiPreviewCache.top_risk) || [];
@@ -1764,12 +1769,12 @@ function populatePbiDetailMatrix(records) {
     body.innerHTML = records.map(r => {
         const pillClass = r.churn_score >= 70 ? 'high' : (r.churn_score >= 30 ? 'med' : 'low');
         return `<tr>
-            <td style="font-family: var(--font-mono); font-weight: 700; color: #00F5FF;">${r.customer_id}</td>
+            <td class="pbiIdCell">${r.customer_id}</td>
             <td>${r.segment || 'Enterprise'}</td>
             <td>${r.contract_type || 'Month-to-month'}</td>
             <td>${r.tenure || 12} mos</td>
             <td><span class="pbiRiskPill ${pillClass}">${r.churn_score}%</span></td>
-            <td style="font-family: var(--font-mono); font-weight: 600;">$${Number(r.revenue || 0).toLocaleString()}</td>
+            <td class="pbiRevenueCell">$${Number(r.revenue || 0).toLocaleString()}</td>
             <td><span class="pbiRiskPill ${pillClass}">${r.risk_tier || 'Active'}</span></td>
         </tr>`;
     }).join('');
@@ -1800,6 +1805,7 @@ window.copyDaxFormula = copyDaxFormula;
 async function renderPowerBiDashboard(target = window.currentBiTarget || 'powerbi') {
     try {
         const isTableau = target === 'tableau';
+        const isLight = document.body.classList.contains('light-theme');
         const endpoint = isTableau ? '/api/export/tableau/preview' : '/api/export/powerbi/preview';
         const resp = await fetch(endpoint);
         const data = await resp.json();
@@ -1835,12 +1841,39 @@ async function renderPowerBiDashboard(target = window.currentBiTarget || 'powerb
 
         destroyPbiCharts();
 
+        // Theme-aware Chart Palette & Tooltip
+        const gridColor = isLight ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.06)';
+        const tickColor = isLight ? '#475569' : '#94A3B8';
+        const legendColor = isLight ? '#0F172A' : '#E2E8F0';
+        const donutBorder = isLight ? '#FFFFFF' : '#0D111A';
+        const tooltipBg = isLight ? '#FFFFFF' : '#0F172A';
+        const tooltipTitle = isLight ? '#0F172A' : '#F8FAFC';
+        const tooltipBody = isLight ? '#334155' : '#CBD5E1';
+        const tooltipBorder = isLight ? '#CBD5E1' : 'rgba(255, 255, 255, 0.15)';
+        const tooltipConfig = {
+            backgroundColor: tooltipBg,
+            titleColor: tooltipTitle,
+            bodyColor: tooltipBody,
+            borderColor: tooltipBorder,
+            borderWidth: 1,
+            padding: 8,
+            boxPadding: 4,
+            cornerRadius: 6
+        };
+
         // 1. Revenue Trend Chart
         const trendCanvas = document.getElementById('pbiRevenueTrendChart');
         if (trendCanvas && window.Chart) {
             const trendData = data.trend || [];
             const labels = trendData.length ? trendData.map(d => d.date) : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             const revenues = trendData.length ? trendData.map(d => d.revenue) : [9800, 10400, 11200, 11900, 12400, 12100, 13000, 13400, 13900, 14200, 14800, 15500];
+            const primaryColor = isTableau 
+                ? (isLight ? '#EA580C' : '#EB6A37') 
+                : (isLight ? '#0284C7' : '#00F5FF');
+            const primaryBg = isTableau 
+                ? (isLight ? 'rgba(234, 88, 12, 0.14)' : 'rgba(235, 106, 55, 0.15)') 
+                : (isLight ? 'rgba(2, 132, 199, 0.12)' : 'rgba(0, 245, 255, 0.12)');
+
             pbiCharts.trend = new Chart(trendCanvas, {
                 type: 'line',
                 data: {
@@ -1848,21 +1881,25 @@ async function renderPowerBiDashboard(target = window.currentBiTarget || 'powerb
                     datasets: [{
                         label: isTableau ? 'Tableau Revenue ($)' : 'Total Revenue ($)',
                         data: revenues,
-                        borderColor: isTableau ? '#EB6A37' : '#00F5FF',
-                        backgroundColor: isTableau ? 'rgba(235, 106, 55, 0.12)' : 'rgba(0, 245, 255, 0.1)',
-                        borderWidth: 2,
+                        borderColor: primaryColor,
+                        backgroundColor: primaryBg,
+                        borderWidth: 2.2,
                         tension: 0.35,
                         fill: true,
-                        pointBackgroundColor: isTableau ? '#EB6A37' : '#00F5FF'
+                        pointBackgroundColor: primaryColor,
+                        pointHoverRadius: 5
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: tooltipConfig
+                    },
                     scales: {
-                        x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94A3B8', font: { size: 10 } } },
-                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94A3B8', font: { size: 10 }, callback: v => '$' + v.toLocaleString() } }
+                        x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10, family: 'Inter' } } },
+                        y: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10, family: 'Inter' }, callback: v => '$' + v.toLocaleString() } }
                     }
                 }
             });
@@ -1876,6 +1913,15 @@ async function renderPowerBiDashboard(target = window.currentBiTarget || 'powerb
                 { segment: 'Mid-Market', revenue: 48900, churn_rate: 22.8 },
                 { segment: 'SMB', revenue: 29400, churn_rate: 34.6 }
             ];
+            const revBarBg = isTableau 
+                ? (isLight ? 'rgba(234, 88, 12, 0.85)' : 'rgba(235, 106, 55, 0.8)') 
+                : (isLight ? 'rgba(217, 119, 6, 0.85)' : 'rgba(242, 200, 17, 0.75)');
+            const revBarBorder = isTableau 
+                ? (isLight ? '#EA580C' : '#EB6A37') 
+                : (isLight ? '#D97706' : '#F2C811');
+            const churnBarBg = isLight ? 'rgba(225, 29, 72, 0.85)' : 'rgba(255, 0, 127, 0.75)';
+            const churnBarBorder = isLight ? '#E11D48' : '#FF007F';
+
             pbiCharts.segment = new Chart(segCanvas, {
                 type: 'bar',
                 data: {
@@ -1884,16 +1930,16 @@ async function renderPowerBiDashboard(target = window.currentBiTarget || 'powerb
                         {
                             label: 'Revenue ($)',
                             data: segData.map(s => s.revenue),
-                            backgroundColor: isTableau ? 'rgba(235, 106, 55, 0.75)' : 'rgba(242, 200, 17, 0.7)',
-                            borderColor: isTableau ? '#EB6A37' : '#F2C811',
+                            backgroundColor: revBarBg,
+                            borderColor: revBarBorder,
                             borderWidth: 1,
                             borderRadius: 4
                         },
                         {
                             label: 'Churn Rate (%)',
                             data: segData.map(s => s.churn_rate),
-                            backgroundColor: 'rgba(255, 0, 127, 0.7)',
-                            borderColor: '#FF007F',
+                            backgroundColor: churnBarBg,
+                            borderColor: churnBarBorder,
                             borderWidth: 1,
                             borderRadius: 4
                         }
@@ -1902,10 +1948,13 @@ async function renderPowerBiDashboard(target = window.currentBiTarget || 'powerb
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#E2E8F0', font: { size: 10 } } } },
+                    plugins: { 
+                        legend: { labels: { color: legendColor, font: { size: 11, family: 'Inter', weight: 600 } } },
+                        tooltip: tooltipConfig
+                    },
                     scales: {
-                        x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94A3B8', font: { size: 10 } } },
-                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94A3B8', font: { size: 10 } } }
+                        x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10, family: 'Inter' } } },
+                        y: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10, family: 'Inter' } } }
                     }
                 }
             });
@@ -1921,21 +1970,27 @@ async function renderPowerBiDashboard(target = window.currentBiTarget || 'powerb
                 else if (r.churn_score >= 30) med++;
                 else low++;
             });
+            const donutColors = isLight 
+                ? ['#DC2626', '#D97706', '#059669'] 
+                : ['#FF007F', '#F59E0B', '#10B981'];
             pbiCharts.riskDist = new Chart(riskDistCanvas, {
                 type: 'doughnut',
                 data: {
                     labels: ['High Risk (>=70%)', 'Moderate Risk (30-70%)', 'Low Risk (<30%)'],
                     datasets: [{
                         data: [Math.max(high, 4), Math.max(med, 12), Math.max(low, 9)],
-                        backgroundColor: ['#FF007F', '#F59E0B', '#10B981'],
-                        borderColor: '#0D111A',
+                        backgroundColor: donutColors,
+                        borderColor: donutBorder,
                         borderWidth: 3
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'right', labels: { color: '#E2E8F0', font: { size: 10 } } } }
+                    plugins: { 
+                        legend: { position: 'right', labels: { color: legendColor, font: { size: 11, family: 'Inter' } } },
+                        tooltip: tooltipConfig
+                    }
                 }
             });
         }
@@ -1943,13 +1998,16 @@ async function renderPowerBiDashboard(target = window.currentBiTarget || 'powerb
         // 4. Drivers Chart
         const driversCanvas = document.getElementById('pbiDriversChart');
         if (driversCanvas && window.Chart) {
+            const driverBarColors = isLight 
+                ? ['#7C3AED', '#0284C7', '#D97706', '#059669'] 
+                : ['#8B5CF6', '#00F5FF', '#F2C811', '#10B981'];
             pbiCharts.drivers = new Chart(driversCanvas, {
                 type: 'bar',
                 data: {
                     labels: ['Contract Commitment', 'Support Tickets', 'Price / Monthly Tier', 'Tenure / Lifecycle'],
                     datasets: [{
                         data: [34.5, 26.2, 21.8, 17.5],
-                        backgroundColor: ['#8B5CF6', '#00F5FF', '#F2C811', '#10B981'],
+                        backgroundColor: driverBarColors,
                         borderRadius: 4
                     }]
                 },
@@ -1957,10 +2015,13 @@ async function renderPowerBiDashboard(target = window.currentBiTarget || 'powerb
                     indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: tooltipConfig
+                    },
                     scales: {
-                        x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94A3B8', font: { size: 10 }, callback: v => v + '%' } },
-                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94A3B8', font: { size: 10 } } }
+                        x: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10, family: 'Inter' }, callback: v => v + '%' } },
+                        y: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 10, family: 'Inter' } } }
                     }
                 }
             });
@@ -1977,14 +2038,14 @@ async function renderPowerBiDashboard(target = window.currentBiTarget || 'powerb
                     const pillClass = r.churn_score >= 70 ? 'high' : (r.churn_score >= 30 ? 'med' : 'low');
                     const action = r.churn_score >= 70 ? 'Executive Callback & Discount' : (r.churn_score >= 30 ? 'Onboarding Health Check' : 'Loyalty Upgrade');
                     return `<tr>
-                        <td style="font-family: var(--font-mono); font-weight: 700; color: #00F5FF;">${r.customer_id}</td>
-                        <td style="font-weight: 600;">${r.customer_name}</td>
+                        <td class="pbiIdCell">${r.customer_id}</td>
+                        <td class="pbiNameCell">${r.customer_name}</td>
                         <td>${r.segment}</td>
                         <td>${r.contract_type}</td>
                         <td><span class="pbiRiskPill ${pillClass}">${r.churn_score}%</span></td>
-                        <td style="font-family: var(--font-mono); font-weight: 600;">$${Number(r.revenue || 0).toLocaleString()}</td>
+                        <td class="pbiRevenueCell">$${Number(r.revenue || 0).toLocaleString()}</td>
                         <td><span class="pbiRiskPill ${pillClass}">${r.risk_tier}</span></td>
-                        <td style="font-size: 0.74rem; color: #E2E8F0;">${action}</td>
+                        <td class="pbiActionCell">${action}</td>
                     </tr>`;
                 }).join('');
             }
@@ -1994,23 +2055,27 @@ async function renderPowerBiDashboard(target = window.currentBiTarget || 'powerb
         populatePbiDetailMatrix(data.top_risk || []);
 
         // 7. Populate Formulas / Measures List
+        const formulaSectionTitle = document.getElementById('pbiFormulaSectionTitle');
+        if (formulaSectionTitle) {
+            formulaSectionTitle.textContent = isTableau ? 'Official Tableau Calculated Fields Suite' : 'Official DAX Measures Suite';
+        }
         const daxContainer = document.getElementById('pbiDaxListContainer');
         const formulas = isTableau ? (data.calculated_fields || []) : (data.dax_measures || []);
         if (daxContainer && formulas.length) {
             daxContainer.innerHTML = formulas.map(m => {
                 const escapedFormula = m.formula.replace(/"/g, '&quot;');
-                const badgeColor = isTableau ? '#EB6A37' : '#00F5FF';
-                const badgeBg = isTableau ? 'rgba(235, 106, 55, 0.15)' : 'rgba(0, 245, 255, 0.15)';
+                const badgeColor = isTableau ? (isLight ? '#C2410C' : '#EB6A37') : (isLight ? '#0369A1' : '#00F5FF');
+                const badgeBg = isTableau ? (isLight ? '#FFEDD5' : 'rgba(235, 106, 55, 0.15)') : (isLight ? '#E0F2FE' : 'rgba(0, 245, 255, 0.15)');
                 return `<div class="pbiDaxCard">
                     <div style="flex: 1;">
                         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                            <span style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">${m.name}</span>
-                            <span style="font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: ${badgeBg}; color: ${badgeColor}; font-family: var(--font-mono);">${m.type}</span>
+                            <span class="pbiDaxTitle">${m.name}</span>
+                            <span style="font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: ${badgeBg}; color: ${badgeColor}; font-family: var(--font-mono);">${m.type}</span>
                         </div>
                         <div class="pbiDaxCode">${m.formula}</div>
-                        <div style="font-size: 0.70rem; color: var(--muted); margin-top: 3px;">${m.desc}</div>
+                        <div class="pbiDaxDesc">${m.desc}</div>
                     </div>
-                    <button type="button" class="btnSecondaryDownload" onclick="copyDaxFormula('${escapedFormula}', this)" style="padding: 5px 10px; font-size: 0.74rem;">
+                    <button type="button" class="btnSecondaryDownload" onclick="copyDaxFormula('${escapedFormula}', this)" style="padding: 6px 12px; font-size: 0.76rem;">
                         <i data-lucide="copy" style="width: 12px; height: 12px;"></i> Copy Formula
                     </button>
                 </div>`;
@@ -2028,6 +2093,21 @@ function openBiExportModal(target = 'powerbi') {
     window.currentBiTarget = target;
     const modal = document.getElementById('biExportModal');
     if (!modal) return;
+    const modalDialog = modal.querySelector('.pbiStudioModal');
+    if (modalDialog) {
+        if (target === 'tableau') {
+            modalDialog.classList.add('tableau-mode');
+            modalDialog.classList.remove('powerbi-mode');
+        } else {
+            modalDialog.classList.add('powerbi-mode');
+            modalDialog.classList.remove('tableau-mode');
+        }
+    }
+    const tab4Label = document.getElementById('pbiTabBtnModelLabel');
+    if (tab4Label) {
+        tab4Label.textContent = target === 'tableau' ? 'Page 4: Semantic Model & Calculated Fields' : 'Page 4: Star Schema & DAX';
+    }
+
     const title = document.getElementById('biModalTitle');
     const subtitle = document.getElementById('biModalSubtitle');
     const badge = document.getElementById('biModalLogoBadge');
@@ -2069,7 +2149,7 @@ function openBiExportModal(target = 'powerbi') {
                 <button type="button" class="btnSecondaryDownload" onclick="triggerDownload('/api/export/tableau?type=fallback', 'qiplo-tableau-fallback.zip'); showBiToast('Downloading Fallback CSVs + Formulas...', 'file-archive');">
                     <i data-lucide="file-archive" style="width: 13px; height: 13px;"></i> Fallback (.zip)
                 </button>
-                <button type="button" class="btnSecondaryDownload" onclick="publishToTableauServer()" id="tabRibbonPublishBtn" style="color: #E97627; border-color: rgba(233, 118, 39, 0.4);">
+                <button type="button" class="btnSecondaryDownload tabPublishBtn" onclick="publishToTableauServer()" id="tabRibbonPublishBtn">
                     <i data-lucide="upload-cloud" style="width: 13px; height: 13px;"></i> Publish to Server
                 </button>
             `;
@@ -2100,7 +2180,7 @@ function openBiExportModal(target = 'powerbi') {
                 <button type="button" class="btnSecondaryDownload" onclick="triggerDownload('/api/export/powerbi?type=fallback', 'qiplo-powerbi-fallback.zip'); showBiToast('Downloading Fallback CSVs + DAX package...', 'file-archive');">
                     <i data-lucide="file-archive" style="width: 13px; height: 13px;"></i> Fallback (.zip)
                 </button>
-                <button type="button" class="btnSecondaryDownload" onclick="pushToPowerBiService()" id="pbiRibbonPushBtn" style="color: #F2C811; border-color: rgba(242, 200, 17, 0.4);">
+                <button type="button" class="btnSecondaryDownload pbiPushBtn" onclick="pushToPowerBiService()" id="pbiRibbonPushBtn">
                     <i data-lucide="zap" style="width: 13px; height: 13px;"></i> Push Live REST
                 </button>
             `;
@@ -6582,6 +6662,10 @@ function setupThemeToggle() {
         }
         if (typeof lastChartsData !== 'undefined' && lastChartsData) {
             renderCharts(lastChartsData, lastFeatureImportance);
+        }
+        const biModal = document.getElementById('biExportModal');
+        if (biModal && !biModal.classList.contains('hidden')) {
+            renderPowerBiDashboard(window.currentBiTarget || 'powerbi');
         }
     });
 }

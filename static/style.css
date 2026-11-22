@@ -8068,11 +8068,11 @@ body.light-theme .customerDetailCard {
 }
 
 /* ==========================================================================
-   POWER BI EXECUTIVE DASHBOARD STUDIO & MODAL STYLING
+   POWER BI & TABLEAU EXECUTIVE DASHBOARD STUDIO & MODAL STYLING
    ========================================================================== */
 .zoomModalContent,
 .pbiStudioModal {
-    background: #0D111A;
+    background: #0B0E17;
     border: 1px solid rgba(242, 200, 17, 0.4);
     border-radius: 16px;
     box-shadow: 0 25px 80px rgba(0, 0, 0, 0.85), 0 0 35px rgba(242, 200, 17, 0.12);
@@ -8081,10 +8081,43 @@ body.light-theme .customerDetailCard {
     max-height: 92vh;
     overflow-y: auto;
     padding: 24px;
-    color: #FFFFFF;
+    color: #F8FAFC;
     position: relative;
     box-sizing: border-box;
     font-family: var(--font-body);
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+/* Tableau Mode Overrides in Dark Mode */
+.pbiStudioModal.tableau-mode {
+    border-color: rgba(235, 106, 55, 0.45);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.85), 0 0 35px rgba(235, 106, 55, 0.16);
+}
+.pbiStudioModal.tableau-mode .pbiLogoBadge {
+    background: linear-gradient(135deg, rgba(235, 106, 55, 0.3) 0%, rgba(225, 87, 89, 0.3) 100%);
+    border-color: rgba(235, 106, 55, 0.6);
+    box-shadow: 0 0 16px rgba(235, 106, 55, 0.25);
+}
+.pbiStudioModal.tableau-mode .btnPrimaryDownload {
+    background: linear-gradient(135deg, #EB6A37 0%, #E15759 100%);
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(235, 106, 55, 0.35);
+}
+.pbiStudioModal.tableau-mode .btnPrimaryDownload:hover {
+    box-shadow: 0 6px 20px rgba(235, 106, 55, 0.5);
+}
+.pbiStudioModal.tableau-mode .pbiNavTab.active {
+    color: #EB6A37;
+    background: rgba(235, 106, 55, 0.1);
+    border-bottom: 2px solid #EB6A37;
+}
+.pbiStudioModal.tableau-mode .pbiKpiCard::before {
+    background: #EB6A37;
+}
+.pbiStudioModal.tableau-mode .pbiSlicerPill.active {
+    background: rgba(235, 106, 55, 0.18) !important;
+    color: #EB6A37 !important;
+    border-color: rgba(235, 106, 55, 0.5) !important;
 }
 
 .pbiHeaderBar {
@@ -8133,6 +8166,32 @@ body.light-theme .customerDetailCard {
     margin-top: 2px;
 }
 
+.biLiveBadge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(16, 185, 129, 0.2);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.biModalCloseBtn {
+    font-size: 1.4rem;
+    color: var(--muted);
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    line-height: 1;
+    transition: color 0.15s ease, transform 0.15s ease;
+}
+.biModalCloseBtn:hover {
+    color: #FFFFFF;
+    transform: scale(1.15);
+}
+
 .pbiQuickActionRibbon {
     display: flex;
     gap: 8px;
@@ -8178,13 +8237,22 @@ body.light-theme .customerDetailCard {
     align-items: center;
     gap: 6px;
     cursor: pointer;
-    transition: background 0.15s ease, border-color 0.15s ease;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 .pbiQuickActionRibbon .btnSecondaryDownload:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(242, 200, 17, 0.4);
     color: #FFFFFF;
+}
+
+.pbiPushBtn {
+    color: #F2C811;
+    border-color: rgba(242, 200, 17, 0.4);
+}
+.tabPublishBtn {
+    color: #E97627;
+    border-color: rgba(233, 118, 39, 0.4);
 }
 
 .pbiNavTabs {
@@ -8282,7 +8350,7 @@ body.light-theme .customerDetailCard {
 
 .pbiKpiDaxHint {
     font-size: 0.68rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.45);
     font-family: var(--font-mono);
     margin-top: 4px;
     display: block;
@@ -8329,6 +8397,14 @@ body.light-theme .customerDetailCard {
     color: #F2C811;
     font-weight: 700;
 }
+.pbiStudioModal.tableau-mode .pbiChartBadge {
+    background: rgba(235, 106, 55, 0.15);
+    color: #EB6A37;
+}
+
+.pbiSectionHeading {
+    color: #FFFFFF;
+}
 
 .pbiTableContainer {
     background: rgba(255, 255, 255, 0.02);
@@ -8366,6 +8442,28 @@ body.light-theme .customerDetailCard {
     background: rgba(255, 255, 255, 0.03);
 }
 
+.pbiIdCell {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: #00F5FF;
+}
+
+.pbiNameCell {
+    font-weight: 600;
+    color: #F8FAFC;
+}
+
+.pbiRevenueCell {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: #F8FAFC;
+}
+
+.pbiActionCell {
+    font-size: 0.74rem;
+    color: #E2E8F0;
+}
+
 .pbiRiskPill {
     padding: 2px 8px;
     border-radius: 12px;
@@ -8392,6 +8490,101 @@ body.light-theme .customerDetailCard {
     border: 1px solid rgba(16, 185, 129, 0.35);
 }
 
+.pbiSlicerBox {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 16px;
+}
+
+.pbiSlicerLabel {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+
+.pbiSlicerPill {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #E2E8F0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.pbiSlicerPill:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #FFFFFF;
+}
+.pbiSlicerPill.active {
+    background: rgba(242, 200, 17, 0.15) !important;
+    color: #F2C811 !important;
+    border-color: rgba(242, 200, 17, 0.4) !important;
+}
+
+.pbiArchitectureBox {
+    background: linear-gradient(145deg, rgba(242, 200, 17, 0.04), rgba(0, 245, 255, 0.04));
+    border: 1px solid rgba(242, 200, 17, 0.3);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 18px;
+}
+
+.pbiArchTitle {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #F2C811;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.pbiStudioModal.tableau-mode .pbiArchTitle {
+    color: #EB6A37;
+}
+
+.pbiArchDesc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin: 0 0 12px 0;
+}
+
+.pbiFactCard {
+    background: rgba(0, 245, 255, 0.05);
+    border: 1px solid rgba(0, 245, 255, 0.25);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.pbiFactTitle {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #00F5FF;
+}
+
+.pbiDimCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.pbiDimTitle {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.pbiDimSub {
+    font-size: 0.70rem;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
 .pbiDaxCard {
     background: rgba(255, 255, 255, 0.025);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -8404,11 +8597,462 @@ body.light-theme .customerDetailCard {
     gap: 12px;
 }
 
+.pbiDaxTitle {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
 .pbiDaxCode {
     font-family: var(--font-mono);
     font-size: 0.76rem;
     color: #00F5FF;
     word-break: break-all;
+}
+.pbiStudioModal.tableau-mode .pbiDaxCode {
+    color: #EB6A37;
+}
+
+.pbiDaxDesc {
+    font-size: 0.70rem;
+    color: var(--muted);
+    margin-top: 3px;
+}
+
+.pbiConnectorCard {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.pbiConnectorTitle {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    font-size: 0.90rem;
+}
+
+.pbiConnectorCyan {
+    color: var(--accent-2);
+}
+
+.pbiConnectorDesc {
+    font-size: 0.76rem;
+    color: var(--muted);
+    margin: 0 0 10px 0;
+}
+
+.pbiRestBar {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.pbiRestTitle {
+    font-size: 0.80rem;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+
+.pbiRestSub {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--muted);
+}
+
+.pbiLiveFeedBox {
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.pbiLiveFeedLabel {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--muted);
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.pbiLiveFeedCode {
+    font-size: 0.8rem;
+    color: var(--accent-2);
+    word-break: break-all;
+}
+
+.pbiStudioLaunchBtn {
+    background: rgba(242, 200, 17, 0.08);
+    border: 1px solid rgba(242, 200, 17, 0.4);
+    color: #F2C811;
+}
+
+.tabStudioLaunchBtn {
+    background: rgba(235, 106, 55, 0.08);
+    border: 1px solid rgba(235, 106, 55, 0.4);
+    color: #EB6A37;
+}
+
+/* ==========================================================================
+   LIGHT MODE SPECIALIZED OVERRIDES FOR POWER BI & TABLEAU STUDIO
+   ========================================================================== */
+body.light-theme .magnificZoomModal {
+    background: rgba(15, 23, 42, 0.60);
+    backdrop-filter: blur(10px);
+}
+
+body.light-theme .pbiStudioModal {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    box-shadow: 0 25px 70px rgba(15, 23, 42, 0.16), 0 0 25px rgba(242, 200, 17, 0.08);
+    color: #0F172A;
+}
+
+body.light-theme .pbiStudioModal.tableau-mode {
+    border-color: #FDBA74;
+    box-shadow: 0 25px 70px rgba(15, 23, 42, 0.16), 0 0 25px rgba(235, 106, 55, 0.12);
+}
+
+body.light-theme .pbiStudioModal.tableau-mode .pbiLogoBadge {
+    background: rgba(235, 106, 55, 0.1);
+    border-color: rgba(235, 106, 55, 0.4);
+    box-shadow: 0 2px 8px rgba(235, 106, 55, 0.15);
+}
+
+body.light-theme .pbiStudioModal.tableau-mode .btnPrimaryDownload {
+    background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%);
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);
+}
+
+body.light-theme .pbiStudioModal.tableau-mode .pbiNavTab.active {
+    color: #C2410C;
+    background: rgba(235, 106, 55, 0.12);
+    border-bottom: 2px solid #EA580C;
+}
+
+body.light-theme .pbiStudioModal.tableau-mode .pbiArchTitle {
+    color: #C2410C;
+}
+
+body.light-theme .pbiStudioModal.tableau-mode .pbiDaxCode {
+    color: #C2410C;
+}
+
+body.light-theme .pbiStudioModal.tableau-mode .pbiChartBadge {
+    background: rgba(235, 106, 55, 0.12);
+    color: #C2410C;
+}
+
+body.light-theme .pbiStudioModal.powerbi-mode .btnPrimaryDownload {
+    background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(217, 119, 6, 0.25);
+}
+
+body.light-theme .pbiStudioModal.powerbi-mode .pbiNavTab.active {
+    color: #B45309;
+    background: rgba(245, 158, 11, 0.12);
+    border-bottom: 2px solid #D97706;
+}
+
+body.light-theme .pbiHeaderBar {
+    border-bottom: 1px solid #E2E8F0;
+}
+
+body.light-theme .pbiStudioTitle {
+    color: #0F172A;
+}
+
+body.light-theme .pbiStudioSubtitle {
+    color: #475569;
+}
+
+body.light-theme .biLiveBadge {
+    background: rgba(5, 150, 105, 0.12);
+    color: #047857;
+    border-color: rgba(5, 150, 105, 0.35);
+}
+
+body.light-theme .biModalCloseBtn {
+    color: #64748B;
+}
+body.light-theme .biModalCloseBtn:hover {
+    color: #0F172A;
+}
+
+body.light-theme .pbiQuickActionRibbon {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+}
+
+body.light-theme .pbiQuickActionRibbon .btnSecondaryDownload {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    color: #1E293B;
+}
+
+body.light-theme .pbiQuickActionRibbon .btnSecondaryDownload:hover {
+    background: #F1F5F9;
+    border-color: #94A3B8;
+    color: #0F172A;
+}
+
+body.light-theme .pbiPushBtn {
+    color: #B45309 !important;
+    border-color: #FCD34D !important;
+}
+body.light-theme .tabPublishBtn {
+    color: #C2410C !important;
+    border-color: #FDBA74 !important;
+}
+
+body.light-theme .pbiNavTabs {
+    border-bottom: 1px solid #E2E8F0;
+}
+
+body.light-theme .pbiNavTab {
+    color: #475569;
+}
+
+body.light-theme .pbiNavTab:hover {
+    color: #0F172A;
+    background: #F1F5F9;
+}
+
+body.light-theme .pbiKpiCard {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+body.light-theme .pbiKpiLabel {
+    color: #475569;
+}
+
+body.light-theme .pbiKpiValue {
+    color: #0F172A;
+}
+
+body.light-theme .pbiKpiDaxHint {
+    color: #64748B;
+}
+
+body.light-theme .pbiChartCard {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+body.light-theme .pbiChartTitle {
+    color: #0F172A;
+}
+
+body.light-theme .pbiSectionHeading {
+    color: #0F172A;
+}
+
+body.light-theme .pbiTableContainer {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+}
+
+body.light-theme .pbiTable thead th {
+    background: #F8FAFC;
+    border-bottom: 1px solid #E2E8F0;
+    color: #475569;
+}
+
+body.light-theme .pbiTable tbody td {
+    border-bottom: 1px solid #F1F5F9;
+    color: #1E293B;
+}
+
+body.light-theme .pbiTable tbody tr:hover td {
+    background: #F8FAFC;
+}
+
+body.light-theme .pbiIdCell {
+    color: #0369A1 !important;
+}
+
+body.light-theme .pbiNameCell {
+    color: #0F172A !important;
+}
+
+body.light-theme .pbiRevenueCell {
+    color: #0F172A !important;
+}
+
+body.light-theme .pbiActionCell {
+    color: #334155 !important;
+}
+
+body.light-theme .pbiRiskPill.high {
+    background: rgba(220, 38, 38, 0.12);
+    color: #B91C1C;
+    border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+body.light-theme .pbiRiskPill.med {
+    background: rgba(217, 119, 6, 0.12);
+    color: #B45309;
+    border: 1px solid rgba(217, 119, 6, 0.3);
+}
+
+body.light-theme .pbiRiskPill.low {
+    background: rgba(5, 150, 105, 0.12);
+    color: #047857;
+    border: 1px solid rgba(5, 150, 105, 0.3);
+}
+
+body.light-theme .pbiSlicerBox {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+}
+
+body.light-theme .pbiSlicerLabel {
+    color: #475569;
+}
+
+body.light-theme .pbiSlicerPill {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    color: #334155;
+}
+
+body.light-theme .pbiSlicerPill:hover {
+    background: #F1F5F9;
+    color: #0F172A;
+    border-color: #94A3B8;
+}
+
+body.light-theme .pbiSlicerPill.active {
+    background: rgba(217, 119, 6, 0.12) !important;
+    color: #B45309 !important;
+    border-color: #D97706 !important;
+}
+
+body.light-theme .pbiArchitectureBox {
+    background: #F8FAFC;
+    border: 1px solid #CBD5E1;
+}
+
+body.light-theme .pbiArchTitle {
+    color: #B45309;
+}
+
+body.light-theme .pbiArchDesc {
+    color: #475569;
+}
+
+body.light-theme .pbiFactCard {
+    background: rgba(2, 132, 199, 0.08);
+    border: 1px solid rgba(2, 132, 199, 0.25);
+}
+
+body.light-theme .pbiFactTitle {
+    color: #0369A1;
+}
+
+body.light-theme .pbiDimCard {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+}
+
+body.light-theme .pbiDimTitle {
+    color: #0F172A;
+}
+
+body.light-theme .pbiDimSub {
+    color: #64748B;
+}
+
+body.light-theme .pbiDaxCard {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+}
+
+body.light-theme .pbiDaxTitle {
+    color: #0F172A;
+}
+
+body.light-theme .pbiDaxCode {
+    color: #0284C7;
+}
+
+body.light-theme .pbiDaxDesc {
+    color: #475569;
+}
+
+body.light-theme .pbiConnectorCard {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+body.light-theme .pbiConnectorCyan {
+    color: #0369A1;
+}
+
+body.light-theme .pbiConnectorDesc {
+    color: #475569;
+}
+
+body.light-theme .pbiRestBar {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+}
+
+body.light-theme .pbiRestTitle {
+    color: #0F172A;
+}
+
+body.light-theme .pbiRestSub {
+    color: #475569;
+}
+
+body.light-theme .pbiLiveFeedBox {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+}
+
+body.light-theme .pbiLiveFeedLabel {
+    color: #475569;
+}
+
+body.light-theme .pbiLiveFeedCode {
+    color: #4338CA;
+}
+
+body.light-theme .pbiStudioLaunchBtn {
+    background: rgba(245, 158, 11, 0.1) !important;
+    border: 1.5px solid #D97706 !important;
+    color: #B45309 !important;
+}
+
+body.light-theme .tabStudioLaunchBtn {
+    background: rgba(235, 106, 55, 0.1) !important;
+    border: 1.5px solid #EA580C !important;
+    color: #C2410C !important;
 }
 
 @media (max-width: 768px) {
