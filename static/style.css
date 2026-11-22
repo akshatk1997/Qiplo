@@ -1350,14 +1350,33 @@ body.light-theme .lang-quick-btn:hover {
 }
 
 @media (max-width: 960px) {
+    .topbarCenter {
+        display: none !important;
+    }
     .mobile-actions-menu {
         display: inline-flex !important;
     }
 }
 
 @media (max-width: 768px) {
-    .sloganBadge {
+    .topbar {
+        padding: 0 14px !important;
+        height: 56px !important;
+        min-height: 56px !important;
+    }
+    .topbarRight > button:not(.themeToggleBtn) {
         display: none !important;
+    }
+    .themeToggleBtn,
+    .mobile-menu-btn {
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        border-radius: 50% !important;
+    }
+    #companyNameInput {
+        width: 120px !important;
+        height: 36px !important;
     }
 }
 
@@ -4807,297 +4826,84 @@ body.dark-theme .ghostBtn:hover {
 }
 
 
-/* ==========================================================================
-   Comprehensive Tablet & Mobile Touch Parity Engine (Zero Feature Loss)
-   ========================================================================== */
-
-/* Tablet Optimization (768px to 1024px) */
-@media (min-width: 768px) and (max-width: 1024px) {
+/* Mobile iOS & Android Compatibility Optimizations */
+@media (max-width: 768px) {
     .topbar {
-        display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
         justify-content: space-between !important;
-        height: 56px !important;
-        min-height: 56px !important;
-        padding: 0 16px !important;
         gap: 10px !important;
+        padding: 0 16px !important;
+        min-height: 56px !important;
+        height: 56px !important;
         overflow: visible !important;
     }
     .topbarLeft {
-        display: inline-flex !important;
+        display: flex !important;
+        flex-direction: row !important;
         align-items: center !important;
-        gap: 8px !important;
-        flex-shrink: 0 !important;
-    }
-    .topbarLeft input[type="text"],
-    #companyNameInput {
-        width: 125px !important;
-        height: 34px !important;
-        font-size: 0.78rem !important;
+        width: auto !important;
     }
     .topbarCenter {
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        flex: 1 !important;
-        max-width: 360px !important;
-        margin: 0 auto !important;
-    }
-    .topbarCenter .capsule-group {
-        display: inline-flex !important;
-        height: 34px !important;
-        width: 100% !important;
-        justify-content: center !important;
-        gap: 3px !important;
-        padding: 2px !important;
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(255, 255, 255, 0.12) !important;
-        border-radius: 8px !important;
-    }
-    body.light-theme .topbarCenter .capsule-group {
-        background: #F1F5F9 !important;
-        border: 1px solid #CBD5E1 !important;
-    }
-    .topbarCenter .capsule-group button {
-        flex: 1 !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 0.76rem !important;
-        font-weight: 600 !important;
-        padding: 0 8px !important;
-        height: 28px !important;
-        min-height: 28px !important;
-        gap: 4px !important;
-        white-space: nowrap !important;
-    }
-    .topbarRight {
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 8px !important;
-        flex-shrink: 0 !important;
-        margin-left: auto !important;
-    }
-    .header-lang-btn {
-        height: 34px !important;
-        padding: 0 8px !important;
-        font-size: 0.76rem !important;
-    }
-    .themeToggleBtn,
-    .mobile-menu-btn {
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
-        padding: 0 !important;
-    }
-    .sloganBadge,
-    .appSub {
         display: none !important;
     }
-    
-    .studio {
-        grid-template-columns: 240px 1fr !important;
-        gap: 14px !important;
-        padding: 16px !important;
-    }
-    .notesPane {
-        grid-column: span 2 !important;
-        width: 100% !important;
-    }
-    .studioTabs {
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: thin;
-    }
-    .tab {
-        padding: 8px 14px !important;
-        font-size: 0.82rem !important;
-        min-height: 38px !important;
-        flex-shrink: 0 !important;
-    }
-    .zoomModalContent,
-    .pbiStudioModal {
-        width: 92vw !important;
-        max-width: 900px !important;
-        max-height: 90vh !important;
-        padding: 20px !important;
-    }
-}
-
-/* Mobile Touch Optimization (320px to 767px) */
-@media (max-width: 767px) {
-    .topbar {
+    .topbarRight {
         display: flex !important;
         flex-direction: row !important;
-        flex-wrap: wrap !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        height: auto !important;
-        min-height: 56px !important;
-        padding: 8px 12px 10px 12px !important;
-        gap: 6px 10px !important;
-        overflow: visible !important;
-    }
-    .topbarLeft {
-        order: 1 !important;
-        display: inline-flex !important;
         align-items: center !important;
         gap: 8px !important;
-        flex: 1 !important;
-        min-width: 0 !important;
-    }
-    .logoBox {
-        flex-shrink: 0 !important;
-    }
-    .topbarLeft input[type="text"],
-    #companyNameInput {
-        order: 1 !important;
-        width: 95px !important;
-        min-width: 70px !important;
-        max-width: 110px !important;
-        font-size: 0.74rem !important;
-        height: 34px !important;
-        padding: 0 8px !important;
-    }
-    .topbarRight {
-        order: 2 !important;
-        display: inline-flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        gap: 6px !important;
         width: auto !important;
         overflow: visible !important;
         padding: 0 !important;
-        margin-left: auto !important;
+        margin-left: auto;
         flex-wrap: nowrap !important;
         flex-shrink: 0 !important;
     }
-    .header-lang-wrapper {
-        flex-shrink: 0 !important;
-    }
-    .header-lang-btn {
-        height: 34px !important;
-        padding: 0 8px !important;
-        font-size: 0.74rem !important;
-        gap: 4px !important;
-    }
-    .header-lang-btn .header-lang-name {
+    .sloganBadge, .appSub {
         display: none !important;
-    }
-    .header-lang-dropdown {
-        right: 0 !important;
-        width: 190px !important;
-        max-height: 320px !important;
     }
     .themeToggleBtn span {
         display: none !important;
     }
     .themeToggleBtn {
-        order: 2 !important;
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
+        width: 36px !important;
+        height: 36px !important;
         border-radius: 50% !important;
         padding: 0 !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         flex-shrink: 0 !important;
+    }
+    #companyNameInput {
+        order: 1 !important;
+        width: 110px !important;
+        font-size: 0.78rem !important;
+        height: 36px !important;
+    }
+    .themeToggleBtn {
+        order: 2 !important;
     }
     .mobile-actions-menu {
         order: 3 !important;
         flex-shrink: 0 !important;
         display: inline-block !important;
     }
-    .mobile-menu-btn {
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
-        border-radius: 50% !important;
-        padding: 0 !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        flex-shrink: 0 !important;
-    }
-    .themeToggleBtn svg,
-    .mobile-menu-btn svg {
-        width: 16px !important;
-        height: 16px !important;
+    .themeToggleBtn svg, .mobile-menu-btn svg {
+        width: 18px !important;
+        height: 18px !important;
         display: block !important;
     }
-    .sloganBadge,
-    .appSub {
-        display: none !important;
-    }
-
-    /* Row 2: Full Width Centered Primary Action Ribbon (Report, Tableau, Power BI) */
-    .topbarCenter {
-        order: 3 !important;
-        display: flex !important;
-        width: 100% !important;
-        justify-content: center !important;
-        margin: 4px 0 0 0 !important;
-        flex-shrink: 0 !important;
-    }
-    .topbarCenter .capsule-group {
-        display: flex !important;
-        width: 100% !important;
-        max-width: 440px !important;
-        height: 34px !important;
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(255, 255, 255, 0.12) !important;
-        border-radius: 8px !important;
-        padding: 2px !important;
-        gap: 3px !important;
-        box-sizing: border-box !important;
-    }
-    body.light-theme .topbarCenter .capsule-group {
-        background: #F1F5F9 !important;
-        border: 1px solid #CBD5E1 !important;
-    }
-    .topbarCenter .capsule-group button {
-        flex: 1 !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 0.74rem !important;
-        font-weight: 600 !important;
-        padding: 0 4px !important;
-        height: 28px !important;
-        min-height: 28px !important;
-        white-space: nowrap !important;
-        border-radius: 6px !important;
-        gap: 4px !important;
-    }
-    .topbarCenter .capsule-group button i,
-    .topbarCenter .capsule-group button svg {
-        width: 13px !important;
-        height: 13px !important;
-    }
     
-    /* Studio layout single-column stacked view */
-    .studio {
-        grid-template-columns: 1fr !important;
-        padding: 10px !important;
-        gap: 12px !important;
-    }
-    .sourcesPane,
-    .notesPane {
-        display: flex !important;
-        position: static !important;
-        width: 100% !important;
-        grid-column: auto !important;
-    }
+    /* Make sidebars and tables space-efficient for mobile layout */
     .sourcesPane .chartBlock {
         display: none !important;
     }
     .sourcesPane .sourceMeta {
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: repeat(4, 1fr) !important;
         gap: 6px !important;
-        margin-top: 10px !important;
-        padding-top: 10px !important;
+        margin-top: 12px !important;
+        padding-top: 12px !important;
     }
     .sourcesPane .sourceMetaRow {
         flex-direction: column !important;
@@ -5110,161 +4916,39 @@ body.dark-theme .ghostBtn:hover {
     .sourcesPane .sourceMetaRow strong {
         font-size: 0.8rem !important;
     }
-
-    /* Navigation Tabs Smooth Touch Scroller */
-    .studioTabs {
-        padding: 8px 8px 0 !important;
-        gap: 4px !important;
-        overflow-x: auto !important;
-        white-space: nowrap !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: none !important;
-    }
-    .studioTabs::-webkit-scrollbar {
-        display: none !important;
-    }
-    .tab {
-        padding: 8px 12px !important;
-        font-size: 0.80rem !important;
-        min-height: 40px !important;
-        flex-shrink: 0 !important;
-    }
-
-    /* KPI Cards Responsive 2x2 Grid */
-    .executiveKpiStrip {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 8px !important;
-        margin-bottom: 14px !important;
-    }
-    .executiveKpiCard {
-        padding: 12px 10px !important;
-    }
-    .executiveKpiCard .kpiValue {
-        font-size: 1.25rem !important;
-    }
-    .executiveKpiCard .kpiSubtext {
-        font-size: 0.68rem !important;
-    }
-
-    /* Workflow Cards Vertical Stack */
-    .slideWorkflowBody {
-        flex-direction: column !important;
-        gap: 10px !important;
-        margin: 14px 0 !important;
-    }
-    .workflowStepCard {
-        width: 100% !important;
-        padding: 14px !important;
-    }
-
-    /* Charts & Performance Grid */
-    .chartsGridContainer {
+    
+    /* Studio layout stacked view */
+    .studio {
         grid-template-columns: 1fr !important;
+        padding: 12px !important;
         gap: 12px !important;
     }
-    .modelMetricsGrid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 8px !important;
-    }
-    .confusionMatrixGrid {
-        grid-template-columns: 70px repeat(2, 1fr) !important;
-        font-size: 0.72rem !important;
-        gap: 4px !important;
-    }
-
-    /* Data Tables Horizontal Touch Scrolling */
-    .tableWrap,
-    .resultTableWrap,
-    .pbiTableContainer {
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        display: block !important;
-        border-radius: 8px !important;
-    }
-    table.predictionTable,
-    table.rankingTable,
-    table.cohortTable,
-    table.pbiTable {
-        min-width: 620px !important;
-    }
-    table th, table td {
-        padding: 8px 10px !important;
-        font-size: 0.78rem !important;
-    }
     
-    /* Touch-friendly inputs and buttons */
+    /* Make buttons and actions fully aligned and touch-friendly */
     button, input, select {
-        min-height: 38px !important;
+        min-height: 40px !important;
         touch-action: manipulation;
     }
     
-    /* Chat & AI Copilot Forms */
+    /* Form fields stacking */
     .chatForm {
         flex-direction: row !important;
-        gap: 6px !important;
+        gap: 8px !important;
     }
     .chatForm input {
         flex: 1 !important;
-        min-height: 40px !important;
+        min-height: 42px !important;
     }
     .chatForm button {
-        min-height: 40px !important;
-        padding: 0 14px !important;
+        min-height: 42px !important;
+        padding: 0 16px !important;
     }
     
-    /* Modal Responsive Optimization */
-    .magnificZoomContent,
-    .zoomModalContent,
-    .pbiStudioModal {
-        padding: 14px 10px !important;
-        width: 96vw !important;
-        max-width: 96vw !important;
-        max-height: 92vh !important;
-        border-radius: 12px !important;
-        margin: 4vh auto !important;
-    }
-    .pbiHeaderBar {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 8px !important;
-    }
-    .pbiStudioTitle {
-        font-size: 1.05rem !important;
-    }
-    .pbiStudioSubtitle {
-        font-size: 0.72rem !important;
-    }
-    .pbiQuickActionRibbon {
-        padding: 8px !important;
-        gap: 6px !important;
-    }
-    .pbiQuickActionRibbon button {
-        flex: 1 1 45% !important;
-        font-size: 0.74rem !important;
-        padding: 7px 8px !important;
-        justify-content: center !important;
-        min-height: 38px !important;
-    }
-    .pbiNavTabs {
-        overflow-x: auto !important;
-        white-space: nowrap !important;
-        -webkit-overflow-scrolling: touch !important;
-        padding-bottom: 4px !important;
-    }
-    .pbiNavTab {
-        padding: 7px 12px !important;
-        font-size: 0.76rem !important;
-        flex-shrink: 0 !important;
-    }
-    .pbiKpiGrid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 8px !important;
-    }
-    .pbiChartGrid {
-        grid-template-columns: 1fr !important;
-        gap: 12px !important;
+    /* Modal responsive alignment */
+    .magnificZoomContent {
+        padding: 18px !important;
+        width: 95% !important;
+        max-height: 95vh !important;
     }
 }
 
