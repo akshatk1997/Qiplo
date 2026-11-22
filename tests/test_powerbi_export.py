@@ -174,3 +174,13 @@ def test_powerbi_api_endpoints():
     assert "stage" in data
     assert "message" in data
     assert "fix" in data
+
+    # 7. Interactive Preview API
+    res_preview = client.get("/api/export/powerbi/preview")
+    assert res_preview.status_code == 200
+    p_data = res_preview.json
+    assert p_data["ok"] is True
+    assert "kpis" in p_data
+    assert "total_revenue" in p_data["kpis"]
+    assert "dax_measures" in p_data
+    assert len(p_data["dax_measures"]) == 7

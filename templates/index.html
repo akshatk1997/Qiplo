@@ -1674,6 +1674,10 @@
                                         <i data-lucide="external-link" class="lucide-icon" style="width: 14px; height: 14px;"></i>
                                         <span>Generate & Open Full Audit Report</span>
                                     </button>
+                                    <button type="button" class="ghostBtn" onclick="openBiExportModal('powerbi')" style="padding: 10px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; font-size: 0.84rem; background: rgba(242, 200, 17, 0.08); border: 1px solid rgba(242, 200, 17, 0.4); color: #F2C811; margin-top: 8px;">
+                                        <i data-lucide="line-chart" class="lucide-icon" style="width: 14px; height: 14px;"></i>
+                                        <span>Create Power BI Dashboard</span>
+                                    </button>
                                 </div>
 
                                 <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
@@ -2631,45 +2635,267 @@
 
     <!-- Dedicated Power BI & Tableau BI Dashboard Modal -->
     <div id="biExportModal" class="magnificZoomModal hidden" onclick="if(event.target===this) closeBiExportModal()">
-        <div class="zoomModalContent" style="max-width: 680px; padding: 24px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 14px; margin-bottom: 18px;">
+        <div class="zoomModalContent pbiStudioModal" style="max-width: 1100px; padding: 24px;">
+            <!-- Studio Header -->
+            <div class="pbiHeaderBar">
+                <div class="pbiHeaderLeft">
+                    <div class="pbiLogoBadge">
+                        <svg class="brand-logo-svg brand-powerbi" viewBox="0 0 24 24" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2" y="2" width="20" height="20" rx="4.5" fill="#F2C811" fill-opacity="0.25"/>
+                            <rect x="5.5" y="11" width="3.2" height="8" rx="1.2" fill="#E0A30B"/>
+                            <rect x="10.4" y="7.5" width="3.2" height="11.5" rx="1.2" fill="#F2C811"/>
+                            <rect x="15.3" y="4.5" width="3.2" height="14.5" rx="1.2" fill="#F7DC6F"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 id="biModalTitle" class="pbiStudioTitle">Power BI Executive Intelligence Studio</h3>
+                        <div class="pbiStudioSubtitle">Live Star-Schema Data Model | Enterprise DAX Measures | Zero Manual Repair Deliverables</div>
+                    </div>
+                </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
-                    <i data-lucide="layout-grid" class="lucide-icon" style="width: 22px; height: 22px; color: var(--accent-2);"></i>
-                    <h3 id="biModalTitle" style="margin: 0; font-size: 1.2rem; font-weight: 700; color: var(--text);">Power BI &amp; Tableau Dashboard Connectors</h3>
+                    <span style="font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; background: rgba(16, 185, 129, 0.2); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.4); text-transform: uppercase; letter-spacing: 0.04em;">
+                        LIVE OUTPUT READY
+                    </span>
+                    <button type="button" class="tour-close-x" onclick="closeBiExportModal()" style="font-size: 1.4rem; color: var(--muted); cursor: pointer; background: transparent; border: none;">&times;</button>
                 </div>
-                <button type="button" class="tour-close-x" onclick="closeBiExportModal()">&times;</button>
             </div>
-            <div id="biModalBody">
-                <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.5; margin-bottom: 16px;">
-                    Generate enterprise-ready deliverables directly from your Qiplo analysis: complete Power BI PBIP project bundles with star-schema datasets, pre-compiled DAX measures, brand themes, and Tableau workbooks.
-                </p>
 
-                <!-- Hero: Power BI Project Deliverable Package (PBIP) -->
-                <div style="background: linear-gradient(135deg, rgba(242, 200, 17, 0.08) 0%, rgba(0, 245, 255, 0.05) 100%); border: 1px solid rgba(242, 200, 17, 0.35); border-radius: var(--radius-sm); padding: 18px; margin-bottom: 18px;">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <div style="width: 28px; height: 28px; border-radius: 6px; background: rgba(242, 200, 17, 0.2); display: flex; align-items: center; justify-content: center;">
-                                <i data-lucide="package-check" style="width: 16px; height: 16px; color: #F2C811;"></i>
-                            </div>
-                            <span style="font-weight: 700; color: #FFFFFF; font-size: 1.02rem;">Power BI Project Package (.pbip / Star Schema)</span>
-                        </div>
-                        <span style="font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 4px; background: rgba(242, 200, 17, 0.2); color: #F2C811; border: 1px solid rgba(242, 200, 17, 0.4); text-transform: uppercase; letter-spacing: 0.04em;">Zero Manual Repair</span>
+            <!-- Instant One-Click Action Ribbon -->
+            <div class="pbiQuickActionRibbon">
+                <button type="button" class="btnPrimaryDownload" onclick="triggerDownload('/api/export/powerbi', 'qiplo-powerbi.zip'); showBiToast('Downloading Power BI Project Package (.pbip)...', 'package-check');" title="Download full Star Schema PBIP package">
+                    <i data-lucide="download" style="width: 14px; height: 14px;"></i> Download Power BI Package (.pbip ZIP)
+                </button>
+                <button type="button" class="btnSecondaryDownload" onclick="triggerDownload('/api/export/powerbi?type=pbit', 'Qiplo_PowerBI_Dashboard.pbit'); showBiToast('Downloading Power BI Template (.pbit)...', 'line-chart');">
+                    <i data-lucide="line-chart" style="width: 13px; height: 13px;"></i> Template (.pbit)
+                </button>
+                <button type="button" class="btnSecondaryDownload" onclick="triggerDownload('/api/export/powerbi?type=pbids', 'Qiplo_PowerBI_Source.pbids'); showBiToast('Downloading Power BI Data Source (.pbids)...', 'share-2');">
+                    <i data-lucide="share-2" style="width: 13px; height: 13px;"></i> Data Source (.pbids)
+                </button>
+                <button type="button" class="btnSecondaryDownload" onclick="triggerDownload('/api/export/powerbi?type=fallback', 'qiplo-powerbi-fallback.zip'); showBiToast('Downloading Fallback CSVs + DAX package...', 'file-archive');">
+                    <i data-lucide="file-archive" style="width: 13px; height: 13px;"></i> Fallback (.zip)
+                </button>
+                <button type="button" class="btnSecondaryDownload" onclick="pushToPowerBiService()" id="pbiRibbonPushBtn" style="color: #F2C811; border-color: rgba(242, 200, 17, 0.4);">
+                    <i data-lucide="zap" style="width: 13px; height: 13px;"></i> Push Live REST
+                </button>
+            </div>
+
+            <!-- Page Navigation Tabs -->
+            <div class="pbiNavTabs">
+                <button type="button" class="pbiNavTab active" id="pbiTabBtnExec" onclick="switchPbiPage('exec')">
+                    <i data-lucide="layout-dashboard" style="width: 14px; height: 14px;"></i> Page 1: Executive Overview
+                </button>
+                <button type="button" class="pbiNavTab" id="pbiTabBtnRisk" onclick="switchPbiPage('risk')">
+                    <i data-lucide="alert-triangle" style="width: 14px; height: 14px;"></i> Page 2: Churn Risk &amp; Drivers
+                </button>
+                <button type="button" class="pbiNavTab" id="pbiTabBtnDetail" onclick="switchPbiPage('detail')">
+                    <i data-lucide="filter" style="width: 14px; height: 14px;"></i> Page 3: Slicers &amp; Explorer
+                </button>
+                <button type="button" class="pbiNavTab" id="pbiTabBtnModel" onclick="switchPbiPage('model')">
+                    <i data-lucide="database" style="width: 14px; height: 14px;"></i> Page 4: Star Schema &amp; DAX
+                </button>
+                <button type="button" class="pbiNavTab" id="pbiTabBtnConnectors" onclick="switchPbiPage('connectors')">
+                    <i data-lucide="link-2" style="width: 14px; height: 14px;"></i> Page 5: Connectors &amp; Deployment
+                </button>
+            </div>
+
+            <!-- Tab 1: Executive Overview -->
+            <div id="pbiPageExec">
+                <!-- 4 Core KPI Cards -->
+                <div class="pbiKpiGrid">
+                    <div class="pbiKpiCard cyan">
+                        <span class="pbiKpiLabel">Total Revenue</span>
+                        <div class="pbiKpiValue" id="pbiKpiRev">$142,500</div>
+                        <span class="pbiKpiDaxHint">DAX: Total Revenue = SUM(Fact[Revenue])</span>
                     </div>
-                    <p style="font-size: 0.80rem; color: var(--muted); margin: 0 0 14px 0; line-height: 1.45;">
-                        Complete Power BI Project deliverable containing 5 typed star-schema CSVs (Fact, Date, Customer, Product, Region), TMDL semantic model, 7 core DAX measures (Total Revenue, Customers, Churn Rate, Revenue at Risk, MoM %, YTD, Avg Score), Qiplo cyber theme, and 3-page interactive report layout.
-                    </p>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button type="button" class="primaryBtn" onclick="window.open('/api/export/powerbi', '_blank')" style="flex: 2; min-width: 200px; justify-content: center; background: linear-gradient(135deg, #F2C811 0%, #E97627 100%); color: #090D16; font-weight: 700; border: none;">
-                            <i data-lucide="download" style="width: 15px; height: 15px;"></i> Download Power BI Package (.zip)
-                        </button>
-                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/powerbi?type=fallback', '_blank')" style="flex: 1; min-width: 160px; justify-content: center; font-size: 0.78rem;" title="CSVs + measures.dax + theme + README">
-                            <i data-lucide="file-archive" style="width: 14px; height: 14px;"></i> Download Fallback (.zip)
-                        </button>
+                    <div class="pbiKpiCard purple">
+                        <span class="pbiKpiLabel">Evaluated Customers</span>
+                        <div class="pbiKpiValue" id="pbiKpiCust">25</div>
+                        <span class="pbiKpiDaxHint">DAX: Customers = DISTINCTCOUNT(Fact[CustomerID])</span>
+                    </div>
+                    <div class="pbiKpiCard">
+                        <span class="pbiKpiLabel">Portfolio Churn Rate</span>
+                        <div class="pbiKpiValue" id="pbiKpiRate">28.0%</div>
+                        <span class="pbiKpiDaxHint">DAX: Churn Rate = DIVIDE(COUNTROWS(...))</span>
+                    </div>
+                    <div class="pbiKpiCard danger">
+                        <span class="pbiKpiLabel">Revenue at Risk</span>
+                        <div class="pbiKpiValue" id="pbiKpiRisk">$42,500</div>
+                        <span class="pbiKpiDaxHint">DAX: CALCULATE([Total Revenue], Fact[Risk]&gt;=0.7)</span>
                     </div>
                 </div>
 
-                <!-- Secondary Deliverables Grid -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 18px;">
+                <!-- 2 Primary Power BI Executive Visuals -->
+                <div class="pbiChartGrid">
+                    <div class="pbiChartCard">
+                        <div class="pbiChartHeader">
+                            <span class="pbiChartTitle">
+                                <i data-lucide="trending-up" style="width: 15px; height: 15px; color: #00F5FF;"></i>
+                                Revenue Trend &amp; Monthly Trajectory
+                            </span>
+                            <span class="pbiChartBadge">Time-Series</span>
+                        </div>
+                        <div style="height: 220px; position: relative;">
+                            <canvas id="pbiRevenueTrendChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="pbiChartCard">
+                        <div class="pbiChartHeader">
+                            <span class="pbiChartTitle">
+                                <i data-lucide="pie-chart" style="width: 15px; height: 15px; color: #F2C811;"></i>
+                                Churn Rate &amp; Revenue by Customer Segment
+                            </span>
+                            <span class="pbiChartBadge">Segment Bar</span>
+                        </div>
+                        <div style="height: 220px; position: relative;">
+                            <canvas id="pbiSegmentChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Churn Risk & Drivers -->
+            <div id="pbiPageRisk" class="hidden">
+                <div class="pbiChartGrid">
+                    <div class="pbiChartCard">
+                        <div class="pbiChartHeader">
+                            <span class="pbiChartTitle">
+                                <i data-lucide="bar-chart-2" style="width: 15px; height: 15px; color: #FF007F;"></i>
+                                Churn Risk Probability Distribution
+                            </span>
+                            <span class="pbiChartBadge">Histogram</span>
+                        </div>
+                        <div style="height: 200px; position: relative;">
+                            <canvas id="pbiRiskDistChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="pbiChartCard">
+                        <div class="pbiChartHeader">
+                            <span class="pbiChartTitle">
+                                <i data-lucide="sliders" style="width: 15px; height: 15px; color: #8B5CF6;"></i>
+                                Root Cause Drivers &amp; Attribution Weights
+                            </span>
+                            <span class="pbiChartBadge">Driver Breakdown</span>
+                        </div>
+                        <div style="height: 200px; position: relative;">
+                            <canvas id="pbiDriversChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 20 At-Risk Customer Directory -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="font-size: 0.84rem; font-weight: 700; color: #FFFFFF; display: flex; align-items: center; gap: 7px;">
+                        <i data-lucide="alert-octagon" style="width: 14px; height: 14px; color: #FF007F;"></i>
+                        Top 20 At-Risk Customer Directory (Page 2 Visual)
+                    </span>
+                    <span style="font-size: 0.70rem; color: var(--muted);">Sorted by Churn Probability DESC</span>
+                </div>
+                <div class="pbiTableContainer">
+                    <table class="pbiTable">
+                        <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Account Name</th>
+                                <th>Segment</th>
+                                <th>Contract</th>
+                                <th>Churn Score</th>
+                                <th>Revenue (ARR)</th>
+                                <th>Risk Tier</th>
+                                <th>Recommended Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pbiTopRiskTableBody">
+                            <tr><td colspan="8" style="text-align: center; color: var(--muted); padding: 16px;">Loading live Power BI dataset...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab 3: Slicers & Explorer -->
+            <div id="pbiPageDetail" class="hidden">
+                <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 14px; margin-bottom: 16px;">
+                    <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                        <span style="font-size: 0.74rem; font-weight: 700; color: var(--muted); text-transform: uppercase;">Interactive Slicers:</span>
+                        <div style="display: flex; gap: 6px;" id="pbiFilterPills">
+                            <button type="button" class="btnSecondaryDownload" onclick="filterPbiMatrix('all', this)" style="background: rgba(242, 200, 17, 0.15); color: #F2C811; border-color: rgba(242, 200, 17, 0.4);">All Records</button>
+                            <button type="button" class="btnSecondaryDownload" onclick="filterPbiMatrix('high', this)">High Risk (&ge;70%)</button>
+                            <button type="button" class="btnSecondaryDownload" onclick="filterPbiMatrix('med', this)">Moderate Risk (30-70%)</button>
+                            <button type="button" class="btnSecondaryDownload" onclick="filterPbiMatrix('low', this)">Low Risk (&lt;30%)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pbiTableContainer">
+                    <table class="pbiTable">
+                        <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Segment</th>
+                                <th>Contract Type</th>
+                                <th>Tenure</th>
+                                <th>Churn Score</th>
+                                <th>Revenue</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pbiDetailMatrixTableBody">
+                            <tr><td colspan="7" style="text-align: center; color: var(--muted); padding: 16px;">Loading matrix data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab 4: Star Schema & DAX Measures -->
+            <div id="pbiPageModel" class="hidden">
+                <!-- Star Schema Architecture Box -->
+                <div style="background: linear-gradient(145deg, rgba(242, 200, 17, 0.04), rgba(0, 245, 255, 0.04)); border: 1px solid rgba(242, 200, 17, 0.3); border-radius: 10px; padding: 16px; margin-bottom: 18px;">
+                    <div style="font-size: 0.86rem; font-weight: 700; color: #F2C811; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="layers" style="width: 16px; height: 16px;"></i>
+                        Star-Schema Relational Architecture (1 Fact + 4 Dimensions)
+                    </div>
+                    <p style="font-size: 0.78rem; color: var(--muted); margin: 0 0 12px 0;">
+                        Structured star schema adhering to Microsoft Power BI best practices. Central Fact table connected via 1-to-many, single-direction relationships to continuous Date, Customer, Product, and Region dimensions.
+                    </p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
+                        <div style="background: rgba(0, 245, 255, 0.05); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 8px; padding: 10px;">
+                            <div style="font-size: 0.78rem; font-weight: 700; color: #00F5FF;">Fact (Central Table)</div>
+                            <div style="font-size: 0.70rem; color: var(--muted); margin-top: 4px;">PK: TransactionID<br/>FKs: CustomerID, Date, ProductID, RegionID<br/>Measures: Revenue, ChurnRisk, Churned</div>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 8px; padding: 10px;">
+                            <div style="font-size: 0.78rem; font-weight: 700; color: #FFFFFF;">DimCustomer</div>
+                            <div style="font-size: 0.70rem; color: var(--muted); margin-top: 4px;">PK: CustomerID<br/>Segment, ContractType, BillingCycle, RiskTier</div>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 8px; padding: 10px;">
+                            <div style="font-size: 0.78rem; font-weight: 700; color: #FFFFFF;">DimDate (Calendar)</div>
+                            <div style="font-size: 0.70rem; color: var(--muted); margin-top: 4px;">PK: Date (Continuous)<br/>Year, Quarter, Month, Day, IsWeekend</div>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 8px; padding: 10px;">
+                            <div style="font-size: 0.78rem; font-weight: 700; color: #FFFFFF;">DimProduct</div>
+                            <div style="font-size: 0.70rem; color: var(--muted); margin-top: 4px;">PK: ProductID<br/>ProductName, Category, Tier</div>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 8px; padding: 10px;">
+                            <div style="font-size: 0.78rem; font-weight: 700; color: #FFFFFF;">DimRegion</div>
+                            <div style="font-size: 0.70rem; color: var(--muted); margin-top: 4px;">PK: RegionID<br/>RegionName, Territory, Country</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7 Pre-Compiled Official DAX Formulas -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <span style="font-size: 0.84rem; font-weight: 700; color: #FFFFFF; display: flex; align-items: center; gap: 7px;">
+                        <i data-lucide="code" style="width: 14px; height: 14px; color: #F2C811;"></i>
+                        Official DAX Measures Suite (Included in Deliverables)
+                    </span>
+                    <span style="font-size: 0.70rem; color: var(--muted);">Click formula button to copy DAX to clipboard</span>
+                </div>
+                <div id="pbiDaxListContainer">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- Tab 5: All File Formats & Connectors -->
+            <div id="pbiPageConnectors" class="hidden">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin-bottom: 18px;">
                     <!-- Power BI Template (.pbit) -->
                     <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
@@ -2678,7 +2904,7 @@
                             </div>
                             <p style="font-size: 0.76rem; color: var(--muted); margin: 0 0 10px 0;">Standalone binary template with pre-wired visuals and measures.</p>
                         </div>
-                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/powerbi?type=pbit', '_blank')" style="width: 100%; justify-content: center; font-size: 0.80rem;">
+                        <button type="button" class="ghostBtn" onclick="triggerDownload('/api/export/powerbi?type=pbit', 'Qiplo_PowerBI_Dashboard.pbit')" style="width: 100%; justify-content: center; font-size: 0.80rem;">
                             <i data-lucide="download" style="width: 13px; height: 13px;"></i> Download .pbit
                         </button>
                     </div>
@@ -2690,7 +2916,7 @@
                             </div>
                             <p style="font-size: 0.76rem; color: var(--muted); margin: 0 0 10px 0;">Direct connection file to link Power BI directly to your live SQLite feed.</p>
                         </div>
-                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/powerbi?type=pbids', '_blank')" style="width: 100%; justify-content: center; font-size: 0.80rem;">
+                        <button type="button" class="ghostBtn" onclick="triggerDownload('/api/export/powerbi?type=pbids', 'Qiplo_PowerBI_Source.pbids')" style="width: 100%; justify-content: center; font-size: 0.80rem;">
                             <i data-lucide="download" style="width: 13px; height: 13px;"></i> Download .pbids
                         </button>
                     </div>
@@ -2702,7 +2928,7 @@
                             </div>
                             <p style="font-size: 0.76rem; color: var(--muted); margin: 0 0 10px 0;">Pre-configured executive workbook with calculated fields.</p>
                         </div>
-                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/tableau', '_blank')" style="width: 100%; justify-content: center; font-size: 0.80rem;">
+                        <button type="button" class="ghostBtn" onclick="triggerDownload('/api/export/tableau', 'Qiplo_Tableau_Dashboard.twb')" style="width: 100%; justify-content: center; font-size: 0.80rem;">
                             <i data-lucide="download" style="width: 13px; height: 13px;"></i> Download .twb
                         </button>
                     </div>
@@ -2714,7 +2940,7 @@
                             </div>
                             <p style="font-size: 0.76rem; color: var(--muted); margin: 0 0 10px 0;">Raw M-code script for Power Query Advanced Editor.</p>
                         </div>
-                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/powerbi/m', '_blank')" style="width: 100%; justify-content: center; font-size: 0.80rem;">
+                        <button type="button" class="ghostBtn" onclick="triggerDownload('/api/export/powerbi/m', 'Qiplo_PowerBI_M_Query.m')" style="width: 100%; justify-content: center; font-size: 0.80rem;">
                             <i data-lucide="file-code" style="width: 13px; height: 13px;"></i> Download M-Script
                         </button>
                     </div>
@@ -2733,6 +2959,7 @@
                         <i data-lucide="zap" style="width: 13px; height: 13px;"></i> Push Live Dataset
                     </button>
                 </div>
+
                 <!-- Live Feed Copy Box -->
                 <div style="background: var(--surface-3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                     <div>
@@ -2743,6 +2970,9 @@
                         <i data-lucide="copy" style="width: 12px; height: 12px;"></i> Copy URL
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
             </div>
         </div>
     </div>

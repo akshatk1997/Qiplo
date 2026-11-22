@@ -1681,12 +1681,331 @@ function showBiToast(msg, iconName = 'check-circle') {
     }, 4000);
 }
 
+function triggerDownload(url, filename) {
+    const a = document.createElement('a');
+    a.href = url;
+    if (filename) a.download = filename;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+        try { a.remove(); } catch (e) {}
+    }, 1000);
+}
+window.triggerDownload = triggerDownload;
+
+let pbiCharts = {};
+function destroyPbiCharts() {
+    ['trend', 'segment', 'riskDist', 'drivers'].forEach(k => {
+        if (pbiCharts[k]) {
+            try { pbiCharts[k].destroy(); } catch (e) {}
+            pbiCharts[k] = null;
+        }
+    });
+}
+
+function switchPbiPage(pageName) {
+    const pages = ['exec', 'risk', 'detail', 'model', 'connectors'];
+    pages.forEach(p => {
+        const pageEl = document.getElementById(`pbiPage${p.charAt(0).toUpperCase() + p.slice(1)}`);
+        const tabBtn = document.getElementById(`pbiTabBtn${p.charAt(0).toUpperCase() + p.slice(1)}`);
+        if (pageEl) {
+            if (p === pageName) {
+                pageEl.classList.remove('hidden');
+            } else {
+                pageEl.classList.add('hidden');
+            }
+        }
+        if (tabBtn) {
+            if (p === pageName) {
+                tabBtn.classList.add('active');
+            } else {
+                tabBtn.classList.remove('active');
+            }
+        }
+    });
+    if (window.lucide) window.lucide.createIcons();
+}
+window.switchPbiPage = switchPbiPage;
+
+function filterPbiMatrix(filterType, btnEl) {
+    const pills = document.querySelectorAll('#pbiFilterPills button');
+    pills.forEach(p => {
+        p.style.background = 'rgba(255, 255, 255, 0.04)';
+        p.style.color = '#E2E8F0';
+        p.style.borderColor = 'rgba(255, 255, 255, 0.12)';
+    });
+    if (btnEl) {
+        btnEl.style.background = 'rgba(242, 200, 17, 0.15)';
+        btnEl.style.color = '#F2C811';
+        btnEl.style.borderColor = 'rgba(242, 200, 17, 0.4)';
+    }
+
+    const allRecords = (window.pbiPreviewCache && window.pbiPreviewCache.top_risk) || [];
+    let filtered = allRecords;
+    if (filterType === 'high') {
+        filtered = allRecords.filter(r => r.churn_score >= 70);
+    } else if (filterType === 'med') {
+        filtered = allRecords.filter(r => r.churn_score >= 30 && r.churn_score < 70);
+    } else if (filterType === 'low') {
+        filtered = allRecords.filter(r => r.churn_score < 30);
+    }
+    populatePbiDetailMatrix(filtered);
+}
+window.filterPbiMatrix = filterPbiMatrix;
+
+function populatePbiDetailMatrix(records) {
+    const body = document.getElementById('pbiDetailMatrixTableBody');
+    if (!body) return;
+    if (!records || records.length === 0) {
+        body.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--muted); padding: 16px;">No customer records match active slicer filter.</td></tr>';
+        return;
+    }
+    body.innerHTML = records.map(r => {
+        const pillClass = r.churn_score >= 70 ? 'high' : (r.churn_score >= 30 ? 'med' : 'low');
+        return `<tr>
+            <td style="font-family: var(--font-mono); font-weight: 700; color: #00F5FF;">${r.customer_id}</td>
+            <td>${r.segment || 'Enterprise'}</td>
+            <td>${r.contract_type || 'Month-to-month'}</td>
+            <td>${r.tenure || 12} mos</td>
+            <td><span class="pbiRiskPill ${pillClass}">${r.churn_score}%</span></td>
+            <td style="font-family: var(--font-mono); font-weight: 600;">$${Number(r.revenue || 0).toLocaleString()}</td>
+            <td><span class="pbiRiskPill ${pillClass}">${r.risk_tier || 'Active'}</span></td>
+        </tr>`;
+    }).join('');
+}
+
+function copyDaxFormula(formulaText, btnEl) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(formulaText).then(() => {
+            showBiToast("DAX formula copied to clipboard!", "check-circle");
+            if (btnEl) {
+                const orig = btnEl.innerHTML;
+                btnEl.innerHTML = '<i data-lucide="check" style="width:12px;height:12px;color:#10B981;"></i> Copied!';
+                if (window.lucide) window.lucide.createIcons();
+                setTimeout(() => {
+                    btnEl.innerHTML = orig;
+                    if (window.lucide) window.lucide.createIcons();
+                }, 2000);
+            }
+        }).catch(() => {
+            prompt("Copy DAX Formula:", formulaText);
+        });
+    } else {
+        prompt("Copy DAX Formula:", formulaText);
+    }
+}
+window.copyDaxFormula = copyDaxFormula;
+
+async function renderPowerBiDashboard() {
+    try {
+        const resp = await fetch('/api/export/powerbi/preview');
+        const data = await resp.json();
+        if (!data || !data.ok) return;
+
+        window.pbiPreviewCache = data;
+
+        // Populate KPIs
+        const kpis = data.kpis || {};
+        const revEl = document.getElementById('pbiKpiRev');
+        if (revEl) revEl.textContent = '$' + Number(kpis.total_revenue || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        const custEl = document.getElementById('pbiKpiCust');
+        if (custEl) custEl.textContent = (kpis.total_customers || 0).toLocaleString();
+        const rateEl = document.getElementById('pbiKpiRate');
+        if (rateEl) rateEl.textContent = (kpis.churn_rate || 0).toFixed(1) + '%';
+        const riskEl = document.getElementById('pbiKpiRisk');
+        if (riskEl) riskEl.textContent = '$' + Number(kpis.revenue_at_risk || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+        destroyPbiCharts();
+
+        // 1. Revenue Trend Chart
+        const trendCanvas = document.getElementById('pbiRevenueTrendChart');
+        if (trendCanvas && window.Chart) {
+            const trendData = data.trend || [];
+            const labels = trendData.map(d => d.date);
+            const revenues = trendData.map(d => d.revenue);
+            pbiCharts.trend = new Chart(trendCanvas, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Revenue ($)',
+                        data: revenues,
+                        borderColor: '#00F5FF',
+                        backgroundColor: 'rgba(0, 245, 255, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.35,
+                        fill: true,
+                        pointBackgroundColor: '#00F5FF'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94A3B8', font: { size: 10 } } },
+                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94A3B8', font: { size: 10 }, callback: v => '$' + v.toLocaleString() } }
+                    }
+                }
+            });
+        }
+
+        // 2. Segment Bar Chart
+        const segCanvas = document.getElementById('pbiSegmentChart');
+        if (segCanvas && window.Chart) {
+            const segData = data.segments || [];
+            pbiCharts.segment = new Chart(segCanvas, {
+                type: 'bar',
+                data: {
+                    labels: segData.map(s => s.segment),
+                    datasets: [
+                        {
+                            label: 'Revenue ($)',
+                            data: segData.map(s => s.revenue),
+                            backgroundColor: 'rgba(242, 200, 17, 0.7)',
+                            borderColor: '#F2C811',
+                            borderWidth: 1,
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Churn Rate (%)',
+                            data: segData.map(s => s.churn_rate),
+                            backgroundColor: 'rgba(255, 0, 127, 0.7)',
+                            borderColor: '#FF007F',
+                            borderWidth: 1,
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#E2E8F0', font: { size: 10 } } } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94A3B8', font: { size: 10 } } },
+                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94A3B8', font: { size: 10 } } }
+                    }
+                }
+            });
+        }
+
+        // 3. Risk Distribution Histogram
+        const riskDistCanvas = document.getElementById('pbiRiskDistChart');
+        if (riskDistCanvas && window.Chart) {
+            const topRisk = data.top_risk || [];
+            let low = 0, med = 0, high = 0;
+            topRisk.forEach(r => {
+                if (r.churn_score >= 70) high++;
+                else if (r.churn_score >= 30) med++;
+                else low++;
+            });
+            pbiCharts.riskDist = new Chart(riskDistCanvas, {
+                type: 'doughnut',
+                data: {
+                    labels: ['High Risk (>=70%)', 'Moderate Risk (30-70%)', 'Low Risk (<30%)'],
+                    datasets: [{
+                        data: [high, med, low],
+                        backgroundColor: ['#FF007F', '#F59E0B', '#10B981'],
+                        borderColor: '#0D111A',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'right', labels: { color: '#E2E8F0', font: { size: 10 } } } }
+                }
+            });
+        }
+
+        // 4. Drivers Chart
+        const driversCanvas = document.getElementById('pbiDriversChart');
+        if (driversCanvas && window.Chart) {
+            pbiCharts.drivers = new Chart(driversCanvas, {
+                type: 'bar',
+                data: {
+                    labels: ['Contract Commitment', 'Support Tickets', 'Price / Monthly Tier', 'Tenure / Lifecycle'],
+                    datasets: [{
+                        data: [34.5, 26.2, 21.8, 17.5],
+                        backgroundColor: ['#8B5CF6', '#00F5FF', '#F2C811', '#10B981'],
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94A3B8', font: { size: 10 }, callback: v => v + '%' } },
+                        y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94A3B8', font: { size: 10 } } }
+                    }
+                }
+            });
+        }
+
+        // 5. Populate Top 20 Table
+        const topTableBody = document.getElementById('pbiTopRiskTableBody');
+        if (topTableBody) {
+            const topRisk = data.top_risk || [];
+            if (topRisk.length === 0) {
+                topTableBody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--muted); padding: 16px;">No customer records available.</td></tr>';
+            } else {
+                topTableBody.innerHTML = topRisk.map(r => {
+                    const pillClass = r.churn_score >= 70 ? 'high' : (r.churn_score >= 30 ? 'med' : 'low');
+                    const action = r.churn_score >= 70 ? 'Executive Callback & Discount' : (r.churn_score >= 30 ? 'Onboarding Health Check' : 'Loyalty Upgrade');
+                    return `<tr>
+                        <td style="font-family: var(--font-mono); font-weight: 700; color: #00F5FF;">${r.customer_id}</td>
+                        <td style="font-weight: 600;">${r.customer_name}</td>
+                        <td>${r.segment}</td>
+                        <td>${r.contract_type}</td>
+                        <td><span class="pbiRiskPill ${pillClass}">${r.churn_score}%</span></td>
+                        <td style="font-family: var(--font-mono); font-weight: 600;">$${Number(r.revenue || 0).toLocaleString()}</td>
+                        <td><span class="pbiRiskPill ${pillClass}">${r.risk_tier}</span></td>
+                        <td style="font-size: 0.74rem; color: #E2E8F0;">${action}</td>
+                    </tr>`;
+                }).join('');
+            }
+        }
+
+        // 6. Populate Detail Matrix Table
+        populatePbiDetailMatrix(data.top_risk || []);
+
+        // 7. Populate DAX Measures List
+        const daxContainer = document.getElementById('pbiDaxListContainer');
+        if (daxContainer && data.dax_measures) {
+            daxContainer.innerHTML = data.dax_measures.map(m => {
+                const escapedFormula = m.formula.replace(/"/g, '&quot;');
+                return `<div class="pbiDaxCard">
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                            <span style="font-size: 0.82rem; font-weight: 700; color: #FFFFFF;">${m.name}</span>
+                            <span style="font-size: 0.65rem; padding: 1px 6px; border-radius: 4px; background: rgba(0, 245, 255, 0.15); color: #00F5FF; font-family: var(--font-mono);">${m.type}</span>
+                        </div>
+                        <div class="pbiDaxCode">${m.formula}</div>
+                        <div style="font-size: 0.70rem; color: var(--muted); margin-top: 3px;">${m.desc}</div>
+                    </div>
+                    <button type="button" class="btnSecondaryDownload" onclick="copyDaxFormula('${escapedFormula}', this)" style="padding: 5px 10px; font-size: 0.74rem;">
+                        <i data-lucide="copy" style="width: 12px; height: 12px;"></i> Copy DAX
+                    </button>
+                </div>`;
+            }).join('');
+        }
+
+        if (window.lucide) window.lucide.createIcons();
+    } catch (err) {
+        console.error('Error rendering Power BI Dashboard:', err);
+    }
+}
+window.renderPowerBiDashboard = renderPowerBiDashboard;
+
 function openBiExportModal(target = 'powerbi') {
     const modal = document.getElementById('biExportModal');
     if (!modal) return;
     const title = document.getElementById('biModalTitle');
     if (title) {
-        title.textContent = target === 'tableau' ? 'Tableau Executive Dashboard Integration' : 'Power BI Executive Dashboard Integration';
+        title.textContent = target === 'tableau' ? 'Tableau Executive Dashboard Integration' : 'Power BI Executive Intelligence Studio';
     }
     const codeEl = document.getElementById('biFeedUrlCode');
     if (codeEl) {
@@ -1694,13 +2013,22 @@ function openBiExportModal(target = 'powerbi') {
     }
     modal.classList.remove('hidden');
     checkPbiRestStatus();
+    if (target === 'tableau') {
+        switchPbiPage('connectors');
+    } else {
+        switchPbiPage('exec');
+        renderPowerBiDashboard();
+    }
     if (window.lucide) window.lucide.createIcons();
 }
+window.openBiExportModal = openBiExportModal;
 
 function closeBiExportModal() {
     const modal = document.getElementById('biExportModal');
     if (modal) modal.classList.add('hidden');
+    destroyPbiCharts();
 }
+window.closeBiExportModal = closeBiExportModal;
 
 async function checkPbiRestStatus() {
     const statusEl = document.getElementById('pbiRestStatusText');
@@ -1722,7 +2050,7 @@ async function checkPbiRestStatus() {
 window.checkPbiRestStatus = checkPbiRestStatus;
 
 async function pushToPowerBiService() {
-    const btn = document.getElementById('pbiRestPushBtn');
+    const btn = document.getElementById('pbiRestPushBtn') || document.getElementById('pbiRibbonPushBtn');
     const origHtml = btn ? btn.innerHTML : '';
     if (btn) {
         btn.disabled = true;
@@ -1773,14 +2101,13 @@ function copyBiFeedUrl() {
 }
 
 document.getElementById('exportTableauBtn').addEventListener('click', () => {
-    window.open('/api/export/tableau', '_blank');
+    triggerDownload('/api/export/tableau', 'Qiplo_Tableau_Dashboard.twb');
     openBiExportModal('tableau');
     showBiToast("Tableau Workbook (.twb) downloaded! Pre-loaded with executive layout & AI risk fields.", "trending-up");
 });
 document.getElementById('exportPowerBiBtn').addEventListener('click', () => {
-    window.open('/api/export/powerbi', '_blank');
     openBiExportModal('powerbi');
-    showBiToast("Power BI Project Package (.pbip) downloaded! Star schema & DAX measures ready.", "package-check");
+    showBiToast("Power BI Executive Intelligence Studio opened! Live output and star-schema ready.", "package-check");
 });
 window.exportExcel = function() {
     if (!predictionData || !predictionData.length) {
