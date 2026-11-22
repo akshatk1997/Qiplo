@@ -138,7 +138,12 @@
         <p>Qiplo Network Engine — Enterprise Proxy Management — Rate-Limit Compliant</p>
     </footer>
 
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="/static/lucide.min.js?v=0.460.0"></script>
+    <script>
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+        }
+    </script>
     <script src="/static/settings.js"></script>
 </body>
 </html>

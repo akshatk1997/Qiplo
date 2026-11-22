@@ -308,22 +308,96 @@ body.light-theme .sourceName {
     color: #0F172A !important;
 }
 
-/* Lucide Icon Utilities */
+/* Lucide Icon Utilities — Guaranteed High Visibility Across Dark and Light Themes */
 .lucide-icon, .lucide, svg.lucide, [data-lucide] {
     width: 16px;
     height: 16px;
     stroke: currentColor;
     fill: none;
-    stroke-width: 2.2;
+    stroke-width: 2.2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     vertical-align: middle;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
-    transition: stroke 0.2s ease, color 0.2s ease;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: stroke 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+i[data-lucide] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    line-height: 1;
 }
 
 button .lucide, button .lucide-icon, button svg.lucide,
 a .lucide, a .lucide-icon, a svg.lucide {
     pointer-events: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+/* Studio Tabs Icon Prominence */
+.tab i,
+.tab svg,
+.tab .lucide {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    stroke: currentColor !important;
+    stroke-width: 2px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
+    opacity: 0.9 !important;
+    visibility: visible !important;
+    transition: transform 0.2s ease, opacity 0.2s ease, color 0.2s ease;
+}
+
+.tab:hover i,
+.tab:hover svg {
+    opacity: 1 !important;
+    transform: scale(1.12);
+}
+
+.tab.active i,
+.tab.active svg {
+    opacity: 1 !important;
+    stroke-width: 2.3px !important;
+}
+
+/* Danger Button Icon Styling */
+.dangerBtn {
+    background: rgba(239, 68, 68, 0.15) !important;
+    border: 1px solid rgba(239, 68, 68, 0.45) !important;
+    color: #EF4444 !important;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+.dangerBtn:hover {
+    background: rgba(239, 68, 68, 0.3) !important;
+    border-color: #EF4444 !important;
+    color: #FFFFFF !important;
+}
+.dangerBtn i, .dangerBtn svg {
+    color: inherit !important;
+    stroke: currentColor !important;
 }
 
 

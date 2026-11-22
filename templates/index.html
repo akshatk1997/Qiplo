@@ -24,9 +24,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@400;500;700&family=Montserrat:wght@400;600;700;800&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link rel="stylesheet" href="/static/style.css?v=2.6.0" />
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- High-Performance Local Production Scripts (Zero Network Latency & Offline-Safe) -->
+    <script src="/static/lucide.min.js?v=0.460.0"></script>
+    <script src="/static/chart.umd.min.js?v=4.4.6" defer></script>
+    <script src="/static/marked.min.js?v=14.0.0"></script>
+    <script>
+        // Guaranteed immediate Lucide icon initialization on load
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+        }
+    </script>
 </head>
 <body class="dark-theme">
     <header class="topbar">
@@ -696,14 +703,14 @@
             </div>
 
             <div class="studioTabs">
-                <button class="tab active" data-tab="overview" type="button"><i data-lucide="layout-dashboard" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Overview</button>
-                <button class="tab" data-tab="specials" type="button"><i data-lucide="layers" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Specials</button>
-                <button class="tab" data-tab="actions" type="button"><i data-lucide="zap" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Actions</button>
-                <button class="tab" data-tab="customers" type="button"><i data-lucide="users" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Customers</button>
-                <button class="tab" data-tab="business" type="button"><i data-lucide="briefcase" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Business</button>
-                <button class="tab" data-tab="sandbox" type="button"><i data-lucide="flask-conical" class="lucide-icon" style="width: 13px; height: 13px; vertical-align: middle;"></i> Sandbox</button>
-                <button class="tab" data-tab="presentation" type="button"><i data-lucide="presentation" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Presentation</button>
-                <button class="tab" data-tab="guide" type="button"><i data-lucide="book-marked" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> Guide</button>
+                <button class="tab active" data-tab="overview" type="button"><i data-lucide="layout-dashboard" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Overview</button>
+                <button class="tab" data-tab="specials" type="button"><i data-lucide="layers" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Specials</button>
+                <button class="tab" data-tab="actions" type="button"><i data-lucide="zap" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Actions</button>
+                <button class="tab" data-tab="customers" type="button"><i data-lucide="users" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Customers</button>
+                <button class="tab" data-tab="business" type="button"><i data-lucide="briefcase" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Business</button>
+                <button class="tab" data-tab="sandbox" type="button"><i data-lucide="flask-conical" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Sandbox</button>
+                <button class="tab" data-tab="presentation" type="button"><i data-lucide="presentation" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Presentation</button>
+                <button class="tab" data-tab="guide" type="button"><i data-lucide="book-marked" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Guide</button>
             </div>
 
             <div class="tabBody" id="tab-overview">
@@ -2674,5 +2681,18 @@
     <script src="/static/i18n.js?v=1.0.0" defer></script>
     <script src="/static/waves.js?v=1.0.0" defer></script>
     <script src="/static/app.js?v=2.6.0" defer></script>
+    <script>
+        // Ensure all icons are immediately rendered upon complete DOM load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
+        });
+        window.addEventListener('load', () => {
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
+        });
+    </script>
 </body>
 </html>
