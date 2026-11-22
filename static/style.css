@@ -87,9 +87,13 @@
     --radius-full: 9999px;
     --shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.65), 0 0 15px rgba(139, 92, 246, 0.18);
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-    --font-heading: 'Plus Jakarta Sans', 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Space Mono', monospace;
+    /* ==========================================================================
+       SAS.com (SAS Institute) & Filament Design System Enterprise Typography Stack
+       ========================================================================== */
+    --font-heading: 'Avenir Next', 'AvenirNextforSAS', 'Anova', 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --font-body: 'Anova UI', 'Avenir Next', 'AvenirNextforSAS', 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    --font-ui: 'Avenir Next', 'AvenirNextforSAS', 'Anova UI', 'Plus Jakarta Sans', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --font-mono: 'SAS Monospace', 'JetBrains Mono', 'Space Mono', 'Consolas', 'Courier New', monospace;
     --font: var(--font-body);
 }
 
@@ -415,8 +419,13 @@ a .lucide, a .lucide-icon, a svg.lucide {
 
 html, body { height: 100%; max-width: 100vw; overflow-x: hidden; }
 
+/* ==========================================================================
+   SAS.com TYPOGRAPHY SYSTEM HIERARCHY ACCORDING TO SECTION & ELEMENT TYPES
+   ========================================================================== */
 body {
-    font-family: var(--font);
+    font-family: var(--font-body);
+    font-size: 0.875rem; /* 14px SAS standard base body font */
+    line-height: 1.55;
     margin: 0;
     color: var(--text);
     background: var(--bg);
@@ -426,25 +435,86 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    font-feature-settings: 'cv02' 1, 'cv03' 1, 'cv04' 1, 'cv11' 1;
 }
 
+/* Headings System — SAS.com Clarity with Impact Hierarchy */
 h1, h2, h3, h4, h5, h6,
 .appName, .brandTitle,
 .sectionHead h2, .paneHead h2,
-.floatingCopilotTitle, .folder-title {
+.floatingCopilotTitle, .folder-title,
+.guideSectionCard h3, .guideSectionCard h4,
+.termBox h4, .aiCardHead h3, .chart-card-title,
+.quad-title, .modalHead h3 {
     font-family: var(--font-heading);
-    letter-spacing: -0.015em;
+    letter-spacing: -0.02em;
     font-weight: 700;
+    color: var(--text);
+    line-height: 1.25;
 }
 
-.tabular-nums, .statValue, .metric-value, .stat-value, .kpi-val, td.num, .metricBox strong, .item-meta, .probCell {
-    font-variant-numeric: tabular-nums;
+h1, .heroTitle, .brandTitle {
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
 }
 
-button, input, select, textarea, optgroup {
-    font-family: inherit;
-    font-size: inherit;
-    color: inherit;
+h2, .sectionHead h2, .paneHead h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+}
+
+h3, .aiCardHead h3, .guideSectionCard h3, .modalHead h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+}
+
+h4, .termBox h4, .quad-title, .cause-box h4, .metric-comparison-box h4 {
+    font-size: 0.92rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+}
+
+/* Paragraphs, Body Copy & Subtitles */
+p, .sectionSub, .guideSectionCard p, .termBox p, .modalBody p, .quad-desc, .cause-box p {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+}
+
+/* Overlines, Badges, Category Micro-Text (SAS Visual Analytics Category standard) */
+.kpiTitle, .kpi-title, .kpi-card .kpi-title, .statLabel,
+.subHeader, .tab-overline, .folder-summary,
+.badge, .meta-pill, .kpiBadge, .quad-badge, .chart-card-badge,
+th, .table-header-cell {
+    font-family: var(--font-heading);
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Numbers, Metrics, Tabular Telemetry (SAS Monospace & Lining Numerals) */
+.tabular-nums, .statValue, .metric-value, .stat-value, .kpi-val, .kpiValue,
+td.num, .metricBox strong, .item-meta, .probCell, .prob, code, pre, .font-mono,
+#sandboxProbabilityText, .roiValue, .savedArrValue {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: 'tnum' 1, 'zero' 1;
+}
+
+/* Interactive Controls (Buttons, Inputs, Selects, Nav) */
+button, input, select, textarea, optgroup,
+.primaryBtn, .ghostBtn, .navBtn, .capsuleBtn,
+.nav-pill, .tab, .tab-btn, .dropdown-item, .roleSelect {
+    font-family: var(--font-ui);
+    -webkit-font-smoothing: antialiased;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -3652,7 +3722,8 @@ td.empty { text-align: center; color: var(--muted); padding: 26px; }
     word-break: break-word;
 }
 .qaSlideText code {
-    font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 0.85rem;
     color: var(--accent);
 }
@@ -5018,8 +5089,7 @@ body.dark-theme .ghostBtn:hover {
     animation: welcome-pulse 3s infinite ease-in-out;
 }
 .welcome-header h2 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
+    font-family: var(--font-heading);
     font-size: 1.8rem;
     font-weight: 700;
     color: #f8fafc;
@@ -5035,7 +5105,7 @@ body.dark-theme .ghostBtn:hover {
 /* Body Text */
 .welcome-body p {
     color: #94a3b8;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-body);
     font-size: 0.88rem;
     line-height: 1.65;
     margin: 0 0 22px 0;
@@ -5057,7 +5127,7 @@ body.dark-theme .ghostBtn:hover {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-heading);
     font-size: 0.85rem;
     color: #e2e8f0;
     font-weight: 500;
@@ -5076,7 +5146,7 @@ body.dark-theme .ghostBtn:hover {
     color: #0b0f19;
     padding: 12px 28px;
     border-radius: 6px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-ui);
     font-weight: 700;
     font-size: 0.9rem;
     letter-spacing: 0.05em;

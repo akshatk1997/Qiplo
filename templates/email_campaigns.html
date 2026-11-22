@@ -6,7 +6,7 @@
     <title>Qiplo — Bulk Email Campaign Tool</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/static/style.css?v=2.6.0" />
     <script src="/static/lucide.min.js?v=0.460.0"></script>
     <script src="/static/chart.umd.min.js?v=4.4.6" defer></script>
@@ -25,15 +25,26 @@
             --danger: #EF4444;
             --primary: #00F5FF;
             --accent-pink: #FF007F;
+            /* SAS Institute Typography Stack */
+            --font-body: 'Anova UI', 'Avenir Next', 'AvenirNextforSAS', 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            --font-heading: 'Avenir Next', 'AvenirNextforSAS', 'Anova', 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            --font-ui: 'Avenir Next', 'AvenirNextforSAS', 'Anova UI', 'Plus Jakarta Sans', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-mono: 'SAS Monospace', 'JetBrains Mono', 'Space Mono', 'Consolas', 'Courier New', monospace;
         }
         * { box-sizing: border-box; }
         body {
-            font-family: 'Inter', 'Plus Jakarta Sans', sans-serif;
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             background: var(--bg);
             color: var(--text);
             margin: 0;
             padding: 0;
             min-height: 100vh;
+        }
+        h1, h2, h3, h4, h5, h6, .topbarTitle, .modal-title, .section-title {
+            font-family: var(--font-heading);
+            letter-spacing: -0.02em;
         }
         .topbar {
             display: flex;
@@ -106,7 +117,8 @@
             padding: 16px; text-align: center;
         }
         .stat-value {
-            font-family: 'JetBrains Mono', monospace; font-size: 1.6rem; font-weight: 700;
+            font-family: var(--font-mono); font-size: 1.6rem; font-weight: 700;
+            font-variant-numeric: tabular-nums lining-nums;
         }
         .stat-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; margin-top: 4px; }
         .stat-value.success { color: var(--success); }
@@ -120,11 +132,11 @@
         }
         .form-control {
             width: 100%; padding: 10px 14px; background: var(--surface-2); border: 1px solid var(--border);
-            border-radius: 8px; color: var(--text); font-size: 0.88rem; font-family: inherit;
+            border-radius: 8px; color: var(--text); font-size: 0.88rem; font-family: var(--font-ui);
             transition: border-color 0.2s;
         }
         .form-control:focus { outline: none; border-color: var(--accent); }
-        textarea.form-control { min-height: 120px; resize: vertical; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; }
+        textarea.form-control { min-height: 120px; resize: vertical; font-family: var(--font-mono); font-size: 0.78rem; }
         select.form-control { cursor: pointer; }
         .badge {
             display: inline-block; padding: 3px 8px; border-radius: 6px;
@@ -178,7 +190,7 @@
         .modal-close:hover { color: var(--text); }
         .token-hint {
             font-size: 0.72rem; color: var(--muted); margin-top: 4px;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: var(--font-mono); font-variant-numeric: tabular-nums;
         }
         .action-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
         .recipient-preview {

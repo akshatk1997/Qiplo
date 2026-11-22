@@ -3688,7 +3688,7 @@ def create_app() -> Flask:
     <title>Qiplo — Comprehensive Executive Customer Retention Audit</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
     <script src="/static/chart.umd.min.js"></script>
     <script>
         if (typeof Chart === 'undefined') {{
@@ -3713,6 +3713,10 @@ def create_app() -> Flask:
             --border-glow: rgba(0, 245, 255, 0.25);
             --text: #F9FAFB;
             --muted: #9CA3AF;
+            --font-heading: 'Avenir Next', 'AvenirNextforSAS', 'Anova', 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            --font-body: 'Anova UI', 'Avenir Next', 'AvenirNextforSAS', 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            --font-ui: 'Avenir Next', 'AvenirNextforSAS', 'Anova UI', 'Plus Jakarta Sans', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-mono: 'SAS Monospace', 'JetBrains Mono', 'Space Mono', 'Consolas', monospace;
         }}
         @media print {{
             body {{ background: #ffffff !important; color: #111827 !important; padding: 0 !important; font-size: 10pt; }}
@@ -3733,14 +3737,22 @@ def create_app() -> Flask:
             .chart-container-box {{ height: 180px !important; }}
         }}
         body {{
-            font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: var(--font-body);
             background: var(--bg);
             color: var(--text);
             margin: 0;
             padding: 32px 24px;
-            line-height: 1.5;
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            font-feature-settings: 'cv02' 1, 'cv03' 1, 'cv04' 1, 'cv11' 1;
         }}
-        .font-mono {{ font-family: 'Space Mono', monospace; }}
+        .font-mono {{
+            font-family: var(--font-mono);
+            font-variant-numeric: tabular-nums lining-nums;
+            font-feature-settings: 'tnum' 1, 'zero' 1;
+        }}
         .report-container {{
             max-width: 1200px;
             margin: 0 auto;
@@ -3756,15 +3768,34 @@ def create_app() -> Flask:
             flex-wrap: wrap;
         }}
         .brand-title {{
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-heading);
             font-size: 2.2rem;
             font-weight: 800;
+            letter-spacing: -0.025em;
             background: linear-gradient(135deg, #00F5FF 0%, #A78BFA 50%, #FF007F 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin: 0;
+            line-height: 1.15;
+        }}
+        .section-title, .chart-card-title, .quad-title, h1, h2, h3, h4 {{
+            font-family: var(--font-heading);
+            letter-spacing: -0.015em;
+        }}
+        .kpi-title, th, .quad-badge, .chart-card-badge {{
+            font-family: var(--font-heading);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }}
+        .kpi-val, code, .tabular-nums, td.num {{
+            font-family: var(--font-mono);
+            font-variant-numeric: tabular-nums lining-nums;
             letter-spacing: -0.02em;
         }}
+        .btn-toolbar {{
+            font-family: var(--font-ui);
+            font-weight: 600;
+            letter-spacing: 0.01em;
         .tagline {{
             font-size: 0.88rem;
             color: var(--primary);
@@ -4729,7 +4760,7 @@ function initAllCharts() {{
         return;
     }}
 
-    Chart.defaults.font.family = "'Space Grotesk', 'Inter', -apple-system, sans-serif";
+    Chart.defaults.font.family = "'Avenir Next', 'AvenirNextforSAS', 'Anova', 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif";
     Chart.defaults.color = "#9CA3AF";
 
     // 1. Portfolio Risk Distribution Doughnut

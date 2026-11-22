@@ -21,7 +21,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@400;500;700&family=Montserrat:wght@400;600;700;800&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@400;500;700&family=Montserrat:wght@400;600;700;800&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link rel="stylesheet" href="/static/style.css?v=2.6.0" />
     <!-- High-Performance Local Production Scripts (Zero Network Latency & Offline-Safe) -->
@@ -1196,7 +1196,7 @@
                                 <circle id="sandboxGaugeCircle" cx="50" cy="50" r="40" stroke="var(--accent)" stroke-width="8" fill="transparent" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2" style="transition: stroke-dashoffset 0.35s ease; filter: url(#neonGlow);" />
                             </svg>
                             <div style="position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                                <span id="sandboxProbabilityText" style="font-size: 1.8rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: var(--text);">0.0%</span>
+                                <span id="sandboxProbabilityText" style="font-size: 1.8rem; font-weight: 800; font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--text);">0.0%</span>
                                 <span style="font-size: 0.65rem; color: var(--muted); text-transform: uppercase;">Churn Probability</span>
                             </div>
                         </div>
@@ -1619,7 +1619,7 @@
                             </div>
                             <p class="sectionSub" style="margin-bottom: 15px;">Real-time tamper-proof activity logs tracking customer touchpoints and configurations.</p>
                             
-                            <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 10px; max-height: 220px; overflow-y: auto; font-family: monospace; font-size: 0.72rem; display: flex; flex-direction: column; gap: 8px;" id="auditLogContainer">
+                            <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 10px; max-height: 220px; overflow-y: auto; font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.72rem; display: flex; flex-direction: column; gap: 8px;" id="auditLogContainer">
                                 <!-- Audit rows will be populated here -->
                             </div>
                         </div>
@@ -2007,7 +2007,7 @@
                             </div>
 
                             <div style="background: var(--surface-2); border: 1px solid var(--border); border-left: 4px solid var(--accent); padding: 14px; border-radius: 8px;">
-                                <h4 style="margin: 0 0 4px; font-size: 0.95rem; color: var(--accent); font-family: 'Outfit', sans-serif;">Policy 4: Priority Support Ticket Fast-Tracking (&lt;2h Response SLA)</h4>
+                                <h4 style="margin: 0 0 4px; font-size: 0.95rem; color: var(--accent); font-family: var(--font-heading);">Policy 4: Priority Support Ticket Fast-Tracking (&lt;2h Response SLA)</h4>
                                 <p style="margin: 0; font-size: 0.85rem; color: var(--muted);">All active support tickets originating from high-risk accounts must be automatically escalated to Senior Tier-3 Technical Engineers with a <strong>guaranteed &lt;2 hour response SLA</strong>.</p>
                             </div>
                         </div>
@@ -2225,35 +2225,35 @@
                 </h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
                     <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('data')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">01 — DATA</span>
+                        <span style="font-weight: 800; color: var(--accent); font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.8rem; display: block; margin-bottom: 2px;">01 — DATA</span>
                         <span style="font-size: 0.78rem; color: var(--muted);">Import spreadsheet files, clean PII credentials, and standardize column currencies.</span>
                     </div>
                     <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('ai_analysis')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">02 — AI ANALYSIS</span>
+                        <span style="font-weight: 800; color: var(--accent); font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.8rem; display: block; margin-bottom: 2px;">02 — AI ANALYSIS</span>
                         <span style="font-size: 0.78rem; color: var(--muted);">Run ML models to predict customer churn risks and compile accuracy telemetry.</span>
                     </div>
                     <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('problem_detection')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">03 — PROBLEM DETECTION</span>
+                        <span style="font-weight: 800; color: var(--accent); font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.8rem; display: block; margin-bottom: 2px;">03 — PROBLEM DETECTION</span>
                         <span style="font-size: 0.78rem; color: var(--muted);">Scan for top business health alerts (Revenue concentration, churn risk, inventory).</span>
                     </div>
                     <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('root_cause')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">04 — ROOT CAUSE</span>
+                        <span style="font-weight: 800; color: var(--accent); font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.8rem; display: block; margin-bottom: 2px;">04 — ROOT CAUSE</span>
                         <span style="font-size: 0.78rem; color: var(--muted);">Isolate leading friction drivers (e.g. Month-to-Month contracts, regional conversion drops).</span>
                     </div>
                     <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('business_impact')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">05 — BUSINESS IMPACT</span>
+                        <span style="font-weight: 800; color: var(--accent); font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.8rem; display: block; margin-bottom: 2px;">05 — BUSINESS IMPACT</span>
                         <span style="font-size: 0.78rem; color: var(--muted);">Quantify expected ARR loss and simulate target loyalty coupon campaigns.</span>
                     </div>
                     <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('recommendation')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">06 — RECOMMENDATION</span>
+                        <span style="font-weight: 800; color: var(--accent); font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.8rem; display: block; margin-bottom: 2px;">06 — RECOMMENDATION</span>
                         <span style="font-size: 0.78rem; color: var(--muted);">Generate prescriptive playbooks and simulate sandbox scenario outcomes.</span>
                     </div>
                     <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('action')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">07 — ACTION</span>
+                        <span style="font-weight: 800; color: var(--accent); font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.8rem; display: block; margin-bottom: 2px;">07 — ACTION</span>
                         <span style="font-size: 0.78rem; color: var(--muted);">Assign account task owners, fast-track SLAs, and dispatch CRM webhook triggers.</span>
                     </div>
                     <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.2s ease;" onclick="closeToolInfo(); focusPipelineStep('measure_result')" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-                        <span style="font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; display: block; margin-bottom: 2px;">08 — MEASURE RESULT</span>
+                        <span style="font-weight: 800; color: var(--accent); font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.8rem; display: block; margin-bottom: 2px;">08 — MEASURE RESULT</span>
                         <span style="font-size: 0.78rem; color: var(--muted);">Export compliance audit trails, generate PowerPoint slide decks, and track logs.</span>
                     </div>
                 </div>
