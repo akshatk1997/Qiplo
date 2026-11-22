@@ -1599,103 +1599,121 @@
                         </div>
 
                         <!-- Enterprise Integrations & Automated Reports -->
-                        <div class="bizCard" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 20px;">
-                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-                                <i data-lucide="link" class="lucide-icon" style="color: var(--accent-2);"></i>
-                                <h3 style="margin: 0;">CRM Connections & Reports</h3>
+                        <div class="bizCard" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 24px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(0, 245, 255, 0.12); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0, 245, 255, 0.25);">
+                                        <i data-lucide="file-bar-chart" class="lucide-icon" style="color: var(--primary); width: 17px; height: 17px;"></i>
+                                    </div>
+                                    <div>
+                                        <h3 style="margin: 0; font-size: 1.05rem; font-weight: 700; color: #FFFFFF; font-family: var(--font-heading);">CRM Connections & Reports</h3>
+                                        <p class="sectionSub" style="margin: 2px 0 0 0; font-size: 0.78rem;">Stream data dynamically from HubSpot, Salesforce, Stripe, and generate executive reports.</p>
+                                    </div>
+                                </div>
+                                <span style="font-size: 0.70rem; font-weight: 700; padding: 3px 8px; border-radius: 999px; background: rgba(0, 245, 255, 0.12); color: var(--primary); border: 1px solid rgba(0, 245, 255, 0.25); text-transform: uppercase; letter-spacing: 0.05em;">Enterprise Suite</span>
                             </div>
-                            <p class="sectionSub" style="margin-bottom: 15px;">Stream data dynamically from HubSpot, Salesforce, Stripe, and schedule board reports.</p>
                             
-                            <div class="tabs" style="display: flex; border-bottom: 1px solid var(--border); margin-bottom: 12px; padding-bottom: 4px; gap: 12px;">
-                                <span id="intTabCrm" style="cursor: pointer; font-weight: 700; color: var(--accent-2); font-size: 0.85rem;">CRM SYNC</span>
-                                <span id="intTabReport" style="cursor: pointer; font-weight: 700; color: var(--muted); font-size: 0.85rem;">SCHEDULER</span>
-                                <span id="intTabAlerts" style="cursor: pointer; font-weight: 700; color: var(--muted); font-size: 0.85rem;">ALERT CHANNELS</span>
+                            <div class="tabs" style="display: flex; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 10px; padding: 4px; margin: 18px 0; gap: 6px;">
+                                <span id="intTabCrm" role="button" tabindex="0" style="flex: 1; cursor: pointer; font-weight: 700; color: var(--accent-2); font-size: 0.80rem; padding: 8px 12px; border-radius: 7px; text-align: center; transition: all 0.2s ease; letter-spacing: 0.04em;">CRM SYNC</span>
+                                <span id="intTabReport" role="button" tabindex="0" style="flex: 1; cursor: pointer; font-weight: 700; color: var(--muted); font-size: 0.80rem; padding: 8px 12px; border-radius: 7px; text-align: center; transition: all 0.2s ease; letter-spacing: 0.04em;">REPORT SCHEDULER</span>
+                                <span id="intTabAlerts" role="button" tabindex="0" style="flex: 1; cursor: pointer; font-weight: 700; color: var(--muted); font-size: 0.80rem; padding: 8px 12px; border-radius: 7px; text-align: center; transition: all 0.2s ease; letter-spacing: 0.04em;">ALERT CHANNELS</span>
                             </div>
                             
                             <!-- CRM Sub-tab -->
-                            <div id="crmSubTabBody" style="display: flex; flex-direction: column; gap: 8px;">
-                                <div style="display: flex; gap: 10px;">
-                                    <select id="crmPlatformSelect" class="roleSelect" style="flex: 1;">
-                                        <option value="hubspot">HubSpot CRM</option>
-                                        <option value="salesforce">Salesforce Cloud</option>
-                                        <option value="stripe">Stripe Billing</option>
-                                    </select>
-                                    <input type="password" id="crmApiKey" placeholder="CRM API Secret Token..." style="flex: 2; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.9rem;" />
+                            <div id="crmSubTabBody" style="display: flex; flex-direction: column; gap: 14px;">
+                                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 12px;">
+                                    <div>
+                                        <label style="font-size: 0.74rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Data Platform</label>
+                                        <select id="crmPlatformSelect" class="roleSelect" style="width: 100%; height: 38px;">
+                                            <option value="hubspot">HubSpot CRM</option>
+                                            <option value="salesforce">Salesforce Cloud</option>
+                                            <option value="stripe">Stripe Billing</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label style="font-size: 0.74rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">API Key / Secret Token</label>
+                                        <input type="password" id="crmApiKey" placeholder="CRM API Secret Token..." style="width: 100%; height: 38px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 0 12px; border-radius: 6px; font-size: 0.88rem; box-sizing: border-box;" />
+                                    </div>
                                 </div>
-                                <button type="button" id="crmConnectBtn" class="primaryBtn" style="padding: 8px; width: 100%;">Establish Integration Channel</button>
-                                <div style="margin-top: 8px; font-size: 0.78rem; color: var(--muted);">
-                                    Active Streams: <span id="activeCrmStreams">None (Manual uploads default)</span>
+                                <button type="button" id="crmConnectBtn" class="primaryBtn" style="padding: 10px; width: 100%; font-weight: 600;">Establish Integration Channel</button>
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: 8px; font-size: 0.78rem; color: var(--muted);">
+                                    <span>Active Synchronization Streams:</span>
+                                    <span id="activeCrmStreams" style="font-weight: 600; color: var(--text);">None (Manual uploads default)</span>
                                 </div>
                             </div>
                             
                             <!-- Scheduler Sub-tab -->
-                            <div id="schedulerSubTabBody" class="hidden" style="display: flex; flex-direction: column; gap: 12px;">
+                            <div id="schedulerSubTabBody" class="hidden" style="display: flex; flex-direction: column; gap: 16px;">
                                 <!-- Instant Data-Driven Audit Report Generator -->
-                                <div class="report-config-card" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 10px;">
+                                <div class="report-config-card" style="background: linear-gradient(145deg, rgba(0, 245, 255, 0.04), rgba(139, 92, 246, 0.04)); border: 1px solid rgba(0, 245, 255, 0.22); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 14px;">
                                     <div style="display: flex; align-items: center; justify-content: space-between;">
-                                        <span style="font-size: 0.84rem; font-weight: 700; color: #FFFFFF; display: flex; align-items: center; gap: 6px;">
-                                            <i data-lucide="file-bar-chart" class="lucide-icon" style="color: var(--primary); width: 16px; height: 16px;"></i>
+                                        <span style="font-size: 0.88rem; font-weight: 700; color: #FFFFFF; display: flex; align-items: center; gap: 8px;">
+                                            <i data-lucide="file-check-2" class="lucide-icon" style="color: var(--primary); width: 17px; height: 17px;"></i>
                                             Executive Audit Report Generator
                                         </span>
-                                        <span style="font-size: 0.68rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: rgba(0, 245, 255, 0.15); color: #00F5FF;">Data-Driven</span>
+                                        <span style="font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 4px; background: rgba(0, 245, 255, 0.15); color: #00F5FF; letter-spacing: 0.04em;">LIVE AUDIT</span>
                                     </div>
-                                    <p style="margin: 0; font-size: 0.78rem; color: var(--muted); line-height: 1.4;">
+                                    <p style="margin: 0; font-size: 0.80rem; color: var(--muted); line-height: 1.45;">
                                         Synthesizes an executive-ready audit report directly from your ingested customer dataset, including CLV revenue risk quadrants, CSAT and support friction telemetry, and 30-60-90 day retention playbooks.
                                     </p>
-                                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; font-size: 0.74rem; color: var(--text);">
-                                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                            <input type="checkbox" id="repOptClv" checked style="accent-color: #00F5FF;"> CLV Risk Matrix
+                                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 0.76rem; color: var(--text);">
+                                        <label style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-weight: 600;">
+                                            <input type="checkbox" id="repOptClv" checked style="accent-color: #00F5FF; width: 15px; height: 15px;"> CLV Risk Matrix
                                         </label>
-                                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                            <input type="checkbox" id="repOptFriction" checked style="accent-color: #00F5FF;"> CSAT & Friction Telemetry
+                                        <label style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-weight: 600;">
+                                            <input type="checkbox" id="repOptFriction" checked style="accent-color: #00F5FF; width: 15px; height: 15px;"> CSAT & Friction Telemetry
                                         </label>
-                                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                            <input type="checkbox" id="repOptCauses" checked style="accent-color: #00F5FF;"> Root Cause Weights
+                                        <label style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-weight: 600;">
+                                            <input type="checkbox" id="repOptCauses" checked style="accent-color: #00F5FF; width: 15px; height: 15px;"> Root Cause Weights
                                         </label>
-                                        <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                            <input type="checkbox" id="repOptPlaybook" checked style="accent-color: #00F5FF;"> 30-60-90d Playbook
+                                        <label style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-weight: 600;">
+                                            <input type="checkbox" id="repOptPlaybook" checked style="accent-color: #00F5FF; width: 15px; height: 15px;"> 30-60-90d Playbook
                                         </label>
                                     </div>
-                                    <button type="button" id="generateCustomReportBtn" class="primaryBtn" onclick="generateCustomReport()" style="padding: 9px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <button type="button" id="generateCustomReportBtn" class="primaryBtn" onclick="generateCustomReport()" style="padding: 10px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; font-size: 0.84rem; background: linear-gradient(135deg, #00F5FF, #8B5CF6); color: #090D16; border: none; box-shadow: 0 4px 12px rgba(0, 245, 255, 0.25);">
                                         <i data-lucide="external-link" class="lucide-icon" style="width: 14px; height: 14px;"></i>
                                         <span>Generate & Open Full Audit Report</span>
                                     </button>
                                 </div>
 
-                                <div style="font-size: 0.76rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;">
-                                    Automated Periodic Dispatch
+                                <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+                                    <span style="font-size: 0.74rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em;">Automated Periodic Dispatch</span>
+                                    <div style="flex: 1; height: 1px; background: var(--border);"></div>
                                 </div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                                     <div>
-                                        <label style="font-size: 0.75rem; color: var(--muted);">Schedule Interval</label>
-                                        <select id="reportFreq" class="roleSelect" style="width: 100%;">
+                                        <label style="font-size: 0.74rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Schedule Interval</label>
+                                        <select id="reportFreq" class="roleSelect" style="width: 100%; height: 38px;">
                                             <option value="weekly">Weekly (Monday 8AM)</option>
                                             <option value="daily">Daily Churn Digest</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label style="font-size: 0.75rem; color: var(--muted);">Report Format</label>
-                                        <select id="reportFormat" class="roleSelect" style="width: 100%;">
+                                        <label style="font-size: 0.74rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Report Format</label>
+                                        <select id="reportFormat" class="roleSelect" style="width: 100%; height: 38px;">
                                             <option value="pdf">PDF Exec Summary</option>
                                             <option value="excel">Excel Detailed Sheets</option>
                                         </select>
                                     </div>
                                 </div>
-                                <input type="email" id="reportEmail" placeholder="board-members@company.com" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.9rem;" />
-                                <button type="button" id="schedulerBtn" class="primaryBtn" style="padding: 8px; width: 100%;">Save Automated Schedule</button>
+                                <div>
+                                    <label style="font-size: 0.74rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Recipient Email Address</label>
+                                    <input type="email" id="reportEmail" placeholder="board-members@company.com" style="width: 100%; height: 38px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 0 12px; border-radius: 6px; font-size: 0.88rem; box-sizing: border-box;" />
+                                </div>
+                                <button type="button" id="schedulerBtn" class="primaryBtn" style="padding: 10px; width: 100%; font-weight: 600;">Save Automated Schedule</button>
                             </div>
 
                             <!-- Alert Channels Sub-tab -->
-                            <div id="alertsSubTabBody" class="hidden" style="display: flex; flex-direction: column; gap: 8px;">
+                            <div id="alertsSubTabBody" class="hidden" style="display: flex; flex-direction: column; gap: 14px;">
                                 <div>
-                                    <label style="font-size: 0.75rem; color: var(--muted); display: block; margin-bottom: 4px;">Outbound Slack Webhook URL</label>
-                                    <input type="text" id="alertSlackWebhook" placeholder="https://hooks.slack.com/services/..." style="width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.88rem;" />
+                                    <label style="font-size: 0.74rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Outbound Slack Webhook URL</label>
+                                    <input type="text" id="alertSlackWebhook" placeholder="https://hooks.slack.com/services/..." style="width: 100%; height: 38px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 0 12px; border-radius: 6px; font-size: 0.88rem; box-sizing: border-box;" />
                                 </div>
                                 <div>
-                                    <label style="font-size: 0.75rem; color: var(--muted); display: block; margin-bottom: 4px;">Outbound Alert Email Recipient</label>
-                                    <input type="email" id="alertEmailRecipient" placeholder="csm-alerts@company.com" style="width: 100%; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.88rem;" />
+                                    <label style="font-size: 0.74rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Outbound Alert Email Recipient</label>
+                                    <input type="email" id="alertEmailRecipient" placeholder="csm-alerts@company.com" style="width: 100%; height: 38px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 0 12px; border-radius: 6px; font-size: 0.88rem; box-sizing: border-box;" />
                                 </div>
-                                <button type="button" id="saveAlertChannelsBtn" class="primaryBtn" style="padding: 8px; width: 100%;">Save Alert Channel Settings</button>
+                                <button type="button" id="saveAlertChannelsBtn" class="primaryBtn" style="padding: 10px; width: 100%; font-weight: 600;">Save Alert Channel Settings</button>
                             </div>
                         </div>
 

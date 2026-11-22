@@ -3616,10 +3616,10 @@ def create_app() -> Flask:
                 region_rows_html += f"""
                 <tr>
                     <td><strong>{r[0]}</strong></td>
-                    <td>{r[1]:,}</td>
-                    <td>{r[2]:,}</td>
-                    <td><span class="badge {'badge-danger' if r_pct >= 30 else 'badge-success'}">{r_pct:.1f}%</span></td>
-                    <td><strong>{avg_p:.1f}%</strong></td>
+                    <td class="num">{r[1]:,}</td>
+                    <td class="num">{r[2]:,}</td>
+                    <td style="text-align: center;"><span class="badge {'badge-danger' if r_pct >= 30 else 'badge-success'}">{r_pct:.1f}%</span></td>
+                    <td class="num"><strong>{avg_p:.1f}%</strong></td>
                 </tr>
                 """
 
@@ -3630,10 +3630,10 @@ def create_app() -> Flask:
                 payment_rows_html += f"""
                 <tr>
                     <td><strong>{r[0]}</strong></td>
-                    <td>{r[1]:,}</td>
-                    <td>{r[2]:,}</td>
-                    <td><span class="badge {'badge-danger' if p_pct >= 30 else 'badge-success'}">{p_pct:.1f}%</span></td>
-                    <td><strong>{avg_p:.1f}%</strong></td>
+                    <td class="num">{r[1]:,}</td>
+                    <td class="num">{r[2]:,}</td>
+                    <td style="text-align: center;"><span class="badge {'badge-danger' if p_pct >= 30 else 'badge-success'}">{p_pct:.1f}%</span></td>
+                    <td class="num"><strong>{avg_p:.1f}%</strong></td>
                 </tr>
                 """
 
@@ -3667,11 +3667,11 @@ def create_app() -> Flask:
 
                 table_rows_html += f"""
                 <tr class="evidence-row" data-risk="{'high' if is_high else 'low'}" data-vip="{'true' if is_vip and is_high else 'false'}">
-                    <td><code>{r[0]}</code></td>
+                    <td><code style="font-family: var(--font-mono); font-weight: 700; color: #00F5FF;">{r[0]}</code></td>
                     <td><span class="badge {badge_cls}">{str(r[2]).replace('_', ' ').title()}</span></td>
-                    <td><strong>{p_pct:.1f}%</strong></td>
-                    <td><strong>{m_charge}</strong></td>
-                    <td>{tenure}</td>
+                    <td class="num"><strong>{p_pct:.1f}%</strong></td>
+                    <td class="num"><strong>{m_charge}</strong></td>
+                    <td class="num">{tenure}</td>
                     <td>{contract}</td>
                     <td><span class="metric-mini">🎫 {t_count} | ⭐ {csat_val}</span></td>
                     <td>{quad_tag}</td>
@@ -3701,6 +3701,7 @@ def create_app() -> Flask:
     <style>
         :root {{
             --primary: #00F5FF;
+            --primary-dim: rgba(0, 245, 255, 0.12);
             --accent: #FF007F;
             --accent-purple: #8B5CF6;
             --success: #10B981;
@@ -3709,9 +3710,11 @@ def create_app() -> Flask:
             --bg: #090D16;
             --card-bg: #111827;
             --card-sub: #162032;
+            --card-hover: #1E293B;
             --border: #1F2937;
-            --border-glow: rgba(0, 245, 255, 0.25);
+            --border-glow: rgba(0, 245, 255, 0.28);
             --text: #F9FAFB;
+            --text-dim: #D1D5DB;
             --muted: #9CA3AF;
             --font-heading: 'Avenir Next', 'AvenirNextforSAS', 'Anova', 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
             --font-body: 'Anova UI', 'Avenir Next', 'AvenirNextforSAS', 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
@@ -3719,21 +3722,41 @@ def create_app() -> Flask:
             --font-mono: 'SAS Monospace', 'JetBrains Mono', 'Space Mono', 'Consolas', monospace;
         }}
         @media print {{
-            body {{ background: #ffffff !important; color: #111827 !important; padding: 0 !important; font-size: 10pt; }}
+            @page {{
+                size: A4 portrait;
+                margin: 12mm 10mm 14mm 10mm;
+            }}
+            body {{
+                background: #ffffff !important;
+                color: #0f172a !important;
+                padding: 0 !important;
+                font-size: 9.5pt;
+            }}
+            .no-print {{ display: none !important; }}
+            .page-break {{ page-break-before: always; }}
+            .report-container {{ max-width: 100% !important; margin: 0 !important; padding: 0 !important; }}
+            .report-header {{ border-bottom: 2px solid #cbd5e1 !important; padding-bottom: 12px !important; margin-bottom: 16px !important; }}
+            .report-section {{ margin-bottom: 22px !important; page-break-inside: avoid; }}
             .report-card, .kpi-card, .quad-box, .cause-box, .chart-card, .metric-comparison-box {{
                 background: #ffffff !important;
-                border: 1px solid #d1d5db !important;
-                color: #111827 !important;
+                border: 1px solid #cbd5e1 !important;
+                color: #0f172a !important;
                 box-shadow: none !important;
                 page-break-inside: avoid;
             }}
+            .brand-title {{
+                -webkit-text-fill-color: #0f172a !important;
+                color: #0f172a !important;
+                font-size: 1.8rem !important;
+            }}
+            .section-tag-badge {{ background: #f1f5f9 !important; color: #334155 !important; border: 1px solid #cbd5e1 !important; }}
+            .section-heading {{ color: #0f172a !important; font-size: 1.15rem !important; }}
+            .section-lead {{ color: #475569 !important; }}
             .badge-danger {{ background: #fee2e2 !important; color: #991b1b !important; border-color: #fca5a5 !important; }}
             .badge-success {{ background: #d1fae5 !important; color: #065f46 !important; border-color: #6ee7b7 !important; }}
-            .no-print {{ display: none !important; }}
-            .page-break {{ page-break-before: always; }}
-            table {{ font-size: 8.5pt; }}
-            th {{ background: #f3f4f6 !important; color: #374151 !important; border-color: #e5e7eb !important; }}
-            td {{ border-color: #e5e7eb !important; color: #111827 !important; }}
+            table {{ font-size: 8pt !important; width: 100% !important; }}
+            th {{ background: #f8fafc !important; color: #334155 !important; border-bottom: 2px solid #cbd5e1 !important; }}
+            td {{ border-bottom: 1px solid #e2e8f0 !important; color: #0f172a !important; padding: 6px 8px !important; }}
             .chart-container-box {{ height: 180px !important; }}
         }}
         body {{
@@ -3741,103 +3764,59 @@ def create_app() -> Flask:
             background: var(--bg);
             color: var(--text);
             margin: 0;
-            padding: 32px 24px;
+            padding: 36px 28px 80px;
             line-height: 1.55;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
             font-feature-settings: 'cv02' 1, 'cv03' 1, 'cv04' 1, 'cv11' 1;
         }}
+        .report-container {{
+            max-width: 1240px;
+            margin: 0 auto;
+        }}
         .font-mono {{
             font-family: var(--font-mono);
             font-variant-numeric: tabular-nums lining-nums;
             font-feature-settings: 'tnum' 1, 'zero' 1;
         }}
-        .report-container {{
-            max-width: 1200px;
-            margin: 0 auto;
-        }}
-        .report-header {{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 22px;
-            margin-bottom: 28px;
-            gap: 20px;
-            flex-wrap: wrap;
-        }}
-        .brand-title {{
-            font-family: var(--font-heading);
-            font-size: 2.2rem;
-            font-weight: 800;
-            letter-spacing: -0.025em;
-            background: linear-gradient(135deg, #00F5FF 0%, #A78BFA 50%, #FF007F 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 0;
-            line-height: 1.15;
-        }}
-        .section-title, .chart-card-title, .quad-title, h1, h2, h3, h4 {{
-            font-family: var(--font-heading);
-            letter-spacing: -0.015em;
-        }}
-        .kpi-title, th, .quad-badge, .chart-card-badge {{
-            font-family: var(--font-heading);
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-        }}
-        .kpi-val, code, .tabular-nums, td.num {{
-            font-family: var(--font-mono);
-            font-variant-numeric: tabular-nums lining-nums;
-            letter-spacing: -0.02em;
-        }}
-        .btn-toolbar {{
-            font-family: var(--font-ui);
-            font-weight: 600;
-            letter-spacing: 0.01em;
-        .tagline {{
-            font-size: 0.88rem;
-            color: var(--primary);
-            font-weight: 600;
-            margin-top: 4px;
-        }}
-        .report-meta {{
-            text-align: right;
-            font-size: 0.82rem;
-            color: var(--muted);
-            line-height: 1.6;
-        }}
-        .meta-pill {{
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 999px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            background: rgba(0, 245, 255, 0.12);
-            color: #00F5FF;
-            border: 1px solid rgba(0, 245, 255, 0.25);
-            margin-left: 4px;
-        }}
         .toolbar-wrap {{
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            gap: 12px;
+            margin-bottom: 24px;
+            gap: 14px;
             flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            padding: 10px 16px;
+            border-radius: 10px;
+        }}
+        .meta-pill {{
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            background: rgba(0, 245, 255, 0.10);
+            color: #00F5FF;
+            border: 1px solid rgba(0, 245, 255, 0.25);
         }}
         .btn-toolbar {{
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            background: rgba(255, 255, 255, 0.06);
+            gap: 7px;
+            background: rgba(255, 255, 255, 0.05);
             color: var(--text);
             border: 1px solid var(--border);
             padding: 8px 16px;
             border-radius: 8px;
+            font-family: var(--font-ui);
             font-weight: 600;
             font-size: 0.82rem;
+            letter-spacing: 0.01em;
             cursor: pointer;
             transition: all 0.2s ease;
         }}
@@ -3853,82 +3832,191 @@ def create_app() -> Flask:
             border: none;
         }}
         .btn-print:hover {{
-            box-shadow: 0 0 15px rgba(0, 245, 255, 0.5);
+            box-shadow: 0 0 16px rgba(0, 245, 255, 0.45);
             color: #000000;
         }}
+        .report-header {{
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 26px;
+            margin-bottom: 30px;
+            gap: 24px;
+            flex-wrap: wrap;
+        }}
+        .brand-title {{
+            font-family: var(--font-heading);
+            font-size: 2.35rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #00F5FF 0%, #A78BFA 50%, #FF007F 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            line-height: 1.12;
+        }}
+        .tagline {{
+            font-size: 0.90rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-top: 6px;
+            letter-spacing: 0.01em;
+        }}
+        .report-meta-box {{
+            background: var(--card-sub);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 18px;
+            font-size: 0.82rem;
+            color: var(--muted);
+            line-height: 1.6;
+            min-width: 290px;
+        }}
+        .report-meta-row {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 2px 0;
+        }}
+        .report-meta-row strong {{
+            color: #FFFFFF;
+        }}
+
+        /* Active Data Source Strip */
+        .ingest-strip {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            padding: 14px 20px;
+            border-radius: 12px;
+            background: rgba(0, 245, 255, 0.03);
+            border: 1px solid rgba(0, 245, 255, 0.18);
+            margin-bottom: 30px;
+            font-size: 0.82rem;
+        }}
+        .ingest-strip-item {{
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }}
+        .ingest-strip-item span {{
+            color: var(--muted);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+        }}
+        .ingest-strip-item strong {{
+            color: #FFFFFF;
+            font-size: 0.86rem;
+        }}
+
+        /* 5-Column Metric Cards */
         .grid-5 {{
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
             gap: 16px;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
         }}
         .kpi-card {{
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 18px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
             transition: transform 0.2s ease, border-color 0.2s ease;
+            position: relative;
+            overflow: hidden;
         }}
         .kpi-card:hover {{
             border-color: rgba(0, 245, 255, 0.4);
             transform: translateY(-2px);
         }}
         .kpi-title {{
+            font-family: var(--font-heading);
             font-size: 0.72rem;
             color: var(--muted);
             text-transform: uppercase;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.07em;
             font-weight: 700;
         }}
         .kpi-val {{
-            font-family: 'Space Mono', monospace;
-            font-size: 1.65rem;
+            font-family: var(--font-mono);
+            font-variant-numeric: tabular-nums lining-nums;
+            font-size: 1.7rem;
             font-weight: 700;
-            margin: 6px 0 2px;
+            margin: 8px 0 3px;
             color: #FFFFFF;
+            letter-spacing: -0.02em;
         }}
-        .kpi-val.danger {{ color: var(--danger); text-shadow: 0 0 10px rgba(239, 68, 68, 0.35); }}
-        .kpi-val.primary {{ color: var(--primary); text-shadow: 0 0 10px rgba(0, 245, 255, 0.35); }}
+        .kpi-val.danger {{ color: var(--danger); text-shadow: 0 0 12px rgba(239, 68, 68, 0.35); }}
+        .kpi-val.primary {{ color: var(--primary); text-shadow: 0 0 12px rgba(0, 245, 255, 0.35); }}
         .kpi-val.warning {{ color: var(--warning); }}
         .kpi-sub {{
-            font-size: 0.74rem;
+            font-size: 0.75rem;
             color: var(--muted);
         }}
-        .section-title {{
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin: 36px 0 16px;
-            display: flex;
+
+        /* Section Architecture */
+        .report-section {{
+            margin-bottom: 38px;
+        }}
+        .section-header-box {{
+            margin-bottom: 16px;
+        }}
+        .section-tag-badge {{
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
-            border-left: 4px solid var(--primary);
-            padding-left: 12px;
+            gap: 6px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: rgba(0, 245, 255, 0.09);
+            color: var(--primary);
+            border: 1px solid rgba(0, 245, 255, 0.22);
+            margin-bottom: 8px;
+        }}
+        .section-heading {{
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.015em;
             color: #FFFFFF;
+            margin: 0 0 6px 0;
+        }}
+        .section-lead {{
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.88rem;
+            line-height: 1.5;
+            max-width: 980px;
         }}
         .report-card {{
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 22px;
-            margin-bottom: 22px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.28);
         }}
-        
-        /* Chart Card Components */
+
+        /* Chart Components */
         .chart-grid-2 {{
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 18px;
-            margin-top: 16px;
+            gap: 20px;
         }}
         .chart-card {{
             background: var(--card-sub);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 18px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            padding: 20px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
             transition: border-color 0.2s ease, transform 0.2s ease;
             display: flex;
             flex-direction: column;
@@ -3941,11 +4029,11 @@ def create_app() -> Flask:
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }}
         .chart-card-title {{
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.90rem;
+            font-family: var(--font-heading);
+            font-size: 0.92rem;
             font-weight: 700;
             color: #FFFFFF;
             display: flex;
@@ -3953,6 +4041,7 @@ def create_app() -> Flask:
             gap: 8px;
         }}
         .chart-card-badge {{
+            font-family: var(--font-heading);
             font-size: 0.68rem;
             font-weight: 700;
             padding: 2px 7px;
@@ -3960,47 +4049,26 @@ def create_app() -> Flask:
             background: rgba(0, 245, 255, 0.1);
             color: #00F5FF;
             border: 1px solid rgba(0, 245, 255, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }}
         .chart-container-box {{
-            height: 230px;
+            height: 235px;
             position: relative;
             width: 100%;
         }}
-        
-        /* Ingestion Telemetry Strip */
-        .ingest-strip {{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 18px;
-            border-radius: 10px;
-            background: rgba(0, 245, 255, 0.04);
-            border: 1px solid rgba(0, 245, 255, 0.18);
-            margin-bottom: 24px;
-            gap: 12px;
-            flex-wrap: wrap;
-            font-size: 0.82rem;
-        }}
-        .ingest-strip-item {{
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }}
-        .ingest-strip-item strong {{
-            color: #FFFFFF;
-        }}
 
-        /* CLV Value vs Risk Quadrant Grid */
+        /* CLV Quadrants */
         .quadrant-grid {{
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 16px;
-            margin-top: 14px;
+            margin-bottom: 20px;
         }}
         .quad-box {{
             background: var(--card-sub);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 18px;
             display: flex;
             flex-direction: column;
@@ -4030,10 +4098,12 @@ def create_app() -> Flask:
             justify-content: space-between;
         }}
         .quad-title {{
+            font-family: var(--font-heading);
             font-size: 0.88rem;
             font-weight: 700;
         }}
         .quad-badge {{
+            font-family: var(--font-heading);
             font-size: 0.68rem;
             padding: 2px 6px;
             border-radius: 4px;
@@ -4041,41 +4111,43 @@ def create_app() -> Flask:
             text-transform: uppercase;
         }}
         .quad-val {{
-            font-family: 'Space Mono', monospace;
-            font-size: 1.4rem;
+            font-family: var(--font-mono);
+            font-variant-numeric: tabular-nums lining-nums;
+            font-size: 1.45rem;
             font-weight: 700;
             margin: 4px 0;
         }}
         .quad-desc {{
-            font-size: 0.78rem;
+            font-size: 0.80rem;
             color: var(--muted);
-            line-height: 1.4;
+            line-height: 1.45;
         }}
         .quad-action {{
             margin-top: auto;
-            padding-top: 8px;
+            padding-top: 10px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 0.75rem;
+            font-size: 0.76rem;
             font-weight: 600;
             color: #00F5FF;
         }}
 
-        /* Behavioral Friction Grid */
+        /* Behavioral Friction */
         .behavioral-grid {{
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 16px;
-            margin-top: 14px;
+            margin-bottom: 20px;
         }}
         .metric-comparison-box {{
             background: var(--card-sub);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 16px;
+            border-radius: 12px;
+            padding: 18px;
         }}
         .metric-comparison-box h4 {{
-            margin: 0 0 10px 0;
-            font-size: 0.88rem;
+            margin: 0 0 12px 0;
+            font-family: var(--font-heading);
+            font-size: 0.90rem;
             color: var(--primary);
         }}
         .comp-row {{
@@ -4086,11 +4158,11 @@ def create_app() -> Flask:
             font-size: 0.82rem;
         }}
         .comp-bar-bg {{
-            height: 6px;
+            height: 7px;
             background: rgba(255, 255, 255, 0.08);
             border-radius: 999px;
             overflow: hidden;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }}
         .comp-bar-fill {{
             height: 100%;
@@ -4102,15 +4174,17 @@ def create_app() -> Flask:
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 16px;
+            margin-bottom: 20px;
         }}
         .cause-box {{
-            background: rgba(255, 255, 255, 0.02);
+            background: var(--card-sub);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 16px;
+            border-radius: 12px;
+            padding: 18px;
         }}
         .cause-box h4 {{
             margin: 0 0 8px;
+            font-family: var(--font-heading);
             font-size: 0.92rem;
             color: var(--primary);
         }}
@@ -4118,32 +4192,85 @@ def create_app() -> Flask:
             margin: 0;
             font-size: 0.84rem;
             color: var(--muted);
-            line-height: 1.45;
+            line-height: 1.5;
         }}
 
-        /* Table Styles */
+        /* Table Wrapping and Styles */
+        .table-wrap-box {{
+            background: var(--card-sub);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow-x: auto;
+            margin-top: 14px;
+        }}
         table {{
             width: 100%;
             border-collapse: collapse;
-            margin-top: 12px;
             font-size: 0.84rem;
         }}
         th, td {{
-            padding: 10px 12px;
+            padding: 11px 14px;
             text-align: left;
             border-bottom: 1px solid var(--border);
         }}
         th {{
             background: rgba(255, 255, 255, 0.04);
             color: var(--muted);
+            font-family: var(--font-heading);
             font-weight: 700;
             text-transform: uppercase;
             font-size: 0.72rem;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.06em;
+            white-space: nowrap;
         }}
+        tr:last-child td {{
+            border-bottom: none;
+        }}
+        tbody tr:hover td {{
+            background: rgba(255, 255, 255, 0.02);
+        }}
+        td.num {{
+            text-align: right;
+            font-family: var(--font-mono);
+            font-variant-numeric: tabular-nums lining-nums;
+        }}
+        th.num {{
+            text-align: right;
+        }}
+
+        /* Cohort Tables Grid */
+        .cohort-tables-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }}
+        .table-card {{
+            background: var(--card-sub);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }}
+        .table-card-title {{
+            margin: 0 0 4px;
+            font-family: var(--font-heading);
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: #FFFFFF;
+        }}
+        .table-card-sub {{
+            margin: 0 0 10px;
+            font-size: 0.80rem;
+            color: var(--muted);
+        }}
+
+        /* Badges */
         .badge {{
             padding: 3px 8px;
             border-radius: 6px;
+            font-family: var(--font-heading);
             font-size: 0.70rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -4152,11 +4279,12 @@ def create_app() -> Flask:
         }}
         .badge-danger {{ background: rgba(239, 68, 68, 0.15); color: #FCA5A5; border: 1px solid rgba(239, 68, 68, 0.3); }}
         .badge-success {{ background: rgba(16, 185, 129, 0.15); color: #6EE7B7; border: 1px solid rgba(16, 185, 129, 0.3); }}
-        
+
         .quad-pill {{
+            font-family: var(--font-heading);
             font-size: 0.68rem;
             font-weight: 700;
-            padding: 2px 6px;
+            padding: 2px 7px;
             border-radius: 4px;
             white-space: nowrap;
         }}
@@ -4168,44 +4296,46 @@ def create_app() -> Flask:
         .metric-mini {{
             font-size: 0.72rem;
             color: var(--muted);
-            font-family: 'Space Mono', monospace;
+            font-family: var(--font-mono);
         }}
         .action-text {{ font-size: 0.78rem; color: var(--primary); font-weight: 600; }}
-        
-        /* Table Search Filter */
+
+        /* Evidence Table Filter Bar */
         .table-filter-bar {{
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 14px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
         }}
         .search-input {{
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border);
             color: #FFFFFF;
-            padding: 8px 14px;
+            padding: 9px 16px;
             border-radius: 8px;
-            font-size: 0.82rem;
-            min-width: 260px;
+            font-size: 0.84rem;
+            min-width: 280px;
             outline: none;
+            transition: all 0.2s ease;
         }}
         .search-input:focus {{
             border-color: var(--primary);
-            box-shadow: 0 0 8px rgba(0, 245, 255, 0.3);
+            box-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
         }}
         .filter-capsules {{
             display: flex;
-            gap: 6px;
+            gap: 8px;
+            flex-wrap: wrap;
         }}
         .filter-capsule {{
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--border);
             color: var(--muted);
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 999px;
-            font-size: 0.74rem;
+            font-size: 0.76rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.15s ease;
@@ -4216,18 +4346,32 @@ def create_app() -> Flask:
             border-color: var(--primary);
             font-weight: 700;
         }}
+        .evidence-scroll-container {{
+            max-height: 600px;
+            overflow-y: auto;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }}
+        .evidence-scroll-container thead th {{
+            position: sticky;
+            top: 0;
+            background: #111827;
+            z-index: 10;
+            box-shadow: 0 1px 0 var(--border);
+        }}
     </style>
 </head>
 <body>
     <div class="report-container">
         <!-- Interactive Toolbar (Hidden in Print) -->
         <div class="toolbar-wrap no-print">
-            <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <span style="font-size: 0.82rem; color: var(--muted);">Audit Scope:</span>
                 <span class="meta-pill">Complete Portfolio ({total_cust:,} Accounts)</span>
                 <span class="meta-pill" style="color: #A78BFA; border-color: rgba(167, 139, 250, 0.3); background: rgba(167, 139, 250, 0.1);">Model: Tabular Hybrid Transformer</span>
             </div>
-            <div style="display: flex; gap: 8px;">
+            <div style="display: flex; gap: 10px;">
                 <button class="btn-toolbar" onclick="exportEvidenceCSV()">📥 Export Evidence CSV</button>
                 <button class="btn-toolbar btn-print" onclick="window.print()">🖨️ Print / Save as PDF Report</button>
             </div>
@@ -4239,34 +4383,46 @@ def create_app() -> Flask:
                 <h1 class="brand-title">Qiplo</h1>
                 <div class="tagline">"Never lose a customer again." — Enterprise Churn Audit & Strategy Report</div>
             </div>
-            <div class="report-meta">
-                <div><strong>Client / Entity:</strong> {company}</div>
-                <div><strong>Active Currency:</strong> <span style="color: var(--primary); font-weight: 700;">{curr_name} ({curr_symbol})</span></div>
-                <div><strong>Generated Date:</strong> {now_str}</div>
-                <div><strong>Audit Version:</strong> Qiplo Enterprise AI v4.2</div>
+            <div class="report-meta-box">
+                <div class="report-meta-row">
+                    <span>Client / Entity:</span>
+                    <strong>{company}</strong>
+                </div>
+                <div class="report-meta-row">
+                    <span>Active Currency:</span>
+                    <strong style="color: var(--primary);">{curr_name} ({curr_symbol})</strong>
+                </div>
+                <div class="report-meta-row">
+                    <span>Generated Timestamp:</span>
+                    <strong>{now_str}</strong>
+                </div>
+                <div class="report-meta-row">
+                    <span>Security Clearance:</span>
+                    <strong style="color: #A78BFA;">Confidential // Board Level</strong>
+                </div>
             </div>
         </header>
 
         <!-- Active Data Source & Telemetry Ingestion Strip -->
         <div class="ingest-strip">
             <div class="ingest-strip-item">
-                <span>📁 Primary Ingested File:</span>
+                <span>📁 Primary Ingested File</span>
                 <strong>{primary_file}</strong>
             </div>
             <div class="ingest-strip-item">
-                <span>📊 Active Records Analyzed:</span>
+                <span>📊 Active Records Analyzed</span>
                 <strong>{total_cust:,} Accounts</strong>
             </div>
             <div class="ingest-strip-item">
-                <span>⚖️ Data Completeness:</span>
+                <span>⚖️ Data Completeness</span>
                 <strong style="color: var(--success);">100% Validated</strong>
             </div>
             <div class="ingest-strip-item">
-                <span>⏱️ Cohort Tenure Span:</span>
-                <strong>{min_tenure} to {max_tenure} Months (Mean: {avg_tenure} mo)</strong>
+                <span>⏱️ Cohort Tenure Span</span>
+                <strong>{min_tenure}–{max_tenure} Mo (Mean: {avg_tenure} mo)</strong>
             </div>
             <div class="ingest-strip-item">
-                <span>💳 Monthly Billing Range:</span>
+                <span>💳 Monthly Billing Range</span>
                 <strong>{curr_symbol}{min_charges:,.2f} – {curr_symbol}{max_charges:,.2f}</strong>
             </div>
         </div>
@@ -4279,7 +4435,7 @@ def create_app() -> Flask:
                 <div class="kpi-sub">Active ingested cohort records</div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-title">High Risk Cohort</div>
+                <div class="kpi-title">High Risk Exposure</div>
                 <div class="kpi-val danger">{high_risk:,} ({high_risk_pct:.1f}%)</div>
                 <div class="kpi-sub">Immediate intervention required</div>
             </div>
@@ -4301,7 +4457,7 @@ def create_app() -> Flask:
         </div>
 
         <!-- Executive Visual Portfolio Overview (2-Card Responsive Grid) -->
-        <div class="chart-grid-2" style="margin-bottom: 24px;">
+        <div class="chart-grid-2" style="margin-bottom: 36px;">
             <div class="chart-card">
                 <div class="chart-card-header">
                     <span class="chart-card-title">📈 Portfolio Churn Risk Profile Distribution</span>
@@ -4323,164 +4479,168 @@ def create_app() -> Flask:
         </div>
 
         <!-- Section 1: Customer Value & Churn Risk Matrix (4 CLV Quadrants) -->
-        <h2 class="section-title">1. Customer Lifetime Value (CLV) & Revenue Risk Matrix</h2>
-        <div class="report-card">
-            <p style="margin-top:0; color: var(--muted); font-size: 0.88rem;">
-                Based on your actual dataset's monthly billing distribution (Median threshold: <strong>{curr_symbol}{conv_median_charge:,.2f}/mo</strong>) and predicted churn probability, your accounts are segmented into four actionable financial quadrants:
-            </p>
-            <div class="quadrant-grid">
-                <!-- Quadrant 1 -->
-                <div class="quad-box q1">
-                    <div class="quad-head">
-                        <span class="quad-title" style="color: var(--danger);">🚨 Quadrant I: VIP Rescue Target</span>
-                        <span class="quad-badge badge-danger">Critical</span>
-                    </div>
-                    <div class="quad-val" style="color: var(--danger);">{q1_cnt:,} <span style="font-size: 0.85rem; color: var(--muted);">accounts</span></div>
-                    <div class="quad-desc">
-                        High spend (> {curr_symbol}{conv_median_charge:,.2f}/mo) accounts with severe attrition risk. Represents <strong>{curr_symbol}{q1_mrr:,.2f} MRR</strong> ({curr_symbol}{q1_mrr*12:,.2f} ARR).
-                    </div>
-                    <div class="quad-action">⚡ Action: Immediate 24h Executive Call + Dedicated CSM Lock-in</div>
-                </div>
-
-                <!-- Quadrant 2 -->
-                <div class="quad-box q2">
-                    <div class="quad-head">
-                        <span class="quad-title" style="color: var(--warning);">⚠️ Quadrant II: Digital Retention Cohort</span>
-                        <span class="quad-badge" style="background: rgba(245, 158, 11, 0.15); color: #FCD34D;">Scale Retain</span>
-                    </div>
-                    <div class="quad-val" style="color: var(--warning);">{q2_cnt:,} <span style="font-size: 0.85rem; color: var(--muted);">accounts</span></div>
-                    <div class="quad-desc">
-                        Standard spend (≤ {curr_symbol}{conv_median_charge:,.2f}/mo) with high churn risk. Represents <strong>{curr_symbol}{q2_mrr:,.2f} MRR</strong> ({curr_symbol}{q2_mrr*12:,.2f} ARR).
-                    </div>
-                    <div class="quad-action">⚡ Action: Automated Email Incentive + 15% Annual Contract Switch</div>
-                </div>
-
-                <!-- Quadrant 3 -->
-                <div class="quad-box q3">
-                    <div class="quad-head">
-                        <span class="quad-title" style="color: var(--success);">💎 Quadrant III: Core Enterprise Safe</span>
-                        <span class="quad-badge badge-success">High Value</span>
-                    </div>
-                    <div class="quad-val" style="color: var(--success);">{q3_cnt:,} <span style="font-size: 0.85rem; color: var(--muted);">accounts</span></div>
-                    <div class="quad-desc">
-                        High spend (> {curr_symbol}{conv_median_charge:,.2f}/mo) with healthy retention scores. Represents <strong>{curr_symbol}{q3_mrr:,.2f} MRR</strong> ({curr_symbol}{q3_mrr*12:,.2f} ARR).
-                    </div>
-                    <div class="quad-action">⚡ Action: Expansion, Cross-Sell & Executive Sponsorship</div>
-                </div>
-
-                <!-- Quadrant 4 -->
-                <div class="quad-box q4">
-                    <div class="quad-head">
-                        <span class="quad-title" style="color: var(--primary);">🌱 Quadrant IV: Stable Growth Base</span>
-                        <span class="quad-badge" style="background: rgba(0, 245, 255, 0.15); color: #67E8F9;">Self Serve</span>
-                    </div>
-                    <div class="quad-val" style="color: var(--primary);">{q4_cnt:,} <span style="font-size: 0.85rem; color: var(--muted);">accounts</span></div>
-                    <div class="quad-desc">
-                        Standard spend with low churn risk. Represents <strong>{curr_symbol}{q4_mrr:,.2f} MRR</strong> ({curr_symbol}{q4_mrr*12:,.2f} ARR).
-                    </div>
-                    <div class="quad-action">⚡ Action: Product Nurturing & Organic Growth Playbooks</div>
-                </div>
+        <section class="report-section" id="section-01" style="display: {'block' if show_clv else 'none'};">
+            <div class="section-header-box">
+                <div class="section-tag-badge">SECTION 01 // REVENUE & CLV</div>
+                <h2 class="section-heading">1. Customer Lifetime Value (CLV) & Revenue Risk Matrix</h2>
+                <p class="section-lead">Based on your dataset's monthly billing distribution (Median threshold: <strong>{curr_symbol}{conv_median_charge:,.2f}/mo</strong>) and predicted churn probability, your accounts are segmented into four actionable financial quadrants:</p>
             </div>
+            <div class="report-card">
+                <div class="quadrant-grid">
+                    <!-- Quadrant 1 -->
+                    <div class="quad-box q1">
+                        <div class="quad-head">
+                            <span class="quad-title" style="color: var(--danger);">🚨 Quadrant I: VIP Rescue Target</span>
+                            <span class="quad-badge badge-danger">Critical</span>
+                        </div>
+                        <div class="quad-val" style="color: var(--danger);">{q1_cnt:,} <span style="font-size: 0.85rem; color: var(--muted); font-family: var(--font-body); font-weight: normal;">accounts</span></div>
+                        <div class="quad-desc">
+                            High spend (> {curr_symbol}{conv_median_charge:,.2f}/mo) accounts with severe attrition risk. Represents <strong>{curr_symbol}{q1_mrr:,.2f} MRR</strong> ({curr_symbol}{q1_mrr*12:,.2f} ARR).
+                        </div>
+                        <div class="quad-action">⚡ Action: Immediate 24h Executive Call + Dedicated CSM Lock-in</div>
+                    </div>
 
-            <!-- Section 1 Charts (Revenue Exposure and Volume per Quadrant) -->
-            <div class="chart-grid-2">
-                <div class="chart-card">
-                    <div class="chart-card-header">
-                        <span class="chart-card-title">💎 CLV Revenue Exposure Across Quadrants</span>
-                        <span class="chart-card-badge">MRR Distribution</span>
+                    <!-- Quadrant 2 -->
+                    <div class="quad-box q2">
+                        <div class="quad-head">
+                            <span class="quad-title" style="color: var(--warning);">⚠️ Quadrant II: Digital Retention Cohort</span>
+                            <span class="quad-badge" style="background: rgba(245, 158, 11, 0.15); color: #FCD34D;">Scale Retain</span>
+                        </div>
+                        <div class="quad-val" style="color: var(--warning);">{q2_cnt:,} <span style="font-size: 0.85rem; color: var(--muted); font-family: var(--font-body); font-weight: normal;">accounts</span></div>
+                        <div class="quad-desc">
+                            Standard spend (≤ {curr_symbol}{conv_median_charge:,.2f}/mo) with high churn risk. Represents <strong>{curr_symbol}{q2_mrr:,.2f} MRR</strong> ({curr_symbol}{q2_mrr*12:,.2f} ARR).
+                        </div>
+                        <div class="quad-action">⚡ Action: Automated Email Incentive + 15% Annual Contract Switch</div>
                     </div>
-                    <div class="chart-container-box">
-                        <canvas id="clvRevenueChart"></canvas>
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-card-header">
-                        <span class="chart-card-title">👥 Account Concentration by CLV Quadrant</span>
-                        <span class="chart-card-badge">Account Volumes</span>
-                    </div>
-                    <div class="chart-container-box">
-                        <canvas id="clvVolumeChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Section 2: Customer Friction & Behavioral Health Telemetry (From Ingested Data) -->
-        <h2 class="section-title">2. Customer Friction & Behavioral Health Telemetry (From Ingested Data)</h2>
-        <div class="report-card">
-            <p style="margin-top:0; color: var(--muted); font-size: 0.88rem;">
-                Direct comparative behavioral indicators between high-risk customers and healthy customer cohorts computed from your dataset:
-            </p>
-            <div class="behavioral-grid">
-                <!-- Support Tickets -->
-                <div class="metric-comparison-box">
-                    <h4>🎫 Support Ticket Friction Velocity</h4>
-                    <div class="comp-row">
-                        <span>High Risk Accounts:</span>
-                        <strong style="color: var(--danger);">{hr_tickets} avg tickets</strong>
+                    <!-- Quadrant 3 -->
+                    <div class="quad-box q3">
+                        <div class="quad-head">
+                            <span class="quad-title" style="color: var(--success);">💎 Quadrant III: Core Enterprise Safe</span>
+                            <span class="quad-badge badge-success">High Value</span>
+                        </div>
+                        <div class="quad-val" style="color: var(--success);">{q3_cnt:,} <span style="font-size: 0.85rem; color: var(--muted); font-family: var(--font-body); font-weight: normal;">accounts</span></div>
+                        <div class="quad-desc">
+                            High spend (> {curr_symbol}{conv_median_charge:,.2f}/mo) with healthy retention scores. Represents <strong>{curr_symbol}{q3_mrr:,.2f} MRR</strong> ({curr_symbol}{q3_mrr*12:,.2f} ARR).
+                        </div>
+                        <div class="quad-action">⚡ Action: Expansion, Cross-Sell & Executive Sponsorship</div>
                     </div>
-                    <div class="comp-bar-bg">
-                        <div class="comp-bar-fill" style="width: {min(100, int(hr_tickets * 20))}%; background: var(--danger);"></div>
-                    </div>
-                    <div class="comp-row">
-                        <span>Low Risk Accounts:</span>
-                        <strong style="color: var(--success);">{lr_tickets} avg tickets</strong>
-                    </div>
-                    <div class="comp-bar-bg">
-                        <div class="comp-bar-fill" style="width: {min(100, int(lr_tickets * 20))}%; background: var(--success);"></div>
-                    </div>
-                    <div style="font-size: 0.74rem; color: var(--muted);">
-                        High-risk customers submit <strong>{(hr_tickets/lr_tickets if lr_tickets > 0 else 3.2):.1f}x more tickets</strong>, indicating unaddressed technical or account onboarding friction.
-                    </div>
-                </div>
 
-                <!-- CSAT Score -->
-                <div class="metric-comparison-box">
-                    <h4>⭐ Customer Satisfaction (CSAT / 5.0)</h4>
-                    <div class="comp-row">
-                        <span>High Risk Accounts:</span>
-                        <strong style="color: var(--danger);">{hr_csat} / 5.0</strong>
-                    </div>
-                    <div class="comp-bar-bg">
-                        <div class="comp-bar-fill" style="width: {min(100, int(hr_csat * 20))}%; background: var(--danger);"></div>
-                    </div>
-                    <div class="comp-row">
-                        <span>Low Risk Accounts:</span>
-                        <strong style="color: var(--success);">{lr_csat} / 5.0</strong>
-                    </div>
-                    <div class="comp-bar-bg">
-                        <div class="comp-bar-fill" style="width: {min(100, int(lr_csat * 20))}%; background: var(--success);"></div>
-                    </div>
-                    <div style="font-size: 0.74rem; color: var(--muted);">
-                        Satisfaction drops by <strong>{max(0.0, lr_csat - hr_csat):.1f} points</strong> among at-risk accounts. Accounts scoring under 3.0 require priority outreach.
+                    <!-- Quadrant 4 -->
+                    <div class="quad-box q4">
+                        <div class="quad-head">
+                            <span class="quad-title" style="color: var(--primary);">🌱 Quadrant IV: Stable Growth Base</span>
+                            <span class="quad-badge" style="background: rgba(0, 245, 255, 0.15); color: #67E8F9;">Self Serve</span>
+                        </div>
+                        <div class="quad-val" style="color: var(--primary);">{q4_cnt:,} <span style="font-size: 0.85rem; color: var(--muted); font-family: var(--font-body); font-weight: normal;">accounts</span></div>
+                        <div class="quad-desc">
+                            Standard spend with low churn risk. Represents <strong>{curr_symbol}{q4_mrr:,.2f} MRR</strong> ({curr_symbol}{q4_mrr*12:,.2f} ARR).
+                        </div>
+                        <div class="quad-action">⚡ Action: Product Nurturing & Organic Growth Playbooks</div>
                     </div>
                 </div>
 
-                <!-- Payment Delays -->
-                <div class="metric-comparison-box">
-                    <h4>⏱️ Payment Delays & Billing Friction</h4>
-                    <div class="comp-row">
-                        <span>High Risk Accounts:</span>
-                        <strong style="color: var(--warning);">{hr_delays} avg delays</strong>
+                <!-- Section 1 Charts (Revenue Exposure and Volume per Quadrant) -->
+                <div class="chart-grid-2">
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <span class="chart-card-title">💎 CLV Revenue Exposure Across Quadrants</span>
+                            <span class="chart-card-badge">MRR Distribution</span>
+                        </div>
+                        <div class="chart-container-box">
+                            <canvas id="clvRevenueChart"></canvas>
+                        </div>
                     </div>
-                    <div class="comp-bar-bg">
-                        <div class="comp-bar-fill" style="width: {min(100, int(hr_delays * 18))}%; background: var(--warning);"></div>
-                    </div>
-                    <div class="comp-row">
-                        <span>Low Risk Accounts:</span>
-                        <strong style="color: var(--success);">{lr_delays} avg delays</strong>
-                    </div>
-                    <div class="comp-bar-bg">
-                        <div class="comp-bar-fill" style="width: {min(100, int(lr_delays * 18))}%; background: var(--success);"></div>
-                    </div>
-                    <div style="font-size: 0.74rem; color: var(--muted);">
-                        Delayed payments are a <strong>lead predictive indicator</strong> of voluntary and involuntary attrition.
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <span class="chart-card-title">👥 Account Concentration by CLV Quadrant</span>
+                            <span class="chart-card-badge">Account Volumes</span>
+                        </div>
+                        <div class="chart-container-box">
+                            <canvas id="clvVolumeChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Section 2 Chart: Behavioral Matrix Comparison -->
-            <div style="margin-top: 18px;">
+        <!-- Section 2: Customer Friction & Behavioral Health Telemetry -->
+        <section class="report-section" id="section-02" style="display: {'block' if show_friction else 'none'};">
+            <div class="section-header-box">
+                <div class="section-tag-badge">SECTION 02 // BEHAVIORAL TELEMETRY</div>
+                <h2 class="section-heading">2. Customer Friction & Behavioral Health Telemetry</h2>
+                <p class="section-lead">Direct comparative behavioral indicators between high-risk customers and healthy customer cohorts computed from your dataset:</p>
+            </div>
+            <div class="report-card">
+                <div class="behavioral-grid">
+                    <!-- Support Tickets -->
+                    <div class="metric-comparison-box">
+                        <h4>🎫 Support Ticket Friction Velocity</h4>
+                        <div class="comp-row">
+                            <span>High Risk Accounts:</span>
+                            <strong style="color: var(--danger); font-family: var(--font-mono);">{hr_tickets} avg tickets</strong>
+                        </div>
+                        <div class="comp-bar-bg">
+                            <div class="comp-bar-fill" style="width: {min(100, int(hr_tickets * 20))}%; background: var(--danger);"></div>
+                        </div>
+                        <div class="comp-row">
+                            <span>Low Risk Accounts:</span>
+                            <strong style="color: var(--success); font-family: var(--font-mono);">{lr_tickets} avg tickets</strong>
+                        </div>
+                        <div class="comp-bar-bg">
+                            <div class="comp-bar-fill" style="width: {min(100, int(lr_tickets * 20))}%; background: var(--success);"></div>
+                        </div>
+                        <div style="font-size: 0.74rem; color: var(--muted); line-height: 1.45;">
+                            High-risk customers submit <strong>{(hr_tickets/lr_tickets if lr_tickets > 0 else 3.2):.1f}x more tickets</strong>, indicating unaddressed technical or account onboarding friction.
+                        </div>
+                    </div>
+
+                    <!-- CSAT Score -->
+                    <div class="metric-comparison-box">
+                        <h4>⭐ Customer Satisfaction (CSAT / 5.0)</h4>
+                        <div class="comp-row">
+                            <span>High Risk Accounts:</span>
+                            <strong style="color: var(--danger); font-family: var(--font-mono);">{hr_csat} / 5.0</strong>
+                        </div>
+                        <div class="comp-bar-bg">
+                            <div class="comp-bar-fill" style="width: {min(100, int(hr_csat * 20))}%; background: var(--danger);"></div>
+                        </div>
+                        <div class="comp-row">
+                            <span>Low Risk Accounts:</span>
+                            <strong style="color: var(--success); font-family: var(--font-mono);">{lr_csat} / 5.0</strong>
+                        </div>
+                        <div class="comp-bar-bg">
+                            <div class="comp-bar-fill" style="width: {min(100, int(lr_csat * 20))}%; background: var(--success);"></div>
+                        </div>
+                        <div style="font-size: 0.74rem; color: var(--muted); line-height: 1.45;">
+                            Satisfaction drops by <strong>{max(0.0, lr_csat - hr_csat):.1f} points</strong> among at-risk accounts. Accounts scoring under 3.0 require priority outreach.
+                        </div>
+                    </div>
+
+                    <!-- Payment Delays -->
+                    <div class="metric-comparison-box">
+                        <h4>⏱️ Payment Delays & Billing Friction</h4>
+                        <div class="comp-row">
+                            <span>High Risk Accounts:</span>
+                            <strong style="color: var(--warning); font-family: var(--font-mono);">{hr_delays} avg delays</strong>
+                        </div>
+                        <div class="comp-bar-bg">
+                            <div class="comp-bar-fill" style="width: {min(100, int(hr_delays * 18))}%; background: var(--warning);"></div>
+                        </div>
+                        <div class="comp-row">
+                            <span>Low Risk Accounts:</span>
+                            <strong style="color: var(--success); font-family: var(--font-mono);">{lr_delays} avg delays</strong>
+                        </div>
+                        <div class="comp-bar-bg">
+                            <div class="comp-bar-fill" style="width: {min(100, int(lr_delays * 18))}%; background: var(--success);"></div>
+                        </div>
+                        <div style="font-size: 0.74rem; color: var(--muted); line-height: 1.45;">
+                            Delayed payments are a <strong>lead predictive indicator</strong> of voluntary and involuntary attrition.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2 Chart: Behavioral Matrix Comparison -->
                 <div class="chart-card">
                     <div class="chart-card-header">
                         <span class="chart-card-title">📊 Comparative Behavioral Friction Matrix (High-Risk vs Healthy Retained)</span>
@@ -4491,35 +4651,36 @@ def create_app() -> Flask:
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Section 3: Root Cause Drivers & Feature Importance -->
-        <h2 class="section-title">3. Root Cause Drivers & Feature Importance</h2>
-        <div class="report-card">
-            <p style="margin-top:0; color: var(--muted); font-size: 0.88rem;">
-                Machine learning correlation scores and feature weights identifying why customers leave:
-            </p>
-            <div class="causes-grid">
-                <div class="cause-box">
-                    <h4>1. Contract Commitment Friction (Weight: 34.2%)</h4>
-                    <p>Month-to-month accounts exhibit <strong>3.4x higher attrition risk</strong> compared to annual contract commitments. High-risk customers are overwhelmingly concentrated in non-contractual billing cycles.</p>
-                </div>
-                <div class="cause-box">
-                    <h4>2. Price Sensitivity & Unaligned Pricing Tiers (Weight: 26.8%)</h4>
-                    <p>Accounts paying elevated monthly charges without receiving tailored onboarding or multi-year discounts account for <strong>{((risk_mrr/total_mrr*100) if total_mrr > 0 else 0):.1f}% of total revenue at risk</strong>.</p>
-                </div>
-                <div class="cause-box">
-                    <h4>3. Service Ticket Friction & Escalations (Weight: 21.5%)</h4>
-                    <p>Accounts with elevated support tickets ({hr_tickets} avg) show a steep churn probability spike due to unresolved technical friction.</p>
-                </div>
-                <div class="cause-box">
-                    <h4>4. Early Tenure Vulnerability (Weight: 17.5%)</h4>
-                    <p>The highest risk concentration occurs within the first 90 days. Accounts reaching Month 6+ exhibit 85%+ retention stability.</p>
-                </div>
+        <section class="report-section" id="section-03" style="display: {'block' if show_causes else 'none'};">
+            <div class="section-header-box">
+                <div class="section-tag-badge">SECTION 03 // ROOT CAUSE ANALYSIS</div>
+                <h2 class="section-heading">3. Root Cause Drivers & Feature Importance</h2>
+                <p class="section-lead">Machine learning correlation scores and feature weights identifying the primary drivers triggering customer attrition:</p>
             </div>
+            <div class="report-card">
+                <div class="causes-grid">
+                    <div class="cause-box">
+                        <h4>1. Contract Commitment Friction (Weight: 34.2%)</h4>
+                        <p>Month-to-month accounts exhibit <strong>3.4x higher attrition risk</strong> compared to annual contract commitments. High-risk customers are overwhelmingly concentrated in non-contractual billing cycles.</p>
+                    </div>
+                    <div class="cause-box">
+                        <h4>2. Price Sensitivity & Spend Tier (Weight: 26.8%)</h4>
+                        <p>Accounts paying elevated monthly charges without receiving tailored onboarding or multi-year discounts account for <strong>{((risk_mrr/total_mrr*100) if total_mrr > 0 else 0):.1f}% of total revenue at risk</strong>.</p>
+                    </div>
+                    <div class="cause-box">
+                        <h4>3. Service Ticket Escalations (Weight: 21.5%)</h4>
+                        <p>Accounts with elevated support tickets ({hr_tickets} avg) show a steep churn probability spike due to unresolved technical friction.</p>
+                    </div>
+                    <div class="cause-box">
+                        <h4>4. Early Tenure Vulnerability (Weight: 17.5%)</h4>
+                        <p>The highest risk concentration occurs within the first 90 days. Accounts reaching Month 6+ exhibit 85%+ retention stability.</p>
+                    </div>
+                </div>
 
-            <!-- Section 3 Chart: Feature Importance Bar Chart -->
-            <div style="margin-top: 18px;">
+                <!-- Section 3 Chart: Feature Importance Bar Chart -->
                 <div class="chart-card">
                     <div class="chart-card-header">
                         <span class="chart-card-title">🔍 Predictive Feature Importance & Attrition Drivers (%)</span>
@@ -4530,82 +4691,94 @@ def create_app() -> Flask:
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Section 4: Cohort Segment Breakdown Analysis (Regional & Payment) -->
-        <h2 class="section-title">4. Cohort Segment Breakdown Analysis</h2>
-        
-        <!-- Section 4 Charts (Regional Risk & Payment Risk) -->
-        <div class="chart-grid-2" style="margin-bottom: 20px;">
-            <div class="chart-card">
-                <div class="chart-card-header">
-                    <span class="chart-card-title">🌍 Regional Churn Concentration & Account Density</span>
-                    <span class="chart-card-badge">Geographic Breakdown</span>
-                </div>
-                <div class="chart-container-box">
-                    <canvas id="regionalRiskChart"></canvas>
-                </div>
+        <!-- Section 4: Cohort Segment Breakdown Analysis -->
+        <section class="report-section" id="section-04">
+            <div class="section-header-box">
+                <div class="section-tag-badge">SECTION 04 // SEGMENT BREAKDOWN</div>
+                <h2 class="section-heading">4. Cohort Segment Breakdown Analysis</h2>
+                <p class="section-lead">Multidimensional risk distribution cross-referenced by regional operating territory and billing settlement channel:</p>
             </div>
-            <div class="chart-card">
-                <div class="chart-card-header">
-                    <span class="chart-card-title">💳 Payment Method Vulnerability Breakdown</span>
-                    <span class="chart-card-badge">Billing Channels</span>
+            <div class="report-card">
+                <!-- Section 4 Charts (Regional Risk & Payment Risk) -->
+                <div class="chart-grid-2" style="margin-bottom: 24px;">
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <span class="chart-card-title">🌍 Regional Churn Concentration & Account Density</span>
+                            <span class="chart-card-badge">Geographic Breakdown</span>
+                        </div>
+                        <div class="chart-container-box">
+                            <canvas id="regionalRiskChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <span class="chart-card-title">💳 Payment Method Vulnerability Breakdown</span>
+                            <span class="chart-card-badge">Billing Channels</span>
+                        </div>
+                        <div class="chart-container-box">
+                            <canvas id="paymentRiskChart"></canvas>
+                        </div>
+                    </div>
                 </div>
-                <div class="chart-container-box">
-                    <canvas id="paymentRiskChart"></canvas>
-                </div>
-            </div>
-        </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 20px;">
-            <div class="report-card" style="margin-bottom: 0;">
-                <h3 style="margin-top:0; font-family:'Space Grotesk', sans-serif; font-size: 1.05rem;">Regional Risk Concentration</h3>
-                <p style="color: var(--muted); font-size: 0.8rem; margin-top: 0;">Attritions and risk scores mapped across active business regions:</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Region</th>
-                            <th>Total Accounts</th>
-                            <th>High Risk</th>
-                            <th>Churn Rate</th>
-                            <th>Avg Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {region_rows_html}
-                    </tbody>
-                </table>
+                <!-- Side-by-Side Tables -->
+                <div class="cohort-tables-grid">
+                    <div class="table-card">
+                        <h3 class="table-card-title">Regional Risk Concentration</h3>
+                        <p class="table-card-sub">Attritions and risk scores mapped across active business regions:</p>
+                        <div class="table-wrap-box">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Region</th>
+                                        <th class="num">Total</th>
+                                        <th class="num">High Risk</th>
+                                        <th style="text-align: center;">Churn Rate</th>
+                                        <th class="num">Avg Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {region_rows_html}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="table-card">
+                        <h3 class="table-card-title">Billing & Payment Method Exposure</h3>
+                        <p class="table-card-sub">Risk segmentation mapping based on active payment structures:</p>
+                        <div class="table-wrap-box">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Payment Method</th>
+                                        <th class="num">Total</th>
+                                        <th class="num">High Risk</th>
+                                        <th style="text-align: center;">Churn Rate</th>
+                                        <th class="num">Avg Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {payment_rows_html}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="report-card" style="margin-bottom: 0;">
-                <h3 style="margin-top:0; font-family:'Space Grotesk', sans-serif; font-size: 1.05rem;">Billing & Payment Method Exposure</h3>
-                <p style="color: var(--muted); font-size: 0.8rem; margin-top: 0;">Risk segmentation mapping based on active payment structures:</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Payment Method</th>
-                            <th>Total Accounts</th>
-                            <th>High Risk</th>
-                            <th>Churn Rate</th>
-                            <th>Avg Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {payment_rows_html}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </section>
 
         <!-- Section 5: Strategic Revenue Recovery Scenarios -->
-        <h2 class="section-title">5. Strategic Revenue Recovery Scenarios ({currency_code})</h2>
-        <div class="report-card">
-            <p style="margin-top:0; color: var(--muted); font-size: 0.88rem;">
-                Projected ARR savings and monthly operating margins recovered based on proactive retention playbooks:
-            </p>
-
-            <!-- Section 5 Chart: Revenue Recovery Waterfall Chart -->
-            <div style="margin-bottom: 20px;">
-                <div class="chart-card">
+        <section class="report-section" id="section-05">
+            <div class="section-header-box">
+                <div class="section-tag-badge">SECTION 05 // FINANCIAL RECOVERY</div>
+                <h2 class="section-heading">5. Strategic Revenue Recovery Scenarios ({currency_code})</h2>
+                <p class="section-lead">Projected ARR savings and monthly operating margins recovered based on proactive retention playbooks:</p>
+            </div>
+            <div class="report-card">
+                <!-- Section 5 Chart: Revenue Recovery Waterfall Chart -->
+                <div class="chart-card" style="margin-bottom: 22px;">
                     <div class="chart-card-header">
                         <span class="chart-card-title">💵 Strategic Annual ARR Recovery Potential by Playbook ({currency_code})</span>
                         <span class="chart-card-badge">Financial Projection</span>
@@ -4614,137 +4787,151 @@ def create_app() -> Flask:
                         <canvas id="recoveryWaterfallChart"></canvas>
                     </div>
                 </div>
-            </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Recovery Scenario</th>
-                        <th>Target Recovery Rate</th>
-                        <th>Projected Monthly Recovery ({curr_symbol})</th>
-                        <th>Projected Annualized Savings ({curr_symbol})</th>
-                        <th>Prescribed Core Action Plan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Tactical Retention Outreach</strong></td>
-                        <td>15% Churn Recovery</td>
-                        <td>{curr_symbol}{conv_risk_mrr * 0.15:,.2f}</td>
-                        <td style="color: var(--success); font-weight: 700;">{curr_symbol}{conv_risk_arr * 0.15:,.2f}</td>
-                        <td>Automated CSM alerts and 24h fast check-in calls.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Strategic Migration Campaign</strong></td>
-                        <td>30% Churn Recovery</td>
-                        <td>{curr_symbol}{conv_risk_mrr * 0.30:,.2f}</td>
-                        <td style="color: var(--success); font-weight: 700;">{curr_symbol}{conv_risk_arr * 0.30:,.2f}</td>
-                        <td>Offer month-to-month users a 15% discount for 1-year commitments.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Optimal VIP Onboarding</strong></td>
-                        <td>50% Churn Recovery</td>
-                        <td>{curr_symbol}{conv_risk_mrr * 0.50:,.2f}</td>
-                        <td style="color: var(--success); font-weight: 700;">{curr_symbol}{conv_risk_arr * 0.50:,.2f}</td>
-                        <td>Redesign onboarding walkthroughs and priority support escalation.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                <div class="table-wrap-box">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Recovery Scenario</th>
+                                <th>Target Recovery Rate</th>
+                                <th class="num">Projected Monthly ({curr_symbol})</th>
+                                <th class="num">Annualized Savings ({curr_symbol})</th>
+                                <th>Prescribed Core Action Plan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Tactical Retention Outreach</strong></td>
+                                <td><span class="badge" style="background: rgba(0, 245, 255, 0.15); color: #00F5FF; border: 1px solid rgba(0, 245, 255, 0.3);">15% Churn Recovery</span></td>
+                                <td class="num">{curr_symbol}{conv_risk_mrr * 0.15:,.2f}</td>
+                                <td class="num" style="color: var(--success); font-weight: 700;">{curr_symbol}{conv_risk_arr * 0.15:,.2f}</td>
+                                <td>Automated CSM alerts and 24h fast check-in calls.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Strategic Migration Campaign</strong></td>
+                                <td><span class="badge" style="background: rgba(167, 139, 250, 0.15); color: #C4B5FD; border: 1px solid rgba(167, 139, 250, 0.3);">30% Churn Recovery</span></td>
+                                <td class="num">{curr_symbol}{conv_risk_mrr * 0.30:,.2f}</td>
+                                <td class="num" style="color: var(--success); font-weight: 700;">{curr_symbol}{conv_risk_arr * 0.30:,.2f}</td>
+                                <td>Offer month-to-month users a 15% discount for 1-year commitments.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Optimal VIP Onboarding</strong></td>
+                                <td><span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #6EE7B7; border: 1px solid rgba(16, 185, 129, 0.3);">50% Churn Recovery</span></td>
+                                <td class="num">{curr_symbol}{conv_risk_mrr * 0.50:,.2f}</td>
+                                <td class="num" style="color: var(--success); font-weight: 700;">{curr_symbol}{conv_risk_arr * 0.50:,.2f}</td>
+                                <td>Redesign onboarding walkthroughs and priority support escalation.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
         <!-- Section 6: Contract Commitment & Tenure Lifecycle Hazard Curve -->
-        <h2 class="section-title">6. Contract Commitment & Tenure Lifecycle Hazard Curve</h2>
-        <div class="report-card">
-            <p style="margin-top:0; color: var(--muted); font-size: 0.88rem;">
-                Visual contract risk concentration and tenure lifecycle hazard decay curve computed from your dataset:
-            </p>
-            <div class="chart-grid-2">
-                <div class="chart-card">
-                    <div class="chart-card-header">
-                        <span class="chart-card-title">📑 Risk Concentration by Contract Commitment</span>
-                        <span class="chart-card-badge">Contract Types</span>
+        <section class="report-section" id="section-06">
+            <div class="section-header-box">
+                <div class="section-tag-badge">SECTION 06 // TENURE HAZARD MODEL</div>
+                <h2 class="section-heading">6. Contract Commitment & Tenure Lifecycle Hazard Curve</h2>
+                <p class="section-lead">Visual contract risk concentration and tenure lifecycle hazard decay curve computed from your dataset:</p>
+            </div>
+            <div class="report-card">
+                <div class="chart-grid-2">
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <span class="chart-card-title">📑 Risk Concentration by Contract Commitment</span>
+                            <span class="chart-card-badge">Contract Types</span>
+                        </div>
+                        <div class="chart-container-box">
+                            <canvas id="contractRiskChart"></canvas>
+                        </div>
                     </div>
-                    <div class="chart-container-box">
-                        <canvas id="contractRiskChart"></canvas>
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-card-header">
-                        <span class="chart-card-title">⏳ Tenure Lifecycle Hazard Decay Curve (%)</span>
-                        <span class="chart-card-badge">Attrition Progression</span>
-                    </div>
-                    <div class="chart-container-box">
-                        <canvas id="tenureRiskChart"></canvas>
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <span class="chart-card-title">⏳ Tenure Lifecycle Hazard Decay Curve (%)</span>
+                            <span class="chart-card-badge">Attrition Progression</span>
+                        </div>
+                        <div class="chart-container-box">
+                            <canvas id="tenureRiskChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Section 7: Strategic 30-60-90 Day Retention Action Roadmap -->
-        <h2 class="section-title">7. Strategic 30-60-90 Day Retention Action Roadmap</h2>
-        <div class="report-card">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
-                <div class="cause-box" style="border-left: 3px solid var(--danger);">
-                    <h4 style="color: var(--danger);">Phase 1 (Days 0–2): VIP Rescue Blitz</h4>
-                    <p>Trigger automated CSM phone alerts for all <strong>Quadrant I VIP accounts</strong> with churn score ≥65%. Offer dedicated executive sponsors and renewal incentives.</p>
-                </div>
-                <div class="cause-box" style="border-left: 3px solid var(--warning);">
-                    <h4 style="color: var(--warning);">Phase 2 (Days 3–30): Contract Migration</h4>
-                    <p>Launch targeted email and in-app campaigns offering a <strong>15–20% discount</strong> to high-risk month-to-month accounts in exchange for switching to annual agreements.</p>
-                </div>
-                <div class="cause-box" style="border-left: 3px solid var(--primary);">
-                    <h4 style="color: var(--primary);">Phase 3 (Days 31–60): Support Fast-Track</h4>
-                    <p>Flag all customer support tickets from accounts with CSAT &lt; 3.0 or &gt;2 open cases for <strong>expedited &lt;2 hour resolution SLAs</strong>.</p>
-                </div>
-                <div class="cause-box" style="border-left: 3px solid var(--success);">
-                    <h4 style="color: var(--success);">Phase 4 (Days 61–90): Onboarding Redesign</h4>
-                    <p>Deploy structured onboarding check-ins and feature adoption walkthroughs across the first 90 days to eliminate early tenure drop-off.</p>
+        <section class="report-section" id="section-07" style="display: {'block' if show_playbook else 'none'};">
+            <div class="section-header-box">
+                <div class="section-tag-badge">SECTION 07 // RETENTION ROADMAP</div>
+                <h2 class="section-heading">7. Strategic 30-60-90 Day Retention Action Roadmap</h2>
+                <p class="section-lead">Phased mitigation sequence to systematically intercept vulnerable accounts and lock in recurring revenue:</p>
+            </div>
+            <div class="report-card">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+                    <div class="cause-box" style="border-left: 3px solid var(--danger);">
+                        <h4 style="color: var(--danger);">Phase 1 (Days 0–2): VIP Rescue Blitz</h4>
+                        <p>Trigger automated CSM phone alerts for all <strong>Quadrant I VIP accounts</strong> with churn score ≥65%. Offer dedicated executive sponsors and renewal incentives.</p>
+                    </div>
+                    <div class="cause-box" style="border-left: 3px solid var(--warning);">
+                        <h4 style="color: var(--warning);">Phase 2 (Days 3–30): Contract Migration</h4>
+                        <p>Launch targeted email and in-app campaigns offering a <strong>15–20% discount</strong> to high-risk month-to-month accounts in exchange for switching to annual agreements.</p>
+                    </div>
+                    <div class="cause-box" style="border-left: 3px solid var(--primary);">
+                        <h4 style="color: var(--primary);">Phase 3 (Days 31–60): Support Fast-Track</h4>
+                        <p>Flag all customer support tickets from accounts with CSAT &lt; 3.0 or &gt;2 open cases for <strong>expedited &lt;2 hour resolution SLAs</strong>.</p>
+                    </div>
+                    <div class="cause-box" style="border-left: 3px solid var(--success);">
+                        <h4 style="color: var(--success);">Phase 4 (Days 61–90): Onboarding Redesign</h4>
+                        <p>Deploy structured onboarding check-ins and feature adoption walkthroughs across the first 90 days to eliminate early tenure drop-off.</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Section 8: Vulnerable Accounts Evidence & Action Directory -->
-        <h2 class="section-title">8. Customer Evidence & Action Directory</h2>
-        <div class="report-card">
-            <div class="table-filter-bar no-print">
-                <input type="text" id="evidenceSearchInput" class="search-input" placeholder="🔍 Filter accounts by ID, contract, action..." oninput="filterEvidenceTable()">
-                <div class="filter-capsules">
-                    <button type="button" class="filter-capsule active" onclick="setEvidenceFilter('all')">All Accounts ({len(rows)})</button>
-                    <button type="button" class="filter-capsule" onclick="setEvidenceFilter('high')">High Risk ({high_risk})</button>
-                    <button type="button" class="filter-capsule" onclick="setEvidenceFilter('vip')">VIP Danger ({q1_cnt})</button>
-                    <button type="button" class="filter-capsule" onclick="setEvidenceFilter('low')">Low Risk ({low_risk})</button>
+        <section class="report-section" id="section-08">
+            <div class="section-header-box">
+                <div class="section-tag-badge">SECTION 08 // AUDIT DIRECTORY</div>
+                <h2 class="section-heading">8. Customer Evidence & Action Directory</h2>
+                <p class="section-lead">Granular account-level audit directory with individual churn probabilities, CLV financial tiers, and prescriptive actions:</p>
+            </div>
+            <div class="report-card">
+                <div class="table-filter-bar no-print">
+                    <input type="text" id="evidenceSearchInput" class="search-input" placeholder="🔍 Filter accounts by ID, contract, action..." oninput="filterEvidenceTable()">
+                    <div class="filter-capsules">
+                        <button type="button" class="filter-capsule active" onclick="setEvidenceFilter('all')">All Accounts ({len(rows)})</button>
+                        <button type="button" class="filter-capsule" onclick="setEvidenceFilter('high')">High Risk ({high_risk})</button>
+                        <button type="button" class="filter-capsule" onclick="setEvidenceFilter('vip')">VIP Danger ({q1_cnt})</button>
+                        <button type="button" class="filter-capsule" onclick="setEvidenceFilter('low')">Low Risk ({low_risk})</button>
+                    </div>
+                </div>
+
+                <div class="evidence-scroll-container">
+                    <table id="evidenceTable">
+                        <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Risk Level</th>
+                                <th class="num">Churn Prob</th>
+                                <th class="num">Monthly Bill</th>
+                                <th class="num">Tenure</th>
+                                <th>Contract</th>
+                                <th>Friction Metrics</th>
+                                <th>CLV Quadrant</th>
+                                <th>Prescribed Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {table_rows_html}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
-            <p style="margin-top:0; color: var(--muted); font-size: 0.82rem;">
-                Showing audited customer accounts with calculated churn probability, CLV quadrant, and prescriptive mitigation:
-            </p>
-            <div style="overflow-x: auto;">
-                <table id="evidenceTable">
-                    <thead>
-                        <tr>
-                            <th>Customer ID</th>
-                            <th>Risk Level</th>
-                            <th>Churn Prob</th>
-                            <th>Monthly Bill</th>
-                            <th>Tenure</th>
-                            <th>Contract</th>
-                            <th>Friction Metrics</th>
-                            <th>CLV Quadrant</th>
-                            <th>Prescribed Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {table_rows_html}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </section>
 
         <!-- Footer -->
-        <footer style="margin-top: 40px; text-align: center; border-top: 1px solid var(--border); padding-top: 20px; font-size: 0.8rem; color: var(--muted);">
+        <footer style="margin-top: 48px; text-align: center; border-top: 1px solid var(--border); padding-top: 24px; font-size: 0.82rem; color: var(--muted); line-height: 1.6;">
             <div><strong>Qiplo Enterprise AI Customer Retention Platform</strong> — Free & Open Source (MIT Licensed)</div>
-            <div>Report synthesized dynamically from ingested customer data for {company}. Confidential & Proprietary.</div>
+            <div>Report synthesized dynamically from ingested customer data for <strong>{company}</strong>. Confidential & Proprietary.</div>
         </footer>
     </div>
 
