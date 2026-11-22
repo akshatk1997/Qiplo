@@ -27,6 +27,14 @@ from flask import Flask, jsonify, render_template, request, Response, redirect
 
 from churn_analysis import (ensure_database, import_frame_to_sql, load_config, save_config, predict_from_frame,
                              train_model, generate_ai_insight_with_llm, DEFAULT_TARGET)
+from powerbi_exporter import (
+    build_star_schema,
+    generate_powerbi_pbip_package,
+    generate_fallback_package,
+    generate_pbit_bytes,
+    validate_powerbi_package,
+    push_to_powerbi_rest_api,
+)
 
 SCHEMA_PATH = BASE_DIR / "sql" / "schema.sql"
 CONFIG_PATH = BASE_DIR / "config" / "company_config.json"
@@ -3125,7 +3133,7 @@ def create_app() -> Flask:
     def export_powerbi_api():
         try:
             csv_url = f"{request.url_root}api/export/csv"
-            export_type = request.args.get("type", "pbit").lower()
+            export_type = request.args.get("type", "pbip").lower()
 
             if export_type == "pbids":
                 pbids_data = {
@@ -3151,15 +3159,77 @@ def create_app() -> Flask:
                     headers={"Content-Disposition": "attachment; filename=Qiplo_PowerBI_Source.pbids"}
                 )
 
-            # Default: Return Power BI Template (.pbit) file
-            pbit_bytes = generate_powerbi_pbit_bytes(csv_url)
+            enriched_df = build_enriched_predictions_dataframe()
+            date_str = datetime.now().strftime("%Y-%m-%d")
+
+            # Fallback package (data CSVs + measures.dax + theme + README)
+            if export_type == "fallback":
+                fallback_bytes = generate_fallback_package(enriched_df)
+                return Response(
+                    fallback_bytes,
+                    mimetype="application/zip",
+                    headers={"Content-Disposition": f'attachment; filename="qiplo-powerbi-fallback-{date_str}.zip"'}
+                )
+
+            # Standalone .pbit file if explicitly requested
+            if export_type == "pbit":
+                pbit_bytes = generate_pbit_bytes(csv_url)
+                return Response(
+                    pbit_bytes,
+                    mimetype="application/octet-stream",
+                    headers={"Content-Disposition": "attachment; filename=Qiplo_PowerBI_Dashboard.pbit"}
+                )
+
+            # Default / pbip: Return complete working Power BI Project package (qiplo-powerbi-<date>.zip)
+            pbip_zip_bytes = generate_powerbi_pbip_package(enriched_df, csv_url=csv_url)
+            val = validate_powerbi_package(pbip_zip_bytes, len(enriched_df))
+            if not val.get("ok"):
+                return jsonify({
+                    "ok": False,
+                    "stage": val.get("stage", "validation"),
+                    "message": val.get("message", "Validation failed"),
+                    "fix": val.get("fix", "Download fallback CSV + DAX package."),
+                    "fallback_url": f"{request.url_root}api/export/powerbi?type=fallback"
+                }), 422
+
             return Response(
-                pbit_bytes,
-                mimetype="application/octet-stream",
-                headers={"Content-Disposition": "attachment; filename=Qiplo_PowerBI_Dashboard.pbit"}
+                pbip_zip_bytes,
+                mimetype="application/zip",
+                headers={"Content-Disposition": f'attachment; filename="qiplo-powerbi-{date_str}.zip"'}
             )
         except Exception as e:
-            return jsonify({"error": f"Failed to generate Power BI export: {e}"}), 500
+            return jsonify({
+                "ok": False,
+                "stage": "export_generation",
+                "message": f"Failed to generate Power BI export: {e}",
+                "fix": "Download fallback CSV + DAX package using the fallback link.",
+                "fallback_url": f"{request.url_root}api/export/powerbi?type=fallback"
+            }), 500
+
+    @app.route("/api/export/powerbi/push", methods=["POST"])
+    def export_powerbi_push():
+        try:
+            df = build_enriched_predictions_dataframe()
+            res = push_to_powerbi_rest_api(df)
+            status_code = 200 if res.get("ok") else 400
+            return jsonify(res), status_code
+        except Exception as e:
+            return jsonify({"ok": False, "stage": "execution", "message": str(e), "fix": "Check credentials."}), 500
+
+    @app.route("/api/export/powerbi/status")
+    def export_powerbi_status():
+        tenant_id = os.environ.get("PBI_TENANT_ID")
+        client_id = os.environ.get("PBI_CLIENT_ID")
+        client_secret = os.environ.get("PBI_CLIENT_SECRET")
+        workspace_id = os.environ.get("PBI_WORKSPACE_ID")
+        is_configured = bool(tenant_id and client_id and client_secret and workspace_id)
+        return jsonify({
+            "configured": is_configured,
+            "has_tenant_id": bool(tenant_id),
+            "has_client_id": bool(client_id),
+            "has_client_secret": bool(client_secret),
+            "has_workspace_id": bool(workspace_id)
+        })
 
     @app.route("/api/export/powerbi/m")
     def export_powerbi_m_script():

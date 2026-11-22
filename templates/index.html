@@ -2641,57 +2641,97 @@
             </div>
             <div id="biModalBody">
                 <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.5; margin-bottom: 16px;">
-                    Instantly export pre-configured interactive dashboards with complete KPIs, risk score cards, revenue exposure matrices, and automated DAX measures directly to Power BI Desktop or Tableau.
+                    Generate enterprise-ready deliverables directly from your Qiplo analysis: complete Power BI PBIP project bundles with star-schema datasets, pre-compiled DAX measures, brand themes, and Tableau workbooks.
                 </p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 20px;">
-                    <!-- Power BI Template card -->
-                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #F2C811; margin-bottom: 6px; font-size: 0.95rem;">
-                                <i data-lucide="line-chart" style="width: 18px; height: 18px;"></i> Power BI Template (.pbit)
+
+                <!-- Hero: Power BI Project Deliverable Package (PBIP) -->
+                <div style="background: linear-gradient(135deg, rgba(242, 200, 17, 0.08) 0%, rgba(0, 245, 255, 0.05) 100%); border: 1px solid rgba(242, 200, 17, 0.35); border-radius: var(--radius-sm); padding: 18px; margin-bottom: 18px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div style="width: 28px; height: 28px; border-radius: 6px; background: rgba(242, 200, 17, 0.2); display: flex; align-items: center; justify-content: center;">
+                                <i data-lucide="package-check" style="width: 16px; height: 16px; color: #F2C811;"></i>
                             </div>
-                            <p style="font-size: 0.78rem; color: var(--muted); margin: 0 0 12px 0;">Auto-creates complete report with cards, bar charts, risk tables &amp; DAX measures inside Power BI Desktop.</p>
+                            <span style="font-weight: 700; color: #FFFFFF; font-size: 1.02rem;">Power BI Project Package (.pbip / Star Schema)</span>
                         </div>
-                        <button type="button" class="primaryBtn" onclick="window.open('/api/export/powerbi?type=pbit', '_blank')" style="width: 100%; justify-content: center;">
-                            <i data-lucide="download" style="width: 14px; height: 14px;"></i> Download .pbit Template
+                        <span style="font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 4px; background: rgba(242, 200, 17, 0.2); color: #F2C811; border: 1px solid rgba(242, 200, 17, 0.4); text-transform: uppercase; letter-spacing: 0.04em;">Zero Manual Repair</span>
+                    </div>
+                    <p style="font-size: 0.80rem; color: var(--muted); margin: 0 0 14px 0; line-height: 1.45;">
+                        Complete Power BI Project deliverable containing 5 typed star-schema CSVs (Fact, Date, Customer, Product, Region), TMDL semantic model, 7 core DAX measures (Total Revenue, Customers, Churn Rate, Revenue at Risk, MoM %, YTD, Avg Score), Qiplo cyber theme, and 3-page interactive report layout.
+                    </p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button type="button" class="primaryBtn" onclick="window.open('/api/export/powerbi', '_blank')" style="flex: 2; min-width: 200px; justify-content: center; background: linear-gradient(135deg, #F2C811 0%, #E97627 100%); color: #090D16; font-weight: 700; border: none;">
+                            <i data-lucide="download" style="width: 15px; height: 15px;"></i> Download Power BI Package (.zip)
+                        </button>
+                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/powerbi?type=fallback', '_blank')" style="flex: 1; min-width: 160px; justify-content: center; font-size: 0.78rem;" title="CSVs + measures.dax + theme + README">
+                            <i data-lucide="file-archive" style="width: 14px; height: 14px;"></i> Download Fallback (.zip)
                         </button>
                     </div>
-                    <!-- Power BI Connector card -->
-                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+                </div>
+
+                <!-- Secondary Deliverables Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 18px;">
+                    <!-- Power BI Template (.pbit) -->
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
-                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--accent); margin-bottom: 6px; font-size: 0.95rem;">
-                                <i data-lucide="share-2" style="width: 18px; height: 18px;"></i> Power BI Data Source (.pbids)
+                            <div style="display: flex; align-items: center; gap: 7px; font-weight: 700; color: #F2C811; margin-bottom: 4px; font-size: 0.90rem;">
+                                <i data-lucide="line-chart" style="width: 16px; height: 16px;"></i> Power BI Template (.pbit)
                             </div>
-                            <p style="font-size: 0.78rem; color: var(--muted); margin: 0 0 12px 0;">Direct connection file to link Power BI Desktop directly to your live SQLite predictions feed.</p>
+                            <p style="font-size: 0.76rem; color: var(--muted); margin: 0 0 10px 0;">Standalone binary template with pre-wired visuals and measures.</p>
                         </div>
-                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/powerbi?type=pbids', '_blank')" style="width: 100%; justify-content: center;">
-                            <i data-lucide="download" style="width: 14px; height: 14px;"></i> Download .pbids Connector
+                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/powerbi?type=pbit', '_blank')" style="width: 100%; justify-content: center; font-size: 0.80rem;">
+                            <i data-lucide="download" style="width: 13px; height: 13px;"></i> Download .pbit
                         </button>
                     </div>
-                    <!-- Tableau Workbook card -->
-                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <!-- Power BI Data Source (.pbids) -->
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
-                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: #E97627; margin-bottom: 6px; font-size: 0.95rem;">
-                                <i data-lucide="trending-up" style="width: 18px; height: 18px;"></i> Tableau Workbook (.twb)
+                            <div style="display: flex; align-items: center; gap: 7px; font-weight: 700; color: var(--accent); margin-bottom: 4px; font-size: 0.90rem;">
+                                <i data-lucide="share-2" style="width: 16px; height: 16px;"></i> Power BI Data Source (.pbids)
                             </div>
-                            <p style="font-size: 0.78rem; color: var(--muted); margin: 0 0 12px 0;">Complete Tableau workbook pre-configured with Executive AI Churn Dashboard layout &amp; calculated fields.</p>
+                            <p style="font-size: 0.76rem; color: var(--muted); margin: 0 0 10px 0;">Direct connection file to link Power BI directly to your live SQLite feed.</p>
                         </div>
-                        <button type="button" class="primaryBtn" onclick="window.open('/api/export/tableau', '_blank')" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #E97627 0%, #D946EF 100%);">
-                            <i data-lucide="download" style="width: 14px; height: 14px;"></i> Download .twb Workbook
+                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/powerbi?type=pbids', '_blank')" style="width: 100%; justify-content: center; font-size: 0.80rem;">
+                            <i data-lucide="download" style="width: 13px; height: 13px;"></i> Download .pbids
                         </button>
                     </div>
-                    <!-- Power Query M-Script card -->
-                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; display: flex; flex-direction: column; justify-content: space-between;">
+                    <!-- Tableau Workbook (.twb) -->
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
-                            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--accent-2); margin-bottom: 6px; font-size: 0.95rem;">
-                                <i data-lucide="code" style="width: 18px; height: 18px;"></i> Power Query M-Script (.m)
+                            <div style="display: flex; align-items: center; gap: 7px; font-weight: 700; color: #E97627; margin-bottom: 4px; font-size: 0.90rem;">
+                                <i data-lucide="trending-up" style="width: 16px; height: 16px;"></i> Tableau Workbook (.twb)
                             </div>
-                            <p style="font-size: 0.78rem; color: var(--muted); margin: 0 0 12px 0;">Raw M-Code script for pasting into Power Query Advanced Editor.</p>
+                            <p style="font-size: 0.76rem; color: var(--muted); margin: 0 0 10px 0;">Pre-configured executive workbook with calculated fields.</p>
                         </div>
-                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/powerbi/m', '_blank')" style="width: 100%; justify-content: center;">
-                            <i data-lucide="file-code" style="width: 14px; height: 14px;"></i> Download M-Script
+                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/tableau', '_blank')" style="width: 100%; justify-content: center; font-size: 0.80rem;">
+                            <i data-lucide="download" style="width: 13px; height: 13px;"></i> Download .twb
                         </button>
                     </div>
+                    <!-- Power Query M-Script (.m) -->
+                    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 7px; font-weight: 700; color: var(--accent-2); margin-bottom: 4px; font-size: 0.90rem;">
+                                <i data-lucide="code" style="width: 16px; height: 16px;"></i> Power Query M-Script (.m)
+                            </div>
+                            <p style="font-size: 0.76rem; color: var(--muted); margin: 0 0 10px 0;">Raw M-code script for Power Query Advanced Editor.</p>
+                        </div>
+                        <button type="button" class="ghostBtn" onclick="window.open('/api/export/powerbi/m', '_blank')" style="width: 100%; justify-content: center; font-size: 0.80rem;">
+                            <i data-lucide="file-code" style="width: 13px; height: 13px;"></i> Download M-Script
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live Power BI REST Push Service Bar -->
+                <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i data-lucide="cloud-upload" style="width: 18px; height: 18px; color: var(--accent-2);"></i>
+                        <div>
+                            <span style="font-size: 0.80rem; font-weight: 700; color: #FFFFFF;">Power BI Service REST Live Push</span>
+                            <span id="pbiRestStatusText" style="display: block; font-size: 0.72rem; color: var(--muted);">Direct cloud sync via Azure AD Client Credentials</span>
+                        </div>
+                    </div>
+                    <button type="button" id="pbiRestPushBtn" class="ghostBtn" onclick="pushToPowerBiService()" style="font-size: 0.78rem; padding: 6px 14px;">
+                        <i data-lucide="zap" style="width: 13px; height: 13px;"></i> Push Live Dataset
+                    </button>
                 </div>
                 <!-- Live Feed Copy Box -->
                 <div style="background: var(--surface-3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px;">

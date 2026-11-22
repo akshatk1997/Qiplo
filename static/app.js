@@ -1693,6 +1693,7 @@ function openBiExportModal(target = 'powerbi') {
         codeEl.textContent = `${window.location.origin}/api/export/csv`;
     }
     modal.classList.remove('hidden');
+    checkPbiRestStatus();
     if (window.lucide) window.lucide.createIcons();
 }
 
@@ -1700,6 +1701,63 @@ function closeBiExportModal() {
     const modal = document.getElementById('biExportModal');
     if (modal) modal.classList.add('hidden');
 }
+
+async function checkPbiRestStatus() {
+    const statusEl = document.getElementById('pbiRestStatusText');
+    if (!statusEl) return;
+    try {
+        const resp = await fetch('/api/export/powerbi/status');
+        const data = await resp.json();
+        if (data.configured) {
+            statusEl.textContent = `Configured (Tenant: ${data.tenant_id ? data.tenant_id.substring(0, 8) + '...' : 'configured'})`;
+            statusEl.style.color = '#10B981';
+        } else {
+            statusEl.textContent = `Awaiting Azure AD credentials in env vars (${data.missing ? data.missing.join(', ') : 'PBI_TENANT_ID, ...'})`;
+            statusEl.style.color = 'var(--muted)';
+        }
+    } catch (e) {
+        // silent fallback
+    }
+}
+window.checkPbiRestStatus = checkPbiRestStatus;
+
+async function pushToPowerBiService() {
+    const btn = document.getElementById('pbiRestPushBtn');
+    const origHtml = btn ? btn.innerHTML : '';
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i data-lucide="loader" class="spin" style="width:13px;height:13px;"></i> Pushing...';
+        if (window.lucide) window.lucide.createIcons();
+    }
+    try {
+        const resp = await fetch('/api/export/powerbi/push', { method: 'POST' });
+        const res = await resp.json();
+        if (res.ok) {
+            showBiToast(`Successfully pushed dataset to Power BI Service (${res.rows_pushed || 0} rows)!`, "check-circle");
+            const statusEl = document.getElementById('pbiRestStatusText');
+            if (statusEl) {
+                statusEl.textContent = `Pushed dataset: ${res.dataset_id || 'Active'}`;
+                statusEl.style.color = '#10B981';
+            }
+        } else {
+            const errStage = res.stage ? `[${res.stage}] ` : '';
+            const errMsg = res.message || 'Push failed';
+            const fixGuide = res.fix ? `\n\nFix Guidance: ${res.fix}` : '';
+            alert(`${errStage}${errMsg}${fixGuide}`);
+            showBiToast(`Push failed: ${errMsg}`, "alert-triangle");
+        }
+    } catch (err) {
+        alert(`Failed to push to Power BI REST API: ${err.message}`);
+        showBiToast(`Push error: ${err.message}`, "alert-triangle");
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = origHtml || '<i data-lucide="zap" style="width: 13px; height: 13px;"></i> Push Live Dataset';
+            if (window.lucide) window.lucide.createIcons();
+        }
+    }
+}
+window.pushToPowerBiService = pushToPowerBiService;
 
 function copyBiFeedUrl() {
     const url = `${window.location.origin}/api/export/csv`;
@@ -1720,9 +1778,9 @@ document.getElementById('exportTableauBtn').addEventListener('click', () => {
     showBiToast("Tableau Workbook (.twb) downloaded! Pre-loaded with executive layout & AI risk fields.", "trending-up");
 });
 document.getElementById('exportPowerBiBtn').addEventListener('click', () => {
-    window.open('/api/export/powerbi?type=pbit', '_blank');
+    window.open('/api/export/powerbi', '_blank');
     openBiExportModal('powerbi');
-    showBiToast("Power BI Report Template (.pbit) downloaded! Auto-creates visuals inside Power BI Desktop.", "line-chart");
+    showBiToast("Power BI Project Package (.pbip) downloaded! Star schema & DAX measures ready.", "package-check");
 });
 window.exportExcel = function() {
     if (!predictionData || !predictionData.length) {
