@@ -50,6 +50,61 @@ const AudioFeedback = {
     notify: () => {}
 };
 
+// Universal High-Performance Lucide Icon Renderer with Safe Debounced Observer
+let _iconRefreshDebounce = null;
+window.refreshIcons = function(root) {
+    try {
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons(root ? { root } : undefined);
+        }
+    } catch (err) {
+        console.warn('Lucide icon render notice:', err);
+    }
+};
+
+// Auto-render any dynamically injected <i data-lucide="..."> elements
+if (typeof MutationObserver !== 'undefined' && typeof document !== 'undefined') {
+    const _setupIconObserver = () => {
+        window.refreshIcons();
+        if (document.body) {
+            const iconObserver = new MutationObserver((mutations) => {
+                let needsRender = false;
+                for (let i = 0; i < mutations.length; i++) {
+                    const m = mutations[i];
+                    if (m.addedNodes && m.addedNodes.length > 0) {
+                        for (let j = 0; j < m.addedNodes.length; j++) {
+                            const node = m.addedNodes[j];
+                            if (node.nodeType === 1) {
+                                if (node.hasAttribute && node.hasAttribute('data-lucide')) {
+                                    needsRender = true;
+                                    break;
+                                }
+                                if (node.querySelector && node.querySelector('[data-lucide]')) {
+                                    needsRender = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (needsRender) break;
+                }
+                if (needsRender) {
+                    clearTimeout(_iconRefreshDebounce);
+                    _iconRefreshDebounce = setTimeout(() => {
+                        window.refreshIcons();
+                    }, 35);
+                }
+            });
+            iconObserver.observe(document.body, { childList: true, subtree: true });
+        }
+    };
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', _setupIconObserver);
+    } else {
+        _setupIconObserver();
+    }
+}
+
 // Autonomous Self-Healing Fetch Wrapper with Automatic Retry & Exponential Backoff
 async function safeFetch(url, options = {}, retries = 3, backoff = 400) {
     const roleSelect = document.getElementById('roleSelect');
@@ -6448,7 +6503,9 @@ document.addEventListener('DOMContentLoaded', () => {
             mobileMenuBtn.classList.toggle('active', mobileMenuDropdown.classList.contains('visible'));
             if (mobileMenuDropdown.classList.contains('visible') && window.selectMenuCategory) {
                 const slider = document.getElementById('menuFolderSlider');
-                window.selectMenuCategory(slider ? slider.value : 0, false);
+                setTimeout(() => {
+                    window.selectMenuCategory(slider ? slider.value : 0, false);
+                }, 40);
             }
         });
         document.addEventListener('click', (e) => {
@@ -6720,7 +6777,7 @@ function initCommandPaletteAndHotkeys() {
             return;
         }
 
-        // Escape Key handler — Close Command Palette, AI Copilot, or 3-Dot Menu
+        // Escape Key handler — Close Command Palette, AI Copilot, 3-Dot Menu, or any active Modals
         if (e.key === 'Escape') {
             closeCommandPalette();
             const copilot = document.getElementById('tab-copilot');
@@ -6731,6 +6788,11 @@ function initCommandPaletteAndHotkeys() {
             if (mobileMenuDropdown) mobileMenuDropdown.classList.remove('visible');
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
+            if (typeof closeBiExportModal === 'function') closeBiExportModal();
+            if (typeof closeMagnificZoom === 'function') closeMagnificZoom();
+            if (typeof closeToolInfo === 'function') closeToolInfo();
+            if (typeof closeResolutionWizard === 'function') closeResolutionWizard();
+            if (typeof exitGammaLivePresenter === 'function') exitGammaLivePresenter();
             return;
         }
 
@@ -6847,8 +6909,8 @@ function initCategorySlider() {
         if (trackRect.width === 0 || btnRect.width === 0) return;
         const left = btnRect.left - trackRect.left + track.scrollLeft;
         const width = btnRect.width;
-        indicator.style.left = `${left}px`;
-        indicator.style.width = `${width}px`;
+        indicator.style.left = `${Math.round(left)}px`;
+        indicator.style.width = `${Math.round(width)}px`;
     }
 
     function selectCategory(index, animateScroll = true) {
@@ -6865,7 +6927,7 @@ function initCategorySlider() {
             const isActive = (i === index);
             tab.classList.toggle('active', isActive);
             if (isActive) {
-                updateIndicator(tab);
+                requestAnimationFrame(() => updateIndicator(tab));
             }
         });
 
