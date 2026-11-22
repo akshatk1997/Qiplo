@@ -8161,11 +8161,18 @@ window.addEventListener('languageChanged', (e) => {
     // Re-render prediction results table if data is present
     if (typeof predictionData !== 'undefined' && predictionData && predictionData.length && typeof renderRows === 'function') {
         renderRows();
+        if (window.qiploI18n && typeof window.qiploI18n.translateDOM === 'function') {
+            const table = document.getElementById('predictionTable');
+            if (table) window.qiploI18n.translateDOM(table);
+        }
     }
     // Re-render BI export studio modal if active
     const biModal = document.getElementById('biExportModal');
     if (biModal && !biModal.classList.contains('hidden') && typeof renderPowerBiDashboard === 'function') {
         renderPowerBiDashboard(window.currentBiTarget || 'powerbi');
+        if (window.qiploI18n && typeof window.qiploI18n.translateDOM === 'function') {
+            window.qiploI18n.translateDOM(biModal);
+        }
     }
     // Re-render operational tips for current role
     const roleSelect = document.getElementById('roleSelect');

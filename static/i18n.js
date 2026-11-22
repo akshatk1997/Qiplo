@@ -1781,8 +1781,1664 @@
         }
     };
 
+
+
+    const PHRASE_DICTIONARY = {
+        "Overview": {
+                "es": "Visión General",
+                "fr": "Vue d'ensemble",
+                "de": "Übersicht",
+                "zh": "概览",
+                "ja": "概要",
+                "pt": "Visão Geral",
+                "ar": "نظرة عامة",
+                "hi": "अवलोकन",
+                "ru": "Обзор"
+        },
+        "Specials": {
+                "es": "Especiales",
+                "fr": "Spéciaux",
+                "de": "Spezial",
+                "zh": "专题套件",
+                "ja": "特別分析",
+                "pt": "Especiais",
+                "ar": "تحليلات خاصة",
+                "hi": "विशेष",
+                "ru": "Специальные"
+        },
+        "Actions": {
+                "es": "Acciones",
+                "fr": "Actions",
+                "de": "Maßnahmen",
+                "zh": "行动方案",
+                "ja": "アクション",
+                "pt": "Ações",
+                "ar": "الإجراءات",
+                "hi": "कार्रवाई",
+                "ru": "Действия"
+        },
+        "Customers": {
+                "es": "Clientes",
+                "fr": "Clients",
+                "de": "Kunden",
+                "zh": "客户名单",
+                "ja": "顧客",
+                "pt": "Clientes",
+                "ar": "العملاء",
+                "hi": "ग्राहक",
+                "ru": "Клиенты"
+        },
+        "Business": {
+                "es": "Negocio",
+                "fr": "Entreprise",
+                "de": "Geschäft",
+                "zh": "商业智能",
+                "ja": "ビジネス",
+                "pt": "Negócios",
+                "ar": "الأعمال",
+                "hi": "व्यवसाय",
+                "ru": "Бизнес"
+        },
+        "Sandbox": {
+                "es": "Zona de Pruebas",
+                "fr": "Bac à sable",
+                "de": "Sandbox",
+                "zh": "沙盒模拟",
+                "ja": "サンドボックス",
+                "pt": "Sandbox",
+                "ar": "صندوق التجربة",
+                "hi": "सैंडबॉक्स",
+                "ru": "Песочница"
+        },
+        "Presentation": {
+                "es": "Presentación",
+                "fr": "Présentation",
+                "de": "Präsentation",
+                "zh": "演示文稿",
+                "ja": "プレゼンテーション",
+                "pt": "Apresentação",
+                "ar": "العرض التقديمي",
+                "hi": "प्रस्तुति",
+                "ru": "Презентация"
+        },
+        "Guide": {
+                "es": "Guía",
+                "fr": "Guide",
+                "de": "Leitfaden",
+                "zh": "使用指南",
+                "ja": "ガイド",
+                "pt": "Guia",
+                "ar": "الدليل",
+                "hi": "मार्गदर्शिका",
+                "ru": "Руководство"
+        },
+        "Report": {
+                "es": "Informe",
+                "fr": "Rapport",
+                "de": "Bericht",
+                "zh": "审计报告",
+                "ja": "レポート",
+                "pt": "Relatório",
+                "ar": "التقرير",
+                "hi": "रिपोर्ट",
+                "ru": "Отчет"
+        },
+        "Tableau": {
+                "es": "Tableau",
+                "fr": "Tableau",
+                "de": "Tableau",
+                "zh": "Tableau",
+                "ja": "Tableau",
+                "pt": "Tableau",
+                "ar": "Tableau",
+                "hi": "Tableau",
+                "ru": "Tableau"
+        },
+        "Power BI": {
+                "es": "Power BI",
+                "fr": "Power BI",
+                "de": "Power BI",
+                "zh": "Power BI",
+                "ja": "Power BI",
+                "pt": "Power BI",
+                "ar": "Power BI",
+                "hi": "Power BI",
+                "ru": "Power BI"
+        },
+        "Excel": {
+                "es": "Excel",
+                "fr": "Excel",
+                "de": "Excel",
+                "zh": "Excel",
+                "ja": "Excel",
+                "pt": "Excel",
+                "ar": "Excel",
+                "hi": "Excel",
+                "ru": "Excel"
+        },
+        "PDF": {
+                "es": "PDF",
+                "fr": "PDF",
+                "de": "PDF",
+                "zh": "PDF",
+                "ja": "PDF",
+                "pt": "PDF",
+                "ar": "PDF",
+                "hi": "PDF",
+                "ru": "PDF"
+        },
+        "Live": {
+                "es": "En vivo",
+                "fr": "En direct",
+                "de": "Live",
+                "zh": "实时",
+                "ja": "ライブ",
+                "pt": "Ao vivo",
+                "ar": "مباشر",
+                "hi": "लाइव",
+                "ru": "В эфире"
+        },
+        "Data": {
+                "es": "Datos",
+                "fr": "Données",
+                "de": "Daten",
+                "zh": "数据",
+                "ja": "データ",
+                "pt": "Dados",
+                "ar": "البيانات",
+                "hi": "डेटा",
+                "ru": "Данные"
+        },
+        "Notes": {
+                "es": "Notas",
+                "fr": "Notes",
+                "de": "Notizen",
+                "zh": "笔记",
+                "ja": "ノート",
+                "pt": "Notas",
+                "ar": "الملاحظات",
+                "hi": "नोट्स",
+                "ru": "Заметки"
+        },
+        "Tour": {
+                "es": "Recorrido",
+                "fr": "Visite",
+                "de": "Tour",
+                "zh": "漫游导览",
+                "ja": "ツアー",
+                "pt": "Tour",
+                "ar": "جولة",
+                "hi": "टूर",
+                "ru": "Тур"
+        },
+        "Sync": {
+                "es": "Sincronizar",
+                "fr": "Synchroniser",
+                "de": "Sync",
+                "zh": "同步",
+                "ja": "同期",
+                "pt": "Sincronizar",
+                "ar": "مزامنة",
+                "hi": "सिंक",
+                "ru": "Синхронизация"
+        },
+        "Settings": {
+                "es": "Ajustes",
+                "fr": "Paramètres",
+                "de": "Einstellungen",
+                "zh": "设置",
+                "ja": "設定",
+                "pt": "Configurações",
+                "ar": "الإعدادات",
+                "hi": "सेटिंग्स",
+                "ru": "Настройки"
+        },
+        "Admin Session": {
+                "es": "Sesión Admin",
+                "fr": "Session Admin",
+                "de": "Admin-Sitzung",
+                "zh": "管理员会话",
+                "ja": "管理者セッション",
+                "pt": "Sessão Admin",
+                "ar": "جلسة المشرف",
+                "hi": "व्यवस्थापक सत्र",
+                "ru": "Сессия админа"
+        },
+        "All": {
+                "es": "Todo",
+                "fr": "Tout",
+                "de": "Alle",
+                "zh": "全部",
+                "ja": "すべて",
+                "pt": "Tudo",
+                "ar": "الكل",
+                "hi": "सभी",
+                "ru": "Все"
+        },
+        "Exports": {
+                "es": "Exportaciones",
+                "fr": "Exportations",
+                "de": "Exporte",
+                "zh": "导出工具",
+                "ja": "エクスポート",
+                "pt": "Exportações",
+                "ar": "الصادرات",
+                "hi": "निर्यात",
+                "ru": "Экспорт"
+        },
+        "Suites": {
+                "es": "Suites",
+                "fr": "Suites",
+                "de": "Suites",
+                "zh": "业务套件",
+                "ja": "スイート",
+                "pt": "Suítes",
+                "ar": "الأجنحة",
+                "hi": "सूट्स",
+                "ru": "Пакеты"
+        },
+        "Tools": {
+                "es": "Herramientas",
+                "fr": "Outils",
+                "de": "Werkzeuge",
+                "zh": "工具箱",
+                "ja": "ツール",
+                "pt": "Ferramentas",
+                "ar": "الأدوات",
+                "hi": "उपकरण",
+                "ru": "Инструменты"
+        },
+        "System": {
+                "es": "Sistema",
+                "fr": "Système",
+                "de": "System",
+                "zh": "系统设置",
+                "ja": "システム",
+                "pt": "Sistema",
+                "ar": "النظام",
+                "hi": "सिस्टम",
+                "ru": "Система"
+        },
+        "Languages": {
+                "es": "Idiomas",
+                "fr": "Langues",
+                "de": "Sprachen",
+                "zh": "语言",
+                "ja": "言語",
+                "pt": "Idiomas",
+                "ar": "اللغات",
+                "hi": "भाषाएं",
+                "ru": "Языки"
+        },
+        "Never lose a customer again": {
+                "es": "Nunca vuelva a perder un cliente",
+                "fr": "Ne perdez plus jamais un client",
+                "de": "Verlieren Sie nie wieder einen Kunden",
+                "zh": "永不流失任何一位客户",
+                "ja": "もう二度と顧客を失わない",
+                "pt": "Nunca mais perca um cliente",
+                "ar": "لا تفقد عميلاً أبداً بعد اليوم",
+                "hi": "फिर कभी कोई ग्राहक न खोएं",
+                "ru": "Больше никогда не теряйте клиентов"
+        },
+        "Demo Sandbox Active": {
+                "es": "Modo Sandbox Activo",
+                "fr": "Bac à sable démo actif",
+                "de": "Demo-Sandbox aktiv",
+                "zh": "演示沙盒已激活",
+                "ja": "デモサンドボックス稼働中",
+                "pt": "Sandbox de Demonstração Ativo",
+                "ar": "صندوق التجربة النشط",
+                "hi": "डेमो सैंडबॉक्स सक्रिय",
+                "ru": "Демо-песочница активна"
+        },
+        "Company name (optional)": {
+                "es": "Nombre de empresa (opcional)",
+                "fr": "Nom de l'entreprise (optionnel)",
+                "de": "Unternehmensname (optional)",
+                "zh": "公司名称（可选）",
+                "ja": "会社名（任意）",
+                "pt": "Nome da empresa (opcional)",
+                "ar": "اسم الشركة (اختياري)",
+                "hi": "कंपनी का नाम (वैकल्पिक)",
+                "ru": "Название компании (опционально)"
+        },
+        "Ingestion & Telemetry": {
+                "es": "Ingesta y Telemetría",
+                "fr": "Ingestion et Télémétrie",
+                "de": "Erfassung & Telemetrie",
+                "zh": "数据导入与监控",
+                "ja": "データ取得とテレメトリ",
+                "pt": "Ingestão e Telemetria",
+                "ar": "الاستيعاب والقياس",
+                "hi": "डेटा अंतर्ग्रहण और टेलीमेट्री",
+                "ru": "Сбор данных и телеметрия"
+        },
+        "Active records, billing distribution & dataset sync": {
+                "es": "Registros activos, distribución de facturación y sincronización",
+                "fr": "Registres actifs, facturation et synchronisation",
+                "de": "Aktive Datensätze, Abrechnungsverteilung & Synchronisierung",
+                "zh": "活跃记录、计费分布和数据集同步",
+                "ja": "アクティブなレコード、請求分布、データ同期",
+                "pt": "Registros ativos, distribuição de faturamento e sincronização",
+                "ar": "السجلات النشطة وتوزيع الفواتير ومزامنة البيانات",
+                "hi": "सक्रिय रिकॉर्ड, बिलिंग वितरण और डेटासेट सिंक",
+                "ru": "Активные записи, распределение счетов и синхронизация"
+        },
+        "Predictive AI & Sandbox": {
+                "es": "IA Predictiva y Sandbox",
+                "fr": "IA Prédictive & Bac à sable",
+                "de": "Prädiktive KI & Sandbox",
+                "zh": "预测性AI与沙盒",
+                "ja": "予測AIとサンドボックス",
+                "pt": "IA Preditiva e Sandbox",
+                "ar": "الذكاء الاصطناعي التنبؤي وصندوق التجربة",
+                "hi": "भविष्य कहनेवाला एआई और सैंडबॉक्स",
+                "ru": "Предиктивный ИИ и песочница"
+        },
+        "Test retention levers & simulate churn outlooks": {
+                "es": "Pruebe palancas de retención y simule escenarios de cancelación",
+                "fr": "Testez les leviers de rétention et simulez le désabonnement",
+                "de": "Kundenbindungshebel testen & Abwanderungsszenarien simulieren",
+                "zh": "测试留存杠杆并模拟流失走势",
+                "ja": "維持施策をテストし、解約見通しをシミュレーション",
+                "pt": "Teste alavancas de retenção e simule cenários de churn",
+                "ar": "اختبر أدوات الاستبقاء ومحاكاة توقعات التسرب",
+                "hi": "रिटेंशन लीवर का परीक्षण करें और चर्न आउटलुक का अनुकरण करें",
+                "ru": "Тестируйте рычаги удержания и моделируйте отток"
+        },
+        "Prescriptive SLA Actions": {
+                "es": "Acciones Prescriptivas de SLA",
+                "fr": "Actions Prescriptives SLA",
+                "de": "Präskriptive SLA-Maßnahmen",
+                "zh": "指导性SLA响应",
+                "ja": "処方的SLAアクション",
+                "pt": "Ações Prescritivas de SLA",
+                "ar": "إجراءات اتفاقية مستوى الخدمة الإلزامية",
+                "hi": "निर्देशात्मक एसएलए कार्रवाइयां",
+                "ru": "Предписанные действия по SLA"
+        },
+        "Automated triage, CSM assignments & Gamma pitch decks": {
+                "es": "Triaje automatizado, asignaciones de CSM y presentaciones Gamma",
+                "fr": "Triage automatisé, affectations CSM et présentations Gamma",
+                "de": "Automatisiertes Triage, CSM-Zuweisung & Gamma-Präsentationen",
+                "zh": "自动分流、CSM分配和Gamma演示幻灯片",
+                "ja": "自動トリアージ、CSM割り当て、Gammaスライドデッキ",
+                "pt": "Triagem automatizada, atribuições de CSM e apresentações Gamma",
+                "ar": "الفرز التلقائي وتعيين مديري النجاح وعروض Gamma التقديمية",
+                "hi": "स्वचालित ट्राइएज, सीएसएम आवंटन और गामा पिच डेक",
+                "ru": "Автоматическая сортировка, назначения CSM и презентации Gamma"
+        },
+        "Monitored Accounts": {
+                "es": "Cuentas Monitoreadas",
+                "fr": "Comptes Surveillés",
+                "de": "Überwachte Konten",
+                "zh": "受监控账户",
+                "ja": "監視対象アカウント",
+                "pt": "Contas Monitoradas",
+                "ar": "الحسابات المراقبة",
+                "hi": "निगरानी किए गए खाते",
+                "ru": "Контролируемые аккаунты"
+        },
+        "Synced": {
+                "es": "Sincronizado",
+                "fr": "Synchronisé",
+                "de": "Synchronisiert",
+                "zh": "已同步",
+                "ja": "同期済み",
+                "pt": "Sincronizado",
+                "ar": "متزامن",
+                "hi": "सिंक किया गया",
+                "ru": "Синхронизировано"
+        },
+        "Active database & ingested profiles": {
+                "es": "Base de datos activa y perfiles cargados",
+                "fr": "Base de données active et profils importés",
+                "de": "Aktive Datenbank & geladene Profile",
+                "zh": "活跃数据库和已摄入的客户资料",
+                "ja": "アクティブデータベースとプロファイル",
+                "pt": "Banco de dados ativo e perfis ingeridos",
+                "ar": "قاعدة البيانات النشطة والملفات الشخصية المجمعة",
+                "hi": "सक्रिय डेटाबेस और प्रोफ़ाइल",
+                "ru": "Активная база данных и профили"
+        },
+        "Immediate Triage Risk": {
+                "es": "Riesgo Urgente (Triaje)",
+                "fr": "Risque Urgent (Triage)",
+                "de": "Akutes Triage-Risiko",
+                "zh": "高急迫风险（分流）",
+                "ja": "緊急トリアージリスク",
+                "pt": "Risco Imediato de Triagem",
+                "ar": "خطر الفرز الفوري",
+                "hi": "तत्काल ट्राइएज जोखिम",
+                "ru": "Срочный риск (триаж)"
+        },
+        "Attention": {
+                "es": "Atención",
+                "fr": "Attention",
+                "de": "Achtung",
+                "zh": "需关注",
+                "ja": "要対応",
+                "pt": "Atenção",
+                "ar": "انتباه",
+                "hi": "ध्यान दें",
+                "ru": "Внимание"
+        },
+        "Accounts requiring proactive retention": {
+                "es": "Cuentas que requieren retención proactiva",
+                "fr": "Comptes nécessitant une rétention proactive",
+                "de": "Konten mit proaktivem Bindungsbedarf",
+                "zh": "需要主动进行留存干预的账户",
+                "ja": "積極的な維持施策が必要なアカウント",
+                "pt": "Contas que exigem retenção proativa",
+                "ar": "الحسابات التي تتطلب استبقاء استباقي",
+                "hi": "सक्रिय रिटेंशन की आवश्यकता वाले खाते",
+                "ru": "Аккаунты, требующие превентивного удержания"
+        },
+        "Healthy Baseline": {
+                "es": "Base Saludable",
+                "fr": "Base Saine",
+                "de": "Gesunde Basis",
+                "zh": "健康基线",
+                "ja": "健全なベースライン",
+                "pt": "Base Saudável",
+                "ar": "الخط الأساسي السليم",
+                "hi": "स्वस्थ आधार",
+                "ru": "Здоровая база"
+        },
+        "Stable": {
+                "es": "Estable",
+                "fr": "Stable",
+                "de": "Stabil",
+                "zh": "稳定",
+                "ja": "安定",
+                "pt": "Estável",
+                "ar": "مستقر",
+                "hi": "स्थिर",
+                "ru": "Стабильно"
+        },
+        "Low risk & high loyalty cohorts": {
+                "es": "Cohortes de bajo riesgo y alta fidelidad",
+                "fr": "Cohortes à faible risque et haute fidélité",
+                "de": "Kohorten mit geringem Risiko & hoher Treue",
+                "zh": "低风险与高忠诚度客群",
+                "ja": "低リスクかつ高ロイヤルティのコホート",
+                "pt": "Coortes de baixo risco e alta fidelidade",
+                "ar": "مجموعات منخفضة المخاطر وعالية الولاء",
+                "hi": "कम जोखिम और उच्च वफादारी समूह",
+                "ru": "Когорты с низким риском и высокой лояльностью"
+        },
+        "Feature Dimensions": {
+                "es": "Dimensiones de Características",
+                "fr": "Dimensions des Variables",
+                "de": "Merkmalsdimensionen",
+                "zh": "特征评估维度",
+                "ja": "特徴量次元",
+                "pt": "Dimensões de Atributos",
+                "ar": "أبعاد الخصائص",
+                "hi": "सुविधा आयाम",
+                "ru": "Оцениваемые параметры"
+        },
+        "Real-time ML": {
+                "es": "ML en tiempo real",
+                "fr": "ML temps réel",
+                "de": "Echtzeit-ML",
+                "zh": "实时机器学习",
+                "ja": "リアルタイム機械学習",
+                "pt": "ML em tempo real",
+                "ar": "تعلم الآلة بالوقت الفعلي",
+                "hi": "वास्तविक समय एमएल",
+                "ru": "ML в реальном времени"
+        },
+        "Tenure, spend, usage & tickets": {
+                "es": "Antigüedad, gasto, uso y tickets de soporte",
+                "fr": "Ancienneté, dépenses, utilisation et tickets",
+                "de": "Laufzeit, Ausgaben, Nutzung & Tickets",
+                "zh": "在网时长、消费金额、使用量和工单数",
+                "ja": "契約期間、支出、利用状況、サポートチケット",
+                "pt": "Tempo de contrato, gastos, uso e tíquetes",
+                "ar": "المدة والإنفاق والاستخدام والتذاكر",
+                "hi": "कार्यकाल, खर्च, उपयोग और टिकट",
+                "ru": "Срок, траты, использование и тикеты"
+        },
+        "Awaiting analysis": {
+                "es": "Esperando análisis",
+                "fr": "En attente d'analyse",
+                "de": "Warten auf Analyse",
+                "zh": "等待分析生成",
+                "ja": "分析待機中",
+                "pt": "Aguardando análise",
+                "ar": "بانتظار التحليل",
+                "hi": "विश्लेषण की प्रतीक्षा है",
+                "ru": "Ожидание анализа"
+        },
+        "AI-Generated Retention Summary": {
+                "es": "Resumen Ejecutivo de Retención por IA",
+                "fr": "Résumé Exécutif de Rétention par l'IA",
+                "de": "KI-generierte Kundenbindungsübersicht",
+                "zh": "AI生成客户留存分析综述",
+                "ja": "AI生成による維持分析サマリー",
+                "pt": "Resumo Executivo de Retenção por IA",
+                "ar": "ملخص الاستبقاء المُنشأ بالذكاء الاصطناعي",
+                "hi": "एआई-जनित प्रतिधारण सारांश",
+                "ru": "Сводка удержания, сформированная ИИ"
+        },
+        "Prediction Engine": {
+                "es": "Motor de Predicción",
+                "fr": "Moteur de Prédiction",
+                "de": "Vorhersage-Engine",
+                "zh": "预测引擎",
+                "ja": "予測エンジン",
+                "pt": "Motor de Predição",
+                "ar": "محرك التنبؤ",
+                "hi": "भविष्यवाणी इंजन",
+                "ru": "Движок прогнозирования"
+        },
+        "System Status": {
+                "es": "Estado del Sistema",
+                "fr": "État du Système",
+                "de": "Systemstatus",
+                "zh": "系统状态",
+                "ja": "システム状態",
+                "pt": "Status do Sistema",
+                "ar": "حالة النظام",
+                "hi": "सिस्टम की स्थिति",
+                "ru": "Состояние системы"
+        },
+        "Operational": {
+                "es": "Operativo",
+                "fr": "Opérationnel",
+                "de": "Betriebsbereit",
+                "zh": "正常运行",
+                "ja": "稼働中",
+                "pt": "Operacional",
+                "ar": "يعمل بكفاءة",
+                "hi": "सक्रिय",
+                "ru": "Работает штатно"
+        },
+        "Response Latency": {
+                "es": "Latencia de Respuesta",
+                "fr": "Latence de Réponse",
+                "de": "Antwortlatenz",
+                "zh": "响应延迟",
+                "ja": "応答レイテンシ",
+                "pt": "Latência de Resposta",
+                "ar": "زمن الاستجابة",
+                "hi": "प्रतिक्रिया विलंबता",
+                "ru": "Задержка ответа"
+        },
+        "Model Version": {
+                "es": "Versión del Modelo",
+                "fr": "Version du Modèle",
+                "de": "Modellversion",
+                "zh": "模型版本",
+                "ja": "モデルバージョン",
+                "pt": "Versão do Modelo",
+                "ar": "إصدار النموذج",
+                "hi": "मॉडल संस्करण",
+                "ru": "Версия модели"
+        },
+        "Last Retrained": {
+                "es": "Último Reentrenamiento",
+                "fr": "Dernier Réentraînement",
+                "de": "Zuletzt neu trainiert",
+                "zh": "上次重训时间",
+                "ja": "最終再学習日時",
+                "pt": "Último Retreinamento",
+                "ar": "آخر إعادة تدريب",
+                "hi": "अंतिम पुनः प्रशिक्षित",
+                "ru": "Последнее переобучение"
+        },
+        "Awaiting training": {
+                "es": "Esperando entrenamiento",
+                "fr": "En attente d'entraînement",
+                "de": "Warten auf Training",
+                "zh": "等待训练",
+                "ja": "学習待機中",
+                "pt": "Aguardando treinamento",
+                "ar": "بانتظار التدريب",
+                "hi": "प्रशिक्षण की प्रतीक्षा है",
+                "ru": "Ожидает обучения"
+        },
+        "Telemetry Source": {
+                "es": "Fuente de Telemetría",
+                "fr": "Source de Télémétrie",
+                "de": "Telemetrie-Quelle",
+                "zh": "遥测数据源",
+                "ja": "テレメトリソース",
+                "pt": "Fonte de Telemetria",
+                "ar": "مصدر القياس",
+                "hi": "टेलीमेट्री स्रोत",
+                "ru": "Источник телеметрии"
+        },
+        "Consolidated DB State": {
+                "es": "Estado Consolidado de BD",
+                "fr": "État Consolidé de la BDD",
+                "de": "Konsolidierter DB-Status",
+                "zh": "合并数据库状态",
+                "ja": "統合DBステート",
+                "pt": "Estado Consolidado do BD",
+                "ar": "حالة قاعدة البيانات الموحدة",
+                "hi": "समेकित डीबी स्थिति",
+                "ru": "Консолидированная БД"
+        },
+        "Model Performance Telemetry": {
+                "es": "Telemetría de Rendimiento del Modelo",
+                "fr": "Télémétrie de Performance du Modèle",
+                "de": "Modell-Leistungs-Telemetrie",
+                "zh": "模型性能监控指标",
+                "ja": "モデルパフォーマンスのテレメトリ",
+                "pt": "Telemetria de Desempenho do Modelo",
+                "ar": "قياس أداء النموذج",
+                "hi": "मॉडल प्रदर्शन टेलीमेट्री",
+                "ru": "Телеметрия производительности модели"
+        },
+        "Accuracy": {
+                "es": "Precisión Global",
+                "fr": "Précision Globale",
+                "de": "Genauigkeit (Accuracy)",
+                "zh": "准确率 (Accuracy)",
+                "ja": "正解率",
+                "pt": "Acurácia",
+                "ar": "الدقة الإجمالية",
+                "hi": "सटीकता (Accuracy)",
+                "ru": "Точность (Accuracy)"
+        },
+        "Precision": {
+                "es": "Precisión",
+                "fr": "Précision",
+                "de": "Präzision (Precision)",
+                "zh": "精确率 (Precision)",
+                "ja": "適合率",
+                "pt": "Precisão",
+                "ar": "الدقة (Precision)",
+                "hi": "परिशुद्धता (Precision)",
+                "ru": "Точность (Precision)"
+        },
+        "Recall": {
+                "es": "Exhaustividad",
+                "fr": "Rappel",
+                "de": "Trefferquote (Recall)",
+                "zh": "召回率 (Recall)",
+                "ja": "再現率",
+                "pt": "Revocação",
+                "ar": "الاستدعاء (Recall)",
+                "hi": "रीकॉल (Recall)",
+                "ru": "Полнота (Recall)"
+        },
+        "ROC AUC": {
+                "es": "ROC AUC",
+                "fr": "ROC AUC",
+                "de": "ROC AUC",
+                "zh": "ROC AUC",
+                "ja": "ROC AUC",
+                "pt": "ROC AUC",
+                "ar": "ROC AUC",
+                "hi": "ROC AUC",
+                "ru": "ROC AUC"
+        },
+        "ML Confusion Matrix (Validation Split)": {
+                "es": "Matriz de Confusión ML (División de Validación)",
+                "fr": "Matrice de Confusion ML (Validation)",
+                "de": "ML-Wahrheitsmatrix (Validierung)",
+                "zh": "机器学习混淆矩阵（验证集）",
+                "ja": "ML混同行列（検証スプリット）",
+                "pt": "Matriz de Confusão de ML (Validação)",
+                "ar": "مصفوفة الارتباك (تقسيم التحقق)",
+                "hi": "एमएल भ्रम मैट्रिक्स (सत्यापन विभाजन)",
+                "ru": "Матрица ошибок ML (валидация)"
+        },
+        "Retention & Satisfaction Signals": {
+                "es": "Señales de Retención y Satisfacción",
+                "fr": "Signaux de Rétention et de Satisfaction",
+                "de": "Kundenbindungs- & Zufriedenheitssignale",
+                "zh": "客户留存与满意度特征信号",
+                "ja": "顧客維持および満足度シグナル",
+                "pt": "Sinais de Retenção e Satisfação",
+                "ar": "إشارات الاستبقاء ورضا العملاء",
+                "hi": "प्रतिधारण और संतुष्टि संकेत",
+                "ru": "Сигналы удержания и удовлетворенности"
+        },
+        "Global Feature Importance (SHAP weights)": {
+                "es": "Importancia Global de Factores (Pesos SHAP)",
+                "fr": "Importance Globale des Variables (Poids SHAP)",
+                "de": "Globale Merkmalsbedeutung (SHAP-Werte)",
+                "zh": "全局特征重要性（SHAP贡献权重）",
+                "ja": "大域的特徴量重要度（SHAPウェイト）",
+                "pt": "Importância Global de Atributos (Pesos SHAP)",
+                "ar": "أهمية الخصائص العالمية (أوزان SHAP)",
+                "hi": "वैश्विक सुविधा महत्व (SHAP भार)",
+                "ru": "Важность факторов (веса SHAP)"
+        },
+        "Prediction Results & Account Intelligence": {
+                "es": "Resultados de Predicción e Inteligencia de Cuentas",
+                "fr": "Résultats de Prédiction et Renseignements Clients",
+                "de": "Vorhersageergebnisse & Konto-Intelligenz",
+                "zh": "预测结果与账户洞察",
+                "ja": "予測結果およびアカウントインテリジェンス",
+                "pt": "Resultados de Predição e Inteligência de Contas",
+                "ar": "نتائج التنبؤ وذكاء الحسابات",
+                "hi": "भविष्यवाणी परिणाम और खाता बुद्धिमत्ता",
+                "ru": "Результаты прогнозирования и аналитика аккаунтов"
+        },
+        "Search by customer ID or segment...": {
+                "es": "Buscar por ID de cliente o segmento...",
+                "fr": "Rechercher par identifiant client ou segment...",
+                "de": "Nach Kunden-ID oder Segment suchen...",
+                "zh": "按客户ID或客群搜索...",
+                "ja": "顧客IDまたはセグメントで検索...",
+                "pt": "Pesquisar por ID do cliente ou segmento...",
+                "ar": "البحث برمز العميل أو الشريحة...",
+                "hi": "ग्राहक आईडी या सेगमेंट द्वारा खोजें...",
+                "ru": "Поиск по ID клиента или сегменту..."
+        },
+        "Customer Account": {
+                "es": "Cuenta de Cliente",
+                "fr": "Compte Client",
+                "de": "Kundenkonto",
+                "zh": "客户账户",
+                "ja": "顧客アカウント",
+                "pt": "Conta do Cliente",
+                "ar": "حساب العميل",
+                "hi": "ग्राहक खाता",
+                "ru": "Аккаунт клиента"
+        },
+        "Risk Status": {
+                "es": "Estado de Riesgo",
+                "fr": "Statut de Risque",
+                "de": "Risikostatus",
+                "zh": "风险等级",
+                "ja": "リスク状態",
+                "pt": "Status de Risco",
+                "ar": "حالة الخطر",
+                "hi": "जोखिम स्थिति",
+                "ru": "Статус риска"
+        },
+        "Predicted Probability": {
+                "es": "Probabilidad Predicha",
+                "fr": "Probabilité Prédite",
+                "de": "Vorhergesagte Wahrscheinlichkeit",
+                "zh": "预测流失概率",
+                "ja": "予測確率",
+                "pt": "Probabilidade Predita",
+                "ar": "الاحتمالية المتوقعة",
+                "hi": "अनुमानित प्रायिकता",
+                "ru": "Вероятность оттока"
+        },
+        "Risk Drivers": {
+                "es": "Factores de Riesgo",
+                "fr": "Facteurs de Risque",
+                "de": "Risikofaktoren",
+                "zh": "风险主因",
+                "ja": "リスク要因",
+                "pt": "Fatores de Risco",
+                "ar": "دوافع الخطر",
+                "hi": "जोखिम कारक",
+                "ru": "Факторы риска"
+        },
+        "Contract": {
+                "es": "Contrato",
+                "fr": "Contrat",
+                "de": "Vertrag",
+                "zh": "合同期限",
+                "ja": "契約形態",
+                "pt": "Contrato",
+                "ar": "العقد",
+                "hi": "अनुबंध",
+                "ru": "Тип контракта"
+        },
+        "Monthly Charges": {
+                "es": "Cargos Mensuales",
+                "fr": "Frais Mensuels",
+                "de": "Monatliche Gebühren",
+                "zh": "月度资费",
+                "ja": "月額料金",
+                "pt": "Cobranças Mensais",
+                "ar": "الرسوم الشهرية",
+                "hi": "मासिक शुल्क",
+                "ru": "Ежемесячный счет"
+        },
+        "SLA Status": {
+                "es": "Estado de SLA",
+                "fr": "Statut SLA",
+                "de": "SLA-Status",
+                "zh": "SLA状态",
+                "ja": "SLAステータス",
+                "pt": "Status do SLA",
+                "ar": "حالة اتفاقية SLA",
+                "hi": "एसएलए स्थिति",
+                "ru": "Статус SLA"
+        },
+        "High Risk": {
+                "es": "Alto Riesgo",
+                "fr": "Risque Élevé",
+                "de": "Hohes Risiko",
+                "zh": "高风险",
+                "ja": "高リスク",
+                "pt": "Alto Risco",
+                "ar": "مخاطر عالية",
+                "hi": "उच्च जोखिम",
+                "ru": "Высокий риск"
+        },
+        "Low Risk": {
+                "es": "Bajo Riesgo",
+                "fr": "Faible Risque",
+                "de": "Geringes Risiko",
+                "zh": "低风险",
+                "ja": "低リスク",
+                "pt": "Baixo Risco",
+                "ar": "مخاطر منخفضة",
+                "hi": "कम जोखिम",
+                "ru": "Низкий риск"
+        },
+        "Assigned": {
+                "es": "Asignado",
+                "fr": "Assigné",
+                "de": "Zugewiesen",
+                "zh": "已分配",
+                "ja": "割当済み",
+                "pt": "Atribuído",
+                "ar": "تم التعيين",
+                "hi": "आवंटित",
+                "ru": "Назначен"
+        },
+        "Unassigned": {
+                "es": "Sin Asignar",
+                "fr": "Non Assigné",
+                "de": "Nicht zugewiesen",
+                "zh": "未分配",
+                "ja": "未割当",
+                "pt": "Não Atribuído",
+                "ar": "غير معين",
+                "hi": "अनअसाइन किया गया",
+                "ru": "Не назначен"
+        },
+        "All risks": {
+                "es": "Todos los riesgos",
+                "fr": "Tous les risques",
+                "de": "Alle Risiken",
+                "zh": "所有风险级别",
+                "ja": "すべてのリスク",
+                "pt": "Todos os riscos",
+                "ar": "جميع المخاطر",
+                "hi": "सभी जोखिम",
+                "ru": "Все риски"
+        },
+        "Sort:": {
+                "es": "Ordenar:",
+                "fr": "Trier:",
+                "de": "Sortieren:",
+                "zh": "排序：",
+                "ja": "並べ替え:",
+                "pt": "Ordenar:",
+                "ar": "ترتيب:",
+                "hi": "क्रमबद्ध करें:",
+                "ru": "Сортировка:"
+        },
+        "Probability (High → Low)": {
+                "es": "Probabilidad (Alta → Baja)",
+                "fr": "Probabilité (Haute → Basse)",
+                "de": "Wahrscheinlichkeit (Hoch → Niedrig)",
+                "zh": "流失概率（从高到低）",
+                "ja": "確率（高い順）",
+                "pt": "Probabilidade (Alta → Baixa)",
+                "ar": "الاحتمالية (من الأعلى إلى الأدنى)",
+                "hi": "प्रायिकता (उच्च → निम्न)",
+                "ru": "Вероятность (по убыванию)"
+        },
+        "Probability (Low → High)": {
+                "es": "Probabilidad (Baja → Alta)",
+                "fr": "Probabilité (Basse → Haute)",
+                "de": "Wahrscheinlichkeit (Niedrig → Hoch)",
+                "zh": "流失概率（从低到高）",
+                "ja": "確率（低い順）",
+                "pt": "Probabilidade (Baixa → Alta)",
+                "ar": "الاحتمالية (من الأدنى إلى الأعلى)",
+                "hi": "प्रायिकता (निम्न → उच्च)",
+                "ru": "Вероятность (по возрастанию)"
+        },
+        "Specialized Intelligence Suites": {
+                "es": "Suites Especializadas de Inteligencia",
+                "fr": "Suites d'Intelligence Spécialisées",
+                "de": "Spezialisierte Business-Suites",
+                "zh": "专项业务智能分析套件",
+                "ja": "特化型インテリジェンススイート",
+                "pt": "Suítes Especializadas de Inteligência",
+                "ar": "أجنحة الذكاء المتخصصة",
+                "hi": "विशेषज्ञता प्राप्त इंटेलिजेंस सूट",
+                "ru": "Специализированные аналитические комплексы"
+        },
+        "Evaluate financial, operational, revenue, and product margins in real-time.": {
+                "es": "Evalúe márgenes financieros, operativos, de ingresos y producto en tiempo real.",
+                "fr": "Évaluez les marges financières, opérationnelles et produit en temps réel.",
+                "de": "Finanzielle, operative und produktbezogene Margen in Echtzeit auswerten.",
+                "zh": "实时评估财务、运营、营收和产品利润表现。",
+                "ja": "財務、運用、収益、製品マージンをリアルタイムで評価。",
+                "pt": "Avalie margens financeiras, operacionais, de receita e produto em tempo real.",
+                "ar": "تقييم الهوامش المالية والتشغيلية والإيرادات والمنتجات في الوقت الفعلي.",
+                "hi": "वास्तविक समय में वित्तीय, परिचालन, राजस्व और उत्पाद मार्जिन का मूल्यांकन करें।",
+                "ru": "Оценивайте финансовые, операционные и продуктовые показатели в реальном времени."
+        },
+        "Finance": {
+                "es": "Finanzas",
+                "fr": "Finance",
+                "de": "Finanzen",
+                "zh": "财务管理",
+                "ja": "財務",
+                "pt": "Finanças",
+                "ar": "المالية",
+                "hi": "वित्त",
+                "ru": "Финансы"
+        },
+        "Operations": {
+                "es": "Operaciones",
+                "fr": "Opérations",
+                "de": "Betrieb",
+                "zh": "运营管理",
+                "ja": "運用",
+                "pt": "Operações",
+                "ar": "العمليات",
+                "hi": "संचालन",
+                "ru": "Операции"
+        },
+        "Sales": {
+                "es": "Ventas",
+                "fr": "Ventes",
+                "de": "Vertrieb",
+                "zh": "销售营收",
+                "ja": "営業",
+                "pt": "Vendas",
+                "ar": "المبيعات",
+                "hi": "बिक्री",
+                "ru": "Продажи"
+        },
+        "Product": {
+                "es": "Producto",
+                "fr": "Produit",
+                "de": "Produkt",
+                "zh": "产品体验",
+                "ja": "製品",
+                "pt": "Produto",
+                "ar": "المنتج",
+                "hi": "उत्पाद",
+                "ru": "Продукт"
+        },
+        "CashFlow Intelligence Suite": {
+                "es": "Suite de Inteligencia de Flujo de Caja",
+                "fr": "Suite d'Intelligence Flux de Trésorerie",
+                "de": "CashFlow-Intelligenz-Suite",
+                "zh": "现金流智能分析套件",
+                "ja": "キャッシュフローインテリジェンススイート",
+                "pt": "Suíte de Inteligência de Fluxo de Caixa",
+                "ar": "جناح ذكاء التدفق النقدي",
+                "hi": "कैशफ्लो इंटेलिजेंस सूट",
+                "ru": "Комплекс аналитики денежных потоков"
+        },
+        "Real-Time Liquidity Simulator": {
+                "es": "Simulador de Liquidez en Tiempo Real",
+                "fr": "Simulateur de Liquidité en Temps Réel",
+                "de": "Echtzeit-Liquiditätssimulator",
+                "zh": "实时流动性模拟器",
+                "ja": "リアルタイム流動性シミュレータ",
+                "pt": "Simulador de Liquidez em Tempo Real",
+                "ar": "محاكي السيولة في الوقت الفعلي",
+                "hi": "वास्तविक समय तरलता सिम्युलेटर",
+                "ru": "Симулятор ликвидности в реальном времени"
+        },
+        "Suite Copilot Briefing": {
+                "es": "Informe del Copiloto de Suite",
+                "fr": "Briefing Copilote de Suite",
+                "de": "Suite-Copilot-Briefing",
+                "zh": "套件Copilot简报",
+                "ja": "スイートCopilotブリーフィング",
+                "pt": "Briefing do Copiloto da Suíte",
+                "ar": "إحاطة مساعد الجناح الذكي",
+                "hi": "सूट कोपायलट ब्रीफिंग",
+                "ru": "Сводка ИИ-копилота по комплексу"
+        },
+        "Recommendations": {
+                "es": "Recomendaciones",
+                "fr": "Recommandations",
+                "de": "Empfehlungen",
+                "zh": "处方性建议",
+                "ja": "推奨アクション",
+                "pt": "Recomendações",
+                "ar": "التوصيات",
+                "hi": "सिफारिशें",
+                "ru": "Рекомендации"
+        },
+        "Live Analyzed Diagnostics & Performance Tips": {
+                "es": "Diagnósticos Analizados en Vivo y Consejos de Rendimiento",
+                "fr": "Diagnostics en Direct & Conseils de Performance",
+                "de": "Live-Analysedaten & Leistungstipps",
+                "zh": "实时诊断分析与业绩提升建议",
+                "ja": "ライブ診断とパフォーマンスアドバイス",
+                "pt": "Diagnósticos Analisados ao Vivo e Dicas de Desempenho",
+                "ar": "التشخيصات المحللة مباشرة ونصائح الأداء",
+                "hi": "लाइव विश्लेषित निदान और प्रदर्शन सुझाव",
+                "ru": "Оперативная диагностика и советы по удержанию"
+        },
+        "All Roles": {
+                "es": "Todos los Roles",
+                "fr": "Tous les Rôles",
+                "de": "Alle Rollen",
+                "zh": "全部岗位",
+                "ja": "すべての役職",
+                "pt": "Todos os Cargos",
+                "ar": "جميع الأدوار",
+                "hi": "सभी भूमिकाएं",
+                "ru": "Все роли"
+        },
+        "Executive": {
+                "es": "Ejecutivo (C-Level)",
+                "fr": "Direction Exécutive",
+                "de": "Geschäftsführung",
+                "zh": "高管视图 (C-Level)",
+                "ja": "経営陣",
+                "pt": "Executivo",
+                "ar": "الإدارة التنفيذية",
+                "hi": "कार्यकारी (C-Level)",
+                "ru": "Руководство"
+        },
+        "Manager": {
+                "es": "Gerente de Éxito",
+                "fr": "Responsable CSM",
+                "de": "Manager",
+                "zh": "团队经理 (CSM)",
+                "ja": "マネージャー",
+                "pt": "Gerente",
+                "ar": "المدير",
+                "hi": "प्रबंधक",
+                "ru": "Менеджер"
+        },
+        "Support": {
+                "es": "Soporte Técnico",
+                "fr": "Support Technique",
+                "de": "Technischer Support",
+                "zh": "技术支持",
+                "ja": "サポート",
+                "pt": "Suporte",
+                "ar": "الدعم الفني",
+                "hi": "तकनीकी सहायता",
+                "ru": "Поддержка"
+        },
+        "1. Account Parameters": {
+                "es": "1. Parámetros de la Cuenta",
+                "fr": "1. Paramètres du Compte",
+                "de": "1. Kontoparameter",
+                "zh": "1. 账户模拟参数",
+                "ja": "1. アカウントパラメータ",
+                "pt": "1. Parâmetros da Conta",
+                "ar": "1. معايير الحساب",
+                "hi": "1. खाता पैरामीटर",
+                "ru": "1. Параметры аккаунта"
+        },
+        "2. Simulated Churn Outlook": {
+                "es": "2. Pronóstico Simulado de Cancelación",
+                "fr": "2. Perspectives Simulées de Désabonnement",
+                "de": "2. Simulierter Abwanderungsausblick",
+                "zh": "2. 模拟流失走势预测",
+                "ja": "2. シミュレーション解約見通し",
+                "pt": "2. Cenário Simulado de Churn",
+                "ar": "2. توقعات التسرب المحاكية",
+                "hi": "2. सिम्युलेटेड चर्न आउटलुक",
+                "ru": "2. Индикатор вероятности оттока"
+        },
+        "Loyal Account": {
+                "es": "Cuenta Leal",
+                "fr": "Client Fidèle",
+                "de": "Treues Kundenkonto",
+                "zh": "高忠诚度账户",
+                "ja": "ロイヤル顧客",
+                "pt": "Conta Fiel",
+                "ar": "حساب مخلص",
+                "hi": "वफादार खाता",
+                "ru": "Лояльный клиент"
+        },
+        "Moderate Risk": {
+                "es": "Riesgo Moderado",
+                "fr": "Risque Modéré",
+                "de": "Mittleres Risiko",
+                "zh": "中等风险账户",
+                "ja": "中程度リスク",
+                "pt": "Risco Moderado",
+                "ar": "مخاطر متوسطة",
+                "hi": "मध्यम जोखिम",
+                "ru": "Средний риск"
+        },
+        "Critical Risk": {
+                "es": "Riesgo Crítico",
+                "fr": "Risque Critique",
+                "de": "Kritisches Risiko",
+                "zh": "极其危急风险",
+                "ja": "重大リスク",
+                "pt": "Risco Crítico",
+                "ar": "خطر حرج",
+                "hi": "गंभीर जोखिम",
+                "ru": "Критический риск"
+        },
+        "Reset": {
+                "es": "Restablecer",
+                "fr": "Réinitialiser",
+                "de": "Zurücksetzen",
+                "zh": "重置参数",
+                "ja": "リセット",
+                "pt": "Redefinir",
+                "ar": "إعادة ضبط",
+                "hi": "रीसेट",
+                "ru": "Сброс"
+        },
+        "Tenure Months": {
+                "es": "Meses de Antigüedad",
+                "fr": "Mois d'Ancienneté",
+                "de": "Vertragslaufzeit (Monate)",
+                "zh": "在网月份",
+                "ja": "契約月数",
+                "pt": "Meses de Contrato",
+                "ar": "أشهر الاشتراك",
+                "hi": "कार्यकाल के महीने",
+                "ru": "Месяцы сотрудничества"
+        },
+        "Total Charges": {
+                "es": "Cargos Totales",
+                "fr": "Frais Totaux",
+                "de": "Gesamtausgaben",
+                "zh": "历史累计总消费",
+                "ja": "累計請求額",
+                "pt": "Cobranças Totais",
+                "ar": "إجمالي الرسوم",
+                "hi": "कुल शुल्क",
+                "ru": "Общая сумма платежей"
+        },
+        "Support Tickets": {
+                "es": "Tickets de Soporte",
+                "fr": "Tickets de Support",
+                "de": "Support-Tickets",
+                "zh": "售后工单数",
+                "ja": "サポートチケット",
+                "pt": "Tíquetes de Suporte",
+                "ar": "تذاكر الدعم",
+                "hi": "सहायता टिकट",
+                "ru": "Обращения в поддержку"
+        },
+        "Payment Delays": {
+                "es": "Retrasos de Pago",
+                "fr": "Retards de Paiement",
+                "de": "Zahlungsverzögerungen",
+                "zh": "付款逾期次数",
+                "ja": "支払い遅延回数",
+                "pt": "Atrasos no Pagamento",
+                "ar": "تأخيرات الدفع",
+                "hi": "भुगतान में देरी",
+                "ru": "Задержки платежей"
+        },
+        "Product Usage": {
+                "es": "Uso del Producto",
+                "fr": "Utilisation du Produit",
+                "de": "Produktnutzung",
+                "zh": "产品使用活跃度",
+                "ja": "プロダクト利用頻度",
+                "pt": "Uso do Produto",
+                "ar": "استخدام المنتج",
+                "hi": "उत्पाद का उपयोग",
+                "ru": "Использование продукта"
+        },
+        "Complaint Count": {
+                "es": "Conteo de Quejas",
+                "fr": "Nombre de Plaintes",
+                "de": "Anzahl der Beschwerden",
+                "zh": "投诉记录数",
+                "ja": "苦情件数",
+                "pt": "Número de Reclamações",
+                "ar": "عدد الشكاوى",
+                "hi": "शिकायतों की संख्या",
+                "ru": "Количество жалоб"
+        },
+        "Customer Satisfaction Score": {
+                "es": "Puntuación de Satisfacción (CSAT)",
+                "fr": "Score de Satisfaction (CSAT)",
+                "de": "Kundenzufriedenheit (CSAT)",
+                "zh": "客户满意度评分 (CSAT)",
+                "ja": "顧客満足度スコア (CSAT)",
+                "pt": "Pontuação de Satisfação (CSAT)",
+                "ar": "نقاط رضا العملاء (CSAT)",
+                "hi": "ग्राहक संतुष्टि स्कोर (CSAT)",
+                "ru": "Индекс удовлетворенности (CSAT)"
+        },
+        "Business Retention Intelligence": {
+                "es": "Inteligencia de Retención de Negocio",
+                "fr": "Intelligence de Rétention Commerciale",
+                "de": "Business-Kundenbindungs-Intelligenz",
+                "zh": "企业留存与客户价值智能",
+                "ja": "ビジネス顧客維持インテリジェンス",
+                "pt": "Inteligência de Retenção de Negócios",
+                "ar": "ذكاء استبقاء الأعمال",
+                "hi": "व्यापार प्रतिधारण बुद्धिमत्ता",
+                "ru": "Бизнес-интеллект и удержание клиентов"
+        },
+        "Business Health Status": {
+                "es": "Estado de Salud del Negocio",
+                "fr": "État de Santé de l'Entreprise",
+                "de": "Geschäftszustand",
+                "zh": "企业综合经营健康度",
+                "ja": "ビジネス健全性ステータス",
+                "pt": "Status de Saúde do Negócio",
+                "ar": "حالة صحة الأعمال",
+                "hi": "व्यापार स्वास्थ्य स्थिति",
+                "ru": "Состояние здоровья бизнеса"
+        },
+        "Top 5 Detected Problems": {
+                "es": "Top 5 Problemas Detectados",
+                "fr": "Top 5 des Problèmes Détectés",
+                "de": "Top 5 erkannte Probleme",
+                "zh": "核心检测问题 Top 5",
+                "ja": "検出された問題トップ5",
+                "pt": "Top 5 Problemas Detectados",
+                "ar": "أبرز 5 مشكلات تم اكتشافها",
+                "hi": "शीर्ष 5 पाई गई समस्याएं",
+                "ru": "Топ-5 обнаруженных проблем"
+        },
+        "Active Closed-Loop Resolutions": {
+                "es": "Resoluciones Activas en Bucle Cerrado",
+                "fr": "Résolutions Actives en Boucle Fermée",
+                "de": "Aktive Closed-Loop-Lösungen",
+                "zh": "闭环治理推进清单",
+                "ja": "進行中のクローズドループ解決策",
+                "pt": "Resoluções Ativas em Loop Fechado",
+                "ar": "حلول الحلقة المغلقة النشطة",
+                "hi": "सक्रिय क्लोज्ड-लूप समाधान",
+                "ru": "Активные циклы решений"
+        },
+        "Retention Campaign ROI Simulator": {
+                "es": "Simulador de ROI de Campañas de Retención",
+                "fr": "Simulateur de ROI des Campagnes de Rétention",
+                "de": "Kundenbindungs-ROI-Simulator",
+                "zh": "挽留营销ROI投入产出模拟器",
+                "ja": "顧客維持キャンペーンROIシミュレータ",
+                "pt": "Simulador de ROI de Campanhas de Retenção",
+                "ar": "محاكي العائد على الاستثمار لحملات الاستبقاء",
+                "hi": "प्रतिधारण अभियान आरओआई सिम्युलेटर",
+                "ru": "Симулятор окупаемости (ROI) кампаний"
+        },
+        "Segment Loss Risk Ranking": {
+                "es": "Ranking de Riesgo de Pérdida por Segmento",
+                "fr": "Classement des Pertes par Segment",
+                "de": "Segmentverlust-Risikoranking",
+                "zh": "细分市场潜在损失风险排行",
+                "ja": "セグメント別損失リスクランキング",
+                "pt": "Ranking de Risco de Perda por Segmento",
+                "ar": "ترتيب مخاطر خسائر الشرائح",
+                "hi": "सेगमेंट हानि जोखिम रैंकिंग",
+                "ru": "Рейтинг риска потерь по сегментам"
+        },
+        "Cohort Segment Churn Trend": {
+                "es": "Tendencia de Cancelación por Cohorte",
+                "fr": "Tendance de Désabonnement par Cohorte",
+                "de": "Kohorten-Abwanderungstrend",
+                "zh": "同期群流失趋势分析",
+                "ja": "コホート別解約トレンド",
+                "pt": "Tendência de Churn por Coorte",
+                "ar": "اتجاه تسرب مجموعات العملاء",
+                "hi": "समूह खंड चर्न प्रवृत्ति",
+                "ru": "Динамика оттока по когортам"
+        },
+        "Cohort Retention Matrix": {
+                "es": "Matriz de Retención de Cohortes",
+                "fr": "Matrice de Rétention des Cohortes",
+                "de": "Kohorten-Kundenbindungsmatrix",
+                "zh": "同期群客户留存矩阵",
+                "ja": "コホート維持マトリックス",
+                "pt": "Matriz de Retenção de Coortes",
+                "ar": "مصفوفة استبقاء المجموعات",
+                "hi": "समूह प्रतिधारण मैट्रिक्स",
+                "ru": "Матрица удержания когорт"
+        },
+        "CSM & Account Assignments": {
+                "es": "Asignaciones de Cuentas y CSM",
+                "fr": "Affectations CSM et Comptes",
+                "de": "CSM- & Kontozuweisungen",
+                "zh": "CSM专员与高危账户指派",
+                "ja": "CSMおよびアカウント割り当て",
+                "pt": "Atribuições de CSM e Contas",
+                "ar": "تعيينات مديري النجاح والحسابات",
+                "hi": "सीएसएम और खाता कार्यभार",
+                "ru": "Назначения менеджеров и счетов"
+        },
+        "CRM Connections & Reports": {
+                "es": "Conexiones CRM e Informes Programados",
+                "fr": "Connexions CRM et Rapports",
+                "de": "CRM-Anbindung & Berichte",
+                "zh": "CRM系统集成与定时调度",
+                "ja": "CRM連携およびレポート",
+                "pt": "Conexões de CRM e Relatórios",
+                "ar": "ربط إدارة علاقات العملاء والتقارير",
+                "hi": "सीआरएम कनेक्शन और रिपोर्ट",
+                "ru": "Интеграции с CRM и отчеты"
+        },
+        "A/B Test Retention Tracker": {
+                "es": "Rastreador de Pruebas A/B de Retención",
+                "fr": "Suivi des Tests A/B de Rétention",
+                "de": "A/B-Test-Bindungstracker",
+                "zh": "A/B测试挽留策略评估面板",
+                "ja": "A/Bテスト顧客維持トラッカー",
+                "pt": "Rastreador de Testes A/B de Retenção",
+                "ar": "متتبع اختبارات A/B للاستبقاء",
+                "hi": "ए/बी टेस्ट प्रतिधारण ट्रैकर",
+                "ru": "Трекер A/B тестов удержания"
+        },
+        "Compliance Audit History": {
+                "es": "Historial de Auditoría y Cumplimiento",
+                "fr": "Historique d'Audit et de Conformité",
+                "de": "Compliance-Auditprotokoll",
+                "zh": "合规审计与操作安全日志",
+                "ja": "コンプライアンス監査履歴",
+                "pt": "Histórico de Auditoria e Conformidade",
+                "ar": "سجل تدقيق الامتثال",
+                "hi": "अनुपालन ऑडिट इतिहास",
+                "ru": "Журнал аудита и комплаенса"
+        },
+        "Live Slide Editor & Layout Switcher": {
+                "es": "Editor de Diapositivas y Selector de Diseño",
+                "fr": "Éditeur de Diapositives et Mises en Page",
+                "de": "Live-Folieneditor & Layout-Umschalter",
+                "zh": "实时幻灯片编辑器与版式切换",
+                "ja": "スライドエディタおよびレイアウト変更",
+                "pt": "Editor de Slides ao Vivo e Alternador de Layout",
+                "ar": "محرر الشرائح المباشر وتنسيق العرض",
+                "hi": "लाइव स्लाइड संपादक और लेआउट परिवर्तक",
+                "ru": "Редактор слайдов и переключение макетов"
+        },
+        "Quick Presentation Q&A Cards": {
+                "es": "Tarjetas Rápidas de Preguntas y Respuestas",
+                "fr": "Cartes Q&R pour Présentation Rapide",
+                "de": "Schnelle Frage-und-Antwort-Karten",
+                "zh": "高管问答速查提示卡片",
+                "ja": "プレゼンテーションQ&Aカード",
+                "pt": "Cartões Rápidos de Perguntas e Respostas",
+                "ar": "بطاقات الأسئلة والأجوبة السريعة",
+                "hi": "त्वरित प्रस्तुति प्रश्नोत्तर कार्ड",
+                "ru": "Карточки быстрых ответов на вопросы"
+        },
+        "Generate AI Deck": {
+                "es": "Generar Presentación con IA",
+                "fr": "Générer la Présentation IA",
+                "de": "KI-Präsentation erstellen",
+                "zh": "AI生成高管演示文稿",
+                "ja": "AIプレゼンテーション生成",
+                "pt": "Gerar Apresentação com IA",
+                "ar": "إنشاء عرض بالذكاء الاصطناعي",
+                "hi": "एआई प्रस्तुति बनाएं",
+                "ru": "Создать презентацию с ИИ"
+        },
+        "Surprise Me": {
+                "es": "Sorpréndeme",
+                "fr": "Surprenez-moi",
+                "de": "Überrasch mich",
+                "zh": "随机创意版式",
+                "ja": "おまかせデザイン",
+                "pt": "Surpreenda-me",
+                "ar": "فاجئني",
+                "hi": "मुझे आश्चर्यचकित करें",
+                "ru": "Случайный дизайн"
+        },
+        "Fullscreen Mode": {
+                "es": "Modo Pantalla Completa",
+                "fr": "Mode Plein Écran",
+                "de": "Vollbildmodus",
+                "zh": "全屏放映模式",
+                "ja": "全画面表示",
+                "pt": "Modo Tela Cheia",
+                "ar": "ملء الشاشة",
+                "hi": "पूर्ण स्क्रीन मोड",
+                "ru": "Полноэкранный режим"
+        },
+        "Glossary, Financial Metrics & Corporate Policies": {
+                "es": "Glosario, Métricas Financieras y Políticas Corporativas",
+                "fr": "Glossaire, Métriques Financières et Politiques",
+                "de": "Glossar, Finanzkennzahlen & Unternehmensrichtlinien",
+                "zh": "企业术语表、财务指标与留存管理制度",
+                "ja": "用語集、財務指標、企業ポリシー",
+                "pt": "Glossário, Métricas Financeiras e Políticas Corporativas",
+                "ar": "المصطلحات والمقاييس المالية والسياسات",
+                "hi": "शब्दावली, वित्तीय मेट्रिक्स और नीतियां",
+                "ru": "Глоссарий, финансовые метрики и регламенты"
+        },
+        "1. Platform Motive & Customer Retention Philosophy": {
+                "es": "1. Misión de la Plataforma y Filosofía de Retención",
+                "fr": "1. Mission de la Plateforme et Philosophie",
+                "de": "1. Unternehmensmission & Kundenbindungsphilosophie",
+                "zh": "1. 平台宗旨与客户留存经营哲学",
+                "ja": "1. プラットフォームの使命と顧客維持哲学",
+                "pt": "1. Missão da Plataforma e Filosofia de Retenção",
+                "ar": "1. هدف المنصة وفلسفة استبقاء العملاء",
+                "hi": "1. प्लेटफ़ॉर्म का उद्देश्य और प्रतिधारण दर्शन",
+                "ru": "1. Миссия платформы и философия удержания"
+        },
+        "2. Executive Financial Terms & Calculation Formulas": {
+                "es": "2. Términos Financieros Ejecutivos y Fórmulas",
+                "fr": "2. Termes Financiers et Formules de Calcul",
+                "de": "2. Finanzbegriffe für Führungskräfte & Formeln",
+                "zh": "2. 核心财务术语与标准计算公式",
+                "ja": "2. 財務用語と計算式",
+                "pt": "2. Termos Financeiros e Fórmulas de Cálculo",
+                "ar": "2. المصطلحات المالية وصيغ الحساب",
+                "hi": "2. वित्तीय शर्तें और गणना सूत्र",
+                "ru": "2. Финансовые термины и формулы расчета"
+        },
+        "3. Risk Cohort Classifications & Telemetry Thresholds": {
+                "es": "3. Clasificaciones de Riesgo y Umbrales de Telemetría",
+                "fr": "3. Classifications des Risques et Seuils",
+                "de": "3. Risikokohorten-Klassifizierung & Schwellenwerte",
+                "zh": "3. 风险客群分类与监控阈值判定",
+                "ja": "3. リスクコホート分類とテレメトリ閾値",
+                "pt": "3. Classificações de Risco e Limiares de Telemetria",
+                "ar": "3. تصنيفات المخاطر وعتبات القياس",
+                "hi": "3. जोखिम वर्गीकरण और टेलीमेट्री सीमाएं",
+                "ru": "3. Классификация рисков и пороговые значения"
+        },
+        "4. Corporate Retention Policies & Operational SLAs": {
+                "es": "4. Políticas Corporativas de Retención y SLAs",
+                "fr": "4. Politiques d'Entreprise et SLAs Opérationnels",
+                "de": "4. Richtlinien zur Kundenbindung & operative SLAs",
+                "zh": "4. 企业客户留存治理制度与响应SLA",
+                "ja": "4. 顧客維持ポリシーと運用SLA",
+                "pt": "4. Políticas de Retenção e SLAs Operacionais",
+                "ar": "4. سياسات استبقاء العملاء واتفاقيات SLA",
+                "hi": "4. कॉर्पोरेट प्रतिधारण नीतियां और एसएलए",
+                "ru": "4. Регламенты удержания и операционные SLA"
+        },
+        "5. Customer Lifetime Value (CLV) & Cohort Metrics": {
+                "es": "5. Valor de Vida del Cliente (CLV) y Métricas de Cohorte",
+                "fr": "5. Valeur Vie Client (CLV) et Métriques de Cohorte",
+                "de": "5. Customer Lifetime Value (CLV) & Kohortenmetriken",
+                "zh": "5. 客户生命周期价值 (CLV) 与同期群指标",
+                "ja": "5. 顧客生涯価値 (CLV) とコホート指標",
+                "pt": "5. Valor do Ciclo de Vida do Cliente (CLV) e Coortes",
+                "ar": "5. القيمة الدائمة للعميل (CLV) ومقاييس المجموعات",
+                "hi": "5. ग्राहक जीवनकाल मूल्य (CLV) और समूह मेट्रिक्स",
+                "ru": "5. Пожизненная ценность (CLV) и когортные метрики"
+        },
+        "6. Enterprise Retention Control Modules": {
+                "es": "6. Módulos de Control de Retención Empresarial",
+                "fr": "6. Modules de Contrôle de Rétention d'Entreprise",
+                "de": "6. Kontrollmodule für Enterprise-Kundenbindung",
+                "zh": "6. 企业级留存协同与控制模块",
+                "ja": "6. エンタープライズ維持管理モジュール",
+                "pt": "6. Módulos de Controle de Retenção Corporativa",
+                "ar": "6. وحدات التحكم في الاستبقاء للمؤسسات",
+                "hi": "6. एंटरप्राइज प्रतिधारण नियंत्रण मॉड्यूल",
+                "ru": "6. Модули управления удержанием клиентов"
+        },
+        "7. Strategic Customer Retention Playbooks": {
+                "es": "7. Manuales Estratégicos de Retención de Clientes",
+                "fr": "7. Playbooks Stratégiques de Rétention Client",
+                "de": "7. Strategische Playbooks zur Kundenbindung",
+                "zh": "7. 战略级客户挽留实战操作手册",
+                "ja": "7. 戦略的顧客維持プレイブック",
+                "pt": "7. Manuais Estratégicos de Retenção de Clientes",
+                "ar": "7. أدلة استبقاء العملاء الاستراتيجية",
+                "hi": "7. रणनीतिक ग्राहक प्रतिधारण प्लेबुक",
+                "ru": "7. Стратегические регламенты удержания клиентов"
+        },
+        "5 Rules of Cohort Analysis": {
+                "es": "5 Reglas del Análisis de Cohortes",
+                "fr": "5 Règles de l'Analyse de Cohortes",
+                "de": "5 Regeln der Kohortenanalyse",
+                "zh": "同期群分析的5项黄金法则",
+                "ja": "コホート分析の5つの原則",
+                "pt": "5 Regras da Análise de Coortes",
+                "ar": "5 قواعد لتحليل المجموعات",
+                "hi": "समूह विश्लेषण के 5 नियम",
+                "ru": "5 правил когортного анализа"
+        },
+        "AI Copilot": {
+                "es": "Copiloto IA",
+                "fr": "Copilote IA",
+                "de": "KI-Copilot",
+                "zh": "AI智能助手",
+                "ja": "AIコパイロット",
+                "pt": "Copiloto IA",
+                "ar": "مساعد الذكاء الاصطناعي",
+                "hi": "एआई कोपायलट",
+                "ru": "ИИ-Копилот"
+        },
+        "Show top churn risks": {
+                "es": "Mostrar mayores riesgos de cancelación",
+                "fr": "Afficher les plus hauts risques",
+                "de": "Höchste Abwanderungsrisiken zeigen",
+                "zh": "显示流失风险最高账户",
+                "ja": "上位の解約リスクを表示",
+                "pt": "Mostrar maiores riscos de churn",
+                "ar": "إظهار أكبر مخاطر التسرب",
+                "hi": "शीर्ष चर्न जोखिम दिखाएं",
+                "ru": "Показать наибольшие риски оттока"
+        },
+        "Compare regions by risk": {
+                "es": "Comparar regiones por nivel de riesgo",
+                "fr": "Comparer les régions par risque",
+                "de": "Regionen nach Risiko vergleichen",
+                "zh": "按区域对比流失风险",
+                "ja": "地域別リスクを比較",
+                "pt": "Comparar regiões por risco",
+                "ar": "مقارنة المناطق حسب الخطر",
+                "hi": "जोखिम के आधार पर क्षेत्रों की तुलना करें",
+                "ru": "Сравнить регионы по рискам"
+        },
+        "Retention advice": {
+                "es": "Consejos estratégicos de retención",
+                "fr": "Conseils de rétention",
+                "de": "Empfehlungen zur Kundenbindung",
+                "zh": "获取客户挽留指导建议",
+                "ja": "維持施策のアドバイス",
+                "pt": "Conselhos de retenção",
+                "ar": "نصائح الاستبقاء",
+                "hi": "प्रतिधारण सलाह",
+                "ru": "Советы по удержанию"
+        },
+        "Ask AI Copilot a business or churn query...": {
+                "es": "Haga una consulta de negocio o cancelación al Copiloto IA...",
+                "fr": "Posez une question commerciale ou sur le désabonnement...",
+                "de": "Stellen Sie dem KI-Copiloten eine Business-Frage...",
+                "zh": "向AI智能助手咨询业务或客户流失分析问题...",
+                "ja": "AIコパイロットにビジネスや解約の質問をする...",
+                "pt": "Faça uma pergunta de negócios ou churn ao Copiloto IA...",
+                "ar": "اطرح سؤالاً على مساعد الذكاء الاصطناعي...",
+                "hi": "एआई कोपायलट से एक व्यापार या चर्न प्रश्न पूछें...",
+                "ru": "Задайте бизнес- или аналитический вопрос..."
+        },
+        "Send": {
+                "es": "Enviar",
+                "fr": "Envoyer",
+                "de": "Senden",
+                "zh": "发送",
+                "ja": "送信",
+                "pt": "Enviar",
+                "ar": "إرسال",
+                "hi": "भेजें",
+                "ru": "Отправить"
+        },
+        "Corporate Operational Reference Manual": {
+                "es": "Manual de Referencia Operativa Corporativa",
+                "fr": "Manuel de Référence Opérationnelle",
+                "de": "Unternehmens-Handbuch für operative Prozesse",
+                "zh": "企业级运营治理参考手册",
+                "ja": "企業運用リファレンスマニュアル",
+                "pt": "Manual de Referência Operacional Corporativo",
+                "ar": "دليل التشغيل المرجعي للمؤسسة",
+                "hi": "कॉर्पोरेट परिचालन संदर्भ मैनुअल",
+                "ru": "Корпоративное руководство по управлению"
+        },
+        "Licensing & Data Privacy": {
+                "es": "Licencias y Privacidad de Datos",
+                "fr": "Licences et Confidentialité",
+                "de": "Lizenzierung & Datenschutz",
+                "zh": "授权许可与数据安全隐私",
+                "ja": "ライセンスとデータプライバシー",
+                "pt": "Licenciamento e Privacidade de Dados",
+                "ar": "الترخيص وخصوصية البيانات",
+                "hi": "लाइसेंसिंग और डेटा गोपनीयता",
+                "ru": "Лицензирование и конфиденциальность данных"
+        },
+        "Got it, thanks!": {
+                "es": "¡Entendido, gracias!",
+                "fr": "Compris, merci !",
+                "de": "Verstanden, danke!",
+                "zh": "明白，谢谢！",
+                "ja": "了解しました！",
+                "pt": "Entendido, obrigado!",
+                "ar": "فهمت ذلك، شكراً!",
+                "hi": "समझ गया, धन्यवाद!",
+                "ru": "Понятно, спасибо!"
+        }
+};
+
+    // Fast lowercase and clean lookup index
+    const LOWER_LOOKUP = {};
+    for (const [k, v] of Object.entries(PHRASE_DICTIONARY)) {
+        const lower = k.toLowerCase().trim();
+        LOWER_LOOKUP[lower] = v;
+        const cleanNoPunct = lower.replace(/[^\w\s]/g, '').trim();
+        if (cleanNoPunct && cleanNoPunct !== lower) {
+            LOWER_LOOKUP[cleanNoPunct] = v;
+        }
+    }
+
     let currentLang = localStorage.getItem('qiplo_language') || 'en';
     if (!TRANSLATIONS[currentLang]) currentLang = 'en';
+
+    function getTranslationForText(text, lang) {
+        if (!text || lang === 'en') return text;
+        const clean = text.trim();
+        if (!clean) return text;
+
+        // 1. Exact phrase in PHRASE_DICTIONARY
+        if (PHRASE_DICTIONARY[clean] && PHRASE_DICTIONARY[clean][lang]) {
+            return PHRASE_DICTIONARY[clean][lang];
+        }
+
+        // 2. Exact key in TRANSLATIONS
+        if (TRANSLATIONS[lang] && TRANSLATIONS[lang][clean] !== undefined) {
+            return TRANSLATIONS[lang][clean];
+        }
+
+        // 3. Lowercase index lookup
+        const lower = clean.toLowerCase();
+        if (LOWER_LOOKUP[lower] && LOWER_LOOKUP[lower][lang]) {
+            return LOWER_LOOKUP[lower][lang];
+        }
+
+        // 4. Reverse key lookup from TRANSLATIONS.en
+        const enDict = TRANSLATIONS['en'];
+        for (const [k, enVal] of Object.entries(enDict)) {
+            if (enVal && enVal.toLowerCase().trim() === lower) {
+                if (TRANSLATIONS[lang] && TRANSLATIONS[lang][k]) {
+                    return TRANSLATIONS[lang][k];
+                }
+            }
+        }
+
+        return null;
+    }
 
     function t(key, fallback = '') {
         const langDict = TRANSLATIONS[currentLang] || TRANSLATIONS['en'];
@@ -1793,16 +3449,22 @@
         if (enDict && enDict[key] !== undefined) {
             return enDict[key];
         }
+        const trans = getTranslationForText(key, currentLang);
+        if (trans) return trans;
         return fallback || key;
     }
 
-    function translateUI() {
-        const langConfig = SUPPORTED_LANGUAGES.find(l => l.code === currentLang) || SUPPORTED_LANGUAGES[0];
-        document.documentElement.lang = currentLang;
+    function translateDOM(root = document.body) {
+        if (!root) return;
+        const lang = currentLang;
+        const isEn = lang === 'en';
+        const langConfig = SUPPORTED_LANGUAGES.find(l => l.code === lang) || SUPPORTED_LANGUAGES[0];
+
+        document.documentElement.lang = lang;
         document.documentElement.dir = langConfig.dir || 'ltr';
 
-        // 1. Elements with data-i18n
-        document.querySelectorAll('[data-i18n]').forEach(el => {
+        // 1. Translate [data-i18n] elements
+        root.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             const translation = t(key);
             if (translation) {
@@ -1823,202 +3485,82 @@
             }
         });
 
-        // 2. Translate explicit core elements by ID or selector
-        const updates = [
-            // Header
-            { sel: '.sloganBadge span, .sloganBadge', key: 'slogan', isContentWithIcon: true },
-            { id: 'demoBadge', key: 'demo_badge', isContentWithIcon: true, iconName: 'flask-conical' },
-            { id: 'companyNameInput', key: 'company_placeholder', isPlaceholder: true },
-            { sel: '#exportReportBtn span', key: 'btn_report' },
-            { sel: '#exportTableauBtn span', key: 'btn_tableau' },
-            { sel: '#exportPowerBiBtn span', key: 'btn_powerbi' },
-            { sel: '#exportExcelBtn span', key: 'btn_excel' },
-            { sel: '#exportPdfBtn span', key: 'btn_pdf' },
-            { id: 'liveTrackingText', key: 'badge_live' },
-            { sel: '#toggleSourcesBtn span.hide-mobile', key: 'btn_data' },
-            { sel: '#toggleNotesBtn span.hide-mobile', key: 'btn_notes' },
-            { sel: '#headerTourBtn span.headerBtnLabel', key: 'btn_tour' },
-            { sel: '#headerGuideBtn span.headerBtnLabel', key: 'btn_guide' },
-            { sel: '#headerReloadBtn span.headerBtnLabel', key: 'btn_sync' },
-            { sel: '#settingsBtn span.headerBtnLabel', key: 'btn_settings' },
-            { sel: '.userProfileRole', key: 'admin_session' },
+        // 2. Translate Input and Textarea placeholders
+        root.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(el => {
+            if (!el.hasAttribute('data-i18n-orig-ph')) {
+                el.setAttribute('data-i18n-orig-ph', el.placeholder);
+            }
+            const orig = el.getAttribute('data-i18n-orig-ph');
+            if (isEn) {
+                el.placeholder = orig;
+            } else {
+                const trans = getTranslationForText(orig, lang);
+                if (trans) el.placeholder = trans;
+            }
+        });
 
-            // Workflow banner
-            { sel: '.workflowStepCard[data-step="1"] .workflowStepTitle', key: 'wf_step1_title', isContentWithIcon: true, iconName: 'database' },
-            { sel: '.workflowStepCard[data-step="1"] .workflowStepSub', key: 'wf_step1_sub' },
-            { sel: '.workflowStepCard[data-step="2"] .workflowStepTitle', key: 'wf_step2_title', isContentWithIcon: true, iconName: 'flask-conical' },
-            { sel: '.workflowStepCard[data-step="2"] .workflowStepSub', key: 'wf_step2_sub' },
-            { sel: '.workflowStepCard[data-step="3"] .workflowStepTitle', key: 'wf_step3_title', isContentWithIcon: true, iconName: 'zap' },
-            { sel: '.workflowStepCard[data-step="3"] .workflowStepSub', key: 'wf_step3_sub' },
-            { id: 'workflowStepPill1', key: 'wf_active' },
-            { id: 'workflowStepPill2', key: 'wf_explore' },
-            { id: 'workflowStepPill3', key: 'wf_explore' },
+        // 3. Translate tooltips [title]
+        root.querySelectorAll('[title]').forEach(el => {
+            if (!el.hasAttribute('data-i18n-orig-title')) {
+                el.setAttribute('data-i18n-orig-title', el.title);
+            }
+            const orig = el.getAttribute('data-i18n-orig-title');
+            if (isEn) {
+                el.title = orig;
+            } else {
+                const trans = getTranslationForText(orig, lang);
+                if (trans) el.title = trans;
+            }
+        });
 
-            // Tabs
-            { sel: '.tab[data-tab="overview"]', key: 'tab_overview', isTabWithIcon: true, iconName: 'layout-dashboard' },
-            { sel: '.tab[data-tab="specials"]', key: 'tab_specials', isTabWithIcon: true, iconName: 'layers' },
-            { sel: '.tab[data-tab="actions"]', key: 'tab_actions', isTabWithIcon: true, iconName: 'zap' },
-            { sel: '.tab[data-tab="customers"]', key: 'tab_customers', isTabWithIcon: true, iconName: 'users' },
-            { sel: '.tab[data-tab="business"]', key: 'tab_business', isTabWithIcon: true, iconName: 'briefcase' },
-            { sel: '.tab[data-tab="sandbox"]', key: 'tab_sandbox', isTabWithIcon: true, iconName: 'flask-conical' },
-            { sel: '.tab[data-tab="presentation"]', key: 'tab_presentation', isTabWithIcon: true, iconName: 'presentation' },
+        // 4. Translate all text tags across the document
+        const textTags = 'h1, h2, h3, h4, h5, p, span, button, a, th, label, option, summary, strong, b, td';
+        root.querySelectorAll(textTags).forEach(el => {
+            // Skip code blocks, scripts, and numerical data badges
+            if (el.closest('script, style, code, pre, .monaco-editor, #valSandboxTenure, .kpiValue, .metricCardVal, #overviewCurrencySelect, #specialSimSlider')) return;
+            // Skip logo label to preserve brand mark
+            if (el.classList.contains('logoSubLabel') || el.id === 'brandTitle') return;
 
-            // Sidebar
-            { sel: '.sourcesPane .paneHead h2', key: 'sidebar_sources' },
-            { id: 'addSourceBtn', key: 'sidebar_add' },
-            { sel: '.schema-info-card h4', key: 'sidebar_schema_title' },
-            { sel: '.schema-info-card p', key: 'sidebar_schema_desc' },
-            { sel: '#downloadTemplateBtn', key: 'sidebar_download_template', isContentWithIcon: true, iconName: 'download' },
-            { id: 'customerSearchInput', key: 'cust_search', isPlaceholder: true },
-            { id: 'chatInput', key: 'copilot_placeholder', isPlaceholder: true },
-            { id: 'chatSendButton', key: 'copilot_send' },
-            { id: 'guideSearchInput', key: 'guide_search', isPlaceholder: true },
+            const hasChildElements = Array.from(el.children).some(c => c.tagName !== 'BR');
 
-            // Overview Section
-            { sel: '#kpiMonitored .kpiLabel', key: 'kpi_monitored' },
-            { sel: '#kpiMonitored .kpiSub', key: 'kpi_monitored_sub' },
-            { sel: '#kpiTriage .kpiLabel', key: 'kpi_triage' },
-            { sel: '#kpiTriage .kpiSub', key: 'kpi_triage_sub' },
-            { sel: '#kpiBaseline .kpiLabel', key: 'kpi_baseline' },
-            { sel: '#kpiBaseline .kpiSub', key: 'kpi_baseline_sub' },
-            { sel: '#kpiDimensions .kpiLabel', key: 'kpi_dimensions' },
-            { sel: '#kpiDimensions .kpiSub', key: 'kpi_dimensions_sub' },
-            { sel: '#modelMetricsHead h3', key: 'model_metrics_title' },
-            { sel: '.metricBox:nth-child(1) .metricLabel', key: 'metric_acc' },
-            { sel: '.metricBox:nth-child(2) .metricLabel', key: 'metric_prec' },
-            { sel: '.metricBox:nth-child(3) .metricLabel', key: 'metric_rec' },
-            { sel: '.metricBox:nth-child(4) .metricLabel', key: 'metric_roc' },
-            { sel: '#signalsTitle', key: 'signals_title' },
-            { sel: '#shapTitle', key: 'shap_title' },
-            { sel: '#aiNarrativeCard h3', key: 'ai_narrative_title' },
+            if (!hasChildElements) {
+                const txt = el.textContent.trim();
+                if (!txt || /^\d+([.,]\d+)?%?$/.test(txt) || /^\$[\d,]+/.test(txt)) return;
 
-            // Specials Section
-            { sel: '#specialsHead h2', key: 'specials_title' },
-            { sel: '#specialsHead p', key: 'specials_sub' },
-            { sel: '#specialsCurrencyLabel', key: 'currency_label' },
-            { sel: '.specials-tab[data-module="finance"]', key: 'module_finance' },
-            { sel: '.specials-tab[data-module="operations"]', key: 'module_ops' },
-            { sel: '.specials-tab[data-module="sales"]', key: 'module_sales' },
-            { sel: '.specials-tab[data-module="product"]', key: 'module_product' },
-
-            // Actions Section
-            { sel: '#recommendationsHead h3', key: 'rec_title' },
-            { sel: '#tipsPanelHead h3', key: 'tips_title' },
-
-            // Customers Table Section
-            { sel: '#resultSectionTitle', key: 'cust_title' },
-            { sel: '#filterPillAll .pillText', key: 'filter_all_risks' },
-            { sel: '#filterPillHigh .pillText', key: 'filter_high_risk' },
-            { sel: '#filterPillLow .pillText', key: 'filter_low_risk' },
-
-            // Business Hub Section
-            { sel: '#businessHubTitle', key: 'biz_title' },
-            { sel: '#businessHubQuestion', key: 'biz_question' },
-
-            // Sandbox Section
-            { sel: '#sandboxHead h2', key: 'sandbox_title' },
-            { sel: '#sandboxHead p', key: 'sandbox_sub' },
-            { sel: '#sandboxPresetLoyal', key: 'sandbox_preset_loyal' },
-            { sel: '#sandboxPresetModerate', key: 'sandbox_preset_moderate' },
-            { sel: '#sandboxPresetCritical', key: 'sandbox_preset_critical' },
-            { sel: '#sandboxPresetReset', key: 'sandbox_preset_reset' },
-            { sel: '#sandboxParamsTitle', key: 'sandbox_params_title' },
-            { sel: '#sandboxGaugeTitle', key: 'sandbox_gauge_title' },
-            { sel: '#sandboxRecsTitle', key: 'sandbox_recs_title' },
-
-            // Presentation Section
-            { sel: '#presHead h2', key: 'pres_title' },
-            { sel: '#generatePresBtn span', key: 'pres_generate' },
-            { sel: '#fullscreenPresBtn span', key: 'pres_fullscreen' },
-            { sel: '#printPresBtn span', key: 'pres_print' },
-            { sel: '#downloadPptxBtn span', key: 'pres_pptx' },
-            { sel: '#downloadHtmlDeckBtn span', key: 'pres_html' },
-
-            // Notes Section
-            { sel: '.notesPane .paneHead h2', key: 'notes_title' },
-
-            // Copilot Section
-            { sel: '#copilotToggleBtn span', key: 'copilot_title' },
-            { sel: '.copilotConsultantTag', key: 'copilot_status' },
-            { sel: '.chatChip:nth-child(1)', key: 'chip_1' },
-            { sel: '.chatChip:nth-child(2)', key: 'chip_2' },
-            { sel: '.chatChip:nth-child(3)', key: 'chip_3' },
-
-            // BI Export Modals (Power BI & Tableau)
-            { id: 'pbiTabBtnExec', key: 'page_exec', isContentWithIcon: true, iconName: 'layout-dashboard' },
-            { id: 'pbiTabBtnRisk', key: 'page_risk', isContentWithIcon: true, iconName: 'alert-triangle' },
-            { id: 'pbiTabBtnDetail', key: 'page_detail', isContentWithIcon: true, iconName: 'filter' },
-            { id: 'pbiTabBtnConnectors', key: 'page_connectors', isContentWithIcon: true, iconName: 'link-2' },
-            { sel: '.pbiKpiCard.cyan .pbiKpiLabel', key: 'kpi_rev' },
-            { sel: '.pbiKpiCard.purple .pbiKpiLabel', key: 'kpi_cust' },
-            { sel: '.pbiKpiCard:not(.cyan):not(.purple):not(.danger) .pbiKpiLabel', key: 'kpi_rate' },
-            { sel: '.pbiKpiCard.danger .pbiKpiLabel', key: 'kpi_risk' },
-            { sel: '#pbiFilterPills button:nth-child(1)', key: 'slicer_all' },
-            { sel: '#pbiFilterPills button:nth-child(2)', key: 'slicer_high' },
-            { sel: '#pbiFilterPills button:nth-child(3)', key: 'slicer_med' },
-            { sel: '#pbiFilterPills button:nth-child(4)', key: 'slicer_low' },
-            { sel: '.pbiLiveFeedLabel', key: 'live_feed_label' },
-            { sel: '.pbiLiveFeedBox button span, .pbiLiveFeedBox button', key: 'btn_copy_url', isContentWithIcon: true, iconName: 'copy' }
-        ];
-
-        updates.forEach(u => {
-            const el = u.id ? document.getElementById(u.id) : document.querySelector(u.sel);
-            if (!el) return;
-            const text = t(u.key);
-            if (!text) return;
-
-            if (u.isPlaceholder) {
-                el.placeholder = text;
-            } else if (u.isTabWithIcon) {
-                el.innerHTML = `<i data-lucide="${u.iconName}" class="lucide-icon" style="width: 13.5px; height: 13.5px; vertical-align: middle;"></i> ${text}`;
-            } else if (u.isContentWithIcon) {
-                const icon = el.querySelector('i');
-                if (icon) {
-                    el.innerHTML = '';
-                    el.appendChild(icon);
-                    el.appendChild(document.createTextNode(' ' + text));
+                if (!el.hasAttribute('data-i18n-orig')) {
+                    el.setAttribute('data-i18n-orig', txt);
+                }
+                const orig = el.getAttribute('data-i18n-orig');
+                if (isEn) {
+                    el.textContent = orig;
                 } else {
-                    el.textContent = text;
+                    const trans = getTranslationForText(orig, lang);
+                    if (trans) el.textContent = trans;
                 }
             } else {
-                el.textContent = text;
+                Array.from(el.childNodes).forEach(node => {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        const raw = node.textContent.trim();
+                        if (!raw || /^\d+([.,]\d+)?%?$/.test(raw) || /^\$[\d,]+/.test(raw)) return;
+
+                        if (!node._origText) {
+                            node._origText = raw;
+                        }
+                        const orig = node._origText;
+                        if (isEn) {
+                            node.textContent = (node.textContent.startsWith(' ') ? ' ' : '') + orig;
+                        } else {
+                            const trans = getTranslationForText(orig, lang);
+                            if (trans) {
+                                node.textContent = (node.textContent.startsWith(' ') ? ' ' : '') + trans;
+                            }
+                        }
+                    }
+                });
             }
         });
 
-        // 3. Smart Phrase Table & Badges Translation
-        const phraseMap = {
-            'Customer Account': t('th_account'),
-            'Risk Status': t('th_risk'),
-            'Predicted Probability': t('th_prob'),
-            'Risk Drivers': t('shap_title'),
-            'Actions': t('th_action'),
-            'Customer ID': t('th_id'),
-            'Account Name': t('th_name'),
-            'Segment': t('th_segment'),
-            'Contract': t('th_contract'),
-            'Contract Type': t('th_contract'),
-            'Tenure': t('th_tenure'),
-            'Churn Score': t('th_score'),
-            'Revenue': t('th_revenue'),
-            'Revenue (ARR)': t('th_revenue'),
-            'Status': t('th_status'),
-            'Recommended Action': t('th_action'),
-            'High Risk': t('filter_high_risk'),
-            'Low Risk': t('filter_low_risk'),
-            'All Customers': t('filter_all_risks'),
-            'Category Slider': t('category_slider'),
-            'All Categories (25+)': t('all_categories'),
-            'Select Language': t('lang_select_title')
-        };
-
-        document.querySelectorAll('th, .pillText, .slider-tag-text, .header-lang-dropdown-head span').forEach(el => {
-            const raw = el.textContent.trim();
-            if (phraseMap[raw]) {
-                el.textContent = phraseMap[raw];
-            }
-        });
-
-        // 4. Update Header Language Button & Active Highlighting
+        // 5. Update Language Switcher UI
         const hFlag = document.getElementById('headerLangFlag');
         const hCode = document.getElementById('headerLangCode');
         if (hFlag) hFlag.textContent = langConfig.flag;
@@ -2026,7 +3568,7 @@
 
         document.querySelectorAll('.header-lang-item').forEach(item => {
             const code = item.getAttribute('data-lang');
-            if (code === currentLang) {
+            if (code === lang) {
                 item.classList.add('active');
             } else {
                 item.classList.remove('active');
@@ -2040,10 +3582,9 @@
             el.textContent = langConfig.native;
         });
 
-        // Update active class in dropdown and mobile grid
         document.querySelectorAll('.langOptionItem').forEach(item => {
             const code = item.getAttribute('data-lang');
-            if (code === currentLang) {
+            if (code === lang) {
                 item.classList.add('active');
             } else {
                 item.classList.remove('active');
@@ -2051,36 +3592,37 @@
         });
         document.querySelectorAll('.lang-quick-btn').forEach(btn => {
             const code = btn.getAttribute('data-lang');
-            if (code === currentLang) {
+            if (code === lang) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');
             }
         });
 
-        // Re-render Lucide icons
+        // 6. Refresh Lucide Icons safely
         if (window.lucide && typeof window.lucide.createIcons === 'function') {
             window.lucide.createIcons();
         }
+    }
 
-        // Fire custom event
+    function translateUI() {
+        translateDOM(document.body);
+        const langConfig = SUPPORTED_LANGUAGES.find(l => l.code === currentLang) || SUPPORTED_LANGUAGES[0];
         window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: currentLang, config: langConfig } }));
     }
 
     function setLanguage(lang) {
-        if (!TRANSLATIONS[lang]) return;
+        if (!SUPPORTED_LANGUAGES.some(l => l.code === lang)) return;
         currentLang = lang;
         localStorage.setItem('qiplo_language', lang);
         translateUI();
 
-        // Premium Toast Feedback
         const langObj = SUPPORTED_LANGUAGES.find(l => l.code === currentLang);
         if (window.showBiToast && langObj) {
             window.showBiToast(`${langObj.flag} Language changed to ${langObj.native} (${langObj.name})`, 'globe');
         }
 
-        // Also update backend session or notify Copilot if chat is visible
-        if (window.appendMessage && currentLang !== 'en') {
+        if (window.appendMessage && currentLang !== 'en' && langObj) {
             const notice = `${langObj.flag} **Language updated to ${langObj.native} (${langObj.name})**. All dashboard workspaces, predictive AI queries, and presentation decks will now process in ${langObj.name}.`;
             window.appendMessage('bot', notice, true);
         }
@@ -2094,7 +3636,6 @@
         return SUPPORTED_LANGUAGES;
     }
 
-    // Header Language Dropdown Controller
     window.toggleHeaderLangMenu = function(e) {
         if (e) e.stopPropagation();
         const dd = document.getElementById('headerLangDropdown');
@@ -2117,16 +3658,16 @@
         }
     });
 
-    // Export globally
     window.qiploI18n = {
         t,
+        getTranslationForText,
+        translateDOM,
+        translateUI,
         setLanguage,
         getCurrentLanguage,
-        getSupportedLanguages,
-        translateUI
+        getSupportedLanguages
     };
 
-    // Auto-run on DOMContentLoaded
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', translateUI);
     } else {
