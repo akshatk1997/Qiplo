@@ -1226,15 +1226,14 @@ document.getElementById('exportReportBtn').addEventListener('click', () => {
 });
 
 window.generateCustomReport = function() {
-    const exportBtn = document.getElementById('exportReportBtn');
-    if (exportBtn) {
-        exportBtn.click();
-    } else {
-        const company = encodeURIComponent(document.getElementById('companyNameInput')?.value.trim() || '');
-        const currencySelect = document.getElementById('currencySelect') || document.getElementById('sandboxCurrencySelect');
-        const currency = currencySelect ? encodeURIComponent(currencySelect.value) : 'USD';
-        window.open(`/api/export/report?company=${company}&currency=${currency}`, '_blank');
-    }
+    const company = encodeURIComponent(document.getElementById('companyNameInput')?.value.trim() || '');
+    const currencySelect = document.getElementById('currencySelect') || document.getElementById('sandboxCurrencySelect');
+    const currency = currencySelect ? encodeURIComponent(currencySelect.value) : 'USD';
+    const clv = document.getElementById('repOptClv')?.checked !== false;
+    const friction = document.getElementById('repOptFriction')?.checked !== false;
+    const causes = document.getElementById('repOptCauses')?.checked !== false;
+    const playbook = document.getElementById('repOptPlaybook')?.checked !== false;
+    window.open(`/api/export/report?company=${company}&currency=${currency}&clv=${clv}&friction=${friction}&causes=${causes}&playbook=${playbook}`, '_blank');
 };
 
 document.getElementById('companyNameInput').addEventListener('input', debounce(() => {
