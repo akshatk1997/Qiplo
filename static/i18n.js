@@ -1785,10 +1785,10 @@
 
     const PHRASE_DICTIONARY = {
         "Overview": {
-                "es": "Visión General",
+                "es": "Resumen",
                 "fr": "Vue d'ensemble",
                 "de": "Übersicht",
-                "zh": "概览",
+                "zh": "总览",
                 "ja": "概要",
                 "pt": "Visão Geral",
                 "ar": "نظرة عامة",
@@ -1798,56 +1798,56 @@
         "Specials": {
                 "es": "Especiales",
                 "fr": "Spéciaux",
-                "de": "Spezial",
-                "zh": "专题套件",
-                "ja": "特別分析",
+                "de": "Spezialmodule",
+                "zh": "专项套件",
+                "ja": "専門機能",
                 "pt": "Especiais",
-                "ar": "تحليلات خاصة",
-                "hi": "विशेष",
-                "ru": "Специальные"
+                "ar": "الأجنحة الخاصة",
+                "hi": "विशिष्ट सूट",
+                "ru": "Спецмодули"
         },
         "Actions": {
                 "es": "Acciones",
                 "fr": "Actions",
-                "de": "Maßnahmen",
-                "zh": "行动方案",
+                "de": "Aktionen",
+                "zh": "行动策略",
                 "ja": "アクション",
                 "pt": "Ações",
                 "ar": "الإجراءات",
-                "hi": "कार्रवाई",
+                "hi": "कार्रवाइयां",
                 "ru": "Действия"
         },
         "Customers": {
                 "es": "Clientes",
                 "fr": "Clients",
                 "de": "Kunden",
-                "zh": "客户名单",
-                "ja": "顧客",
+                "zh": "客户总数",
+                "ja": "総顧客数",
                 "pt": "Clientes",
-                "ar": "العملاء",
-                "hi": "ग्राहक",
-                "ru": "Клиенты"
+                "ar": "إجمالي العملاء",
+                "hi": "कुल ग्राहक",
+                "ru": "Клиентов"
         },
         "Business": {
-                "es": "Negocio",
-                "fr": "Entreprise",
-                "de": "Geschäft",
-                "zh": "商业智能",
+                "es": "Negocios",
+                "fr": "Affaires",
+                "de": "Unternehmen",
+                "zh": "商业中心",
                 "ja": "ビジネス",
                 "pt": "Negócios",
                 "ar": "الأعمال",
-                "hi": "व्यवसाय",
+                "hi": "व्यापार",
                 "ru": "Бизнес"
         },
         "Sandbox": {
-                "es": "Zona de Pruebas",
-                "fr": "Bac à sable",
-                "de": "Sandbox",
-                "zh": "沙盒模拟",
+                "es": "Simulador Sandbox",
+                "fr": "Bac à Sable",
+                "de": "Sandbox-Simulator",
+                "zh": "沙盒模拟工作台",
                 "ja": "サンドボックス",
-                "pt": "Sandbox",
-                "ar": "صندوق التجربة",
-                "hi": "सैंडबॉक्स",
+                "pt": "Simulador Sandbox",
+                "ar": "مختبر المحاكاة",
+                "hi": "सैंडबॉक्स सिम्युलेटर",
                 "ru": "Песочница"
         },
         "Presentation": {
@@ -1855,31 +1855,31 @@
                 "fr": "Présentation",
                 "de": "Präsentation",
                 "zh": "演示文稿",
-                "ja": "プレゼンテーション",
+                "ja": "プレゼン",
                 "pt": "Apresentação",
                 "ar": "العرض التقديمي",
                 "hi": "प्रस्तुति",
                 "ru": "Презентация"
         },
         "Guide": {
-                "es": "Guía",
+                "es": "Manual",
                 "fr": "Guide",
                 "de": "Leitfaden",
-                "zh": "使用指南",
+                "zh": "指南",
                 "ja": "ガイド",
                 "pt": "Guia",
                 "ar": "الدليل",
                 "hi": "मार्गदर्शिका",
-                "ru": "Руководство"
+                "ru": "Гайд"
         },
         "Report": {
                 "es": "Informe",
                 "fr": "Rapport",
                 "de": "Bericht",
-                "zh": "审计报告",
+                "zh": "报告",
                 "ja": "レポート",
                 "pt": "Relatório",
-                "ar": "التقرير",
+                "ar": "تقرير",
                 "hi": "रिपोर्ट",
                 "ru": "Отчет"
         },
@@ -1912,7 +1912,7 @@
                 "zh": "Excel",
                 "ja": "Excel",
                 "pt": "Excel",
-                "ar": "Excel",
+                "ar": "إكسيل",
                 "hi": "Excel",
                 "ru": "Excel"
         },
@@ -1928,12 +1928,12 @@
                 "ru": "PDF"
         },
         "Live": {
-                "es": "En vivo",
-                "fr": "En direct",
+                "es": "En Vivo",
+                "fr": "En Direct",
                 "de": "Live",
-                "zh": "实时",
-                "ja": "ライブ",
-                "pt": "Ao vivo",
+                "zh": "实时监测",
+                "ja": "リアルタイム",
+                "pt": "Ao Vivo",
                 "ar": "مباشر",
                 "hi": "लाइव",
                 "ru": "В эфире"
@@ -1942,7 +1942,7 @@
                 "es": "Datos",
                 "fr": "Données",
                 "de": "Daten",
-                "zh": "数据",
+                "zh": "数据源",
                 "ja": "データ",
                 "pt": "Dados",
                 "ar": "البيانات",
@@ -1953,32 +1953,32 @@
                 "es": "Notas",
                 "fr": "Notes",
                 "de": "Notizen",
-                "zh": "笔记",
-                "ja": "ノート",
+                "zh": "工作笔记",
+                "ja": "メモ帳",
                 "pt": "Notas",
                 "ar": "الملاحظات",
                 "hi": "नोट्स",
                 "ru": "Заметки"
         },
         "Tour": {
-                "es": "Recorrido",
+                "es": "Guía",
                 "fr": "Visite",
                 "de": "Tour",
-                "zh": "漫游导览",
+                "zh": "导览",
                 "ja": "ツアー",
                 "pt": "Tour",
                 "ar": "جولة",
-                "hi": "टूर",
+                "hi": "दौरा",
                 "ru": "Тур"
         },
         "Sync": {
                 "es": "Sincronizar",
                 "fr": "Synchroniser",
-                "de": "Sync",
-                "zh": "同步",
+                "de": "Synchronisieren",
+                "zh": "同步数据",
                 "ja": "同期",
                 "pt": "Sincronizar",
-                "ar": "مزامنة",
+                "ar": "تزامن",
                 "hi": "सिंक",
                 "ru": "Синхронизация"
         },
@@ -1994,14 +1994,14 @@
                 "ru": "Настройки"
         },
         "Admin Session": {
-                "es": "Sesión Admin",
+                "es": "Sesión Administrador",
                 "fr": "Session Admin",
                 "de": "Admin-Sitzung",
                 "zh": "管理员会话",
                 "ja": "管理者セッション",
-                "pt": "Sessão Admin",
+                "pt": "Sessão Administrador",
                 "ar": "جلسة المشرف",
-                "hi": "व्यवस्थापक सत्र",
+                "hi": "एडमिन सत्र",
                 "ru": "Сессия админа"
         },
         "All": {
@@ -2082,102 +2082,102 @@
                 "ru": "Больше никогда не теряйте клиентов"
         },
         "Demo Sandbox Active": {
-                "es": "Modo Sandbox Activo",
-                "fr": "Bac à sable démo actif",
-                "de": "Demo-Sandbox aktiv",
-                "zh": "演示沙盒已激活",
+                "es": "Modo Demostración Activo",
+                "fr": "Mode Démo Actif",
+                "de": "Demo-Modus Aktiv",
+                "zh": "沙盒演示模式运行中",
                 "ja": "デモサンドボックス稼働中",
-                "pt": "Sandbox de Demonstração Ativo",
-                "ar": "صندوق التجربة النشط",
+                "pt": "Modo Demonstração Ativo",
+                "ar": "وضع المحاكاة التجريبي نشط",
                 "hi": "डेमो सैंडबॉक्स सक्रिय",
                 "ru": "Демо-песочница активна"
         },
         "Company name (optional)": {
                 "es": "Nombre de empresa (opcional)",
-                "fr": "Nom de l'entreprise (optionnel)",
+                "fr": "Nom de l'entreprise (facultatif)",
                 "de": "Unternehmensname (optional)",
-                "zh": "公司名称（可选）",
-                "ja": "会社名（任意）",
+                "zh": "企业名称（可选）",
+                "ja": "企業名（任意）",
                 "pt": "Nome da empresa (opcional)",
                 "ar": "اسم الشركة (اختياري)",
                 "hi": "कंपनी का नाम (वैकल्पिक)",
-                "ru": "Название компании (опционально)"
+                "ru": "Название компании (необязательно)"
         },
         "Ingestion & Telemetry": {
                 "es": "Ingesta y Telemetría",
-                "fr": "Ingestion et Télémétrie",
-                "de": "Erfassung & Telemetrie",
-                "zh": "数据导入与监控",
-                "ja": "データ取得とテレメトリ",
+                "fr": "Ingestion & Télémétrie",
+                "de": "Datenerfassung & Telemetrie",
+                "zh": "数据导入与实时遥测",
+                "ja": "データ取り込みとテレメトリ",
                 "pt": "Ingestão e Telemetria",
-                "ar": "الاستيعاب والقياس",
+                "ar": "إدخال البيانات والقياس عن بعد",
                 "hi": "डेटा अंतर्ग्रहण और टेलीमेट्री",
-                "ru": "Сбор данных и телеметрия"
+                "ru": "Загрузка и телеметрия"
         },
         "Active records, billing distribution & dataset sync": {
-                "es": "Registros activos, distribución de facturación y sincronización",
-                "fr": "Registres actifs, facturation et synchronisation",
-                "de": "Aktive Datensätze, Abrechnungsverteilung & Synchronisierung",
-                "zh": "活跃记录、计费分布和数据集同步",
-                "ja": "アクティブなレコード、請求分布、データ同期",
-                "pt": "Registros ativos, distribuição de faturamento e sincronização",
+                "es": "Registros activos, facturación y sincronización de datos",
+                "fr": "Dossiers actifs, facturation et synchronisation",
+                "de": "Aktive Datensätze, Abrechnungsverteilung & Synchronisation",
+                "zh": "活跃客户档案、计费分布及数据集同步",
+                "ja": "アクティブ顧客、請求分布、データ同期",
+                "pt": "Registros ativos, faturamento e sincronização",
                 "ar": "السجلات النشطة وتوزيع الفواتير ومزامنة البيانات",
                 "hi": "सक्रिय रिकॉर्ड, बिलिंग वितरण और डेटासेट सिंक",
                 "ru": "Активные записи, распределение счетов и синхронизация"
         },
         "Predictive AI & Sandbox": {
-                "es": "IA Predictiva y Sandbox",
-                "fr": "IA Prédictive & Bac à sable",
+                "es": "IA Predictiva y Simulación",
+                "fr": "IA Prédictive & Bac à Sable",
                 "de": "Prädiktive KI & Sandbox",
-                "zh": "预测性AI与沙盒",
+                "zh": "预测式AI与沙盒模拟",
                 "ja": "予測AIとサンドボックス",
                 "pt": "IA Preditiva e Sandbox",
-                "ar": "الذكاء الاصطناعي التنبؤي وصندوق التجربة",
-                "hi": "भविष्य कहनेवाला एआई और सैंडबॉक्स",
+                "ar": "الذكاء الاصطناعي التنبؤي والمحاكاة",
+                "hi": "पूर्वानुमानित AI और सैंडबॉक्स",
                 "ru": "Предиктивный ИИ и песочница"
         },
         "Test retention levers & simulate churn outlooks": {
-                "es": "Pruebe palancas de retención y simule escenarios de cancelación",
-                "fr": "Testez les leviers de rétention et simulez le désabonnement",
-                "de": "Kundenbindungshebel testen & Abwanderungsszenarien simulieren",
-                "zh": "测试留存杠杆并模拟流失走势",
-                "ja": "維持施策をテストし、解約見通しをシミュレーション",
-                "pt": "Teste alavancas de retenção e simule cenários de churn",
-                "ar": "اختبر أدوات الاستبقاء ومحاكاة توقعات التسرب",
-                "hi": "रिटेंशन लीवर का परीक्षण करें और चर्न आउटलुक का अनुकरण करें",
-                "ru": "Тестируйте рычаги удержания и моделируйте отток"
+                "es": "Prueba palancas de retención y proyecta retención",
+                "fr": "Testez les leviers de fidélisation et simulez l'attrition",
+                "de": "Kundenbindungshebel testen & Abwanderung prognostizieren",
+                "zh": "测试挽留策略与模拟动态流失概率",
+                "ja": "リテンション施策をテストし解約率をシミュレーション",
+                "pt": "Teste alavancas de retenção e simule o churn",
+                "ar": "اختبار روافع الحفاظ على العملاء ومحاكاة التسرب",
+                "hi": "ग्राहक प्रतिधारण लीवर का परीक्षण और मंथन सिमुलेशन",
+                "ru": "Тестируйте рычаги удержания и прогнозируйте отток"
         },
         "Prescriptive SLA Actions": {
                 "es": "Acciones Prescriptivas de SLA",
                 "fr": "Actions Prescriptives SLA",
                 "de": "Präskriptive SLA-Maßnahmen",
-                "zh": "指导性SLA响应",
-                "ja": "処方的SLAアクション",
+                "zh": "规范化SLA行动",
+                "ja": "SLA処方アクション",
                 "pt": "Ações Prescritivas de SLA",
-                "ar": "إجراءات اتفاقية مستوى الخدمة الإلزامية",
-                "hi": "निर्देशात्मक एसएलए कार्रवाइयां",
-                "ru": "Предписанные действия по SLA"
+                "ar": "إجراءات SLA التوجيهية",
+                "hi": "निर्धारित SLA कार्रवाइयां",
+                "ru": "Предписывающие SLA-действия"
         },
         "Automated triage, CSM assignments & Gamma pitch decks": {
-                "es": "Triaje automatizado, asignaciones de CSM y presentaciones Gamma",
-                "fr": "Triage automatisé, affectations CSM et présentations Gamma",
-                "de": "Automatisiertes Triage, CSM-Zuweisung & Gamma-Präsentationen",
-                "zh": "自动分流、CSM分配和Gamma演示幻灯片",
-                "ja": "自動トリアージ、CSM割り当て、Gammaスライドデッキ",
-                "pt": "Triagem automatizada, atribuições de CSM e apresentações Gamma",
-                "ar": "الفرز التلقائي وتعيين مديري النجاح وعروض Gamma التقديمية",
-                "hi": "स्वचालित ट्राइएज, सीएसएम आवंटन और गामा पिच डेक",
-                "ru": "Автоматическая сортировка, назначения CSM и презентации Gamma"
+                "es": "Triaje automático, asignación a CSM y presentaciones",
+                "fr": "Triage automatisé, affectations CSM et présentations",
+                "de": "Automatische Triage, CSM-Zuweisungen & Präsentationen",
+                "zh": "自动化客户分诊、CSM分配及智能演示文稿",
+                "ja": "自動トリアージ、CSM担当割り当て、Gammaデッキ生成",
+                "pt": "Triagem automatizada, atribuições de CSM e apresentações",
+                "ar": "الفرز الآلي وتعيين مدراء النجاح والعروض التقديمية",
+                "hi": "स्वचालित प्राथमिकता, CSM कार्यभार और प्रेजेंटेशन",
+                "ru": "Автоматическая сортировка, распределение CSM и презентации"
         },
         "Monitored Accounts": {
                 "es": "Cuentas Monitoreadas",
                 "fr": "Comptes Surveillés",
                 "de": "Überwachte Konten",
-                "zh": "受监控账户",
+                "zh": "受监测客户账户",
                 "ja": "監視対象アカウント",
                 "pt": "Contas Monitoradas",
                 "ar": "الحسابات المراقبة",
-                "hi": "निगरानी किए गए खाते",
+                "hi": "निगरानी वाले खाते",
                 "ru": "Контролируемые аккаунты"
         },
         "Synced": {
@@ -2193,24 +2193,24 @@
         },
         "Active database & ingested profiles": {
                 "es": "Base de datos activa y perfiles cargados",
-                "fr": "Base de données active et profils importés",
-                "de": "Aktive Datenbank & geladene Profile",
-                "zh": "活跃数据库和已摄入的客户资料",
-                "ja": "アクティブデータベースとプロファイル",
-                "pt": "Banco de dados ativo e perfis ingeridos",
-                "ar": "قاعدة البيانات النشطة والملفات الشخصية المجمعة",
-                "hi": "सक्रिय डेटाबेस और प्रोफ़ाइल",
-                "ru": "Активная база данных и профили"
+                "fr": "Base de données et profils ingérés",
+                "de": "Aktive Datenbank & verarbeitete Profile",
+                "zh": "活跃数据库与已解析客户档案",
+                "ja": "データベース内のアクティブ顧客",
+                "pt": "Banco de dados e perfis ativos",
+                "ar": "قاعدة البيانات النشطة والملفات المدخلة",
+                "hi": "सक्रिय डेटाबेस और लोड की गई प्रोफाइल",
+                "ru": "Активная база и загруженные профили"
         },
         "Immediate Triage Risk": {
-                "es": "Riesgo Urgente (Triaje)",
-                "fr": "Risque Urgent (Triage)",
-                "de": "Akutes Triage-Risiko",
-                "zh": "高急迫风险（分流）",
-                "ja": "緊急トリアージリスク",
-                "pt": "Risco Imediato de Triagem",
+                "es": "Riesgo de Triaje Inmediato",
+                "fr": "Risque Immédiat à Traiter",
+                "de": "Sofortiges Triage-Risiko",
+                "zh": "即刻分诊流失风险",
+                "ja": "即時対応トリアージリスク",
+                "pt": "Risco Imediato para Triagem",
                 "ar": "خطر الفرز الفوري",
-                "hi": "तत्काल ट्राइएज जोखिम",
+                "hi": "तत्काल कार्रवाई जोखिम",
                 "ru": "Срочный риск (триаж)"
         },
         "Attention": {
@@ -2236,14 +2236,14 @@
                 "ru": "Аккаунты, требующие превентивного удержания"
         },
         "Healthy Baseline": {
-                "es": "Base Saludable",
+                "es": "Línea Base Saludable",
                 "fr": "Base Saine",
                 "de": "Gesunde Basis",
-                "zh": "健康基线",
-                "ja": "健全なベースライン",
-                "pt": "Base Saudável",
-                "ar": "الخط الأساسي السليم",
-                "hi": "स्वस्थ आधार",
+                "zh": "稳定健康基线",
+                "ja": "健全ベースライン",
+                "pt": "Linha de Base Saudável",
+                "ar": "القاعدة السليمة",
+                "hi": "सुरक्षित बेसलाइन",
                 "ru": "Здоровая база"
         },
         "Stable": {
@@ -2269,14 +2269,14 @@
                 "ru": "Когорты с низким риском и высокой лояльностью"
         },
         "Feature Dimensions": {
-                "es": "Dimensiones de Características",
-                "fr": "Dimensions des Variables",
+                "es": "Dimensiones Evaluadas",
+                "fr": "Dimensions Évaluées",
                 "de": "Merkmalsdimensionen",
-                "zh": "特征评估维度",
-                "ja": "特徴量次元",
-                "pt": "Dimensões de Atributos",
-                "ar": "أبعاد الخصائص",
-                "hi": "सुविधा आयाम",
+                "zh": "评估指标维度",
+                "ja": "評価指標次元数",
+                "pt": "Dimensões Avaliadas",
+                "ar": "أبعاد المتغيرات",
+                "hi": "मूल्यांकित आयाम",
                 "ru": "Оцениваемые параметры"
         },
         "Real-time ML": {
@@ -2434,43 +2434,43 @@
                 "ru": "Телеметрия производительности модели"
         },
         "Accuracy": {
-                "es": "Precisión Global",
+                "es": "Exactitud",
                 "fr": "Précision Globale",
-                "de": "Genauigkeit (Accuracy)",
+                "de": "Genauigkeit",
                 "zh": "准确率 (Accuracy)",
-                "ja": "正解率",
+                "ja": "正解率 (Accuracy)",
                 "pt": "Acurácia",
-                "ar": "الدقة الإجمالية",
+                "ar": "الدقة الكلية",
                 "hi": "सटीकता (Accuracy)",
                 "ru": "Точность (Accuracy)"
         },
         "Precision": {
                 "es": "Precisión",
                 "fr": "Précision",
-                "de": "Präzision (Precision)",
-                "zh": "精确率 (Precision)",
-                "ja": "適合率",
+                "de": "Präzision",
+                "zh": "精确度 (Precision)",
+                "ja": "適合率 (Precision)",
                 "pt": "Precisão",
-                "ar": "الدقة (Precision)",
+                "ar": "الدقة التنبؤية",
                 "hi": "परिशुद्धता (Precision)",
                 "ru": "Точность (Precision)"
         },
         "Recall": {
-                "es": "Exhaustividad",
+                "es": "Sensibilidad",
                 "fr": "Rappel",
-                "de": "Trefferquote (Recall)",
+                "de": "Sensitivität",
                 "zh": "召回率 (Recall)",
-                "ja": "再現率",
+                "ja": "再現率 (Recall)",
                 "pt": "Revocação",
-                "ar": "الاستدعاء (Recall)",
-                "hi": "रीकॉल (Recall)",
+                "ar": "الاستدعاء",
+                "hi": "रिकॉल (Recall)",
                 "ru": "Полнота (Recall)"
         },
         "ROC AUC": {
                 "es": "ROC AUC",
                 "fr": "ROC AUC",
                 "de": "ROC AUC",
-                "zh": "ROC AUC",
+                "zh": "ROC AUC 曲线面积",
                 "ja": "ROC AUC",
                 "pt": "ROC AUC",
                 "ar": "ROC AUC",
@@ -2492,22 +2492,22 @@
                 "es": "Señales de Retención y Satisfacción",
                 "fr": "Signaux de Rétention et de Satisfaction",
                 "de": "Kundenbindungs- & Zufriedenheitssignale",
-                "zh": "客户留存与满意度特征信号",
-                "ja": "顧客維持および満足度シグナル",
+                "zh": "客户满意度与留存行为信号",
+                "ja": "リテンションおよび顧客満足度シグナル",
                 "pt": "Sinais de Retenção e Satisfação",
-                "ar": "إشارات الاستبقاء ورضا العملاء",
+                "ar": "إشارات الرضا واستبقاء العملاء",
                 "hi": "प्रतिधारण और संतुष्टि संकेत",
                 "ru": "Сигналы удержания и удовлетворенности"
         },
         "Global Feature Importance (SHAP weights)": {
                 "es": "Importancia Global de Factores (Pesos SHAP)",
-                "fr": "Importance Globale des Variables (Poids SHAP)",
-                "de": "Globale Merkmalsbedeutung (SHAP-Werte)",
-                "zh": "全局特征重要性（SHAP贡献权重）",
-                "ja": "大域的特徴量重要度（SHAPウェイト）",
-                "pt": "Importância Global de Atributos (Pesos SHAP)",
-                "ar": "أهمية الخصائص العالمية (أوزان SHAP)",
-                "hi": "वैश्विक सुविधा महत्व (SHAP भार)",
+                "fr": "Importance Globale des Variables (SHAP)",
+                "de": "Globale Merkmalsbedeutung (SHAP)",
+                "zh": "特征重要性权重 (SHAP Weights)",
+                "ja": "特徴量重要度 (SHAP寄与率)",
+                "pt": "Importância Global dos Recursos (SHAP)",
+                "ar": "أهمية المتغيرات الكلية (أوزان SHAP)",
+                "hi": "सुविधाओं का वैश्विक महत्व (SHAP)",
                 "ru": "Важность факторов (веса SHAP)"
         },
         "Prediction Results & Account Intelligence": {
@@ -2538,10 +2538,10 @@
                 "de": "Kundenkonto",
                 "zh": "客户账户",
                 "ja": "顧客アカウント",
-                "pt": "Conta do Cliente",
+                "pt": "Conta de Cliente",
                 "ar": "حساب العميل",
                 "hi": "ग्राहक खाता",
-                "ru": "Аккаунт клиента"
+                "ru": "Аккаунт Клиента"
         },
         "Risk Status": {
                 "es": "Estado de Riesgo",
@@ -2580,12 +2580,12 @@
                 "es": "Contrato",
                 "fr": "Contrat",
                 "de": "Vertrag",
-                "zh": "合同期限",
+                "zh": "合同类型",
                 "ja": "契約形態",
                 "pt": "Contrato",
-                "ar": "العقد",
+                "ar": "نوع العقد",
                 "hi": "अनुबंध",
-                "ru": "Тип контракта"
+                "ru": "Контракт"
         },
         "Monthly Charges": {
                 "es": "Cargos Mensuales",
@@ -2599,14 +2599,14 @@
                 "ru": "Ежемесячный счет"
         },
         "SLA Status": {
-                "es": "Estado de SLA",
+                "es": "Estado SLA",
                 "fr": "Statut SLA",
                 "de": "SLA-Status",
                 "zh": "SLA状态",
-                "ja": "SLAステータス",
-                "pt": "Status do SLA",
-                "ar": "حالة اتفاقية SLA",
-                "hi": "एसएलए स्थिति",
+                "ja": "SLA状態",
+                "pt": "Status SLA",
+                "ar": "حالة SLA",
+                "hi": "SLA स्थिति",
                 "ru": "Статус SLA"
         },
         "High Risk": {
@@ -2657,10 +2657,10 @@
                 "es": "Todos los riesgos",
                 "fr": "Tous les risques",
                 "de": "Alle Risiken",
-                "zh": "所有风险级别",
-                "ja": "すべてのリスク",
+                "zh": "全部风险等级",
+                "ja": "全リスク",
                 "pt": "Todos os riscos",
-                "ar": "جميع المخاطر",
+                "ar": "كافة المخاطر",
                 "hi": "सभी जोखिम",
                 "ru": "Все риски"
         },
@@ -2698,33 +2698,33 @@
                 "ru": "Вероятность (по возрастанию)"
         },
         "Specialized Intelligence Suites": {
-                "es": "Suites Especializadas de Inteligencia",
-                "fr": "Suites d'Intelligence Spécialisées",
-                "de": "Spezialisierte Business-Suites",
-                "zh": "专项业务智能分析套件",
+                "es": "Suites de Inteligencia Especializada",
+                "fr": "Suites d'Intelligence Métier",
+                "de": "Spezialisierte Intelligence-Suites",
+                "zh": "专项商业智能套件",
                 "ja": "特化型インテリジェンススイート",
-                "pt": "Suítes Especializadas de Inteligência",
+                "pt": "Suítes de Inteligência Especializada",
                 "ar": "أجنحة الذكاء المتخصصة",
                 "hi": "विशेषज्ञता प्राप्त इंटेलिजेंस सूट",
                 "ru": "Специализированные аналитические комплексы"
         },
         "Evaluate financial, operational, revenue, and product margins in real-time.": {
-                "es": "Evalúe márgenes financieros, operativos, de ingresos y producto en tiempo real.",
-                "fr": "Évaluez les marges financières, opérationnelles et produit en temps réel.",
-                "de": "Finanzielle, operative und produktbezogene Margen in Echtzeit auswerten.",
-                "zh": "实时评估财务、运营、营收和产品利润表现。",
-                "ja": "財務、運用、収益、製品マージンをリアルタイムで評価。",
-                "pt": "Avalie margens financeiras, operacionais, de receita e produto em tempo real.",
-                "ar": "تقييم الهوامش المالية والتشغيلية والإيرادات والمنتجات في الوقت الفعلي.",
-                "hi": "वास्तविक समय में वित्तीय, परिचालन, राजस्व और उत्पाद मार्जिन का मूल्यांकन करें।",
+                "es": "Evalúe márgenes financieros, operativos y de producto en tiempo real.",
+                "fr": "Évaluez les marges financières, opérationnelles et produits en temps réel.",
+                "de": "Bewerten Sie Finanzen, Betrieb und Produktmargen in Echtzeit.",
+                "zh": "实时评估财务、供应链、销售及产品端健康度。",
+                "ja": "財務、オペレーション、製品マージンをリアルタイムで検証します。",
+                "pt": "Avalie margens financeiras, operacionais e de produtos em tempo real.",
+                "ar": "تقييم الهوامش المالية والتشغيلية في الوقت الفعلي.",
+                "hi": "वित्तीय, परिचालन और उत्पाद मार्जिन का वास्तविक समय में मूल्यांकन करें।",
                 "ru": "Оценивайте финансовые, операционные и продуктовые показатели в реальном времени."
         },
         "Finance": {
                 "es": "Finanzas",
                 "fr": "Finance",
                 "de": "Finanzen",
-                "zh": "财务管理",
-                "ja": "財務",
+                "zh": "财务套件",
+                "ja": "財務スイート",
                 "pt": "Finanças",
                 "ar": "المالية",
                 "hi": "वित्त",
@@ -2734,8 +2734,8 @@
                 "es": "Operaciones",
                 "fr": "Opérations",
                 "de": "Betrieb",
-                "zh": "运营管理",
-                "ja": "運用",
+                "zh": "运营套件",
+                "ja": "オペレーション",
                 "pt": "Operações",
                 "ar": "العمليات",
                 "hi": "संचालन",
@@ -2745,8 +2745,8 @@
                 "es": "Ventas",
                 "fr": "Ventes",
                 "de": "Vertrieb",
-                "zh": "销售营收",
-                "ja": "営業",
+                "zh": "销售套件",
+                "ja": "営業スイート",
                 "pt": "Vendas",
                 "ar": "المبيعات",
                 "hi": "बिक्री",
@@ -2756,8 +2756,8 @@
                 "es": "Producto",
                 "fr": "Produit",
                 "de": "Produkt",
-                "zh": "产品体验",
-                "ja": "製品",
+                "zh": "产品套件",
+                "ja": "製品スイート",
                 "pt": "Produto",
                 "ar": "المنتج",
                 "hi": "उत्पाद",
@@ -2781,8 +2781,8 @@
                 "zh": "实时流动性模拟器",
                 "ja": "リアルタイム流動性シミュレータ",
                 "pt": "Simulador de Liquidez em Tempo Real",
-                "ar": "محاكي السيولة في الوقت الفعلي",
-                "hi": "वास्तविक समय तरलता सिम्युलेटर",
+                "ar": "محاكي السيولة اللحظي",
+                "hi": "रियल-टाइम लिक्विडिटी सिम्युलेटर",
                 "ru": "Симулятор ликвидности в реальном времени"
         },
         "Suite Copilot Briefing": {
@@ -2800,7 +2800,7 @@
                 "es": "Recomendaciones",
                 "fr": "Recommandations",
                 "de": "Empfehlungen",
-                "zh": "处方性建议",
+                "zh": "AI 推荐策略",
                 "ja": "推奨アクション",
                 "pt": "Recomendações",
                 "ar": "التوصيات",
@@ -2808,14 +2808,14 @@
                 "ru": "Рекомендации"
         },
         "Live Analyzed Diagnostics & Performance Tips": {
-                "es": "Diagnósticos Analizados en Vivo y Consejos de Rendimiento",
-                "fr": "Diagnostics en Direct & Conseils de Performance",
-                "de": "Live-Analysedaten & Leistungstipps",
-                "zh": "实时诊断分析与业绩提升建议",
-                "ja": "ライブ診断とパフォーマンスアドバイス",
-                "pt": "Diagnósticos Analisados ao Vivo e Dicas de Desempenho",
-                "ar": "التشخيصات المحللة مباشرة ونصائح الأداء",
-                "hi": "लाइव विश्लेषित निदान और प्रदर्शन सुझाव",
+                "es": "Diagnósticos en Vivo y Consejos de Rendimiento",
+                "fr": "Diagnostics en Direct & Conseils d'Optimisation",
+                "de": "Live-Diagnosen & Leistungsoptimierung",
+                "zh": "实时诊断与客户留存调优建议",
+                "ja": "ライブ診断とパフォーマンス改善のヒント",
+                "pt": "Diagnósticos em Tempo Real e Dicas de Otimização",
+                "ar": "التشخيص المباشر ونصائح تحسين الأداء",
+                "hi": "लाइव डायग्नोस्टिक्स और प्रदर्शन टिप्स",
                 "ru": "Оперативная диагностика и советы по удержанию"
         },
         "All Roles": {
@@ -2865,12 +2865,12 @@
         "1. Account Parameters": {
                 "es": "1. Parámetros de la Cuenta",
                 "fr": "1. Paramètres du Compte",
-                "de": "1. Kontoparameter",
-                "zh": "1. 账户模拟参数",
-                "ja": "1. アカウントパラメータ",
+                "de": "1. Konten-Parameter",
+                "zh": "1. 客户账户参数配置",
+                "ja": "1. 顧客パラメータ設定",
                 "pt": "1. Parâmetros da Conta",
-                "ar": "1. معايير الحساب",
-                "hi": "1. खाता पैरामीटर",
+                "ar": "1. معاملات الحساب",
+                "hi": "1. खाता मापदंड",
                 "ru": "1. Параметры аккаунта"
         },
         "2. Simulated Churn Outlook": {
@@ -3006,23 +3006,23 @@
                 "ru": "Индекс удовлетворенности (CSAT)"
         },
         "Business Retention Intelligence": {
-                "es": "Inteligencia de Retención de Negocio",
-                "fr": "Intelligence de Rétention Commerciale",
-                "de": "Business-Kundenbindungs-Intelligenz",
-                "zh": "企业留存与客户价值智能",
-                "ja": "ビジネス顧客維持インテリジェンス",
-                "pt": "Inteligência de Retenção de Negócios",
-                "ar": "ذكاء استبقاء الأعمال",
-                "hi": "व्यापार प्रतिधारण बुद्धिमत्ता",
+                "es": "Inteligencia de Negocio y Retención",
+                "fr": "Intelligence Économique et Rétention",
+                "de": "Geschäfts- & Kundenbindungs-Intelligence",
+                "zh": "企业商业决策与客户留存智能",
+                "ja": "ビジネス意思決定と解約防止",
+                "pt": "Inteligência de Negócios e Retenção",
+                "ar": "ذكاء الحفاظ على الأعمال واستقرارها",
+                "hi": "व्यापार प्रतिधारण इंटेलिजेंस",
                 "ru": "Бизнес-интеллект и удержание клиентов"
         },
         "Business Health Status": {
                 "es": "Estado de Salud del Negocio",
-                "fr": "État de Santé de l'Entreprise",
-                "de": "Geschäftszustand",
-                "zh": "企业综合经营健康度",
+                "fr": "Santé Globale de l'Entreprise",
+                "de": "Unternehmensgesundheit",
+                "zh": "业务健康综合评级",
                 "ja": "ビジネス健全性ステータス",
-                "pt": "Status de Saúde do Negócio",
+                "pt": "Saúde Geral dos Negócios",
                 "ar": "حالة صحة الأعمال",
                 "hi": "व्यापार स्वास्थ्य स्थिति",
                 "ru": "Состояние здоровья бизнеса"
@@ -3031,11 +3031,11 @@
                 "es": "Top 5 Problemas Detectados",
                 "fr": "Top 5 des Problèmes Détectés",
                 "de": "Top 5 erkannte Probleme",
-                "zh": "核心检测问题 Top 5",
-                "ja": "検出された問題トップ5",
+                "zh": "系统检测出的前5大核心隐患",
+                "ja": "検出された上位5つの課題",
                 "pt": "Top 5 Problemas Detectados",
-                "ar": "أبرز 5 مشكلات تم اكتشافها",
-                "hi": "शीर्ष 5 पाई गई समस्याएं",
+                "ar": "أبرز 5 مشكلات تم رصدها",
+                "hi": "शीर्ष 5 पहचानी गई समस्याएं",
                 "ru": "Топ-5 обнаруженных проблем"
         },
         "Active Closed-Loop Resolutions": {
@@ -3150,13 +3150,13 @@
         },
         "Quick Presentation Q&A Cards": {
                 "es": "Tarjetas Rápidas de Preguntas y Respuestas",
-                "fr": "Cartes Q&R pour Présentation Rapide",
-                "de": "Schnelle Frage-und-Antwort-Karten",
-                "zh": "高管问答速查提示卡片",
-                "ja": "プレゼンテーションQ&Aカード",
+                "fr": "Cartes Rapides de Questions-Réponses",
+                "de": "Schnelle Q&A-Präsentationskarten",
+                "zh": "董事会常见问题快速问答卡",
+                "ja": "役員報告用 Q&A カード",
                 "pt": "Cartões Rápidos de Perguntas e Respostas",
                 "ar": "بطاقات الأسئلة والأجوبة السريعة",
-                "hi": "त्वरित प्रस्तुति प्रश्नोत्तर कार्ड",
+                "hi": "त्वरित प्रश्नोत्तर कार्ड",
                 "ru": "Карточки быстрых ответов на вопросы"
         },
         "Generate AI Deck": {
@@ -3182,26 +3182,26 @@
                 "ru": "Случайный дизайн"
         },
         "Fullscreen Mode": {
-                "es": "Modo Pantalla Completa",
-                "fr": "Mode Plein Écran",
+                "es": "Pantalla Completa",
+                "fr": "Plein Écran",
                 "de": "Vollbildmodus",
                 "zh": "全屏放映模式",
-                "ja": "全画面表示",
-                "pt": "Modo Tela Cheia",
-                "ar": "ملء الشاشة",
+                "ja": "全画面モード",
+                "pt": "Tela Cheia",
+                "ar": "وضع ملء الشاشة",
                 "hi": "पूर्ण स्क्रीन मोड",
                 "ru": "Полноэкранный режим"
         },
         "Glossary, Financial Metrics & Corporate Policies": {
                 "es": "Glosario, Métricas Financieras y Políticas Corporativas",
-                "fr": "Glossaire, Métriques Financières et Politiques",
-                "de": "Glossar, Finanzkennzahlen & Unternehmensrichtlinien",
-                "zh": "企业术语表、财务指标与留存管理制度",
-                "ja": "用語集、財務指標、企業ポリシー",
-                "pt": "Glossário, Métricas Financeiras e Políticas Corporativas",
-                "ar": "المصطلحات والمقاييس المالية والسياسات",
-                "hi": "शब्दावली, वित्तीय मेट्रिक्स और नीतियां",
-                "ru": "Глоссарий, финансовые метрики и регламенты"
+                "fr": "Glossaire, Métriques Financières & Politiques",
+                "de": "Glossar, Finanzmetriken & Unternehmensrichtlinien",
+                "zh": "企业术语表、财务公式及治理政策",
+                "ja": "用語集、財務計算式および企業規程",
+                "pt": "Glossário, Métricas Financeiras e Governança",
+                "ar": "المسرد والمعادلات المالية والسياسات المؤسسية",
+                "hi": "शब्दावली, वित्तीय सूत्र और कॉर्पोरेट नीतियां",
+                "ru": "Глоссарий, финансовые формулы и регламенты"
         },
         "1. Platform Motive & Customer Retention Philosophy": {
                 "es": "1. Misión de la Plataforma y Filosofía de Retención",
@@ -3303,25 +3303,25 @@
                 "ru": "ИИ-Копилот"
         },
         "Show top churn risks": {
-                "es": "Mostrar mayores riesgos de cancelación",
+                "es": "Ver mayores riesgos de pérdida",
                 "fr": "Afficher les plus hauts risques",
                 "de": "Höchste Abwanderungsrisiken zeigen",
-                "zh": "显示流失风险最高账户",
-                "ja": "上位の解約リスクを表示",
-                "pt": "Mostrar maiores riscos de churn",
-                "ar": "إظهار أكبر مخاطر التسرب",
-                "hi": "शीर्ष चर्न जोखिम दिखाएं",
+                "zh": "列出当前流失风险最高的客户",
+                "ja": "最も解約リスクの高い顧客を表示",
+                "pt": "Ver maiores riscos de cancelamento",
+                "ar": "عرض أعلى العملاء عرضة للتسرب",
+                "hi": "उच्चतम जोखिम वाले ग्राहक दिखाएं",
                 "ru": "Показать наибольшие риски оттока"
         },
         "Compare regions by risk": {
-                "es": "Comparar regiones por nivel de riesgo",
+                "es": "Comparar regiones por riesgo",
                 "fr": "Comparer les régions par risque",
                 "de": "Regionen nach Risiko vergleichen",
-                "zh": "按区域对比流失风险",
-                "ja": "地域別リスクを比較",
+                "zh": "按地区对比客户流失率",
+                "ja": "地域別にリスクを比較",
                 "pt": "Comparar regiões por risco",
-                "ar": "مقارنة المناطق حسب الخطر",
-                "hi": "जोखिम के आधार पर क्षेत्रों की तुलना करें",
+                "ar": "مقارنة المناطق حسب نسبة الخطر",
+                "hi": "जोखिम के अनुसार क्षेत्रों की तुलना करें",
                 "ru": "Сравнить регионы по рискам"
         },
         "Retention advice": {
@@ -3389,6 +3389,11039 @@
                 "ar": "فهمت ذلك، شكراً!",
                 "hi": "समझ गया, धन्यवाद!",
                 "ru": "Понятно, спасибо!"
+        },
+        "$25 one-time statement credit": {
+                "es": "Crédito de estado de cuenta único de $25",
+                "fr": "Crédit de relevé unique de 25 $",
+                "de": "Einmalige Kontoauszugsgutschrift in Höhe von 25 $",
+                "zh": "25 美元一次性账单信用额",
+                "ja": "25 ドルの 1 回限りの明細クレジット",
+                "pt": "Crédito de extrato único de US$ 25",
+                "ar": "رصيد كشف حساب بقيمة 25 دولارًا لمرة واحدة",
+                "hi": "$25 एकमुश्त विवरण क्रेडिट",
+                "ru": "Единоразовый кредит в размере 25 долларов США"
+        },
+        "+ Add": {
+                "es": "+ Añadir",
+                "fr": "+ Ajouter",
+                "de": "+ Hinzufügen",
+                "zh": "+ 添加",
+                "ja": "+ 追加",
+                "pt": "+ Adicionar",
+                "ar": "+ إضافة",
+                "hi": "+ जोड़ें",
+                "ru": "+ Добавить"
+        },
+        "+$12,400 / mo": {
+                "es": "+$12,400 / mes",
+                "fr": "+12 400$ / mois",
+                "de": "+12.400 $/Monat",
+                "zh": "+$12,400/月",
+                "ja": "+$12,400/月",
+                "pt": "+$ 12.400 / mês",
+                "ar": "+12,400 دولار شهريًا",
+                "hi": "+$12,400 /महीना",
+                "ru": "+$12,400/мес."
+        },
+        "+25% to +95% Profit Boost": {
+                "es": "Aumento de ganancias de +25% a +95%",
+                "fr": "+25 % à +95 % d'augmentation des bénéfices",
+                "de": "+25 % bis +95 % Gewinnsteigerung",
+                "zh": "+25% 至 +95% 利润提升",
+                "ja": "+25% ～ +95% の利益増加",
+                "pt": "+25% a +95% de aumento de lucro",
+                "ar": "+25% إلى +95% زيادة في الأرباح",
+                "hi": "+25% से +95% लाभ में वृद्धि",
+                "ru": "Увеличение прибыли от +25% до +95%"
+        },
+        ". I have direct access to your database details, prediction summaries, and retention records. Ask me anything:": {
+                "es": ". Tengo acceso directo a los detalles de su base de datos, resúmenes de predicciones y registros de retención. Pregúntame cualquier cosa:",
+                "fr": ". J'ai un accès direct aux détails de votre base de données, aux résumés de prédiction et aux enregistrements de conservation. Demandez-moi n'importe quoi :",
+                "de": ". Ich habe direkten Zugriff auf Ihre Datenbankdetails, Vorhersagezusammenfassungen und Aufbewahrungsdatensätze. Fragen Sie mich etwas:",
+                "zh": "。我可以直接访问您的数据库详细信息、预测摘要和保留记录。有什么问题问我：",
+                "ja": "。私はデータベースの詳細、予測の概要、保持記録に直接アクセスできます。何でも聞いてください:",
+                "pt": ". Tenho acesso direto aos detalhes do seu banco de dados, resumos de previsões e registros de retenção. Pergunte-me qualquer coisa:",
+                "ar": ". لدي إمكانية الوصول المباشر إلى تفاصيل قاعدة البيانات الخاصة بك وملخصات التنبؤ وسجلات الاحتفاظ. اسألني أي شيء:",
+                "hi": ". आपके डेटाबेस विवरण, पूर्वानुमान सारांश और अवधारण रिकॉर्ड तक मेरी सीधी पहुंच है। मुझसे कुछ भी पूछें:",
+                "ru": ". У меня есть прямой доступ к данным вашей базы данных, сводкам прогнозов и записям хранения. Спроси меня о чём угодно:"
+        },
+        ".pdf": {
+                "es": ".pdf",
+                "fr": ".pdf",
+                "de": ".pdf",
+                "zh": ".pdf",
+                "ja": ".pdf",
+                "pt": ".pdf",
+                "ar": ".pdf",
+                "hi": ".pdf",
+                "ru": ".pdf"
+        },
+        "0 complaints": {
+                "es": "0 quejas",
+                "fr": "0 plainte",
+                "de": "0 Beschwerden",
+                "zh": "0 投诉",
+                "ja": "苦情0件",
+                "pt": "0 reclamações",
+                "ar": "0 شكاوى",
+                "hi": "0 शिकायतें",
+                "ru": "0 жалоб"
+        },
+        "0 days": {
+                "es": "0 días",
+                "fr": "0 jours",
+                "de": "0 Tage",
+                "zh": "0 天",
+                "ja": "0日",
+                "pt": "0 dias",
+                "ar": "0 أيام",
+                "hi": "0 दिन",
+                "ru": "0 дней"
+        },
+        "0 tickets": {
+                "es": "0 entradas",
+                "fr": "0 billets",
+                "de": "0 Tickets",
+                "zh": "0 票",
+                "ja": "チケット0枚",
+                "pt": "0 ingressos",
+                "ar": "0 تذاكر",
+                "hi": "0 टिकट",
+                "ru": "0 билетов"
+        },
+        "0.18 (18%)": {
+                "es": "0,18 (18%)",
+                "fr": "0,18 (18%)",
+                "de": "0,18 (18 %)",
+                "zh": "0.18 (18%)",
+                "ja": "0.18 (18%)",
+                "pt": "0,18 (18%)",
+                "ar": "0.18 (18%)",
+                "hi": "0.18 (18%)",
+                "ru": "0,18 (18%)"
+        },
+        "0.25 (25%)": {
+                "es": "0,25 (25%)",
+                "fr": "0,25 (25%)",
+                "de": "0,25 (25 %)",
+                "zh": "0.25（25%）",
+                "ja": "0.25 (25%)",
+                "pt": "0,25 (25%)",
+                "ar": "0.25 (25%)",
+                "hi": "0.25 (25%)",
+                "ru": "0,25 (25%)"
+        },
+        "01 — DATA": {
+                "es": "01 — DATOS",
+                "fr": "01 — DONNÉES",
+                "de": "01 – DATEN",
+                "zh": "01 — 数据",
+                "ja": "01 — データ",
+                "pt": "01 — DADOS",
+                "ar": "01 - البيانات",
+                "hi": "01 - डेटा",
+                "ru": "01 — ДАННЫЕ"
+        },
+        "02 — AI ANALYSIS": {
+                "es": "02 - ANÁLISIS DE IA",
+                "fr": "02 — ANALYSE DE L'IA",
+                "de": "02 – KI-ANALYSE",
+                "zh": "02 — 人工智能分析",
+                "ja": "02 — AI分析",
+                "pt": "02 — ANÁLISE DE IA",
+                "ar": "02 - تحليل الذكاء الاصطناعي",
+                "hi": "02 - एआई विश्लेषण",
+                "ru": "02 — ИИ-АНАЛИЗ"
+        },
+        "03 — PROBLEM DETECTION": {
+                "es": "03 — DETECCIÓN DE PROBLEMAS",
+                "fr": "03 — DÉTECTION DE PROBLÈME",
+                "de": "03 – PROBLEMERKENNUNG",
+                "zh": "03 — 问题检测",
+                "ja": "03 — 問題の検出",
+                "pt": "03 — DETECÇÃO DE PROBLEMAS",
+                "ar": "03 — اكتشاف المشكلة",
+                "hi": "03 - समस्या का पता लगाना",
+                "ru": "03 — ОБНАРУЖЕНИЕ ПРОБЛЕМЫ"
+        },
+        "04 — ROOT CAUSE": {
+                "es": "04 — CAUSA RAÍZ",
+                "fr": "04 — CAUSE PROFONDE",
+                "de": "04 – URSACHE",
+                "zh": "04 — 根本原因",
+                "ja": "04 — 根本原因",
+                "pt": "04 — CAUSA RAIZ",
+                "ar": "04 - السبب الجذري",
+                "hi": "04- मूल कारण",
+                "ru": "04 — ПЕРВОНАЧАЛЬНАЯ ПРИЧИНА"
+        },
+        "05 — BUSINESS IMPACT": {
+                "es": "05 — IMPACTO EN EL NEGOCIO",
+                "fr": "05 — IMPACT SUR LES AFFAIRES",
+                "de": "05 – AUSWIRKUNGEN AUF DAS GESCHÄFT",
+                "zh": "05 — 业务影响",
+                "ja": "05 — ビジネスへの影響",
+                "pt": "05 — IMPACTO NO NEGÓCIO",
+                "ar": "05 — تأثير الأعمال",
+                "hi": "05-व्यापार प्रभाव",
+                "ru": "05 — БИЗНЕС-ВЛИЯНИЕ"
+        },
+        "06 — RECOMMENDATION": {
+                "es": "06 — RECOMENDACIÓN",
+                "fr": "06 — RECOMMANDATION",
+                "de": "06 — EMPFEHLUNG",
+                "zh": "06 — 推荐",
+                "ja": "06 — 推奨事項",
+                "pt": "06 — RECOMENDAÇÃO",
+                "ar": "06 — التوصية",
+                "hi": "06-सिफारिश",
+                "ru": "06 — РЕКОМЕНДАЦИЯ"
+        },
+        "07 — ACTION": {
+                "es": "07 — ACCIÓN",
+                "fr": "07 — ACTION",
+                "de": "07 – AKTION",
+                "zh": "07 — 行动",
+                "ja": "07 — アクション",
+                "pt": "07 — AÇÃO",
+                "ar": "07 - العمل",
+                "hi": "07 - कार्रवाई",
+                "ru": "07 — ДЕЙСТВИЕ"
+        },
+        "08 — MEASURE RESULT": {
+                "es": "08 — RESULTADO DE LA MEDIDA",
+                "fr": "08 — RÉSULTAT DE LA MESURE",
+                "de": "08 — ERGEBNIS MESSEN",
+                "zh": "08 — 测量结果",
+                "ja": "08 — 結果の測定",
+                "pt": "08 — RESULTADO DA MEDIDA",
+                "ar": "08 - قياس النتيجة",
+                "hi": "08 - माप परिणाम",
+                "ru": "08 — РЕЗУЛЬТАТ ИЗМЕРЕНИЯ"
+        },
+        "1. Align by Signup Month": {
+                "es": "1. Alinear por mes de registro",
+                "fr": "1. Aligner par mois d'inscription",
+                "de": "1. Ausrichtung nach Anmeldemonat",
+                "zh": "1. 按注册月份对齐",
+                "ja": "1. 登録月ごとに調整する",
+                "pt": "1. Alinhe por mês de inscrição",
+                "ar": "1. قم بالمحاذاة حسب شهر الاشتراك",
+                "hi": "1. साइनअप माह के अनुसार संरेखित करें",
+                "ru": "1. Выравнивание по месяцу регистрации"
+        },
+        "1. Header & Quick Actions Bar": {
+                "es": "1. Encabezado y barra de acciones rápidas",
+                "fr": "1. Barre d'en-tête et d'actions rapides",
+                "de": "1. Kopfzeile und Schnellaktionsleiste",
+                "zh": "1. 标题和快速操作栏",
+                "ja": "1. ヘッダーとクイックアクションバー",
+                "pt": "1. Cabeçalho e barra de ações rápidas",
+                "ar": "1. شريط الرأس والإجراءات السريعة",
+                "hi": "1. हेडर और त्वरित कार्रवाई बार",
+                "ru": "1. Заголовок и панель быстрых действий"
+        },
+        "10 Slides (Full Board Pitch Deck)": {
+                "es": "10 diapositivas (presentación de presentación de pensión completa)",
+                "fr": "10 diapositives (Pitch Deck en pension complète)",
+                "de": "10 Folien (Pitch-Deck mit Vollpension)",
+                "zh": "10 张幻灯片（全板演示文稿）",
+                "ja": "スライド 10 枚 (フルボード ピッチデッキ)",
+                "pt": "10 slides (apresentação completa)",
+                "ar": "10 شرائح (عرض تقديمي كامل)",
+                "hi": "10 स्लाइड (पूर्ण बोर्ड पिच डेक)",
+                "ru": "10 слайдов (презентация с полным пансионом)"
+        },
+        "10 languages": {
+                "es": "10 idiomas",
+                "fr": "10 langues",
+                "de": "10 Sprachen",
+                "zh": "10种语言",
+                "ja": "10言語",
+                "pt": "10 idiomas",
+                "ar": "10 لغات",
+                "hi": "10 भाषाएँ",
+                "ru": "10 языков"
+        },
+        "100 rows": {
+                "es": "100 filas",
+                "fr": "100 lignes",
+                "de": "100 Reihen",
+                "zh": "100行",
+                "ja": "100行",
+                "pt": "100 linhas",
+                "ar": "100 صف",
+                "hi": "100 पंक्तियाँ",
+                "ru": "100 строк"
+        },
+        "12 Slides (Enterprise Deep Dive)": {
+                "es": "12 diapositivas (inmersión profunda empresarial)",
+                "fr": "12 diapositives (immersion approfondie en entreprise)",
+                "de": "12 Folien (Enterprise Deep Dive)",
+                "zh": "12 张幻灯片（企业深度剖析）",
+                "ja": "12 スライド (エンタープライズ詳細)",
+                "pt": "12 slides (aprofundamento empresarial)",
+                "ar": "12 شريحة (الغوص العميق في المؤسسة)",
+                "hi": "12 स्लाइड्स (एंटरप्राइज़ डीप डाइव)",
+                "ru": "12 слайдов (подробное знакомство с предприятием)"
+        },
+        "15 hours": {
+                "es": "15 horas",
+                "fr": "15 heures",
+                "de": "15 Stunden",
+                "zh": "15小时",
+                "ja": "15時間",
+                "pt": "15 horas",
+                "ar": "15 ساعة",
+                "hi": "15 घंटे",
+                "ru": "15 часов"
+        },
+        "15 rows": {
+                "es": "15 filas",
+                "fr": "15 lignes",
+                "de": "15 Reihen",
+                "zh": "15行",
+                "ja": "15行",
+                "pt": "15 linhas",
+                "ar": "15 صفًا",
+                "hi": "15 पंक्तियाँ",
+                "ru": "15 рядов"
+        },
+        "15%–20% billing discount credit": {
+                "es": "Crédito de descuento en facturación del 15 % al 20 %",
+                "fr": "Crédit de remise sur facturation de 15 à 20 %",
+                "de": "15–20 % Rechnungsrabattgutschrift",
+                "zh": "15%–20% 的账单折扣信用",
+                "ja": "15% ～ 20% の請求割引クレジット",
+                "pt": "Crédito de desconto de faturamento de 15% a 20%",
+                "ar": "15%-20% رصيد خصم الفواتير",
+                "hi": "15%-20% बिलिंग छूट क्रेडिट",
+                "ru": "Скидка на оплату счетов в размере 15–20 %."
+        },
+        "2 Primary Power BI Executive Visuals": {
+                "es": "2 imágenes ejecutivas primarias de Power BI",
+                "fr": "2 visuels exécutifs principaux de Power BI",
+                "de": "2 primäre Power BI-Visuals für Führungskräfte",
+                "zh": "2 主要 Power BI 执行视觉效果",
+                "ja": "2 つの主要な Power BI エグゼクティブ ビジュアル",
+                "pt": "2 recursos visuais executivos primários do Power BI",
+                "ar": "2 مرئيات تنفيذية أساسية في مجال Power BI",
+                "hi": "2 प्राथमिक पावर बीआई कार्यकारी दृश्य",
+                "ru": "2 основных исполнительных визуальных элемента Power BI"
+        },
+        "2. High-Impact Result Scorecard Summary Cards": {
+                "es": "2. Tarjetas de resumen del cuadro de mando de resultados de alto impacto",
+                "fr": "2. Cartes récapitulatives des résultats à fort impact",
+                "de": "2. High-Impact-Ergebnis-Scorecard-Zusammenfassungskarten",
+                "zh": "2. 高影响力结果记分卡摘要卡",
+                "ja": "2. 影響力の高い結果スコアカードの概要カード",
+                "pt": "2. Cartões de resumo do scorecard de resultados de alto impacto",
+                "ar": "2. بطاقات ملخصة لبطاقة الأداء عالية التأثير",
+                "hi": "2. उच्च-प्रभाव परिणाम स्कोरकार्ड सारांश कार्ड",
+                "ru": "2. Сводные карты показателей высокого воздействия"
+        },
+        "2. Track Contract Value (MRR) separately": {
+                "es": "2. Realice un seguimiento del valor del contrato (MRR) por separado",
+                "fr": "2. Suivre la valeur du contrat (MRR) séparément",
+                "de": "2. Verfolgen Sie den Vertragswert (MRR) separat",
+                "zh": "2. 单独跟踪合同价值（MRR）",
+                "ja": "2. 契約金額 (MRR) を個別に追跡する",
+                "pt": "2. Acompanhe o valor do contrato (MRR) separadamente",
+                "ar": "2. تتبع قيمة العقد (MRR) بشكل منفصل",
+                "hi": "2. अनुबंध मूल्य (एमआरआर) को अलग से ट्रैक करें",
+                "ru": "2. Отслеживайте стоимость контракта (MRR) отдельно"
+        },
+        "24 business hours": {
+                "es": "24 horas hábiles",
+                "fr": "24 heures ouvrables",
+                "de": "24 Geschäftsstunden",
+                "zh": "24小时营业",
+                "ja": "24営業時間",
+                "pt": "24 horas úteis",
+                "ar": "24 ساعة عمل",
+                "hi": "24 व्यावसायिक घंटे",
+                "ru": "24 рабочих часа"
+        },
+        "24 months": {
+                "es": "24 meses",
+                "fr": "24 mois",
+                "de": "24 Monate",
+                "zh": "24个月",
+                "ja": "24ヶ月",
+                "pt": "24 meses",
+                "ar": "24 شهرا",
+                "hi": "24 महीने",
+                "ru": "24 месяца"
+        },
+        "25 rows": {
+                "es": "25 filas",
+                "fr": "25 lignes",
+                "de": "25 Reihen",
+                "zh": "25行",
+                "ja": "25行",
+                "pt": "25 linhas",
+                "ar": "25 صفًا",
+                "hi": "25 पंक्तियाँ",
+                "ru": "25 рядов"
+        },
+        "3 Slides (Quick Executive Brief)": {
+                "es": "3 diapositivas (resumen ejecutivo rápido)",
+                "fr": "3 diapositives (résumé exécutif rapide)",
+                "de": "3 Folien (Kurzbriefing)",
+                "zh": "3 张幻灯片（快速执行简介）",
+                "ja": "3 枚のスライド (簡単なエグゼクティブ ブリーフ)",
+                "pt": "3 slides (resumo executivo rápido)",
+                "ar": "3 شرائح (موجز تنفيذي سريع)",
+                "hi": "3 स्लाइड (त्वरित कार्यकारी संक्षिप्त)",
+                "ru": "3 слайда (краткий обзор)"
+        },
+        "3. Monitor the Stabilization Point": {
+                "es": "3. Monitorear el punto de estabilización",
+                "fr": "3. Surveillez le point de stabilisation",
+                "de": "3. Überwachen Sie den Stabilisierungspunkt",
+                "zh": "3. 监控稳定点",
+                "ja": "3. 安定点を監視する",
+                "pt": "3. Monitore o Ponto de Estabilização",
+                "ar": "3. مراقبة نقطة التثبيت",
+                "hi": "3. स्थिरीकरण बिंदु की निगरानी करें",
+                "ru": "3. Следите за точкой стабилизации."
+        },
+        "3. Multi-Faceted Filter & Search Toolbar": {
+                "es": "3. Barra de herramientas de búsqueda y filtro multifacético",
+                "fr": "3. Barre d'outils de filtre et de recherche à multiples facettes",
+                "de": "3. Vielfältige Filter- und Suchsymbolleiste",
+                "zh": "3. 多方面的过滤和搜索工具栏",
+                "ja": "3. 多面的なフィルターと検索ツールバー",
+                "pt": "3. Filtro multifacetado e barra de ferramentas de pesquisa",
+                "ar": "3. شريط أدوات التصفية والبحث متعدد الأوجه",
+                "hi": "3. बहुआयामी फ़िल्टर एवं खोज टूलबार",
+                "ru": "3. Многогранная панель фильтров и поиска."
+        },
+        "30-60-90d Playbook": {
+                "es": "Libro de jugadas 30-60-90d",
+                "fr": "Manuel de jeu 30-60-90d",
+                "de": "30-60-90d Spielbuch",
+                "zh": "30-60-90d 剧本",
+                "ja": "30-60-90d プレイブック",
+                "pt": "Manual 30-60-90d",
+                "ar": "30-60-90d قواعد اللعبة التي تمارسها",
+                "hi": "30-60-90डी प्लेबुक",
+                "ru": "30-60-90d Пособие"
+        },
+        "35.0% – 64.9%": {
+                "es": "35,0% – 64,9%",
+                "fr": "35,0% – 64,9%",
+                "de": "35,0 % – 64,9 %",
+                "zh": "35.0% – 64.9%",
+                "ja": "35.0% – 64.9%",
+                "pt": "35,0% – 64,9%",
+                "ar": "35.0% – 64.9%",
+                "hi": "35.0% – 64.9%",
+                "ru": "35,0% – 64,9%"
+        },
+        "3D Card Flip": {
+                "es": "Voltear tarjeta 3D",
+                "fr": "Retournement de carte 3D",
+                "de": "3D-Karten-Flip",
+                "zh": "3D卡片翻转",
+                "ja": "3Dカードフリップ",
+                "pt": "Virar cartão 3D",
+                "ar": "الوجه بطاقة ثلاثية الأبعاد",
+                "hi": "3डी कार्ड फ्लिप",
+                "ru": "3D переворот карты"
+        },
+        "4 Core KPI Cards": {
+                "es": "4 tarjetas KPI principales",
+                "fr": "4 cartes KPI de base",
+                "de": "4 Kern-KPI-Karten",
+                "zh": "4 核心 KPI 卡",
+                "ja": "4 つのコア KPI カード",
+                "pt": "4 cartões KPI principais",
+                "ar": "4 بطاقات KPI الأساسية",
+                "hi": "4 कोर KPI कार्ड",
+                "ru": "4 карты основных ключевых показателей эффективности"
+        },
+        "4 controls": {
+                "es": "4 controles",
+                "fr": "4 commandes",
+                "de": "4 Bedienelemente",
+                "zh": "4个控制",
+                "ja": "4つのコントロール",
+                "pt": "4 controles",
+                "ar": "4 ضوابط",
+                "hi": "4 नियंत्रण",
+                "ru": "4 элемента управления"
+        },
+        "4. Compare Campaign Cohorts": {
+                "es": "4. Comparar cohortes de campaña",
+                "fr": "4. Comparez les cohortes de campagne",
+                "de": "4. Vergleichen Sie Kampagnenkohorten",
+                "zh": "4. 比较竞选群组",
+                "ja": "4. キャンペーンコホートを比較する",
+                "pt": "4. Compare coortes de campanha",
+                "ar": "4. قارن بين مجموعات الحملة",
+                "hi": "4. अभियान समूहों की तुलना करें",
+                "ru": "4. Сравните когорты кампаний"
+        },
+        "4. Result Status Info Bar": {
+                "es": "4. Barra de información de estado de resultados",
+                "fr": "4. Barre d'informations sur l'état des résultats",
+                "de": "4. Ergebnisstatus-Infoleiste",
+                "zh": "4. 结果状态信息栏",
+                "ja": "4. 結果ステータス情報バー",
+                "pt": "4. Barra de informações de status do resultado",
+                "ar": "4. شريط معلومات حالة النتيجة",
+                "hi": "4. परिणाम स्थिति जानकारी बार",
+                "ru": "4. Информационная панель статуса результата"
+        },
+        "5 Slides (Executive Deck)": {
+                "es": "5 diapositivas (plataforma ejecutiva)",
+                "fr": "5 diapositives (Deck exécutif)",
+                "de": "5 Folien (Executive Deck)",
+                "zh": "5 张幻灯片（执行层）",
+                "ja": "5 枚のスライド (エグゼクティブ デッキ)",
+                "pt": "5 slides (apresentação executiva)",
+                "ar": "5 شرائح (السطح التنفيذي)",
+                "hi": "5 स्लाइड (कार्यकारी डेक)",
+                "ru": "5 слайдов (представительская презентация)"
+        },
+        "5 tools": {
+                "es": "5 herramientas",
+                "fr": "5 outils",
+                "de": "5 Werkzeuge",
+                "zh": "5个工具",
+                "ja": "5つのツール",
+                "pt": "5 ferramentas",
+                "ar": "5 أدوات",
+                "hi": "5 उपकरण",
+                "ru": "5 инструментов"
+        },
+        "5. Calculate Net Revenue Retention": {
+                "es": "5. Calcule la retención de ingresos netos",
+                "fr": "5. Calculer la rétention des revenus nets",
+                "de": "5. Berechnen Sie die Nettoeinbehalte",
+                "zh": "5. 计算净收入保留",
+                "ja": "5. 純収益保持率の計算",
+                "pt": "5. Calcule a retenção da receita líquida",
+                "ar": "5. حساب الاحتفاظ بصافي الإيرادات",
+                "hi": "5. शुद्ध राजस्व प्रतिधारण की गणना करें",
+                "ru": "5. Рассчитайте удержание чистой прибыли"
+        },
+        "5. Structured Table": {
+                "es": "5. Tabla estructurada",
+                "fr": "5. Tableau structuré",
+                "de": "5. Strukturierte Tabelle",
+                "zh": "5. 结构化表",
+                "ja": "5. 構造化テーブル",
+                "pt": "5. Tabela Estruturada",
+                "ar": "5. جدول منظم",
+                "hi": "5. संरचित तालिका",
+                "ru": "5. Структурированная таблица"
+        },
+        "50 rows": {
+                "es": "50 filas",
+                "fr": "50 lignes",
+                "de": "50 Reihen",
+                "zh": "50行",
+                "ja": "50行",
+                "pt": "50 linhas",
+                "ar": "50 صفًا",
+                "hi": "50 पंक्तियाँ",
+                "ru": "50 рядов"
+        },
+        "5x–25x Cost Advantage": {
+                "es": "Ventaja de costos de 5x a 25x",
+                "fr": "Avantage de coût 5x à 25x",
+                "de": "5x–25x Kostenvorteil",
+                "zh": "5x–25x 成本优势",
+                "ja": "5 ～ 25 倍のコストメリット",
+                "pt": "Vantagem de custo de 5x a 25x",
+                "ar": "ميزة التكلفة 5x–25x",
+                "hi": "5x–25x लागत लाभ",
+                "ru": "5–25-кратное преимущество в затратах"
+        },
+        "6 items": {
+                "es": "6 artículos",
+                "fr": "6 articles",
+                "de": "6 Artikel",
+                "zh": "6 项目",
+                "ja": "6項目",
+                "pt": "6 itens",
+                "ar": "6 عناصر",
+                "hi": "6 आइटम",
+                "ru": "6 предметов"
+        },
+        "6. Pagination Bar": {
+                "es": "6. Barra de paginación",
+                "fr": "6. Barre de pagination",
+                "de": "6. Paginierungsleiste",
+                "zh": "6. 分页栏",
+                "ja": "6. ページネーションバー",
+                "pt": "6. Barra de paginação",
+                "ar": "6. شريط ترقيم الصفحات",
+                "hi": "6. पेजिनेशन बार",
+                "ru": "6. Панель нумерации страниц"
+        },
+        "7 Pre-Compiled Official DAX Formulas": {
+                "es": "7 fórmulas DAX oficiales precompiladas",
+                "fr": "7 formules DAX officielles précompilées",
+                "de": "7 vorkompilierte offizielle DAX-Formeln",
+                "zh": "7 个预编译的官方 DAX 公式",
+                "ja": "7 つのコンパイル済み公式 DAX 式",
+                "pt": "7 fórmulas DAX oficiais pré-compiladas",
+                "ar": "7 صيغ DAX الرسمية المجمعة مسبقًا",
+                "hi": "7 पूर्व-संकलित आधिकारिक DAX सूत्र",
+                "ru": "7 предварительно скомпилированных официальных формул DAX"
+        },
+        "8 Slides (Comprehensive Audit Deck)": {
+                "es": "8 diapositivas (presentación de auditoría completa)",
+                "fr": "8 diapositives (deck d'audit complet)",
+                "de": "8 Folien (umfassendes Audit-Deck)",
+                "zh": "8 张幻灯片（综合审核平台）",
+                "ja": "8 枚のスライド (包括的な監査資料)",
+                "pt": "8 slides (apresentação de auditoria abrangente)",
+                "ar": "8 شرائح (مجموعة التدقيق الشاملة)",
+                "hi": "8 स्लाइड (व्यापक ऑडिट डेक)",
+                "ru": "8 слайдов (комплексная аудиторская презентация)"
+        },
+        "8 suites": {
+                "es": "8 suites",
+                "fr": "8 suites",
+                "de": "8 Suiten",
+                "zh": "8 间套房",
+                "ja": "8つのスイート",
+                "pt": "8 suítes",
+                "ar": "8 أجنحة",
+                "hi": "8 सुइट्स",
+                "ru": "8 люксов"
+        },
+        "90-Day Critical Window": {
+                "es": "Ventana crítica de 90 días",
+                "fr": "Fenêtre critique de 90 jours",
+                "de": "Kritisches 90-Tage-Fenster",
+                "zh": "90 天关键窗口期",
+                "ja": "90 日間の重要な期間",
+                "pt": "Janela crítica de 90 dias",
+                "ar": "نافذة حرجة لمدة 90 يومًا",
+                "hi": "90-दिवसीय क्रिटिकल विंडो",
+                "ru": "90-дневное критическое окно"
+        },
+        ": Analyze customers signing up in the same calendar month to prevent tenure bias.": {
+                "es": ": Analice los clientes que se registran en el mismo mes calendario para evitar el sesgo de permanencia.",
+                "fr": ": Analysez les clients qui s'inscrivent au cours du même mois civil pour éviter les biais de titularisation.",
+                "de": ": Analysieren Sie Kunden, die sich im selben Kalendermonat anmelden, um Tenure-Bias zu vermeiden.",
+                "zh": "：分析同一日历月内注册的客户，以防止任期偏差。",
+                "ja": ": 在職期間の偏りを防ぐために、同じ暦月にサインアップした顧客を分析します。",
+                "pt": ": analise os clientes que se inscreveram no mesmo mês para evitar distorções de posse.",
+                "ar": ": قم بتحليل العملاء الذين يقومون بالتسجيل في نفس الشهر التقويمي لمنع التحيز لمدة الحيازة.",
+                "hi": ": कार्यकाल संबंधी पूर्वाग्रह को रोकने के लिए उसी कैलेंडर माह में साइन अप करने वाले ग्राहकों का विश्लेषण करें।",
+                "ru": ": анализируйте клиентов, регистрирующихся в одном и том же календарном месяце, чтобы предотвратить предвзятость в отношении срока владения."
+        },
+        ": Annual Recurring Revenue. MRR projected for 12 months.": {
+                "es": ": Ingresos anuales recurrentes. MRR proyectado a 12 meses.",
+                "fr": ": Revenu annuel récurrent. MRR projeté sur 12 mois.",
+                "de": ": Jährlich wiederkehrender Umsatz. MRR für 12 Monate prognostiziert.",
+                "zh": "：年度经常性收入。 MRR 预计为 12 个月。",
+                "ja": ": 年間経常収益。 12 か月間の MRR 予測。",
+                "pt": ": Receita Recorrente Anual. MRR projetado para 12 meses.",
+                "ar": ": الإيرادات السنوية المتكررة. MRR المتوقع لمدة 12 شهرا.",
+                "hi": ": वार्षिक आवर्ती राजस्व। एमआरआर 12 महीने के लिए अनुमानित है।",
+                "ru": ": Годовой регулярный доход. MRR прогнозируется на 12 месяцев."
+        },
+        ": Avg Daily Rate. Billing index in travel/hotel data sheets.": {
+                "es": ": Tarifa diaria promedio. Índice de facturación en fichas de viajes/hoteles.",
+                "fr": ": Tarif journalier moyen. Indice de facturation dans les fiches voyages/hôtels.",
+                "de": ": Durchschnittlicher Tagespreis. Abrechnungsindex in Reise-/Hoteldatenblättern.",
+                "zh": "：平均每日费率。旅行/酒店数据表中的计费索引。",
+                "ja": ": 平均日額。旅行/ホテルのデータシートの請求インデックス。",
+                "pt": ": Taxa diária média. Índice de faturamento em planilhas de viagens/hotéis.",
+                "ar": ": متوسط السعر اليومي. فهرس الفواتير في أوراق بيانات السفر/الفنادق.",
+                "hi": ": औसत दैनिक दर। यात्रा/होटल डेटा शीट में बिलिंग सूचकांक।",
+                "ru": ": Средняя дневная ставка. Индекс выставления счетов в таблицах данных о поездках/отелях."
+        },
+        ": Conduct structured exit interviews for cancelled accounts to log product feedback.": {
+                "es": ": Realice entrevistas de salida estructuradas para cuentas canceladas para registrar comentarios sobre el producto.",
+                "fr": ": Mener des entretiens de sortie structurés pour les comptes annulés afin d'enregistrer les commentaires sur les produits.",
+                "de": ": Führen Sie strukturierte Austrittsgespräche für gekündigte Konten durch, um Produktfeedback zu protokollieren.",
+                "zh": "：对已取消的帐户进行结构化退出访谈，以记录产品反馈。",
+                "ja": ": キャンセルされたアカウントに対して構造化された終了インタビューを実施し、製品のフィードバックを記録します。",
+                "pt": ": conduza entrevistas de saída estruturadas para contas canceladas para registrar feedback do produto.",
+                "ar": ": قم بإجراء مقابلات خروج منظمة للحسابات الملغاة لتسجيل تعليقات المنتج.",
+                "hi": ": उत्पाद फीडबैक लॉग करने के लिए रद्द किए गए खातों के लिए संरचित निकास साक्षात्कार आयोजित करें।",
+                "ru": ": Проводить структурированные выходные интервью для закрытых аккаунтов, чтобы регистрировать отзывы о продукте."
+        },
+        ": Customer Acquisition Cost. Standard marketing acquisition spend.": {
+                "es": ": Costo de Adquisición de Clientes. Gasto estándar en adquisición de marketing.",
+                "fr": ": Coût d'acquisition client. Dépenses d'acquisition marketing standard.",
+                "de": ": Kundenakquisekosten. Standardausgaben für die Marketingakquise.",
+                "zh": "：客户获取成本。标准营销采购支出。",
+                "ja": ": 顧客獲得コスト。標準的なマーケティング獲得費用。",
+                "pt": ": Custo de aquisição do cliente. Gastos padrão com aquisição de marketing.",
+                "ar": ": تكلفة اكتساب العملاء. الإنفاق القياسي على الاستحواذ على التسويق.",
+                "hi": ": ग्राहक अधिग्रहण लागत. मानक विपणन अधिग्रहण व्यय.",
+                "ru": ": Стоимость привлечения клиентов. Стандартные маркетинговые затраты на приобретение."
+        },
+        ": Customer Lifetime Value. Total projected customer income.": {
+                "es": ": Valor de por vida del cliente. Ingresos totales proyectados del cliente.",
+                "fr": ": Valeur à vie du client. Revenu total projeté du client.",
+                "de": ": Customer Lifetime Value. Gesamtes prognostiziertes Kundeneinkommen.",
+                "zh": "：客户终身价值。预计客户总收入。",
+                "ja": ": 顧客生涯価値。予想される顧客の総収入。",
+                "pt": ": Valor vitalício do cliente. Receita total projetada do cliente.",
+                "ar": ": قيمة العميل مدى الحياة. إجمالي دخل العملاء المتوقع.",
+                "hi": ": ग्राहक जीवन मूल्य। कुल अनुमानित ग्राहक आय.",
+                "ru": ": Пожизненная ценность клиента. Общий прогнозируемый доход клиентов."
+        },
+        ": Customer count retention can be high while contract value drops, or vice versa.": {
+                "es": ": La retención del número de clientes puede ser alta mientras el valor del contrato cae, o viceversa.",
+                "fr": ": La fidélisation du nombre de clients peut être élevée tandis que la valeur du contrat diminue, ou vice versa.",
+                "de": ": Die Kundenbindung kann hoch sein, während der Vertragswert sinkt, oder umgekehrt.",
+                "zh": "：客户数量保留率可能很高，而合同价值却下降，反之亦然。",
+                "ja": ": 顧客数の維持率が高い一方で、契約額は減少する場合もあれば、その逆の場合もあります。",
+                "pt": ": a retenção do número de clientes pode ser alta enquanto o valor do contrato cai ou vice-versa.",
+                "ar": ": يمكن أن يكون معدل الاحتفاظ بعدد العملاء مرتفعًا بينما تنخفض قيمة العقد، أو العكس.",
+                "hi": ": अनुबंध मूल्य में गिरावट होने पर ग्राहक संख्या प्रतिधारण अधिक हो सकती है, या इसके विपरीत।",
+                "ru": ": сохранение количества клиентов может быть высоким, а стоимость контракта падает, и наоборот."
+        },
+        ": Days Sales Outstanding. Receivables collection latency index.": {
+                "es": ": Días de ventas pendientes. Índice de latencia de cobro de cuentas por cobrar.",
+                "fr": ": Jours de vente exceptionnels. Indice de latence de recouvrement des créances.",
+                "de": ": Verkaufstage ausstehend. Latenzindex für den Forderungseinzug.",
+                "zh": "：应收账款天数。应收账款催收延迟指数。",
+                "ja": ": 売上高が伸びた日。売掛金回収遅延インデックス。",
+                "pt": ": Dias de vendas pendentes. Índice de latência de cobrança de recebíveis.",
+                "ar": ": أيام المبيعات المعلقة. مؤشر زمن وصول تحصيل المستحقات.",
+                "hi": ": दिन की बिक्री बकाया। प्राप्य संग्रह विलंबता सूचकांक।",
+                "ru": ": Выдающиеся продажи дней. Индекс задержки взыскания дебиторской задолженности."
+        },
+        ": Dynamic modules (Finance, Operations, Sales, Product) with ARR margin simulators.": {
+                "es": ": Módulos dinámicos (Finanzas, Operaciones, Ventas, Producto) con simuladores de margen ARR.",
+                "fr": ": Modules dynamiques (Finance, Opérations, Ventes, Produit) avec simulateurs de marge ARR.",
+                "de": ": Dynamische Module (Finanzen, Betrieb, Vertrieb, Produkt) mit ARR-Margensimulatoren.",
+                "zh": "：带有 ARR 利润模拟器的动态模块（财务、运营、销售、产品）。",
+                "ja": "：ARRマージンシミュレーターを備えた動的モジュール（財務、運営、販売、製品）。",
+                "pt": ": Módulos dinâmicos (Finanças, Operações, Vendas, Produto) com simuladores de margem ARR.",
+                "ar": ": الوحدات الديناميكية (التمويل، العمليات، المبيعات، المنتج) مع محاكيات هامش ARR.",
+                "hi": ": एआरआर मार्जिन सिमुलेटर के साथ गतिशील मॉड्यूल (वित्त, संचालन, बिक्री, उत्पाद)।",
+                "ru": ": Динамические модули (Финансы, Операции, Продажи, Продукт) с симуляторами маржи ARR."
+        },
+        ": Enforce card retries and custom email alerts when invoice charging fails.": {
+                "es": ": aplique reintentos de tarjeta y alertas personalizadas por correo electrónico cuando falle el cobro de la factura.",
+                "fr": ": Appliquez les tentatives de carte et les alertes personnalisées par e-mail en cas d'échec du chargement de la facture.",
+                "de": ": Erzwingen Sie erneute Kartenversuche und benutzerdefinierte E-Mail-Benachrichtigungen, wenn die Rechnungsberechnung fehlschlägt.",
+                "zh": "：当发票计费失败时，强制执行卡重试和自定义电子邮件警报。",
+                "ja": ": 請求書の請求が失敗した場合、カードの再試行とカスタム電子メール アラートを強制します。",
+                "pt": ": aplique novas tentativas de cartão e alertas de e-mail personalizados quando a cobrança da fatura falhar.",
+                "ar": ": فرض عمليات إعادة محاولة البطاقة وتنبيهات البريد الإلكتروني المخصصة عند فشل تحصيل الفاتورة.",
+                "hi": ": चालान चार्जिंग विफल होने पर कार्ड पुनः प्रयास और कस्टम ईमेल अलर्ट लागू करें।",
+                "ru": ": принудительно выполнять повторные попытки карты и настраивать оповещения по электронной почте в случае сбоя в оплате счета."
+        },
+        ": Enforce structured training check-ins during the first 90 days after signup.": {
+                "es": ": Haga cumplir controles de capacitación estructurados durante los primeros 90 días después del registro.",
+                "fr": ": imposez des enregistrements de formation structurés au cours des 90 premiers jours suivant l'inscription.",
+                "de": ": Erzwingen Sie strukturierte Schulungs-Check-ins während der ersten 90 Tage nach der Anmeldung.",
+                "zh": "：在注册后的前 90 天内强制执行结构化培训签到。",
+                "ja": ": サインアップ後の最初の 90 日間に、構造化されたトレーニングのチェックインを強制します。",
+                "pt": ": aplique check-ins de treinamento estruturados durante os primeiros 90 dias após a inscrição.",
+                "ar": ": فرض عمليات تسجيل التدريب المنظمة خلال أول 90 يومًا بعد الاشتراك.",
+                "hi": ": साइनअप के बाद पहले 90 दिनों के दौरान संरचित प्रशिक्षण चेक-इन लागू करें।",
+                "ru": ": обеспечить структурированное обучение в течение первых 90 дней после регистрации."
+        },
+        ": Evaluate if users acquired during discounts exhibit higher decay rates.": {
+                "es": ": Evalúe si los usuarios adquiridos durante los descuentos presentan tasas de deterioro más altas.",
+                "fr": ": Évaluez si les utilisateurs acquis lors des remises présentent des taux de désintégration plus élevés.",
+                "de": ": Bewerten Sie, ob Benutzer, die im Rahmen von Rabatten gewonnen wurden, höhere Abklingraten aufweisen.",
+                "zh": "：评估在折扣期间获得的用户是否表现出较高的衰减率。",
+                "ja": ": 割引中に獲得したユーザーの減衰率が高いかどうかを評価します。",
+                "pt": ": Avalie se os usuários adquiridos durante descontos apresentam taxas de decaimento mais altas.",
+                "ar": ": قم بتقييم ما إذا كان المستخدمون الذين تم الحصول عليهم خلال الخصومات يظهرون معدلات تسوس أعلى.",
+                "hi": ": मूल्यांकन करें कि क्या छूट के दौरान प्राप्त उपयोगकर्ता उच्च क्षय दर प्रदर्शित करते हैं।",
+                "ru": ": Оцените, имеют ли пользователи, привлеченные во время скидок, более высокие темпы распада."
+        },
+        ": Evaluates detailed risk factors, confidence intervals, and region distributions.": {
+                "es": ": Evalúa factores de riesgo detallados, intervalos de confianza y distribuciones regionales.",
+                "fr": ": évalue les facteurs de risque détaillés, les intervalles de confiance et les répartitions régionales.",
+                "de": ": Bewertet detaillierte Risikofaktoren, Konfidenzintervalle und regionale Verteilungen.",
+                "zh": "：评估详细的风险因素、置信区间和区域分布。",
+                "ja": ": 詳細なリスク要因、信頼区間、および領域分布を評価します。",
+                "pt": ": avalia fatores de risco detalhados, intervalos de confiança e distribuições regionais.",
+                "ar": ": يقيم عوامل الخطر التفصيلية وفترات الثقة وتوزيعات المنطقة.",
+                "hi": ": विस्तृत जोखिम कारकों, आत्मविश्वास अंतराल और क्षेत्र वितरण का मूल्यांकन करता है।",
+                "ru": ": Оценивает подробные факторы риска, доверительные интервалы и региональное распределение."
+        },
+        ": Extend accounts by 14 days before disabling access due to billing failure.": {
+                "es": ": Amplíe las cuentas 14 días antes de deshabilitar el acceso debido a un error de facturación.",
+                "fr": ": Prolongez les comptes de 14 jours avant de désactiver l'accès en raison d'un échec de facturation.",
+                "de": ": Konten um 14 Tage verlängern, bevor der Zugriff aufgrund eines Abrechnungsfehlers deaktiviert wird.",
+                "zh": "：在因计费失败而禁用访问之前，将帐户延长 14 天。",
+                "ja": ": 請求の失敗によりアクセスを無効にする前に、アカウントを 14 日間延長します。",
+                "pt": ": Prolongue as contas por 14 dias antes de desativar o acesso devido a falha no faturamento.",
+                "ar": ": قم بتمديد الحسابات لمدة 14 يومًا قبل تعطيل الوصول بسبب فشل الفوترة.",
+                "hi": ": बिलिंग विफलता के कारण पहुंच अक्षम करने से पहले खातों को 14 दिनों तक बढ़ाएँ।",
+                "ru": ": Продлите учетные записи на 14 дней, прежде чем отключать доступ из-за сбоя при выставлении счетов."
+        },
+        ": Fast-track open support tickets for accounts showing >65% risk.": {
+                "es": ": Tickets de soporte abiertos de vía rápida para cuentas que muestran >65% de riesgo.",
+                "fr": ": Ouvrir rapidement les tickets d’assistance pour les comptes présentant un risque > 65 %.",
+                "de": ": Schnelle Bearbeitung offener Support-Tickets für Konten mit einem Risiko von mehr als 65 %.",
+                "zh": "：为风险超过 65% 的账户提供快速开放支持票证。",
+                "ja": ": リスクが 65% を超えるアカウントのオープン サポート チケットをファストトラックします。",
+                "pt": ": abertura rápida de tickets de suporte para contas que apresentam risco >65%.",
+                "ar": ": تذاكر دعم مفتوحة سريعة للحسابات التي تظهر مخاطر بنسبة أكبر من 65%.",
+                "hi": ": 65% से अधिक जोखिम दर्शाने वाले खातों के लिए फास्ट-ट्रैक ओपन सपोर्ट टिकट।",
+                "ru": ": Ускоренное открытие заявок в службу поддержки для учетных записей с риском> 65 %."
+        },
+        ": Focus on expansion revenue (upsells) within the cohort to achieve >100% NRR.": {
+                "es": ": centrarse en los ingresos de expansión (ventas adicionales) dentro de la cohorte para lograr >100 % de NRR.",
+                "fr": ": Concentrez-vous sur les revenus d'expansion (ventes incitatives) au sein de la cohorte pour atteindre > 100 % de NRR.",
+                "de": ": Konzentrieren Sie sich auf Expansionserlöse (Upsells) innerhalb der Kohorte, um >100 % NRR zu erreichen.",
+                "zh": "：专注于扩大群体内的收入（追加销售），以实现 >100% 的 NRR。",
+                "ja": ": 100% 以上の NRR を達成するには、コホート内の拡大収益 (アップセル) に焦点を当てます。",
+                "pt": ": Foco na receita de expansão (upsells) dentro da coorte para atingir >100% de NRR.",
+                "ar": ": التركيز على إيرادات التوسع (عمليات البيع الإضافية) داخل المجموعة لتحقيق معدل صافي مخاطر أعلى من 100%.",
+                "hi": ": 100% एनआरआर हासिल करने के लिए समूह के भीतर विस्तार राजस्व (अपसेल) पर ध्यान दें।",
+                "ru": ": Сосредоточьтесь на доходах от расширения (дополнительных продаж) внутри когорты, чтобы достичь NRR >100%."
+        },
+        ": Generates corporate PowerPoint PPTX slide decks from live database telemetry.": {
+                "es": ": Genera presentaciones de diapositivas PPTX de PowerPoint corporativas a partir de telemetría de base de datos en vivo.",
+                "fr": ": génère des présentations de diapositives PowerPoint PPTX d'entreprise à partir de la télémétrie de base de données en direct.",
+                "de": ": Erstellt PowerPoint PPTX-Foliendecks für Unternehmen aus Live-Datenbanktelemetrie.",
+                "zh": "：根据实时数据库遥测生成企业 PowerPoint PPTX 幻灯片。",
+                "ja": ": ライブ データベース テレメトリから企業の PowerPoint PPTX スライド デッキを生成します。",
+                "pt": ": gera apresentações de slides PPTX do PowerPoint corporativo a partir de telemetria de banco de dados ao vivo.",
+                "ar": ": يقوم بإنشاء مجموعات شرائح PowerPoint PPTX للشركات من القياس المباشر لقاعدة البيانات.",
+                "hi": ": लाइव डेटाबेस टेलीमेट्री से कॉर्पोरेट पावरपॉइंट पीपीटीएक्स स्लाइड डेक उत्पन्न करता है।",
+                "ru": ": Создает корпоративные слайды PowerPoint PPTX на основе телеметрии базы данных в реальном времени."
+        },
+        ": Global regulatory compliance regarding data masking.": {
+                "es": ": Cumplimiento normativo global en materia de enmascaramiento de datos.",
+                "fr": ": Conformité réglementaire mondiale concernant le masquage des données.",
+                "de": ": Globale Einhaltung gesetzlicher Vorschriften zur Datenmaskierung.",
+                "zh": "：有关数据屏蔽的全球监管合规性。",
+                "ja": ": データマスキングに関する世界的な規制への準拠。",
+                "pt": ": Conformidade regulatória global em relação ao mascaramento de dados.",
+                "ar": ": الامتثال التنظيمي العالمي فيما يتعلق بإخفاء البيانات.",
+                "hi": ": डेटा मास्किंग के संबंध में वैश्विक नियामक अनुपालन।",
+                "ru": ": Соответствие глобальным нормативным требованиям в отношении маскировки данных."
+        },
+        ": Identify the month at which the cohort retention curve flattens out (e.g. Month 6).": {
+                "es": ": Identifique el mes en el que la curva de retención de cohortes se aplana (por ejemplo, mes 6).",
+                "fr": ": Identifiez le mois au cours duquel la courbe de rétention de la cohorte s'aplatit (par exemple, mois 6).",
+                "de": ": Identifizieren Sie den Monat, in dem die Kohortenbindungskurve abflacht (z. B. Monat 6).",
+                "zh": "：确定队列保留曲线变平的月份（例如第 6 个月）。",
+                "ja": ": コホート維持曲線が平坦になる月を特定します (例: 6 か月目)。",
+                "pt": ": Identifique o mês em que a curva de retenção da coorte se estabiliza (por exemplo, Mês 6).",
+                "ar": ": حدد الشهر الذي يتسطح فيه منحنى استبقاء المجموعة النموذجية (على سبيل المثال، الشهر 6).",
+                "hi": ": उस महीने की पहचान करें जिस पर समूह प्रतिधारण वक्र समतल हो जाता है (जैसे महीना 6)।",
+                "ru": ": Определите месяц, в котором кривая удержания когорты выравнивается (например, месяц 6)."
+        },
+        ": Initiates automated outbound recovery email templates and tasks list.": {
+                "es": ": inicia listas de tareas y plantillas de correo electrónico de recuperación saliente automatizadas.",
+                "fr": ": lance les modèles d'e-mails de récupération sortants automatisés et la liste des tâches.",
+                "de": ": Initiiert automatisierte E-Mail-Vorlagen und Aufgabenlisten für die ausgehende Wiederherstellung.",
+                "zh": "：启动自动出站恢复电子邮件模板和任务列表。",
+                "ja": ": 自動送信回復メール テンプレートとタスク リストを開始します。",
+                "pt": ": inicia modelos automatizados de e-mail de recuperação de saída e lista de tarefas.",
+                "ar": ": يبدأ قوالب البريد الإلكتروني وقائمة المهام للاسترداد التلقائي للخارج.",
+                "hi": ": स्वचालित आउटबाउंड पुनर्प्राप्ति ईमेल टेम्प्लेट और कार्य सूची आरंभ करता है।",
+                "ru": ": инициирует автоматические шаблоны исходящей электронной почты для восстановления и список задач."
+        },
+        ": Link Customer Success Manager (CSM) performance bonuses directly to Net Revenue Retention (NRR).": {
+                "es": ": vincule las bonificaciones de desempeño del Customer Success Manager (CSM) directamente con la retención de ingresos netos (NRR).",
+                "fr": ": Liez les bonus de performance du Customer Success Manager (CSM) directement à la rétention des revenus nets (NRR).",
+                "de": ": Verknüpfen Sie die Leistungsboni des Customer Success Manager (CSM) direkt mit der Nettoeinnahmenbindung (Net Revenue Retention, NRR).",
+                "zh": "：将客户成功经理 (CSM) 绩效奖金直接与净收入保留 (NRR) 联系起来。",
+                "ja": ": カスタマー サクセス マネージャー (CSM) のパフォーマンス ボーナスを純収益維持率 (NRR) に直接リンクします。",
+                "pt": ": Vincule os bônus de desempenho do Customer Success Manager (CSM) diretamente à retenção de receita líquida (NRR).",
+                "ar": ": ربط مكافآت أداء مدير نجاح العملاء (CSM) مباشرةً بصافي الاحتفاظ بالإيرادات (NRR).",
+                "hi": ": ग्राहक सफलता प्रबंधक (सीएसएम) प्रदर्शन बोनस को सीधे शुद्ध राजस्व प्रतिधारण (एनआरआर) से लिंक करें।",
+                "ru": ": Свяжите бонусы за производительность Customer Success Manager (CSM) непосредственно с удержанием чистой выручки (NRR)."
+        },
+        ": Monthly Recurring Revenue. Active billing revenue.": {
+                "es": ": Ingresos mensuales recurrentes. Ingresos por facturación activa.",
+                "fr": ": Revenu mensuel récurrent. Revenus de facturation active.",
+                "de": ": Monatlich wiederkehrende Einnahmen. Aktiver Abrechnungsumsatz.",
+                "zh": "：每月经常性收入。主动计费收入。",
+                "ja": ": 毎月の経常収益。アクティブな課金収入。",
+                "pt": ": Receita Recorrente Mensal. Receita de faturamento ativo.",
+                "ar": ": الإيرادات الشهرية المتكررة. إيرادات الفواتير النشطة.",
+                "hi": ": मासिक आवर्ती राजस्व. सक्रिय बिलिंग राजस्व.",
+                "ru": ": Ежемесячный регулярный доход. Активный доход от выставления счетов."
+        },
+        ": Offer 15-20% discounts to convert month-to-month contracts to annual commitments.": {
+                "es": ": Ofrezca descuentos del 15 al 20 % para convertir contratos de mes a mes en compromisos anuales.",
+                "fr": ": Offrez des remises de 15 à 20 % pour convertir les contrats mensuels en engagements annuels.",
+                "de": ": Bieten Sie 15-20 % Rabatte an, um monatliche Verträge in jährliche Verpflichtungen umzuwandeln.",
+                "zh": "：提供 15-20% 的折扣，将按月合同转换为年度承诺。",
+                "ja": ": 月ごとの契約を年間契約に変換する場合、15 ～ 20% の割引を提供します。",
+                "pt": ": Ofereça descontos de 15 a 20% para converter contratos mensais em compromissos anuais.",
+                "ar": ": تقديم خصومات تتراوح بين 15-20% لتحويل العقود الشهرية إلى التزامات سنوية.",
+                "hi": ": मासिक अनुबंधों को वार्षिक प्रतिबद्धताओं में बदलने के लिए 15-20% छूट प्रदान करें।",
+                "ru": ": Предлагайте скидки 15–20 % для конвертации ежемесячных контрактов в годовые."
+        },
+        ": Offer statement credits to customers switching from manual to auto-pay.": {
+                "es": ": Ofrezca créditos en el estado de cuenta a los clientes que cambien del pago manual al pago automático.",
+                "fr": ": Offrez des crédits de relevé aux clients passant du paiement manuel au paiement automatique.",
+                "de": ": Bieten Sie Kontoauszugsgutschriften für Kunden an, die von der manuellen zur automatischen Zahlung wechseln.",
+                "zh": "：为从手动付款转为自动付款的客户提供对帐单积分。",
+                "ja": ": 手動支払いから自動支払いに切り替えた顧客に明細クレジットを提供します。",
+                "pt": ": ofereça créditos no extrato aos clientes que mudam do pagamento manual para o pagamento automático.",
+                "ar": ": تقديم أرصدة كشف الحساب للعملاء الذين يتحولون من الدفع اليدوي إلى الدفع التلقائي.",
+                "hi": ": मैनुअल से ऑटो-पे पर स्विच करने वाले ग्राहकों को स्टेटमेंट क्रेडिट प्रदान करें।",
+                "ru": ": Предлагайте кредиты клиентам, переходящим с ручной оплаты на автоматическую."
+        },
+        ": Run proactive health checks on high-risk accounts to resolve setup friction.": {
+                "es": ": ejecute comprobaciones de estado proactivas en cuentas de alto riesgo para resolver problemas de configuración.",
+                "fr": ": effectuez des contrôles de santé proactifs sur les comptes à haut risque pour résoudre les frictions de configuration.",
+                "de": ": Führen Sie proaktive Integritätsprüfungen für Konten mit hohem Risiko durch, um Probleme bei der Einrichtung zu beheben.",
+                "zh": "：对高风险帐户进行主动健康检查以解决设置问题。",
+                "ja": ": リスクの高いアカウントに対してプロアクティブなヘルスチェックを実行して、セットアップの問題を解決します。",
+                "pt": ": execute verificações de integridade proativas em contas de alto risco para resolver problemas de configuração.",
+                "ar": ": قم بإجراء فحوصات سلامة استباقية على الحسابات عالية المخاطر لحل مشكلة الإعداد.",
+                "hi": ": सेटअप घर्षण को हल करने के लिए उच्च जोखिम वाले खातों पर सक्रिय स्वास्थ्य जांच चलाएं।",
+                "ru": ": запускайте упреждающие проверки работоспособности учетных записей с высоким уровнем риска, чтобы устранить проблемы с настройкой."
+        },
+        ": Runs interactive test simulations using the Tabular Hybrid Transformer.": {
+                "es": ": Ejecuta simulaciones de prueba interactivas utilizando el transformador híbrido tabular.",
+                "fr": ": Exécute des simulations de tests interactifs à l’aide du Tabular Hybrid Transformer.",
+                "de": ": Führt interaktive Testsimulationen mit dem Tabular Hybrid Transformer durch.",
+                "zh": "：使用表格混合变压器运行交互式测试模拟。",
+                "ja": ":Tabular Hybrid Transformer を使用して対話型テスト シミュレーションを実行します。",
+                "pt": ": executa simulações de teste interativas usando o Tabular Hybrid Transformer.",
+                "ar": ": تشغيل عمليات محاكاة اختبارية تفاعلية باستخدام المحول الهجين الجدولي.",
+                "hi": ": टेबुलर हाइब्रिड ट्रांसफार्मर का उपयोग करके इंटरैक्टिव परीक्षण सिमुलेशन चलाता है।",
+                "ru": ": запускает интерактивное тестовое моделирование с использованием табличного гибридного трансформатора."
+        },
+        ": Service Level Agreement. Customer ticket resolution response speed.": {
+                "es": ": Acuerdo de nivel de servicio. Velocidad de respuesta de resolución de tickets de clientes.",
+                "fr": ": Accord de niveau de service. Vitesse de réponse de résolution des tickets clients.",
+                "de": ": Service Level Agreement. Reaktionsgeschwindigkeit bei der Lösung von Kundentickets.",
+                "zh": "：服务水平协议。客户工单解决响应速度。",
+                "ja": ": サービスレベル契約。顧客のチケット解決の応答速度。",
+                "pt": ": Acordo de Nível de Serviço. Velocidade de resposta de resolução de tickets do cliente.",
+                "ar": ": اتفاقية مستوى الخدمة. سرعة الاستجابة لحل تذكرة العميل.",
+                "hi": ": सेवा स्तर समझौता। ग्राहक टिकट समाधान प्रतिक्रिया गति।",
+                "ru": ": Соглашение об уровне обслуживания. Скорость ответа на решение проблемы с заявкой клиента."
+        },
+        ": Set alerts for accounts that demonstrate sudden drop-offs in product usage.": {
+                "es": ": establezca alertas para cuentas que demuestren caídas repentinas en el uso del producto.",
+                "fr": ": définissez des alertes pour les comptes qui démontrent une baisse soudaine de l'utilisation du produit.",
+                "de": ": Legen Sie Benachrichtigungen für Konten fest, bei denen ein plötzlicher Rückgang der Produktnutzung auftritt.",
+                "zh": "：为显示产品使用量突然下降的帐户设置警报。",
+                "ja": ": 製品の使用量が突然低下したアカウントに対してアラートを設定します。",
+                "pt": ": defina alertas para contas que demonstrem quedas repentinas no uso do produto.",
+                "ar": ": قم بتعيين التنبيهات للحسابات التي توضح الانخفاض المفاجئ في استخدام المنتج.",
+                "hi": ": उन खातों के लिए अलर्ट सेट करें जो उत्पाद उपयोग में अचानक गिरावट दर्शाते हैं।",
+                "ru": ": установите оповещения для учетных записей, которые демонстрируют внезапное прекращение использования продукта."
+        },
+        ": Target healthy low-risk cohorts with expansion upsell offerings.": {
+                "es": ": Diríjase a cohortes saludables de bajo riesgo con ofertas de expansión de ventas adicionales.",
+                "fr": ": Ciblez des cohortes saines à faible risque avec des offres de vente incitative d’expansion.",
+                "de": ": Zielen Sie mit erweiterten Upsell-Angeboten auf gesunde Kohorten mit geringem Risiko.",
+                "zh": "：通过扩展追加销售产品瞄准健康的低风险人群。",
+                "ja": "：拡大アップセル製品を使用して、健全な低リスクコホートをターゲットにします。",
+                "pt": ": Almeje grupos saudáveis de baixo risco com ofertas de upsell de expansão.",
+                "ar": ": استهدف مجموعات صحية منخفضة المخاطر من خلال عروض التوسع في البيع.",
+                "hi": ": विस्तार अपसेल पेशकशों के साथ स्वस्थ कम जोखिम वाले समूहों को लक्षित करें।",
+                "ru": ": Нацеливайтесь на здоровые когорты с низким уровнем риска с помощью дополнительных предложений по расширению продаж."
+        },
+        ": Tracks global cohort warnings, SHAP importance weights, and alert cards.": {
+                "es": ": realiza un seguimiento de las advertencias de cohortes globales, las ponderaciones de importancia de SHAP y las tarjetas de alerta.",
+                "fr": ": suit les avertissements de cohorte mondiale, les pondérations d'importance SHAP et les cartes d'alerte.",
+                "de": ": Verfolgt globale Kohortenwarnungen, SHAP-Wichtigkeitsgewichtungen und Warnkarten.",
+                "zh": "：跟踪全球队列警告、SHAP 重要性权重和警报卡。",
+                "ja": ": グローバル コホート警告、SHAP 重要度の重み、およびアラート カードを追跡します。",
+                "pt": ": rastreia avisos de coorte global, pesos de importância SHAP e cartões de alerta.",
+                "ar": ": يتتبع تحذيرات المجموعة العامة وأوزان أهمية SHAP وبطاقات التنبيه.",
+                "hi": ": वैश्विक समूह चेतावनियों, SHAP महत्व भार और चेतावनी कार्डों को ट्रैक करता है।",
+                "ru": ": отслеживает глобальные групповые предупреждения, веса важности SHAP и карточки предупреждений."
+        },
+        ": Trigger proactive check-ins based on predictive risk alerts rather than waiting for cancel requests.": {
+                "es": ": active registros proactivos basados en alertas de riesgo predictivas en lugar de esperar solicitudes de cancelación.",
+                "fr": ": Déclenchez des enregistrements proactifs basés sur des alertes de risque prédictives plutôt que d'attendre les demandes d'annulation.",
+                "de": ": Lösen Sie proaktive Check-ins basierend auf vorausschauenden Risikowarnungen aus, anstatt auf Stornierungsanfragen zu warten.",
+                "zh": "：根据预测风险警报触发主动签入，而不是等待取消请求。",
+                "ja": ": キャンセル要求を待つのではなく、予測リスク アラートに基づいてプロアクティブなチェックインをトリガーします。",
+                "pt": ": acione check-ins proativos com base em alertas de risco preditivos, em vez de aguardar solicitações de cancelamento.",
+                "ar": ": قم بإجراء عمليات تسجيل وصول استباقية بناءً على تنبيهات المخاطر التنبؤية بدلاً من انتظار طلبات الإلغاء.",
+                "hi": ": रद्द अनुरोधों की प्रतीक्षा करने के बजाय पूर्वानुमानित जोखिम अलर्ट के आधार पर सक्रिय चेक-इन ट्रिगर करें।",
+                "ru": ": запуск упреждающих проверок на основе прогнозируемых предупреждений о рисках, а не ожидание запросов на отмену."
+        },
+        "< 35.0%": {
+                "es": "< 35,0%",
+                "fr": "< 35,0%",
+                "de": "< 35,0 %",
+                "zh": "< 35.0%",
+                "ja": "< 35.0%",
+                "pt": "< 35,0%",
+                "ar": "< 35.0%",
+                "hi": "<35.0%",
+                "ru": "< 35,0%"
+        },
+        "A chart plotting customer longevity based on their signup month, showing when churn stabilizes to calculate asymptotic lifetime value.": {
+                "es": "Un gráfico que muestra la longevidad del cliente en función del mes de registro y que muestra cuándo se estabiliza la deserción para calcular el valor de vida asintótico.",
+                "fr": "Un graphique traçant la longévité des clients en fonction de leur mois d'inscription, indiquant le moment où le taux de désabonnement se stabilise pour calculer la valeur asymptotique de la durée de vie.",
+                "de": "Ein Diagramm, das die Kundenlebensdauer basierend auf ihrem Anmeldemonat darstellt und zeigt, wann sich die Abwanderung stabilisiert, um den asymptotischen Lifetime-Wert zu berechnen.",
+                "zh": "根据注册月份绘制客户寿命的图表，显示客户流失何时稳定以计算渐近生命周期价值。",
+                "ja": "サインアップ月に基づいて顧客の寿命をプロットしたグラフ。漸近的な生涯価値を計算するために解約が安定する時期を示します。",
+                "pt": "Um gráfico que representa a longevidade do cliente com base no mês de inscrição, mostrando quando a rotatividade se estabiliza para calcular o valor assintótico do ciclo de vida.",
+                "ar": "رسم بياني يوضح طول عمر العميل استنادًا إلى شهر الاشتراك، ويوضح متى يستقر التباطؤ لحساب القيمة الدائمة المقاربة.",
+                "hi": "एक चार्ट जो ग्राहकों के साइनअप माह के आधार पर उनकी दीर्घायु की योजना बनाता है, यह दर्शाता है कि स्पर्शोन्मुख जीवनकाल मूल्य की गणना करने के लिए मंथन कब स्थिर होता है।",
+                "ru": "Диаграмма, показывающая продолжительность жизни клиентов в зависимости от месяца их регистрации и показывающая, когда отток стабилизируется для расчета асимптотической ценности жизни."
+        },
+        "A collaboration module to assign dedicated Customer Success Managers (CSMs) to accounts flagged with churn risks.": {
+                "es": "Un módulo de colaboración para asignar administradores de éxito del cliente (CSM) dedicados a cuentas marcadas con riesgos de abandono.",
+                "fr": "Un module de collaboration pour affecter des Customer Success Managers (CSM) dédiés aux comptes signalés avec des risques de désabonnement.",
+                "de": "Ein Kollaborationsmodul zur Zuweisung dedizierter Customer Success Manager (CSMs) zu Konten, bei denen ein Abwanderungsrisiko besteht.",
+                "zh": "一个协作模块，用于将专门的客户成功经理 (CSM) 分配给标记有流失风险的帐户。",
+                "ja": "チャーン リスクのフラグが立てられたアカウントに専任のカスタマー サクセス マネージャー (CSM) を割り当てるコラボレーション モジュール。",
+                "pt": "Um módulo de colaboração para atribuir Gerentes de Sucesso do Cliente (CSMs) dedicados a contas sinalizadas com riscos de rotatividade.",
+                "ar": "وحدة تعاون لتعيين مديري نجاح العملاء (CSMs) المخصصين للحسابات التي تم وضع علامة عليها بأنها تنطوي على مخاطر التوقف عن العمل.",
+                "hi": "मंथन जोखिमों से चिह्नित खातों के लिए समर्पित ग्राहक सफलता प्रबंधकों (सीएसएम) को नियुक्त करने के लिए एक सहयोग मॉड्यूल।",
+                "ru": "Модуль совместной работы для назначения специальных менеджеров по работе с клиентами (CSM) к учетным записям, отмеченным риском оттока."
+        },
+        "A tamper-evident activities ledger tracking configurations, alert triggers, and manager updates.": {
+                "es": "Un libro de actividades a prueba de manipulaciones que rastrea configuraciones, activadores de alertas y actualizaciones del administrador.",
+                "fr": "Un grand livre d'activités inviolable qui suit les configurations, les déclencheurs d'alertes et les mises à jour des gestionnaires.",
+                "de": "Ein manipulationssicheres Aktivitätsbuch zur Nachverfolgung von Konfigurationen, Alarmauslösern und Manageraktualisierungen.",
+                "zh": "防篡改的活动分类帐跟踪配置、警报触发器和管理器更新。",
+                "ja": "改ざんが明らかなアクティビティ台帳で、設定、アラートトリガー、マネージャーの更新を追跡します。",
+                "pt": "Um livro-razão de atividades inviolável que rastreia configurações, gatilhos de alerta e atualizações do gerente.",
+                "ar": "تكوينات تتبع دفتر الأستاذ للأنشطة الواضحة، ومشغلات التنبيه، وتحديثات المدير.",
+                "hi": "एक छेड़छाड़-स्पष्ट गतिविधियाँ बहीखाता ट्रैकिंग कॉन्फ़िगरेशन, अलर्ट ट्रिगर और प्रबंधक अपडेट।",
+                "ru": "Защищенный от несанкционированного доступа журнал действий, отслеживающий конфигурации, триггеры оповещений и обновления менеджеров."
+        },
+        "A to Z Glossary": {
+                "es": "Glosario de la A a la Z",
+                "fr": "Glossaire de A à Z",
+                "de": "Glossar von A bis Z",
+                "zh": "A 到 Z 术语表",
+                "ja": "A to Z 用語集",
+                "pt": "Glossário de A a Z",
+                "ar": "من الألف إلى الياء معجم",
+                "hi": "ए से ज़ेड शब्दावली",
+                "ru": "Глоссарий от А до Я"
+        },
+        "A/B Retention Campaigns": {
+                "es": "Campañas de retención A/B",
+                "fr": "Campagnes de rétention A/B",
+                "de": "A/B-Retentionskampagnen",
+                "zh": "A/B 保留活动",
+                "ja": "A/B 維持キャンペーン",
+                "pt": "Campanhas de retenção A/B",
+                "ar": "حملات الاحتفاظ أ/ب",
+                "hi": "ए/बी प्रतिधारण अभियान",
+                "ru": "Кампании удержания A/B"
+        },
+        "A/B Retention Campaigns & Compliance Audit logs": {
+                "es": "Campañas de retención A/B y registros de auditoría de cumplimiento",
+                "fr": "Campagnes de rétention A/B et journaux d'audit de conformité",
+                "de": "A/B-Aufbewahrungskampagnen und Compliance-Audit-Protokolle",
+                "zh": "A/B 保留活动和合规审核日志",
+                "ja": "A/B 保持キャンペーンとコンプライアンス監査ログ",
+                "pt": "Campanhas de retenção A/B e registros de auditoria de conformidade",
+                "ar": "حملات الاحتفاظ بـ A/B وسجلات تدقيق الامتثال",
+                "hi": "ए/बी प्रतिधारण अभियान एवं अनुपालन लेखापरीक्षा लॉग",
+                "ru": "Кампании по удержанию A/B и журналы аудита соответствия"
+        },
+        "A/B campaign outcome logged successfully.": {
+                "es": "El resultado de la campaña A/B se registró correctamente.",
+                "fr": "Le résultat de la campagne A/B a été enregistré avec succès.",
+                "de": "Das Ergebnis der A/B-Kampagne wurde erfolgreich protokolliert.",
+                "zh": "A/B 活动结果已成功记录。",
+                "ja": "A/B キャンペーンの結果が正常に記録されました。",
+                "pt": "Resultado da campanha A/B registrado com sucesso.",
+                "ar": "تم تسجيل نتيجة حملة A/B بنجاح.",
+                "hi": "ए/बी अभियान परिणाम सफलतापूर्वक लॉग किया गया।",
+                "ru": "Результаты кампании A/B успешно зарегистрированы."
+        },
+        "ACCOUNT LTV": {
+                "es": "LTV DE LA CUENTA",
+                "fr": "LTV DU COMPTE",
+                "de": "KONTO-LTV",
+                "zh": "账户生命周期价值",
+                "ja": "アカウントLTV",
+                "pt": "LTV DA CONTA",
+                "ar": "القيمة الدائمة للحساب",
+                "hi": "खाता एलटीवी",
+                "ru": "ОБЩАЯ ЦЕННОСТЬ СЧЕТА"
+        },
+        "AI": {
+                "es": "IA",
+                "fr": "IA",
+                "de": "KI",
+                "zh": "人工智能",
+                "ja": "AI",
+                "pt": "IA",
+                "ar": "منظمة العفو الدولية",
+                "hi": "ऐ",
+                "ru": "ИИ"
+        },
+        "AI Advisor Copilot": {
+                "es": "Copiloto asesor de IA",
+                "fr": "Copilote Conseiller IA",
+                "de": "KI-Berater-Copilot",
+                "zh": "AI顾问副驾驶",
+                "ja": "AIアドバイザー副操縦士",
+                "pt": "Copiloto Conselheiro de IA",
+                "ar": "مستشار الذكاء الاصطناعي مساعد الطيار",
+                "hi": "एआई सलाहकार सहपायलट",
+                "ru": "Советник по искусственному интеллекту, второй пилот"
+        },
+        "AI Advisors suggestions": {
+                "es": "Sugerencias de asesores de IA",
+                "fr": "Suggestions des conseillers en IA",
+                "de": "Vorschläge von AI Advisors",
+                "zh": "AI顾问建议",
+                "ja": "AIアドバイザーの提案",
+                "pt": "Sugestões de conselheiros de IA",
+                "ar": "اقتراحات مستشاري الذكاء الاصطناعي",
+                "hi": "एआई सलाहकारों के सुझाव",
+                "ru": "Предложения советников по искусственному интеллекту"
+        },
+        "AI Copilot Advisor": {
+                "es": "Asesor de copiloto de IA",
+                "fr": "Conseiller copilote IA",
+                "de": "KI-Copilot-Berater",
+                "zh": "AI副驾驶顾问",
+                "ja": "AI 副操縦士アドバイザー",
+                "pt": "Conselheiro Copiloto de IA",
+                "ar": "مستشار مساعد الطيار بالذكاء الاصطناعي",
+                "hi": "एआई कोपायलट सलाहकार",
+                "ru": "AI-советник второго пилота"
+        },
+        "AI Copilot Executive Advisor": {
+                "es": "Asesor ejecutivo del copiloto de IA",
+                "fr": "Conseiller exécutif du copilote IA",
+                "de": "Executive Advisor für KI-Copilot",
+                "zh": "AI副驾驶执行顾问",
+                "ja": "AI 副操縦士エグゼクティブアドバイザー",
+                "pt": "Conselheiro Executivo do Copiloto de IA",
+                "ar": "المستشار التنفيذي لمساعد الطيار في الذكاء الاصطناعي",
+                "hi": "एआई कोपायलट कार्यकारी सलाहकार",
+                "ru": "Исполнительный советник AI Copilot"
+        },
+        "AI Polish": {
+                "es": "AI polaco",
+                "fr": "Polonais IA",
+                "de": "AI-Polnisch",
+                "zh": "人工智能抛光",
+                "ja": "AIポリッシュ",
+                "pt": "IA polonês",
+                "ar": "البولندية",
+                "hi": "ऐ पोलिश",
+                "ru": "AI польский"
+        },
+        "AI Polish & Upgrade Card Content": {
+                "es": "Contenido de la tarjeta de actualización y pulido de IA",
+                "fr": "Contenu de la carte de polissage et de mise à niveau de l'IA",
+                "de": "AI Polish & Upgrade-Karteninhalte",
+                "zh": "AI打磨&升级卡牌内容",
+                "ja": "AI 磨きとカード コンテンツのアップグレード",
+                "pt": "AI Polish e conteúdo do cartão de atualização",
+                "ar": "AI البولندية وترقية محتوى البطاقة",
+                "hi": "एआई पॉलिश और अपग्रेड कार्ड सामग्री",
+                "ru": "Полировка AI и содержимое карты обновления"
+        },
+        "AI Prompt Magic:": {
+                "es": "Magia rápida de IA:",
+                "fr": "Magie d'invite IA :",
+                "de": "KI-Prompt-Magie:",
+                "zh": "AI提示魔法：",
+                "ja": "AI プロンプト マジック:",
+                "pt": "Magia de prompt de IA:",
+                "ar": "الذكاء الاصطناعي الفوري:",
+                "hi": "एआई प्रॉम्प्ट जादू:",
+                "ru": "Магия подсказок AI:"
+        },
+        "ALERT CHANNELS": {
+                "es": "CANALES DE ALERTA",
+                "fr": "CANAUX D'ALERTE",
+                "de": "ALARMKANÄLE",
+                "zh": "警报通道",
+                "ja": "アラートチャンネル",
+                "pt": "CANAIS DE ALERTA",
+                "ar": "قنوات التنبيه",
+                "hi": "चेतावनी चैनल",
+                "ru": "КАНАЛЫ ОПОВЕЩЕНИЯ"
+        },
+        "ANNUAL PROJECTION": {
+                "es": "PROYECCIÓN ANUAL",
+                "fr": "PROJECTION ANNUELLE",
+                "de": "JAHRESPROJEKTION",
+                "zh": "年度预测",
+                "ja": "年次予測",
+                "pt": "PROJEÇÃO ANUAL",
+                "ar": "التوقعات السنوية",
+                "hi": "वार्षिक प्रक्षेपण",
+                "ru": "ГОДОВОЙ ПРОГНОЗ"
+        },
+        "API Key / Secret Token": {
+                "es": "Clave API/Token secreto",
+                "fr": "Clé API/jeton secret",
+                "de": "API-Schlüssel/Geheimes Token",
+                "zh": "API 密钥/秘密令牌",
+                "ja": "APIキー/シークレットトークン",
+                "pt": "Chave de API/token secreto",
+                "ar": "مفتاح واجهة برمجة التطبيقات/الرمز السري",
+                "hi": "एपीआई कुंजी/गुप्त टोकन",
+                "ru": "Ключ API/секретный токен"
+        },
+        "API Key Collapsible Bar": {
+                "es": "Barra plegable de clave API",
+                "fr": "Barre pliable de clé API",
+                "de": "Zusammenklappbare API-Schlüsselleiste",
+                "zh": "API 密钥可折叠栏",
+                "ja": "API キーの折りたたみ可能なバー",
+                "pt": "Barra dobrável de chave de API",
+                "ar": "شريط API الرئيسي القابل للطي",
+                "hi": "एपीआई कुंजी कोलैप्सेबल बार",
+                "ru": "Складная панель ключей API"
+        },
+        "ARR (Annual Recurring Revenue)": {
+                "es": "ARR (ingresos anuales recurrentes)",
+                "fr": "ARR (Revenu Annuel Récurrent)",
+                "de": "ARR (Annual Recurring Revenue)",
+                "zh": "ARR（年度经常性收入）",
+                "ja": "ARR (年間経常収益)",
+                "pt": "ARR (receita recorrente anual)",
+                "ar": "ARR (الإيرادات السنوية المتكررة)",
+                "hi": "एआरआर (वार्षिक आवर्ती राजस्व)",
+                "ru": "ARR (годовой регулярный доход)"
+        },
+        "ARR = MRR × 12 Months": {
+                "es": "ARR = MRR × 12 meses",
+                "fr": "ARR = MRR × 12 mois",
+                "de": "ARR = MRR × 12 Monate",
+                "zh": "ARR = MRR × 12 个月",
+                "ja": "ARR = MRR × 12 か月",
+                "pt": "ARR = MRR × 12 meses",
+                "ar": "ARR = MRR × 12 شهرًا",
+                "hi": "एआरआर = एमआरआर × 12 महीने",
+                "ru": "ARR = MRR × 12 месяцев"
+        },
+        "ARR Recovery & ROI Scenarios": {
+                "es": "Escenarios de recuperación de ARR y ROI",
+                "fr": "Scénarios de récupération ARR et de retour sur investissement",
+                "de": "ARR-Wiederherstellungs- und ROI-Szenarien",
+                "zh": "ARR 恢复和投资回报率场景",
+                "ja": "ARR 回復と ROI シナリオ",
+                "pt": "Cenários de recuperação de ARR e ROI",
+                "ar": "استرداد ARR وسيناريوهات عائد الاستثمار",
+                "hi": "एआरआर रिकवरी और आरओआई परिदृश्य",
+                "ru": "Сценарии восстановления ARR и рентабельности инвестиций"
+        },
+        "ATTRITION %": {
+                "es": "% DE DESGASTE",
+                "fr": "% D'ATTRITION",
+                "de": "Abnutzung %",
+                "zh": "流失率",
+                "ja": "消耗%",
+                "pt": "ATTRIÇÃO %",
+                "ar": "الاستنزاف %",
+                "hi": "आकर्षण %",
+                "ru": "ИСХОД, %"
+        },
+        "Account CSM Assignments & SLA Trigger": {
+                "es": "Asignaciones de CSM de cuentas y activación de SLA",
+                "fr": "Attributions CSM de compte et déclencheur SLA",
+                "de": "Konto-CSM-Zuweisungen und SLA-Trigger",
+                "zh": "帐户 CSM 分配和 SLA 触发器",
+                "ja": "アカウント CSM の割り当てと SLA トリガー",
+                "pt": "Atribuições de CSM da conta e acionador de SLA",
+                "ar": "تعيينات CSM للحساب ومشغل SLA",
+                "hi": "खाता सीएसएम असाइनमेंट और एसएलए ट्रिगर",
+                "ru": "Назначения CSM учетной записи и триггер SLA"
+        },
+        "Accounts exhibiting severe churn indicators. Requires mandatory 24-hour CSM call SLA.": {
+                "es": "Cuentas que exhiben severos indicadores de abandono. Requiere SLA de llamada CSM obligatoria las 24 horas.",
+                "fr": "Comptes présentant des indicateurs de désabonnement sévères. Nécessite un SLA d’appel CSM obligatoire 24 heures sur 24.",
+                "de": "Konten, die schwerwiegende Abwanderungsindikatoren aufweisen. Erfordert ein obligatorisches 24-Stunden-CSM-Anruf-SLA.",
+                "zh": "账户表现出严重的流失指标。需要强制 24 小时 CSM 呼叫 SLA。",
+                "ja": "深刻なチャーン指標を示しているアカウント。必須の 24 時間 CSM コール SLA が必要です。",
+                "pt": "Contas exibindo indicadores severos de rotatividade. Requer SLA de chamada CSM obrigatório de 24 horas.",
+                "ar": "تظهر الحسابات مؤشرات تقلب شديدة. يتطلب مكالمات CSM إلزامية لاتفاقية مستوى الخدمة (SLA) على مدار 24 ساعة.",
+                "hi": "खाते गंभीर मंथन संकेतक प्रदर्शित कर रहे हैं। अनिवार्य 24 घंटे सीएसएम कॉल एसएलए की आवश्यकता है।",
+                "ru": "Аккаунты с серьезными показателями оттока. Требуется обязательное соглашение об уровне обслуживания для звонков CSM в течение 24 часов."
+        },
+        "Accounts maintaining healthy retention metrics and low attrition risk": {
+                "es": "Cuentas que mantienen métricas de retención saludables y un bajo riesgo de deserción",
+                "fr": "Comptes maintenant des indicateurs de rétention sains et un faible risque d’attrition",
+                "de": "Konten sorgen für gesunde Kundenbindungskennzahlen und ein geringes Abwanderungsrisiko",
+                "zh": "账户保持健康的保留指标和低流失风险",
+                "ja": "健全な維持指標と低い減少リスクを維持するアカウント",
+                "pt": "Contas que mantêm métricas de retenção saudáveis e baixo risco de atrito",
+                "ar": "تحافظ الحسابات على مقاييس احتفاظ سليمة ومخاطر استنزاف منخفضة",
+                "hi": "स्वस्थ प्रतिधारण मेट्रिक्स और कम क्षय जोखिम को बनाए रखने वाले खाते",
+                "ru": "Аккаунты поддерживают хорошие показатели удержания и низкий риск истощения"
+        },
+        "Acquiring a new customer is 5 to 25 times more expensive than retaining an existing account (Harvard Business Review).": {
+                "es": "Adquirir un nuevo cliente es entre 5 y 25 veces más caro que conservar una cuenta existente (Harvard Business Review).",
+                "fr": "Acquérir un nouveau client coûte 5 à 25 fois plus cher que conserver un compte existant (Harvard Business Review).",
+                "de": "Die Gewinnung eines neuen Kunden ist 5- bis 25-mal teurer als die Beibehaltung eines bestehenden Kontos (Harvard Business Review).",
+                "zh": "获取新客户的成本比保留现有客户的成本高 5 至 25 倍（《哈佛商业评论》）。",
+                "ja": "新しい顧客を獲得するには、既存のアカウントを維持するよりも 5 ～ 25 倍の費用がかかります (ハーバード ビジネス レビュー)。",
+                "pt": "Adquirir um novo cliente é 5 a 25 vezes mais caro do que manter uma conta existente (Harvard Business Review).",
+                "ar": "إن الحصول على عميل جديد يكلف 5 إلى 25 مرة أكثر من الاحتفاظ بحساب حالي (هارفارد بزنس ريفيو).",
+                "hi": "मौजूदा खाता बनाए रखने की तुलना में नया ग्राहक प्राप्त करना 5 से 25 गुना अधिक महंगा है (हार्वर्ड बिजनेस रिव्यू)।",
+                "ru": "Привлечение нового клиента обходится в 5–25 раз дороже, чем сохранение существующего (Harvard Business Review)."
+        },
+        "Act Neg": {
+                "es": "Acto negativo",
+                "fr": "Acte négatif",
+                "de": "Akt Neg",
+                "zh": "消极行为",
+                "ja": "アクト・ネグ",
+                "pt": "Ato negativo",
+                "ar": "قانون نيج",
+                "hi": "अधिनियम नकारात्मक",
+                "ru": "Закон отрицательный"
+        },
+        "Act Negative Row": {
+                "es": "Actuar fila negativa",
+                "fr": "Agir sur une ligne négative",
+                "de": "Negative Zeile handeln",
+                "zh": "负行",
+                "ja": "アクトネガティブロウ",
+                "pt": "Linha Negativa do Ato",
+                "ar": "التصرف بالصف السلبي",
+                "hi": "अधिनियम नकारात्मक पंक्ति",
+                "ru": "Действуйте в отрицательной строке"
+        },
+        "Act Pos": {
+                "es": "Acto pos.",
+                "fr": "Acte Pos",
+                "de": "Akt-Pos",
+                "zh": "行动位置",
+                "ja": "アクトポジション",
+                "pt": "Posição do ato",
+                "ar": "قانون نقاط البيع",
+                "hi": "अधिनियम स्थिति",
+                "ru": "Акт Поз"
+        },
+        "Act Positive Row": {
+                "es": "Actuar fila positiva",
+                "fr": "Agir de manière positive",
+                "de": "Positive Zeile handeln",
+                "zh": "积极行动",
+                "ja": "アクトポジティブロウ",
+                "pt": "Ato Positivo Linha",
+                "ar": "التصرف في صف إيجابي",
+                "hi": "अधिनियम सकारात्मक पंक्ति",
+                "ru": "Действуйте в положительном ряду"
+        },
+        "Action Playbook Grid": {
+                "es": "Cuadrícula del libro de jugadas de acción",
+                "fr": "Grille du manuel d'action",
+                "de": "Aktions-Playbook-Raster",
+                "zh": "行动手册网格",
+                "ja": "アクション プレイブック グリッド",
+                "pt": "Grade do Manual de Ação",
+                "ar": "شبكة كتاب اللعب",
+                "hi": "एक्शन प्लेबुक ग्रिड",
+                "ru": "Сетка книги действий"
+        },
+        "Actions & Resolution Hub": {
+                "es": "Centro de acciones y resolución",
+                "fr": "Centre d'actions et de résolution",
+                "de": "Hub für Aktionen und Lösungen",
+                "zh": "行动与解决方案中心",
+                "ja": "アクションと解決ハブ",
+                "pt": "Centro de Ações e Resolução",
+                "ar": "مركز الإجراءات والحل",
+                "hi": "क्रियाएँ एवं समाधान हब",
+                "ru": "Центр действий и решений"
+        },
+        "Actions populated dynamically": {
+                "es": "Acciones completadas dinámicamente",
+                "fr": "Actions remplies dynamiquement",
+                "de": "Aktionen werden dynamisch ausgefüllt",
+                "zh": "动态填充的操作",
+                "ja": "動的に設定されるアクション",
+                "pt": "Ações preenchidas dinamicamente",
+                "ar": "يتم تعبئة الإجراءات ديناميكيًا",
+                "hi": "क्रियाएँ गतिशील रूप से पॉप्युलेट हुईं",
+                "ru": "Действия заполняются динамически"
+        },
+        "Activate Closed-Loop Action Loop": {
+                "es": "Activar bucle de acción de bucle cerrado",
+                "fr": "Activer la boucle d'action en boucle fermée",
+                "de": "Aktivieren Sie die Closed-Loop-Aktionsschleife",
+                "zh": "激活闭环动作循环",
+                "ja": "閉ループアクションループをアクティブ化する",
+                "pt": "Ativar loop de ação de circuito fechado",
+                "ar": "تفعيل حلقة العمل ذات الحلقة المغلقة",
+                "hi": "क्लोज्ड-लूप एक्शन लूप सक्रिय करें",
+                "ru": "Активируйте цикл действия с обратной связью"
+        },
+        "Active": {
+                "es": "Activo",
+                "fr": "Actif",
+                "de": "Aktiv",
+                "zh": "活跃",
+                "ja": "アクティブ",
+                "pt": "Ativo",
+                "ar": "نشط",
+                "hi": "सक्रिय",
+                "ru": "Активный"
+        },
+        "Active Accounts": {
+                "es": "Cuentas activas",
+                "fr": "Comptes actifs",
+                "de": "Aktive Konten",
+                "zh": "活跃账户",
+                "ja": "アクティブなアカウント",
+                "pt": "Contas ativas",
+                "ar": "الحسابات النشطة",
+                "hi": "सक्रिय खाते",
+                "ru": "Активные аккаунты"
+        },
+        "Active Resolution Loops checklist": {
+                "es": "Lista de verificación de bucles de resolución activa",
+                "fr": "Liste de contrôle des boucles de résolution active",
+                "de": "Checkliste für aktive Auflösungsschleifen",
+                "zh": "主动解决循环清单",
+                "ja": "アクティブな解決ループのチェックリスト",
+                "pt": "Lista de verificação de loops de resolução ativa",
+                "ar": "قائمة التحقق من حلقات الدقة النشطة",
+                "hi": "सक्रिय रिज़ॉल्यूशन लूप्स चेकलिस्ट",
+                "ru": "Контрольный список циклов активного разрешения"
+        },
+        "Active Step": {
+                "es": "Paso Activo",
+                "fr": "Étape Active",
+                "de": "Aktiver Schritt",
+                "zh": "当前步骤",
+                "ja": "実行中",
+                "pt": "Etapa Ativa",
+                "ar": "الخطوة الحالية",
+                "hi": "सक्रिय चरण",
+                "ru": "Текущий шаг"
+        },
+        "Active Suite Workspace": {
+                "es": "Espacio de trabajo de Active Suite",
+                "fr": "Espace de travail de la suite active",
+                "de": "Active Suite-Arbeitsbereich",
+                "zh": "活动套件工作区",
+                "ja": "アクティブスイートワークスペース",
+                "pt": "Espaço de trabalho do Active Suite",
+                "ar": "مساحة عمل الجناح النشط",
+                "hi": "सक्रिय सुइट कार्यक्षेत्र",
+                "ru": "Рабочее пространство Active Suite"
+        },
+        "Active Synchronization Streams:": {
+                "es": "Flujos de sincronización activa:",
+                "fr": "Flux de synchronisation actifs :",
+                "de": "Aktive Synchronisierungsströme:",
+                "zh": "主动同步流：",
+                "ja": "アクティブな同期ストリーム:",
+                "pt": "Fluxos de sincronização ativos:",
+                "ar": "تيارات المزامنة النشطة:",
+                "hi": "सक्रिय तुल्यकालन धाराएँ:",
+                "ru": "Потоки активной синхронизации:"
+        },
+        "Active behavioral and billing attributes monitored by Tabular Hybrid Transformer": {
+                "es": "Atributos activos de comportamiento y facturación monitoreados por Tabular Hybrid Transformer",
+                "fr": "Attributs de comportement et de facturation actifs surveillés par Tabular Hybrid Transformer",
+                "de": "Aktive Verhaltens- und Abrechnungsattribute, die vom Tabular Hybrid Transformer überwacht werden",
+                "zh": "由 Tabular Hybrid Transformer 监控的主动行为和计费属性",
+                "ja": "Tabular Hybrid Transformer によって監視されるアクティブな行動属性と課金属性",
+                "pt": "Atributos ativos de comportamento e faturamento monitorados pelo Tabular Hybrid Transformer",
+                "ar": "السمات السلوكية والفوترة النشطة التي تتم مراقبتها بواسطة Tabular Hybrid Transformer",
+                "hi": "सक्रिय व्यवहार और बिलिंग विशेषताओं की निगरानी टेबुलर हाइब्रिड ट्रांसफार्मर द्वारा की जाती है",
+                "ru": "Активные атрибуты поведения и выставления счетов, отслеживаемые Tabular Hybrid Transformer"
+        },
+        "Active customer profiles": {
+                "es": "Perfiles de clientes activos",
+                "fr": "Profils clients actifs",
+                "de": "Aktive Kundenprofile",
+                "zh": "活跃客户档案",
+                "ja": "アクティブな顧客プロファイル",
+                "pt": "Perfis de clientes ativos",
+                "ar": "ملفات تعريف العملاء النشطة",
+                "hi": "सक्रिय ग्राहक प्रोफ़ाइल",
+                "ru": "Активные профили клиентов"
+        },
+        "Active integration framework for Salesforce/Hubspot webhooks and automated reporting cron schedulers.": {
+                "es": "Marco de integración activo para webhooks de Salesforce/Hubspot y programadores cron de informes automatizados.",
+                "fr": "Cadre d'intégration actif pour les webhooks Salesforce/Hubspot et les planificateurs cron de rapports automatisés.",
+                "de": "Aktives Integrationsframework für Salesforce/Hubspot-Webhooks und automatisierte Reporting-Cron-Scheduler.",
+                "zh": "Salesforce/Hubspot webhook 和自动报告 cron 调度程序的主动集成框架。",
+                "ja": "Salesforce/Hubspot Webhook と自動レポート cron スケジューラーのアクティブな統合フレームワーク。",
+                "pt": "Estrutura de integração ativa para webhooks Salesforce/Hubspot e agendadores cron de relatórios automatizados.",
+                "ar": "إطار عمل متكامل نشط لخطافات الويب الخاصة بـ Salesforce/Hubspot وبرامج جدولة cron لإعداد التقارير الآلية.",
+                "hi": "सेल्सफोर्स/हबस्पॉट वेबहुक और स्वचालित रिपोर्टिंग क्रॉन शेड्यूलर्स के लिए सक्रिय एकीकरण ढांचा।",
+                "ru": "Платформа активной интеграции для веб-перехватчиков Salesforce/Hubspot и планировщиков автоматизированных отчетов."
+        },
+        "Actual Risk": {
+                "es": "Riesgo real",
+                "fr": "Risque réel",
+                "de": "Tatsächliches Risiko",
+                "zh": "实际风险",
+                "ja": "実際のリスク",
+                "pt": "Risco real",
+                "ar": "المخاطر الفعلية",
+                "hi": "वास्तविक जोखिम",
+                "ru": "Фактический риск"
+        },
+        "Add Card": {
+                "es": "Agregar tarjeta",
+                "fr": "Ajouter une carte",
+                "de": "Karte hinzufügen",
+                "zh": "添加卡",
+                "ja": "カードを追加",
+                "pt": "Adicionar cartão",
+                "ar": "أضف بطاقة",
+                "hi": "कार्ड जोड़ें",
+                "ru": "Добавить карту"
+        },
+        "Add New Slide": {
+                "es": "Agregar nueva diapositiva",
+                "fr": "Ajouter une nouvelle diapositive",
+                "de": "Neue Folie hinzufügen",
+                "zh": "添加新幻灯片",
+                "ja": "新しいスライドを追加",
+                "pt": "Adicionar novo slide",
+                "ar": "إضافة شريحة جديدة",
+                "hi": "नई स्लाइड जोड़ें",
+                "ru": "Добавить новый слайд"
+        },
+        "Adobe Acrobat PDF Official Integration": {
+                "es": "Integración oficial de Adobe Acrobat PDF",
+                "fr": "Intégration officielle d'Adobe Acrobat PDF",
+                "de": "Offizielle Integration von Adobe Acrobat PDF",
+                "zh": "Adobe Acrobat PDF 官方集成",
+                "ja": "Adobe Acrobat PDF 正式統合",
+                "pt": "Integração oficial do Adobe Acrobat PDF",
+                "ar": "أدوبي أكروبات PDF التكامل الرسمي",
+                "hi": "एडोब एक्रोबैट पीडीएफ आधिकारिक एकीकरण",
+                "ru": "Официальная интеграция Adobe Acrobat PDF"
+        },
+        "Alert": {
+                "es": "Alerta",
+                "fr": "Alerte",
+                "de": "Alarm",
+                "zh": "警报",
+                "ja": "アラート",
+                "pt": "Alerta",
+                "ar": "تنبيه",
+                "hi": "चेतावनी",
+                "ru": "Оповещение"
+        },
+        "Alert Channels Sub-tab": {
+                "es": "Subpestaña Canales de alerta",
+                "fr": "Sous-onglet Canaux d'alerte",
+                "de": "Unterregisterkarte „Alarmkanäle“.",
+                "zh": "警报通道子选项卡",
+                "ja": "「アラートチャネル」サブタブ",
+                "pt": "Subguia Canais de Alerta",
+                "ar": "علامة التبويب الفرعية لقنوات التنبيه",
+                "hi": "Alert Channels Sub-tab",
+                "ru": "Подвкладка «Каналы оповещений»"
+        },
+        "All Active Datasets": {
+                "es": "Todos los conjuntos de datos activos",
+                "fr": "Tous les ensembles de données actifs",
+                "de": "All Active Datasets",
+                "zh": "所有活动数据集",
+                "ja": "すべてのアクティブなデータセット",
+                "pt": "Todos os conjuntos de dados ativos",
+                "ar": "كافة مجموعات البيانات النشطة",
+                "hi": "All Active Datasets",
+                "ru": "Все активные наборы данных"
+        },
+        "All Categories": {
+                "es": "Todas las categorías",
+                "fr": "Toutes les catégories",
+                "de": "Alle Kategorien",
+                "zh": "所有类别",
+                "ja": "すべてのカテゴリ",
+                "pt": "Todas as categorias",
+                "ar": "جميع الفئات",
+                "hi": "सभी श्रेणियाँ",
+                "ru": "Все категории"
+        },
+        "All Categories (25+)": {
+                "es": "Todas las Categorías (25+)",
+                "fr": "Toutes les Catégories (25+)",
+                "de": "Alle Kategorien (25+)",
+                "zh": "全部功能类别 (25+)",
+                "ja": "すべての機能カテゴリ (25+)",
+                "pt": "Todas as Categorias (25+)",
+                "ar": "جميع الفئات (25+)",
+                "hi": "सभी श्रेणियां (25+)",
+                "ru": "Все Категории (25+)"
+        },
+        "All Engines (Unified)": {
+                "es": "Todos los motores (unificados)",
+                "fr": "Tous les moteurs (unifiés)",
+                "de": "Alle Engines (einheitlich)",
+                "zh": "所有引擎（统一）",
+                "ja": "すべてのエンジン (統合)",
+                "pt": "Todos os motores (unificados)",
+                "ar": "جميع المحركات (موحدة)",
+                "hi": "All Engines (Unified)",
+                "ru": "Все двигатели (унифицированные)"
+        },
+        "All Features": {
+                "es": "Todas las características",
+                "fr": "Toutes les fonctionnalités",
+                "de": "Alle Funktionen",
+                "zh": "所有功能",
+                "ja": "すべての機能",
+                "pt": "Todos os recursos",
+                "ar": "جميع الميزات",
+                "hi": "All Features",
+                "ru": "Все функции"
+        },
+        "All Platform Features & Actions": {
+                "es": "Todas las funciones y acciones de la plataforma",
+                "fr": "Toutes les fonctionnalités et actions de la plateforme",
+                "de": "Alle Plattformfunktionen und -aktionen",
+                "zh": "所有平台功能和操作",
+                "ja": "すべてのプラットフォームの機能とアクション",
+                "pt": "Todos os recursos e ações da plataforma",
+                "ar": "جميع ميزات وإجراءات النظام الأساسي",
+                "hi": "सभी प्लेटफ़ॉर्म सुविधाएँ और क्रियाएँ",
+                "ru": "Все функции и действия платформы"
+        },
+        "All Platform Features & Actions (More...)": {
+                "es": "Todas las funciones y acciones de la plataforma (más...)",
+                "fr": "Toutes les fonctionnalités et actions de la plateforme (Plus...)",
+                "de": "Alle Plattformfunktionen und -aktionen (Mehr...)",
+                "zh": "所有平台功能和操作（更多...）",
+                "ja": "すべてのプラットフォームの機能とアクション (詳細...)",
+                "pt": "Todos os recursos e ações da plataforma (mais...)",
+                "ar": "جميع ميزات وإجراءات النظام الأساسي (المزيد...)",
+                "hi": "सभी प्लेटफ़ॉर्म सुविधाएँ और क्रियाएँ (अधिक...)",
+                "ru": "Все функции и действия платформы (Подробнее...)"
+        },
+        "All Subscribers": {
+                "es": "Todos los suscriptores",
+                "fr": "Tous les abonnés",
+                "de": "All Subscribers",
+                "zh": "所有订阅者",
+                "ja": "すべての購読者",
+                "pt": "Todos os assinantes",
+                "ar": "جميع المشتركين",
+                "hi": "All Subscribers",
+                "ru": "Все подписчики"
+        },
+        "All active support tickets originating from high-risk accounts must be automatically escalated to Senior Tier-3 Technical Engineers with a": {
+                "es": "Todos los tickets de soporte activos que se originen en cuentas de alto riesgo deben derivarse automáticamente a ingenieros técnicos sénior de nivel 3 con un",
+                "fr": "Tous les tickets d'assistance actifs provenant de comptes à haut risque doivent être automatiquement transmis aux ingénieurs techniques senior de niveau 3 avec un",
+                "de": "Alle aktiven Support-Tickets, die von Konten mit hohem Risiko stammen, müssen automatisch an leitende technische Ingenieure der Stufe 3 mit einer Eskalation weitergeleitet werden",
+                "zh": "所有来自高风险账户的有效支持票证必须自动升级给具有高级 3 级技术工程师",
+                "ja": "高リスクのアカウントから発信されたアクティブなサポート チケットはすべて、上級 Tier-3 テクニカル エンジニアに自動的にエスカレーションされる必要があります。",
+                "pt": "Todos os tickets de suporte ativos originados de contas de alto risco devem ser automaticamente escalados para engenheiros técnicos seniores de nível 3 com um",
+                "ar": "يجب تصعيد جميع طلبات الدعم النشطة الناشئة عن الحسابات عالية المخاطر تلقائيًا إلى كبار المهندسين الفنيين من المستوى 3 ذوي الخبرة",
+                "hi": "उच्च जोखिम वाले खातों से उत्पन्न होने वाले सभी सक्रिय समर्थन टिकट स्वचालित रूप से वरिष्ठ टियर -3 तकनीकी इंजीनियरों को भेजे जाने चाहिए",
+                "ru": "Все активные заявки в службу поддержки, исходящие от учетных записей с высоким уровнем риска, должны автоматически передаваться старшим техническим инженерам уровня 3 с"
+        },
+        "All rows": {
+                "es": "Todas las filas",
+                "fr": "Toutes les lignes",
+                "de": "Alle Reihen",
+                "zh": "所有行",
+                "ja": "すべての行",
+                "pt": "Todas as linhas",
+                "ar": "جميع الصفوف",
+                "hi": "All rows",
+                "ru": "Все строки"
+        },
+        "Allows marketing teams to test discount coupons or concierge phone calls to see which method drives the lowest actual churn.": {
+                "es": "Permite a los equipos de marketing probar cupones de descuento o llamadas telefónicas de conserjería para ver qué método genera la menor tasa de abandono real.",
+                "fr": "Permet aux équipes marketing de tester des coupons de réduction ou des appels téléphoniques de concierge pour voir quelle méthode génère le taux de désabonnement réel le plus faible.",
+                "de": "Ermöglicht Marketingteams, Rabattgutscheine oder Concierge-Telefonanrufe zu testen, um zu sehen, welche Methode die geringste tatsächliche Abwanderung bewirkt.",
+                "zh": "允许营销团队测试折扣优惠券或礼宾电话，看看哪种方法可以实现最低的实际流失率。",
+                "ja": "マーケティング チームが割引クーポンやコンシェルジュの電話をテストして、どの方法が実際の解約率を最も低くするかを確認できるようになります。",
+                "pt": "Permite que as equipes de marketing testem cupons de desconto ou telefonemas de concierge para ver qual método gera a menor rotatividade real.",
+                "ar": "يسمح لفرق التسويق باختبار كوبونات الخصم أو مكالمات الكونسيرج الهاتفية لمعرفة الطريقة التي تؤدي إلى أقل نسبة من التراجع الفعلي.",
+                "hi": "मार्केटिंग टीमों को डिस्काउंट कूपन या कंसीयज फोन कॉल का परीक्षण करने की अनुमति देता है ताकि यह देखा जा सके कि कौन सी विधि सबसे कम वास्तविक मंथन करती है।",
+                "ru": "Позволяет маркетинговым командам тестировать купоны на скидку или телефонные звонки консьержу, чтобы увидеть, какой метод обеспечивает наименьший фактический отток клиентов."
+        },
+        "An experimental sandbox to log, track, and measure the effectiveness of active customer retention campaigns.": {
+                "es": "Un sandbox experimental para registrar, rastrear y medir la efectividad de las campañas activas de retención de clientes.",
+                "fr": "Un bac à sable expérimental pour enregistrer, suivre et mesurer l'efficacité des campagnes actives de fidélisation des clients.",
+                "de": "Eine experimentelle Sandbox zum Protokollieren, Verfolgen und Messen der Wirksamkeit aktiver Kundenbindungskampagnen.",
+                "zh": "一个实验性沙箱，用于记录、跟踪和衡量活跃客户保留活动的有效性。",
+                "ja": "アクティブな顧客維持キャンペーンの効果を記録、追跡、測定するための実験的なサンドボックス。",
+                "pt": "Um sandbox experimental para registrar, rastrear e medir a eficácia de campanhas ativas de retenção de clientes.",
+                "ar": "صندوق اختبار تجريبي لتسجيل وتتبع وقياس مدى فعالية حملات الاحتفاظ بالعملاء النشطة.",
+                "hi": "सक्रिय ग्राहक प्रतिधारण अभियानों की प्रभावशीलता को लॉग करने, ट्रैक करने और मापने के लिए एक प्रयोगात्मक सैंडबॉक्स।",
+                "ru": "Экспериментальная песочница для регистрации, отслеживания и измерения эффективности активных кампаний по удержанию клиентов."
+        },
+        "Analyzed tips will be populated dynamically": {
+                "es": "Los consejos analizados se completarán dinámicamente",
+                "fr": "Les conseils analysés seront renseignés dynamiquement",
+                "de": "Analysierte Tipps werden dynamisch gefüllt",
+                "zh": "分析的提示将动态填充",
+                "ja": "分析されたヒントは動的に入力されます",
+                "pt": "As dicas analisadas serão preenchidas dinamicamente",
+                "ar": "سيتم ملء النصائح التي تم تحليلها ديناميكيًا",
+                "hi": "विश्लेषित युक्तियाँ गतिशील रूप से पॉप्युलेट की जाएंगी",
+                "ru": "Проанализированные советы будут заполняться динамически."
+        },
+        "Annual Pre-payments": {
+                "es": "Prepagos Anuales",
+                "fr": "Paiements anticipés annuels",
+                "de": "Jährliche Vorauszahlungen",
+                "zh": "年度预付款",
+                "ja": "年間前払い",
+                "pt": "Pré-pagamentos anuais",
+                "ar": "الدفعات المسبقة السنوية",
+                "hi": "Annual Pre-payments",
+                "ru": "Ежегодные предоплаты"
+        },
+        "Annualized valuation of recurring revenue generated by subscription contracts.": {
+                "es": "Valoración anualizada de los ingresos recurrentes generados por los contratos de suscripción.",
+                "fr": "Valorisation annualisée des revenus récurrents générés par les contrats d'abonnement.",
+                "de": "Annualisierte Bewertung wiederkehrender Einnahmen aus Abonnementverträgen.",
+                "zh": "订阅合同产生的经常性收入的年化估值。",
+                "ja": "サブスクリプション契約によって生成される経常収益の年次評価。",
+                "pt": "Avaliação anualizada da receita recorrente gerada pelos contratos de assinatura.",
+                "ar": "التقييم السنوي للإيرادات المتكررة الناتجة عن عقود الاشتراك.",
+                "hi": "सदस्यता अनुबंधों द्वारा उत्पन्न आवर्ती राजस्व का वार्षिक मूल्यांकन।",
+                "ru": "Годовая оценка регулярного дохода, полученного по договорам подписки."
+        },
+        "Assign CSM": {
+                "es": "Asignar CSM",
+                "fr": "Attribuer un CSM",
+                "de": "CSM zuweisen",
+                "zh": "分配 CSM",
+                "ja": "CSM の割り当て",
+                "pt": "Atribuir CSM",
+                "ar": "تعيين CSM",
+                "hi": "Assign CSM",
+                "ru": "Назначить CSM"
+        },
+        "Assign account task owners, fast-track SLAs, and dispatch CRM webhook triggers.": {
+                "es": "Asigne propietarios de tareas de cuentas, acelere acuerdos de nivel de servicio y envíe activadores de webhooks de CRM.",
+                "fr": "Attribuez des propriétaires de tâches de compte, accélérez les SLA et envoyez des déclencheurs de webhook CRM.",
+                "de": "Weisen Sie Kontoaufgabeneigentümer zu, beschleunigen Sie SLAs und versenden Sie CRM-Webhook-Trigger.",
+                "zh": "分配帐户任务所有者、快速跟踪 SLA 并调度 CRM Webhook 触发器。",
+                "ja": "アカウント タスクの所有者を割り当て、SLA を迅速に追跡し、CRM Webhook トリガーをディスパッチします。",
+                "pt": "Atribua proprietários de tarefas de conta, acelere SLAs e envie gatilhos de webhook de CRM.",
+                "ar": "قم بتعيين مالكي مهام الحساب، واتفاقيات مستوى الخدمة السريعة، وإرسال مشغلات خطاف الويب لإدارة علاقات العملاء.",
+                "hi": "खाता कार्य स्वामियों को असाइन करें, एसएलए को फास्ट-ट्रैक करें और सीआरएम वेबहुक ट्रिगर्स भेजें।",
+                "ru": "Назначайте владельцев задач учетной записи, ускоряйте заключение соглашений об уровне обслуживания и отправляйте триггеры веб-перехватчиков CRM."
+        },
+        "Assign specific Customer Success Managers to high-risk accounts and track SLA outreach.": {
+                "es": "Asigne gerentes de éxito del cliente específicos a cuentas de alto riesgo y realice un seguimiento del alcance del SLA.",
+                "fr": "Affectez des Customer Success Managers spécifiques aux comptes à haut risque et suivez la sensibilisation aux SLA.",
+                "de": "Weisen Sie Hochrisikokonten bestimmte Customer Success Manager zu und verfolgen Sie die SLA-Reichweite.",
+                "zh": "为高风险客户分配特定的客户成功经理并跟踪 SLA 推广。",
+                "ja": "リスクの高いアカウントに特定のカスタマー サクセス マネージャーを割り当て、SLA の達成状況を追跡します。",
+                "pt": "Atribua Gerentes de Sucesso do Cliente específicos para contas de alto risco e rastreie o alcance do SLA.",
+                "ar": "قم بتعيين مديري نجاح العملاء المحددين للحسابات عالية المخاطر وتتبع انتشار اتفاقية مستوى الخدمة.",
+                "hi": "उच्च जोखिम वाले खातों के लिए विशिष्ट ग्राहक सफलता प्रबंधकों को नियुक्त करें और एसएलए आउटरीच को ट्रैक करें।",
+                "ru": "Назначьте конкретных менеджеров по работе с клиентами для работы с учетными записями с высоким уровнем риска и отслеживайте соблюдение соглашений об уровне обслуживания."
+        },
+        "Assignment saved and logged to Compliance Audit Trails successfully.": {
+                "es": "La tarea se guardó y se registró correctamente en Compliance Audit Trails.",
+                "fr": "Devoir enregistré et consigné avec succès dans les pistes d'audit de conformité.",
+                "de": "Die Zuweisung wurde erfolgreich gespeichert und in Compliance Audit Trails protokolliert.",
+                "zh": "作业已成功保存并记录到合规性审核跟踪。",
+                "ja": "割り当ては正常に保存され、コンプライアンス監査証跡に記録されました。",
+                "pt": "Atribuição salva e registrada nas trilhas de auditoria de conformidade com sucesso.",
+                "ar": "تم حفظ المهمة وتسجيلها في مسارات تدقيق الامتثال بنجاح.",
+                "hi": "असाइनमेंट सहेजा गया और अनुपालन ऑडिट ट्रेल्स में सफलतापूर्वक लॉग किया गया।",
+                "ru": "Назначение успешно сохранено и зарегистрировано в журнале аудита соответствия."
+        },
+        "At Risk": {
+                "es": "En riesgo",
+                "fr": "À risque",
+                "de": "In Gefahr",
+                "zh": "面临风险",
+                "ja": "危険にさらされています",
+                "pt": "Em risco",
+                "ar": "في خطر",
+                "hi": "जोखिम में",
+                "ru": "В зоне риска"
+        },
+        "Audit rows will be populated here": {
+                "es": "Las filas de auditoría se completarán aquí",
+                "fr": "Les lignes d'audit seront renseignées ici",
+                "de": "Hier werden Prüfzeilen ausgefüllt",
+                "zh": "审核行将填充在此处",
+                "ja": "監査行がここに入力されます",
+                "pt": "As linhas de auditoria serão preenchidas aqui",
+                "ar": "سيتم ملء صفوف التدقيق هنا",
+                "hi": "ऑडिट पंक्तियाँ यहाँ भरी जाएंगी",
+                "ru": "Строки аудита будут заполнены здесь"
+        },
+        "Authorized Admin Session": {
+                "es": "Sesión de administrador autorizado",
+                "fr": "Session d'administration autorisée",
+                "de": "Autorisierte Admin-Sitzung",
+                "zh": "授权管理会话",
+                "ja": "承認された管理者セッション",
+                "pt": "Sessão de administrador autorizada",
+                "ar": "جلسة الإدارة المعتمدة",
+                "hi": "Authorized Admin Session",
+                "ru": "Авторизованный сеанс администратора"
+        },
+        "Authorized Role: Enterprise Admin Session": {
+                "es": "Rol autorizado: sesión de administrador empresarial",
+                "fr": "Rôle autorisé : session d'administration d'entreprise",
+                "de": "Autorisierte Rolle: Unternehmensadministratorsitzung",
+                "zh": "授权角色：企业管理员会话",
+                "ja": "承認された役割: エンタープライズ管理者セッション",
+                "pt": "Função autorizada: Sessão de administração corporativa",
+                "ar": "الدور المعتمد: جلسة إدارة المؤسسة",
+                "hi": "अधिकृत भूमिका: एंटरप्राइज एडमिन सत्र",
+                "ru": "Авторизованная роль: сеанс администратора предприятия"
+        },
+        "Auto Play": {
+                "es": "Reproducción automática",
+                "fr": "Lecture automatique",
+                "de": "Automatische Wiedergabe",
+                "zh": "自动播放",
+                "ja": "自動再生",
+                "pt": "Reprodução automática",
+                "ar": "اللعب التلقائي",
+                "hi": "Auto Play",
+                "ru": "Автовоспроизведение"
+        },
+        "Auto-Play:": {
+                "es": "Reproducción automática:",
+                "fr": "Lecture automatique :",
+                "de": "Auto-Play:",
+                "zh": "自动播放：",
+                "ja": "自動再生:",
+                "pt": "Reprodução automática:",
+                "ar": "التشغيل التلقائي:",
+                "hi": "Auto-Play:",
+                "ru": "Автовоспроизведение:"
+        },
+        "Automated Periodic Dispatch": {
+                "es": "Envío periódico automatizado",
+                "fr": "Envoi périodique automatisé",
+                "de": "Automatisierter periodischer Versand",
+                "zh": "自动定期调度",
+                "ja": "自動定期発送",
+                "pt": "Envio Periódico Automatizado",
+                "ar": "الإرسال الدوري الآلي",
+                "hi": "स्वचालित आवधिक प्रेषण",
+                "ru": "Автоматизированная периодическая отправка"
+        },
+        "Automated Statement Credits": {
+                "es": "Créditos de extracto automatizados",
+                "fr": "Crédits de relevé automatisés",
+                "de": "Automatisierte Kontoauszugsgutschriften",
+                "zh": "自动声明信用",
+                "ja": "自動明細クレジット",
+                "pt": "Créditos de extrato automatizado",
+                "ar": "الاعتمادات بيان الآلي",
+                "hi": "स्वचालित विवरण क्रेडिट",
+                "ru": "Автоматизированная выписка кредитов"
+        },
+        "Avg Risk": {
+                "es": "Riesgo promedio",
+                "fr": "Risque moyen",
+                "de": "Durchschnittliches Risiko",
+                "zh": "平均风险",
+                "ja": "平均リスク",
+                "pt": "Risco médio",
+                "ar": "متوسط المخاطر",
+                "hi": "Avg Risk",
+                "ru": "Средний риск"
+        },
+        "Awaiting Simulation": {
+                "es": "En espera de simulación",
+                "fr": "En attente de simulation",
+                "de": "Warten auf Simulation",
+                "zh": "等待模拟",
+                "ja": "シミュレーションを待っています",
+                "pt": "Aguardando Simulação",
+                "ar": "في انتظار المحاكاة",
+                "hi": "Awaiting Simulation",
+                "ru": "Ожидание моделирования"
+        },
+        "Awaiting database analysis...": {
+                "es": "A la espera del análisis de la base de datos...",
+                "fr": "En attente d'analyse de la base de données...",
+                "de": "Warten auf Datenbankanalyse...",
+                "zh": "等待数据库分析...",
+                "ja": "データベース分析を待っています...",
+                "pt": "Aguardando análise do banco de dados...",
+                "ar": "في انتظار تحليل قاعدة البيانات...",
+                "hi": "डेटाबेस विश्लेषण की प्रतीक्षा है...",
+                "ru": "Ожидаем анализа базы данных..."
+        },
+        "Back": {
+                "es": "Atrás",
+                "fr": "Retour",
+                "de": "Zurück",
+                "zh": "返回",
+                "ja": "戻る",
+                "pt": "Voltar",
+                "ar": "العودة",
+                "hi": "वापस",
+                "ru": "Назад"
+        },
+        "Behavioral Friction & Support Telemetry": {
+                "es": "Fricción conductual y telemetría de apoyo",
+                "fr": "Friction comportementale et télémétrie de support",
+                "de": "Verhaltensreibung und Unterstützungstelemetrie",
+                "zh": "行为摩擦与支持遥测",
+                "ja": "行動の摩擦とサポートのテレメトリー",
+                "pt": "Fricção Comportamental e Telemetria de Suporte",
+                "ar": "الاحتكاك السلوكي ودعم القياس عن بعد",
+                "hi": "व्यवहारिक घर्षण एवं समर्थन टेलीमेट्री",
+                "ru": "Поведенческое трение и поддерживающая телеметрия"
+        },
+        "Billing Delays (Days)": {
+                "es": "Retrasos en facturación (días)",
+                "fr": "Délais de facturation (jours)",
+                "de": "Abrechnungsverzögerungen (Tage)",
+                "zh": "账单延迟（天）",
+                "ja": "請求遅延 (日)",
+                "pt": "Atrasos de cobrança (dias)",
+                "ar": "تأخير الفواتير (أيام)",
+                "hi": "Billing Delays (Days)",
+                "ru": "Задержки выставления счетов (дни)"
+        },
+        "Burgundy & Wine Crimson (Executive Luxury)": {
+                "es": "Borgoña y vino carmesí (lujo ejecutivo)",
+                "fr": "Bourgogne & Wine Crimson (Luxe Exécutif)",
+                "de": "Burgunderrot und Weinrot (Executive Luxury)",
+                "zh": "勃艮第酒红色（行政豪华）",
+                "ja": "ブルゴーニュ & ワイン クリムゾン (エグゼクティブ ラグジュアリー)",
+                "pt": "Borgonha e vinho carmesim (luxo executivo)",
+                "ar": "اللون العنابي والنبيذ القرمزي (الفخامة التنفيذية)",
+                "hi": "बरगंडी और वाइन क्रिमसन (कार्यकारी विलासिता)",
+                "ru": "Бургундия и винно-малиновый (представительский люкс)"
+        },
+        "Burgundy Luxury": {
+                "es": "Lujo Borgoña",
+                "fr": "Luxe Bourgogne",
+                "de": "Burgunder Luxus",
+                "zh": "勃艮第奢华",
+                "ja": "ブルゴーニュ・ラグジュアリー",
+                "pt": "Luxo Borgonha",
+                "ar": "بورجوندي الفاخرة",
+                "hi": "बरगंडी विलासिता",
+                "ru": "Бургундия Роскошь"
+        },
+        "Business & Enterprise Revenue Hub": {
+                "es": "Centro de ingresos empresariales y empresariales",
+                "fr": "Centre de revenus des entreprises et des entreprises",
+                "de": "Business & Enterprise Revenue Hub",
+                "zh": "商业和企业收入中心",
+                "ja": "ビジネスおよびエンタープライズ収益ハブ",
+                "pt": "Centro de receitas empresariais e empresariais",
+                "ar": "مركز إيرادات الأعمال والمؤسسات",
+                "hi": "व्यवसाय एवं उद्यम राजस्व केंद्र",
+                "ru": "Центр доходов бизнеса и предприятий"
+        },
+        "Business & Revenue Hub": {
+                "es": "Centro de negocios e ingresos",
+                "fr": "Centre d'affaires et de revenus",
+                "de": "Business- und Revenue-Hub",
+                "zh": "商业与收入中心",
+                "ja": "ビジネスと収益のハブ",
+                "pt": "Centro de negócios e receitas",
+                "ar": "مركز الأعمال والإيرادات",
+                "hi": "व्यवसाय एवं राजस्व केंद्र",
+                "ru": "Центр бизнеса и доходов"
+        },
+        "Business Hub & ROI Simulator": {
+                "es": "Centro de Negocios y Simulador de ROI",
+                "fr": "Business Hub et simulateur de retour sur investissement",
+                "de": "Business Hub und ROI-Simulator",
+                "zh": "业务中心和投资回报率模拟器",
+                "ja": "ビジネスハブとROIシミュレーター",
+                "pt": "Business Hub e Simulador de ROI",
+                "ar": "مركز الأعمال ومحاكي عائد الاستثمار",
+                "hi": "बिजनेस हब और आरओआई सिम्युलेटर",
+                "ru": "Бизнес-центр и симулятор рентабельности инвестиций"
+        },
+        "Business Terms & Corporate Policies Knowledge Guide": {
+                "es": "Guía de conocimientos sobre términos comerciales y políticas corporativas",
+                "fr": "Guide de connaissances sur les conditions commerciales et les politiques d'entreprise",
+                "de": "Wissensleitfaden zu Geschäftsbedingungen und Unternehmensrichtlinien",
+                "zh": "商业术语和公司政策知识指南",
+                "ja": "取引条件と企業ポリシーのナレッジガイド",
+                "pt": "Guia de conhecimento sobre termos comerciais e políticas corporativas",
+                "ar": "دليل المعرفة لشروط الأعمال وسياسات الشركة",
+                "hi": "व्यावसायिक शर्तें और कॉर्पोरेट नीतियाँ ज्ञान मार्गदर्शिका",
+                "ru": "Руководство по деловым условиям и корпоративной политике"
+        },
+        "Business Usecase:": {
+                "es": "Caso de uso empresarial:",
+                "fr": "Cas d'utilisation professionnelle :",
+                "de": "Geschäftsanwendungsfall:",
+                "zh": "业务用例：",
+                "ja": "ビジネスユースケース:",
+                "pt": "Caso de uso comercial:",
+                "ar": "حالة الاستخدام التجاري:",
+                "hi": "व्यावसायिक उपयोगकेस:",
+                "ru": "Вариант использования в бизнесе:"
+        },
+        "CAC Payback Period": {
+                "es": "Período de recuperación de CAC",
+                "fr": "Période de récupération du CAC",
+                "de": "CAC-Amortisationszeitraum",
+                "zh": "CAC投资回收期",
+                "ja": "CAC 回収期間",
+                "pt": "Período de retorno do CAC",
+                "ar": "فترة الاسترداد CAC",
+                "hi": "सीएसी पेबैक अवधि",
+                "ru": "Срок окупаемости CAC"
+        },
+        "CARD 1 OF 5": {
+                "es": "TARJETA 1 DE 5",
+                "fr": "CARTE 1 SUR 5",
+                "de": "KARTE 1 VON 5",
+                "zh": "卡 1 / 5",
+                "ja": "カード 1/5",
+                "pt": "CARTÃO 1 DE 5",
+                "ar": "البطاقة 1 من 5",
+                "hi": "CARD 1 OF 5",
+                "ru": "КАРТОЧКА 1 ИЗ 5"
+        },
+        "CFO Financial Risk": {
+                "es": "Director Financiero de Riesgos Financieros",
+                "fr": "Risque financier du directeur financier",
+                "de": "Finanzielles Risiko des CFO",
+                "zh": "首席财务官财务风险",
+                "ja": "CFO の財務リスク",
+                "pt": "Risco Financeiro do Diretor Financeiro",
+                "ar": "المخاطر المالية للمدير المالي",
+                "hi": "सीएफओ वित्तीय जोखिम",
+                "ru": "Финансовый риск финансового директора"
+        },
+        "CID-0000": {
+                "es": "CID-0000",
+                "fr": "CID-0000",
+                "de": "CID-0000",
+                "zh": "CID-0000",
+                "ja": "CID-0000",
+                "pt": "CID-0000",
+                "ar": "سيد-0000",
+                "hi": "सीआईडी-0000",
+                "ru": "CID-0000"
+        },
+        "CLI Terminal Command Palette": {
+                "es": "Paleta de comandos del terminal CLI",
+                "fr": "Palette de commandes du terminal CLI",
+                "de": "CLI-Terminal-Befehlspalette",
+                "zh": "CLI 终端命令面板",
+                "ja": "CLI ターミナル コマンド パレット",
+                "pt": "Paleta de comandos do terminal CLI",
+                "ar": "لوحة الأوامر الطرفية لـ CLI",
+                "hi": "सीएलआई टर्मिनल कमांड पैलेट",
+                "ru": "Палитра команд терминала CLI"
+        },
+        "CLV & ARR Matrix": {
+                "es": "Matriz CLV y ARR",
+                "fr": "Matrice CLV et ARR",
+                "de": "CLV- und ARR-Matrix",
+                "zh": "CLV 和 ARR 矩阵",
+                "ja": "CLV と ARR マトリックス",
+                "pt": "Matriz CLV e ARR",
+                "ar": "مصفوفة CLV وARR",
+                "hi": "CLV & ARR Matrix",
+                "ru": "Матрица CLV и ARR"
+        },
+        "CLV (Customer Lifetime Value)": {
+                "es": "CLV (valor de vida del cliente)",
+                "fr": "CLV (Valeur à vie du client)",
+                "de": "CLV (Customer Lifetime Value)",
+                "zh": "CLV（客户终身价值）",
+                "ja": "CLV (顧客生涯価値)",
+                "pt": "CLV (valor de vida do cliente)",
+                "ar": "CLV (قيمة العميل مدى الحياة)",
+                "hi": "सीएलवी (ग्राहक आजीवन मूल्य)",
+                "ru": "CLV (пожизненная ценность клиента)"
+        },
+        "CLV 4-Quadrant Retention Matrix": {
+                "es": "Matriz de retención de 4 cuadrantes CLV",
+                "fr": "Matrice de rétention CLV à 4 quadrants",
+                "de": "CLV 4-Quadranten-Retentionsmatrix",
+                "zh": "CLV 4 象限保留矩阵",
+                "ja": "CLV 4 象限保持マトリックス",
+                "pt": "Matriz de retenção de 4 quadrantes CLV",
+                "ar": "CLV 4-مصفوفة الاحتفاظ بالربع",
+                "hi": "सीएलवी 4-क्वाड्रेंट रिटेंशन मैट्रिक्स",
+                "ru": "CLV 4-квадрантная матрица удержания"
+        },
+        "CLV = (Average Monthly Bill × Gross Margin %) ÷ Monthly Churn Rate": {
+                "es": "CLV = (Factura mensual promedio × % de margen bruto) ÷ Tasa de abandono mensual",
+                "fr": "CLV = (Facture mensuelle moyenne × Marge brute %) ÷ Taux de désabonnement mensuel",
+                "de": "CLV = (durchschnittliche monatliche Rechnung × Bruttomarge %) ÷ monatliche Abwanderungsrate",
+                "zh": "CLV =（平均每月账单 × 毛利率 %） ÷ 每月流失率",
+                "ja": "CLV = (月平均請求額 × 粗利率 %) ÷ 月次解約率",
+                "pt": "CLV = (fatura média mensal × porcentagem de margem bruta) ÷ taxa de rotatividade mensal",
+                "ar": "CLV = (متوسط الفاتورة الشهرية × إجمالي الهامش %) ÷ معدل التراجع الشهري",
+                "hi": "सीएलवी = (औसत मासिक बिल × सकल मार्जिन%) ÷ मासिक मंथन दर",
+                "ru": "CLV = (Средний ежемесячный чек × Валовая прибыль %) ÷ Ежемесячный коэффициент оттока"
+        },
+        "CLV Risk Matrix": {
+                "es": "Matriz de riesgos CLV",
+                "fr": "Matrice de risque CLV",
+                "de": "CLV-Risikomatrix",
+                "zh": "CLV 风险矩阵",
+                "ja": "CLV リスク マトリックス",
+                "pt": "Matriz de Risco CLV",
+                "ar": "مصفوفة مخاطر CLV",
+                "hi": "सीएलवी जोखिम मैट्रिक्स",
+                "ru": "Матрица рисков CLV"
+        },
+        "CORE METRIC": {
+                "es": "MÉTRICA PRINCIPAL",
+                "fr": "MÉTRIQUE DE BASE",
+                "de": "KERNMETRIK",
+                "zh": "核心指标",
+                "ja": "コアメトリクス",
+                "pt": "MÉTRICA PRINCIPAL",
+                "ar": "المقياس الأساسي",
+                "hi": "कोर मेट्रिक",
+                "ru": "ОСНОВНАЯ МЕТРИКА"
+        },
+        "CRM API Secret Token...": {
+                "es": "Token secreto de API de CRM...",
+                "fr": "Jeton secret de l'API CRM...",
+                "de": "Geheimes CRM-API-Token...",
+                "zh": "CRM API 秘密令牌...",
+                "ja": "CRM API シークレット トークン...",
+                "pt": "Token secreto da API CRM...",
+                "ar": "الرمز السري لواجهة برمجة تطبيقات CRM...",
+                "hi": "सीआरएम एपीआई गुप्त टोकन...",
+                "ru": "Секретный токен CRM API..."
+        },
+        "CRM SYNC": {
+                "es": "SINCRONIZACIÓN DE CRM",
+                "fr": "SYNCHRONISATION CRM",
+                "de": "CRM-SYNC",
+                "zh": "客户关系管理同步",
+                "ja": "CRM同期",
+                "pt": "SINCRONIZAÇÃO DE CRM",
+                "ar": "مزامنة إدارة علاقات العملاء",
+                "hi": "सीआरएम सिंक",
+                "ru": "CRM-СИНХРОНИЗАЦИЯ"
+        },
+        "CRM Sub-tab": {
+                "es": "Subpestaña CRM",
+                "fr": "Sous-onglet CRM",
+                "de": "Unterregisterkarte „CRM“.",
+                "zh": "CRM 子选项卡",
+                "ja": "CRMサブタブ",
+                "pt": "Subguia CRM",
+                "ar": "علامة التبويب الفرعية CRM",
+                "hi": "सीआरएम उप-टैब",
+                "ru": "Дополнительная вкладка CRM"
+        },
+        "CSAT & Friction Telemetry": {
+                "es": "CSAT y telemetría de fricción",
+                "fr": "CSAT et télémétrie par friction",
+                "de": "CSAT und Reibungstelemetrie",
+                "zh": "CSAT 和摩擦遥测",
+                "ja": "CSAT および摩擦テレメトリー",
+                "pt": "CSAT e telemetria de fricção",
+                "ar": "CSAT وقياس الاحتكاك",
+                "hi": "सीएसएटी और घर्षण टेलीमेट्री",
+                "ru": "CSAT и фрикционная телеметрия"
+        },
+        "CSAT Satisfaction Score": {
+                "es": "Puntuación de satisfacción CSAT",
+                "fr": "Score de satisfaction CSAT",
+                "de": "CSAT-Zufriedenheitswert",
+                "zh": "CSAT 满意度得分",
+                "ja": "CSAT 満足度スコア",
+                "pt": "Pontuação de satisfação CSAT",
+                "ar": "درجة رضا CSAT",
+                "hi": "सीएसएटी संतुष्टि स्कोर",
+                "ru": "Оценка удовлетворенности CSAT"
+        },
+        "CSM Collaboration Notes": {
+                "es": "Notas de colaboración del MSC",
+                "fr": "Notes de collaboration avec le CSM",
+                "de": "Hinweise zur CSM-Zusammenarbeit",
+                "zh": "CSM 协作说明",
+                "ja": "CSM コラボレーションノート",
+                "pt": "Notas de colaboração CSM",
+                "ar": "ملاحظات تعاون CSM",
+                "hi": "सीएसएम सहयोग नोट्स",
+                "ru": "Примечания к сотрудничеству с CSM"
+        },
+        "CSMs are authorized to issue a pre-approved": {
+                "es": "Los CSM están autorizados a emitir un certificado preaprobado.",
+                "fr": "Les CSM sont autorisés à délivrer un certificat pré-approuvé",
+                "de": "CSMs sind berechtigt, eine Vorabgenehmigung auszustellen",
+                "zh": "CSM 有权签发预先批准的",
+                "ja": "CSM には、事前承認済みの証明書を発行する権限が与えられています。",
+                "pt": "Os CSMs estão autorizados a emitir um certificado pré-aprovado",
+                "ar": "يحق لـ CSMs إصدار موافقة مسبقة",
+                "hi": "सीएसएम पूर्व-अनुमोदित जारी करने के लिए अधिकृत हैं",
+                "ru": "CSM уполномочены выдавать предварительно утвержденные"
+        },
+        "CSV Schema Hint": {
+                "es": "Sugerencia de esquema CSV",
+                "fr": "Astuce pour le schéma CSV",
+                "de": "Hinweis zum CSV-Schema",
+                "zh": "CSV 架构提示",
+                "ja": "CSV スキーマのヒント",
+                "pt": "Dica de esquema CSV",
+                "ar": "تلميح مخطط CSV",
+                "hi": "सीएसवी स्कीमा संकेत",
+                "ru": "Подсказка по схеме CSV"
+        },
+        "Campaign (e.g. Winter Offer)": {
+                "es": "Campaña (por ejemplo, oferta de invierno)",
+                "fr": "Campagne (par exemple, offre d'hiver)",
+                "de": "Aktion (z. B. Winterangebot)",
+                "zh": "活动（例如冬季优惠）",
+                "ja": "キャンペーン（例：ウィンターオファー）",
+                "pt": "Campanha (por exemplo, oferta de inverno)",
+                "ar": "الحملة (مثل عرض الشتاء)",
+                "hi": "अभियान (उदा. शीतकालीन ऑफर)",
+                "ru": "Кампания (например, Зимнее предложение)"
+        },
+        "Card 1 of 5": {
+                "es": "Tarjeta 1 de 5",
+                "fr": "Carte 1 sur 5",
+                "de": "Karte 1 von 5",
+                "zh": "第 1 张卡片（共 5 张）",
+                "ja": "カード 1/5",
+                "pt": "Cartão 1 de 5",
+                "ar": "البطاقة 1 من 5",
+                "hi": "5 में से कार्ड 1",
+                "ru": "Карта 1 из 5"
+        },
+        "CashFlow Intelligence": {
+                "es": "Inteligencia de Flujo de Caja",
+                "fr": "Trésorerie Prévisionnelle",
+                "de": "CashFlow Intelligence",
+                "zh": "现金流与回款智能",
+                "ja": "キャッシュフローインテリジェンス",
+                "pt": "Inteligência de Fluxo de Caixa",
+                "ar": "ذكاء التدفقات النقدية",
+                "hi": "कैशफ्लो इंटेलिजेंस",
+                "ru": "Аналитика денежных потоков"
+        },
+        "Category Folder 1: Executive Telemetry & Exports": {
+                "es": "Carpeta de categoría 1: Telemetría ejecutiva y exportaciones",
+                "fr": "Dossier de catégorie 1 : Télémétrie exécutive et exportations",
+                "de": "Kategorieordner 1: Executive Telemetry & Exports",
+                "zh": "类别文件夹 1：执行遥测和导出",
+                "ja": "カテゴリ フォルダ 1: エグゼクティブ テレメトリとエクスポート",
+                "pt": "Pasta de Categoria 1: Telemetria Executiva e Exportações",
+                "ar": "مجلد الفئة 1: القياس التنفيذي والصادرات",
+                "hi": "श्रेणी फ़ोल्डर 1: कार्यकारी टेलीमेट्री और निर्यात",
+                "ru": "Папка категории 1: Исполнительная телеметрия и экспорт"
+        },
+        "Category Folder 2: Workspaces & Dashboards": {
+                "es": "Carpeta de categoría 2: espacios de trabajo y paneles",
+                "fr": "Dossier de catégorie 2 : Espaces de travail et tableaux de bord",
+                "de": "Kategorieordner 2: Arbeitsbereiche und Dashboards",
+                "zh": "类别文件夹 2：工作区和仪表板",
+                "ja": "カテゴリ フォルダ 2: ワークスペースとダッシュボード",
+                "pt": "Pasta de categoria 2: espaços de trabalho e painéis",
+                "ar": "مجلد الفئة 2: مساحات العمل ولوحات المعلومات",
+                "hi": "श्रेणी फ़ोल्डर 2: कार्यस्थान और डैशबोर्ड",
+                "ru": "Папка категории 2: Рабочие области и информационные панели"
+        },
+        "Category Folder 3: Platform Sidebars & Tools": {
+                "es": "Carpeta de categoría 3: Barras laterales y herramientas de plataforma",
+                "fr": "Dossier de catégorie 3 : Barres latérales et outils de la plate-forme",
+                "de": "Kategorieordner 3: Plattform-Seitenleisten und Tools",
+                "zh": "类别文件夹 3：平台侧边栏和工具",
+                "ja": "カテゴリ フォルダー 3: プラットフォーム サイドバーとツール",
+                "pt": "Pasta de categoria 3: barras laterais e ferramentas da plataforma",
+                "ar": "مجلد الفئة 3: الأشرطة الجانبية للمنصة وأدواتها",
+                "hi": "श्रेणी फ़ोल्डर 3: प्लेटफ़ॉर्म साइडबार और उपकरण",
+                "ru": "Папка категории 3: Боковые панели и инструменты платформы"
+        },
+        "Category Folder 4: Governance & Utilities": {
+                "es": "Carpeta de categoría 4: Gobernanza y servicios públicos",
+                "fr": "Dossier de catégorie 4 : Gouvernance et services publics",
+                "de": "Kategorieordner 4: Governance & Versorgungsunternehmen",
+                "zh": "类别文件夹 4：治理与公用事业",
+                "ja": "カテゴリ フォルダ 4: ガバナンスと公益事業",
+                "pt": "Pasta de Categoria 4: Governança e Serviços Públicos",
+                "ar": "مجلد الفئة 4: الحوكمة والمرافق",
+                "hi": "श्रेणी फ़ोल्डर 4: शासन एवं उपयोगिताएँ",
+                "ru": "Папка категории 4: Управление и коммунальные услуги"
+        },
+        "Category Folder 5: Global Localization & Languages": {
+                "es": "Carpeta de categoría 5: Localización global e idiomas",
+                "fr": "Dossier de catégorie 5 : Localisation globale et langues",
+                "de": "Kategorieordner 5: Globale Lokalisierung und Sprachen",
+                "zh": "类别文件夹 5：全球本地化和语言",
+                "ja": "カテゴリ フォルダ 5: グローバル ローカリゼーションと言語",
+                "pt": "Pasta de categoria 5: localização global e idiomas",
+                "ar": "مجلد الفئة 5: الترجمة العالمية واللغات",
+                "hi": "श्रेणी फ़ोल्डर 5: वैश्विक स्थानीयकरण और भाषाएँ",
+                "ru": "Папка категории 5: Глобальная локализация и языки"
+        },
+        "Category Slider & Quick Selector": {
+                "es": "Control deslizante de categoría y selector rápido",
+                "fr": "Curseur de catégorie et sélecteur rapide",
+                "de": "Kategorie-Schieberegler und Schnellauswahl",
+                "zh": "类别滑块和快速选择器",
+                "ja": "カテゴリスライダーとクイックセレクター",
+                "pt": "Controle deslizante de categoria e seletor rápido",
+                "ar": "شريط تمرير الفئة ومحدد سريع",
+                "hi": "श्रेणी स्लाइडर और त्वरित चयनकर्ता",
+                "ru": "Слайдер категорий и быстрый выбор"
+        },
+        "Change Language": {
+                "es": "Cambiar idioma",
+                "fr": "Changer de langue",
+                "de": "Sprache ändern",
+                "zh": "更改语言",
+                "ja": "言語を変更する",
+                "pt": "Alterar idioma",
+                "ar": "تغيير اللغة",
+                "hi": "भाषा बदलें",
+                "ru": "Изменить язык"
+        },
+        "Change currency": {
+                "es": "Cambiar moneda",
+                "fr": "Changer de devise",
+                "de": "Währung ändern",
+                "zh": "更改货币",
+                "ja": "通貨を変更する",
+                "pt": "Alterar moeda",
+                "ar": "تغيير العملة",
+                "hi": "मुद्रा बदलें",
+                "ru": "Изменить валюту"
+        },
+        "Change the sliders to run scenario simulation models.": {
+                "es": "Cambie los controles deslizantes para ejecutar modelos de simulación de escenarios.",
+                "fr": "Modifiez les curseurs pour exécuter des modèles de simulation de scénario.",
+                "de": "Ändern Sie die Schieberegler, um Szenariosimulationsmodelle auszuführen.",
+                "zh": "更改滑块以运行场景模拟模型。",
+                "ja": "スライダーを変更してシナリオ シミュレーション モデルを実行します。",
+                "pt": "Altere os controles deslizantes para executar modelos de simulação de cenário.",
+                "ar": "قم بتغيير أشرطة التمرير لتشغيل نماذج محاكاة السيناريو.",
+                "hi": "परिदृश्य सिमुलेशन मॉडल चलाने के लिए स्लाइडर बदलें।",
+                "ru": "Измените ползунки, чтобы запустить модели моделирования сценариев."
+        },
+        "Charcoal & Amber": {
+                "es": "Carbón y ámbar",
+                "fr": "Charbon et Ambre",
+                "de": "Kohle und Bernstein",
+                "zh": "木炭和琥珀",
+                "ja": "チャコール＆アンバー",
+                "pt": "Carvão e Âmbar",
+                "ar": "الفحم والعنبر",
+                "hi": "लकड़ी का कोयला और एम्बर",
+                "ru": "Уголь и Янтарь"
+        },
+        "Churn Probability": {
+                "es": "Probabilidad de abandono",
+                "fr": "Probabilité de désabonnement",
+                "de": "Abwanderungswahrscheinlichkeit",
+                "zh": "流失概率",
+                "ja": "チャーン確率",
+                "pt": "Probabilidade de rotatividade",
+                "ar": "احتمالية التقلب",
+                "hi": "मंथन की संभावना",
+                "ru": "Вероятность оттока"
+        },
+        "Churn Rate % = (Canceled Accounts ÷ Total Start Accounts) × 100": {
+                "es": "% de tasa de abandono = (Cuentas canceladas ÷ Cuentas iniciales totales) × 100",
+                "fr": "Taux de désabonnement % = (Comptes annulés ÷ Total des comptes de démarrage) × 100",
+                "de": "Abwanderungsrate % = (Gelöschte Konten ÷ Gesamtzahl der Startkonten) × 100",
+                "zh": "流失率 % =（取消的帐户 ÷ 启动帐户总数）× 100",
+                "ja": "解約率 % = (キャンセルされたアカウント ÷ 開始アカウントの合計) × 100",
+                "pt": "Taxa de rotatividade% = (contas canceladas ÷ total de contas iniciais) × 100",
+                "ar": "معدل التراجع % = (الحسابات الملغاة ÷ إجمالي حسابات البدء) × 100",
+                "hi": "मंथन दर % = (रद्द किए गए खाते ÷ कुल प्रारंभ खाते) × 100",
+                "ru": "% оттока = (Отмененные аккаунты ÷ Общее количество стартовых аккаунтов) × 100"
+        },
+        "Churn Rate & Revenue by Customer Segment": {
+                "es": "Tasa de abandono e ingresos por segmento de clientes",
+                "fr": "Taux de désabonnement et revenus par segment de clientèle",
+                "de": "Abwanderungsrate und Umsatz nach Kundensegment",
+                "zh": "按客户群划分的客户流失率和收入",
+                "ja": "顧客セグメント別の解約率と収益",
+                "pt": "Taxa de rotatividade e receita por segmento de cliente",
+                "ar": "معدل التدوير والإيرادات حسب شريحة العملاء",
+                "hi": "ग्राहक खंड द्वारा मंथन दर और राजस्व",
+                "ru": "Уровень оттока и доход по сегментам клиентов"
+        },
+        "Churn Rate (Attrition Rate %)": {
+                "es": "Tasa de abandono (tasa de deserción%)",
+                "fr": "Taux de désabonnement (taux d'attrition %)",
+                "de": "Abwanderungsrate (Abwanderungsrate %)",
+                "zh": "流失率（流失率%）",
+                "ja": "チャーンレート (離職率 %)",
+                "pt": "Taxa de rotatividade (taxa de atrito%)",
+                "ar": "معدل الزبد (معدل الاستنزاف %)",
+                "hi": "मंथन दर (क्षरण दर%)",
+                "ru": "Коэффициент оттока (коэффициент оттока, %)"
+        },
+        "Churn Rate Optimization": {
+                "es": "Optimización de la tasa de abandono",
+                "fr": "Optimisation du taux de désabonnement",
+                "de": "Optimierung der Abwanderungsrate",
+                "zh": "流失率优化",
+                "ja": "チャーンレートの最適化",
+                "pt": "Otimização da taxa de rotatividade",
+                "ar": "تحسين معدل الزبد",
+                "hi": "मंथन दर अनुकूलन",
+                "ru": "Оптимизация оттока клиентов"
+        },
+        "Churn Risk Probability Distribution": {
+                "es": "Distribución de probabilidad de riesgo de abandono",
+                "fr": "Distribution de la probabilité du risque de désabonnement",
+                "de": "Wahrscheinlichkeitsverteilung des Abwanderungsrisikos",
+                "zh": "流失风险概率分布",
+                "ja": "チャーンリスクの確率分布",
+                "pt": "Distribuição de probabilidade de risco de rotatividade",
+                "ar": "توزيع احتمالية مخاطر التقلب",
+                "hi": "मंथन जोखिम संभाव्यता वितरण",
+                "ru": "Распределение вероятности риска оттока"
+        },
+        "Churned": {
+                "es": "batido",
+                "fr": "Baratté",
+                "de": "Aufgewühlt",
+                "zh": "搅动",
+                "ja": "撹拌された",
+                "pt": "Agitado",
+                "ar": "مخضض",
+                "hi": "मंथन किया",
+                "ru": "взбитый"
+        },
+        "Circular Progress Indicator": {
+                "es": "Indicador de progreso circular",
+                "fr": "Indicateur de progrès circulaire",
+                "de": "Zirkulärer Fortschrittsindikator",
+                "zh": "圆形进度指示器",
+                "ja": "円形の進行状況インジケーター",
+                "pt": "Indicador Circular de Progresso",
+                "ar": "مؤشر التقدم الدائري",
+                "hi": "परिपत्र प्रगति संकेतक",
+                "ru": "Круговой индикатор прогресса"
+        },
+        "Classic Navy & Blue": {
+                "es": "Azul marino y azul clásico",
+                "fr": "Bleu marine et bleu classique",
+                "de": "Klassisches Marineblau und Blau",
+                "zh": "经典海军蓝和蓝色",
+                "ja": "クラシックなネイビー&ブルー",
+                "pt": "Clássico Marinho e Azul",
+                "ar": "البحرية الكلاسيكية والأزرق",
+                "hi": "क्लासिक नेवी और नीला",
+                "ru": "Классический темно-синий и синий"
+        },
+        "Classic Navy & Blue (Finance & Trust)": {
+                "es": "Azul marino y azul clásico (finanzas y fideicomisos)",
+                "fr": "Classique Marine & Bleu (Finance & Trust)",
+                "de": "Klassisches Marineblau und Blau (Finanzen und Vertrauen)",
+                "zh": "经典海军蓝和蓝色（金融和信托）",
+                "ja": "クラシック ネイビー & ブルー (金融 & 信頼)",
+                "pt": "Clássico Marinho e Azul (Finanças e Confiança)",
+                "ar": "الكلاسيكية البحرية والأزرق (التمويل والثقة)",
+                "hi": "क्लासिक नेवी और ब्लू (वित्त और ट्रस्ट)",
+                "ru": "Классический темно-синий и синий (финансы и доверие)"
+        },
+        "Clean Minimalist": {
+                "es": "Limpio minimalista",
+                "fr": "Propre minimaliste",
+                "de": "Sauberer Minimalist",
+                "zh": "干净简约",
+                "ja": "クリーンなミニマリスト",
+                "pt": "Limpo Minimalista",
+                "ar": "الحد الأدنى النظيف",
+                "hi": "स्वच्छ न्यूनतमवादी",
+                "ru": "Чистый минималистский"
+        },
+        "Clear Chat History": {
+                "es": "Borrar historial de chat",
+                "fr": "Effacer l'historique des discussions",
+                "de": "Chatverlauf löschen",
+                "zh": "清除聊天记录",
+                "ja": "チャット履歴をクリアする",
+                "pt": "Limpar histórico de bate-papo",
+                "ar": "مسح سجل الدردشة",
+                "hi": "चैट इतिहास साफ़ करें",
+                "ru": "Очистить историю чата"
+        },
+        "Clear search": {
+                "es": "Borrar búsqueda",
+                "fr": "Effacer la recherche",
+                "de": "Suche löschen",
+                "zh": "清除搜索",
+                "ja": "検索をクリア",
+                "pt": "Limpar pesquisa",
+                "ar": "مسح البحث",
+                "hi": "स्पष्ट खोज",
+                "ru": "Очистить поиск"
+        },
+        " or select a prompt magic template above to compile your custom presentation.": {
+                "es": "Haga clic en \\",
+                "fr": "Cliquez sur « Générer AI Deck » ou sélectionnez un modèle magique d'invite ci-dessus pour compiler votre présentation personnalisée.",
+                "de": "Klicken Sie auf „KI-Deck generieren“ oder wählen Sie oben eine Prompt-Magic-Vorlage aus, um Ihre individuelle Präsentation zusammenzustellen.",
+                "zh": "单击“生成 AI Deck”或选择上面的提示魔术模板来编译您的自定义演示文稿。",
+                "ja": "[Generate AI Deck] をクリックするか、上のプロンプト マジック テンプレートを選択してカスタム プレゼンテーションをコンパイルします。",
+                "pt": "Clique em \\",
+                "ar": "انقر فوق \\",
+                "hi": "अपनी कस्टम प्रस्तुति को संकलित करने के लिए \\",
+                "ru": "Нажмите «Создать презентацию AI» или выберите шаблон магической подсказки выше, чтобы скомпилировать собственную презентацию."
+        },
+        "Click formula button to copy DAX to clipboard": {
+                "es": "Haga clic en el botón de fórmula para copiar DAX al portapapeles",
+                "fr": "Cliquez sur le bouton de formule pour copier DAX dans le presse-papiers",
+                "de": "Klicken Sie auf die Formelschaltfläche, um DAX in die Zwischenablage zu kopieren",
+                "zh": "单击公式按钮将 DAX 复制到剪贴板",
+                "ja": "数式ボタンをクリックして DAX をクリップボードにコピーします",
+                "pt": "Clique no botão de fórmula para copiar o DAX para a área de transferência",
+                "ar": "انقر فوق زر الصيغة لنسخ DAX إلى الحافظة",
+                "hi": "DAX को क्लिपबोर्ड पर कॉपी करने के लिए फॉर्मूला बटन पर क्लिक करें",
+                "ru": "Нажмите кнопку формулы, чтобы скопировать DAX в буфер обмена."
+        },
+        "Close": {
+                "es": "Cerrar",
+                "fr": "Fermer",
+                "de": "Schließen",
+                "zh": "关闭",
+                "ja": "閉じる",
+                "pt": "Fechar",
+                "ar": "إغلاق",
+                "hi": "बंद करें",
+                "ru": "Закрыть"
+        },
+        "Close AI Copilot": {
+                "es": "Cerrar copiloto AI",
+                "fr": "Fermer le copilote IA",
+                "de": "Schließen Sie den KI-Copiloten",
+                "zh": "关闭AI副驾驶",
+                "ja": "AI コパイロットを閉じる",
+                "pt": "Fechar o Copiloto de IA",
+                "ar": "أغلق مساعد الطيار الآلي",
+                "hi": "एआई कोपायलट बंद करें",
+                "ru": "Закрыть второго пилота AI"
+        },
+        "Close AI Copilot (Esc)": {
+                "es": "Cerrar copiloto AI (Esc)",
+                "fr": "Fermer le copilote IA (Esc)",
+                "de": "KI-Copilot schließen (Esc)",
+                "zh": "关闭 AI 副驾驶 (Esc)",
+                "ja": "AI コパイロットを閉じる (Esc)",
+                "pt": "Fechar AI Copilot (Esc)",
+                "ar": "إغلاق مساعد الطيار الآلي (Esc)",
+                "hi": "एआई कोपायलट (ईएससी) बंद करें",
+                "ru": "Закрыть второго пилота AI (Esc)"
+        },
+        "Close Studio Modal": {
+                "es": "Cerrar Estudio Modal",
+                "fr": "Fermer Studio Modal",
+                "de": "Schließen Sie Studio Modal",
+                "zh": "关闭工作室模态",
+                "ja": "スタジオモーダルを閉じる",
+                "pt": "Fechar Modal do Estúdio",
+                "ar": "إغلاق الاستوديو مشروط",
+                "hi": "स्टूडियो मॉडल बंद करें",
+                "ru": "Закрыть модальное окно студии"
+        },
+        "Closed-Loop Business Decision Intelligence Console": {
+                "es": "Consola de inteligencia de decisiones empresariales de circuito cerrado",
+                "fr": "Console de Business Decision Intelligence en boucle fermée",
+                "de": "Closed-Loop-Business-Decision-Intelligence-Konsole",
+                "zh": "闭环商业决策智能控制台",
+                "ja": "クローズドループのビジネス意思決定インテリジェンス コンソール",
+                "pt": "Console de inteligência de decisão de negócios de circuito fechado",
+                "ar": "وحدة تحكم ذكاء قرارات الأعمال ذات الحلقة المغلقة",
+                "hi": "क्लोज्ड-लूप बिजनेस डिसीजन इंटेलिजेंस कंसोल",
+                "ru": "Консоль аналитики бизнес-решений с обратной связью"
+        },
+        "Closed-Loop Resolution Wizard Modal": {
+                "es": "Modal del asistente de resolución de bucle cerrado",
+                "fr": "Assistant de résolution en boucle fermée modal",
+                "de": "Modaler Closed-Loop-Auflösungsassistent",
+                "zh": "闭环解析向导模式",
+                "ja": "クローズドループ解決ウィザード モーダル",
+                "pt": "Modal do assistente de resolução de circuito fechado",
+                "ar": "معالج دقة الحلقة المغلقة مشروط",
+                "hi": "क्लोज्ड-लूप रेजोल्यूशन विज़ार्ड मोडल",
+                "ru": "Модальное окно мастера разрешения замкнутого цикла"
+        },
+        "Cohort Retention Curves": {
+                "es": "Curvas de retención de cohortes",
+                "fr": "Courbes de rétention des cohortes",
+                "de": "Kohortenretentionskurven",
+                "zh": "群组保留曲线",
+                "ja": "コホート保持曲線",
+                "pt": "Curvas de retenção de coorte",
+                "ar": "منحنيات الاحتفاظ الفوج",
+                "hi": "समूह प्रतिधारण वक्र",
+                "ru": "Кривые удержания когорты"
+        },
+        "Collapse Datasets Sidebar ([)": {
+                "es": "Contraer barra lateral de conjuntos de datos ([)",
+                "fr": "Réduire la barre latérale des ensembles de données ([)",
+                "de": "Seitenleiste „Datensätze einklappen“ ([)",
+                "zh": "折叠数据集侧边栏 ([)",
+                "ja": "データセットを折りたたむサイドバー ([)",
+                "pt": "Recolher barra lateral de conjuntos de dados ([)",
+                "ar": "طي الشريط الجانبي لمجموعات البيانات ([)",
+                "hi": "डेटासेट साइडबार को संक्षिप्त करें ([)",
+                "ru": "Свернуть боковую панель наборов данных ([)"
+        },
+        "Collapse Notes Sidebar (])": {
+                "es": "Contraer barra lateral de notas (])",
+                "fr": "Réduire la barre latérale des notes (])",
+                "de": "Notizen-Seitenleiste einklappen (])",
+                "zh": "折叠笔记侧边栏 (])",
+                "ja": "メモのサイドバーを折りたたむ (])",
+                "pt": "Recolher barra lateral de notas (])",
+                "ar": "طي الشريط الجانبي للملاحظات (])",
+                "hi": "नोट्स साइडबार को संक्षिप्त करें (])",
+                "ru": "Свернуть боковую панель заметок (])"
+        },
+        "Command Palette": {
+                "es": "Paleta de comandos",
+                "fr": "Palette de commandes",
+                "de": "Befehlspalette",
+                "zh": "命令面板",
+                "ja": "コマンドパレット",
+                "pt": "Paleta de Comandos",
+                "ar": "لوحة الأوامر",
+                "hi": "कमांड पैलेट",
+                "ru": "Палитра команд"
+        },
+        "Compiles dynamic presentation slide layouts based on your current database metrics and exports PowerPoint PPTX files.": {
+                "es": "Compila diseños de diapositivas de presentación dinámica basados en las métricas de su base de datos actual y exporta archivos PPTX de PowerPoint.",
+                "fr": "Compile des mises en page de diapositives de présentation dynamiques en fonction des métriques de votre base de données actuelle et exporte les fichiers PowerPoint PPTX.",
+                "de": "Stellt dynamische Präsentationsfolienlayouts basierend auf Ihren aktuellen Datenbankmetriken zusammen und exportiert PowerPoint PPTX-Dateien.",
+                "zh": "根据当前数据库指标编译动态演示文稿幻灯片布局并导出 PowerPoint PPTX 文件。",
+                "ja": "現在のデータベース メトリックに基づいて動的なプレゼンテーション スライド レイアウトをコンパイルし、PowerPoint PPTX ファイルをエクスポートします。",
+                "pt": "Compila layouts de slides de apresentação dinâmicos com base nas métricas atuais do banco de dados e exporta arquivos PPTX do PowerPoint.",
+                "ar": "يجمع تخطيطات شرائح العرض التقديمي الديناميكية بناءً على مقاييس قاعدة البيانات الحالية لديك ويصدر ملفات PowerPoint PPTX.",
+                "hi": "आपके वर्तमान डेटाबेस मेट्रिक्स के आधार पर गतिशील प्रस्तुति स्लाइड लेआउट संकलित करता है और PowerPoint PPTX फ़ाइलों को निर्यात करता है।",
+                "ru": "Компилирует макеты слайдов динамической презентации на основе текущих показателей базы данных и экспортирует файлы PowerPoint PPTX."
+        },
+        "Compliance Audit logs": {
+                "es": "Registros de auditoría de cumplimiento",
+                "fr": "Journaux d'audit de conformité",
+                "de": "Compliance-Audit-Protokolle",
+                "zh": "合规审核日志",
+                "ja": "コンプライアンス監査ログ",
+                "pt": "Registros de auditoria de conformidade",
+                "ar": "سجلات تدقيق الامتثال",
+                "hi": "अनुपालन लेखापरीक्षा लॉग",
+                "ru": "Журналы аудита соответствия"
+        },
+        "Comprehensive guide matching Qiplo's core motive:": {
+                "es": "Guía completa que coincide con el motivo central de Qiplo:",
+                "fr": "Guide complet correspondant à la motivation principale de Qiplo :",
+                "de": "Umfassender Leitfaden passend zum Kernmotiv von Qiplo:",
+                "zh": "符合 Qiplo 核心动机的综合指南：",
+                "ja": "Qiplo の中心的な動機に合致する包括的なガイド:",
+                "pt": "Guia abrangente que corresponde ao motivo principal do Qiplo:",
+                "ar": "دليل شامل يتوافق مع الدافع الأساسي لـ Qiplo:",
+                "hi": "Qiplo के मूल उद्देश्य से मेल खाती व्यापक मार्गदर्शिका:",
+                "ru": "Подробное руководство, соответствующее основному мотиву Qiplo:"
+        },
+        "Config": {
+                "es": "configuración",
+                "fr": "Configuration",
+                "de": "Konfig",
+                "zh": "配置",
+                "ja": "構成",
+                "pt": "Configuração",
+                "ar": "التكوين",
+                "hi": "कॉन्फिग",
+                "ru": "Конфигурация"
+        },
+        "Confusion Matrix Card": {
+                "es": "Tarjeta de matriz de confusión",
+                "fr": "Carte Matrice de Confusion",
+                "de": "Verwirrungsmatrixkarte",
+                "zh": "混乱矩阵卡",
+                "ja": "混同マトリックスカード",
+                "pt": "Cartão Matriz de Confusão",
+                "ar": "بطاقة مصفوفة الارتباك",
+                "hi": "कन्फ्यूजन मैट्रिक्स कार्ड",
+                "ru": "Карта матрицы путаницы"
+        },
+        "Connection failed:": {
+                "es": "La conexión falló:",
+                "fr": "Échec de la connexion :",
+                "de": "Verbindung fehlgeschlagen:",
+                "zh": "连接失败：",
+                "ja": "接続に失敗しました:",
+                "pt": "Falha na conexão:",
+                "ar": "فشل الاتصال:",
+                "hi": "कनेक्शन विफल:",
+                "ru": "Соединение не удалось:"
+        },
+        "Consult AI Advisor Copilot": {
+                "es": "Consulte al copiloto del asesor de IA",
+                "fr": "Consulter AI Advisor Copilot",
+                "de": "Wenden Sie sich an den AI Advisor Copilot",
+                "zh": "咨询 AI Advisor Copilot",
+                "ja": "AI アドバイザーの副操縦士に相談する",
+                "pt": "Consulte o Copiloto do AI Advisor",
+                "ar": "استشر مستشار الذكاء الاصطناعي مساعد الطيار",
+                "hi": "एआई सलाहकार कोपायलट से परामर्श लें",
+                "ru": "Проконсультируйтесь с консультантом по искусственному интеллекту, вторым пилотом"
+        },
+        "Contacted": {
+                "es": "Contactado",
+                "fr": "Contacté",
+                "de": "Kontaktiert",
+                "zh": "已联系",
+                "ja": "連絡済み",
+                "pt": "Contatado",
+                "ar": "تم الاتصال به",
+                "hi": "व्यक्ति से संपर्क किया",
+                "ru": "Связались"
+        },
+        "Contract Type": {
+                "es": "Tipo de contrato",
+                "fr": "Type de contrat",
+                "de": "Vertragstyp",
+                "zh": "合约类型",
+                "ja": "契約の種類",
+                "pt": "Tipo de contrato",
+                "ar": "نوع العقد",
+                "hi": "करार का प्रकार",
+                "ru": "Тип контракта"
+        },
+        "Converts plain natural language questions into accurate SQL queries and text summaries of your datasets in real-time.": {
+                "es": "Convierte preguntas sencillas en lenguaje natural en consultas SQL precisas y resúmenes de texto de sus conjuntos de datos en tiempo real.",
+                "fr": "Convertit les questions en langage naturel simple en requêtes SQL précises et en résumés textuels de vos ensembles de données en temps réel.",
+                "de": "Konvertiert einfache Fragen in natürlicher Sprache in präzise SQL-Abfragen und Textzusammenfassungen Ihrer Datensätze in Echtzeit.",
+                "zh": "将简单的自然语言问题实时转换为准确的 SQL 查询和数据集的文本摘要。",
+                "ja": "単純な自然言語の質問を正確な SQL クエリとデータセットのテキスト概要にリアルタイムで変換します。",
+                "pt": "Converte perguntas simples em linguagem natural em consultas SQL precisas e resumos de texto de seus conjuntos de dados em tempo real.",
+                "ar": "يحول أسئلة اللغة الطبيعية البسيطة إلى استعلامات SQL دقيقة وملخصات نصية لمجموعات البيانات الخاصة بك في الوقت الفعلي.",
+                "hi": "सादे प्राकृतिक भाषा के प्रश्नों को वास्तविक समय में आपके डेटासेट के सटीक SQL प्रश्नों और पाठ सारांश में परिवर्तित करता है।",
+                "ru": "Преобразует простые вопросы на естественном языке в точные SQL-запросы и текстовые сводки ваших наборов данных в режиме реального времени."
+        },
+        "Copilot AI Agent": {
+                "es": "Agente copiloto de IA",
+                "fr": "Agent IA copilote",
+                "de": "Copilot-KI-Agent",
+                "zh": "副驾驶AI代理",
+                "ja": "副操縦AIエージェント",
+                "pt": "Agente Copiloto AI",
+                "ar": "وكيل مساعد الطيار AI",
+                "hi": "सहपायलट एआई एजेंट",
+                "ru": "ИИ-агент второго пилота"
+        },
+        "Copilot Reset": {
+                "es": "Reinicio del copiloto",
+                "fr": "Réinitialisation du copilote",
+                "de": "Copilot-Reset",
+                "zh": "副驾驶重置",
+                "ja": "副操縦士のリセット",
+                "pt": "Redefinição do copiloto",
+                "ar": "إعادة تعيين مساعد الطيار",
+                "hi": "सहपायलट रीसेट",
+                "ru": "Сброс второго пилота"
+        },
+        "Copy Outline": {
+                "es": "Copiar esquema",
+                "fr": "Copier le plan",
+                "de": "Gliederung kopieren",
+                "zh": "复制大纲",
+                "ja": "アウトラインをコピー",
+                "pt": "Copiar esboço",
+                "ar": "نسخ المخطط التفصيلي",
+                "hi": "रूपरेखा कॉपी करें",
+                "ru": "Копировать схему"
+        },
+        "Copy entire deck outline to clipboard": {
+                "es": "Copie el esquema completo de la plataforma al portapapeles",
+                "fr": "Copier l'intégralité du plan du deck dans le presse-papiers",
+                "de": "Kopieren Sie den gesamten Deckumriss in die Zwischenablage",
+                "zh": "将整个甲板轮廓复制到剪贴板",
+                "ja": "デッキのアウトライン全体をクリップボードにコピーします",
+                "pt": "Copie todo o contorno do deck para a área de transferência",
+                "ar": "انسخ مخطط المجموعة بالكامل إلى الحافظة",
+                "hi": "संपूर्ण डेक रूपरेखा को क्लिपबोर्ड पर कॉपी करें",
+                "ru": "Скопировать весь контур колоды в буфер обмена"
+        },
+        "Corporate Photography": {
+                "es": "Fotografía Corporativa",
+                "fr": "Photographie d'entreprise",
+                "de": "Unternehmensfotografie",
+                "zh": "企业摄影",
+                "ja": "企業写真",
+                "pt": "Fotografia Corporativa",
+                "ar": "التصوير الفوتوغرافي للشركات",
+                "hi": "कॉर्पोरेट फोटोग्राफी",
+                "ru": "Корпоративная фотография"
+        },
+        "Crimson & Bright Red (Decisive Action)": {
+                "es": "Carmesí y rojo brillante (acción decisiva)",
+                "fr": "Pourpre et rouge vif (action décisive)",
+                "de": "Purpurrot und leuchtendes Rot (Entscheidende Aktion)",
+                "zh": "深红色和亮红色（果断行动）",
+                "ja": "クリムゾン＆ブライトレッド（ディシジョン・アクション）",
+                "pt": "Carmesim e Vermelho Brilhante (Ação Decisiva)",
+                "ar": "قرمزي وأحمر ساطع (إجراء حاسم)",
+                "hi": "क्रिमसन और ब्राइट रेड (निर्णायक कार्रवाई)",
+                "ru": "Багровый и ярко-красный (Решительное действие)"
+        },
+        "Critical": {
+                "es": "Crítico",
+                "fr": "Critique",
+                "de": "Kritisch",
+                "zh": "关键",
+                "ja": "クリティカル",
+                "pt": "Crítico",
+                "ar": "حرجة",
+                "hi": "गंभीर",
+                "ru": "Критический"
+        },
+        "Currency:": {
+                "es": "Moneda: ",
+                "fr": "Devise: ",
+                "de": "Währung: ",
+                "zh": "货币单位: ",
+                "ja": "通貨: ",
+                "pt": "Moeda: ",
+                "ar": "العملة: ",
+                "hi": "मुद्रा: ",
+                "ru": "Валюта: "
+        },
+        "Customer ID": {
+                "es": "ID Cliente",
+                "fr": "ID Client",
+                "de": "Kunden-ID",
+                "zh": "客户编号",
+                "ja": "顧客ID",
+                "pt": "ID Cliente",
+                "ar": "معرف العميل",
+                "hi": "ग्राहक आईडी",
+                "ru": "ID Клиента"
+        },
+        "Customer ID (A → Z)": {
+                "es": "ID de cliente (A → Z)",
+                "fr": "Numéro client (A → Z)",
+                "de": "Kundennummer (A → Z)",
+                "zh": "客户 ID（A → Z）",
+                "ja": "顧客ID（A→Z）",
+                "pt": "ID do cliente (A → Z)",
+                "ar": "معرف العميل (أ → ي)",
+                "hi": "ग्राहक आईडी (ए → जेड)",
+                "ru": "Идентификатор клиента (A → Z)"
+        },
+        "Customer Retention": {
+                "es": "Retención de clientes",
+                "fr": "Fidélisation des clients",
+                "de": "Kundenbindung",
+                "zh": "客户保留",
+                "ja": "顧客維持",
+                "pt": "Retenção de clientes",
+                "ar": "الاحتفاظ بالعملاء",
+                "hi": "ग्राहक प्रतिधारण",
+                "ru": "Удержание клиентов"
+        },
+        "Customer Success Lifecycle Alignment": {
+                "es": "Alineación del ciclo de vida del éxito del cliente",
+                "fr": "Alignement du cycle de vie de la réussite client",
+                "de": "Ausrichtung des Kundenerfolgslebenszyklus",
+                "zh": "客户成功生命周期调整",
+                "ja": "カスタマーサクセスのライフサイクル調整",
+                "pt": "Alinhamento do ciclo de vida do sucesso do cliente",
+                "ar": "محاذاة دورة حياة نجاح العملاء",
+                "hi": "ग्राहक सफलता जीवनचक्र संरेखण",
+                "ru": "Согласование жизненного цикла успеха клиента"
+        },
+        "Customers 360 Explorer": {
+                "es": "Clientes Explorador 360",
+                "fr": "Clients 360 Explorer",
+                "de": "Kunden 360 Explorer",
+                "zh": "客户 360 浏览器",
+                "ja": "顧客 360 エクスプローラー",
+                "pt": "Clientes 360 Explorer",
+                "ar": "العملاء 360 إكسبلورر",
+                "hi": "ग्राहक 360 एक्सप्लोरर",
+                "ru": "Клиенты 360 Explorer"
+        },
+        "Customers Database": {
+                "es": "Base de datos de clientes",
+                "fr": "Base de données clients",
+                "de": "Kundendatenbank",
+                "zh": "客户数据库",
+                "ja": "顧客データベース",
+                "pt": "Banco de dados de clientes",
+                "ar": "قاعدة بيانات العملاء",
+                "hi": "ग्राहक डेटाबेस",
+                "ru": "База данных клиентов"
+        },
+        "Customers Explorer": {
+                "es": "Explorador de clientes",
+                "fr": "Explorateur de clients",
+                "de": "Kunden-Explorer",
+                "zh": "客户探索者",
+                "ja": "顧客エクスプローラー",
+                "pt": "Explorador de clientes",
+                "ar": "مستكشف العملاء",
+                "hi": "ग्राहक एक्सप्लोरर",
+                "ru": "Исследователь клиентов"
+        },
+        "Customers with churn probability exceeding risk threshold requiring immediate SLA triage": {
+                "es": "Clientes con una probabilidad de abandono que supera el umbral de riesgo y que requieren una clasificación inmediata de SLA",
+                "fr": "Clients dont la probabilité de désabonnement dépasse le seuil de risque nécessitant un tri SLA immédiat",
+                "de": "Kunden, deren Abwanderungswahrscheinlichkeit die Risikoschwelle überschreitet, erfordern eine sofortige SLA-Triage",
+                "zh": "客户流失概率超过风险阈值，需要立即进行 SLA 分类",
+                "ja": "解約確率がリスクしきい値を超えている顧客には即時 SLA トリアージが必要",
+                "pt": "Clientes com probabilidade de rotatividade excedendo o limite de risco que exigem triagem imediata de SLA",
+                "ar": "العملاء الذين لديهم احتمالية تعطل تتجاوز حد المخاطر ويتطلبون فرزًا فوريًا لاتفاقية مستوى الخدمة",
+                "hi": "जोखिम सीमा से अधिक मंथन की संभावना वाले ग्राहकों को तत्काल एसएलए ट्राइएज की आवश्यकता होती है",
+                "ru": "Клиенты, вероятность оттока которых превышает порог риска, требующие немедленной сортировки по SLA"
+        },
+        "Cyber Neon Pink & Cyan": {
+                "es": "Rosa neón cibernético y cian",
+                "fr": "Cyber Néon Rose & Cyan",
+                "de": "Cyber Neon Pink & Cyan",
+                "zh": "网络霓虹粉色和青色",
+                "ja": "サイバーネオンピンク＆シアン",
+                "pt": "Cyber Neon Rosa e Ciano",
+                "ar": "سايبر نيون الوردي والسماوي",
+                "hi": "साइबर नियॉन गुलाबी और सियान",
+                "ru": "Кибер-неон, розовый и голубой"
+        },
+        "DAX formula copied to clipboard!": {
+                "es": "¡Fórmula DAX copiada al portapapeles!",
+                "fr": "Formule DAX copiée dans le presse-papier !",
+                "de": "DAX-Formel in Zwischenablage kopiert!",
+                "zh": "DAX 公式已复制到剪贴板！",
+                "ja": "DAX 式がクリップボードにコピーされました。",
+                "pt": "Fórmula DAX copiada para a área de transferência!",
+                "ar": "تم نسخ صيغة DAX إلى الحافظة!",
+                "hi": "DAX फॉर्मूला क्लिपबोर्ड पर कॉपी किया गया!",
+                "ru": "Формула DAX скопирована в буфер обмена!"
+        },
+        "DAX: CALCULATE([Total Revenue], Fact[Risk]>=0.7)": {
+                "es": "DAX: CALCULAR([Ingresos totales], Hecho[Riesgo]>=0,7)",
+                "fr": "DAX : CALCULER([Revenu total], Fait[Risque]>=0,7)",
+                "de": "DAX: CALCULATE([Gesamtumsatz], Fakt[Risiko]>=0,7)",
+                "zh": "DAX：计算（[总收入]，事实[风险]>=0.7）",
+                "ja": "DAX: CALCULATE([総収益], ファクト[リスク]>=0.7)",
+                "pt": "DAX: CALCULAR([Receita Total], Fato[Risco]>=0,7)",
+                "ar": "DAX: حساب([إجمالي الإيرادات]، حقيقة[المخاطرة]>=0.7)",
+                "hi": "DAX: गणना करें([कुल राजस्व], तथ्य[जोखिम]>=0.7)",
+                "ru": "DAX: РАСЧЕТ([Общий доход], Факт[Риск]>=0,7)"
+        },
+        "DAX: Churn Rate = DIVIDE(COUNTROWS(...))": {
+                "es": "DAX: Tasa de abandono = DIVIDIR (CONTADORES (...))",
+                "fr": "DAX : Taux de désabonnement = DIVIDE(COUNTROWS(...))",
+                "de": "DAX: Abwanderungsrate = DIVIDE(COUNTROWS(...))",
+                "zh": "DAX：流失率 = DIVIDE(COUNTROWS(...))",
+                "ja": "DAX: チャーンレート = DIVIDE(COUNTROWS(...))",
+                "pt": "DAX: Taxa de rotatividade = DIVIDIR(CONTRADORAS(...))",
+                "ar": "داكس: معدل التغيير = القسمة(الأعداد (...))",
+                "hi": "DAX: मंथन दर = विभाजित(काउंटरो(...))",
+                "ru": "DAX: коэффициент оттока = РАЗДЕЛИТЬ(СЧЕТЧИ(...))"
+        },
+        "DAX: Customers = DISTINCTCOUNT(Fact[CustomerID])": {
+                "es": "DAX: Clientes = DISTINCTCOUNT(Hecho[ID de cliente])",
+                "fr": "DAX : Clients = DISTINCTCOUNT(Fact[CustomerID])",
+                "de": "DAX: Kunden = DISTINCTCOUNT(Fact[CustomerID])",
+                "zh": "DAX：客户 = DISTINCTCOUNT(Fact[CustomerID])",
+                "ja": "DAX: 顧客 = DISTINCTCOUNT(ファクト[顧客ID])",
+                "pt": "DAX: Clientes = DISTINCTCOUNT(Fato[CustomerID])",
+                "ar": "DAX: العملاء = DISTINCTCOUNT(Fact[معرف العميل])",
+                "hi": "DAX: ग्राहक = DISTINCTCOUNT(तथ्य[ग्राहक आईडी])",
+                "ru": "DAX: Клиенты = DISTINCTCOUNT(Факт[CustomerID])"
+        },
+        "DAX: Total Revenue = SUM(Fact[Revenue])": {
+                "es": "DAX: Ingresos totales = SUMA(Hecho[Ingresos])",
+                "fr": "DAX : Revenu total = SOMME (Fait[Revenu])",
+                "de": "DAX: Gesamtumsatz = SUM(Fakt[Umsatz])",
+                "zh": "DAX：总收入 = SUM(事实[收入])",
+                "ja": "DAX: 総収益 = SUM(事実[収益])",
+                "pt": "DAX: Receita total = SOMA(fato[receita])",
+                "ar": "DAX: إجمالي الإيرادات = SUM(Fact[Revenue])",
+                "hi": "DAX: कुल राजस्व = SUM(तथ्य[राजस्व])",
+                "ru": "DAX: общий доход = СУММА(Факт[Доход])."
+        },
+        "DEADLINE": {
+                "es": "PLAZO",
+                "fr": "DATE LIMITE",
+                "de": "FRIST",
+                "zh": "截止日期",
+                "ja": "締め切り",
+                "pt": "PRAZO",
+                "ar": "الموعد النهائي",
+                "hi": "अंतिम तारीख",
+                "ru": "СРОК"
+        },
+        "Daily Churn Digest": {
+                "es": "Resumen diario de abandono",
+                "fr": "Résumé du désabonnement quotidien",
+                "de": "Täglicher Churn Digest",
+                "zh": "每日流失摘要",
+                "ja": "毎日のチャーンダイジェスト",
+                "pt": "Resumo diário de rotatividade",
+                "ar": "ملخص الاضطراب اليومي",
+                "hi": "दैनिक मंथन डाइजेस्ट",
+                "ru": "Ежедневный дайджест оттока"
+        },
+        "Dark Plum & Lime (Disruptor Tech)": {
+                "es": "Ciruela oscura y lima (tecnología disruptiva)",
+                "fr": "Prune foncée et citron vert (Disruptor Tech)",
+                "de": "Dunkle Pflaume und Limette (Disruptor Tech)",
+                "zh": "黑梅子和酸橙（Disruptor Tech）",
+                "ja": "ダークプラム＆ライム（ディスラプターテック）",
+                "pt": "Ameixa Escura e Limão (Tecnologia Disruptor)",
+                "ar": "البرقوق الداكن والليمون (Disruptor Tech)",
+                "hi": "डार्क प्लम और लाइम (डिसरप्टर टेक)",
+                "ru": "Темная слива и лайм (Disruptor Tech)"
+        },
+        "Dark Slate & Vivid Orange (Action Growth)": {
+                "es": "Pizarra oscura y naranja vivo (crecimiento de acción)",
+                "fr": "Ardoise foncée et orange vif (Action Growth)",
+                "de": "Dunkler Schiefer und leuchtendes Orange (Action Growth)",
+                "zh": "深石板色和鲜艳的橙色（行动增长）",
+                "ja": "ダークスレート＆ビビッドオレンジ（アクション成長）",
+                "pt": "Ardósia escura e laranja vívida (crescimento de ação)",
+                "ar": "حجر داكن وبرتقالي حيوي (نمو الحركة)",
+                "hi": "डार्क स्लेट और विविड ऑरेंज (एक्शन ग्रोथ)",
+                "ru": "Темно-серебристый и ярко-оранжевый (рост действия)"
+        },
+        "Dark Teal & Coral": {
+                "es": "Verde azulado oscuro y coral",
+                "fr": "Sarcelle foncé et corail",
+                "de": "Dunkles Blaugrün und Koralle",
+                "zh": "深青色和珊瑚色",
+                "ja": "ダークティール&コーラル",
+                "pt": "Azul-petróleo escuro e coral",
+                "ar": "الظلام البط البري والمرجان",
+                "hi": "डार्क चैती और मूंगा",
+                "ru": "Темно-бирюзовый и коралловый"
+        },
+        "Dark Teal & Coral (Modern Tech)": {
+                "es": "Verde azulado oscuro y coral (tecnología moderna)",
+                "fr": "Sarcelle foncé et corail (technologie moderne)",
+                "de": "Dunkles Blaugrün und Koralle (moderne Technologie)",
+                "zh": "深青色和珊瑚色（现代科技）",
+                "ja": "ダークティール&コーラル(モダンテック)",
+                "pt": "Azul-petróleo escuro e coral (tecnologia moderna)",
+                "ar": "البط البري الداكن والمرجاني (التكنولوجيا الحديثة)",
+                "hi": "डार्क टील और कोरल (आधुनिक तकनीक)",
+                "ru": "Темно-бирюзовый и коралловый (современные технологии)"
+        },
+        "Data Platform": {
+                "es": "Plataforma de datos",
+                "fr": "Plateforme de données",
+                "de": "Datenplattform",
+                "zh": "数据平台",
+                "ja": "データプラットフォーム",
+                "pt": "Plataforma de dados",
+                "ar": "منصة البيانات",
+                "hi": "डेटा प्लेटफार्म",
+                "ru": "Платформа данных"
+        },
+        "Data Schema & Template": {
+                "es": "Esquema y Plantilla de Datos",
+                "fr": "Schéma & Modèle de Données",
+                "de": "Datenschema & Vorlage",
+                "zh": "数据格式要求与模板",
+                "ja": "データ構造とテンプレート",
+                "pt": "Esquema e Modelo de Dados",
+                "ar": "هيكل البيانات والنموذج",
+                "hi": "डेटा स्कीमा और टेम्पलेट",
+                "ru": "Схема данных и шаблон"
+        },
+        "Data Source (.pbids)": {
+                "es": "Fuente de datos (.pbids)",
+                "fr": "Source de données (.pbids)",
+                "de": "Datenquelle (.pbids)",
+                "zh": "数据源（.pbids）",
+                "ja": "データソース (.pbids)",
+                "pt": "Fonte de dados (.pbids)",
+                "ar": "مصدر البيانات (pbids.)",
+                "hi": "डेटा स्रोत (.pbids)",
+                "ru": "Источник данных (.pbids)"
+        },
+        "Data Sources & Lakehouse Warehouse": {
+                "es": "Fuentes de datos y almacén de Lakehouse",
+                "fr": "Sources de données et entrepôt de Lakehouse",
+                "de": "Datenquellen und Lakehouse Warehouse",
+                "zh": "数据源和 Lakehouse 仓库",
+                "ja": "データソースとレイクハウスウェアハウス",
+                "pt": "Fontes de dados e armazém Lakehouse",
+                "ar": "مصادر البيانات ومستودع Lakehouse",
+                "hi": "डेटा स्रोत और लेकहाउस वेयरहाउस",
+                "ru": "Источники данных и хранилище Lakehouse"
+        },
+        "Dataset Reference:": {
+                "es": "Referencia del conjunto de datos:",
+                "fr": "Référence de l'ensemble de données :",
+                "de": "Datensatzreferenz:",
+                "zh": "数据集参考：",
+                "ja": "データセット参照:",
+                "pt": "Referência do conjunto de dados:",
+                "ar": "مرجع مجموعة البيانات:",
+                "hi": "डेटासेट संदर्भ:",
+                "ru": "Ссылка на набор данных:"
+        },
+        "Datasets": {
+                "es": "Conjuntos de datos",
+                "fr": "Ensembles de données",
+                "de": "Datensätze",
+                "zh": "数据集",
+                "ja": "データセット",
+                "pt": "Conjuntos de dados",
+                "ar": "مجموعات البيانات",
+                "hi": "डेटासेट",
+                "ru": "Наборы данных"
+        },
+        "Datasets Sidebar": {
+                "es": "Barra lateral de conjuntos de datos",
+                "fr": "Barre latérale des ensembles de données",
+                "de": "Seitenleiste „Datensätze“.",
+                "zh": "数据集侧边栏",
+                "ja": "データセットのサイドバー",
+                "pt": "Barra lateral de conjuntos de dados",
+                "ar": "الشريط الجانبي لمجموعات البيانات",
+                "hi": "डेटासेट साइडबार",
+                "ru": "Боковая панель «Наборы данных»"
+        },
+        "Decision Intelligence Pipeline Section": {
+                "es": "Sección de canalización de inteligencia de decisiones",
+                "fr": "Section du pipeline d’intelligence décisionnelle",
+                "de": "Abschnitt „Decision Intelligence Pipeline“.",
+                "zh": "决策智能管道部分",
+                "ja": "意思決定インテリジェンス パイプライン セクション",
+                "pt": "Seção do pipeline de inteligência de decisão",
+                "ar": "قسم خطوط أنابيب استخبارات القرار",
+                "hi": "निर्णय इंटेलिजेंस पाइपलाइन अनुभाग",
+                "ru": "Секция конвейера анализа решений"
+        },
+        "Dedicated Customer Deep-Dive Intelligence Modal": {
+                "es": "Modal de inteligencia de análisis profundo del cliente dedicado",
+                "fr": "Modal d'intelligence approfondie dédié aux clients",
+                "de": "Spezielles Kunden-Deep-Dive-Intelligence-Modal",
+                "zh": "专用客户深度挖掘情报模式",
+                "ja": "顧客専用の詳細なインテリジェンス モーダル",
+                "pt": "Modal dedicado de inteligência aprofundada do cliente",
+                "ar": "نموذج مخصص للاستخبارات العميقة للعملاء",
+                "hi": "समर्पित ग्राहक डीप-डाइव इंटेलिजेंस मॉडल",
+                "ru": "Модуль глубокого анализа данных для выделенных клиентов"
+        },
+        "Dedicated Power BI & Tableau BI Dashboard Modal": {
+                "es": "Modal de panel de control de Power BI y Tableau BI dedicado",
+                "fr": "Modal de tableau de bord Power BI et Tableau BI dédié",
+                "de": "Dediziertes Power BI- und Tableau BI-Dashboard-Modal",
+                "zh": "专用 Power BI 和 Tableau BI 仪表板模态",
+                "ja": "専用の Power BI および Tableau BI ダッシュボード モーダル",
+                "pt": "Modal de painel dedicado do Power BI e Tableau BI",
+                "ar": "نموذج مخصص للوحة معلومات Power BI وTableau BI",
+                "hi": "समर्पित पावर बीआई और झांकी बीआई डैशबोर्ड मॉडल",
+                "ru": "Выделенная модальная панель мониторинга Power BI и Tableau BI"
+        },
+        "Deep Charcoal & Signal Red (High Contrast)": {
+                "es": "Carbón intenso y rojo señal (alto contraste)",
+                "fr": "Charbon profond et rouge signal (contraste élevé)",
+                "de": "Tiefes Anthrazit und Signalrot (hoher Kontrast)",
+                "zh": "深炭色和信号红（高对比度）",
+                "ja": "ディープチャコール＆シグナルレッド（ハイコントラスト）",
+                "pt": "Carvão Profundo e Vermelho Sinal (Alto Contraste)",
+                "ar": "فحمي عميق وإشارة حمراء (تباين عالي)",
+                "hi": "गहरा चारकोल और सिग्नल लाल (उच्च कंट्रास्ट)",
+                "ru": "Глубокий уголь и сигнально-красный (высокий контраст)"
+        },
+        "Deep Ocean & Coastal Coral (Clean Maritime)": {
+                "es": "Océano profundo y coral costero (marítimo limpio)",
+                "fr": "Océan profond et corail côtier (Clean Maritime)",
+                "de": "Tiefsee- und Küstenkorallen (Clean Maritime)",
+                "zh": "深海和沿海珊瑚（清洁海洋）",
+                "ja": "深海と沿岸サンゴ (きれいな海洋)",
+                "pt": "Oceano profundo e coral costeiro (marítimo limpo)",
+                "ar": "أعماق المحيطات والمرجان الساحلي (البحري النظيف)",
+                "hi": "गहरा महासागर एवं तटीय मूंगा (स्वच्छ समुद्री)",
+                "ru": "Глубокий океан и прибрежные кораллы (Чистое море)"
+        },
+        "Deep Petrol & Sunset (Dynamic SaaS)": {
+                "es": "Deep Petrol & Sunset (SaaS dinámico)",
+                "fr": "Deep Petrol & Sunset (SaaS dynamique)",
+                "de": "Deep Petrol & Sunset (Dynamisches SaaS)",
+                "zh": "Deep Petrol & Sunset（动态 SaaS）",
+                "ja": "Deep Petrol & Sunset (動的 SaaS)",
+                "pt": "Deep Petrol & Sunset (SaaS dinâmico)",
+                "ar": "البنزين العميق وغروب الشمس (SaaS الديناميكي)",
+                "hi": "गहरा पेट्रोल और सूर्यास्त (गतिशील सास)",
+                "ru": "Deep Petrol и Sunset (динамический SaaS)"
+        },
+        "Deep Plum & Emerald Teal (Analytics & AI)": {
+                "es": "Ciruela profunda y verde azulado esmeralda (análisis e inteligencia artificial)",
+                "fr": "Prune profonde et sarcelle émeraude (analyses et IA)",
+                "de": "Tiefes Pflaumen- und Smaragdgrün (Analyse und KI)",
+                "zh": "深梅子色和翡翠青色（分析和人工智能）",
+                "ja": "ディープ プラム & エメラルド ティール (分析 & AI)",
+                "pt": "Deep Plum e Emerald Teal (Analítica e IA)",
+                "ar": "البرقوق العميق والزمرد البط البري (التحليلات والذكاء الاصطناعي)",
+                "hi": "डीप प्लम और एमराल्ड टील (एनालिटिक्स और एआई)",
+                "ru": "Темно-сливовый и изумрудно-бирюзовый (аналитика и искусственный интеллект)"
+        },
+        "Deep Violet & Vivid Purple (Creative Bold)": {
+                "es": "Violeta intenso y morado intenso (creativo en negrita)",
+                "fr": "Violet profond et violet vif (Creative Bold)",
+                "de": "Tiefes Violett und lebendiges Lila (Creative Bold)",
+                "zh": "深紫罗兰色和鲜艳紫色（创意大胆）",
+                "ja": "ディープバイオレット＆ビビッドパープル（クリエイティブボールド）",
+                "pt": "Violeta profundo e roxo vívido (negrito criativo)",
+                "ar": "البنفسجي العميق والأرجواني الزاهي (Creative Bold)",
+                "hi": "गहरा बैंगनी और चमकीला बैंगनी (क्रिएटिव बोल्ड)",
+                "ru": "Глубокий фиолетовый и яркий фиолетовый (креативный жирный оттенок)"
+        },
+        "Delayed Payments": {
+                "es": "Pagos retrasados",
+                "fr": "Paiements retardés",
+                "de": "Verzögerte Zahlungen",
+                "zh": "延迟付款",
+                "ja": "支払いの遅延",
+                "pt": "Pagamentos atrasados",
+                "ar": "المدفوعات المتأخرة",
+                "hi": "विलंबित भुगतान",
+                "ru": "Отсроченные платежи"
+        },
+        "Delete": {
+                "es": "Eliminar",
+                "fr": "Supprimer",
+                "de": "Löschen",
+                "zh": "删除",
+                "ja": "削除",
+                "pt": "Excluir",
+                "ar": "حذف",
+                "hi": "हटाएँ",
+                "ru": "Удалить"
+        },
+        "Delete Slide": {
+                "es": "Eliminar diapositiva",
+                "fr": "Supprimer la diapositive",
+                "de": "Folie löschen",
+                "zh": "删除幻灯片",
+                "ja": "スライドの削除",
+                "pt": "Excluir slide",
+                "ar": "حذف الشريحة",
+                "hi": "स्लाइड हटाएँ",
+                "ru": "Удалить слайд"
+        },
+        "Dense": {
+                "es": "Denso",
+                "fr": "Dense",
+                "de": "Dicht",
+                "zh": "密集",
+                "ja": "密集",
+                "pt": "Denso",
+                "ar": "كثيفة",
+                "hi": "घना",
+                "ru": "Плотный"
+        },
+        "Density": {
+                "es": "densidad",
+                "fr": "Densité",
+                "de": "Dichte",
+                "zh": "密度",
+                "ja": "密度",
+                "pt": "Densidade",
+                "ar": "الكثافة",
+                "hi": "घनत्व",
+                "ru": "Плотность"
+        },
+        "Describe photo, illustration, or animation...": {
+                "es": "Describe una fotografía, ilustración o animación...",
+                "fr": "Décrivez une photo, une illustration ou une animation...",
+                "de": "Beschreiben Sie das Foto, die Illustration oder die Animation...",
+                "zh": "描述照片、插图或动画...",
+                "ja": "写真、イラスト、アニメーションについて説明します...",
+                "pt": "Descreva foto, ilustração ou animação...",
+                "ar": "وصف الصورة أو الرسم التوضيحي أو الرسوم المتحركة...",
+                "hi": "फोटो, चित्रण, या एनीमेशन का वर्णन करें...",
+                "ru": "Опишите фотографию, иллюстрацию или анимацию..."
+        },
+        "Deutsch": {
+                "es": "alemán",
+                "fr": "Allemand",
+                "de": "Deutsch",
+                "zh": "德语",
+                "ja": "ドイツ語",
+                "pt": "Alemão",
+                "ar": "الألمانية",
+                "hi": "जर्मन",
+                "ru": "немецкий"
+        },
+        "DimCustomer": {
+                "es": "Cliente tenue",
+                "fr": "DimClient",
+                "de": "DimCustomer",
+                "zh": "暗淡的顾客",
+                "ja": "ディムカスタマー",
+                "pt": "DimCustomer",
+                "ar": "DimCustomer",
+                "hi": "मंद ग्राहक",
+                "ru": "DimCustomer"
+        },
+        "DimDate (Calendar)": {
+                "es": "DimDate (Calendario)",
+                "fr": "DimDate (Calendrier)",
+                "de": "DimDate (Kalender)",
+                "zh": "DimDate（日历）",
+                "ja": "DimDate (カレンダー)",
+                "pt": "DimDate (calendário)",
+                "ar": "DimDate (التقويم)",
+                "hi": "डिमडेट (कैलेंडर)",
+                "ru": "Димдате (календарь)"
+        },
+        "DimProduct": {
+                "es": "Producto tenue",
+                "fr": "DimProduit",
+                "de": "DimProduct",
+                "zh": "暗淡产品",
+                "ja": "DimProduct",
+                "pt": "DimProduto",
+                "ar": "DimProduct",
+                "hi": "मंद उत्पाद",
+                "ru": "ДимПродукт"
+        },
+        "DimRegion": {
+                "es": "Región tenue",
+                "fr": "DimRégion",
+                "de": "DimRegion",
+                "zh": "暗淡区域",
+                "ja": "ディムリージョン",
+                "pt": "Região escura",
+                "ar": "منطقة خافتة",
+                "hi": "मंदक्षेत्र",
+                "ru": "ДимРегион"
+        },
+        "Direct cloud sync via Azure AD Client Credentials": {
+                "es": "Sincronización directa en la nube a través de credenciales de cliente de Azure AD",
+                "fr": "Synchronisation directe dans le cloud via les informations d'identification du client Azure AD",
+                "de": "Direkte Cloud-Synchronisierung über Azure AD-Client-Anmeldeinformationen",
+                "zh": "通过 Azure AD 客户端凭据直接云同步",
+                "ja": "Azure AD クライアント資格情報を介した直接クラウド同期",
+                "pt": "Sincronização direta na nuvem por meio de credenciais de cliente do Azure AD",
+                "ar": "المزامنة السحابية المباشرة عبر بيانات اعتماد عميل Azure AD",
+                "hi": "Azure AD क्लाइंट क्रेडेंशियल के माध्यम से डायरेक्ट क्लाउड सिंक",
+                "ru": "Прямая синхронизация с облаком через учетные данные клиента Azure AD."
+        },
+        "Direct cloud sync via Personal Access Token (PAT)": {
+                "es": "Sincronización directa en la nube mediante token de acceso personal (PAT)",
+                "fr": "Synchronisation directe dans le cloud via un jeton d'accès personnel (PAT)",
+                "de": "Direkte Cloud-Synchronisierung über Personal Access Token (PAT)",
+                "zh": "通过个人访问令牌 (PAT) 直接云同步",
+                "ja": "パーソナル アクセス トークン (PAT) を介した直接クラウド同期",
+                "pt": "Sincronização direta na nuvem via token de acesso pessoal (PAT)",
+                "ar": "المزامنة السحابية المباشرة عبر رمز الوصول الشخصي (PAT)",
+                "hi": "पर्सनल एक्सेस टोकन (PAT) के माध्यम से डायरेक्ट क्लाउड सिंक",
+                "ru": "Прямая синхронизация с облаком с помощью токена личного доступа (PAT)"
+        },
+        "Direct connection file to link Power BI directly to your live SQLite feed.": {
+                "es": "Archivo de conexión directa para vincular Power BI directamente a su fuente SQLite en vivo.",
+                "fr": "Fichier de connexion directe pour lier Power BI directement à votre flux SQLite en direct.",
+                "de": "Direkte Verbindungsdatei, um Power BI direkt mit Ihrem Live-SQLite-Feed zu verknüpfen.",
+                "zh": "直接连接文件将 Power BI 直接链接到实时 SQLite 源。",
+                "ja": "Power BI をライブ SQLite フィードに直接リンクするための直接接続ファイル。",
+                "pt": "Arquivo de conexão direta para vincular o Power BI diretamente ao seu feed SQLite ativo.",
+                "ar": "ملف اتصال مباشر لربط Power BI مباشرة بموجز SQLite المباشر الخاص بك.",
+                "hi": "Power BI को सीधे आपके लाइव SQLite फ़ीड से लिंक करने के लिए डायरेक्ट कनेक्शन फ़ाइल।",
+                "ru": "Файл прямого подключения для прямой связи Power BI с вашим активным каналом SQLite."
+        },
+        "Discount on monthly charge to incentivize retention": {
+                "es": "Descuento en el cargo mensual para incentivar la retención",
+                "fr": "Remise sur les frais mensuels pour encourager la rétention",
+                "de": "Rabatt auf die monatliche Gebühr, um einen Anreiz zur Kundenbindung zu schaffen",
+                "zh": "月费折扣以激励保留",
+                "ja": "維持を促進するための月額料金の割引",
+                "pt": "Desconto na mensalidade para incentivar a retenção",
+                "ar": "خصم على الرسوم الشهرية لتحفيز الاحتفاظ",
+                "hi": "प्रतिधारण को प्रोत्साहित करने के लिए मासिक शुल्क पर छूट",
+                "ru": "Скидка на ежемесячную плату для стимулирования удержания"
+        },
+        "Down": {
+                "es": "abajo",
+                "fr": "Vers le bas",
+                "de": "Runter",
+                "zh": "向下",
+                "ja": "ダウン",
+                "pt": "Para baixo",
+                "ar": "أسفل",
+                "hi": "नीचे",
+                "ru": "Вниз"
+        },
+        "Download .pbids": {
+                "es": "Descargar .pbids",
+                "fr": "Télécharger .pbids",
+                "de": "Laden Sie .pbids herunter",
+                "zh": "下载.pbids",
+                "ja": ".pbidsをダウンロード",
+                "pt": "Baixar .pbids",
+                "ar": "تحميل .pbids",
+                "hi": ".pbids डाउनलोड करें",
+                "ru": "Скачать .pbids"
+        },
+        "Download .pbit": {
+                "es": "Descargar .pbit",
+                "fr": "Télécharger .pbit",
+                "de": "Laden Sie .pbit herunter",
+                "zh": "下载.pbit",
+                "ja": ".pbitをダウンロード",
+                "pt": "Baixar .pbit",
+                "ar": "تحميل .pbit",
+                "hi": ".pbit डाउनलोड करें",
+                "ru": "Скачать .pbit"
+        },
+        "Download CSV Template": {
+                "es": "Descargar Plantilla CSV",
+                "fr": "Télécharger Modèle CSV",
+                "de": "CSV-Vorlage herunterladen",
+                "zh": "下载 CSV 模板",
+                "ja": "CSVテンプレートをダウンロード",
+                "pt": "Baixar Modelo CSV",
+                "ar": "تحميل نموذج CSV",
+                "hi": "CSV टेम्पलेट डाउनलोड करें",
+                "ru": "Скачать шаблон CSV"
+        },
+        "Download Clean HTML Deck": {
+                "es": "Descargar HTML Limpio",
+                "fr": "Télécharger HTML Épuré",
+                "de": "HTML herunterladen",
+                "zh": "下载独立 HTML 演示文稿",
+                "ja": "HTMLをダウンロード",
+                "pt": "Baixar HTML Limpo",
+                "ar": "تحميل ملف HTML نظيف",
+                "hi": "HTML डाउनलोड करें",
+                "ru": "Скачать чистый HTML"
+        },
+        "Download M-Script": {
+                "es": "Descargar M-Script",
+                "fr": "Télécharger M-Script",
+                "de": "Laden Sie M-Script herunter",
+                "zh": "下载 M 脚本",
+                "ja": "Mスクリプトをダウンロード",
+                "pt": "Baixar M-Script",
+                "ar": "تحميل إم سكريبت",
+                "hi": "एम-स्क्रिप्ट डाउनलोड करें",
+                "ru": "Скачать M-скрипт"
+        },
+        "Download PPTX Deck": {
+                "es": "Descargar PPTX",
+                "fr": "Télécharger PPTX",
+                "de": "PPTX herunterladen",
+                "zh": "下载 PPTX 演示文稿",
+                "ja": "PPTXをダウンロード",
+                "pt": "Baixar PPTX",
+                "ar": "تحميل عرض PPTX",
+                "hi": "PPTX डाउनलोड करें",
+                "ru": "Скачать PPTX"
+        },
+        "Download current filtered customer rows as CSV": {
+                "es": "Descargue las filas de clientes filtradas actuales como CSV",
+                "fr": "Télécharger les lignes clients filtrées actuelles au format CSV",
+                "de": "Laden Sie aktuelle gefilterte Kundenzeilen als CSV herunter",
+                "zh": "将当前筛选的客户行下载为 CSV 格式",
+                "ja": "現在フィルタリングされた顧客行を CSV としてダウンロード",
+                "pt": "Baixe as linhas de clientes filtradas atuais como CSV",
+                "ar": "قم بتنزيل صفوف العملاء التي تمت تصفيتها الحالية كملف CSV",
+                "hi": "वर्तमान फ़िल्टर की गई ग्राहक पंक्तियों को CSV के रूप में डाउनलोड करें",
+                "ru": "Загрузите текущие отфильтрованные строки клиентов в формате CSV."
+        },
+        "Download full Star Schema PBIP package": {
+                "es": "Descargue el paquete PBIP completo de Star Schema",
+                "fr": "Téléchargez le package PBIP Star Schema complet",
+                "de": "Laden Sie das vollständige Star Schema PBIP-Paket herunter",
+                "zh": "下载完整的星型模式 PBIP 包",
+                "ja": "完全なスター スキーマ PBIP パッケージをダウンロード",
+                "pt": "Baixe o pacote Star Schema PBIP completo",
+                "ar": "قم بتنزيل حزمة Star Schema PBIP الكاملة",
+                "hi": "पूर्ण स्टार स्कीमा पीबीआईपी पैकेज डाउनलोड करें",
+                "ru": "Загрузите полный пакет PBIP Star Schema"
+        },
+        "Downloading Fallback CSVs + DAX package...": {
+                "es": "Descargando el paquete CSV alternativo + DAX...",
+                "fr": "Téléchargement des CSV de secours + package DAX...",
+                "de": "Fallback-CSVs + DAX-Paket werden heruntergeladen ...",
+                "zh": "正在下载后备 CSV + DAX 包...",
+                "ja": "フォールバック CSV + DAX パッケージをダウンロードしています...",
+                "pt": "Baixando CSVs substitutos + pacote DAX...",
+                "ar": "جارٍ تنزيل حزمة Fallback CSVs + DAX...",
+                "hi": "फ़ॉलबैक CSVs + DAX पैकेज डाउनलोड हो रहा है...",
+                "ru": "Загрузка резервного пакета CSV + DAX..."
+        },
+        "Downloading Fallback CSVs + Formulas...": {
+                "es": "Descargando CSV y fórmulas alternativas...",
+                "fr": "Téléchargement des CSV de secours + formules...",
+                "de": "Fallback-CSVs und Formeln werden heruntergeladen ...",
+                "zh": "正在下载后备 CSV + 公式...",
+                "ja": "フォールバック CSV と数式をダウンロードしています...",
+                "pt": "Baixando CSVs substitutos + fórmulas...",
+                "ar": "جارٍ تنزيل ملفات CSV الاحتياطية + الصيغ...",
+                "hi": "फ़ॉलबैक सीएसवी + फ़ॉर्मूले डाउनलोड हो रहे हैं...",
+                "ru": "Загрузка резервных CSV-файлов и формул..."
+        },
+        "Downloading Power BI Data Source (.pbids)...": {
+                "es": "Descargando fuente de datos de Power BI (.pbids)...",
+                "fr": "Téléchargement de la source de données Power BI (.pbids)...",
+                "de": "Power BI-Datenquelle (.pbids) wird heruntergeladen...",
+                "zh": "正在下载 Power BI 数据源 (.pbids)...",
+                "ja": "Power BI データ ソース (.pbids) をダウンロードしています...",
+                "pt": "Baixando fonte de dados do Power BI (.pbids)...",
+                "ar": "جارٍ تنزيل مصدر بيانات Power BI (.pbids)...",
+                "hi": "Power BI डेटा स्रोत (.pbids) डाउनलोड हो रहा है...",
+                "ru": "Загрузка источника данных Power BI (.pbids)..."
+        },
+        "Downloading Power BI Project Package (.pbip)...": {
+                "es": "Descargando el paquete de proyecto Power BI (.pbip)...",
+                "fr": "Téléchargement du package de projet Power BI (.pbip)...",
+                "de": "Power BI-Projektpaket (.pbip) wird heruntergeladen...",
+                "zh": "正在下载 Power BI 项目包 (.pbip)...",
+                "ja": "Power BI プロジェクト パッケージ (.pbip) をダウンロードしています...",
+                "pt": "Baixando o pacote de projeto do Power BI (.pbip)...",
+                "ar": "جارٍ تنزيل حزمة مشروع Power BI (.pbip)...",
+                "hi": "Power BI प्रोजेक्ट पैकेज (.pbip) डाउनलोड हो रहा है...",
+                "ru": "Загрузка пакета проекта Power BI (.pbip)..."
+        },
+        "Downloading Power BI Template (.pbit)...": {
+                "es": "Descargando plantilla de Power BI (.pbit)...",
+                "fr": "Téléchargement du modèle Power BI (.pbit)...",
+                "de": "Power BI-Vorlage (.pbit) wird heruntergeladen...",
+                "zh": "正在下载 Power BI 模板 (.pbit)...",
+                "ja": "Power BI テンプレート (.pbit) をダウンロードしています...",
+                "pt": "Baixando modelo do Power BI (.pbit)...",
+                "ar": "جارٍ تنزيل قالب Power BI (.pbit)...",
+                "hi": "पावर बीआई टेम्पलेट (.pbit) डाउनलोड हो रहा है...",
+                "ru": "Загрузка шаблона Power BI (.pbit)..."
+        },
+        "Downloading Tableau Packaged Workbook (.twbx)...": {
+                "es": "Descargando el libro de trabajo empaquetado de Tableau (.twbx)...",
+                "fr": "Téléchargement du classeur intégré Tableau (.twbx)...",
+                "de": "Tableau Packaged Workbook (.twbx) wird heruntergeladen ...",
+                "zh": "正在下载 Tableau 打包工作簿 (.twbx)...",
+                "ja": "Tableau パッケージ化されたワークブック (.twbx) をダウンロードしています...",
+                "pt": "Baixando a pasta de trabalho em pacote do Tableau (.twbx)...",
+                "ar": "جارٍ تنزيل مصنف Tableau المعبأ (.twbx)...",
+                "hi": "झांकी पैकेज्ड वर्कबुक (.twbx) डाउनलोड हो रही है...",
+                "ru": "Загрузка упакованной книги Tableau (.twbx)..."
+        },
+        "Downloading Tableau XML Workbook (.twb)...": {
+                "es": "Descargando el libro de trabajo XML de Tableau (.twb)...",
+                "fr": "Téléchargement du classeur XML Tableau (.twb)...",
+                "de": "Tableau XML-Arbeitsmappe (.twb) wird heruntergeladen...",
+                "zh": "正在下载 Tableau XML 工作簿 (.twb)...",
+                "ja": "Tableau XML ワークブック (.twb) をダウンロードしています...",
+                "pt": "Baixando a pasta de trabalho XML do Tableau (.twb)...",
+                "ar": "جارٍ تنزيل مصنف Tableau XML (.twb)...",
+                "hi": "Tableau XML वर्कबुक (.twb) डाउनलोड हो रहा है...",
+                "ru": "Загрузка книги Tableau XML (.twb)..."
+        },
+        "Driver Breakdown": {
+                "es": "Avería del conductor",
+                "fr": "Panne du pilote",
+                "de": "Fahrerpanne",
+                "zh": "驱动器故障",
+                "ja": "ドライバーの内訳",
+                "pt": "Avaria do motorista",
+                "ar": "انهيار السائق",
+                "hi": "ड्राइवर का टूटना",
+                "ru": "Поломка драйвера"
+        },
+        "Drivers Analysis": {
+                "es": "Análisis de conductores",
+                "fr": "Analyse des pilotes",
+                "de": "Treiberanalyse",
+                "zh": "驱动因素分析",
+                "ja": "ドライバーの分析",
+                "pt": "Análise de Drivers",
+                "ar": "تحليل السائقين",
+                "hi": "ड्राइवर विश्लेषण",
+                "ru": "Анализ драйверов"
+        },
+        "Duplicate": {
+                "es": "Duplicar",
+                "fr": "Dupliquer",
+                "de": "Duplizieren",
+                "zh": "重复",
+                "ja": "重複",
+                "pt": "Duplicar",
+                "ar": "مكررة",
+                "hi": "डुप्लिकेट",
+                "ru": "Дублировать"
+        },
+        "Dynamic Copyright-Free Media Hub & AI Generator": {
+                "es": "Centro de medios dinámico sin derechos de autor y generador de IA",
+                "fr": "Hub multimédia dynamique et générateur d'IA sans droits d'auteur",
+                "de": "Dynamischer, urheberrechtsfreier Media Hub und KI-Generator",
+                "zh": "动态无版权媒体中心和人工智能生成器",
+                "ja": "ダイナミックな著作権フリーのメディア ハブ & AI ジェネレーター",
+                "pt": "Hub de mídia dinâmico e livre de direitos autorais e gerador de IA",
+                "ar": "مركز الوسائط الديناميكي الخالي من حقوق الطبع والنشر ومولد الذكاء الاصطناعي",
+                "hi": "डायनामिक कॉपीराइट-मुक्त मीडिया हब और एआई जेनरेटर",
+                "ru": "Динамический медиацентр без авторских прав и генератор искусственного интеллекта"
+        },
+        "Dynamic problem cards are rendered here": {
+                "es": "Las tarjetas de problemas dinámicos se representan aquí.",
+                "fr": "Les cartes de problèmes dynamiques sont rendues ici",
+                "de": "Hier werden dynamische Problemkarten gerendert",
+                "zh": "此处呈现动态问题卡",
+                "ja": "動的な問題カードがここに表示されます",
+                "pt": "Cartões de problemas dinâmicos são renderizados aqui",
+                "ar": "يتم تقديم بطاقات المشكلة الديناميكية هنا",
+                "hi": "गतिशील समस्या कार्ड यहां प्रस्तुत किए गए हैं",
+                "ru": "Здесь отображаются динамические карточки задач."
+        },
+        "Dynamically rendered customer scorecard & telemetry": {
+                "es": "Telemetría y cuadro de mando del cliente renderizado dinámicamente",
+                "fr": "Carte de pointage client et télémétrie rendues dynamiquement",
+                "de": "Dynamisch gerenderte Kunden-Scorecard und Telemetrie",
+                "zh": "动态呈现的客户记分卡和遥测",
+                "ja": "動的にレンダリングされた顧客スコアカードとテレメトリー",
+                "pt": "Scorecard e telemetria do cliente renderizados dinamicamente",
+                "ar": "يتم تقديم بطاقة أداء العملاء والقياس عن بعد ديناميكيًا",
+                "hi": "गतिशील रूप से प्रस्तुत ग्राहक स्कोरकार्ड और टेलीमेट्री",
+                "ru": "Динамически отображаемая система показателей и телеметрия клиентов"
+        },
+        "E.g. NRR, conversion rate": {
+                "es": "Por ej. NRR, tasa de conversión",
+                "fr": "Par ex. TNR, taux de conversion",
+                "de": "Z.B. NRR, Conversion-Rate",
+                "zh": "例如NRR、转化率",
+                "ja": "例： NRR、コンバージョン率",
+                "pt": "Por exemplo NRR, taxa de conversão",
+                "ar": "على سبيل المثال NRR، معدل التحويل",
+                "hi": "जैसे एनआरआर, रूपांतरण दर",
+                "ru": "например NRR, коэффициент конверсии"
+        },
+        "E.g. Sarah Jenkins": {
+                "es": "Por ej. Sara Jenkins",
+                "fr": "Par ex. Sarah Jenkins",
+                "de": "Z.B. Sarah Jenkins",
+                "zh": "例如萨拉·詹金斯",
+                "ja": "例：サラ・ジェンキンス",
+                "pt": "Por exemplo Sarah Jenkins",
+                "ar": "على سبيل المثال سارة جنكينز",
+                "hi": "जैसे सारा जेनकिंस",
+                "ru": "например Сара Дженкинс"
+        },
+        "EUR (€)": {
+                "es": "euros (€)",
+                "fr": "EUR (€)",
+                "de": "EUR (€)",
+                "zh": "欧元 (€)",
+                "ja": "ユーロ (ユーロ)",
+                "pt": "EUR (€)",
+                "ar": "يورو (€)",
+                "hi": "यूरो (€)",
+                "ru": "евро (€)"
+        },
+        "EXPECTED IMPACT": {
+                "es": "IMPACTO ESPERADO",
+                "fr": "IMPACT ATTENDU",
+                "de": "ERWARTETE AUSWIRKUNG",
+                "zh": "预期影响",
+                "ja": "予想される影響",
+                "pt": "IMPACTO ESPERADO",
+                "ar": "التأثير المتوقع",
+                "hi": "अपेक्षित प्रभाव",
+                "ru": "ОЖИДАЕМОЕ ВОЗДЕЙСТВИЕ"
+        },
+        "Empowers cross-functional team roles (Sales, Support, Executive, Manager) with dedicated action panels, automatic email dispatchers, and task managers.": {
+                "es": "Potencia los roles de equipo multifuncional (Ventas, Soporte, Ejecutivo, Gerente) con paneles de acción dedicados, despachadores automáticos de correo electrónico y administradores de tareas.",
+                "fr": "Renforce les rôles d'équipe interfonctionnels (ventes, support, cadre, responsable) avec des panneaux d'action dédiés, des répartiteurs automatiques d'e-mails et des gestionnaires de tâches.",
+                "de": "Ermöglicht funktionsübergreifende Teamrollen (Vertrieb, Support, Führungskraft, Manager) mit speziellen Aktionsfeldern, automatischen E-Mail-Verteilern und Aufgabenmanagern.",
+                "zh": "通过专用操作面板、自动电子邮件调度程序和任务管理器，为跨职能团队角色（销售、支持、执行、经理）提供支持。",
+                "ja": "専用のアクション パネル、自動電子メール ディスパッチャー、タスク マネージャーを使用して、部門を超えたチームの役割 (営業、サポート、エグゼクティブ、マネージャー) を強化します。",
+                "pt": "Capacita funções de equipe multifuncional (Vendas, Suporte, Executivo, Gerente) com painéis de ação dedicados, despachantes automáticos de e-mail e gerenciadores de tarefas.",
+                "ar": "تمكين أدوار الفريق متعددة الوظائف (المبيعات، الدعم، المدير التنفيذي، المدير) من خلال لوحات عمل مخصصة ومرسلي البريد الإلكتروني التلقائي ومديري المهام.",
+                "hi": "समर्पित एक्शन पैनल, स्वचालित ईमेल डिस्पैचर और कार्य प्रबंधकों के साथ क्रॉस-फ़ंक्शनल टीम भूमिकाओं (बिक्री, समर्थन, कार्यकारी, प्रबंधक) को सशक्त बनाता है।",
+                "ru": "Расширяет возможности межфункциональных командных ролей (продажи, поддержка, руководитель, менеджер) с помощью специальных панелей действий, автоматических диспетчеров электронной почты и менеджеров задач."
+        },
+        "English": {
+                "es": "ingles",
+                "fr": "Anglais",
+                "de": "Englisch",
+                "zh": "英语",
+                "ja": "英語",
+                "pt": "Inglês",
+                "ar": "الإنجليزية",
+                "hi": "अंग्रेजी",
+                "ru": "английский"
+        },
+        "Enter": {
+                "es": "Entrar",
+                "fr": "Entrez",
+                "de": "Treten Sie ein",
+                "zh": "输入",
+                "ja": "入力してください",
+                "pt": "Entrar",
+                "ar": "أدخل",
+                "hi": "दर्ज करें",
+                "ru": "Войти"
+        },
+        "Enter custom deck instructions (e.g., Focus on support tickets, CFO presentation)...": {
+                "es": "Ingrese instrucciones de presentación personalizadas (por ejemplo, centrarse en tickets de soporte, presentación del director financiero)...",
+                "fr": "Saisissez les instructions personnalisées (par exemple, tickets de support Focus sur, présentation du CFO)...",
+                "de": "Geben Sie benutzerdefinierte Präsentationsanweisungen ein (z. B. Fokus auf Support-Tickets, CFO-Präsentation) ...",
+                "zh": "输入自定义说明（例如，关注支持请求、CFO 演示）...",
+                "ja": "カスタムデッキの指示を入力します (例: サポートチケットに焦点を当てる、CFO プレゼンテーション)...",
+                "pt": "Insira instruções personalizadas (por exemplo, foco em tickets de suporte, apresentação do CFO)...",
+                "ar": "أدخل تعليمات المجموعة المخصصة (على سبيل المثال، التركيز على تذاكر الدعم، والعرض التقديمي للمدير المالي)...",
+                "hi": "कस्टम डेक निर्देश दर्ज करें (उदाहरण के लिए, समर्थन टिकटों पर ध्यान दें, सीएफओ प्रस्तुति)...",
+                "ru": "Введите специальные инструкции для колоды (например, «Сосредоточьтесь на обращениях в службу поддержки», «Презентация финансового директора»)..."
+        },
+        "Enter slide points...": {
+                "es": "Introducir puntos de diapositiva...",
+                "fr": "Entrez les points de glissement...",
+                "de": "Folienpunkte eingeben...",
+                "zh": "输入滑动点...",
+                "ja": "スライドポイントを入力してください...",
+                "pt": "Insira pontos de deslizamento...",
+                "ar": "أدخل نقاط الشريحة...",
+                "hi": "स्लाइड बिंदु दर्ज करें...",
+                "ru": "Введите точки слайда..."
+        },
+        "Enter slide subtitle...": {
+                "es": "Introduzca el subtítulo de la diapositiva...",
+                "fr": "Saisissez le sous-titre de la diapositive...",
+                "de": "Untertitel der Folie eingeben...",
+                "zh": "输入幻灯片字幕...",
+                "ja": "スライドのサブタイトルを入力...",
+                "pt": "Insira a legenda do slide...",
+                "ar": "أدخل عنوانًا فرعيًا للشريحة...",
+                "hi": "स्लाइड उपशीर्षक दर्ज करें...",
+                "ru": "Введите подзаголовок слайда..."
+        },
+        "Enter slide title...": {
+                "es": "Introduzca el título de la diapositiva...",
+                "fr": "Entrez le titre de la diapositive...",
+                "de": "Folientitel eingeben...",
+                "zh": "输入幻灯片标题...",
+                "ja": "スライドのタイトルを入力してください...",
+                "pt": "Insira o título do slide...",
+                "ar": "أدخل عنوان الشريحة...",
+                "hi": "स्लाइड शीर्षक दर्ज करें...",
+                "ru": "Введите название слайда..."
+        },
+        "Enterprise Control Center": {
+                "es": "Centro de control empresarial",
+                "fr": "Centre de contrôle d'entreprise",
+                "de": "Unternehmenskontrollzentrum",
+                "zh": "企业控制中心",
+                "ja": "エンタープライズ コントロール センター",
+                "pt": "Centro de controle empresarial",
+                "ar": "مركز التحكم في المؤسسة",
+                "hi": "उद्यम नियंत्रण केंद्र",
+                "ru": "Центр управления предприятием"
+        },
+        "Enterprise Diagnostics": {
+                "es": "Diagnóstico empresarial",
+                "fr": "Diagnostic d'entreprise",
+                "de": "Unternehmensdiagnose",
+                "zh": "企业诊断",
+                "ja": "エンタープライズ診断",
+                "pt": "Diagnóstico Empresarial",
+                "ar": "تشخيص المؤسسة",
+                "hi": "एंटरप्राइज डायग्नोस्टिक्स",
+                "ru": "Диагностика предприятия"
+        },
+        "Enterprise Integrations & Automated Reports": {
+                "es": "Integraciones empresariales e informes automatizados",
+                "fr": "Intégrations d'entreprise et rapports automatisés",
+                "de": "Unternehmensintegrationen und automatisierte Berichte",
+                "zh": "企业集成和自动化报告",
+                "ja": "エンタープライズ統合と自動レポート",
+                "pt": "Integrações empresariais e relatórios automatizados",
+                "ar": "التكامل المؤسسي والتقارير الآلية",
+                "hi": "एंटरप्राइज़ एकीकरण और स्वचालित रिपोर्ट",
+                "ru": "Корпоративная интеграция и автоматизированные отчеты"
+        },
+        "Enterprise Suite": {
+                "es": "Suite empresarial",
+                "fr": "Suite Entreprise",
+                "de": "Enterprise-Suite",
+                "zh": "企业套件",
+                "ja": "エンタープライズ スイート",
+                "pt": "Suíte Empresarial",
+                "ar": "جناح المؤسسة",
+                "hi": "एंटरप्राइज सुइट",
+                "ru": "Корпоративный пакет"
+        },
+        "Eradicates manual upload processes by feeding churn alerts directly into your existing enterprise stack.": {
+                "es": "Erradica los procesos de carga manual al enviar alertas de abandono directamente a su pila empresarial existente.",
+                "fr": "Éradique les processus de téléchargement manuel en introduisant des alertes de désabonnement directement dans votre pile d'entreprise existante.",
+                "de": "Eliminiert manuelle Upload-Prozesse, indem Abwanderungswarnungen direkt in Ihren bestehenden Unternehmens-Stack eingespeist werden.",
+                "zh": "通过将流失警报直接发送到现有的企业堆栈中，消除手动上传流程。",
+                "ja": "既存のエンタープライズ スタックにチャーン アラートを直接送信することで、手動アップロード プロセスを排除します。",
+                "pt": "Elimina processos manuais de upload, alimentando alertas de rotatividade diretamente em sua pilha corporativa existente.",
+                "ar": "يقضي على عمليات التحميل اليدوية عن طريق تغذية تنبيهات التوقف مباشرة في حزمة مؤسستك الحالية.",
+                "hi": "आपके मौजूदा एंटरप्राइज़ स्टैक में सीधे मंथन अलर्ट फ़ीड करके मैन्युअल अपलोड प्रक्रियाओं को समाप्त करता है।",
+                "ru": "Устраняет процессы ручной загрузки, подавая оповещения об оттоке непосредственно в существующий корпоративный стек."
+        },
+        "Español": {
+                "es": "Español",
+                "fr": "espagnol",
+                "de": "Spanisch",
+                "zh": "西班牙语",
+                "ja": "スペイン語",
+                "pt": "Espanhol",
+                "ar": "الاسبانية",
+                "hi": "Español",
+                "ru": "испанский"
+        },
+        "Espresso & Copper Sienna (Heritage Artisanal)": {
+                "es": "Espresso & Copper Sienna (Patrimonio Artesanal)",
+                "fr": "Espresso & Cuivre Sienne (Héritage Artisanal)",
+                "de": "Espresso & Kupfer-Siena (Heritage Artisanal)",
+                "zh": "浓缩咖啡和铜赭石（传统手工）",
+                "ja": "エスプレッソ & コッパー シエナ (伝統的な職人技)",
+                "pt": "Espresso e Cobre Sienna (Patrimônio Artesanal)",
+                "ar": "اسبريسو ونحاس سيينا (حرفية تراثية)",
+                "hi": "एस्प्रेसो और कॉपर सिएना (विरासत कारीगर)",
+                "ru": "Эспрессо и медная сиена (Heritage Artisanal)"
+        },
+        "Espresso & Warm Blush (Premium Consumer)": {
+                "es": "Espresso y rubor cálido (Consumidor Premium)",
+                "fr": "Espresso et fard à joues chaud (Consommateur Premium)",
+                "de": "Espresso & Warm Blush (Premium-Verbraucher)",
+                "zh": "浓缩咖啡和温暖腮红（高端消费者）",
+                "ja": "エスプレッソ＆ウォームブラッシュ（プレミアムコンシューマー）",
+                "pt": "Espresso e Blush Quente (Consumidor Premium)",
+                "ar": "اسبريسو ووارم بلاش (مستهلك ممتاز)",
+                "hi": "एस्प्रेसो और वार्म ब्लश (प्रीमियम उपभोक्ता)",
+                "ru": "Эспрессо и теплые румяна (премиум-потребитель)"
+        },
+        "Establish Integration Channel": {
+                "es": "Establecer canal de integración",
+                "fr": "Établir un canal d'intégration",
+                "de": "Integrationskanal einrichten",
+                "zh": "建立整合渠道",
+                "ja": "統合チャネルの確立",
+                "pt": "Estabelecer Canal de Integração",
+                "ar": "إنشاء قناة التكامل",
+                "hi": "एकीकरण चैनल स्थापित करें",
+                "ru": "Создать канал интеграции"
+        },
+        "Estimated gross margin profit contributed by an account throughout its relationship lifespan.": {
+                "es": "Beneficio del margen bruto estimado aportado por una cuenta a lo largo de su vida útil.",
+                "fr": "Marge brute estimée apportée par un compte tout au long de la durée de vie de sa relation.",
+                "de": "Geschätzter Bruttomargengewinn, den ein Konto während der gesamten Beziehungsdauer beisteuert.",
+                "zh": "账户在整个关系生命周期内贡献的估计毛利率。",
+                "ja": "関係期間全体を通じてアカウントが貢献した推定粗利益。",
+                "pt": "Lucro de margem bruta estimado contribuído por uma conta ao longo de sua vida de relacionamento.",
+                "ar": "إجمالي هامش الربح المقدر الذي ساهم به الحساب طوال فترة علاقته.",
+                "hi": "किसी खाते द्वारा उसके संबंध जीवनकाल के दौरान योगदान किया गया अनुमानित सकल मार्जिन लाभ।",
+                "ru": "Расчетная валовая прибыль, вносимая счетом на протяжении всего срока действия отношений."
+        },
+        "Estimated percent of targeted accounts that accept & stay": {
+                "es": "Porcentaje estimado de cuentas específicas que aceptan y permanecen",
+                "fr": "Pourcentage estimé de comptes ciblés qui acceptent et restent",
+                "de": "Geschätzter Prozentsatz der Zielkonten, die akzeptieren und bleiben",
+                "zh": "接受并留下的目标帐户的估计百分比",
+                "ja": "受け入れて継続するターゲットアカウントの推定割合",
+                "pt": "Porcentagem estimada de contas segmentadas que aceitam e permanecem",
+                "ar": "النسبة المئوية المقدرة للحسابات المستهدفة التي تقبل وتبقى",
+                "hi": "लक्षित खातों का अनुमानित प्रतिशत जो स्वीकार करते हैं और बने रहते हैं",
+                "ru": "Приблизительный процент целевых аккаунтов, которые принимают и остаются"
+        },
+        "Evergreen & Pine": {
+                "es": "Árbol de hoja perenne y pino",
+                "fr": "À feuilles persistantes et pin",
+                "de": "Immergrün und Kiefer",
+                "zh": "常绿松树",
+                "ja": "エバーグリーン＆パイン",
+                "pt": "Sempre-viva e pinho",
+                "ar": "دائمة الخضرة والصنوبر",
+                "hi": "सदाबहार और पाइन",
+                "ru": "Вечнозеленое растение и сосна"
+        },
+        "Evergreen & Pine (Longevity & Capital)": {
+                "es": "Árbol de hoja perenne y pino (longevidad y capital)",
+                "fr": "Persistant & Pin (Longévité & Capital)",
+                "de": "Immergrün und Kiefer (Langlebigkeit und Kapital)",
+                "zh": "长青与松（长寿与资本）",
+                "ja": "エバーグリーン＆パイン（長寿＆資本）",
+                "pt": "Evergreen & Pine (Longevidade e Capital)",
+                "ar": "دائمة الخضرة والصنوبر (طول العمر ورأس المال)",
+                "hi": "सदाबहार और पाइन (दीर्घायु और पूंजी)",
+                "ru": "Вечнозеленое дерево и сосна (долголетие и капитал)"
+        },
+        "Every account that crosses the": {
+                "es": "Cada cuenta que cruza el",
+                "fr": "Chaque compte qui traverse le",
+                "de": "Jedes Konto, das die überschreitet",
+                "zh": "每个跨越的帐户",
+                "ja": "をまたぐすべてのアカウント",
+                "pt": "Cada conta que atravessa o",
+                "ar": "كل حساب يعبر",
+                "hi": "प्रत्येक खाता जो पार करता है",
+                "ru": "Каждый аккаунт, пересекающий"
+        },
+        "Excel Dataset": {
+                "es": "Conjunto de datos de Excel",
+                "fr": "Ensemble de données Excel",
+                "de": "Excel-Datensatz",
+                "zh": "Excel 数据集",
+                "ja": "Excel データセット",
+                "pt": "Conjunto de dados do Excel",
+                "ar": "مجموعة بيانات إكسل",
+                "hi": "एक्सेल डेटासेट",
+                "ru": "Набор данных Excel"
+        },
+        "Excel Detailed Sheets": {
+                "es": "Hojas detalladas de Excel",
+                "fr": "Feuilles détaillées Excel",
+                "de": "Detaillierte Excel-Tabellen",
+                "zh": "Excel 详细表格",
+                "ja": "Excel詳細シート",
+                "pt": "Planilhas detalhadas do Excel",
+                "ar": "أوراق إكسل التفصيلية",
+                "hi": "एक्सेल विस्तृत पत्रक",
+                "ru": "Подробные таблицы Excel"
+        },
+        "Executive 3-Step Decision Workflow Navigator Banner": {
+                "es": "Banner del Navegador de flujo de trabajo de decisiones ejecutivo de 3 pasos",
+                "fr": "Bannière du navigateur de flux de travail décisionnel en 3 étapes pour dirigeants",
+                "de": "Navigator-Banner für den 3-stufigen Entscheidungsworkflow für Führungskräfte",
+                "zh": "执行 3 步决策工作流程导航横幅",
+                "ja": "エグゼクティブ向けの 3 ステップの意思決定ワークフロー ナビゲーター バナー",
+                "pt": "Banner do Navegador de Fluxo de Trabalho de Decisão Executivo em 3 Etapas",
+                "ar": "شعار متصفح سير العمل التنفيذي المكون من 3 خطوات",
+                "hi": "कार्यकारी 3-चरणीय निर्णय वर्कफ़्लो नेविगेटर बैनर",
+                "ru": "Баннер навигатора рабочего процесса трехэтапного принятия решений для руководителей"
+        },
+        "Executive Audit Report": {
+                "es": "Informe de auditoría ejecutiva",
+                "fr": "Rapport d'audit exécutif",
+                "de": "Executive Audit-Bericht",
+                "zh": "执行审计报告",
+                "ja": "経営監査報告書",
+                "pt": "Relatório de Auditoria Executiva",
+                "ar": "تقرير التدقيق التنفيذي",
+                "hi": "कार्यकारी लेखापरीक्षा रिपोर्ट",
+                "ru": "Отчет исполнительного аудита"
+        },
+        "Executive Audit Report Generator": {
+                "es": "Generador de informes de auditoría ejecutiva",
+                "fr": "Générateur de rapport d'audit exécutif",
+                "de": "Generator für Executive-Audit-Berichte",
+                "zh": "执行审计报告生成器",
+                "ja": "エグゼクティブ監査レポート作成者",
+                "pt": "Gerador de Relatório de Auditoria Executiva",
+                "ar": "مولد تقرير التدقيق التنفيذي",
+                "hi": "कार्यकारी ऑडिट रिपोर्ट जेनरेटर",
+                "ru": "Генератор отчетов об аудите исполнительной власти"
+        },
+        "Executive Clean Light": {
+                "es": "Luz limpia ejecutiva",
+                "fr": "Lumière propre exécutive",
+                "de": "Executive Clean Light",
+                "zh": "行政清洁灯",
+                "ja": "エグゼクティブクリーンライト",
+                "pt": "Luz Limpa Executiva",
+                "ar": "الضوء النظيف التنفيذي",
+                "hi": "कार्यकारी स्वच्छ प्रकाश",
+                "ru": "Представительский чистый свет"
+        },
+        "Executive Command Palette Modal": {
+                "es": "Modal de paleta de comando ejecutivo",
+                "fr": "Palette de commandes exécutives modale",
+                "de": "Executive Command Palette Modal",
+                "zh": "执行命令调色板模态",
+                "ja": "エグゼクティブコマンドパレットモーダル",
+                "pt": "Modal de paleta de comando executivo",
+                "ar": "لوحة القيادة التنفيذية مشروط",
+                "hi": "कार्यकारी कमान पैलेट मोडल",
+                "ru": "Модальное окно палитры исполнительных команд"
+        },
+        "Executive Exports": {
+                "es": "Exportaciones Ejecutivas",
+                "fr": "Exportations exécutives",
+                "de": "Executive Exporte",
+                "zh": "执行出口",
+                "ja": "エグゼクティブエクスポート",
+                "pt": "Exportações Executivas",
+                "ar": "الصادرات التنفيذية",
+                "hi": "कार्यकारी निर्यात",
+                "ru": "Исполнительный экспорт"
+        },
+        "Executive Exports & Telemetry": {
+                "es": "Exportaciones ejecutivas y telemetría",
+                "fr": "Exportations exécutives et télémétrie",
+                "de": "Executive Exports & Telemetrie",
+                "zh": "执行导出和遥测",
+                "ja": "エグゼクティブエクスポートとテレメトリー",
+                "pt": "Exportações Executivas e Telemetria",
+                "ar": "الصادرات التنفيذية والقياس عن بعد",
+                "hi": "कार्यकारी निर्यात एवं टेलीमेट्री",
+                "ru": "Исполнительный экспорт и телеметрия"
+        },
+        "Executive High-Impact KPI Metric Strip": {
+                "es": "Franja métrica de KPI ejecutivos de alto impacto",
+                "fr": "Bande métrique KPI pour dirigeants à fort impact",
+                "de": "Executive High-Impact-KPI-Metrikstreifen",
+                "zh": "执行高影响力 KPI 指标条",
+                "ja": "エグゼクティブ向けの影響力の高い KPI メトリクス ストリップ",
+                "pt": "Faixa métrica executiva de KPI de alto impacto",
+                "ar": "قطاع متري لمؤشرات الأداء الرئيسية عالي التأثير",
+                "hi": "कार्यकारी उच्च-प्रभाव KPI मीट्रिक स्ट्रिप",
+                "ru": "Метрическая полоса высокоэффективных ключевых показателей эффективности для руководителей"
+        },
+        "Executive Leadership Quote": {
+                "es": "Cita de liderazgo ejecutivo",
+                "fr": "Citation sur le leadership exécutif",
+                "de": "Zitat von Führungskräften",
+                "zh": "行政领导语录",
+                "ja": "経営幹部の名言",
+                "pt": "Citação de Liderança Executiva",
+                "ar": "اقتباسات القيادة التنفيذية",
+                "hi": "कार्यकारी नेतृत्व उद्धरण",
+                "ru": "Цитата об исполнительном руководстве"
+        },
+        "Executive Presentation": {
+                "es": "Presentación Ejecutiva",
+                "fr": "Présentation exécutive",
+                "de": "Executive-Präsentation",
+                "zh": "执行简报",
+                "ja": "エグゼクティブプレゼンテーション",
+                "pt": "Apresentação Executiva",
+                "ar": "العرض التنفيذي",
+                "hi": "कार्यकारी प्रस्तुति",
+                "ru": "Исполнительная презентация"
+        },
+        "Executive Split & Metrics (40/60 Split)": {
+                "es": "División ejecutiva y métricas (división 40/60)",
+                "fr": "Répartition des dirigeants et mesures (répartition 40/60)",
+                "de": "Führungskräfteaufteilung und Kennzahlen (40/60-Aufteilung)",
+                "zh": "执行人员分割和指标（40/60 分割）",
+                "ja": "経営陣の分割と指標 (40/60 分割)",
+                "pt": "Divisão Executiva e Métricas (Divisão 40/60)",
+                "ar": "الانقسام التنفيذي والمقاييس (40/60 سبليت)",
+                "hi": "कार्यकारी स्प्लिट और मेट्रिक्स (40/60 स्प्लिट)",
+                "ru": "Разделение руководителей и показатели (разделение 40/60)"
+        },
+        "Executive Split & Telemetry Gauges": {
+                "es": "Medidores ejecutivos divididos y telemétricos",
+                "fr": "Jauges exécutives divisées et télémétriques",
+                "de": "Executive Split- und Telemetriemessgeräte",
+                "zh": "执行分体式和遥测仪表",
+                "ja": "エグゼクティブ スプリット & テレメトリー ゲージ",
+                "pt": "Medidores executivos de divisão e telemetria",
+                "ar": "أجهزة قياس الانقسام والقياس عن بعد التنفيذية",
+                "hi": "कार्यकारी स्प्लिट और टेलीमेट्री गेज",
+                "ru": "Исполнительные сплит-системы и датчики телеметрии"
+        },
+        "Executive Summary": {
+                "es": "Resumen ejecutivo",
+                "fr": "Résumé exécutif",
+                "de": "Zusammenfassung",
+                "zh": "执行摘要",
+                "ja": "エグゼクティブサマリー",
+                "pt": "Resumo Executivo",
+                "ar": "ملخص تنفيذي",
+                "hi": "कार्यकारी सारांश",
+                "ru": "Резюме"
+        },
+        "Exit (ESC)": {
+                "es": "Salir (ESC)",
+                "fr": "Quitter (ESC)",
+                "de": "Beenden (ESC)",
+                "zh": "退出（ESC）",
+                "ja": "終了 (ESC)",
+                "pt": "Sair (ESC)",
+                "ar": "خروج (ESC)",
+                "hi": "बाहर निकलें (ईएससी)",
+                "ru": "Выход (ESC)"
+        },
+        "Expand Datasets Sidebar ([)": {
+                "es": "Expandir la barra lateral de conjuntos de datos ([)",
+                "fr": "Développer la barre latérale des ensembles de données ([)",
+                "de": "Erweitern Sie die Seitenleiste „Datensätze“ ([)",
+                "zh": "展开数据集侧边栏 ([)",
+                "ja": "データセットのサイドバーを展開 ([)",
+                "pt": "Expanda a barra lateral de conjuntos de dados ([)",
+                "ar": "توسيع الشريط الجانبي لمجموعات البيانات ([)",
+                "hi": "डेटासेट साइडबार का विस्तार करें ([)",
+                "ru": "Развернуть боковую панель наборов данных ([)"
+        },
+        "Expand Notes Sidebar (])": {
+                "es": "Expandir la barra lateral de Notas (])",
+                "fr": "Développer la barre latérale Notes (])",
+                "de": "Notizen-Seitenleiste erweitern (])",
+                "zh": "展开注释侧边栏 (])",
+                "ja": "ノートのサイドバーを展開 (])",
+                "pt": "Expanda a barra lateral de notas (])",
+                "ar": "قم بتوسيع الشريط الجانبي للملاحظات (])",
+                "hi": "नोट्स साइडबार का विस्तार करें (])",
+                "ru": "Развернуть боковую панель заметок (])"
+        },
+        "Expansion Campaigns": {
+                "es": "Campañas de expansión",
+                "fr": "Campagnes d'expansion",
+                "de": "Expansionskampagnen",
+                "zh": "扩张活动",
+                "ja": "拡張キャンペーン",
+                "pt": "Campanhas de Expansão",
+                "ar": "حملات التوسع",
+                "hi": "विस्तार अभियान",
+                "ru": "Кампании расширения"
+        },
+        "Expected Monthly Loss": {
+                "es": "Pérdida mensual esperada",
+                "fr": "Perte mensuelle attendue",
+                "de": "Erwarteter monatlicher Verlust",
+                "zh": "预计每月损失",
+                "ja": "予想される月間損失",
+                "pt": "Perda Mensal Esperada",
+                "ar": "الخسارة الشهرية المتوقعة",
+                "hi": "अपेक्षित मासिक हानि",
+                "ru": "Ожидаемый ежемесячный убыток"
+        },
+        "Expected Saved Revenue": {
+                "es": "Ingresos ahorrados esperados",
+                "fr": "Revenus économisés attendus",
+                "de": "Erwartete eingesparte Einnahmen",
+                "zh": "预期节省收入",
+                "ja": "期待される節約収益",
+                "pt": "Receita economizada esperada",
+                "ar": "الإيرادات المحفوظة المتوقعة",
+                "hi": "अपेक्षित राजस्व की बचत",
+                "ru": "Ожидаемый сэкономленный доход"
+        },
+        "Expected Success Rate:": {
+                "es": "Tasa de éxito esperada:",
+                "fr": "Taux de réussite attendu :",
+                "de": "Erwartete Erfolgsquote:",
+                "zh": "预期成功率：",
+                "ja": "期待される成功率:",
+                "pt": "Taxa de sucesso esperada:",
+                "ar": "معدل النجاح المتوقع:",
+                "hi": "अपेक्षित सफलता दर:",
+                "ru": "Ожидаемый уровень успеха:"
+        },
+        "Experience real-time telemetry analytics, advanced customer churn prediction, interactive sandboxes, and closed-loop business resolution suites.": {
+                "es": "Experimente análisis de telemetría en tiempo real, predicción avanzada de abandono de clientes, entornos sandbox interactivos y suites de resolución empresarial de circuito cerrado.",
+                "fr": "Bénéficiez d'analyses de télémétrie en temps réel, de prévisions avancées de désabonnement des clients, de bacs à sable interactifs et de suites de résolution commerciale en boucle fermée.",
+                "de": "Erleben Sie Echtzeit-Telemetrieanalysen, erweiterte Kundenabwanderungsvorhersagen, interaktive Sandboxes und geschlossene Business-Resolution-Suites.",
+                "zh": "体验实时遥测分析、高级客户流失预测、交互式沙箱和闭环业务解决方案套件。",
+                "ja": "リアルタイムのテレメトリ分析、高度な顧客離れ予測、インタラクティブなサンドボックス、クローズドループのビジネス解決スイートを体験してください。",
+                "pt": "Experimente análises de telemetria em tempo real, previsão avançada de rotatividade de clientes, sandboxes interativos e suítes de resolução de negócios de circuito fechado.",
+                "ar": "استمتع بتجربة تحليلات القياس عن بعد في الوقت الفعلي، والتنبؤ المتقدم بتقلبات العملاء، وصناديق الحماية التفاعلية، ومجموعات حلول الأعمال ذات الحلقة المغلقة.",
+                "hi": "वास्तविक समय टेलीमेट्री विश्लेषण, उन्नत ग्राहक मंथन भविष्यवाणी, इंटरैक्टिव सैंडबॉक्स और क्लोज्ड-लूप बिजनेस रिज़ॉल्यूशन सुइट्स का अनुभव करें।",
+                "ru": "Воспользуйтесь аналитикой телеметрии в реальном времени, расширенным прогнозированием оттока клиентов, интерактивными песочницами и пакетами решений для бизнеса с замкнутым циклом."
+        },
+        "Explore": {
+                "es": "Explorar",
+                "fr": "Explorer",
+                "de": "Erkunden",
+                "zh": "浏览",
+                "ja": "詳細",
+                "pt": "Explorar",
+                "ar": "استكشاف",
+                "hi": "देखें",
+                "ru": "Обзор"
+        },
+        "Export CSV": {
+                "es": "Exportar CSV",
+                "fr": "Exporter au format CSV",
+                "de": "CSV exportieren",
+                "zh": "导出 CSV",
+                "ja": "CSVのエクスポート",
+                "pt": "Exportar CSV",
+                "ar": "تصدير CSV",
+                "hi": "सीएसवी निर्यात करें",
+                "ru": "Экспортировать CSV"
+        },
+        "Export JSON audit payload": {
+                "es": "Exportar carga útil de auditoría JSON",
+                "fr": "Exporter la charge utile d'audit JSON",
+                "de": "JSON-Audit-Nutzlast exportieren",
+                "zh": "导出 JSON 审计负载",
+                "ja": "JSON監査ペイロードのエクスポート",
+                "pt": "Exportar carga útil de auditoria JSON",
+                "ar": "تصدير حمولة تدقيق JSON",
+                "hi": "JSON ऑडिट पेलोड निर्यात करें",
+                "ru": "Экспорт полезных данных аудита JSON"
+        },
+        "Export Power BI Template (.pbit)": {
+                "es": "Exportar plantilla de Power BI (.pbit)",
+                "fr": "Exporter le modèle Power BI (.pbit)",
+                "de": "Power BI-Vorlage exportieren (.pbit)",
+                "zh": "导出 Power BI 模板 (.pbit)",
+                "ja": "Power BI テンプレート (.pbit) のエクスポート",
+                "pt": "Exportar modelo do Power BI (.pbit)",
+                "ar": "تصدير قالب Power BI (.pbit)",
+                "hi": "पावर बीआई टेम्पलेट निर्यात करें (.pbit)",
+                "ru": "Экспорт шаблона Power BI (.pbit)"
+        },
+        "Export Tableau Packaged Workbook (.twbx)": {
+                "es": "Exportar libro de trabajo empaquetado de Tableau (.twbx)",
+                "fr": "Exporter le classeur package Tableau (.twbx)",
+                "de": "Exportieren einer gepackten Tableau-Arbeitsmappe (.twbx)",
+                "zh": "导出 Tableau 打包工作簿 (.twbx)",
+                "ja": "Tableau パッケージ化ワークブック (.twbx) のエクスポート",
+                "pt": "Exportar pasta de trabalho empacotada do Tableau (.twbx)",
+                "ar": "تصدير مصنف Tableau المعبأ (.twbx)",
+                "hi": "निर्यात झांकी पैकेज्ड वर्कबुक (.twbx)",
+                "ru": "Экспорт упакованной книги Tableau (.twbx)"
+        },
+        "Export compliance audit trails, generate PowerPoint slide decks, and track logs.": {
+                "es": "Exporte pistas de auditoría de cumplimiento, genere presentaciones de diapositivas de PowerPoint y registros de seguimiento.",
+                "fr": "Exportez des pistes d’audit de conformité, générez des présentations PowerPoint et suivez les journaux.",
+                "de": "Exportieren Sie Compliance-Audit-Trails, erstellen Sie PowerPoint-Foliendecks und verfolgen Sie Protokolle.",
+                "zh": "导出合规性审核跟踪、生成 PowerPoint 幻灯片并跟踪日志。",
+                "ja": "コンプライアンス監査証跡をエクスポートし、PowerPoint スライドデッキを生成し、ログを追跡します。",
+                "pt": "Exporte trilhas de auditoria de conformidade, gere apresentações de slides em PowerPoint e rastreie registros.",
+                "ar": "تصدير مسارات تدقيق الامتثال، وإنشاء مجموعات شرائح PowerPoint، وتتبع السجلات.",
+                "hi": "अनुपालन ऑडिट ट्रेल्स निर्यात करें, पावरपॉइंट स्लाइड डेक और ट्रैक लॉग जेनरेट करें।",
+                "ru": "Экспортируйте журналы аудита соответствия, создавайте слайды PowerPoint и отслеживайте журналы."
+        },
+        "Exported JSON audit log successfully!": {
+                "es": "¡Se exportó el registro de auditoría JSON con éxito!",
+                "fr": "Journal d'audit JSON exporté avec succès !",
+                "de": "JSON-Audit-Log erfolgreich exportiert!",
+                "zh": "JSON审核日志导出成功！",
+                "ja": "JSON 監査ログが正常にエクスポートされました。",
+                "pt": "Log de auditoria JSON exportado com sucesso!",
+                "ar": "تم تصدير سجل تدقيق JSON بنجاح!",
+                "hi": "JSON ऑडिट लॉग सफलतापूर्वक निर्यात किया गया!",
+                "ru": "Журнал аудита JSON успешно экспортирован!"
+        },
+        "Exported Prediction Results CSV successfully!": {
+                "es": "¡Resultados de predicción exportados CSV con éxito!",
+                "fr": "Résultats de prédiction exportés au format CSV avec succès !",
+                "de": "Vorhersageergebnisse CSV erfolgreich exportiert!",
+                "zh": "预测结果 CSV 导出成功！",
+                "ja": "予測結果の CSV が正常にエクスポートされました。",
+                "pt": "CSV de resultados de previsão exportados com sucesso!",
+                "ar": "تم تصدير نتائج التنبؤ بتنسيق CSV بنجاح!",
+                "hi": "निर्यातित पूर्वानुमान परिणाम CSV सफलतापूर्वक!",
+                "ru": "Результаты прогнозов успешно экспортированы в формате CSV!"
+        },
+        "Extend Support Access": {
+                "es": "Ampliar el acceso al soporte",
+                "fr": "Étendre l'accès au support",
+                "de": "Erweitern Sie den Support-Zugriff",
+                "zh": "扩展支持访问范围",
+                "ja": "サポートアクセスの拡張",
+                "pt": "Estenda o acesso ao suporte",
+                "ar": "توسيع الوصول إلى الدعم",
+                "hi": "समर्थन पहुंच बढ़ाएँ",
+                "ru": "Расширение доступа к поддержке"
+        },
+        "FKs: CustomerID, Date, ProductID, RegionID": {
+                "es": "FK: ID de cliente, fecha, ID de producto, ID de región",
+                "fr": "FK : CustomerID, Date, ProductID, RegionID",
+                "de": "FKs: Kunden-ID, Datum, Produkt-ID, RegionID",
+                "zh": "FK：客户 ID、日期、产品 ID、区域 ID",
+                "ja": "FK: CustomerID、Date、ProductID、RegionID",
+                "pt": "FKs: CustomerID, Data, ProductID, RegionID",
+                "ar": "FKs: معرف العميل، التاريخ، معرف المنتج، معرف المنطقة",
+                "hi": "एफके: ग्राहकआईडी, दिनांक, उत्पादआईडी, क्षेत्रआईडी",
+                "ru": "ФК: CustomerID, Дата, ProductID, RegionID."
+        },
+        "Fact (Central Table)": {
+                "es": "Hecho (Mesa Central)",
+                "fr": "Fait (Table centrale)",
+                "de": "Fakt (zentrale Tabelle)",
+                "zh": "事实（中央表）",
+                "ja": "ファクト（中央テーブル）",
+                "pt": "Fato (Tabela Central)",
+                "ar": "الحقيقة (الجدول المركزي)",
+                "hi": "तथ्य (केंद्रीय तालिका)",
+                "ru": "Факт (центральный стол)"
+        },
+        "Failed to delete source. Please try again.": {
+                "es": "No se pudo eliminar la fuente. Por favor inténtalo de nuevo.",
+                "fr": "Échec de la suppression de la source. Veuillez réessayer.",
+                "de": "Quelle konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
+                "zh": "删除源失败。请再试一次。",
+                "ja": "ソースの削除に失敗しました。もう一度試してください。",
+                "pt": "Falha ao excluir a fonte. Por favor, tente novamente.",
+                "ar": "فشل في حذف المصدر. يرجى المحاولة مرة أخرى.",
+                "hi": "स्रोत हटाने में विफल. कृपया पुन: प्रयास करें।",
+                "ru": "Не удалось удалить источник. Пожалуйста, попробуйте еще раз."
+        },
+        "Fallback": {
+                "es": "Respaldo",
+                "fr": "Repli",
+                "de": "Rückfall",
+                "zh": "回退",
+                "ja": "フォールバック",
+                "pt": "Alternativa",
+                "ar": "احتياطي",
+                "hi": "फ़ॉलबैक",
+                "ru": "Резервный вариант"
+        },
+        "Fallback (.zip)": {
+                "es": "Reserva (.zip)",
+                "fr": "Solution de secours (.zip)",
+                "de": "Fallback (.zip)",
+                "zh": "后备 (.zip)",
+                "ja": "フォールバック (.zip)",
+                "pt": "Alternativo (.zip)",
+                "ar": "احتياطي (.zip)",
+                "hi": "फ़ॉलबैक (.ज़िप)",
+                "ru": "Резервный вариант (.zip)"
+        },
+        "Fallback Package (.zip)": {
+                "es": "Paquete alternativo (.zip)",
+                "fr": "Package de secours (.zip)",
+                "de": "Fallback-Paket (.zip)",
+                "zh": "后备包 (.zip)",
+                "ja": "フォールバック パッケージ (.zip)",
+                "pt": "Pacote substituto (.zip)",
+                "ar": "الحزمة الاحتياطية (.zip)",
+                "hi": "फ़ॉलबैक पैकेज (.zip)",
+                "ru": "Резервный пакет (.zip)"
+        },
+        "False Neg (FN)": {
+                "es": "Falso Neg (FN)",
+                "fr": "Faux négatif (FN)",
+                "de": "Falsches Negativ (FN)",
+                "zh": "假阴性 (FN)",
+                "ja": "偽否定 (FN)",
+                "pt": "Falso Neg (FN)",
+                "ar": "سلبي كاذب (FN)",
+                "hi": "झूठा नकारात्मक (एफएन)",
+                "ru": "Ложно-отрицательный (FN)"
+        },
+        "False Negative (FN): Churned accounts missed by the model (undetected risk)": {
+                "es": "Falso negativo (FN): cuentas abandonadas que el modelo no detecta (riesgo no detectado)",
+                "fr": "Faux négatif (FN) : comptes désabonnés manqués par le modèle (risque non détecté)",
+                "de": "Falsch negativ (FN): Abgewanderte Konten, die vom Modell übersehen wurden (unerkanntes Risiko)",
+                "zh": "假阴性 (FN)：模型漏掉的流失账户（未检测到的风险）",
+                "ja": "偽陰性 (FN): チャーンされたアカウントがモデルで見逃される (未検出のリスク)",
+                "pt": "Falso Negativo (FN): Contas canceladas perdidas pelo modelo (risco não detectado)",
+                "ar": "سلبية كاذبة (FN): الحسابات المختلة التي غاب عنها النموذج (خطر غير مكتشف)",
+                "hi": "गलत नकारात्मक (एफएन): मॉडल द्वारा चूक गए मंथन खाते (अनिर्धारित जोखिम)",
+                "ru": "Ложноотрицательный результат (FN): удаленные аккаунты, пропущенные моделью (необнаруженный риск)."
+        },
+        "False Pos (FP)": {
+                "es": "Pos. falsa (FP)",
+                "fr": "Fausse Pos (FP)",
+                "de": "Falsche Position (FP)",
+                "zh": "假位置 (FP)",
+                "ja": "フォールスポジション (FP)",
+                "pt": "Pos falsa (FP)",
+                "ar": "نقاط البيع الكاذبة (FP)",
+                "hi": "ग़लत स्थिति (एफपी)",
+                "ru": "Ложная позиция (FP)"
+        },
+        "False Positive (FP): Loyal accounts incorrectly predicted to churn (false alarms)": {
+                "es": "Falso positivo (FP): se predice incorrectamente que las cuentas leales se cancelarán (falsas alarmas)",
+                "fr": "Faux positif (FP) : les comptes fidèles sont prédits à tort comme désabonnement (fausses alarmes)",
+                "de": "False Positive (FP): Bei treuen Kunden wurde fälschlicherweise eine Abwanderung vorhergesagt (Fehlalarm)",
+                "zh": "误报 (FP)：错误地预测忠诚帐户会流失（误报）",
+                "ja": "誤検知 (FP): ロイヤル アカウントのチャーンが誤って予測される (誤報)",
+                "pt": "Falso positivo (FP): Contas leais com previsão incorreta de rotatividade (alarmes falsos)",
+                "ar": "الإيجابية الكاذبة (FP): توقع حدوث خلل في حسابات الولاء بشكل غير صحيح (إنذارات كاذبة)",
+                "hi": "गलत सकारात्मक (एफपी): वफादार खातों में मंथन की गलत भविष्यवाणी की गई (गलत अलार्म)",
+                "ru": "Ложное срабатывание (FP): ошибочно прогнозируется отток лояльных аккаунтов (ложные тревоги)."
+        },
+        "Fields": {
+                "es": "Campos",
+                "fr": "Champs",
+                "de": "Felder",
+                "zh": "数据维度",
+                "ja": "属性項目数",
+                "pt": "Campos",
+                "ar": "الحقول",
+                "hi": "फ़ील्ड्स",
+                "ru": "Полей"
+        },
+        "Filter by risk": {
+                "es": "Filtrar por riesgo",
+                "fr": "Filtrer par risque",
+                "de": "Nach Risiko filtern",
+                "zh": "按风险过滤",
+                "ja": "リスクによるフィルター",
+                "pt": "Filtrar por risco",
+                "ar": "تصفية حسب المخاطر",
+                "hi": "जोखिम के अनुसार फ़िल्टर करें",
+                "ru": "Фильтровать по риску"
+        },
+        "Financial ARR Preservation & ROI Scenarios": {
+                "es": "Preservación de ARR financiero y escenarios de ROI",
+                "fr": "Scénarios de préservation financière du ARR et de retour sur investissement",
+                "de": "Finanzielle ARR-Erhaltung und ROI-Szenarien",
+                "zh": "财务 ARR 保护和投资回报率场景",
+                "ja": "財務的 ARR 維持と ROI シナリオ",
+                "pt": "Preservação financeira de ARR e cenários de ROI",
+                "ar": "الحفاظ على ARR المالي وسيناريوهات عائد الاستثمار",
+                "hi": "वित्तीय एआरआर संरक्षण और आरओआई परिदृश्य",
+                "ru": "Сценарии сохранения финансовой ARR и рентабельности инвестиций"
+        },
+        "Fire SLA Alert": {
+                "es": "Alerta de SLA de incendio",
+                "fr": "Alerte incendie SLA",
+                "de": "Feuer-SLA-Alarm",
+                "zh": "消防 SLA 警报",
+                "ja": "火災 SLA アラート",
+                "pt": "Alerta de SLA de incêndio",
+                "ar": "تنبيه حريق SLA",
+                "hi": "फायर एसएलए अलर्ट",
+                "ru": "Пожарное оповещение SLA"
+        },
+        "Floating Copilot Window Card": {
+                "es": "Tarjeta de ventana de copiloto flotante",
+                "fr": "Carte de fenêtre copilote flottante",
+                "de": "Schwebende Copilot-Fensterkarte",
+                "zh": "浮动副驾驶窗卡",
+                "ja": "フローティング副操縦士ウィンドウ カード",
+                "pt": "Cartão de janela do copiloto flutuante",
+                "ar": "بطاقة نافذة مساعد الطيار العائمة",
+                "hi": "फ्लोटिंग कोपायलट विंडो कार्ड",
+                "ru": "Плавающая карточка окна второго пилота"
+        },
+        "Floating Launcher Pill Button": {
+                "es": "Botón de píldora lanzador flotante",
+                "fr": "Bouton de pilule de lancement flottant",
+                "de": "Schwebender Launcher-Pillenknopf",
+                "zh": "浮动发射器药丸按钮",
+                "ja": "フローティングランチャーピルボタン",
+                "pt": "Botão de pílula do lançador flutuante",
+                "ar": "العائمة قاذفة حبوب منع الحمل زر",
+                "hi": "फ्लोटिंग लॉन्चर पिल बटन",
+                "ru": "Плавающая кнопка запуска таблеток"
+        },
+        "Floating SaaS AI Copilot Widget (Bottom-Right Dock)": {
+                "es": "Widget flotante de copiloto SaaS AI (muelle inferior derecho)",
+                "fr": "Widget copilote IA SaaS flottant (Dock en bas à droite)",
+                "de": "Floating SaaS AI Copilot Widget (Dock unten rechts)",
+                "zh": "浮动 SaaS AI Copilot 小部件（右下 Dock）",
+                "ja": "フローティング SaaS AI コパイロット ウィジェット (右下のドック)",
+                "pt": "Widget flutuante SaaS AI Copilot (dock inferior direito)",
+                "ar": "القطعة العائمة SaaS AI Copilot (المرسى السفلي الأيمن)",
+                "hi": "फ़्लोटिंग SaaS AI कोपायलट विजेट (निचला-दायाँ डॉक)",
+                "ru": "Плавающий виджет SaaS AI Copilot (справа внизу)"
+        },
+        "Floating Sidebar Rail Expand Triggers (Active when sidebars are collapsed)": {
+                "es": "Activadores de expansión del riel de la barra lateral flotante (activos cuando las barras laterales están colapsadas)",
+                "fr": "Déclencheurs d'extension du rail de la barre latérale flottante (actifs lorsque les barres latérales sont réduites)",
+                "de": "Auslöser zum Erweitern der schwebenden Seitenleistenschiene (aktiv, wenn Seitenleisten ausgeblendet sind)",
+                "zh": "浮动侧边栏导轨展开触发器（侧边栏折叠时激活）",
+                "ja": "フローティング サイドバー レール展開トリガー (サイドバーが折りたたまれているときにアクティブになります)",
+                "pt": "Gatilhos de expansão do trilho da barra lateral flutuante (ativos quando as barras laterais são recolhidas)",
+                "ar": "مشغلات توسيع الشريط الجانبي العائم (تنشط عند طي الأشرطة الجانبية)",
+                "hi": "फ़्लोटिंग साइडबार रेल विस्तार ट्रिगर (साइडबार ढहने पर सक्रिय)",
+                "ru": "Плавающие триггеры расширения боковой панели (активны, когда боковые панели свернуты)"
+        },
+        "Forecast the cost and saved revenue of a targeted retention campaign. Adjust variables in real-time:": {
+                "es": "Pronostique el costo y los ingresos ahorrados de una campaña de retención dirigida. Ajusta variables en tiempo real:",
+                "fr": "Prévoyez le coût et les revenus économisés d’une campagne de fidélisation ciblée. Ajustez les variables en temps réel :",
+                "de": "Prognostizieren Sie die Kosten und den eingesparten Umsatz einer gezielten Kundenbindungskampagne. Passen Sie Variablen in Echtzeit an:",
+                "zh": "预测有针对性的保留活动的成本和节省的收入。实时调整变量：",
+                "ja": "ターゲットを絞った維持キャンペーンのコストと節約された収益を予測します。リアルタイムで変数を調整します。",
+                "pt": "Preveja o custo e a receita economizada de uma campanha de retenção direcionada. Ajuste variáveis em tempo real:",
+                "ar": "توقع التكلفة والإيرادات المحفوظة لحملة الاحتفاظ المستهدفة. ضبط المتغيرات في الوقت الحقيقي:",
+                "hi": "लक्षित प्रतिधारण अभियान की लागत और बचाए गए राजस्व का पूर्वानुमान लगाएं। वास्तविक समय में चर समायोजित करें:",
+                "ru": "Прогнозируйте стоимость и сэкономленный доход от целевой кампании по удержанию. Настраивайте переменные в режиме реального времени:"
+        },
+        "Forest & Emerald": {
+                "es": "Bosque y Esmeralda",
+                "fr": "Forêt & Émeraude",
+                "de": "Wald & Smaragd",
+                "zh": "森林与翡翠",
+                "ja": "フォレスト＆エメラルド",
+                "pt": "Floresta e Esmeralda",
+                "ar": "الغابة والزمرد",
+                "hi": "वन एवं पन्ना",
+                "ru": "Лес и Изумруд"
+        },
+        "Forest Green & Cream (Sustainability & Bio)": {
+                "es": "Forest Green & Cream (Sostenibilidad & Bio)",
+                "fr": "Vert Forêt & Crème (Durabilité & Bio)",
+                "de": "Forest Green & Cream (Nachhaltigkeit & Bio)",
+                "zh": "森林绿和奶油色（可持续发展和生物）",
+                "ja": "フォレストグリーン＆クリーム（サステナビリティ＆バイオ）",
+                "pt": "Forest Green & Cream (Sustentabilidade e Bio)",
+                "ar": "الغابة الخضراء والكريمة (الاستدامة والحيوية)",
+                "hi": "वन हरित एवं क्रीम (स्थिरता एवं जैव)",
+                "ru": "Лесно-зеленый и кремовый (устойчивое развитие и био)"
+        },
+        "Français": {
+                "es": "francés",
+                "fr": "Français",
+                "de": "Französisch",
+                "zh": "法国人",
+                "ja": "フランセ",
+                "pt": "Francês",
+                "ar": "الفرنسية",
+                "hi": "फ़्रांसीसी",
+                "ru": "Франсэ"
+        },
+        "Friction & Support Telemetry": {
+                "es": "Telemetría de fricción y soporte",
+                "fr": "Télémétrie de friction et de support",
+                "de": "Reibungs- und Unterstützungstelemetrie",
+                "zh": "摩擦与支撑遥测",
+                "ja": "摩擦とサポートのテレメトリー",
+                "pt": "Telemetria de Fricção e Suporte",
+                "ar": "الاحتكاك والدعم القياس عن بعد",
+                "hi": "घर्षण और समर्थन टेलीमेट्री",
+                "ru": "Телеметрия трения и поддержки"
+        },
+        "Full Analysis Report": {
+                "es": "Informe de análisis completo",
+                "fr": "Rapport d'analyse complet",
+                "de": "Vollständiger Analysebericht",
+                "zh": "完整分析报告",
+                "ja": "完全な分析レポート",
+                "pt": "Relatório de análise completo",
+                "ar": "تقرير التحليل الكامل",
+                "hi": "पूर्ण विश्लेषण रिपोर्ट",
+                "ru": "Полный аналитический отчет"
+        },
+        "GBP (£)": {
+                "es": "GBP (£)",
+                "fr": "GBP (£)",
+                "de": "GBP (£)",
+                "zh": "英镑 (£)",
+                "ja": "ポンド (ポンド)",
+                "pt": "GBP (£)",
+                "ar": "الجنيه الاسترليني (جنيه استرليني)",
+                "hi": "जीबीपी (£)",
+                "ru": "фунт стерлингов (фунтов стерлингов)"
+        },
+        "GDPR/CCPA": {
+                "es": "RGPD/CCPA",
+                "fr": "RGPD/CCPA",
+                "de": "DSGVO/CCPA",
+                "zh": "GDPR/CCPA",
+                "ja": "GDPR/CCPA",
+                "pt": "GDPR/CCPA",
+                "ar": "اللائحة العامة لحماية البيانات/CCPA",
+                "hi": "जीडीपीआर/सीसीपीए",
+                "ru": "GDPR/CCPA"
+        },
+        "Gamma Card Level Inspector & Actions Toolbar": {
+                "es": "Inspector de nivel de tarjeta gamma y barra de herramientas de acciones",
+                "fr": "Inspecteur de niveau de carte Gamma et barre d'outils d'actions",
+                "de": "Gammakarten-Level-Inspektor und Aktionssymbolleiste",
+                "zh": "伽马卡电平检查器和操作工具栏",
+                "ja": "ガンマ カード レベル インスペクターとアクション ツールバー",
+                "pt": "Barra de ferramentas do inspetor de nível de cartão gama e de ações",
+                "ar": "مفتش مستوى بطاقة جاما وشريط أدوات الإجراءات",
+                "hi": "गामा कार्ड लेवल इंस्पेक्टर एवं एक्शन टूलबार",
+                "ru": "Инспектор уровней гамма-карты и панель действий"
+        },
+        "Gamma Executive Presentation Deck": {
+                "es": "Plataforma de presentación ejecutiva Gamma",
+                "fr": "Plate-forme de présentation exécutive Gamma",
+                "de": "Gamma Executive-Präsentationsdeck",
+                "zh": "伽玛行政演示文稿",
+                "ja": "Gamma エグゼクティブ プレゼンテーション デッキ",
+                "pt": "Plataforma de apresentação executiva da Gamma",
+                "ar": "مجموعة العروض التقديمية التنفيذية لجاما",
+                "hi": "गामा कार्यकारी प्रस्तुति डेक",
+                "ru": "Презентационная площадка для руководителей Gamma"
+        },
+        "Gamma Live Presenter Overlay Modal": {
+                "es": "Modal de superposición de presentador Gamma Live",
+                "fr": "Modal de superposition du présentateur Gamma Live",
+                "de": "Gamma Live Presenter Overlay Modal",
+                "zh": "Gamma Live Presenter 叠加模态",
+                "ja": "Gamma Live Presenter オーバーレイ モーダル",
+                "pt": "Modal de sobreposição do apresentador Gamma Live",
+                "ar": "جاما لايف مقدم تراكب مشروط",
+                "hi": "गामा लाइव प्रस्तुतकर्ता ओवरले मॉडल",
+                "ru": "Модальное наложение Gamma Live Presenter"
+        },
+        "Gemini API Key (Optional — built-in consultation engine active)...": {
+                "es": "Clave API de Gemini (opcional: motor de consulta integrado activo)...",
+                "fr": "Clé API Gemini (Facultatif — moteur de consultation intégré actif)...",
+                "de": "Gemini-API-Schlüssel (optional – integrierte Beratungs-Engine aktiv)...",
+                "zh": "Gemini API 密钥（可选 - 内置咨询引擎处于活动状态）...",
+                "ja": "Gemini API キー (オプション - 内蔵コンサルテーション エンジンがアクティブ)...",
+                "pt": "Chave API Gemini (opcional — mecanismo de consulta integrado ativo)...",
+                "ar": "مفتاح Gemini API (اختياري — محرك الاستشارة المدمج نشط)...",
+                "hi": "जेमिनी एपीआई कुंजी (वैकल्पिक - अंतर्निहित परामर्श इंजन सक्रिय)...",
+                "ru": "Ключ API Gemini (опционально — активен встроенный механизм консультаций)..."
+        },
+        "Generate & Open Full Audit Report": {
+                "es": "Generar y abrir informe de auditoría completo",
+                "fr": "Générer et ouvrir un rapport d'audit complet",
+                "de": "Vollständigen Prüfbericht erstellen und öffnen",
+                "zh": "生成并打开完整的审计报告",
+                "ja": "完全な監査レポートを生成して開く",
+                "pt": "Gerar e abrir relatório de auditoria completo",
+                "ar": "إنشاء وفتح تقرير التدقيق الكامل",
+                "hi": "पूर्ण ऑडिट रिपोर्ट बनाएं और खोलें",
+                "ru": "Создать и открыть полный аудиторский отчет"
+        },
+        "Generate Comprehensive Executive Analysis Report": {
+                "es": "Genere un informe de análisis ejecutivo completo",
+                "fr": "Générer un rapport d'analyse exécutif complet",
+                "de": "Erstellen Sie einen umfassenden Executive-Analysebericht",
+                "zh": "生成综合执行分析报告",
+                "ja": "包括的な経営分析レポートを作成する",
+                "pt": "Gere um relatório abrangente de análise executiva",
+                "ar": "إنشاء تقرير التحليل التنفيذي الشامل",
+                "hi": "व्यापक कार्यकारी विश्लेषण रिपोर्ट तैयार करें",
+                "ru": "Создание комплексного отчета об исполнительном анализе"
+        },
+        "Generate a deck with randomized theme and layout variety": {
+                "es": "Genere una plataforma con temas aleatorios y variedad de diseños.",
+                "fr": "Générez un deck avec un thème aléatoire et une variété de mises en page",
+                "de": "Erstellen Sie ein Deck mit zufälliger Themen- und Layoutvielfalt",
+                "zh": "生成具有随机主题和布局变化的套牌",
+                "ja": "ランダム化されたテーマとレイアウトの多様性を備えたデッキを生成します",
+                "pt": "Gere um deck com tema aleatório e variedade de layout",
+                "ar": "قم بإنشاء مجموعة ذات سمات عشوائية وتخطيطات متنوعة",
+                "hi": "यादृच्छिक थीम और लेआउट विविधता के साथ एक डेक तैयार करें",
+                "ru": "Создайте колоду со случайной темой и разнообразием макетов."
+        },
+        "Generate prescriptive playbooks and simulate sandbox scenario outcomes.": {
+                "es": "Genere guías prescriptivas y simule resultados de escenarios sandbox.",
+                "fr": "Générez des playbooks prescriptifs et simulez les résultats des scénarios sandbox.",
+                "de": "Erstellen Sie präskriptive Playbooks und simulieren Sie die Ergebnisse von Sandbox-Szenarios.",
+                "zh": "生成规范性的剧本并模拟沙箱场景结果。",
+                "ja": "規範的なプレイブックを生成し、サンドボックス シナリオの結果をシミュレートします。",
+                "pt": "Gere manuais prescritivos e simule resultados de cenários sandbox.",
+                "ar": "قم بإنشاء أدلة تشغيل توجيهية ومحاكاة نتائج سيناريو وضع الحماية.",
+                "hi": "निर्देशात्मक प्लेबुक तैयार करें और सैंडबॉक्स परिदृश्य परिणामों का अनुकरण करें।",
+                "ru": "Создавайте предписывающие сценарии и моделируйте результаты сценариев песочницы."
+        },
+        "GitHub Repository": {
+                "es": "Repositorio GitHub",
+                "fr": "Dépôt GitHub",
+                "de": "GitHub-Repository",
+                "zh": "GitHub 存储库",
+                "ja": "GitHub リポジトリ",
+                "pt": "Repositório GitHub",
+                "ar": "مستودع جيثب",
+                "hi": "गिटहब रिपॉजिटरी",
+                "ru": "Репозиторий GitHub"
+        },
+        "Glassmorphic Welcome Modal Popup": {
+                "es": "Ventana emergente modal de bienvenida de Glassmorphic",
+                "fr": "Popup modal de bienvenue Glassmorphic",
+                "de": "Modales Willkommens-Popup von Glassmorphic",
+                "zh": "Glassmorphic 欢迎模态弹出窗口",
+                "ja": "Glassmorphic ようこそモーダル ポップアップ",
+                "pt": "Pop-up modal de boas-vindas Glassmorphic",
+                "ar": "Glassmorphic ترحيب مشروط المنبثقة",
+                "hi": "ग्लासमॉर्फिक वेलकम मॉडल पॉपअप",
+                "ru": "Модальное всплывающее окно приветствия Glassmorphic"
+        },
+        "Global Language Switcher Capsule": {
+                "es": "Cápsula de cambio de idioma global",
+                "fr": "Capsule de changement de langue globale",
+                "de": "Global Language Switcher-Kapsel",
+                "zh": "全球语言切换胶囊",
+                "ja": "グローバル言語スイッチャー カプセル",
+                "pt": "Cápsula global de alternância de idiomas",
+                "ar": "كبسولة محول اللغة العالمية",
+                "hi": "वैश्विक भाषा स्विचर कैप्सूल",
+                "ru": "Капсула глобального переключения языков"
+        },
+        "Global Languages": {
+                "es": "Idiomas globales",
+                "fr": "Langues mondiales",
+                "de": "Globale Sprachen",
+                "zh": "全球语言",
+                "ja": "世界言語",
+                "pt": "Idiomas Globais",
+                "ar": "اللغات العالمية",
+                "hi": "वैश्विक भाषाएँ",
+                "ru": "Глобальные языки"
+        },
+        "Global Sample Dataset": {
+                "es": "Conjunto de datos de muestra global",
+                "fr": "Exemple d'ensemble de données global",
+                "de": "Globaler Beispieldatensatz",
+                "zh": "全球样本数据集",
+                "ja": "グローバルサンプルデータセット",
+                "pt": "Conjunto de dados de amostra global",
+                "ar": "مجموعة بيانات العينة العالمية",
+                "hi": "वैश्विक नमूना डेटासेट",
+                "ru": "Глобальный выборочный набор данных"
+        },
+        "Governance & Corporate System Guide": {
+                "es": "Guía de gobierno y sistemas corporativos",
+                "fr": "Guide de gouvernance et du système d'entreprise",
+                "de": "Leitfaden zu Governance und Unternehmenssystemen",
+                "zh": "治理和公司制度指南",
+                "ja": "ガバナンス・企業体制ガイド",
+                "pt": "Guia de Governança e Sistema Corporativo",
+                "ar": "دليل الحوكمة ونظام الشركات",
+                "hi": "शासन एवं कॉर्पोरेट सिस्टम गाइड",
+                "ru": "Руководство по управлению и корпоративной системе"
+        },
+        "Governance & Guide": {
+                "es": "Gobernanza y guía",
+                "fr": "Gouvernance et guide",
+                "de": "Governance & Leitfaden",
+                "zh": "治理与指南",
+                "ja": "ガバナンスとガイド",
+                "pt": "Governança e Guia",
+                "ar": "الحوكمة والدليل",
+                "hi": "शासन एवं मार्गदर्शक",
+                "ru": "Управление и руководство"
+        },
+        "Governance & System": {
+                "es": "Gobernanza y sistema",
+                "fr": "Gouvernance et système",
+                "de": "Governance & System",
+                "zh": "治理与系统",
+                "ja": "ガバナンスとシステム",
+                "pt": "Governança e Sistema",
+                "ar": "الحوكمة والنظام",
+                "hi": "शासन एवं व्यवस्था",
+                "ru": "Управление и система"
+        },
+        "Grace Period Management": {
+                "es": "Gestión del período de gracia",
+                "fr": "Gestion des délais de grâce",
+                "de": "Verwaltung der Nachfrist",
+                "zh": "宽限期管理",
+                "ja": "猶予期間の管理",
+                "pt": "Gerenciamento do período de carência",
+                "ar": "إدارة فترة السماح",
+                "hi": "अनुग्रह अवधि प्रबंधन",
+                "ru": "Управление льготным периодом"
+        },
+        "Grid: Left side: Dynamic metric items list, Right side: interactive simulator & AI Advisor": {
+                "es": "Cuadrícula: lado izquierdo: lista de elementos de métricas dinámicas, lado derecho: simulador interactivo y asesor de IA",
+                "fr": "Grille : côté gauche : liste d'éléments de métriques dynamiques, côté droit : simulateur interactif et conseiller en IA",
+                "de": "Raster: Linke Seite: Liste dynamischer Metrikelemente, rechte Seite: interaktiver Simulator und KI-Berater",
+                "zh": "网格：左侧：动态指标项列表，右侧：交互式模拟器和AI Advisor",
+                "ja": "グリッド: 左側: 動的メトリクス項目リスト、右側: インタラクティブ シミュレーターと AI アドバイザー",
+                "pt": "Grade: Lado esquerdo: lista de itens de métricas dinâmicas, Lado direito: simulador interativo e AI Advisor",
+                "ar": "الشبكة: الجانب الأيسر: قائمة عناصر القياس الديناميكية، الجانب الأيمن: جهاز محاكاة تفاعلي ومستشار الذكاء الاصطناعي",
+                "hi": "ग्रिड: बाईं ओर: गतिशील मीट्रिक आइटम सूची, दाईं ओर: इंटरैक्टिव सिम्युलेटर और एआई सलाहकार",
+                "ru": "Сетка: левая сторона: список элементов динамических показателей, правая сторона: интерактивный симулятор и советник по искусственному интеллекту."
+        },
+        "Growth & Renewals": {
+                "es": "Crecimiento y renovaciones",
+                "fr": "Croissance et renouvellements",
+                "de": "Wachstum und Erneuerungen",
+                "zh": "成长与更新",
+                "ja": "成長と刷新",
+                "pt": "Crescimento e Renovações",
+                "ar": "النمو والتجديدات",
+                "hi": "विकास एवं नवीनीकरण",
+                "ru": "Рост и обновление"
+        },
+        "Guarantees dedicated ownership for high-risk accounts and establishes clear timelines for recovery interventions.": {
+                "es": "Garantiza la propiedad exclusiva de las cuentas de alto riesgo y establece cronogramas claros para las intervenciones de recuperación.",
+                "fr": "Garantit une propriété dédiée pour les comptes à haut risque et établit des délais clairs pour les interventions de recouvrement.",
+                "de": "Garantiert eine dedizierte Verantwortung für Hochrisikokonten und legt klare Zeitpläne für Wiederherstellungsmaßnahmen fest.",
+                "zh": "保证高风险账户的专用所有权，并为恢复干预制定明确的时间表。",
+                "ja": "高リスク口座の専用所有権を保証し、回復介入の明確なタイムラインを確立します。",
+                "pt": "Garante a propriedade dedicada para contas de alto risco e estabelece prazos claros para intervenções de recuperação.",
+                "ar": "يضمن ملكية مخصصة للحسابات عالية المخاطر ويضع جداول زمنية واضحة لتدخلات الاسترداد.",
+                "hi": "उच्च जोखिम वाले खातों के लिए समर्पित स्वामित्व की गारंटी देता है और पुनर्प्राप्ति हस्तक्षेपों के लिए स्पष्ट समयसीमा स्थापित करता है।",
+                "ru": "Гарантирует право собственности на счета с высоким риском и устанавливает четкие сроки действий по восстановлению."
+        },
+        "Guide Header & Search Filter": {
+                "es": "Encabezado de guía y filtro de búsqueda",
+                "fr": "En-tête du guide et filtre de recherche",
+                "de": "Leitfaden-Header und Suchfilter",
+                "zh": "指南标题和搜索过滤器",
+                "ja": "ガイドヘッダーと検索フィルター",
+                "pt": "Cabeçalho do guia e filtro de pesquisa",
+                "ar": "رأس الدليل ومرشح البحث",
+                "hi": "गाइड हेडर और खोज फ़िल्टर",
+                "ru": "Заголовок руководства и фильтр поиска"
+        },
+        "Guided Tour Overlay Step Card": {
+                "es": "Tarjeta de pasos superpuesta de visita guiada",
+                "fr": "Carte d'étape de superposition de visite guidée",
+                "de": "Geführte Tour-Overlay-Schrittkarte",
+                "zh": "导览叠加步骤卡",
+                "ja": "ガイド付きツアー オーバーレイ ステップ カード",
+                "pt": "Cartão de etapas de sobreposição de tour guiado",
+                "ar": "بطاقة الخطوة المتراكبة للجولة الإرشادية",
+                "hi": "गाइडेड टूर ओवरले स्टेप कार्ड",
+                "ru": "Наложенная пошаговая карточка экскурсии"
+        },
+        "Guided Walkthrough": {
+                "es": "Tutorial guiado",
+                "fr": "Procédure pas à pas guidée",
+                "de": "Geführte Komplettlösung",
+                "zh": "引导演练",
+                "ja": "ガイド付きウォークスルー",
+                "pt": "Passo a passo guiado",
+                "ar": "إرشادات تفصيلية",
+                "hi": "निर्देशित पूर्वाभ्यास",
+                "ru": "Пошаговое руководство"
+        },
+        "HEALTHY COHORT": {
+                "es": "COHORTE SALUDABLE",
+                "fr": "COHORTE SAINE",
+                "de": "GESUNDE KOHORTE",
+                "zh": "健康群体",
+                "ja": "健康な集団",
+                "pt": "COORTE SAUDÁVEL",
+                "ar": "مجموعة صحية",
+                "hi": "स्वस्थ समूह",
+                "ru": "ЗДОРОВАЯ КОГОРТА"
+        },
+        "HIGH RISK COHORT": {
+                "es": "COHORTE DE ALTO RIESGO",
+                "fr": "COHORTE À HAUT RISQUE",
+                "de": "KOHORTE MIT HOHEM RISIKO",
+                "zh": "高风险人群",
+                "ja": "高リスクコホート",
+                "pt": "COORTE DE ALTO RISCO",
+                "ar": "مجموعة عالية المخاطر",
+                "hi": "उच्च जोखिम समूह",
+                "ru": "КОГОРТА ВЫСОКОГО РИСКА"
+        },
+        "HTML5 Executive Report": {
+                "es": "Informe ejecutivo HTML5",
+                "fr": "Rapport exécutif HTML5",
+                "de": "HTML5-Executive-Bericht",
+                "zh": "HTML5 执行报告",
+                "ja": "HTML5 エグゼクティブレポート",
+                "pt": "Relatório Executivo HTML5",
+                "ar": "التقرير التنفيذي لـ HTML5",
+                "hi": "HTML5 कार्यकारी रिपोर्ट",
+                "ru": "Исполнительный отчет HTML5"
+        },
+        "Header Row": {
+                "es": "Fila de encabezado",
+                "fr": "Ligne d'en-tête",
+                "de": "Kopfzeile",
+                "zh": "标题行",
+                "ja": "ヘッダー行",
+                "pt": "Linha de cabeçalho",
+                "ar": "صف الرأس",
+                "hi": "शीर्ष लेख पंक्ति",
+                "ru": "Заголовок строки"
+        },
+        "Heatmapped breakdown of customer retention performance across subscription tenure stages.": {
+                "es": "Desglose del rendimiento de retención de clientes en mapas de calor en las etapas de tenencia de la suscripción.",
+                "fr": "Répartition par cartographie thermique des performances de fidélisation des clients à travers les étapes de durée d'abonnement.",
+                "de": "Heatmap-Aufschlüsselung der Kundenbindungsleistung über die Phasen der Abonnementlaufzeit hinweg.",
+                "zh": "跨订阅期限阶段的客户保留绩效的热图细分。",
+                "ja": "サブスクリプション契約期間全体の顧客維持パフォーマンスのヒートマップ化された内訳。",
+                "pt": "Detalhamento do mapeamento térmico do desempenho de retenção de clientes em todos os estágios de posse da assinatura.",
+                "ar": "تفصيل مخطط تمثيلي لأداء الاحتفاظ بالعملاء عبر مراحل مدة الاشتراك.",
+                "hi": "सदस्यता अवधि के चरणों में ग्राहक प्रतिधारण प्रदर्शन का हीटमैप्ड विवरण।",
+                "ru": "Тепловая карта эффективности удержания клиентов на разных этапах срока действия подписки."
+        },
+        "Hello! I am your": {
+                "es": "¡Hola! yo soy tu",
+                "fr": "Bonjour! je suis ton",
+                "de": "Hallo! Ich bin dein",
+                "zh": "你好！我是你的",
+                "ja": "こんにちは！私はあなたのものです",
+                "pt": "Olá! eu sou seu",
+                "ar": "مرحبًا! أنا لك",
+                "hi": "नमस्ते! मैं तुम्हारा हूँ",
+                "ru": "Привет! я твой"
+        },
+        "Hero Title Page": {
+                "es": "Página de título del héroe",
+                "fr": "Page de titre du héros",
+                "de": "Titelseite des Helden",
+                "zh": "英雄扉页",
+                "ja": "ヒーローのタイトルページ",
+                "pt": "Página de título do herói",
+                "ar": "صفحة عنوان البطل",
+                "hi": "हीरो शीर्षक पृष्ठ",
+                "ru": "Титульный лист героя"
+        },
+        "Hidden legacy select for full programmatic compatibility": {
+                "es": "Selección heredada oculta para compatibilidad programática total",
+                "fr": "Sélection d'héritage caché pour une compatibilité programmatique complète",
+                "de": "Versteckte Legacy-Auswahl für volle Programmkompatibilität",
+                "zh": "隐藏的遗留选择以实现完全编程兼容性",
+                "ja": "完全なプログラム互換性を実現するための非表示のレガシー選択",
+                "pt": "Seleção herdada oculta para compatibilidade programática total",
+                "ar": "حدد التراث المخفي للتوافق البرمجي الكامل",
+                "hi": "पूर्ण प्रोग्रामेटिक संगतता के लिए छिपी हुई विरासत का चयन करें",
+                "ru": "Скрытый выбор устаревших версий для полной программной совместимости"
+        },
+        "High": {
+                "es": "Alto",
+                "fr": "Élevé",
+                "de": "Hoch",
+                "zh": "高",
+                "ja": "高",
+                "pt": "Alto",
+                "ar": "عالية",
+                "hi": "ऊँचा",
+                "ru": "Высокий"
+        },
+        "High Attrition Risk": {
+                "es": "Alto riesgo de deserción",
+                "fr": "Risque d’attrition élevé",
+                "de": "Hohes Fluktuationsrisiko",
+                "zh": "高流失风险",
+                "ja": "高い離職リスク",
+                "pt": "Alto risco de atrito",
+                "ar": "مخاطر الاستنزاف العالية",
+                "hi": "उच्च क्षय जोखिम",
+                "ru": "Высокий риск истощения"
+        },
+        "High Support Tickets (>=3)": {
+                "es": "Tickets de soporte alto (>=3)",
+                "fr": "Tickets de support élevé (>=3)",
+                "de": "Hohe Support-Tickets (>=3)",
+                "zh": "高支持票 (>=3)",
+                "ja": "高サポート チケット (>=3)",
+                "pt": "Tickets de suporte alto (>=3)",
+                "ar": "تذاكر الدعم العالية (>=3)",
+                "hi": "उच्च समर्थन टिकट (>=3)",
+                "ru": "Билеты высокой поддержки (>=3)"
+        },
+        "High-Density Grid Layout": {
+                "es": "Diseño de cuadrícula de alta densidad",
+                "fr": "Disposition en grille haute densité",
+                "de": "Rasterlayout mit hoher Dichte",
+                "zh": "高密度网格布局",
+                "ja": "高密度グリッドレイアウト",
+                "pt": "Layout de grade de alta densidade",
+                "ar": "تخطيط الشبكة عالي الكثافة",
+                "hi": "उच्च-घनत्व ग्रिड लेआउट",
+                "ru": "Сетка высокой плотности"
+        },
+        "High-Density View": {
+                "es": "Vista de alta densidad",
+                "fr": "Vue haute densité",
+                "de": "High-Density-Ansicht",
+                "zh": "高密度视图",
+                "ja": "高密度ビュー",
+                "pt": "Visualização de alta densidade",
+                "ar": "عرض عالي الكثافة",
+                "hi": "उच्च-घनत्व दृश्य",
+                "ru": "Просмотр с высокой плотностью просмотра"
+        },
+        "High-Performance Local Production Scripts (Zero Network Latency & Offline-Safe)": {
+                "es": "Scripts de producción local de alto rendimiento (latencia de red cero y seguridad sin conexión)",
+                "fr": "Scripts de production locale hautes performances (latence réseau nulle et sécurité hors ligne)",
+                "de": "Leistungsstarke lokale Produktionsskripte (keine Netzwerklatenz und offline-sicher)",
+                "zh": "高性能本地制作脚本（零网络延迟和离线安全）",
+                "ja": "高性能のローカル プロダクション スクリプト (ネットワーク遅延ゼロ、オフラインでも安全)",
+                "pt": "Scripts de produção local de alto desempenho (latência de rede zero e seguro off-line)",
+                "ar": "نصوص إنتاج محلية عالية الأداء (زمن استجابة للشبكة صفر وآمن دون الاتصال بالإنترنت)",
+                "hi": "उच्च-प्रदर्शन स्थानीय उत्पादन स्क्रिप्ट (शून्य नेटवर्क विलंबता और ऑफ़लाइन-सुरक्षित)",
+                "ru": "Высокопроизводительные сценарии локального производства (нулевая задержка в сети и безопасность в автономном режиме)"
+        },
+        "High-Tech Studio": {
+                "es": "Estudio de alta tecnología",
+                "fr": "Studio de haute technologie",
+                "de": "High-Tech-Studio",
+                "zh": "高科技工作室",
+                "ja": "ハイテクスタジオ",
+                "pt": "Estúdio de alta tecnologia",
+                "ar": "استوديو عالي التقنية",
+                "hi": "हाई-टेक स्टूडियो",
+                "ru": "Студия высоких технологий"
+        },
+        "High-risk customer segments sorted by expected financial loss. Focus outreach here.": {
+                "es": "Segmentos de clientes de alto riesgo ordenados por pérdida financiera esperada. Enfoque la divulgación aquí.",
+                "fr": "Segments de clientèle à haut risque triés par perte financière attendue. Concentrez-vous ici sur la sensibilisation.",
+                "de": "Kundensegmente mit hohem Risiko, sortiert nach erwartetem finanziellen Verlust. Konzentrieren Sie sich hier auf die Öffentlichkeitsarbeit.",
+                "zh": "按预期财务损失排序的高风险客户群。在这里重点宣传。",
+                "ja": "高リスクの顧客セグメントを、予想される経済的損失によって分類します。ここではアウトリーチに焦点を当てます。",
+                "pt": "Segmentos de clientes de alto risco classificados por perda financeira esperada. Concentre a divulgação aqui.",
+                "ar": "شرائح العملاء عالية المخاطر مرتبة حسب الخسارة المالية المتوقعة. التركيز على التواصل هنا.",
+                "hi": "उच्च जोखिम वाले ग्राहक खंडों को अपेक्षित वित्तीय हानि के आधार पर क्रमबद्ध किया गया। यहां आउटरीच पर ध्यान केंद्रित करें।",
+                "ru": "Сегменты клиентов с высоким уровнем риска, отсортированные по ожидаемым финансовым потерям. Сосредоточьте разъяснительную работу здесь."
+        },
+        "Histogram": {
+                "es": "Histograma",
+                "fr": "Histogramme",
+                "de": "Histogramm",
+                "zh": "直方图",
+                "ja": "ヒストグラム",
+                "pt": "Histograma",
+                "ar": "الرسم البياني",
+                "hi": "हिस्टोग्राम",
+                "ru": "Гистограмма"
+        },
+        "Horizontal Category Slider Capsule Bar": {
+                "es": "Barra de cápsula deslizante de categoría horizontal",
+                "fr": "Barre de capsule de curseur de catégorie horizontale",
+                "de": "Horizontale Kategorie-Slider-Kapselleiste",
+                "zh": "水平类别滑块胶囊栏",
+                "ja": "水平カテゴリースライダー カプセルバー",
+                "pt": "Barra de cápsula deslizante de categoria horizontal",
+                "ar": "شريط كبسولة منزلق فئة أفقية",
+                "hi": "क्षैतिज श्रेणी स्लाइडर कैप्सूल बार",
+                "ru": "Горизонтальный слайдер категорий «Капсула»"
+        },
+        "Horizontal Slide": {
+                "es": "Diapositiva horizontal",
+                "fr": "Diapositive horizontale",
+                "de": "Horizontale Folie",
+                "zh": "水平滑轨",
+                "ja": "水平スライド",
+                "pt": "Deslizamento horizontal",
+                "ar": "الشريحة الأفقية",
+                "hi": "क्षैतिज स्लाइड",
+                "ru": "Горизонтальный слайд"
+        },
+        "Houses the interactive campaign simulator, Webhook connector registers (Salesforce, Stripe), and automated report delivery options.": {
+                "es": "Alberga el simulador de campaña interactivo, registros del conector Webhook (Salesforce, Stripe) y opciones de entrega automatizada de informes.",
+                "fr": "Héberge le simulateur de campagne interactif, les registres du connecteur Webhook (Salesforce, Stripe) et les options de livraison automatisée de rapports.",
+                "de": "Enthält den interaktiven Kampagnensimulator, Webhook-Connector-Register (Salesforce, Stripe) und Optionen für die automatische Berichtszustellung.",
+                "zh": "包含交互式活动模拟器、Webhook 连接器寄存器（Salesforce、Stripe）和自动报告交付选项。",
+                "ja": "インタラクティブなキャンペーン シミュレーター、Webhook コネクタ レジスタ (Salesforce、Stripe)、および自動レポート配信オプションを収容します。",
+                "pt": "Abriga o simulador de campanha interativo, registros do conector Webhook (Salesforce, Stripe) e opções automatizadas de entrega de relatórios.",
+                "ar": "يحتوي على محاكي الحملة التفاعلية وسجلات موصل Webhook (Salesforce وStripe) وخيارات تسليم التقارير تلقائيًا.",
+                "hi": "इसमें इंटरैक्टिव अभियान सिम्युलेटर, वेबहुक कनेक्टर रजिस्टर (सेल्सफोर्स, स्ट्राइप), और स्वचालित रिपोर्ट वितरण विकल्प मौजूद हैं।",
+                "ru": "Содержит интерактивный симулятор кампании, регистры соединителей Webhook (Salesforce, Stripe) и параметры автоматической доставки отчетов."
+        },
+        "How it works:": {
+                "es": "Cómo funciona:",
+                "fr": "Comment ça marche :",
+                "de": "So funktioniert es:",
+                "zh": "工作原理：",
+                "ja": "仕組み:",
+                "pt": "Como funciona:",
+                "ar": "كيف يعمل:",
+                "hi": "यह कैसे काम करता है:",
+                "ru": "Как это работает:"
+        },
+        "HubSpot CRM": {
+                "es": "HubSpotCRM",
+                "fr": "HubSpot CRM",
+                "de": "HubSpot CRM",
+                "zh": "HubSpot 客户关系管理",
+                "ja": "HubSpot CRM",
+                "pt": "CRM HubSpot",
+                "ar": "HubSpot CRM",
+                "hi": "हबस्पॉट सीआरएम",
+                "ru": "HubSpot CRM"
+        },
+        "INR (₹)": {
+                "es": "INR ($)",
+                "fr": "INR ( ₹ )",
+                "de": "INR (£)",
+                "zh": "印度卢比（卢比）",
+                "ja": "INR (₹)",
+                "pt": "INR ($)",
+                "ar": "روبية هندية (₹)",
+                "hi": "आईएनआर (₹)",
+                "ru": "индийская рупия (₹)"
+        },
+        "Immediate CSM outreach": {
+                "es": "Divulgación inmediata del MSC",
+                "fr": "Sensibilisation immédiate du MSC",
+                "de": "Sofortige CSM-Kontaktaufnahme",
+                "zh": "立即 CSM 外展",
+                "ja": "CSM の即時対応",
+                "pt": "Alcance imediato do CSM",
+                "ar": "التواصل الفوري مع CSM",
+                "hi": "तत्काल सीएसएम आउटरीच",
+                "ru": "Немедленная связь с CSM"
+        },
+        "Implement standard executive playbooks to optimize customer longevity, decrease monthly logo churn, and scale contract expansions.": {
+                "es": "Implemente guías ejecutivas estándar para optimizar la longevidad de los clientes, disminuir la rotación mensual de logotipos y escalar las expansiones de contratos.",
+                "fr": "Mettez en œuvre des manuels de direction standard pour optimiser la longévité des clients, réduire le taux de désabonnement mensuel des logos et étendre les extensions de contrats.",
+                "de": "Implementieren Sie Standard-Playbooks für Führungskräfte, um die Kundenbindung zu optimieren, die monatliche Abwanderung von Logos zu verringern und Vertragserweiterungen zu skalieren.",
+                "zh": "实施标准执行手册，以优化客户寿命、减少每月徽标流失并扩大合同扩展。",
+                "ja": "標準のエグゼクティブ プレイブックを実装して、顧客の寿命を最適化し、毎月のロゴの変更を減らし、契約の拡大をスケールします。",
+                "pt": "Implemente manuais executivos padrão para otimizar a longevidade do cliente, diminuir a rotatividade mensal de logotipos e dimensionar expansões de contratos.",
+                "ar": "قم بتنفيذ أدلة التشغيل التنفيذية القياسية لتحسين طول عمر العميل، وتقليل التغيير الشهري للشعار، وتوسيع نطاق العقود.",
+                "hi": "ग्राहक की दीर्घायु को अनुकूलित करने, मासिक लोगो मंथन को कम करने और अनुबंध विस्तार को बढ़ाने के लिए मानक कार्यकारी प्लेबुक लागू करें।",
+                "ru": "Внедрите стандартные руководства для руководителей, чтобы оптимизировать срок службы клиентов, уменьшить ежемесячный отток логотипов и масштабировать расширение контрактов."
+        },
+        "Import spreadsheet files, clean PII credentials, and standardize column currencies.": {
+                "es": "Importe archivos de hojas de cálculo, limpie las credenciales de PII y estandarice las monedas de las columnas.",
+                "fr": "Importez des feuilles de calcul, nettoyez les informations d'identification PII et normalisez les devises des colonnes.",
+                "de": "Importieren Sie Tabellendateien, bereinigen Sie PII-Anmeldeinformationen und standardisieren Sie Spaltenwährungen.",
+                "zh": "导入电子表格文件、清理 PII 凭据并标准化列货币。",
+                "ja": "スプレッドシート ファイルをインポートし、PII 認証情報をクリーンアップし、列の通貨を標準化します。",
+                "pt": "Importe arquivos de planilhas, limpe credenciais de PII e padronize as moedas das colunas.",
+                "ar": "استيراد ملفات جداول البيانات، وتنظيف بيانات اعتماد PII، وتوحيد عملات الأعمدة.",
+                "hi": "स्प्रेडशीट फ़ाइलें आयात करें, PII क्रेडेंशियल साफ़ करें, और कॉलम मुद्राओं को मानकीकृत करें।",
+                "ru": "Импортируйте файлы электронных таблиц, очищайте учетные данные, позволяющие идентифицировать личность, и стандартизируйте валюты столбцов."
+        },
+        "In Progress": {
+                "es": "En progreso",
+                "fr": "En cours",
+                "de": "In Bearbeitung",
+                "zh": "进行中",
+                "ja": "進行中",
+                "pt": "Em andamento",
+                "ar": "قيد التقدم",
+                "hi": "प्रगति पर है",
+                "ru": "В процессе"
+        },
+        "Increasing customer retention rates by just 5% increases overall corporate net profitability by 25% to 95% (Bain & Company).": {
+                "es": "Aumentar las tasas de retención de clientes en sólo un 5% aumenta la rentabilidad neta corporativa general entre un 25% y un 95% (Bain & Company).",
+                "fr": "Augmenter les taux de fidélisation de la clientèle de seulement 5 % augmente la rentabilité nette globale de l'entreprise de 25 % à 95 % (Bain & Company).",
+                "de": "Eine Erhöhung der Kundenbindungsrate um nur 5 % erhöht die Gesamtnettorentabilität des Unternehmens um 25 bis 95 % (Bain & Company).",
+                "zh": "客户保留率仅提高 5%，企业整体净利润就能提高 25% 至 95%（Bain & Company）。",
+                "ja": "顧客維持率がわずか 5% 向上するだけで、企業全体の純利益は 25% ～ 95% 増加します (Bain & Company)。",
+                "pt": "Aumentar as taxas de retenção de clientes em apenas 5% aumenta a lucratividade líquida corporativa geral em 25% a 95% (Bain & Company).",
+                "ar": "تؤدي زيادة معدلات الاحتفاظ بالعملاء بنسبة 5% فقط إلى زيادة صافي الربحية الإجمالية للشركة بنسبة 25% إلى 95% (Bain & Company).",
+                "hi": "ग्राहक प्रतिधारण दरों में केवल 5% की वृद्धि से समग्र कॉर्पोरेट शुद्ध लाभप्रदता 25% से 95% (बेन एंड कंपनी) तक बढ़ जाती है।",
+                "ru": "Увеличение коэффициента удержания клиентов всего на 5% увеличивает общую чистую прибыль компании на 25–95% (Bain & Company)."
+        },
+        "Instant Data-Driven Audit Report Generator": {
+                "es": "Generador instantáneo de informes de auditoría basado en datos",
+                "fr": "Générateur de rapports d'audit instantanés basés sur les données",
+                "de": "Sofortiger datengesteuerter Audit-Berichtsgenerator",
+                "zh": "即时数据驱动的审计报告生成器",
+                "ja": "インスタントデータドリブン監査レポートジェネレーター",
+                "pt": "Gerador instantâneo de relatórios de auditoria baseado em dados",
+                "ar": "مولد تقارير التدقيق الفوري المبني على البيانات",
+                "hi": "त्वरित डेटा-संचालित ऑडिट रिपोर्ट जेनरेटर",
+                "ru": "Мгновенный генератор аудиторских отчетов на основе данных"
+        },
+        "Instant One-Click Action Ribbon": {
+                "es": "Cinta de acción instantánea con un solo clic",
+                "fr": "Ruban d'action instantanée en un clic",
+                "de": "Sofortiges Ein-Klick-Aktionsmenüband",
+                "zh": "即时一键操作功能区",
+                "ja": "インスタントワンクリックアクションリボン",
+                "pt": "Faixa de ação instantânea com um clique",
+                "ar": "شريط عمل فوري بنقرة واحدة",
+                "hi": "त्वरित एक-क्लिक एक्शन रिबन",
+                "ru": "Лента мгновенных действий в один клик"
+        },
+        "Instantly generate slide Q&A cards to address typical board meeting queries.": {
+                "es": "Genere instantáneamente tarjetas de preguntas y respuestas con diapositivas para abordar consultas típicas de las reuniones de la junta directiva.",
+                "fr": "Générez instantanément des cartes de questions-réponses diapositives pour répondre aux requêtes typiques des réunions du conseil d'administration.",
+                "de": "Erstellen Sie sofort Folien-Q&A-Karten, um typische Fragen zu Vorstandssitzungen zu beantworten.",
+                "zh": "立即生成幻灯片问答卡来解决典型的董事会会议问题。",
+                "ja": "スライド Q&A カードを即座に生成して、取締役会会議の一般的な質問に対処します。",
+                "pt": "Gere instantaneamente cartões de perguntas e respostas com slides para responder a dúvidas típicas de reuniões de diretoria.",
+                "ar": "قم بإنشاء بطاقات أسئلة وأجوبة من الشرائح على الفور لمعالجة الاستفسارات النموذجية لاجتماعات مجلس الإدارة.",
+                "hi": "विशिष्ट बोर्ड मीटिंग प्रश्नों के समाधान के लिए तुरंत स्लाइड प्रश्नोत्तर कार्ड तैयार करें।",
+                "ru": "Мгновенно создавайте слайды с вопросами и ответами для ответа на типичные вопросы, возникающие на заседаниях совета директоров."
+        },
+        "Inter & JetBrains Mono": {
+                "es": "Inter y JetBrains Mono",
+                "fr": "Inter et JetBrains Mono",
+                "de": "Inter & JetBrains Mono",
+                "zh": "Inter 和 JetBrains Mono",
+                "ja": "インター & JetBrains モノ",
+                "pt": "Inter e JetBrains Mono",
+                "ar": "انتر وJetBrains مونو",
+                "hi": "इंटर और जेटब्रेन्स मोनो",
+                "ru": "Интер и JetBrains Mono"
+        },
+        "Inter & Mono": {
+                "es": "Inter y Mono",
+                "fr": "Inter et Mono",
+                "de": "Inter & Mono",
+                "zh": "间色和单声道",
+                "ja": "インター＆モノ",
+                "pt": "Inter e Mono",
+                "ar": "انتر ومونو",
+                "hi": "इंटर और मोनो",
+                "ru": "Интер и Моно"
+        },
+        "Interactive 8-Step Decision Pipeline": {
+                "es": "Canal de decisiones interactivo de 8 pasos",
+                "fr": "Pipeline de décision interactif en 8 étapes",
+                "de": "Interaktive 8-stufige Entscheidungspipeline",
+                "zh": "交互式 8 步决策流程",
+                "ja": "インタラクティブな 8 ステップの意思決定パイプライン",
+                "pt": "Pipeline de decisão interativo em 8 etapas",
+                "ar": "خط أنابيب القرار التفاعلي المكون من 8 خطوات",
+                "hi": "इंटरैक्टिव 8-चरणीय निर्णय पाइपलाइन",
+                "ru": "Интерактивный 8-шаговый конвейер принятия решений"
+        },
+        "Interactive Retention Journey Workflow": {
+                "es": "Flujo de trabajo interactivo del viaje de retención",
+                "fr": "Flux de travail interactif du parcours de rétention",
+                "de": "Interaktiver Retention Journey-Workflow",
+                "zh": "交互式保留旅程工作流程",
+                "ja": "インタラクティブな保持ジャーニーのワークフロー",
+                "pt": "Fluxo de trabalho da jornada de retenção interativa",
+                "ar": "سير عمل رحلة الاحتفاظ التفاعلية",
+                "hi": "इंटरएक्टिव रिटेंशन जर्नी वर्कफ़्लो",
+                "ru": "Интерактивный рабочий процесс удержания клиентов"
+        },
+        "Interactive Slicers:": {
+                "es": "Cortadoras interactivas:",
+                "fr": "Trancheurs interactifs :",
+                "de": "Interaktive Slicer:",
+                "zh": "交互式切片器：",
+                "ja": "インタラクティブなスライサー:",
+                "pt": "Fatiadores interativos:",
+                "ar": "أدوات التقطيع التفاعلية:",
+                "hi": "इंटरैक्टिव स्लाइसर:",
+                "ru": "Интерактивные слайсеры:"
+        },
+        "Interactive Slide Editor Panel": {
+                "es": "Panel de edición de diapositivas interactivo",
+                "fr": "Panneau de l'éditeur de diapositives interactif",
+                "de": "Interaktives Folieneditor-Panel",
+                "zh": "交互式幻灯片编辑器面板",
+                "ja": "インタラクティブなスライドエディターパネル",
+                "pt": "Painel interativo do editor de slides",
+                "ar": "لوحة محرر الشرائح التفاعلية",
+                "hi": "इंटरएक्टिव स्लाइड संपादक पैनल",
+                "ru": "Интерактивная панель редактора слайдов"
+        },
+        "Interactive Visual Theme & Typography Controller Swatches": {
+                "es": "Muestras interactivas de controlador de tipografía y tema visual",
+                "fr": "Échantillons de contrôleurs de thème visuel et de typographie interactifs",
+                "de": "Interaktive visuelle Themen- und Typografie-Controller-Farbfelder",
+                "zh": "交互式视觉主题和版式控制器样本",
+                "ja": "インタラクティブなビジュアルテーマとタイポグラフィコントローラーのスウォッチ",
+                "pt": "Amostras de tema visual interativo e controlador de tipografia",
+                "ar": "الموضوع المرئي التفاعلي وحوامل التحكم في الطباعة",
+                "hi": "इंटरएक्टिव विज़ुअल थीम और टाइपोग्राफी नियंत्रक नमूने",
+                "ru": "Образцы интерактивных визуальных тем и контроллеров типографики"
+        },
+        "Inventory": {
+                "es": "inventario",
+                "fr": "Inventaire",
+                "de": "Inventar",
+                "zh": "库存",
+                "ja": "在庫",
+                "pt": "Inventário",
+                "ar": "المخزون",
+                "hi": "इन्वेंटरी",
+                "ru": "Инвентарь"
+        },
+        "Involuntary Churn Checks": {
+                "es": "Verificaciones de abandono involuntario",
+                "fr": "Contrôles de désabonnement involontaires",
+                "de": "Unfreiwillige Abwanderungskontrollen",
+                "zh": "非自愿流失检查",
+                "ja": "非自発的チャーンチェック",
+                "pt": "Verificações de rotatividade involuntária",
+                "ar": "الشيكات غير الطوعي",
+                "hi": "अनैच्छिक मंथन जाँच",
+                "ru": "Принудительные проверки оттока"
+        },
+        "Isolate leading friction drivers (e.g. Month-to-Month contracts, regional conversion drops).": {
+                "es": "Aislar los principales factores de fricción (por ejemplo, contratos de mes a mes, caídas de conversión regionales).",
+                "fr": "Isolez les principaux facteurs de friction (par exemple, les contrats mensuels, les baisses de conversion régionales).",
+                "de": "Isolieren Sie die wichtigsten Reibungsfaktoren (z. B. monatliche Verträge, regionale Conversion-Rückgänge).",
+                "zh": "隔离主要的摩擦驱动因素（例如月度合同、区域转化率下降）。",
+                "ja": "主要な摩擦要因を特定します (月ごとの契約、地域のコンバージョンの低下など)。",
+                "pt": "Isole os principais fatores de atrito (por exemplo, contratos mensais, quedas de conversão regional).",
+                "ar": "عزل محركات الاحتكاك الرئيسية (مثل العقود الشهرية، وانخفاض التحويل الإقليمي).",
+                "hi": "अग्रणी घर्षण चालकों को अलग करें (उदाहरण के लिए महीने-दर-माह अनुबंध, क्षेत्रीय रूपांतरण ड्रॉप)।",
+                "ru": "Изолируйте ведущие факторы разногласий (например, ежемесячные контракты, региональные падения конверсии)."
+        },
+        "JPY (¥)": {
+                "es": "JPY (¥)",
+                "fr": "JPY (¥)",
+                "de": "JPY (¥)",
+                "zh": "日元 (日元)",
+                "ja": "円(円)",
+                "pt": "JPY (¥)",
+                "ar": "ين ياباني (¥)",
+                "hi": "जेपीवाई (¥)",
+                "ru": "Иена (¥)"
+        },
+        "JSON Audit": {
+                "es": "Auditoría JSON",
+                "fr": "Audit JSON",
+                "de": "JSON-Prüfung",
+                "zh": "JSON审计",
+                "ja": "JSON監査",
+                "pt": "Auditoria JSON",
+                "ar": "تدقيق JSON",
+                "hi": "JSON ऑडिट",
+                "ru": "JSON-аудит"
+        },
+        "Jet Black & Executive Gold (VIP Wealth)": {
+                "es": "Negro azabache y oro ejecutivo (riqueza VIP)",
+                "fr": "Jet Black et Executive Gold (Patrimoine VIP)",
+                "de": "Jet Black & Executive Gold (VIP-Vermögen)",
+                "zh": "深黑色和行政金（VIP 财富）",
+                "ja": "ジェット ブラック & エグゼクティブ ゴールド (VIP ウェルス)",
+                "pt": "Jet Black e Executive Gold (riqueza VIP)",
+                "ar": "الأسود الداكن والذهبي التنفيذي (VIP Wealth)",
+                "hi": "जेट ब्लैक और एक्जीक्यूटिव गोल्ड (वीआईपी वेल्थ)",
+                "ru": "Jet Black и Executive Gold (VIP Wealth)"
+        },
+        "Jet Black & Gold": {
+                "es": "Negro azabache y oro",
+                "fr": "Noir de jais et or",
+                "de": "Tiefschwarz und Gold",
+                "zh": "深黑色和金色",
+                "ja": "ジェットブラック&ゴールド",
+                "pt": "Preto azeviche e dourado",
+                "ar": "جيت بلاك آند جولد",
+                "hi": "जेट ब्लैक एंड गोल्ड",
+                "ru": "Черный и золотой"
+        },
+        "Jump to Main Executive Dashboard": {
+                "es": "Ir al panel ejecutivo principal",
+                "fr": "Accéder au tableau de bord exécutif principal",
+                "de": "Wechseln Sie zum Haupt-Executive-Dashboard",
+                "zh": "跳转至主执行仪表板",
+                "ja": "メインエグゼクティブダッシュボードに移動",
+                "pt": "Vá para o painel executivo principal",
+                "ar": "انتقل إلى لوحة المعلومات التنفيذية الرئيسية",
+                "hi": "मुख्य कार्यकारी डैशबोर्ड पर जाएं",
+                "ru": "Перейти на главную панель управления для руководителей"
+        },
+        "Jump to Specials & BI Suite": {
+                "es": "Ir a ofertas especiales y BI Suite",
+                "fr": "Aller aux offres spéciales et à la suite BI",
+                "de": "Gehen Sie zu „Specials & BI Suite“.",
+                "zh": "跳转至特价商品和 BI 套件",
+                "ja": "スペシャルと BI スイートに移動",
+                "pt": "Vá para Especiais e BI Suite",
+                "ar": "انتقل إلى العروض الخاصة ومجموعة BI",
+                "hi": "स्पेशल और बीआई सुइट पर जाएं",
+                "ru": "Перейти к специальным предложениям и пакету BI"
+        },
+        "Jump to Strategic SLA Actions": {
+                "es": "Saltar a acciones estratégicas de SLA",
+                "fr": "Accédez aux actions stratégiques SLA",
+                "de": "Gehen Sie zu Strategische SLA-Aktionen",
+                "zh": "跳转至战略 SLA 行动",
+                "ja": "戦略的な SLA アクションに移動",
+                "pt": "Vá para ações estratégicas de SLA",
+                "ar": "انتقل إلى إجراءات SLA الإستراتيجية",
+                "hi": "रणनीतिक एसएलए कार्रवाइयों पर जाएं",
+                "ru": "Перейти к стратегическим действиям по SLA"
+        },
+        "Jump to What-If Scenario Sandbox": {
+                "es": "Saltar a la zona de pruebas de escenarios hipotéticos",
+                "fr": "Aller au bac à sable de scénarios de simulation",
+                "de": "Springen Sie zur Was-wäre-wenn-Szenario-Sandbox",
+                "zh": "跳转到假设情景沙盒",
+                "ja": "What-If シナリオ サンドボックスに移動",
+                "pt": "Vá para a sandbox do cenário hipotético",
+                "ar": "انتقل إلى وضع الحماية لسيناريو ماذا لو",
+                "hi": "व्हाट्स-इफ परिदृश्य सैंडबॉक्स पर जाएं",
+                "ru": "Перейти в песочницу сценария «Что, если»"
+        },
+        "KPI TO MONITOR": {
+                "es": "KPI A MONITOREAR",
+                "fr": "KPI À SURVEILLER",
+                "de": "KPI ZUR ÜBERWACHUNG",
+                "zh": "监控关键绩效指标",
+                "ja": "監視するKPI",
+                "pt": "KPI PARA MONITORAR",
+                "ar": "مؤشرات الأداء الرئيسية للمراقبة",
+                "hi": "मॉनिटर करने के लिए KPI",
+                "ru": "КПЭ ДЛЯ МОНИТОРИНГА"
+        },
+        "Key 1": {
+                "es": "Clave 1",
+                "fr": "Clé 1",
+                "de": "Schlüssel 1",
+                "zh": "钥匙1",
+                "ja": "キー1",
+                "pt": "Chave 1",
+                "ar": "المفتاح 1",
+                "hi": "कुंजी 1",
+                "ru": "Ключ 1"
+        },
+        "Key 2": {
+                "es": "Clave 2",
+                "fr": "Clé 2",
+                "de": "Schlüssel 2",
+                "zh": "关键2",
+                "ja": "キー2",
+                "pt": "Chave 2",
+                "ar": "المفتاح 2",
+                "hi": "कुंजी 2",
+                "ru": "Ключ 2"
+        },
+        "Key 3": {
+                "es": "Clave 3",
+                "fr": "Clé 3",
+                "de": "Schlüssel 3",
+                "zh": "关键3",
+                "ja": "キー3",
+                "pt": "Chave 3",
+                "ar": "المفتاح 3",
+                "hi": "कुंजी 3",
+                "ru": "Ключ 3"
+        },
+        "Key 5": {
+                "es": "Clave 5",
+                "fr": "Clé 5",
+                "de": "Schlüssel 5",
+                "zh": "关键 5",
+                "ja": "キー5",
+                "pt": "Chave 5",
+                "ar": "المفتاح 5",
+                "hi": "कुंजी 5",
+                "ru": "Ключ 5"
+        },
+        "Key 9": {
+                "es": "Clave 9",
+                "fr": "Clé 9",
+                "de": "Schlüssel 9",
+                "zh": "键9",
+                "ja": "キー9",
+                "pt": "Chave 9",
+                "ar": "المفتاح 9",
+                "hi": "कुंजी 9",
+                "ru": "Ключ 9"
+        },
+        "LIVE AUDIT": {
+                "es": "AUDITORÍA EN VIVO",
+                "fr": "AUDIT EN DIRECT",
+                "de": "LIVE-AUDIT",
+                "zh": "现场审核",
+                "ja": "ライブ監査",
+                "pt": "AUDITORIA AO VIVO",
+                "ar": "التدقيق المباشر",
+                "hi": "लाइव ऑडिट",
+                "ru": "ЖИВОЙ АУДИТ"
+        },
+        "LIVE OUTPUT READY": {
+                "es": "SALIDA EN VIVO LISTO",
+                "fr": "PRÊT POUR LA SORTIE EN DIRECT",
+                "de": "LIVE-AUSGABE BEREIT",
+                "zh": "现场输出就绪",
+                "ja": "ライブ出力準備完了",
+                "pt": "SAÍDA AO VIVO PRONTA",
+                "ar": "البث المباشر جاهز",
+                "hi": "लाइव आउटपुट तैयार",
+                "ru": "ЖИВОЙ ВЫХОД ГОТОВ"
+        },
+        "LTV-to-CAC Ratio": {
+                "es": "Relación LTV a CAC",
+                "fr": "Ratio LTV/CAC",
+                "de": "LTV-zu-CAC-Verhältnis",
+                "zh": "LTV 与 CAC 比率",
+                "ja": "LTV対CAC比率",
+                "pt": "Relação LTV para CAC",
+                "ar": "نسبة LTV إلى CAC",
+                "hi": "एलटीवी-टू-सीएसी अनुपात",
+                "ru": "Соотношение LTV и CAC"
+        },
+        "Laser Pointer": {
+                "es": "Puntero láser",
+                "fr": "Pointeur laser",
+                "de": "Laserpointer",
+                "zh": "激光笔",
+                "ja": "レーザーポインター",
+                "pt": "Ponteiro laser",
+                "ar": "مؤشر الليزر",
+                "hi": "लेजर सूचक",
+                "ru": "Лазерная указка"
+        },
+        "Layout:": {
+                "es": "Diseño:",
+                "fr": "Disposition :",
+                "de": "Layout:",
+                "zh": "布局：",
+                "ja": "レイアウト:",
+                "pt": "Disposição:",
+                "ar": "التخطيط:",
+                "hi": "लेआउट:",
+                "ru": "Планировка:"
+        },
+        "Learn how to leverage Qiplo's advanced retention operations panel to collaborate, integrate, test, and audit compliance trails.": {
+                "es": "Aprenda cómo aprovechar el panel de operaciones de retención avanzadas de Qiplo para colaborar, integrar, probar y auditar seguimientos de cumplimiento.",
+                "fr": "Découvrez comment tirer parti du panneau des opérations de rétention avancées de Qiplo pour collaborer, intégrer, tester et auditer les pistes de conformité.",
+                "de": "Erfahren Sie, wie Sie das erweiterte Retention Operations Panel von Qiplo nutzen können, um Compliance-Trails zusammenzuarbeiten, zu integrieren, zu testen und zu prüfen.",
+                "zh": "了解如何利用 Qiplo 的高级保留操作面板来协作、集成、测试和审核合规性跟踪。",
+                "ja": "Qiplo の高度な保持操作パネルを活用して、コンプライアンス証跡を共同作業、統合、テスト、監査する方法を学びます。",
+                "pt": "Aprenda como aproveitar o painel avançado de operações de retenção da Qiplo para colaborar, integrar, testar e auditar trilhas de conformidade.",
+                "ar": "تعرف على كيفية الاستفادة من لوحة عمليات الاحتفاظ المتقدمة في Qiplo للتعاون في مسارات الامتثال ودمجها واختبارها وتدقيقها.",
+                "hi": "सहयोग, एकीकरण, परीक्षण और ऑडिट अनुपालन ट्रेल्स के लिए Qiplo के उन्नत रिटेंशन ऑपरेशंस पैनल का लाभ उठाना सीखें।",
+                "ru": "Узнайте, как использовать расширенную панель операций хранения Qiplo для совместной работы, интеграции, тестирования и аудита журналов соответствия."
+        },
+        "Left Column: Inputs": {
+                "es": "Columna izquierda: entradas",
+                "fr": "Colonne de gauche : entrées",
+                "de": "Linke Spalte: Eingaben",
+                "zh": "左栏：输入",
+                "ja": "左の列: 入力",
+                "pt": "Coluna Esquerda: Entradas",
+                "ar": "العمود الأيسر: المدخلات",
+                "hi": "बायां कॉलम: इनपुट",
+                "ru": "Левый столбец: входы"
+        },
+        "Left Pane: Business Health Summary Status": {
+                "es": "Panel izquierdo: Estado del resumen de salud empresarial",
+                "fr": "Volet de gauche : État récapitulatif de l’état de santé de l’entreprise",
+                "de": "Linker Bereich: Zusammenfassungsstatus des Geschäftszustands",
+                "zh": "左窗格：业务健康状况摘要状态",
+                "ja": "左側のペイン: ビジネスの健全性の概要ステータス",
+                "pt": "Painel esquerdo: Status do resumo da integridade empresarial",
+                "ar": "الجزء الأيسر: حالة ملخص سلامة الأعمال",
+                "hi": "बायां फलक: व्यावसायिक स्वास्थ्य सारांश स्थिति",
+                "ru": "Левая панель: сводное состояние работоспособности бизнеса"
+        },
+        "LinkedIn Profile": {
+                "es": "Perfil de LinkedIn",
+                "fr": "Profil LinkedIn",
+                "de": "LinkedIn-Profil",
+                "zh": "领英个人资料",
+                "ja": "LinkedIn プロフィール",
+                "pt": "Perfil do LinkedIn",
+                "ar": "الملف الشخصي على لينكدإن",
+                "hi": "लिंक्डइन प्रोफ़ाइल",
+                "ru": "Профиль в LinkedIn"
+        },
+        "Live Analyzed Tips Section": {
+                "es": "Sección de consejos analizados en vivo",
+                "fr": "Section de conseils analysés en direct",
+                "de": "Abschnitt mit Live-Analyse-Tipps",
+                "zh": "实时分析提示部分",
+                "ja": "ライブ分析されたヒントセクション",
+                "pt": "Seção de dicas analisadas ao vivo",
+                "ar": "قسم النصائح التي تم تحليلها مباشرة",
+                "hi": "लाइव विश्लेषण युक्तियाँ अनुभाग",
+                "ru": "Раздел советов по анализу в реальном времени"
+        },
+        "Live CSV Feed URL copied to clipboard!": {
+                "es": "¡La URL del feed CSV en vivo se copió en el portapapeles!",
+                "fr": "URL du flux CSV en direct copiée dans le presse-papier !",
+                "de": "Live-CSV-Feed-URL in die Zwischenablage kopiert!",
+                "zh": "实时 CSV Feed URL 已复制到剪贴板！",
+                "ja": "ライブ CSV フィード URL がクリップボードにコピーされました。",
+                "pt": "URL do feed CSV ativo copiado para a área de transferência!",
+                "ar": "تم نسخ عنوان URL لخلاصة CSV المباشرة إلى الحافظة!",
+                "hi": "लाइव सीएसवी फ़ीड यूआरएल क्लिपबोर्ड पर कॉपी किया गया!",
+                "ru": "URL-адрес живого CSV-канала скопирован в буфер обмена!"
+        },
+        "Live Data File Telemetry Engine Active": {
+                "es": "Motor de telemetría de archivos de datos en vivo activo",
+                "fr": "Moteur de télémétrie de fichiers de données en direct actif",
+                "de": "Live-Datendatei-Telemetrie-Engine aktiv",
+                "zh": "实时数据文件遥测引擎处于活动状态",
+                "ja": "ライブ データ ファイル テレメトリ エンジンがアクティブです",
+                "pt": "Mecanismo de telemetria de arquivo de dados ativos ativo",
+                "ar": "محرك القياس عن بعد لملف البيانات الحية نشط",
+                "hi": "लाइव डेटा फ़ाइल टेलीमेट्री इंजन सक्रिय",
+                "ru": "Механизм телеметрии файлов данных в реальном времени активен"
+        },
+        "Live Data Stream": {
+                "es": "Transmisión de datos en vivo",
+                "fr": "Flux de données en direct",
+                "de": "Live-Datenstream",
+                "zh": "实时数据流",
+                "ja": "ライブデータストリーム",
+                "pt": "Transmissão de dados ao vivo",
+                "ar": "بث مباشر للبيانات",
+                "hi": "लाइव डेटा स्ट्रीम",
+                "ru": "Живой поток данных"
+        },
+        "Live Database Inference": {
+                "es": "Inferencia de bases de datos en vivo",
+                "fr": "Inférence de base de données en direct",
+                "de": "Live-Datenbank-Inferenz",
+                "zh": "实时数据库推理",
+                "ja": "ライブデータベース推論",
+                "pt": "Inferência de banco de dados ao vivo",
+                "ar": "استنتاج قاعدة البيانات الحية",
+                "hi": "लाइव डेटाबेस अनुमान",
+                "ru": "Вывод из живой базы данных"
+        },
+        "Live Feed Copy Box": {
+                "es": "Cuadro de copia de transmisión en vivo",
+                "fr": "Boîte de copie de flux en direct",
+                "de": "Live-Feed-Kopierfeld",
+                "zh": "实时馈送复印盒",
+                "ja": "ライブフィードコピーボックス",
+                "pt": "Caixa de cópia de feed ao vivo",
+                "ar": "صندوق نسخ البث المباشر",
+                "hi": "लाइव फ़ीड कॉपी बॉक्स",
+                "ru": "Коробка для копирования прямой трансляции"
+        },
+        "Live Power BI REST Push Service Bar": {
+                "es": "Barra de servicio push REST de Live Power BI",
+                "fr": "Barre de service Push Live Power BI REST",
+                "de": "Live Power BI REST Push Service Bar",
+                "zh": "Live Power BI REST 推送服务栏",
+                "ja": "Live Power BI REST プッシュ サービス バー",
+                "pt": "Barra de serviço push REST do Power BI ao vivo",
+                "ar": "شريط خدمة الدفع Live Power BI REST",
+                "hi": "लाइव पावर बीआई रेस्ट पुश सर्विस बार",
+                "ru": "Панель службы Live Power BI REST Push"
+        },
+        "Live Simulator": {
+                "es": "Simulador en vivo",
+                "fr": "Simulateur en direct",
+                "de": "Live-Simulator",
+                "zh": "现场模拟器",
+                "ja": "ライブシミュレータ",
+                "pt": "Simulador ao vivo",
+                "ar": "محاكي مباشر",
+                "hi": "लाइव सिम्युलेटर",
+                "ru": "Живой симулятор"
+        },
+        "Live Tableau Server REST Publish Bar": {
+                "es": "Barra de publicación REST de Live Tableau Server",
+                "fr": "Barre de publication REST Live Tableau Server",
+                "de": "Live Tableau Server REST-Veröffentlichungsleiste",
+                "zh": "实时 Tableau Server REST 发布栏",
+                "ja": "ライブ Tableau Server REST パブリッシュ バー",
+                "pt": "Barra de publicação REST do Tableau Server em tempo real",
+                "ar": "شريط النشر المباشر لخادم Tableau REST",
+                "hi": "लाइव टेबलो सर्वर रेस्ट पब्लिश बार",
+                "ru": "Панель публикации REST сервера Live Tableau"
+        },
+        "Live Telemetry Stream Engine": {
+                "es": "Motor de transmisión de telemetría en vivo",
+                "fr": "Moteur de flux de télémétrie en direct",
+                "de": "Live-Telemetrie-Stream-Engine",
+                "zh": "实时遥测流引擎",
+                "ja": "ライブ テレメトリ ストリーム エンジン",
+                "pt": "Mecanismo de transmissão de telemetria ao vivo",
+                "ar": "محرك البث المباشر للقياس عن بعد",
+                "hi": "लाइव टेलीमेट्री स्ट्रीम इंजन",
+                "ru": "Механизм потоковой передачи телеметрии в реальном времени"
+        },
+        "Live Tracking Sync Active": {
+                "es": "Sincronización de seguimiento en vivo activa",
+                "fr": "Synchronisation du suivi en direct active",
+                "de": "Live-Tracking-Synchronisierung aktiv",
+                "zh": "实时跟踪同步激活",
+                "ja": "ライブトラッキング同期がアクティブです",
+                "pt": "Sincronização de rastreamento ao vivo ativa",
+                "ar": "مزامنة التتبع المباشر نشطة",
+                "hi": "लाइव ट्रैकिंग सिंक सक्रिय",
+                "ru": "Синхронизация с отслеживанием в реальном времени активна"
+        },
+        "Live data file change detected. Syncing telemetry...": {
+                "es": "Se detectó un cambio en el archivo de datos en vivo. Sincronizando telemetría...",
+                "fr": "Modification du fichier de données en direct détectée. Synchronisation de la télémétrie...",
+                "de": "Änderung der Live-Datendatei erkannt. Telemetrie wird synchronisiert...",
+                "zh": "检测到实时数据文件更改。正在同步遥测...",
+                "ja": "ライブ データ ファイルの変更が検出されました。テレメトリを同期中...",
+                "pt": "Alteração no arquivo de dados em tempo real detectada. Sincronizando telemetria...",
+                "ar": "تم اكتشاف تغيير في ملف البيانات المباشرة. جارٍ مزامنة بيانات القياس عن بُعد...",
+                "hi": "लाइव डेटा फ़ाइल परिवर्तन का पता चला. टेलीमेट्री सिंक हो रही है...",
+                "ru": "Обнаружено изменение файла данных в реальном времени. Синхронизация телеметрии..."
+        },
+        "Live slide rendered here": {
+                "es": "Diapositiva en vivo renderizada aquí",
+                "fr": "Diapositive en direct rendue ici",
+                "de": "Live-Folie hier gerendert",
+                "zh": "此处呈现的实时幻灯片",
+                "ja": "ここにレンダリングされたライブスライド",
+                "pt": "Slide ao vivo renderizado aqui",
+                "ar": "الشريحة الحية المقدمة هنا",
+                "hi": "लाइव स्लाइड यहां प्रस्तुत की गई है",
+                "ru": "Живой слайд, представленный здесь"
+        },
+        "Living Telemetry Wave Flow": {
+                "es": "Flujo de ondas de telemetría viva",
+                "fr": "Flux d'ondes de télémétrie vivante",
+                "de": "Lebender Telemetrie-Wellenfluss",
+                "zh": "活体遥测波流",
+                "ja": "リビング テレメトリ ウェーブ フロー",
+                "pt": "Fluxo de ondas de telemetria viva",
+                "ar": "التدفق الموجي للقياس عن بعد",
+                "hi": "लिविंग टेलीमेट्री वेव फ्लो",
+                "ru": "Живая телеметрия Волновой поток"
+        },
+        "Living Telemetry Wave Flow — Real-Time Churn Telemetry Ripple": {
+                "es": "Flujo de ondas de telemetría viva: ondulación de telemetría de abandono en tiempo real",
+                "fr": "Flux d'ondes de télémétrie vivante - Ondulation de télémétrie de désabonnement en temps réel",
+                "de": "Living Telemetry Wave Flow – Churn Telemetry Ripple in Echtzeit",
+                "zh": "活遥测波流 - 实时搅动遥测波纹",
+                "ja": "リビング テレメトリ ウェーブ フロー — リアルタイム チャーン テレメトリ リップル",
+                "pt": "Fluxo de onda de telemetria viva - ondulação de telemetria de rotatividade em tempo real",
+                "ar": "التدفق الموجي للقياس عن بعد الحي - تموج القياس عن بعد في الوقت الحقيقي",
+                "hi": "लिविंग टेलीमेट्री वेव फ्लो - रियल-टाइम मंथन टेलीमेट्री रिपल",
+                "ru": "Живой телеметрический волновой поток — пульсация телеметрии в реальном времени"
+        },
+        "Loading live Power BI dataset...": {
+                "es": "Cargando conjunto de datos de Power BI en vivo...",
+                "fr": "Chargement du jeu de données Power BI en direct...",
+                "de": "Live-Power BI-Datensatz wird geladen...",
+                "zh": "正在加载实时 Power BI 数据集...",
+                "ja": "ライブ Power BI データセットを読み込んでいます...",
+                "pt": "Carregando conjunto de dados dinâmico do Power BI...",
+                "ar": "جارٍ تحميل مجموعة بيانات Power BI المباشرة...",
+                "hi": "लाइव पावर बीआई डेटासेट लोड हो रहा है...",
+                "ru": "Загрузка набора данных Power BI в реальном времени..."
+        },
+        "Loading matrix data...": {
+                "es": "Cargando datos matriciales...",
+                "fr": "Chargement des données matricielles...",
+                "de": "Matrixdaten werden geladen...",
+                "zh": "正在加载矩阵数据...",
+                "ja": "マトリックス データをロードしています...",
+                "pt": "Carregando dados da matriz...",
+                "ar": "جارٍ تحميل بيانات المصفوفة...",
+                "hi": "मैट्रिक्स डेटा लोड हो रहा है...",
+                "ru": "Загрузка данных матрицы..."
+        },
+        "Log Campaign Outcome": {
+                "es": "Registrar el resultado de la campaña",
+                "fr": "Consigner le résultat de la campagne",
+                "de": "Kampagnenergebnis protokollieren",
+                "zh": "记录活动结果",
+                "ja": "キャンペーンの結果を記録する",
+                "pt": "Registrar resultado da campanha",
+                "ar": "سجل نتائج الحملة",
+                "hi": "अभियान परिणाम लॉग करें",
+                "ru": "Записать результаты кампании"
+        },
+        "Log Outcomes": {
+                "es": "Resultados del registro",
+                "fr": "Consigner les résultats",
+                "de": "Protokollergebnisse",
+                "zh": "记录结果",
+                "ja": "結果をログに記録する",
+                "pt": "Registrar resultados",
+                "ar": "نتائج السجل",
+                "hi": "लॉग परिणाम",
+                "ru": "Журнал результатов"
+        },
+        "Log and compare predicted vs. actual churn rates of retention campaigns.": {
+                "es": "Registre y compare las tasas de abandono previstas y reales de las campañas de retención.",
+                "fr": "Enregistrez et comparez les taux de désabonnement prévus et réels des campagnes de fidélisation.",
+                "de": "Protokollieren und vergleichen Sie die prognostizierten mit den tatsächlichen Abwanderungsraten von Kundenbindungskampagnen.",
+                "zh": "记录并比较保留营销活动的预测流失率与实际流失率。",
+                "ja": "維持キャンペーンの予測チャーンレートと実際のチャーンレートを記録して比較します。",
+                "pt": "Registre e compare as taxas de rotatividade previstas e reais de campanhas de retenção.",
+                "ar": "قم بتسجيل ومقارنة معدلات التراجع المتوقعة مقابل معدلات التراجع الفعلية لحملات الاحتفاظ.",
+                "hi": "लॉग इन करें और अवधारण अभियानों की अनुमानित बनाम वास्तविक मंथन दरों की तुलना करें।",
+                "ru": "Регистрируйте и сравнивайте прогнозируемые и фактические показатели оттока в кампаниях по удержанию."
+        },
+        "Logo Churn vs. Revenue Churn": {
+                "es": "Rotación de logotipos versus rotación de ingresos",
+                "fr": "Taux de désabonnement du logo et taux de désabonnement des revenus",
+                "de": "Logo-Abwanderung vs. Umsatz-Abwanderung",
+                "zh": "徽标流失与收入流失",
+                "ja": "ロゴチャーン vs. 収益チャーン",
+                "pt": "Rotatividade de logotipo versus rotatividade de receita",
+                "ar": "الشعار مقابل التغيير في الإيرادات",
+                "hi": "लोगो मंथन बनाम राजस्व मंथन",
+                "ru": "Отток логотипов и отток доходов"
+        },
+        "Logo churn tracks the percentage of lost accounts. Revenue churn tracks the percentage of lost contract value (MRR).": {
+                "es": "La rotación de logotipos rastrea el porcentaje de cuentas perdidas. La rotación de ingresos rastrea el porcentaje de valor del contrato perdido (MRR).",
+                "fr": "Le taux de désabonnement du logo suit le pourcentage de comptes perdus. La perte de revenus suit le pourcentage de valeur contractuelle perdue (MRR).",
+                "de": "Die Logo-Abwanderung erfasst den Prozentsatz der verlorenen Konten. Die Umsatzabwanderung erfasst den Prozentsatz des verlorenen Vertragswerts (MRR).",
+                "zh": "徽标流失跟踪丢失帐户的百分比。收入流失跟踪合同价值损失 (MRR) 的百分比。",
+                "ja": "ロゴのチャーンは、失われたアカウントの割合を追跡します。収益チャーンは、失われた契約価値 (MRR) の割合を追跡します。",
+                "pt": "A rotatividade do logotipo rastreia a porcentagem de contas perdidas. A rotatividade de receita rastreia a porcentagem do valor perdido do contrato (MRR).",
+                "ar": "يتتبع تغيير الشعار النسبة المئوية للحسابات المفقودة. يتتبع تباطؤ الإيرادات النسبة المئوية لقيمة العقد المفقودة (MRR).",
+                "hi": "लोगो मंथन खोए हुए खातों के प्रतिशत को ट्रैक करता है। राजस्व मंथन खोए हुए अनुबंध मूल्य (एमआरआर) के प्रतिशत को ट्रैक करता है।",
+                "ru": "Отток логотипов отслеживает процент потерянных аккаунтов. Отток доходов отслеживает процент потерянной стоимости контракта (MRR)."
+        },
+        "Loss weighted by churn risk": {
+                "es": "Pérdida ponderada por riesgo de abandono",
+                "fr": "Perte pondérée par le risque de désabonnement",
+                "de": "Verlust gewichtet nach Abwanderungsrisiko",
+                "zh": "按流失风险加权的损失",
+                "ja": "解約リスクで加重された損失",
+                "pt": "Perda ponderada pelo risco de rotatividade",
+                "ar": "الخسارة مرجحة بمخاطر التقلب",
+                "hi": "मंथन जोखिम से भारित हानि",
+                "ru": "Убытки, взвешенные по риску оттока"
+        },
+        "Lottie Vector Animations": {
+                "es": "Animaciones vectoriales de Lottie",
+                "fr": "Animations vectorielles Lottie",
+                "de": "Lottie-Vektoranimationen",
+                "zh": "洛蒂矢量动画",
+                "ja": "Lottie ベクター アニメーション",
+                "pt": "Animações vetoriais de Lottie",
+                "ar": "لوتي المتجهات الرسوم المتحركة",
+                "hi": "लोटी वेक्टर एनिमेशन",
+                "ru": "Лотти векторные анимации"
+        },
+        "Low Support Tickets (<3)": {
+                "es": "Tickets de soporte bajos (<3)",
+                "fr": "Tickets de support faibles (<3)",
+                "de": "Niedrige Support-Tickets (<3)",
+                "zh": "低支持票 (<3)",
+                "ja": "サポート チケットが少ない (<3)",
+                "pt": "Tickets de suporte baixos (<3)",
+                "ar": "تذاكر دعم منخفضة (<3)",
+                "hi": "कम समर्थन टिकट (<3)",
+                "ru": "Низкий уровень обращений в службу поддержки (<3)"
+        },
+        "Low risk & high loyalty": {
+                "es": "Bajo riesgo y alta lealtad",
+                "fr": "Faible risque et fidélité élevée",
+                "de": "Geringes Risiko und hohe Loyalität",
+                "zh": "低风险、高忠诚度",
+                "ja": "低リスク&高ロイヤルティ",
+                "pt": "Baixo risco e alta lealdade",
+                "ar": "انخفاض المخاطر والولاء العالي",
+                "hi": "कम जोखिम और उच्च वफादारी",
+                "ru": "Низкий риск и высокая лояльность"
+        },
+        "MRR (Monthly Recurring Revenue)": {
+                "es": "MRR (ingresos mensuales recurrentes)",
+                "fr": "MRR (Revenu mensuel récurrent)",
+                "de": "MRR (Monatlich wiederkehrender Umsatz)",
+                "zh": "MRR（每月经常性收入）",
+                "ja": "MRR (毎月の経常収益)",
+                "pt": "MRR (receita recorrente mensal)",
+                "ar": "MRR (الإيرادات المتكررة الشهرية)",
+                "hi": "एमआरआर (मासिक आवर्ती राजस्व)",
+                "ru": "MRR (ежемесячный регулярный доход)"
+        },
+        "MRR = Sum of Active Customer Monthly Charges": {
+                "es": "MRR = Suma de cargos mensuales de clientes activos",
+                "fr": "MRR = Somme des frais mensuels des clients actifs",
+                "de": "MRR = Summe der monatlichen Gebühren aktiver Kunden",
+                "zh": "MRR = 活跃客户每月费用总和",
+                "ja": "MRR = アクティブな顧客の月額料金の合計",
+                "pt": "MRR = Soma das cobranças mensais do cliente ativo",
+                "ar": "MRR = مجموع الرسوم الشهرية للعميل النشط",
+                "hi": "एमआरआर = सक्रिय ग्राहक मासिक शुल्क का योग",
+                "ru": "MRR = сумма ежемесячных платежей активных клиентов."
+        },
+        "Machine learning risk classifications, 95% Bayesian confidence intervals, multi-factor root cause drivers, and prescriptive retention playbooks.": {
+                "es": "Clasificaciones de riesgo de aprendizaje automático, intervalos de confianza bayesianos del 95 %, impulsores de causa raíz de múltiples factores y guías de retención prescriptivas.",
+                "fr": "Classifications des risques d'apprentissage automatique, intervalles de confiance bayésiens à 95 %, causes profondes multifactorielles et manuels de rétention prescriptifs.",
+                "de": "Risikoklassifizierungen für maschinelles Lernen, 95 % Bayes'sche Konfidenzintervalle, Multi-Faktor-Ursachentreiber und präskriptive Aufbewahrungsanleitungen.",
+                "zh": "机器学习风险分类、95% 贝叶斯置信区间、多因素根本原因驱动因素以及规定性保留策略手册。",
+                "ja": "機械学習のリスク分類、95% ベイズ信頼区間、多要素の根本原因要因、および規範的な保持戦略。",
+                "pt": "Classificações de risco de aprendizado de máquina, intervalos de confiança bayesianos de 95%, motivadores de causa raiz multifatoriais e manuais de retenção prescritivos.",
+                "ar": "تصنيفات مخاطر التعلم الآلي، وفترات الثقة البايزية بنسبة 95%، ومحركات السبب الجذري متعددة العوامل، وإرشادات الاحتفاظ الإرشادية.",
+                "hi": "मशीन लर्निंग जोखिम वर्गीकरण, 95% बायेसियन आत्मविश्वास अंतराल, बहु-कारक मूल कारण ड्राइवर, और प्रिस्क्रिप्टिव रिटेंशन प्लेबुक।",
+                "ru": "Классификации рисков машинного обучения, 95%-ные байесовские доверительные интервалы, многофакторные первопричины и предписывающие инструкции по хранению."
+        },
+        "Made By Akshat Kumar ❤️": {
+                "es": "Hecho por Akshat Kumar ❤️",
+                "fr": "Réalisé par Akshat Kumar ❤️",
+                "de": "Hergestellt von Akshat Kumar ❤️",
+                "zh": "由 Akshat Kumar 制作❤️",
+                "ja": "アクシャット・クマール作❤️",
+                "pt": "Feito por Akshat Kumar ❤️",
+                "ar": "من صنع أكشات كومار ❤️",
+                "hi": "अक्षत कुमार द्वारा निर्मित ❤️",
+                "ru": "Сделано Акшатом Кумаром ❤️"
+        },
+        "Magnific Zoom Lightbox Overlay": {
+                "es": "Superposición de caja de luz con zoom magnífico",
+                "fr": "Magnifique superposition de zoom Lightbox",
+                "de": "Großartiges Zoom-Lightbox-Overlay",
+                "zh": "放大灯箱覆盖",
+                "ja": "壮大なズーム ライトボックス オーバーレイ",
+                "pt": "Sobreposição de lightbox com zoom magnífico",
+                "ar": "تراكب العرض المبسط للتكبير/التصغير الرائع",
+                "hi": "शानदार ज़ूम लाइटबॉक्स ओवरले",
+                "ru": "Наложение лайтбокса с великолепным увеличением"
+        },
+        "Master 3-Dot All Features & Actions Menu": {
+                "es": "Domine el menú de todas las funciones y acciones de 3 puntos",
+                "fr": "Menu principal à 3 points de toutes les fonctionnalités et actions",
+                "de": "Master 3-Dot-Menü „Alle Funktionen und Aktionen“.",
+                "zh": "掌握 3 点所有功能和操作菜单",
+                "ja": "3-Dot のすべての機能とアクション メニューをマスターする",
+                "pt": "Menu Master 3-Dot com todos os recursos e ações",
+                "ar": "Master 3-Dot All الميزات وقائمة الإجراءات",
+                "hi": "मास्टर 3-डॉट सभी सुविधाएँ और क्रियाएँ मेनू",
+                "ru": "Мастер-3-точечное меню «Все функции и действия»"
+        },
+        "Measures the relationship between the lifetime value of a customer and the cost to acquire them. Standard SaaS target is >3x.": {
+                "es": "Mide la relación entre el valor de vida de un cliente y el costo de adquirirlo. El objetivo de SaaS estándar es >3x.",
+                "fr": "Mesure la relation entre la valeur à vie d'un client et le coût de son acquisition. La cible SaaS standard est >3x.",
+                "de": "Misst das Verhältnis zwischen dem Lifetime-Wert eines Kunden und den Kosten für seine Akquise. Das Standard-SaaS-Ziel liegt bei >3x.",
+                "zh": "衡量客户的终身价值与获取客户的成本之间的关系。标准 SaaS 目标是 >3 倍。",
+                "ja": "顧客の生涯価値と顧客獲得コストの関係を測定します。標準の SaaS 目標は 3 倍以上です。",
+                "pt": "Mede a relação entre o valor vitalício de um cliente e o custo para adquiri-lo. A meta de SaaS padrão é >3x.",
+                "ar": "يقيس العلاقة بين القيمة الدائمة للعميل وتكلفة الحصول عليه. هدف SaaS القياسي هو >3x.",
+                "hi": "किसी ग्राहक के जीवनकाल मूल्य और उन्हें प्राप्त करने की लागत के बीच संबंध को मापता है। मानक SaaS लक्ष्य >3x है।",
+                "ru": "Измеряет взаимосвязь между пожизненной ценностью клиента и затратами на его привлечение. Стандартная цель SaaS — >3x."
+        },
+        "Measures: Revenue, ChurnRisk, Churned": {
+                "es": "Medidas: ingresos, riesgo de abandono, abandono",
+                "fr": "Mesures : revenu, risque de désabonnement, désabonnement",
+                "de": "Maßnahmen: Umsatz, ChurnRisk, Churned",
+                "zh": "衡量指标：收入、流失风险、流失情况",
+                "ja": "測定基準: 収益、チャーンリスク、チャーン",
+                "pt": "Medidas: receita, risco de rotatividade, rotatividade",
+                "ar": "التدابير: الإيرادات، المخاطرة، الاضطراب",
+                "hi": "उपाय: राजस्व, मंथन जोखिम, मंथन",
+                "ru": "Показатели: доход, риск оттока, отток"
+        },
+        "Measuring subscription health requires monitoring non-linear customer lifecycles and cohort behaviors. Below is a glossary of advanced retention mechanics.": {
+                "es": "Medir el estado de las suscripciones requiere monitorear los ciclos de vida no lineales de los clientes y los comportamientos de las cohortes. A continuación se muestra un glosario de mecanismos de retención avanzados.",
+                "fr": "Mesurer la santé des abonnements nécessite de surveiller les cycles de vie non linéaires des clients et les comportements des cohortes. Vous trouverez ci-dessous un glossaire des mécanismes de rétention avancés.",
+                "de": "Um den Zustand der Abonnements zu messen, müssen nichtlineare Kundenlebenszyklen und Kohortenverhalten überwacht werden. Nachfolgend finden Sie ein Glossar zu erweiterten Retentionsmechanismen.",
+                "zh": "衡量订阅健康状况需要监控非线性客户生命周期和群体行为。以下是高级保留机制的术语表。",
+                "ja": "サブスクリプションの健全性を測定するには、非線形な顧客のライフサイクルとコホートの行動を監視する必要があります。以下は、高度な保持メカニズムの用語集です。",
+                "pt": "Medir a integridade da assinatura requer o monitoramento dos ciclos de vida não lineares dos clientes e dos comportamentos dos grupos. Abaixo está um glossário de mecânica de retenção avançada.",
+                "ar": "يتطلب قياس صحة الاشتراك مراقبة دورات حياة العملاء غير الخطية وسلوكيات المجموعة. يوجد أدناه مسرد لآليات الاحتفاظ المتقدمة.",
+                "hi": "सदस्यता स्वास्थ्य को मापने के लिए गैर-रेखीय ग्राहक जीवनचक्र और समूह व्यवहार की निगरानी की आवश्यकता होती है। नीचे उन्नत अवधारण यांत्रिकी की एक शब्दावली है।",
+                "ru": "Для измерения работоспособности подписки необходимо отслеживать нелинейные жизненные циклы клиентов и поведение когорт. Ниже приведен глоссарий расширенной механики удержания."
+        },
+        "Medium": {
+                "es": "Medio",
+                "fr": "Moyen",
+                "de": "Mittel",
+                "zh": "中等",
+                "ja": "中",
+                "pt": "Médio",
+                "ar": "متوسط",
+                "hi": "मध्यम",
+                "ru": "Средний"
+        },
+        "Metric Items": {
+                "es": "Elementos métricos",
+                "fr": "Éléments métriques",
+                "de": "Metrische Elemente",
+                "zh": "计量项目",
+                "ja": "メトリクス項目",
+                "pt": "Itens Métricos",
+                "ar": "العناصر المترية",
+                "hi": "मीट्रिक आइटम",
+                "ru": "Метрические элементы"
+        },
+        "Microsoft Excel Official Integration": {
+                "es": "Integración oficial de Microsoft Excel",
+                "fr": "Intégration officielle de Microsoft Excel",
+                "de": "Offizielle Microsoft Excel-Integration",
+                "zh": "Microsoft Excel 官方集成",
+                "ja": "Microsoft Excel公式統合",
+                "pt": "Integração oficial do Microsoft Excel",
+                "ar": "التكامل الرسمي لمايكروسوفت إكسل",
+                "hi": "माइक्रोसॉफ्ट एक्सेल आधिकारिक एकीकरण",
+                "ru": "Официальная интеграция Microsoft Excel"
+        },
+        "Microsoft Power BI Official Integration": {
+                "es": "Integración oficial de Microsoft Power BI",
+                "fr": "Intégration officielle de Microsoft Power BI",
+                "de": "Offizielle Integration von Microsoft Power BI",
+                "zh": "Microsoft Power BI 官方集成",
+                "ja": "Microsoft Power BI の公式統合",
+                "pt": "Integração oficial do Microsoft Power BI",
+                "ar": "التكامل الرسمي لـ Microsoft Power BI",
+                "hi": "माइक्रोसॉफ्ट पावर बीआई आधिकारिक एकीकरण",
+                "ru": "Официальная интеграция Microsoft Power BI"
+        },
+        "Middle Feature Option Capsules": {
+                "es": "Cápsulas de opción de función intermedia",
+                "fr": "Capsules d'option de fonctionnalité intermédiaire",
+                "de": "Kapseln mit mittlerer Funktionsoption",
+                "zh": "中间功能选项胶囊",
+                "ja": "ミドルフィーチャーオプションカプセル",
+                "pt": "Cápsulas de opção de recurso intermediário",
+                "ar": "كبسولات خيار الميزة الوسطى",
+                "hi": "मध्य फ़ीचर विकल्प कैप्सूल",
+                "ru": "Капсулы со средними функциями"
+        },
+        "Midnight Navy & Gold": {
+                "es": "Azul marino medianoche y dorado",
+                "fr": "Bleu nuit et or",
+                "de": "Mitternachtsmarine und Gold",
+                "zh": "午夜海军蓝和金色",
+                "ja": "ミッドナイトネイビー&ゴールド",
+                "pt": "Marinha Meia-Noite e Ouro",
+                "ar": "منتصف الليل البحرية والذهبية",
+                "hi": "आधी रात नौसेना और सोना",
+                "ru": "Полуночный темно-синий и золотой"
+        },
+        "Minimalist Steel Slate": {
+                "es": "Pizarra de acero minimalista",
+                "fr": "Ardoise en acier minimaliste",
+                "de": "Minimalistischer Stahlschiefer",
+                "zh": "极简钢板岩",
+                "ja": "ミニマリストのスチールスレート",
+                "pt": "Ardósia de aço minimalista",
+                "ar": "الحد الأدنى من ألواح الصلب",
+                "hi": "मिनिमलिस्ट स्टील स्लेट",
+                "ru": "Минималистичный стальной сланец"
+        },
+        "Model Performance Metrics Card": {
+                "es": "Tarjeta de métricas de rendimiento del modelo",
+                "fr": "Carte de mesures de performances du modèle",
+                "de": "Karte mit Modellleistungsmetriken",
+                "zh": "模型性能指标卡",
+                "ja": "モデル パフォーマンス メトリック カード",
+                "pt": "Cartão de métricas de desempenho do modelo",
+                "ar": "بطاقة مقاييس الأداء النموذجية",
+                "hi": "मॉडल प्रदर्शन मेट्रिक्स कार्ड",
+                "ru": "Карта показателей производительности модели"
+        },
+        "Moderate friction detected (short tenure, month-to-month). Automated check-in & support SLA monitoring.": {
+                "es": "Se detecta fricción moderada (duración corta, mes a mes). Registro automatizado y monitoreo de SLA de soporte.",
+                "fr": "Friction modérée détectée (ancienneté de courte durée, d’un mois à l’autre). Enregistrement automatisé et prise en charge de la surveillance SLA.",
+                "de": "Mäßige Reibung festgestellt (kurze Amtszeit, von Monat zu Monat). Automatisierter Check-in und Support-SLA-Überwachung.",
+                "zh": "检测到中等摩擦（任期短，每月）。自动签入并支持 SLA 监控。",
+                "ja": "中程度の摩擦が検出されました (短期間、月ごと)。自動チェックインと SLA モニタリングのサポート。",
+                "pt": "Atrito moderado detectado (curto mandato, mês a mês). Check-in automatizado e suporte ao monitoramento de SLA.",
+                "ar": "تم اكتشاف احتكاك معتدل (مدة قصيرة، من شهر لآخر). تسجيل الوصول الآلي ودعم مراقبة جيش تحرير السودان.",
+                "hi": "मध्यम घर्षण का पता चला (अल्पावधि, माह-दर-माह)। स्वचालित चेक-इन और एसएलए निगरानी का समर्थन।",
+                "ru": "Обнаружено умеренное трение (короткий срок владения, из месяца в месяц). Автоматическая регистрация и поддержка мониторинга SLA."
+        },
+        "Modern Illustration": {
+                "es": "Ilustración moderna",
+                "fr": "Illustration moderne",
+                "de": "Moderne Illustration",
+                "zh": "现代插画",
+                "ja": "モダンなイラスト",
+                "pt": "Ilustração Moderna",
+                "ar": "التوضيح الحديث",
+                "hi": "आधुनिक चित्रण",
+                "ru": "Современная иллюстрация"
+        },
+        "Modern SaaS, subscription, and contractual businesses thrive on recurring revenue predictability rather than one-time transaction fees.": {
+                "es": "Los negocios SaaS, de suscripción y contractuales modernos prosperan gracias a la previsibilidad de ingresos recurrentes en lugar de tarifas de transacción únicas.",
+                "fr": "Les entreprises SaaS, d'abonnement et contractuelles modernes prospèrent grâce à la prévisibilité des revenus récurrents plutôt qu'aux frais de transaction ponctuels.",
+                "de": "Moderne SaaS-, Abonnement- und Vertragsgeschäfte leben von der Vorhersehbarkeit wiederkehrender Umsätze und nicht von einmaligen Transaktionsgebühren.",
+                "zh": "现代 SaaS、订阅和合同业务的蓬勃发展依赖于经常性收入的可预测性，而不是一次性的交易费用。",
+                "ja": "最新の SaaS、サブスクリプション、および契約ビジネスは、1 回限りの取引手数料ではなく、経常収益の予測可能性に基づいて成長しています。",
+                "pt": "Os negócios modernos de SaaS, assinaturas e contratos prosperam com base na previsibilidade de receitas recorrentes, em vez de taxas de transação únicas.",
+                "ar": "تزدهر الأعمال الحديثة مثل SaaS والاشتراكات والأعمال التعاقدية بفضل القدرة على التنبؤ بالإيرادات المتكررة بدلاً من رسوم المعاملات التي يتم دفعها لمرة واحدة.",
+                "hi": "आधुनिक SaaS, सदस्यता और संविदात्मक व्यवसाय एक बार के लेनदेन शुल्क के बजाय आवर्ती राजस्व पूर्वानुमान पर पनपते हैं।",
+                "ru": "Современный SaaS, подписной и контрактный бизнес процветает благодаря предсказуемости регулярных доходов, а не разовым комиссиям за транзакции."
+        },
+        "Monitors overall business health status cards (Revenue, Customer Retention, Inventory, Receivables) and lists critical problem alerts with one-click prescriptive resolution pathways.": {
+                "es": "Supervisa las tarjetas de estado general de la empresa (ingresos, retención de clientes, inventario, cuentas por cobrar) y enumera alertas de problemas críticos con vías de resolución prescriptivas con un solo clic.",
+                "fr": "Surveille les fiches d'état de santé globales de l'entreprise (revenus, fidélisation des clients, inventaire, créances) et répertorie les alertes de problèmes critiques avec des voies de résolution prescriptives en un clic.",
+                "de": "Überwacht die allgemeinen Zustandskarten des Unternehmens (Umsatz, Kundenbindung, Lagerbestand, Forderungen) und listet kritische Problemwarnungen mit präskriptiven Lösungswegen mit einem Klick auf.",
+                "zh": "监控整体业务健康状况卡（收入、客户保留、库存、应收账款）并通过一键式规范解决途径列出关键问题警报。",
+                "ja": "全体的なビジネスの健全性ステータス カード (収益、顧客維持、在庫、売掛金) を監視し、ワンクリックで規範的な解決経路を備えた重大な問題のアラートをリストします。",
+                "pt": "Monitora cartões de status geral da saúde do negócio (receita, retenção de clientes, estoque, contas a receber) e lista alertas de problemas críticos com caminhos de resolução prescritivos com um clique.",
+                "ar": "يراقب بطاقات الحالة الصحية العامة للأعمال (الإيرادات، والاحتفاظ بالعملاء، والمخزون، والمستحقات) ويسرد تنبيهات المشكلات الحرجة من خلال مسارات حل إرشادية بنقرة واحدة.",
+                "hi": "समग्र व्यावसायिक स्वास्थ्य स्थिति कार्ड (राजस्व, ग्राहक प्रतिधारण, इन्वेंटरी, प्राप्य) पर नज़र रखता है और एक-क्लिक निर्देशात्मक समाधान मार्गों के साथ महत्वपूर्ण समस्या अलर्ट सूचीबद्ध करता है।",
+                "ru": "Отслеживает карты общего состояния бизнеса (доход, удержание клиентов, запасы, дебиторская задолженность) и выводит список предупреждений о критических проблемах с помощью предписывающих способов решения одним щелчком мыши."
+        },
+        "Month 1": {
+                "es": "Mes 1",
+                "fr": "Mois 1",
+                "de": "Monat 1",
+                "zh": "第 1 个月",
+                "ja": "月 1",
+                "pt": "Mês 1",
+                "ar": "شهر 1",
+                "hi": "महीना 1",
+                "ru": "Месяц 1"
+        },
+        "Month 12+": {
+                "es": "Mes 12+",
+                "fr": "Mois 12+",
+                "de": "Monat 12+",
+                "zh": "12 个月以上",
+                "ja": "12 か月目以降",
+                "pt": "Mês 12+",
+                "ar": "شهر 12+",
+                "hi": "महीना 12+",
+                "ru": "Месяц 12+"
+        },
+        "Month 3": {
+                "es": "Mes 3",
+                "fr": "Mois 3",
+                "de": "Monat 3",
+                "zh": "第三个月",
+                "ja": "3ヶ月目",
+                "pt": "Mês 3",
+                "ar": "شهر 3",
+                "hi": "महीना 3",
+                "ru": "Месяц 3"
+        },
+        "Month 6": {
+                "es": "Mes 6",
+                "fr": "Mois 6",
+                "de": "Monat 6",
+                "zh": "第 6 个月",
+                "ja": "6ヶ月目",
+                "pt": "Mês 6",
+                "ar": "شهر 6",
+                "hi": "महीना 6",
+                "ru": "Месяц 6"
+        },
+        "Month-to-Month Contract": {
+                "es": "Contrato de mes a mes",
+                "fr": "Contrat mensuel",
+                "de": "Monatlicher Vertrag",
+                "zh": "按月合同",
+                "ja": "月額契約",
+                "pt": "Contrato Mês a Mês",
+                "ar": "العقد من شهر إلى شهر",
+                "hi": "माह-दर-माह अनुबंध",
+                "ru": "Ежемесячный контракт"
+        },
+        "Monthly Campaign Cost": {
+                "es": "Costo mensual de la campaña",
+                "fr": "Coût mensuel de la campagne",
+                "de": "Monatliche Kampagnenkosten",
+                "zh": "每月活动费用",
+                "ja": "月額キャンペーン費用",
+                "pt": "Custo mensal da campanha",
+                "ar": "تكلفة الحملة الشهرية",
+                "hi": "मासिक अभियान लागत",
+                "ru": "Ежемесячная стоимость кампании"
+        },
+        "Monthly Charges (High → Low)": {
+                "es": "Cargos mensuales (alto → bajo)",
+                "fr": "Frais mensuels (élevé → faible)",
+                "de": "Monatliche Gebühren (Hoch → Niedrig)",
+                "zh": "每月费用（高→低）",
+                "ja": "月額料金（高→低）",
+                "pt": "Cobranças mensais (alta → baixa)",
+                "ar": "الرسوم الشهرية (عالية → منخفضة)",
+                "hi": "मासिक शुल्क (उच्च → निम्न)",
+                "ru": "Ежемесячная плата (Высокая → Низкая)"
+        },
+        "Monthly Discount Offered:": {
+                "es": "Descuento mensual ofrecido:",
+                "fr": "Remise mensuelle offerte :",
+                "de": "Monatlicher Rabatt angeboten:",
+                "zh": "提供每月折扣：",
+                "ja": "提供される月額割引:",
+                "pt": "Desconto mensal oferecido:",
+                "ar": "الخصم الشهري المقدم:",
+                "hi": "मासिक छूट की पेशकश:",
+                "ru": "Предлагаемая ежемесячная скидка:"
+        },
+        "Montserrat & Fira Code": {
+                "es": "Código Montserrat y Fira",
+                "fr": "Code Montserrat et Fira",
+                "de": "Montserrat- und Fira-Kodex",
+                "zh": "蒙特塞拉特和费拉代码",
+                "ja": "モンセラートとフィラのコード",
+                "pt": "Código de Montserrat e Fira",
+                "ar": "كود مونتسيرات وفيرا",
+                "hi": "मोंटसेराट और फ़िरा कोड",
+                "ru": "Код Монтсеррат и Фира"
+        },
+        "Move card down in order": {
+                "es": "Mover la tarjeta hacia abajo en orden",
+                "fr": "Déplacer la carte vers le bas dans l'ordre",
+                "de": "Bewegen Sie die Karte der Reihe nach nach unten",
+                "zh": "按顺序向下移动卡片",
+                "ja": "カードを順番に下に移動します",
+                "pt": "Mova o cartão para baixo em ordem",
+                "ar": "حرك البطاقة لأسفل بالترتيب",
+                "hi": "कार्ड को क्रम से नीचे ले जाएँ",
+                "ru": "Переместить карту вниз по порядку"
+        },
+        "Move card up in order": {
+                "es": "Mover la tarjeta hacia arriba en orden",
+                "fr": "Déplacer la carte vers le haut dans l'ordre",
+                "de": "Bewegen Sie die Karte der Reihe nach nach oben",
+                "zh": "按顺序向上移动卡片",
+                "ja": "カードを順番に上に移動します",
+                "pt": "Mova o cartão para cima em ordem",
+                "ar": "حرك البطاقة لأعلى بالترتيب",
+                "hi": "कार्ड को क्रम से ऊपर ले जाएं",
+                "ru": "Переместить карту вверх по порядку"
+        },
+        "Navigate with": {
+                "es": "Navegar con",
+                "fr": "Naviguez avec",
+                "de": "Navigieren Sie mit",
+                "zh": "导航用",
+                "ja": "でナビゲートします",
+                "pt": "Navegue com",
+                "ar": "التنقل مع",
+                "hi": "के साथ नेविगेट करें",
+                "ru": "Навигация с помощью"
+        },
+        "Net Saved Revenue": {
+                "es": "Ingresos netos ahorrados",
+                "fr": "Revenu net économisé",
+                "de": "Nettoersparnis",
+                "zh": "净节省收入",
+                "ja": "正味節約収益",
+                "pt": "Receita líquida economizada",
+                "ar": "صافي الإيرادات المحفوظة",
+                "hi": "शुद्ध बचाया राजस्व",
+                "ru": "Чистый сэкономленный доход"
+        },
+        "Next slide": {
+                "es": "Siguiente diapositiva",
+                "fr": "Diapositive suivante",
+                "de": "Nächste Folie",
+                "zh": "下一张幻灯片",
+                "ja": "次のスライド",
+                "pt": "Próximo slide",
+                "ar": "الشريحة التالية",
+                "hi": "अगली स्लाइड",
+                "ru": "Следующий слайд"
+        },
+        "Next ›": {
+                "es": "Siguiente ›",
+                "fr": "Suivant ›",
+                "de": "Weiter ›",
+                "zh": "下一页 ›",
+                "ja": "次へ ›",
+                "pt": "Próximo ›",
+                "ar": "التالي ›",
+                "hi": "अगला ›",
+                "ru": "Далее ›"
+        },
+        "No prediction data available to analyze. Please upload a customer file first.": {
+                "es": "No hay datos de predicción disponibles para analizar. Primero cargue un archivo de cliente.",
+                "fr": "Aucune donnée de prédiction disponible à analyser. Veuillez d'abord télécharger un fichier client.",
+                "de": "Es sind keine Vorhersagedaten zur Analyse verfügbar. Bitte laden Sie zunächst eine Kundendatei hoch.",
+                "zh": "没有可用于分析的预测数据。请先上传客户档案。",
+                "ja": "分析できる予測データがありません。最初に顧客ファイルをアップロードしてください。",
+                "pt": "Não há dados de previsão disponíveis para análise. Faça upload de um arquivo do cliente primeiro.",
+                "ar": "لا توجد بيانات تنبؤية متاحة للتحليل. يرجى تحميل ملف العميل أولا.",
+                "hi": "विश्लेषण के लिए कोई पूर्वानुमान डेटा उपलब्ध नहीं है. कृपया पहले एक ग्राहक फ़ाइल अपलोड करें.",
+                "ru": "Нет прогнозных данных для анализа. Пожалуйста, сначала загрузите файл клиента."
+        },
+        "No prediction data available to export. Please upload a customer file first.": {
+                "es": "No hay datos de predicción disponibles para exportar. Primero cargue un archivo de cliente.",
+                "fr": "Aucune donnée de prédiction disponible pour l'exportation. Veuillez d'abord télécharger un fichier client.",
+                "de": "Es sind keine Vorhersagedaten zum Exportieren verfügbar. Bitte laden Sie zunächst eine Kundendatei hoch.",
+                "zh": "没有可导出的预测数据。请先上传客户档案。",
+                "ja": "エクスポートできる予測データがありません。最初に顧客ファイルをアップロードしてください。",
+                "pt": "Não há dados de previsão disponíveis para exportação. Faça upload de um arquivo do cliente primeiro.",
+                "ar": "لا توجد بيانات تنبؤية متاحة للتصدير. يرجى تحميل ملف العميل أولا.",
+                "hi": "निर्यात के लिए कोई पूर्वानुमान डेटा उपलब्ध नहीं है. कृपया पहले एक ग्राहक फ़ाइल अपलोड करें.",
+                "ru": "Нет данных прогнозов, доступных для экспорта. Пожалуйста, сначала загрузите файл клиента."
+        },
+        "No prediction results available to export.": {
+                "es": "No hay resultados de predicción disponibles para exportar.",
+                "fr": "Aucun résultat de prédiction disponible pour l'exportation.",
+                "de": "Es sind keine Vorhersageergebnisse zum Exportieren verfügbar.",
+                "zh": "没有可导出的预测结果。",
+                "ja": "エクスポートできる予測結果がありません。",
+                "pt": "Nenhum resultado de previsão disponível para exportação.",
+                "ar": "لا توجد نتائج تنبؤية متاحة للتصدير.",
+                "hi": "निर्यात के लिए कोई पूर्वानुमान परिणाम उपलब्ध नहीं है.",
+                "ru": "Нет результатов прогноза, доступных для экспорта."
+        },
+        "No presentation slides available to export.": {
+                "es": "No hay diapositivas de presentación disponibles para exportar.",
+                "fr": "Aucune diapositive de présentation disponible pour l'exportation.",
+                "de": "Es sind keine Präsentationsfolien zum Exportieren verfügbar.",
+                "zh": "没有可导出的演示幻灯片。",
+                "ja": "エクスポートできるプレゼンテーション スライドがありません。",
+                "pt": "Nenhum slide de apresentação disponível para exportação.",
+                "ar": "لا توجد شرائح عرض تقديمي متاحة للتصدير.",
+                "hi": "निर्यात के लिए कोई प्रस्तुति स्लाइड उपलब्ध नहीं है।",
+                "ru": "Нет слайдов презентации, доступных для экспорта."
+        },
+        "None (Manual uploads default)": {
+                "es": "Ninguno (valor predeterminado para cargas manuales)",
+                "fr": "Aucun (téléchargements manuels par défaut)",
+                "de": "Keine (Standardeinstellung für manuelle Uploads)",
+                "zh": "无（默认手动上传）",
+                "ja": "なし (手動アップロードのデフォルト)",
+                "pt": "Nenhum (padrão de uploads manuais)",
+                "ar": "لا شيء (التحميلات اليدوية الافتراضية)",
+                "hi": "कोई नहीं (मैन्युअल अपलोड डिफ़ॉल्ट)",
+                "ru": "Нет (по умолчанию загрузка вручную)"
+        },
+        "Notes Sidebar": {
+                "es": "Barra lateral de notas",
+                "fr": "Barre latérale des notes",
+                "de": "Notizen-Seitenleiste",
+                "zh": "笔记侧边栏",
+                "ja": "メモのサイドバー",
+                "pt": "Barra lateral de notas",
+                "ar": "ملاحظات الشريط الجانبي",
+                "hi": "नोट्स साइडबार",
+                "ru": "Боковая панель заметок"
+        },
+        "OWNER": {
+                "es": "PROPIETARIO",
+                "fr": "PROPRIÉTAIRE",
+                "de": "EIGENTÜMER",
+                "zh": "业主",
+                "ja": "オーナー",
+                "pt": "PROPRIETÁRIO",
+                "ar": "المالك",
+                "hi": "मालिक",
+                "ru": "ВЛАДЕЛЕЦ"
+        },
+        "Ocean & Cyan": {
+                "es": "Océano y cian",
+                "fr": "Océan et Cyan",
+                "de": "Ozean & Cyan",
+                "zh": "海洋与青色",
+                "ja": "オーシャン＆シアン",
+                "pt": "Oceano e Ciano",
+                "ar": "المحيط والسماوي",
+                "hi": "महासागर और सियान",
+                "ru": "Океан и голубой"
+        },
+        "Official Corporate Governance Guide": {
+                "es": "Guía Oficial de Gobernanza",
+                "fr": "Guide Officiel de Gouvernance",
+                "de": "Offizieller Governance-Leitfaden",
+                "zh": "官方合规与公司治理手册",
+                "ja": "公式コーポレートガバナンスガイド",
+                "pt": "Guia Oficial de Governança Corporativa",
+                "ar": "الدليل الرسمي للحوكمة المؤسسية",
+                "hi": "आधिकारिक कॉर्पोरेट प्रशासन गाइड",
+                "ru": "Официальное руководство по корпоративному управлению"
+        },
+        "Official DAX Measures Suite (Included in Deliverables)": {
+                "es": "Conjunto oficial de medidas DAX (incluido en los entregables)",
+                "fr": "Suite officielle de mesures DAX (incluse dans les livrables)",
+                "de": "Offizielle DAX-Measures-Suite (im Lieferumfang enthalten)",
+                "zh": "官方 DAX 措施套件（包含在可交付成果中）",
+                "ja": "公式 DAX 対策スイート (成果物に含まれます)",
+                "pt": "Conjunto oficial de medidas DAX (incluído nos resultados)",
+                "ar": "مجموعة تدابير DAX الرسمية (مضمنة في التسليمات)",
+                "hi": "आधिकारिक DAX माप सुइट (डिलीवरेबल्स में शामिल)",
+                "ru": "Официальный пакет мер DAX (включен в результаты)"
+        },
+        "One Year Contract": {
+                "es": "Contrato de un año",
+                "fr": "Contrat d'un an",
+                "de": "Einjahresvertrag",
+                "zh": "一年合约",
+                "ja": "1年契約",
+                "pt": "Contrato de um ano",
+                "ar": "عقد لمدة سنة واحدة",
+                "hi": "एक वर्ष का अनुबंध",
+                "ru": "Контракт на один год"
+        },
+        "Online • Telemetry Synced": {
+                "es": "En línea • Telemetría sincronizada",
+                "fr": "En ligne • Télémétrie synchronisée",
+                "de": "Online • Telemetrie synchronisiert",
+                "zh": "在线 • 遥测同步",
+                "ja": "オンライン • テレメトリが同期されました",
+                "pt": "On-line • Telemetria sincronizada",
+                "ar": "على الانترنت • القياس عن بعد متزامنة",
+                "hi": "ऑनलाइन • टेलीमेट्री सिंक की गई",
+                "ru": "Онлайн • Синхронизация телеметрии"
+        },
+        "Open AI Copilot Advisor (Ctrl+J)": {
+                "es": "Abrir Asesor de copiloto AI (Ctrl+J)",
+                "fr": "Conseiller copilote IA ouvert (Ctrl+J)",
+                "de": "AI Copilot Advisor öffnen (Strg+J)",
+                "zh": "打开 AI Copilot Advisor (Ctrl+J)",
+                "ja": "AI Copilot Advisor を開く (Ctrl+J)",
+                "pt": "Abra o AI Copilot Advisor (Ctrl+J)",
+                "ar": "فتح AI Copilot Advisor (Ctrl+J)",
+                "hi": "एआई कोपायलट सलाहकार खोलें (Ctrl+J)",
+                "ru": "Открыть советник второго пилота AI (Ctrl+J)"
+        },
+        "Open Graph / Facebook": {
+                "es": "Abrir gráfico / Facebook",
+                "fr": "Ouvrir le graphique / Facebook",
+                "de": "Öffnen Sie Graph / Facebook",
+                "zh": "开放图谱/Facebook",
+                "ja": "オープングラフ / Facebook",
+                "pt": "Gráfico Aberto / Facebook",
+                "ar": "افتح الرسم البياني / الفيسبوك",
+                "hi": "ग्राफ़/फेसबुक खोलें",
+                "ru": "Открыть график / Facebook"
+        },
+        "Open in Sandbox": {
+                "es": "Abrir en la zona de pruebas",
+                "fr": "Ouvrir dans le bac à sable",
+                "de": "In Sandbox öffnen",
+                "zh": "在沙盒中打开",
+                "ja": "サンドボックスで開く",
+                "pt": "Abrir na caixa de areia",
+                "ar": "فتح في وضع الحماية",
+                "hi": "सैंडबॉक्स में खोलें",
+                "ru": "Открыть в песочнице"
+        },
+        "Openverse Creative Commons": {
+                "es": "Openverso Creative Commons",
+                "fr": "Openverse Creative Commons",
+                "de": "Openverse Creative Commons",
+                "zh": "开放宇宙知识共享",
+                "ja": "オープンバース クリエイティブ コモンズ",
+                "pt": "Openverso Creative Commons",
+                "ar": "Openverse المشاع الإبداعي",
+                "hi": "ओपनवर्स क्रिएटिव कॉमन्स",
+                "ru": "Открытая версия Creative Commons"
+        },
+        "Outbound Alert Email Recipient": {
+                "es": "Destinatario del correo electrónico de alerta saliente",
+                "fr": "Destinataire de l'e-mail d'alerte sortante",
+                "de": "E-Mail-Empfänger für ausgehende Benachrichtigungen",
+                "zh": "出站警报电子邮件收件人",
+                "ja": "アウトバウンドアラート電子メール受信者",
+                "pt": "Destinatário do email de alerta de saída",
+                "ar": "تنبيه مستلم البريد الإلكتروني الصادر",
+                "hi": "आउटबाउंड अलर्ट ईमेल प्राप्तकर्ता",
+                "ru": "Получатель исходящего оповещения по электронной почте"
+        },
+        "Outbound Slack Webhook URL": {
+                "es": "URL de webhook saliente de Slack",
+                "fr": "URL du webhook Slack sortant",
+                "de": "Ausgehende Slack-Webhook-URL",
+                "zh": "出站 Slack Webhook URL",
+                "ja": "アウトバウンド Slack Webhook URL",
+                "pt": "URL de saída do Webhook do Slack",
+                "ar": "عنوان URL لخطاف الويب الخاص بـ Slack الصادر",
+                "hi": "आउटबाउंड स्लैक वेबहुक यूआरएल",
+                "ru": "URL-адрес исходящего веб-перехватчика Slack"
+        },
+        "Outfit & Jakarta": {
+                "es": "Traje y Yakarta",
+                "fr": "Tenue & Jakarta",
+                "de": "Outfit & Jakarta",
+                "zh": "服装和雅加达",
+                "ja": "服装とジャカルタ",
+                "pt": "Roupa e Jacarta",
+                "ar": "الزي وجاكرتا",
+                "hi": "पोशाक और जकार्ता",
+                "ru": "Экипировка и Джакарта"
+        },
+        "Outfit & Plus Jakarta": {
+                "es": "Outfit & Plus Yakarta",
+                "fr": "Tenue & Plus Jakarta",
+                "de": "Outfit & Plus Jakarta",
+                "zh": "Outfit & Plus 雅加达",
+                "ja": "アウトフィット＆プラス ジャカルタ",
+                "pt": "Outfit & Plus Jacarta",
+                "ar": "الزي آند بلس جاكرتا",
+                "hi": "आउटफिट और प्लस जकार्ता",
+                "ru": "Экипировка и плюс Джакарта"
+        },
+        "Overview Analytics Suite": {
+                "es": "Descripción general del conjunto de análisis",
+                "fr": "Présentation de la suite analytique",
+                "de": "Übersicht Analytics Suite",
+                "zh": "概述分析套件",
+                "ja": "分析スイートの概要",
+                "pt": "Visão geral do conjunto de análises",
+                "ar": "نظرة عامة على مجموعة التحليلات",
+                "hi": "अवलोकन एनालिटिक्स सुइट",
+                "ru": "Обзор пакета аналитики"
+        },
+        "Overview Dashboard": {
+                "es": "Panel de descripción general",
+                "fr": "Tableau de bord de présentation",
+                "de": "Übersichts-Dashboard",
+                "zh": "概览仪表板",
+                "ja": "概要ダッシュボード",
+                "pt": "Painel de visão geral",
+                "ar": "لوحة معلومات عامة",
+                "hi": "अवलोकन डैशबोर्ड",
+                "ru": "Обзорная панель"
+        },
+        "PDF Exec Summary": {
+                "es": "Resumen ejecutivo en PDF",
+                "fr": "Résumé exécutif PDF",
+                "de": "PDF Exec-Zusammenfassung",
+                "zh": "PDF 执行摘要",
+                "ja": "PDF 実行の概要",
+                "pt": "Resumo executivo em PDF",
+                "ar": "ملخص تنفيذي PDF",
+                "hi": "पीडीएफ कार्यकारी सारांश",
+                "ru": "PDF-резюме об исполнительном производстве"
+        },
+        "PK: CustomerID": {
+                "es": "PK: ID de cliente",
+                "fr": "PK : ID client",
+                "de": "PK: Kunden-ID",
+                "zh": "PK：客户ID",
+                "ja": "PK: 顧客ID",
+                "pt": "PK: ID do cliente",
+                "ar": "PK: معرف العميل",
+                "hi": "पीके: ग्राहकआईडी",
+                "ru": "ПК: идентификатор клиента"
+        },
+        "PK: Date (Continuous)": {
+                "es": "PK: Fecha (continua)",
+                "fr": "PK : Date (continu)",
+                "de": "PK: Datum (kontinuierlich)",
+                "zh": "PK：日期（连续）",
+                "ja": "PK: 日付 (連続)",
+                "pt": "PK: Data (Contínuo)",
+                "ar": "PK: التاريخ (مستمر)",
+                "hi": "पीके: दिनांक (निरंतर)",
+                "ru": "ПК: Дата (непрерывно)"
+        },
+        "PK: ProductID": {
+                "es": "PK: ID de producto",
+                "fr": "PK : ID de produit",
+                "de": "PK: Produkt-ID",
+                "zh": "PK：产品ID",
+                "ja": "PK: 製品ID",
+                "pt": "PK: ID do produto",
+                "ar": "PK: معرف المنتج",
+                "hi": "पीके: उत्पादआईडी",
+                "ru": "ПК: идентификатор продукта"
+        },
+        "PK: RegionID": {
+                "es": "PK: ID de región",
+                "fr": "PK : ID de région",
+                "de": "PK: RegionID",
+                "zh": "PK：区域ID",
+                "ja": "PK: 地域ID",
+                "pt": "PK: ID da região",
+                "ar": "PK: معرف المنطقة",
+                "hi": "पीके: रीजनआईडी",
+                "ru": "ПК:Идентификатор региона"
+        },
+        "PK: TransactionID": {
+                "es": "PK: ID de transacción",
+                "fr": "PK : ID de transaction",
+                "de": "PK: Transaktions-ID",
+                "zh": "PK：交易ID",
+                "ja": "PK: トランザクションID",
+                "pt": "PK: ID da transação",
+                "ar": "PK: معرف المعاملة",
+                "hi": "पीके: ट्रांजेक्शन आईडी",
+                "ru": "ПК: идентификатор транзакции"
+        },
+        "PPTX export error:": {
+                "es": "Error de exportación PPTX:",
+                "fr": "Erreur d'exportation PPTX :",
+                "de": "PPTX-Exportfehler:",
+                "zh": "PPTX 导出错误：",
+                "ja": "PPTX エクスポート エラー:",
+                "pt": "Erro de exportação PPTX:",
+                "ar": "خطأ في تصدير PPTX:",
+                "hi": "पीपीटीएक्स निर्यात त्रुटि:",
+                "ru": "Ошибка экспорта PPTX:"
+        },
+        "PREDICTIVE TELEMETRY": {
+                "es": "TELEMETRÍA PREDICTIVA",
+                "fr": "TÉLÉMÉTRIE PRÉDICTIVE",
+                "de": "PRÄDIKTIVE TELEMETRIE",
+                "zh": "预测遥测",
+                "ja": "予測テレメトリー",
+                "pt": "TELEMETRIA PREDITIVA",
+                "ar": "القياس عن بعد التنبؤي",
+                "hi": "पूर्वानुमानित टेलीमेट्री",
+                "ru": "ПРОГНОЗНАЯ ТЕЛЕМЕТРИЯ"
+        },
+        "PRIORITY": {
+                "es": "PRIORIDAD",
+                "fr": "PRIORITÉ",
+                "de": "PRIORITÄT",
+                "zh": "优先级",
+                "ja": "優先順位",
+                "pt": "PRIORIDADE",
+                "ar": "الأولوية",
+                "hi": "प्राथमिकता",
+                "ru": "ПРИОРИТЕТ"
+        },
+        "PROBLEM": {
+                "es": "PROBLEMA",
+                "fr": "PROBLEME",
+                "de": "PROBLEM",
+                "zh": "问题",
+                "ja": "問題",
+                "pt": "PROBLEMA",
+                "ar": "مشكلة",
+                "hi": "समस्या",
+                "ru": "ПРОБЛЕМА"
+        },
+        "Page 1 of 1": {
+                "es": "Página 1 de 1",
+                "fr": "Page 1 sur 1",
+                "de": "Seite 1 von 1",
+                "zh": "第 1 页，共 1 页",
+                "ja": "ページ 1/1",
+                "pt": "Página 1 de 1",
+                "ar": "الصفحة 1 من 1",
+                "hi": "पेज 1 का 1",
+                "ru": "Страница 1 из 1"
+        },
+        "Page Navigation Tabs": {
+                "es": "Pestañas de navegación de página",
+                "fr": "Onglets de navigation dans les pages",
+                "de": "Seitennavigationsregisterkarten",
+                "zh": "页面导航选项卡",
+                "ja": "ページナビゲーションタブ",
+                "pt": "Guias de navegação de página",
+                "ar": "علامات تبويب التنقل في الصفحة",
+                "hi": "पेज नेविगेशन टैब",
+                "ru": "Вкладки навигации по страницам"
+        },
+        "Page:": {
+                "es": "Página:",
+                "fr": "Page :",
+                "de": "Seite:",
+                "zh": "页码：",
+                "ja": "ページ:",
+                "pt": "Página:",
+                "ar": "الصفحة:",
+                "hi": "पेज:",
+                "ru": "Страница:"
+        },
+        "Past Complaints": {
+                "es": "Quejas pasadas",
+                "fr": "Plaintes antérieures",
+                "de": "Frühere Beschwerden",
+                "zh": "过去的投诉",
+                "ja": "過去の苦情",
+                "pt": "Reclamações anteriores",
+                "ar": "الشكاوى الماضية",
+                "hi": "पिछली शिकायतें",
+                "ru": "Прошлые жалобы"
+        },
+        "Paste API endpoints or tokens to stream predictions back to CRM, or configure automated CSV report delivery schedules.": {
+                "es": "Pegue puntos finales o tokens de API para transmitir predicciones a CRM o configure cronogramas de entrega de informes CSV automatizados.",
+                "fr": "Collez des points de terminaison ou des jetons d'API pour renvoyer les prédictions vers CRM, ou configurez des calendriers de livraison de rapports CSV automatisés.",
+                "de": "Fügen Sie API-Endpunkte oder Token ein, um Vorhersagen zurück an CRM zu streamen, oder konfigurieren Sie automatisierte Zeitpläne für die Zustellung von CSV-Berichten.",
+                "zh": "粘贴 API 端点或令牌以将预测流回 CRM，或配置自动 CSV 报告交付计划。",
+                "ja": "API エンドポイントまたはトークンを貼り付けて、予測を CRM にストリーミングしたり、自動化された CSV レポート配信スケジュールを構成したりできます。",
+                "pt": "Cole endpoints ou tokens de API para transmitir previsões de volta ao CRM ou configure programações automatizadas de entrega de relatórios CSV.",
+                "ar": "الصق نقاط النهاية أو الرموز المميزة لواجهة برمجة التطبيقات (API) لبث التنبؤات مرة أخرى إلى CRM، أو قم بتكوين جداول تسليم تقارير CSV الآلية.",
+                "hi": "भविष्यवाणियों को सीआरएम पर वापस स्ट्रीम करने के लिए एपीआई एंडपॉइंट या टोकन पेस्ट करें, या स्वचालित सीएसवी रिपोर्ट डिलीवरी शेड्यूल कॉन्फ़िगर करें।",
+                "ru": "Вставьте конечные точки API или токены для потоковой передачи прогнозов обратно в CRM или настройте автоматические графики доставки отчетов в формате CSV."
+        },
+        "Percentage of active accounts that cancel or fail to renew within a specified billing period.": {
+                "es": "Porcentaje de cuentas activas que se cancelan o no se renuevan dentro de un período de facturación específico.",
+                "fr": "Pourcentage de comptes actifs qui s'annulent ou ne parviennent pas à se renouveler au cours d'une période de facturation spécifiée.",
+                "de": "Prozentsatz der aktiven Konten, die innerhalb eines bestimmten Abrechnungszeitraums gekündigt oder nicht verlängert werden.",
+                "zh": "在指定计费期内取消或未能续订的活跃帐户的百分比。",
+                "ja": "指定された請求期間内にキャンセルまたは更新に失敗したアクティブなアカウントの割合。",
+                "pt": "Porcentagem de contas ativas que são canceladas ou não renovadas dentro de um período de faturamento especificado.",
+                "ar": "النسبة المئوية للحسابات النشطة التي تلغي أو تفشل في التجديد خلال فترة زمنية محددة للفوترة.",
+                "hi": "सक्रिय खातों का प्रतिशत जो एक निर्दिष्ट बिलिंग अवधि के भीतर रद्द हो जाते हैं या नवीनीकरण करने में विफल रहते हैं।",
+                "ru": "Процент активных учетных записей, которые аннулируются или не продлеваются в течение указанного расчетного периода."
+        },
+        "Percentage of overall correct churn classifications (TP + TN) / Total": {
+                "es": "Porcentaje de clasificaciones generales correctas de abandono (TP + TN) / Total",
+                "fr": "Pourcentage de classifications globales de désabonnement correctes (TP + TN) / Total",
+                "de": "Prozentsatz der insgesamt korrekten Abwanderungsklassifizierungen (TP + TN) / Gesamt",
+                "zh": "总体正确流失分类的百分比 (TP + TN)/总计",
+                "ja": "全体的な正しいチャーン分類の割合 (TP + TN) / 合計",
+                "pt": "Porcentagem de classificações gerais corretas de rotatividade (TP + TN) / Total",
+                "ar": "النسبة المئوية للتصنيفات الصحيحة الشاملة (TP + TN) / الإجمالي",
+                "hi": "समग्र सही मंथन वर्गीकरण का प्रतिशत (टीपी + टीएन) / कुल",
+                "ru": "Процент правильных классификаций оттока (TP + TN) / Всего"
+        },
+        "Percentage of value at risk": {
+                "es": "Porcentaje de valor en riesgo",
+                "fr": "Pourcentage de valeur à risque",
+                "de": "Prozentsatz des gefährdeten Werts",
+                "zh": "风险价值百分比",
+                "ja": "リスクにさらされている価値の割合",
+                "pt": "Porcentagem do valor em risco",
+                "ar": "نسبة القيمة المعرضة للخطر",
+                "hi": "जोखिम में मूल्य का प्रतिशत",
+                "ru": "Процент стоимости, подверженной риску"
+        },
+        "Pexels Premium": {
+                "es": "Pexels Premium",
+                "fr": "Pexels Premium",
+                "de": "Pexels Premium",
+                "zh": "Pexels 高级版",
+                "ja": "Pexels プレミアム",
+                "pt": "Pexels Premium",
+                "ar": "بيكسلز بريميوم",
+                "hi": "Pexels प्रीमियम",
+                "ru": "Пексель Премиум"
+        },
+        "Pinterest Visuals": {
+                "es": "Imágenes de Pinterest",
+                "fr": "Visuels Pinterest",
+                "de": "Pinterest-Visuals",
+                "zh": "Pinterest 视觉效果",
+                "ja": "Pinterest のビジュアル",
+                "pt": "Visuais do Pinterest",
+                "ar": "مرئيات بينتيريست",
+                "hi": "Pinterest विज़ुअल्स",
+                "ru": "Pinterest Визуальные эффекты"
+        },
+        "Pixabay Vector & Photos": {
+                "es": "Vectores y fotos de Pixabay",
+                "fr": "Images vectorielles et photos de Pixabay",
+                "de": "Pixabay Vektoren und Fotos",
+                "zh": "Pixabay 矢量图和照片",
+                "ja": "Pixabayのベクターと写真",
+                "pt": "Pixabay Vetores e Fotos",
+                "ar": "بيكساباي المتجهات والصور",
+                "hi": "पिक्साबे वेक्टर और तस्वीरें",
+                "ru": "Pixabay Векторы и фотографии"
+        },
+        "Platform Capabilities Section": {
+                "es": "Sección de capacidades de la plataforma",
+                "fr": "Section Capacités de la plateforme",
+                "de": "Abschnitt „Plattformfunktionen“.",
+                "zh": "平台能力部分",
+                "ja": "プラットフォーム機能セクション",
+                "pt": "Seção de recursos da plataforma",
+                "ar": "قسم قدرات المنصة",
+                "hi": "प्लेटफ़ॉर्म क्षमता अनुभाग",
+                "ru": "Раздел «Возможности платформы»"
+        },
+        "Platform Settings & RBAC Roles": {
+                "es": "Configuración de plataforma y funciones de RBAC",
+                "fr": "Paramètres de la plate-forme et rôles RBAC",
+                "de": "Plattformeinstellungen und RBAC-Rollen",
+                "zh": "平台设置和 RBAC 角色",
+                "ja": "プラットフォーム設定と RBAC ロール",
+                "pt": "Configurações de plataforma e funções RBAC",
+                "ar": "إعدادات النظام الأساسي وأدوار RBAC",
+                "hi": "प्लेटफ़ॉर्म सेटिंग्स और आरबीएसी भूमिकाएँ",
+                "ru": "Настройки платформы и роли RBAC"
+        },
+        "Platform Tools": {
+                "es": "Herramientas de plataforma",
+                "fr": "Outils de plateforme",
+                "de": "Plattform-Tools",
+                "zh": "平台工具",
+                "ja": "プラットフォームツール",
+                "pt": "Ferramentas de plataforma",
+                "ar": "أدوات المنصة",
+                "hi": "प्लेटफार्म उपकरण",
+                "ru": "Инструменты платформы"
+        },
+        "Platform Tools & Sidebars": {
+                "es": "Herramientas de plataforma y barras laterales",
+                "fr": "Outils de plateforme et barres latérales",
+                "de": "Plattform-Tools und Seitenleisten",
+                "zh": "平台工具和侧边栏",
+                "ja": "プラットフォームツールとサイドバー",
+                "pt": "Ferramentas e barras laterais da plataforma",
+                "ar": "أدوات النظام الأساسي والأشرطة الجانبية",
+                "hi": "प्लेटफ़ॉर्म उपकरण और साइडबार",
+                "ru": "Инструменты платформы и боковые панели"
+        },
+        "Platinum & Charcoal": {
+                "es": "Platino y carbón",
+                "fr": "Platine et charbon",
+                "de": "Platin und Kohle",
+                "zh": "铂金和木炭",
+                "ja": "プラチナとチャコール",
+                "pt": "Platina e Carvão",
+                "ar": "البلاتين والفحم",
+                "hi": "प्लैटिनम और चारकोल",
+                "ru": "Платина и уголь"
+        },
+        "Play": {
+                "es": "Jugar",
+                "fr": "Jouer",
+                "de": "Spielen",
+                "zh": "玩",
+                "ja": "遊ぶ",
+                "pt": "Jogar",
+                "ar": "العب",
+                "hi": "खेलो",
+                "ru": "Играть"
+        },
+        "Playfair & Roboto": {
+                "es": "Playfair y Roboto",
+                "fr": "Foire aux jeux et Roboto",
+                "de": "Playfair & Roboto",
+                "zh": "普莱费尔和罗博托",
+                "ja": "プレイフェア＆ロボト",
+                "pt": "Playfair e Roboto",
+                "ar": "بلايفير وروبوتو",
+                "hi": "प्लेफ़ेयर और रोबोटो",
+                "ru": "Плейфейр и Робото"
+        },
+        "Please enter a description or keyword for the media search.": {
+                "es": "Ingrese una descripción o palabra clave para la búsqueda de medios.",
+                "fr": "Veuillez saisir une description ou un mot-clé pour la recherche multimédia.",
+                "de": "Bitte geben Sie eine Beschreibung oder ein Stichwort für die Mediensuche ein.",
+                "zh": "请输入媒体搜索的描述或关键字。",
+                "ja": "メディア検索の説明またはキーワードを入力してください。",
+                "pt": "Insira uma descrição ou palavra-chave para a pesquisa de mídia.",
+                "ar": "الرجاء إدخال وصف أو كلمة رئيسية للبحث في الوسائط.",
+                "hi": "कृपया मीडिया खोज के लिए विवरण या कीवर्ड दर्ज करें।",
+                "ru": "Введите описание или ключевое слово для поиска медиа."
+        },
+        "Please enter a valid recipient email address.": {
+                "es": "Introduzca una dirección de correo electrónico de destinatario válida.",
+                "fr": "Veuillez saisir une adresse e-mail de destinataire valide.",
+                "de": "Bitte geben Sie eine gültige Empfänger-E-Mail-Adresse ein.",
+                "zh": "请输入有效的收件人电子邮件地址。",
+                "ja": "有効な受信者の電子メール アドレスを入力してください。",
+                "pt": "Insira um endereço de e-mail de destinatário válido.",
+                "ar": "الرجاء إدخال عنوان بريد إلكتروني صالح للمستلم.",
+                "hi": "कृपया एक वैध प्राप्तकर्ता ईमेल पता दर्ज करें।",
+                "ru": "Пожалуйста, введите действительный адрес электронной почты получателя."
+        },
+        "Please enter your API Key or connection token.": {
+                "es": "Ingrese su clave API o token de conexión.",
+                "fr": "Veuillez saisir votre clé API ou votre jeton de connexion.",
+                "de": "Bitte geben Sie Ihren API-Schlüssel oder Verbindungstoken ein.",
+                "zh": "请输入您的 API 密钥或连接令牌。",
+                "ja": "API キーまたは接続トークンを入力してください。",
+                "pt": "Insira sua chave API ou token de conexão.",
+                "ar": "الرجاء إدخال مفتاح واجهة برمجة التطبيقات (API) أو رمز الاتصال المميز.",
+                "hi": "कृपया अपनी एपीआई कुंजी या कनेक्शन टोकन दर्ज करें।",
+                "ru": "Введите свой ключ API или токен подключения."
+        },
+        "Policy 1: Proactive 24-Hour Outreach SLA": {
+                "es": "Política 1: SLA de divulgación proactiva las 24 horas",
+                "fr": "Politique 1 : SLA de sensibilisation proactive 24 heures sur 24",
+                "de": "Richtlinie 1: Proaktives 24-Stunden-Outreach-SLA",
+                "zh": "政策 1：主动 24 小时外展 SLA",
+                "ja": "ポリシー 1: プロアクティブな 24 時間アウトリーチ SLA",
+                "pt": "Política 1: SLA de divulgação proativa 24 horas por dia",
+                "ar": "السياسة 1: اتفاقية مستوى الخدمة (SLA) للتواصل الاستباقي على مدار 24 ساعة",
+                "hi": "नीति 1: सक्रिय 24 घंटे आउटरीच एसएलए",
+                "ru": "Политика 1: Соглашение об уровне обслуживания для активной круглосуточной информационно-разъяснительной работы"
+        },
+        "Policy 2: Annual Contract Migration Incentive": {
+                "es": "Política 2: Incentivo Anual de Migración por Contrato",
+                "fr": "Politique 2 : Incitation à la migration sous contrat annuel",
+                "de": "Richtlinie 2: Jährlicher Anreiz zur Vertragsmigration",
+                "zh": "政策2：年度合同迁移激励",
+                "ja": "ポリシー 2: 年間契約移行インセンティブ",
+                "pt": "Política 2: Incentivo Anual à Migração por Contrato",
+                "ar": "السياسة 2: حوافز الهجرة التعاقدية السنوية",
+                "hi": "नीति 2: वार्षिक अनुबंध प्रवासन प्रोत्साहन",
+                "ru": "Политика 2: Ежегодное стимулирование контрактной миграции"
+        },
+        "Policy 3: Autopay & Electronic Payment Incentive": {
+                "es": "Política 3: Incentivo de pago automático y pago electrónico",
+                "fr": "Politique 3 : Incitatif au paiement automatique et au paiement électronique",
+                "de": "Richtlinie 3: Autopay und elektronischer Zahlungsanreiz",
+                "zh": "政策 3：自动转账和电子支付奖励",
+                "ja": "ポリシー 3: 自動支払いと電子支払いのインセンティブ",
+                "pt": "Política 3: Pagamento Automático e Incentivo ao Pagamento Eletrônico",
+                "ar": "السياسة 3: حوافز الدفع التلقائي والدفع الإلكتروني",
+                "hi": "नीति 3: ऑटोपे और इलेक्ट्रॉनिक भुगतान प्रोत्साहन",
+                "ru": "Политика 3: Стимулирование автоплатежей и электронных платежей"
+        },
+        "Policy 4: Priority Support Ticket Fast-Tracking (<2h Response SLA)": {
+                "es": "Política 4: Seguimiento rápido de tickets de soporte prioritario (SLA de respuesta <2h)",
+                "fr": "Politique 4 : Suivi accéléré des tickets d'assistance prioritaire (SLA de réponse < 2 heures)",
+                "de": "Richtlinie 4: Priorisiertes Support-Ticket-Fast-Tracking (<2 Stunden Antwort-SLA)",
+                "zh": "政策 4：优先支持票快速跟踪（<2 小时响应 SLA）",
+                "ja": "ポリシー 4: 優先サポート チケットの迅速な追跡 (<2 時間の応答 SLA)",
+                "pt": "Política 4: Agilização do ticket de suporte prioritário (SLA de resposta <2h)",
+                "ar": "السياسة 4: التتبع السريع لتذكرة الدعم ذات الأولوية (<الاستجابة لاتفاقية مستوى الخدمة للاستجابة لمدة ساعتين)",
+                "hi": "नीति 4: प्राथमिकता समर्थन टिकट फास्ट-ट्रैकिंग (<2 घंटे प्रतिक्रिया एसएलए)",
+                "ru": "Политика 4: Ускоренное оформление заявки на приоритетную поддержку (соглашение об уровне обслуживания менее 2 часов)"
+        },
+        "Populated dynamically": {
+                "es": "Poblado dinámicamente",
+                "fr": "Rempli dynamiquement",
+                "de": "Dynamisch ausgefüllt",
+                "zh": "动态填充",
+                "ja": "動的に設定される",
+                "pt": "Preenchido dinamicamente",
+                "ar": "يتم تعبئتها ديناميكيًا",
+                "hi": "गतिशील रूप से आबाद",
+                "ru": "Заполняется динамически"
+        },
+        "Populated dynamically via JS": {
+                "es": "Completado dinámicamente a través de JS",
+                "fr": "Rempli dynamiquement via JS",
+                "de": "Wird dynamisch über JS ausgefüllt",
+                "zh": "通过 JS 动态填充",
+                "ja": "JS 経由で動的に設定されます",
+                "pt": "Preenchido dinamicamente via JS",
+                "ar": "يتم ملؤها ديناميكيًا عبر JS",
+                "hi": "जेएस के माध्यम से गतिशील रूप से पॉप्युलेट किया गया",
+                "ru": "Заполняется динамически через JS"
+        },
+        "Portfolio Risk Index": {
+                "es": "Índice de riesgo de cartera",
+                "fr": "Indice de risque du portefeuille",
+                "de": "Portfolio-Risikoindex",
+                "zh": "投资组合风险指数",
+                "ja": "ポートフォリオリスク指数",
+                "pt": "Índice de risco da carteira",
+                "ar": "مؤشر مخاطر المحفظة",
+                "hi": "पोर्टफोलियो जोखिम सूचकांक",
+                "ru": "Индекс портфельного риска"
+        },
+        "Português": {
+                "es": "portugués",
+                "fr": "Portugais",
+                "de": "Portugiesisch",
+                "zh": "葡萄牙语",
+                "ja": "ポルトガル語",
+                "pt": "Português",
+                "ar": "البرتغالية",
+                "hi": "पुर्तगाली",
+                "ru": "Португальский"
+        },
+        "Post-Mortem Auditing": {
+                "es": "Auditoría post mortem",
+                "fr": "Audit post-mortem",
+                "de": "Post-Mortem-Prüfung",
+                "zh": "事后审计",
+                "ja": "事後監査",
+                "pt": "Auditoria post-mortem",
+                "ar": "التدقيق بعد الوفاة",
+                "hi": "पोस्टमार्टम ऑडिटिंग",
+                "ru": "Посмертный аудит"
+        },
+        "Power BI Data Source (.pbids)": {
+                "es": "Fuente de datos de Power BI (.pbids)",
+                "fr": "Source de données Power BI (.pbids)",
+                "de": "Power BI-Datenquelle (.pbids)",
+                "zh": "Power BI 数据源 (.pbids)",
+                "ja": "Power BI データ ソース (.pbids)",
+                "pt": "Fonte de dados do Power BI (.pbids)",
+                "ar": "مصدر بيانات Power BI (pbids.)",
+                "hi": "पावर बीआई डेटा स्रोत (.pbids)",
+                "ru": "Источник данных Power BI (.pbids)"
+        },
+        "Power BI Service REST Live Push": {
+                "es": "Servicio Power BI REST Live Push",
+                "fr": "Service Power BI REST Live Push",
+                "de": "Power BI-Dienst REST Live Push",
+                "zh": "Power BI 服务 REST 实时推送",
+                "ja": "Power BI サービス REST ライブ プッシュ",
+                "pt": "Serviço REST Live Push do Power BI",
+                "ar": "خدمة الدفع المباشر REST من Power BI",
+                "hi": "पावर बीआई सर्विस रेस्ट लाइव पुश",
+                "ru": "Служба Power BI REST Live Push"
+        },
+        "Power BI Studio": {
+                "es": "Estudio Power BI",
+                "fr": "Power BI Studio",
+                "de": "Power BI Studio",
+                "zh": "Power BI 工作室",
+                "ja": "Power BI スタジオ",
+                "pt": "Estúdio Power BI",
+                "ar": "ستوديو باور بي آي",
+                "hi": "पावर बीआई स्टूडियो",
+                "ru": "Студия Power BI"
+        },
+        "Power BI Template": {
+                "es": "Plantilla de Power BI",
+                "fr": "Modèle Power BI",
+                "de": "Power BI-Vorlage",
+                "zh": "Power BI 模板",
+                "ja": "Power BI テンプレート",
+                "pt": "Modelo do Power BI",
+                "ar": "قالب باور بي آي",
+                "hi": "पावर बीआई टेम्पलेट",
+                "ru": "Шаблон Power BI"
+        },
+        "Power BI Template (.pbit)": {
+                "es": "Plantilla de Power BI (.pbit)",
+                "fr": "Modèle Power BI (.pbit)",
+                "de": "Power BI-Vorlage (.pbit)",
+                "zh": "Power BI 模板 (.pbit)",
+                "ja": "Power BI テンプレート (.pbit)",
+                "pt": "Modelo do Power BI (.pbit)",
+                "ar": "قالب Power BI (.pbit)",
+                "hi": "पावर बीआई टेम्पलेट (.pbit)",
+                "ru": "Шаблон Power BI (.pbit)"
+        },
+        "Power Query M-Script (.m)": {
+                "es": "Power Query M-Script (.m)",
+                "fr": "Power Query M-Script (.m)",
+                "de": "Power Query M-Script (.m)",
+                "zh": "Power Query M 脚本 (.m)",
+                "ja": "Power Query M スクリプト (.m)",
+                "pt": "Power Query M-Script (.m)",
+                "ar": "Power Query M-Script (.m)",
+                "hi": "पावर क्वेरी एम-स्क्रिप्ट (.m)",
+                "ru": "M-скрипт Power Query (.m)"
+        },
+        "Pred Neg": {
+                "es": "pred neg",
+                "fr": "Préd négatif",
+                "de": "Pred Neg",
+                "zh": "预防阴性",
+                "ja": "プレドネグ",
+                "pt": "Pred Neg",
+                "ar": "بريد نيج",
+                "hi": "पूर्व नकारात्मक",
+                "ru": "Пред Нег"
+        },
+        "Pred Pos": {
+                "es": "Pred Pos.",
+                "fr": "Pos. préd.",
+                "de": "Pred Pos",
+                "zh": "预测位置",
+                "ja": "プレドポス",
+                "pt": "Posição predial",
+                "ar": "بريد بوس",
+                "hi": "पूर्व स्थिति",
+                "ru": "Пред Поз"
+        },
+        "Predicted Risk": {
+                "es": "Riesgo previsto",
+                "fr": "Risque prévu",
+                "de": "Vorhergesagtes Risiko",
+                "zh": "预测风险",
+                "ja": "予測されるリスク",
+                "pt": "Risco Previsto",
+                "ar": "المخاطر المتوقعة",
+                "hi": "अनुमानित जोखिम",
+                "ru": "Прогнозируемый риск"
+        },
+        "Predictive Playbooks": {
+                "es": "Manuales predictivos",
+                "fr": "Playbooks prédictifs",
+                "de": "Vorhersage-Playbooks",
+                "zh": "预测手册",
+                "ja": "予測プレイブック",
+                "pt": "Manuais Preditivos",
+                "ar": "كتب اللعب التنبؤية",
+                "hi": "पूर्वानुमानित प्लेबुक",
+                "ru": "Предсказательные книги"
+        },
+        "Prescriptive Actions & SLA Workflows": {
+                "es": "Acciones prescriptivas y flujos de trabajo de SLA",
+                "fr": "Actions prescriptives et flux de travail SLA",
+                "de": "Vorschreibende Maßnahmen und SLA-Workflows",
+                "zh": "规范性操作和 SLA 工作流程",
+                "ja": "規範的なアクションと SLA ワークフロー",
+                "pt": "Ações prescritivas e fluxos de trabalho de SLA",
+                "ar": "الإجراءات التوجيهية وسير عمل اتفاقية مستوى الخدمة",
+                "hi": "अनुदेशात्मक क्रियाएँ और SLA वर्कफ़्लोज़",
+                "ru": "Предписывающие действия и рабочие процессы SLA"
+        },
+        "Prescriptive Actions & SLAs": {
+                "es": "Acciones prescriptivas y SLA",
+                "fr": "Actions prescriptives et SLA",
+                "de": "Vorschreibende Maßnahmen und SLAs",
+                "zh": "规范性操作和 SLA",
+                "ja": "規範的なアクションと SLA",
+                "pt": "Ações Prescritivas e SLAs",
+                "ar": "الإجراءات التوجيهية واتفاقيات مستوى الخدمة",
+                "hi": "अनुदेशात्मक कार्रवाइयां और एसएलए",
+                "ru": "Предписывающие действия и соглашения об уровне обслуживания"
+        },
+        "Prescriptive Solutions": {
+                "es": "Soluciones prescriptivas",
+                "fr": "Solutions prescriptives",
+                "de": "Verschreibungspflichtige Lösungen",
+                "zh": "规范性解决方案",
+                "ja": "規範的な解決策",
+                "pt": "Soluções Prescritivas",
+                "ar": "الحلول الإرشادية",
+                "hi": "अनुदेशात्मक समाधान",
+                "ru": "Предписывающие решения"
+        },
+        "Prescriptive Solutions Playbook Grid": {
+                "es": "Cuadrícula del manual de soluciones prescriptivas",
+                "fr": "Grille du manuel de solutions prescriptives",
+                "de": "Playbook-Raster für präskriptive Lösungen",
+                "zh": "规范性解决方案剧本网格",
+                "ja": "規範的なソリューションのハンドブック グリッド",
+                "pt": "Grade do manual de soluções prescritivas",
+                "ar": "شبكة كتاب اللعب للحلول الإرشادية",
+                "hi": "निर्देशात्मक समाधान प्लेबुक ग्रिड",
+                "ru": "Сетка учебника по предписывающим решениям"
+        },
+        "Present Live": {
+                "es": "Presente en vivo",
+                "fr": "Présenter en direct",
+                "de": "Live präsentieren",
+                "zh": "现场直播",
+                "ja": "プレゼントライブ",
+                "pt": "Apresentar ao vivo",
+                "ar": "الحاضر لايف",
+                "hi": "वर्तमान लाइव",
+                "ru": "Настоящее время в прямом эфире"
+        },
+        "Presentation Engine": {
+                "es": "Motor de presentación",
+                "fr": "Moteur de présentation",
+                "de": "Präsentations-Engine",
+                "zh": "演示引擎",
+                "ja": "プレゼンテーションエンジン",
+                "pt": "Motor de apresentação",
+                "ar": "محرك العرض",
+                "hi": "प्रेजेंटेशन इंजन",
+                "ru": "Механизм представления"
+        },
+        "Presentation Q&A Section": {
+                "es": "Presentación Sección de preguntas y respuestas",
+                "fr": "Section questions-réponses de la présentation",
+                "de": "Abschnitt „Fragen und Antworten zur Präsentation“.",
+                "zh": "演讲问答部分",
+                "ja": "プレゼンテーションの質疑応答セクション",
+                "pt": "Seção de perguntas e respostas da apresentação",
+                "ar": "قسم الأسئلة والأجوبة للعرض التقديمي",
+                "hi": "प्रस्तुति प्रश्नोत्तर अनुभाग",
+                "ru": "Раздел вопросов и ответов по презентации"
+        },
+        "Preset: Critical Escalation": {
+                "es": "Preestablecido: Escalada crítica",
+                "fr": "Préréglage : escalade critique",
+                "de": "Voreinstellung: Kritische Eskalation",
+                "zh": "预设：严重升级",
+                "ja": "プリセット: クリティカル エスカレーション",
+                "pt": "Predefinição: Escalada Crítica",
+                "ar": "الإعداد المسبق: التصعيد الحرج",
+                "hi": "प्रीसेट: क्रिटिकल एस्केलेशन",
+                "ru": "Предустановка: критическая эскалация"
+        },
+        "Preset: Loyal Account": {
+                "es": "Preestablecido: Cuenta Leal",
+                "fr": "Préréglage : compte fidèle",
+                "de": "Voreinstellung: Treuekonto",
+                "zh": "预设：忠诚帐户",
+                "ja": "プリセット: ロイヤルアカウント",
+                "pt": "Predefinição: Conta Leal",
+                "ar": "الإعداد المسبق: حساب الولاء",
+                "hi": "प्रीसेट: लॉयल अकाउंट",
+                "ru": "Предустановка: Лояльный аккаунт"
+        },
+        "Preset: Moderate Risk": {
+                "es": "Preestablecido: Riesgo moderado",
+                "fr": "Préréglage : risque modéré",
+                "de": "Voreinstellung: Moderates Risiko",
+                "zh": "预设：中等风险",
+                "ja": "プリセット: 中程度のリスク",
+                "pt": "Predefinição: risco moderado",
+                "ar": "الإعداد المسبق: خطر معتدل",
+                "hi": "प्रीसेट: मध्यम जोखिम",
+                "ru": "Предустановка: умеренный риск"
+        },
+        "Press": {
+                "es": "prensa",
+                "fr": "Presse",
+                "de": "Drücken Sie",
+                "zh": "新闻",
+                "ja": "プレス",
+                "pt": "Pressione",
+                "ar": "اضغط",
+                "hi": "दबाएँ",
+                "ru": "Пресса"
+        },
+        "Previous slide": {
+                "es": "Diapositiva anterior",
+                "fr": "Diapositive précédente",
+                "de": "Vorherige Folie",
+                "zh": "上一张幻灯片",
+                "ja": "前のスライド",
+                "pt": "Diapositivo anterior",
+                "ar": "الشريحة السابقة",
+                "hi": "पिछली स्लाइड",
+                "ru": "Предыдущий слайд"
+        },
+        "Print / Save PDF Deck": {
+                "es": "Imprimir / Guardar PDF",
+                "fr": "Imprimer / PDF",
+                "de": "Drucken / PDF",
+                "zh": "打印 / 保存 PDF 演示文稿",
+                "ja": "印刷 / PDF保存",
+                "pt": "Imprimir / Salvar PDF",
+                "ar": "طباعة / حفظ بتنسيق PDF",
+                "hi": "प्रिंट / PDF सहेजें",
+                "ru": "Печать / Сохранить в PDF"
+        },
+        "Priority Risk Vulnerabilities Matrix": {
+                "es": "Matriz de vulnerabilidades de riesgo prioritario",
+                "fr": "Matrice des vulnérabilités aux risques prioritaires",
+                "de": "Matrix der vorrangigen Risikoschwachstellen",
+                "zh": "优先风险漏洞矩阵",
+                "ja": "優先リスク脆弱性マトリックス",
+                "pt": "Matriz de vulnerabilidades de risco prioritário",
+                "ar": "مصفوفة نقاط الضعف ذات الأولوية للمخاطر",
+                "hi": "प्राथमिकता जोखिम कमजोरियाँ मैट्रिक्स",
+                "ru": "Матрица уязвимостей приоритетных рисков"
+        },
+        "Proactive Machine Learning": {
+                "es": "Aprendizaje automático proactivo",
+                "fr": "Apprentissage automatique proactif",
+                "de": "Proaktives maschinelles Lernen",
+                "zh": "主动机器学习",
+                "ja": "プロアクティブな機械学習",
+                "pt": "Aprendizado de máquina proativo",
+                "ar": "التعلم الآلي الاستباقي",
+                "hi": "प्रोएक्टिव मशीन लर्निंग",
+                "ru": "Проактивное машинное обучение"
+        },
+        "Process Roadmap Nodes": {
+                "es": "Nodos de la hoja de ruta del proceso",
+                "fr": "Nœuds de feuille de route de processus",
+                "de": "Prozess-Roadmap-Knoten",
+                "zh": "流程路线图节点",
+                "ja": "プロセスロードマップノード",
+                "pt": "Nós do roteiro de processo",
+                "ar": "عملية العقد خارطة الطريق",
+                "hi": "प्रक्रिया रोडमैप नोड्स",
+                "ru": "Узлы дорожной карты процесса"
+        },
+        "Product & Tenure Friction": {
+                "es": "Fricción de producto y tenencia",
+                "fr": "Friction entre produits et mandats",
+                "de": "Produkt- und Besitzkonflikte",
+                "zh": "产品和保有权摩擦",
+                "ja": "製品と保有期間の摩擦",
+                "pt": "Fricção de Produto e Posse",
+                "ar": "احتكاك المنتج والحيازة",
+                "hi": "उत्पाद एवं कार्यकाल घर्षण",
+                "ru": "Разногласия по продукту и сроку владения"
+        },
+        "Product Intelligence": {
+                "es": "Inteligencia de Producto",
+                "fr": "Performance Produit",
+                "de": "Produkt-Intelligence",
+                "zh": "功能使用度与流失关联",
+                "ja": "プロダクト利用分析",
+                "pt": "Inteligência de Produto",
+                "ar": "ذكاء المنتجات",
+                "hi": "उत्पाद प्रदर्शन",
+                "ru": "Аналитика продукта"
+        },
+        "ProductName, Category, Tier": {
+                "es": "Nombre del producto, categoría, nivel",
+                "fr": "Nom du produit, catégorie, niveau",
+                "de": "Produktname, Kategorie, Stufe",
+                "zh": "产品名称、类别、等级",
+                "ja": "製品名、カテゴリ、階層",
+                "pt": "Nome do produto, categoria, nível",
+                "ar": "اسم المنتج، الفئة، الطبقة",
+                "hi": "उत्पाद का नाम, श्रेणी, स्तर",
+                "ru": "Название продукта, категория, уровень"
+        },
+        "Projected Suite Impact:": {
+                "es": "Impacto Proyectado:",
+                "fr": "Impact Prévisionnel:",
+                "de": "Prognostizierte Auswirkung:",
+                "zh": "预估挽留收益:",
+                "ja": "予測改善効果:",
+                "pt": "Impacto Projetado:",
+                "ar": "الأثر المالي المتوقع:",
+                "hi": "अनुमानित प्रभाव:",
+                "ru": "Прогнозируемый эффект:"
+        },
+        "Proportion of actual churners successfully identified by the model — minimizes missed churn": {
+                "es": "Proporción de abandonos reales identificados con éxito por el modelo: minimiza el abandono perdido",
+                "fr": "Proportion de désabonnements réels identifiés avec succès par le modèle – minimise les désabonnements manqués",
+                "de": "Anteil der tatsächlichen Abwanderer, die vom Modell erfolgreich identifiziert wurden – minimiert verpasste Abwanderung",
+                "zh": "模型成功识别的实际流失者的比例 - 最大限度地减少错过的流失",
+                "ja": "モデルによって特定された実際のチャーン者の割合 — チャーンの見逃しを最小限に抑える",
+                "pt": "Proporção de abandonadores reais identificados com sucesso pelo modelo — minimiza o abandono perdido",
+                "ar": "نسبة المخضضات الفعلية التي تم تحديدها بنجاح بواسطة النموذج - تقلل من المخضض المفقود",
+                "hi": "मॉडल द्वारा सफलतापूर्वक पहचाने गए वास्तविक मंथन का अनुपात - छूटे हुए मंथन को कम करता है",
+                "ru": "Доля фактических оттоков, успешно выявленных моделью — сводит к минимуму пропущенный отток"
+        },
+        "Proportion of predicted churners that actually churned — minimizes false positive alerts": {
+                "es": "Proporción de abandonos previstos que realmente abandonaron: minimiza las alertas de falsos positivos",
+                "fr": "Proportion de désabonnements prévus qui se sont réellement produits – minimise les alertes faussement positives",
+                "de": "Anteil der vorhergesagten Abwanderer, die tatsächlich abgewandert sind – minimiert falsch-positive Warnungen",
+                "zh": "预测的流失者实际流失的比例——最大限度地减少误报警报",
+                "ja": "予測されたチャーンナーのうち実際にチャーンした人の割合 - 誤検知アラートを最小限に抑える",
+                "pt": "Proporção de desligamentos previstos que realmente mudaram — minimiza alertas falsos positivos",
+                "ar": "نسبة المخضِّضات المتوقعة التي تم المخضضات بالفعل — تقلل من التنبيهات الإيجابية الكاذبة",
+                "hi": "अनुमानित मंथनकर्ताओं का अनुपात जो वास्तव में मंथन हुआ - गलत सकारात्मक अलर्ट को कम करता है",
+                "ru": "Доля прогнозируемых оттоков, которые действительно ушли — сводит к минимуму ложноположительные оповещения."
+        },
+        "Provide a": {
+                "es": "Proporcionar un",
+                "fr": "Fournir un",
+                "de": "Stellen Sie eine",
+                "zh": "提供一个",
+                "ja": "を提供します",
+                "pt": "Forneça um",
+                "ar": "تقديم أ",
+                "hi": "एक प्रदान करें",
+                "ru": "Предоставьте"
+        },
+        "Provide a campaign name, target sample size, predicted churn target, and input the actual final outcome churn rate.": {
+                "es": "Proporcione un nombre de campaña, un tamaño de muestra objetivo, un objetivo de abandono previsto e introduzca la tasa de abandono del resultado final real.",
+                "fr": "Fournissez un nom de campagne, la taille de l’échantillon cible, l’objectif de désabonnement prévu et saisissez le taux de désabonnement réel du résultat final.",
+                "de": "Geben Sie einen Kampagnennamen, eine angestrebte Stichprobengröße und ein prognostiziertes Abwanderungsziel an und geben Sie die tatsächliche Abwanderungsrate des Endergebnisses ein.",
+                "zh": "提供活动名称、目标样本大小、预测的流失目标，并输入实际的最终结果流失率。",
+                "ja": "キャンペーン名、ターゲットサンプルサイズ、予測チャーンターゲットを入力し、実際の最終結果のチャーン率を入力します。",
+                "pt": "Forneça o nome da campanha, o tamanho da amostra alvo, a meta de rotatividade prevista e insira a taxa de rotatividade do resultado final real.",
+                "ar": "قم بتوفير اسم الحملة، وحجم العينة المستهدفة، وهدف الإيقاف المتوقع، وإدخال معدل الإيقاف الفعلي للنتيجة النهائية.",
+                "hi": "अभियान का नाम, लक्ष्य नमूना आकार, अनुमानित मंथन लक्ष्य और वास्तविक अंतिम परिणाम मंथन दर इनपुट करें।",
+                "ru": "Укажите название кампании, целевой размер выборки, прогнозируемый целевой отток и введите фактический конечный показатель оттока."
+        },
+        "Publish to Tableau Server": {
+                "es": "Publicar en Tableau Server",
+                "fr": "Publier sur Tableau Server",
+                "de": "Auf Tableau Server veröffentlichen",
+                "zh": "发布到 Tableau Server",
+                "ja": "Tableau Server へのパブリッシュ",
+                "pt": "Publicar no Tableau Server",
+                "ar": "النشر على خادم Tableau",
+                "hi": "Tableau सर्वर पर प्रकाशित करें",
+                "ru": "Публикация на сервере Tableau"
+        },
+        "Push Live Dataset": {
+                "es": "Empujar conjunto de datos en vivo",
+                "fr": "Pousser l'ensemble de données en direct",
+                "de": "Live-Datensatz übertragen",
+                "zh": "推送实时数据集",
+                "ja": "ライブ データセットのプッシュ",
+                "pt": "Enviar conjunto de dados ao vivo",
+                "ar": "دفع مجموعة البيانات الحية",
+                "hi": "लाइव डेटासेट पुश करें",
+                "ru": "Отправить набор данных в реальном времени"
+        },
+        "Q&A answer slide will render here": {
+                "es": "La diapositiva de respuestas a preguntas y respuestas se mostrará aquí",
+                "fr": "La diapositive de réponse aux questions et réponses s'affichera ici",
+                "de": "Die Frage-und-Antwort-Folie wird hier gerendert",
+                "zh": "问答答案幻灯片将在此处呈现",
+                "ja": "Q&A の回答スライドがここに表示されます",
+                "pt": "O slide da resposta de perguntas e respostas será renderizado aqui",
+                "ar": "سيتم عرض شريحة الإجابة على الأسئلة والأجوبة هنا",
+                "hi": "प्रश्नोत्तर उत्तर स्लाइड यहां प्रस्तुत की जाएगी",
+                "ru": "Здесь будет отображаться слайд с ответами на вопросы и ответы."
+        },
+        "QIPLO GAMMA LIVE": {
+                "es": "QIPLO GAMMA EN VIVO",
+                "fr": "QIPLO GAMMA EN DIRECT",
+                "de": "QIPLO GAMMA LIVE",
+                "zh": "奇波伽玛现场表演",
+                "ja": "QIPLO ガンマ ライブ",
+                "pt": "QIPLO GAMA AO VIVO",
+                "ar": "كيبلو غاما لايف",
+                "hi": "किप्लो गामा लाइव",
+                "ru": "КИПЛО ГАММА LIVE"
+        },
+        "Qiplo AI Copilot": {
+                "es": "Copiloto de IA Qiplo",
+                "fr": "Copilote Qiplo AI",
+                "de": "Qiplo KI-Copilot",
+                "zh": "Qiplo人工智能副驾驶",
+                "ja": "Qiplo AI 副操縦士",
+                "pt": "Copiloto Qiplo AI",
+                "ar": "كيبلو AI مساعد الطيار",
+                "hi": "क्यूप्लो एआई कोपायलट",
+                "ru": "Qiplo AI Второй пилот"
+        },
+        "Qiplo Closed-Loop Decision Diagnostics": {
+                "es": "Diagnósticos de Decisión en Ciclo Cerrado Qiplo",
+                "fr": "Diagnostics de Décision Qiplo en Boucle Fermée",
+                "de": "Qiplo Closed-Loop Entscheidungsdiagnostik",
+                "zh": "Qiplo 闭环智能决策诊断控制台",
+                "ja": "Qiplo クローズドループ意思決定診断",
+                "pt": "Diagnósticos de Decisão em Circuito Fechado Qiplo",
+                "ar": "منظومة تشخيص القرارات مغلقة الحلقة من Qiplo",
+                "hi": "Qiplo क्लोज्ड-लूप निर्णय डायग्नोस्टिक्स",
+                "ru": "Замкнутая диагностика решений Qiplo"
+        },
+        "Qiplo Closed-Loop Resolution": {
+                "es": "Resolución de circuito cerrado de Qiplo",
+                "fr": "Résolution en boucle fermée Qiplo",
+                "de": "Qiplo Closed-Loop-Auflösung",
+                "zh": "Qiplo 闭环分辨率",
+                "ja": "Qiplo クローズドループ解決策",
+                "pt": "Resolução de circuito fechado Qiplo",
+                "ar": "Qiplo دقة الحلقة المغلقة",
+                "hi": "Qiplo बंद-लूप रिज़ॉल्यूशन",
+                "ru": "Разрешение Qiplo в замкнутом контуре"
+        },
+        "Qiplo Logo": {
+                "es": "Logotipo de Qiplo",
+                "fr": "Logo Qiplo",
+                "de": "Qiplo-Logo",
+                "zh": "奇普洛标志",
+                "ja": "キプロのロゴ",
+                "pt": "Logo",
+                "ar": "شعار كيبلو",
+                "hi": "क्यूप्लो लोगो",
+                "ru": "Логотип Кипло"
+        },
+        "Qiplo — Business Decision Intelligence Platform. MIT Licensed.": {
+                "es": "Qiplo — Plataforma de inteligencia de decisiones empresariales. Licencia MIT.",
+                "fr": "Qiplo – Plateforme d’intelligence décisionnelle. Licence MIT.",
+                "de": "Qiplo – Business Decision Intelligence-Plattform. MIT-Lizenz.",
+                "zh": "Qiplo — 商业决策智能平台。麻省理工学院许可。",
+                "ja": "Qiplo — ビジネス意思決定インテリジェンス プラットフォーム。 MITライセンス取得済み。",
+                "pt": "Qiplo — Plataforma de Inteligência de Decisão de Negócios. Licenciado pelo MIT.",
+                "ar": "Qiplo — منصة ذكاء قرارات الأعمال. مرخص من معهد ماساتشوستس للتكنولوجيا.",
+                "hi": "Qiplo - बिजनेस डिसीजन इंटेलिजेंस प्लेटफॉर्म। एमआईटी लाइसेंस प्राप्त.",
+                "ru": "Qiplo — Платформа анализа бизнес-решений. Лицензия MIT."
+        },
+        "Qiplo — Never Lose a Customer Again": {
+                "es": "Qiplo: nunca más pierdas un cliente",
+                "fr": "Qiplo — Ne perdez plus jamais un client",
+                "de": "Qiplo – Verlieren Sie nie wieder einen Kunden",
+                "zh": "Qiplo — 再也不会失去客户",
+                "ja": "Qiplo — もう顧客を失うことはありません",
+                "pt": "Qiplo – Nunca mais perca um cliente",
+                "ar": "Qiplo — لا تفقد عميلك مرة أخرى",
+                "hi": "क्यूप्लो - फिर कभी ग्राहक न खोएं",
+                "ru": "Qiplo — Никогда больше не теряйте клиентов"
+        },
+        "Qiplo — Platform Operations & Intelligence Guide": {
+                "es": "Qiplo: Guía de inteligencia y operaciones de plataforma",
+                "fr": "Qiplo — Guide des opérations et du renseignement de la plateforme",
+                "de": "Qiplo – Plattformbetriebs- und Intelligence-Leitfaden",
+                "zh": "Qiplo — 平台运营和情报指南",
+                "ja": "Qiplo — プラットフォーム運用およびインテリジェンス ガイド",
+                "pt": "Qiplo — Guia de operações e inteligência da plataforma",
+                "ar": "Qiplo - دليل عمليات واستخبارات المنصة",
+                "hi": "Qiplo - प्लेटफ़ॉर्म संचालन और इंटेलिजेंस गाइड",
+                "ru": "Qiplo — Руководство по работе с платформой и аналитике"
+        },
+        "Quantify expected ARR loss and simulate target loyalty coupon campaigns.": {
+                "es": "Cuantifique la pérdida de ARR esperada y simule campañas de cupones de fidelidad objetivo.",
+                "fr": "Quantifiez la perte ARR attendue et simulez des campagnes de coupons de fidélité cibles.",
+                "de": "Quantifizieren Sie den erwarteten ARR-Verlust und simulieren Sie gezielte Treuegutscheinkampagnen.",
+                "zh": "量化预期 ARR 损失并模拟目标忠诚度优惠券活动。",
+                "ja": "予想される ARR 損失を定量化し、ターゲットのロイヤルティ クーポン キャンペーンをシミュレートします。",
+                "pt": "Quantifique a perda esperada de ARR e simule campanhas de cupons de fidelidade alvo.",
+                "ar": "تحديد حجم خسارة ARR المتوقعة ومحاكاة حملات قسيمة الولاء المستهدفة.",
+                "hi": "अपेक्षित एआरआर हानि की मात्रा निर्धारित करें और लक्ष्य लॉयल्टी कूपन अभियानों का अनुकरण करें।",
+                "ru": "Определите ожидаемый убыток ARR и смоделируйте целевые кампании с купонами лояльности."
+        },
+        "Quarterly Health Audits": {
+                "es": "Auditorías de salud trimestrales",
+                "fr": "Audits de santé trimestriels",
+                "de": "Vierteljährliche Gesundheitsaudits",
+                "zh": "季度健康审核",
+                "ja": "四半期ごとの健康監査",
+                "pt": "Auditorias Trimestrais de Saúde",
+                "ar": "عمليات التدقيق الصحي الفصلية",
+                "hi": "त्रैमासिक स्वास्थ्य लेखापरीक्षा",
+                "ru": "Ежеквартальные проверки здоровья"
+        },
+        "Quick Themes:": {
+                "es": "Temas rápidos:",
+                "fr": "Thèmes rapides :",
+                "de": "Schnelle Themen:",
+                "zh": "快速主题：",
+                "ja": "クイックテーマ:",
+                "pt": "Temas rápidos:",
+                "ar": "المواضيع السريعة:",
+                "hi": "त्वरित विषय-वस्तु:",
+                "ru": "Быстрые темы:"
+        },
+        "RECOMMENDED ACTION": {
+                "es": "ACCIÓN RECOMENDADA",
+                "fr": "MESURES RECOMMANDÉES",
+                "de": "EMPFOHLENE AKTION",
+                "zh": "建议采取的行动",
+                "ja": "推奨されるアクション",
+                "pt": "AÇÃO RECOMENDADA",
+                "ar": "الإجراء الموصى به",
+                "hi": "अनुशंसित कार्रवाई",
+                "ru": "РЕКОМЕНДУЕМЫЕ ДЕЙСТВИЯ"
+        },
+        "REPORT SCHEDULER": {
+                "es": "PROGRAMADOR DE INFORMES",
+                "fr": "PLANIFICATEUR DE RAPPORTS",
+                "de": "BERICHTSPLANER",
+                "zh": "报告调度程序",
+                "ja": "レポートスケジューラ",
+                "pt": "AGENDADOR DE RELATÓRIOS",
+                "ar": "جدولة التقرير",
+                "hi": "रिपोर्ट अनुसूचक",
+                "ru": "ПЛАНИРОВЩИК ОТЧЕТОВ"
+        },
+        "ROI: 0%": {
+                "es": "Retorno de la inversión: 0%",
+                "fr": "Retour sur investissement : 0 %",
+                "de": "ROI: 0 %",
+                "zh": "投资回报率：0%",
+                "ja": "ROI: 0%",
+                "pt": "ROI: 0%",
+                "ar": "عائد الاستثمار: 0%",
+                "hi": "आरओआई: 0%",
+                "ru": "Рентабельность инвестиций: 0%"
+        },
+        "ROOT CAUSE": {
+                "es": "CAUSA RAÍZ",
+                "fr": "CAUSE PROFONDE",
+                "de": "GRUNDURSACHE",
+                "zh": "根本原因",
+                "ja": "根本原因",
+                "pt": "CAUSA RAIZ",
+                "ar": "السبب الجذري",
+                "hi": "मूल कारण",
+                "ru": "ПРИЧИНА"
+        },
+        "Raw M-code script for Power Query Advanced Editor.": {
+                "es": "Script de código M sin formato para Power Query Advanced Editor.",
+                "fr": "Script de code M brut pour l'éditeur avancé Power Query.",
+                "de": "Rohes M-Code-Skript für Power Query Advanced Editor.",
+                "zh": "Power Query 高级编辑器的原始 M 代码脚本。",
+                "ja": "Power Query アドバンスト エディター用の生の M コード スクリプト。",
+                "pt": "Script de código M bruto para Power Query Advanced Editor.",
+                "ar": "البرنامج النصي الأولي لرمز M لمحرر Power Query المتقدم.",
+                "hi": "पावर क्वेरी एडवांस्ड एडिटर के लिए रॉ एम-कोड स्क्रिप्ट।",
+                "ru": "Необработанный сценарий M-кода для расширенного редактора Power Query."
+        },
+        "Raw XML Workbook (.twb)": {
+                "es": "Libro de trabajo XML sin formato (.twb)",
+                "fr": "Classeur XML brut (.twb)",
+                "de": "Raw-XML-Arbeitsmappe (.twb)",
+                "zh": "原始 XML 工作簿 (.twb)",
+                "ja": "生の XML ワークブック (.twb)",
+                "pt": "Pasta de trabalho XML bruto (.twb)",
+                "ar": "مصنف XML الأولي (.twb)",
+                "hi": "रॉ XML वर्कबुक (.twb)",
+                "ru": "Необработанная книга XML (.twb)"
+        },
+        "Ready to analyze company data.": {
+                "es": "Listo para analizar datos de la empresa.",
+                "fr": "Prêt à analyser les données de l'entreprise.",
+                "de": "Bereit zur Unternehmensdaten-Analyse.",
+                "zh": "系统就绪，可随时分析企业数据。",
+                "ja": "企業データの分析準備が完了しました。",
+                "pt": "Pronto para analisar os dados corporativos.",
+                "ar": "جاهز لتحليل بيانات الشركة.",
+                "hi": "कंपनी डेटा का विश्लेषण करने के लिए तैयार।",
+                "ru": "Готово к анализу данных компании."
+        },
+        "Real-time Telemetry": {
+                "es": "Telemetría en tiempo real",
+                "fr": "Télémétrie en temps réel",
+                "de": "Echtzeit-Telemetrie",
+                "zh": "实时遥测",
+                "ja": "リアルタイムテレメトリ",
+                "pt": "Telemetria em tempo real",
+                "ar": "القياس عن بعد في الوقت الحقيقي",
+                "hi": "वास्तविक समय टेलीमेट्री",
+                "ru": "Телеметрия в реальном времени"
+        },
+        "Real-time tabular grid populated with active customer risk scores, confidence intervals, risk driver tags, and owner allocations.": {
+                "es": "Cuadrícula tabular en tiempo real con puntuaciones de riesgo de clientes activos, intervalos de confianza, etiquetas de factores de riesgo y asignaciones de propietarios.",
+                "fr": "Grille tabulaire en temps réel remplie de scores de risque client actifs, d'intervalles de confiance, d'étiquettes de facteurs de risque et d'allocations de propriétaires.",
+                "de": "Tabellarisches Echtzeitraster mit aktiven Kundenrisikobewertungen, Konfidenzintervallen, Risikotreiber-Tags und Eigentümerzuordnungen.",
+                "zh": "实时表格网格填充了活跃的客户风险评分、置信区间、风险驱动因素标签和所有者分配。",
+                "ja": "アクティブな顧客リスク スコア、信頼区間、リスク要因タグ、および所有者の割り当てが入力されたリアルタイムの表形式グリッド。",
+                "pt": "Grade tabular em tempo real preenchida com pontuações de risco de clientes ativos, intervalos de confiança, tags de direcionadores de risco e alocações de proprietários.",
+                "ar": "شبكة جدولية في الوقت الفعلي مملوءة بدرجات مخاطر العملاء النشطة، وفترات الثقة، وعلامات دافع المخاطر، وتخصيصات المالك.",
+                "hi": "वास्तविक समय सारणीबद्ध ग्रिड सक्रिय ग्राहक जोखिम स्कोर, आत्मविश्वास अंतराल, जोखिम चालक टैग और मालिक आवंटन से भरा हुआ है।",
+                "ru": "Табличная сетка в реальном времени, заполненная активными оценками рисков клиентов, доверительными интервалами, тегами драйверов риска и распределением владельцев."
+        },
+        "Real-time tamper-proof activity logs tracking customer touchpoints and configurations.": {
+                "es": "Registros de actividad a prueba de manipulaciones en tiempo real que rastrean los puntos de contacto y las configuraciones del cliente.",
+                "fr": "Journaux d'activité inviolables en temps réel retraçant les points de contact et les configurations des clients.",
+                "de": "Manipulationssichere Aktivitätsprotokolle in Echtzeit, die Kundenkontaktpunkte und -konfigurationen verfolgen.",
+                "zh": "实时防篡改活动日志跟踪客户接触点和配置。",
+                "ja": "顧客のタッチポイントと構成を追跡するリアルタイムの改ざん防止アクティビティ ログ。",
+                "pt": "Registros de atividades à prova de violação em tempo real que rastreiam pontos de contato e configurações do cliente.",
+                "ar": "سجلات نشاط مقاومة للتلاعب في الوقت الفعلي تتتبع نقاط اتصال العملاء وتكويناتهم.",
+                "hi": "वास्तविक समय में छेड़छाड़-रोधी गतिविधि लॉग ग्राहक टचप्वाइंट और कॉन्फ़िगरेशन पर नज़र रखते हैं।",
+                "ru": "Защищенные от несанкционированного доступа журналы активности в режиме реального времени отслеживают точки взаимодействия и конфигурации клиентов."
+        },
+        "Real-time tracking of receivables, payables, and working capital risk metrics.": {
+                "es": "Seguimiento en tiempo real de cuentas por cobrar, cuentas por pagar y métricas de riesgo de capital de trabajo.",
+                "fr": "Suivi en temps réel des créances, des dettes et des mesures de risque du fonds de roulement.",
+                "de": "Echtzeitverfolgung von Forderungen, Verbindlichkeiten und Betriebskapitalrisikokennzahlen.",
+                "zh": "实时跟踪应收账款、应付账款和营运资金风险指标。",
+                "ja": "売掛金、買掛金、運転資本のリスク指標をリアルタイムで追跡します。",
+                "pt": "Acompanhamento em tempo real de métricas de risco de contas a receber, contas a pagar e capital de giro.",
+                "ar": "تتبع في الوقت الحقيقي للذمم المدينة والدائنة ومقاييس مخاطر رأس المال العامل.",
+                "hi": "प्राप्य, देय और कार्यशील पूंजी जोखिम मेट्रिक्स की वास्तविक समय पर ट्रैकिंग।",
+                "ru": "Отслеживание дебиторской и кредиторской задолженности в режиме реального времени, а также показателей риска оборотного капитала."
+        },
+        "Receivables": {
+                "es": "Cuentas por cobrar",
+                "fr": "Créances",
+                "de": "Forderungen",
+                "zh": "应收账款",
+                "ja": "売掛金",
+                "pt": "Contas a receber",
+                "ar": "المستحقات",
+                "hi": "प्राप्य",
+                "ru": "Дебиторская задолженность"
+        },
+        "Receiver Operating Characteristic Area Under Curve — measures overall discriminative capability (1.0 = perfect)": {
+                "es": "Área característica de funcionamiento del receptor bajo la curva: mide la capacidad discriminativa general (1,0 = perfecto)",
+                "fr": "Zone caractéristique de fonctionnement du récepteur sous la courbe – mesure la capacité discriminante globale (1,0 = parfait)",
+                "de": "Betriebscharakteristikbereich des Empfängers unter der Kurve – misst die gesamte Unterscheidungsfähigkeit (1,0 = perfekt)",
+                "zh": "接收器工作特征曲线下面积 — 衡量整体辨别能力（1.0 = 完美）",
+                "ja": "受信機動作特性曲線下領域 — 全体的な識別能力を測定します (1.0 = 完璧)",
+                "pt": "Área característica de operação do receptor sob a curva — mede a capacidade discriminativa geral (1,0 = perfeito)",
+                "ar": "منطقة تشغيل جهاز الاستقبال المميزة أسفل المنحنى — تقيس القدرة التمييزية الشاملة (1.0 = مثالية)",
+                "hi": "वक्र के अंतर्गत रिसीवर ऑपरेटिंग विशेषता क्षेत्र - समग्र भेदभाव क्षमता को मापता है (1.0 = उत्तम)",
+                "ru": "Область рабочих характеристик приемника под кривой — измеряет общую различительную способность (1,0 = идеально)"
+        },
+        "Recipient Email Address": {
+                "es": "Dirección de correo electrónico del destinatario",
+                "fr": "Adresse e-mail du destinataire",
+                "de": "E-Mail-Adresse des Empfängers",
+                "zh": "收件人电子邮件地址",
+                "ja": "受信者の電子メールアドレス",
+                "pt": "Endereço de e-mail do destinatário",
+                "ar": "عنوان البريد الإلكتروني للمستلم",
+                "hi": "प्राप्तकर्ता का ईमेल पता",
+                "ru": "Адрес электронной почты получателя"
+        },
+        "Recommended Action": {
+                "es": "Acción recomendada",
+                "fr": "Action recommandée",
+                "de": "Empfohlene Aktion",
+                "zh": "建议采取的行动",
+                "ja": "推奨されるアクション",
+                "pt": "Ação recomendada",
+                "ar": "الإجراء الموصى به",
+                "hi": "अनुशंसित कार्रवाई",
+                "ru": "Рекомендуемое действие"
+        },
+        "RegionName, Territory, Country": {
+                "es": "Nombre de región, territorio, país",
+                "fr": "Nom de la région, territoire, pays",
+                "de": "RegionName, Gebiet, Land",
+                "zh": "地区名称、领土、国家",
+                "ja": "地域名、地域、国",
+                "pt": "Nome da região, território, país",
+                "ar": "اسم المنطقة، الإقليم، البلد",
+                "hi": "क्षेत्र का नाम, क्षेत्र, देश",
+                "ru": "Название региона, территория, страна"
+        },
+        "Released under the MIT License — free for enterprise-wide use. Outbound API requests can be routed through an authenticated proxy pool to shield the host IP.": {
+                "es": "Publicado bajo la licencia MIT: gratuito para uso en toda la empresa. Las solicitudes de API salientes se pueden enrutar a través de un grupo de proxy autenticado para proteger la IP del host.",
+                "fr": "Publié sous licence MIT – gratuit pour une utilisation à l’échelle de l’entreprise. Les requêtes API sortantes peuvent être acheminées via un pool de proxy authentifié pour protéger l'adresse IP de l'hôte.",
+                "de": "Veröffentlicht unter der MIT-Lizenz – kostenlos für die unternehmensweite Nutzung. Ausgehende API-Anfragen können über einen authentifizierten Proxy-Pool weitergeleitet werden, um die Host-IP abzuschirmen.",
+                "zh": "根据 MIT 许可证发布 - 免费供企业范围使用。出站 API 请求可以通过经过身份验证的代理池进行路由，以屏蔽主机 IP。",
+                "ja": "MIT ライセンスに基づいてリリースされており、企業全体で無料で使用できます。アウトバウンド API リクエストは、認証されたプロキシ プールを介してルーティングされ、ホスト IP を保護できます。",
+                "pt": "Lançado sob a licença MIT – gratuito para uso em toda a empresa. As solicitações de API de saída podem ser roteadas por meio de um pool de proxy autenticado para proteger o IP do host.",
+                "ar": "تم إصداره بموجب ترخيص MIT — مجانًا للاستخدام على مستوى المؤسسة. يمكن توجيه طلبات واجهة برمجة التطبيقات الصادرة من خلال تجمع وكيل تمت مصادقته لحماية عنوان IP المضيف.",
+                "hi": "एमआईटी लाइसेंस के तहत जारी - उद्यम-व्यापी उपयोग के लिए निःशुल्क। होस्ट आईपी को सुरक्षित करने के लिए आउटबाउंड एपीआई अनुरोधों को एक प्रमाणित प्रॉक्सी पूल के माध्यम से रूट किया जा सकता है।",
+                "ru": "Выпущено по лицензии MIT — бесплатно для использования в масштабах всего предприятия. Исходящие запросы API могут маршрутизироваться через пул аутентифицированных прокси-серверов для защиты IP-адреса хоста."
+        },
+        "Reload Telemetry & Database State": {
+                "es": "Recargar telemetría y estado de la base de datos",
+                "fr": "Recharger la télémétrie et l'état de la base de données",
+                "de": "Telemetrie- und Datenbankstatus neu laden",
+                "zh": "重新加载遥测和数据库状态",
+                "ja": "テレメトリとデータベースの状態をリロードする",
+                "pt": "Recarregar telemetria e estado do banco de dados",
+                "ar": "إعادة تحميل القياس عن بعد وحالة قاعدة البيانات",
+                "hi": "टेलीमेट्री और डेटाबेस स्थिति पुनः लोड करें",
+                "ru": "Перезагрузить состояние телеметрии и базы данных"
+        },
+        "Rendered dynamically": {
+                "es": "Renderizado dinámicamente",
+                "fr": "Rendu dynamiquement",
+                "de": "Dynamisch gerendert",
+                "zh": "动态渲染",
+                "ja": "動的にレンダリング",
+                "pt": "Renderizado dinamicamente",
+                "ar": "يتم تقديمه ديناميكيًا",
+                "hi": "गतिशील रूप से प्रस्तुत किया गया",
+                "ru": "Отображается динамически"
+        },
+        "Replaces reactive exit surveys with predictive Tabular Hybrid Transformer risk telemetry before accounts decide to cancel.": {
+                "es": "Reemplaza las encuestas de salida reactivas con telemetría predictiva de riesgo de transformador híbrido tabular antes de que las cuentas decidan cancelar.",
+                "fr": "Remplace les enquêtes de sortie réactives par une télémétrie prédictive des risques du transformateur hybride tabulaire avant que les comptes ne décident d'annuler.",
+                "de": "Ersetzt reaktive Exit-Umfragen durch prädiktive Tabular Hybrid Transformer-Risikotelemetrie, bevor sich Konten für eine Kündigung entscheiden.",
+                "zh": "在账户决定取消之前，用预测性表格混合变压器风险遥测取代反应性退出调查。",
+                "ja": "アカウントがキャンセルを決定する前に、事後対応の出口調査を予測的な表形式ハイブリッド トランスフォーマー リスク テレメトリに置き換えます。",
+                "pt": "Substitui pesquisas de saída reativas por telemetria de risco preditiva do Tabular Hybrid Transformer antes que as contas decidam cancelar.",
+                "ar": "يستبدل استبيانات الخروج التفاعلية بقياس مخاطر الجدولي الهجين المحول عن بعد قبل أن تقرر الحسابات الإلغاء.",
+                "hi": "खातों को रद्द करने का निर्णय लेने से पहले प्रतिक्रियाशील निकास सर्वेक्षणों को पूर्वानुमानित टेबुलर हाइब्रिड ट्रांसफार्मर जोखिम टेलीमेट्री से बदल देता है।",
+                "ru": "Заменяет реактивные опросы на выходе прогнозирующей телеметрией рисков Tabular Hybrid Transformer до того, как учетные записи примут решение об отмене."
+        },
+        "Report Format": {
+                "es": "Formato de informe",
+                "fr": "Format du rapport",
+                "de": "Berichtsformat",
+                "zh": "报告格式",
+                "ja": "レポート形式",
+                "pt": "Formato do relatório",
+                "ar": "تنسيق التقرير",
+                "hi": "रिपोर्ट प्रारूप",
+                "ru": "Формат отчета"
+        },
+        "Requires a": {
+                "es": "Requiere un",
+                "fr": "Nécessite un",
+                "de": "Erfordert eine",
+                "zh": "需要一个",
+                "ja": "が必要です",
+                "pt": "Requer um",
+                "ar": "يتطلب أ",
+                "hi": "एक की आवश्यकता है",
+                "ru": "Требуется"
+        },
+        "Reset / Clear Chat History": {
+                "es": "Restablecer/borrar historial de chat",
+                "fr": "Réinitialiser/Effacer l'historique des discussions",
+                "de": "Chat-Verlauf zurücksetzen/löschen",
+                "zh": "重置/清除聊天记录",
+                "ja": "チャット履歴のリセット/クリア",
+                "pt": "Redefinir/limpar histórico de bate-papo",
+                "ar": "إعادة تعيين / مسح سجل الدردشة",
+                "hi": "चैट इतिहास रीसेट/साफ़ करें",
+                "ru": "Сбросить/очистить историю чата"
+        },
+        "Resolved / Saved": {
+                "es": "Resuelto / Guardado",
+                "fr": "Résolu / Enregistré",
+                "de": "Gelöst / Gespeichert",
+                "zh": "已解决/已保存",
+                "ja": "解決済み/保存済み",
+                "pt": "Resolvido/Salvo",
+                "ar": "تم الحل / الحفظ",
+                "hi": "समाधान / सहेजा गया",
+                "ru": "Решено/Сохранено"
+        },
+        "Restore active dataset averages": {
+                "es": "Restaurar promedios de conjuntos de datos activos",
+                "fr": "Restaurer les moyennes des ensembles de données actifs",
+                "de": "Stellen Sie die Durchschnittswerte aktiver Datensätze wieder her",
+                "zh": "恢复活动数据集平均值",
+                "ja": "アクティブなデータセットの平均を復元する",
+                "pt": "Restaurar médias de conjuntos de dados ativos",
+                "ar": "استعادة متوسطات مجموعة البيانات النشطة",
+                "hi": "सक्रिय डेटासेट औसत पुनर्स्थापित करें",
+                "ru": "Восстановить средние значения активного набора данных"
+        },
+        "Retained": {
+                "es": "Retenido",
+                "fr": "Conservé",
+                "de": "Behalten",
+                "zh": "保留",
+                "ja": "保持",
+                "pt": "Retido",
+                "ar": "احتفظ بها",
+                "hi": "बरकरार रखा",
+                "ru": "Сохранено"
+        },
+        "Retention Scaling (CSM KPI Alignment)": {
+                "es": "Escalado de retención (alineación de KPI de CSM)",
+                "fr": "Mise à l'échelle de la rétention (alignement des KPI CSM)",
+                "de": "Aufbewahrungsskalierung (CSM-KPI-Ausrichtung)",
+                "zh": "保留缩放（CSM KPI 调整）",
+                "ja": "維持率のスケーリング (CSM KPI の調整)",
+                "pt": "Dimensionamento de retenção (alinhamento de KPI CSM)",
+                "ar": "مقياس الاحتفاظ (محاذاة CSM KPI)",
+                "hi": "प्रतिधारण स्केलिंग (सीएसएम केपीआई संरेखण)",
+                "ru": "Масштабирование удержания (согласование CSM KPI)"
+        },
+        "Revenue": {
+                "es": "Ingresos",
+                "fr": "Revenus",
+                "de": "Einnahmen",
+                "zh": "收入",
+                "ja": "収益",
+                "pt": "Receita",
+                "ar": "الإيرادات",
+                "hi": "राजस्व",
+                "ru": "Доход"
+        },
+        "Revenue Exposure": {
+                "es": "Exposición de ingresos",
+                "fr": "Exposition aux revenus",
+                "de": "Umsatzrisiko",
+                "zh": "收入风险",
+                "ja": "収益の露出",
+                "pt": "Exposição de receita",
+                "ar": "تعرض الإيرادات",
+                "hi": "राजस्व एक्सपोजर",
+                "ru": "Риск доходов"
+        },
+        "Revenue Intelligence": {
+                "es": "Inteligencia de Ingresos",
+                "fr": "Revenu Prédictif",
+                "de": "Umsatz-Intelligence",
+                "zh": "营收增长与续约分析",
+                "ja": "売上予測インテリジェンス",
+                "pt": "Inteligência de Receita",
+                "ar": "ذكاء الإيرادات",
+                "hi": "राजस्व इंटेलिजेंस",
+                "ru": "Аналитика выручки"
+        },
+        "Revenue Recovery & Billing Churn": {
+                "es": "Recuperación de ingresos y rotación de facturación",
+                "fr": "Récupération des revenus et désabonnement de facturation",
+                "de": "Umsatzrückgewinnung und Abrechnungsabwanderung",
+                "zh": "收入恢复和计费流失",
+                "ja": "収益回復と請求チャーン",
+                "pt": "Recuperação de receita e rotatividade de faturamento",
+                "ar": "استرداد الإيرادات وحركة الفواتير",
+                "hi": "राजस्व वसूली एवं बिलिंग मंथन",
+                "ru": "Восстановление доходов и отток счетов"
+        },
+        "Revenue Trend & Monthly Trajectory": {
+                "es": "Tendencia de ingresos y trayectoria mensual",
+                "fr": "Tendance des revenus et trajectoire mensuelle",
+                "de": "Umsatztrend und monatlicher Verlauf",
+                "zh": "收入趋势和每月轨迹",
+                "ja": "収益の傾向と月次推移",
+                "pt": "Tendência de receita e trajetória mensal",
+                "ar": "اتجاه الإيرادات والمسار الشهري",
+                "hi": "राजस्व प्रवृत्ति एवं मासिक प्रक्षेपवक्र",
+                "ru": "Тенденция дохода и ежемесячная траектория"
+        },
+        "Right Column: Churn Risk Gauge & Dynamic Insight": {
+                "es": "Columna derecha: indicador de riesgo de abandono y visión dinámica",
+                "fr": "Colonne de droite : jauge de risque de désabonnement et aperçu dynamique",
+                "de": "Rechte Spalte: Abwanderungsrisikoanzeige und dynamische Einblicke",
+                "zh": "右栏：流失风险衡量标准和动态洞察",
+                "ja": "右列: チャーン リスク ゲージとダイナミック インサイト",
+                "pt": "Coluna da Direita: Medidor de Risco de Churn e Insight Dinâmico",
+                "ar": "العمود الأيمن: مقياس مخاطر التقلب والرؤية الديناميكية",
+                "hi": "दायां कॉलम: मंथन जोखिम गेज और गतिशील अंतर्दृष्टि",
+                "ru": "Правый столбец: Индикатор риска оттока и динамическая аналитика"
+        },
+        "Right Pane: Top 5 Detected Problems": {
+                "es": "Panel derecho: 5 problemas principales detectados",
+                "fr": "Volet droit : 5 principaux problèmes détectés",
+                "de": "Rechter Bereich: Die fünf häufigsten erkannten Probleme",
+                "zh": "右窗格：检测到的前 5 个问题",
+                "ja": "右ペイン: 検出された問題の上位 5 件",
+                "pt": "Painel direito: 5 principais problemas detectados",
+                "ar": "الجزء الأيمن: أهم 5 مشاكل تم اكتشافها",
+                "hi": "दायाँ फलक: शीर्ष 5 पाई गई समस्याएँ",
+                "ru": "Правая панель: 5 основных обнаруженных проблем"
+        },
+        "Right Utility & Settings (All Actions In Master 3-Dot Menu)": {
+                "es": "Utilidad y configuración correctas (todas las acciones en el menú maestro de 3 puntos)",
+                "fr": "Utilitaire et paramètres de droite (toutes les actions dans le menu principal à 3 points)",
+                "de": "Rechtes Dienstprogramm und Einstellungen (Alle Aktionen im Master-3-Punkt-Menü)",
+                "zh": "正确的实用程序和设置（主三点菜单中的所有操作）",
+                "ja": "右のユーティリティと設定 (マスター 3 ドット メニューのすべてのアクション)",
+                "pt": "Utilitário e configurações corretos (todas as ações no menu mestre de 3 pontos)",
+                "ar": "الأداة المساعدة والإعدادات الصحيحة (جميع الإجراءات في القائمة الرئيسية المكونة من 3 نقاط)",
+                "hi": "सही उपयोगिता और सेटिंग्स (मास्टर 3-डॉट मेनू में सभी क्रियाएं)",
+                "ru": "Правая утилита и настройки (все действия в главном трехточечном меню)"
+        },
+        "Risk Exposure": {
+                "es": "Exposición al riesgo",
+                "fr": "Exposition au risque",
+                "de": "Risikoexposition",
+                "zh": "风险暴露",
+                "ja": "リスクエクスポージャ",
+                "pt": "Exposição ao Risco",
+                "ar": "التعرض للمخاطر",
+                "hi": "जोखिम जोखिम",
+                "ru": "Подверженность риску"
+        },
+        "Risk Tier": {
+                "es": "Nivel de riesgo",
+                "fr": "Niveau de risque",
+                "de": "Risikostufe",
+                "zh": "风险等级",
+                "ja": "リスク階層",
+                "pt": "Nível de risco",
+                "ar": "مستوى المخاطر",
+                "hi": "जोखिम स्तर",
+                "ru": "Уровень риска"
+        },
+        "Risk distribution": {
+                "es": "Distribución de riesgo",
+                "fr": "Distribution du risque",
+                "de": "Risikoverteilung",
+                "zh": "流失风险分布",
+                "ja": "リスク分布",
+                "pt": "Distribuição de risco",
+                "ar": "توزيع المخاطر",
+                "hi": "जोखिम वितरण",
+                "ru": "Распределение риска"
+        },
+        "Root Cause Drivers & Attribution Weights": {
+                "es": "Impulsores de causa raíz y ponderaciones de atribución",
+                "fr": "Facteurs de cause profonde et pondérations d’attribution",
+                "de": "Ursachentreiber und Attributionsgewichtungen",
+                "zh": "根本原因驱动因素和归因权重",
+                "ja": "根本原因の要因と帰属の重み",
+                "pt": "Drivers de causa raiz e pesos de atribuição",
+                "ar": "محركات السبب الجذري وأوزان الإسناد",
+                "hi": "मूल कारण ड्राइवर और एट्रिब्यूशन भार",
+                "ru": "Основные причины и вес атрибуции"
+        },
+        "Root Cause Weights": {
+                "es": "Pesos de causa raíz",
+                "fr": "Pondérations des causes profondes",
+                "de": "Ursachengewichte",
+                "zh": "根本原因权重",
+                "ja": "根本原因の重み付け",
+                "pt": "Pesos de causa raiz",
+                "ar": "أوزان السبب الجذري",
+                "hi": "मूल कारण वजन",
+                "ru": "Вес основной причины"
+        },
+        "Rose Quartz & Coral": {
+                "es": "Cuarzo rosa y coral",
+                "fr": "Quartz rose et corail",
+                "de": "Rosenquarz und Koralle",
+                "zh": "玫瑰石英和珊瑚",
+                "ja": "ローズクォーツ＆コーラル",
+                "pt": "Quartzo Rosa e Coral",
+                "ar": "روز كوارتز ومرجان",
+                "hi": "गुलाब क्वार्ट्ज और मूंगा",
+                "ru": "Розовый кварц и коралл"
+        },
+        "Run ML models to predict customer churn risks and compile accuracy telemetry.": {
+                "es": "Ejecute modelos de aprendizaje automático para predecir los riesgos de pérdida de clientes y compilar telemetría de precisión.",
+                "fr": "Exécutez des modèles ML pour prédire les risques de désabonnement des clients et compiler des télémétries précises.",
+                "de": "Führen Sie ML-Modelle aus, um Kundenabwanderungsrisiken vorherzusagen und Genauigkeitstelemetriedaten zu erstellen.",
+                "zh": "运行机器学习模型来预测客户流失风险并编译准确性遥测数据。",
+                "ja": "ML モデルを実行して顧客の解約リスクを予測し、正確なテレメトリーをコンパイルします。",
+                "pt": "Execute modelos de ML para prever riscos de rotatividade de clientes e compilar telemetria precisa.",
+                "ar": "قم بتشغيل نماذج ML للتنبؤ بمخاطر تقلب العملاء وتجميع قياس الدقة عن بعد.",
+                "hi": "ग्राहक मंथन जोखिमों की भविष्यवाणी करने और सटीकता टेलीमेट्री संकलित करने के लिए एमएल मॉडल चलाएं।",
+                "ru": "Запускайте модели машинного обучения, чтобы прогнозировать риски оттока клиентов и собирать точные данные телеметрии."
+        },
+        "SOC 2 / ISO": {
+                "es": "SOC 2/ISO",
+                "fr": "SOC2/ISO",
+                "de": "SOC 2 / ISO",
+                "zh": "SOC 2/ISO",
+                "ja": "SOC2/ISO",
+                "pt": "SOC2/ISO",
+                "ar": "سوك 2 / إسو",
+                "hi": "एसओसी 2 / आईएसओ",
+                "ru": "СОК 2/ИСО"
+        },
+        "Sage & Warm Terracotta (Wellness Architecture)": {
+                "es": "Salvia y terracota cálida (arquitectura de bienestar)",
+                "fr": "Sauge & Terre Cuite Chaude (Architecture Bien-Être)",
+                "de": "Salbei und warme Terrakotta (Wellness-Architektur)",
+                "zh": "鼠尾草和温暖的兵马俑（健康建筑）",
+                "ja": "セージと温かみのあるテラコッタ (ウェルネス建築)",
+                "pt": "Sage & Warm Terracotta (Arquitetura de Bem-Estar)",
+                "ar": "المريمية والطين الدافئ (هندسة العافية)",
+                "hi": "सेज और वार्म टेराकोटा (वेलनेस आर्किटेक्चर)",
+                "ru": "Шалфей и теплая терракота (Wellness Architecture)"
+        },
+        "Salesforce Cloud": {
+                "es": "Nube de Salesforce",
+                "fr": "SalesforceCloud",
+                "de": "Salesforce-Cloud",
+                "zh": "销售人员云",
+                "ja": "Salesforceクラウド",
+                "pt": "Nuvem Salesforce",
+                "ar": "سحابة سيلزفورس",
+                "hi": "सेल्सफोर्स क्लाउड",
+                "ru": "Облако Salesforce"
+        },
+        "Sandbox Reset": {
+                "es": "Restablecimiento de la zona de pruebas",
+                "fr": "Réinitialisation du bac à sable",
+                "de": "Sandbox-Reset",
+                "zh": "沙盒重置",
+                "ja": "サンドボックスのリセット",
+                "pt": "Redefinição da área restrita",
+                "ar": "إعادة ضبط وضع الحماية",
+                "hi": "सैंडबॉक्स रीसेट",
+                "ru": "Сброс песочницы"
+        },
+        "Sandbox Simulator": {
+                "es": "Simulador de caja de arena",
+                "fr": "Simulateur de bac à sable",
+                "de": "Sandbox-Simulator",
+                "zh": "沙盒模拟器",
+                "ja": "サンドボックスシミュレータ",
+                "pt": "Simulador de caixa de areia",
+                "ar": "محاكي رمل",
+                "hi": "सैंडबॉक्स सिम्युलेटर",
+                "ru": "Симулятор песочницы"
+        },
+        "Save & Apply to Deck": {
+                "es": "Guardar y aplicar a la plataforma",
+                "fr": "Enregistrer et appliquer au deck",
+                "de": "Speichern und auf Deck anwenden",
+                "zh": "保存并应用到甲板上",
+                "ja": "保存してデッキに適用",
+                "pt": "Salvar e aplicar no deck",
+                "ar": "حفظ وتطبيق على سطح السفينة",
+                "hi": "सहेजें और डेक पर लागू करें",
+                "ru": "Сохранить и применить к колоде"
+        },
+        "Save Alert Channel Settings": {
+                "es": "Guardar configuración del canal de alerta",
+                "fr": "Enregistrer les paramètres du canal d'alerte",
+                "de": "Speichern Sie die Alarmkanaleinstellungen",
+                "zh": "保存警报通道设置",
+                "ja": "アラートチャネル設定の保存",
+                "pt": "Salvar configurações do canal de alerta",
+                "ar": "حفظ إعدادات قناة التنبيه",
+                "hi": "अलर्ट चैनल सेटिंग्स सहेजें",
+                "ru": "Сохранить настройки канала оповещений"
+        },
+        "Save Automated Schedule": {
+                "es": "Guardar programación automatizada",
+                "fr": "Enregistrer le calendrier automatisé",
+                "de": "Speichern Sie den automatisierten Zeitplan",
+                "zh": "保存自动时间表",
+                "ja": "自動スケジュールの保存",
+                "pt": "Salvar agendamento automatizado",
+                "ar": "حفظ الجدول الآلي",
+                "hi": "स्वचालित शेड्यूल सहेजें",
+                "ru": "Сохранить автоматическое расписание"
+        },
+        "Save Notes": {
+                "es": "Guardar notas",
+                "fr": "Enregistrer les notes",
+                "de": "Notizen speichern",
+                "zh": "保存笔记",
+                "ja": "メモの保存",
+                "pt": "Salvar notas",
+                "ar": "حفظ الملاحظات",
+                "hi": "नोट्स सहेजें",
+                "ru": "Сохранить заметки"
+        },
+        "Save failed:": {
+                "es": "Error al guardar:",
+                "fr": "Échec de l'enregistrement :",
+                "de": "Speichern fehlgeschlagen:",
+                "zh": "保存失败：",
+                "ja": "保存に失敗しました:",
+                "pt": "Falha ao salvar:",
+                "ar": "فشل الحفظ:",
+                "hi": "सहेजना विफल:",
+                "ru": "Сохранить не удалось:"
+        },
+        "Saved notes will go here": {
+                "es": "Las notas guardadas irán aquí",
+                "fr": "Les notes enregistrées seront placées ici",
+                "de": "Gespeicherte Notizen werden hier angezeigt",
+                "zh": "保存的笔记将放在此处",
+                "ja": "保存したメモはここに表示されます",
+                "pt": "As notas salvas irão para aqui",
+                "ar": "سيتم وضع الملاحظات المحفوظة هنا",
+                "hi": "सहेजे गए नोट यहां जाएंगे",
+                "ru": "Сохраненные заметки будут находиться здесь"
+        },
+        "Saved to Notes!": {
+                "es": "¡Guardado en Notas!",
+                "fr": "Enregistré dans les notes !",
+                "de": "In Notizen gespeichert!",
+                "zh": "已保存到笔记！",
+                "ja": "ノートに保存しました！",
+                "pt": "Salvo nas Notas!",
+                "ar": "تم الحفظ في الملاحظات!",
+                "hi": "नोट्स में सहेजा गया!",
+                "ru": "Сохранено в заметках!"
+        },
+        "Scan for top business health alerts (Revenue concentration, churn risk, inventory).": {
+                "es": "Busque las principales alertas de salud empresarial (concentración de ingresos, riesgo de abandono, inventario).",
+                "fr": "Recherchez les principales alertes de santé de l'entreprise (concentration des revenus, risque de désabonnement, inventaire).",
+                "de": "Suchen Sie nach wichtigen Warnmeldungen zum Geschäftszustand (Umsatzkonzentration, Abwanderungsrisiko, Lagerbestand).",
+                "zh": "扫描顶级业务健康警报（收入集中度、流失风险、库存）。",
+                "ja": "ビジネスの健全性に関する主要なアラート (収益の集中、解約リスク、在庫) をスキャンします。",
+                "pt": "Procure os principais alertas de saúde do negócio (concentração de receita, risco de rotatividade, estoque).",
+                "ar": "البحث عن أهم تنبيهات صحة الأعمال (تركيز الإيرادات، ومخاطر الإيقاف، والمخزون).",
+                "hi": "शीर्ष व्यावसायिक स्वास्थ्य अलर्ट (राजस्व एकाग्रता, मंथन जोखिम, इन्वेंट्री) के लिए स्कैन करें।",
+                "ru": "Сканируйте важные оповещения о состоянии бизнеса (концентрация доходов, риск оттока, запасы)."
+        },
+        "Schedule Interval": {
+                "es": "Intervalo de programación",
+                "fr": "Intervalle de planification",
+                "de": "Zeitplanintervall",
+                "zh": "时间表间隔",
+                "ja": "スケジュール間隔",
+                "pt": "Intervalo de agendamento",
+                "ar": "الفاصل الزمني للجدول الزمني",
+                "hi": "अनुसूची अंतराल",
+                "ru": "Интервал расписания"
+        },
+        "Scheduler Sub-tab": {
+                "es": "Subpestaña Programador",
+                "fr": "Sous-onglet Planificateur",
+                "de": "Unterregisterkarte „Planer“.",
+                "zh": "调度程序子选项卡",
+                "ja": "スケジューラサブタブ",
+                "pt": "Subguia Agendador",
+                "ar": "علامة التبويب الفرعية المجدول",
+                "hi": "शेड्यूलर उप-टैब",
+                "ru": "Подвкладка «Планировщик»"
+        },
+        "Scheduling failed:": {
+                "es": "La programación falló:",
+                "fr": "Échec de la planification :",
+                "de": "Planung fehlgeschlagen:",
+                "zh": "调度失败：",
+                "ja": "スケジュールに失敗しました:",
+                "pt": "Falha no agendamento:",
+                "ar": "فشل الجدولة:",
+                "hi": "शेड्यूलिंग विफल:",
+                "ru": "Не удалось запланировать:"
+        },
+        "Search & Generate": {
+                "es": "Buscar y generar",
+                "fr": "Rechercher et générer",
+                "de": "Suchen und generieren",
+                "zh": "搜索和生成",
+                "ja": "検索と生成",
+                "pt": "Pesquisar e gerar",
+                "ar": "بحث وتوليد",
+                "hi": "खोजें और उत्पन्न करें",
+                "ru": "Поиск и создание"
+        },
+        "Search business terms, financial formulas, or retention policies (e.g. MRR, ARR, CLV, SLA, Churn, Autopay)...": {
+                "es": "Buscar términos de negocio, fórmulas financieras o políticas (MRR, ARR, CLV, SLA)...",
+                "fr": "Rechercher des concepts, formules financières ou politiques...",
+                "de": "Fachbegriffe, Kennzahlen oder Richtlinien suchen (MRR, ARR, CLV, SLA)...",
+                "zh": "搜索商业名词、财务计算公式或治理规范 (如 MRR, ARR, CLV, SLA)...",
+                "ja": "用語、財務計算式、規程を検索 (MRR, ARR, CLV, SLA)...",
+                "pt": "Pesquise termos, fórmulas financeiras ou políticas (MRR, ARR, CLV, SLA)...",
+                "ar": "ابحث في المصطلحات أو المعادلات أو السياسات (MRR, ARR, CLV, SLA)...",
+                "hi": "शब्द, सूत्र या नीतियां खोजें (MRR, ARR, CLV, SLA)...",
+                "ru": "Поиск терминов, формул или политик (MRR, ARR, CLV, SLA)..."
+        },
+        "Search customer ID, contract, driver...": {
+                "es": "Buscar ID de cliente, contrato, conductor...",
+                "fr": "Rechercher un identifiant client, un contrat, un chauffeur...",
+                "de": "Suchen Sie nach Kundennummer, Vertrag, Fahrer...",
+                "zh": "搜索客户 ID、合同、司机...",
+                "ja": "顧客ID、契約書、ドライバーを検索...",
+                "pt": "Pesquisar ID do cliente, contrato, motorista...",
+                "ar": "ابحث عن معرف العميل والعقد والسائق ...",
+                "hi": "ग्राहक आईडी, अनुबंध, ड्राइवर खोजें...",
+                "ru": "Поиск идентификатора клиента, контракта, водителя..."
+        },
+        "Section 1: Platform Motive & Retention Philosophy": {
+                "es": "Sección 1: Motivo de la plataforma y filosofía de retención",
+                "fr": "Section 1 : Motif de la plateforme et philosophie de rétention",
+                "de": "Abschnitt 1: Plattformmotiv und Bindungsphilosophie",
+                "zh": "第 1 部分：平台动机和保留理念",
+                "ja": "セクション 1: プラットフォームの動機と維持の哲学",
+                "pt": "Seção 1: Motivo da Plataforma e Filosofia de Retenção",
+                "ar": "القسم 1: دوافع المنصة وفلسفة الاحتفاظ بها",
+                "hi": "धारा 1: प्लेटफ़ॉर्म मोटिव और रिटेंशन फिलॉसफी",
+                "ru": "Раздел 1: Мотив платформы и философия удержания"
+        },
+        "Section 2: Executive Financial Terms & Formulas": {
+                "es": "Sección 2: Fórmulas y términos financieros ejecutivos",
+                "fr": "Section 2 : Conditions et formules financières pour les dirigeants",
+                "de": "Abschnitt 2: Finanzielle Bedingungen und Formeln für Führungskräfte",
+                "zh": "第 2 部分：执行财务条款和公式",
+                "ja": "セクション 2: 役員財務条件と計算式",
+                "pt": "Seção 2: Termos e Fórmulas Financeiras Executivas",
+                "ar": "القسم 2: الشروط والصيغ المالية التنفيذية",
+                "hi": "धारा 2: कार्यकारी वित्तीय नियम और सूत्र",
+                "ru": "Раздел 2: Финансовые условия и формулы для руководителей"
+        },
+        "Section 3: Risk Cohorts & Threshold Definitions": {
+                "es": "Sección 3: Cohortes de riesgo y definiciones de umbrales",
+                "fr": "Section 3 : Cohortes de risque et définitions des seuils",
+                "de": "Abschnitt 3: Risikokohorten und Schwellenwertdefinitionen",
+                "zh": "第 3 节：风险群组和阈值定义",
+                "ja": "セクション 3: リスク コホートとしきい値の定義",
+                "pt": "Seção 3: Coortes de risco e definições de limites",
+                "ar": "القسم 3: مجموعات المخاطر وتعريفات الحدود",
+                "hi": "धारा 3: जोखिम समूह और सीमा परिभाषाएँ",
+                "ru": "Раздел 3: Когорты риска и определения пороговых значений"
+        },
+        "Section 4: Corporate Retention Policies & Operational SLAs": {
+                "es": "Sección 4: Políticas de retención corporativa y SLA operativos",
+                "fr": "Section 4 : Politiques de rétention de l'entreprise et SLA opérationnels",
+                "de": "Abschnitt 4: Unternehmensbezogene Aufbewahrungsrichtlinien und betriebliche SLAs",
+                "zh": "第 4 节：公司保留政策和运营 SLA",
+                "ja": "セクション 4: 企業保持ポリシーと運用 SLA",
+                "pt": "Seção 4: Políticas de Retenção Corporativa e SLAs Operacionais",
+                "ar": "القسم 4: سياسات الاحتفاظ بالشركة واتفاقيات مستوى الخدمة التشغيلية",
+                "hi": "धारा 4: कॉर्पोरेट प्रतिधारण नीतियां और परिचालन एसएलए",
+                "ru": "Раздел 4: Корпоративная политика хранения и эксплуатационные соглашения об уровне обслуживания"
+        },
+        "Section 5: Customer Lifetime Value (CLV) & Cohort Metrics": {
+                "es": "Sección 5: Valor de vida del cliente (CLV) y métricas de cohorte",
+                "fr": "Section 5 : Valeur à vie du client (CLV) et mesures de cohorte",
+                "de": "Abschnitt 5: Customer Lifetime Value (CLV) und Kohortenmetriken",
+                "zh": "第 5 节：客户终身价值 (CLV) 和同类指标",
+                "ja": "セクション 5: 顧客生涯価値 (CLV) とコホート指標",
+                "pt": "Seção 5: Valor de vida do cliente (CLV) e métricas de coorte",
+                "ar": "القسم 5: القيمة الدائمة للعميل (CLV) ومقاييس المجموعة",
+                "hi": "धारा 5: ग्राहक आजीवन मूल्य (सीएलवी) और समूह मेट्रिक्स",
+                "ru": "Раздел 5. Пожизненная ценность клиента (CLV) и когортные показатели"
+        },
+        "Section 6: Enterprise Retention Control Modules": {
+                "es": "Sección 6: Módulos de control de retención empresarial",
+                "fr": "Section 6 : Modules de contrôle de rétention d'entreprise",
+                "de": "Abschnitt 6: Enterprise Retention Control-Module",
+                "zh": "第 6 节：企业保留控制模块",
+                "ja": "セクション 6: エンタープライズ保持制御モジュール",
+                "pt": "Seção 6: Módulos de controle de retenção empresarial",
+                "ar": "القسم 6: وحدات التحكم في الاحتفاظ بالمؤسسات",
+                "hi": "धारा 6: एंटरप्राइज़ प्रतिधारण नियंत्रण मॉड्यूल",
+                "ru": "Раздел 6: Модули управления хранением данных предприятия"
+        },
+        "Section 7: Strategic Customer Retention Playbooks": {
+                "es": "Sección 7: Guías estratégicas de retención de clientes",
+                "fr": "Section 7 : Manuels stratégiques de fidélisation des clients",
+                "de": "Abschnitt 7: Playbooks zur strategischen Kundenbindung",
+                "zh": "第 7 节：战略客户保留手册",
+                "ja": "セクション 7: 戦略的な顧客維持戦略",
+                "pt": "Seção 7: Manual estratégico de retenção de clientes",
+                "ar": "القسم 7: قواعد اللعبة الإستراتيجية للاحتفاظ بالعملاء",
+                "hi": "धारा 7: रणनीतिक ग्राहक प्रतिधारण प्लेबुक",
+                "ru": "Раздел 7: Стратегические инструкции по удержанию клиентов"
+        },
+        "Segment Bar": {
+                "es": "Barra de segmentos",
+                "fr": "Barre de segments",
+                "de": "Segmentleiste",
+                "zh": "线段条",
+                "ja": "セグメントバー",
+                "pt": "Barra de segmento",
+                "ar": "شريط المقطع",
+                "hi": "खंड बार",
+                "ru": "Сегментная панель"
+        },
+        "Segment Cohort": {
+                "es": "Cohorte de segmento",
+                "fr": "Cohorte de segments",
+                "de": "Segmentkohorte",
+                "zh": "细分群体",
+                "ja": "セグメントコホート",
+                "pt": "Coorte de segmento",
+                "ar": "مجموعة الشريحة",
+                "hi": "खंड समूह",
+                "ru": "Сегмент когорты"
+        },
+        "Segment Comparison Matrix": {
+                "es": "Matriz de comparación de segmentos",
+                "fr": "Matrice de comparaison des segments",
+                "de": "Segmentvergleichsmatrix",
+                "zh": "细分比较矩阵",
+                "ja": "セグメント比較マトリックス",
+                "pt": "Matriz de comparação de segmentos",
+                "ar": "مصفوفة مقارنة القطاعات",
+                "hi": "खंड तुलना मैट्रिक्स",
+                "ru": "Матрица сравнения сегментов"
+        },
+        "Segment Dimension": {
+                "es": "Dimensión del segmento",
+                "fr": "Dimensions des segments",
+                "de": "Segmentdimension",
+                "zh": "段尺寸",
+                "ja": "セグメント寸法",
+                "pt": "Dimensão do segmento",
+                "ar": "البعد القطاعي",
+                "hi": "खंड आयाम",
+                "ru": "Размер сегмента"
+        },
+        "Segment Dimension:": {
+                "es": "Dimensión del segmento:",
+                "fr": "Dimensions des segments :",
+                "de": "Segmentdimension:",
+                "zh": "分段尺寸：",
+                "ja": "セグメント寸法:",
+                "pt": "Dimensão do segmento:",
+                "ar": "البعد القطاع:",
+                "hi": "खंड आयाम:",
+                "ru": "Размер сегмента:"
+        },
+        "Segment Value": {
+                "es": "Valor del segmento",
+                "fr": "Valeur du segment",
+                "de": "Segmentwert",
+                "zh": "分部价值",
+                "ja": "セグメント値",
+                "pt": "Valor do segmento",
+                "ar": "قيمة القطاع",
+                "hi": "खंड मान",
+                "ru": "Значение сегмента"
+        },
+        "Segment, ContractType, BillingCycle, RiskTier": {
+                "es": "Segmento, tipo de contrato, ciclo de facturación, nivel de riesgo",
+                "fr": "Segment, type de contrat, cycle de facturation, niveau de risque",
+                "de": "Segment, Vertragstyp, BillingCycle, RiskTier",
+                "zh": "细分、合同类型、计费周期、风险等级",
+                "ja": "セグメント、契約タイプ、請求サイクル、リスク層",
+                "pt": "Segmento, ContractType, BillingCycle, RiskTier",
+                "ar": "القطاع، نوع العقد، دورة الفواتير، مستوى المخاطر",
+                "hi": "खंड, अनुबंध प्रकार, बिलिंग साइकिल, जोखिम स्तर",
+                "ru": "Сегмент, ContractType, BillingCycle, RiskTier"
+        },
+        "Select Customer Account": {
+                "es": "Seleccionar cuenta de cliente",
+                "fr": "Sélectionnez un compte client",
+                "de": "Wählen Sie Kundenkonto",
+                "zh": "选择客户账户",
+                "ja": "顧客アカウントの選択",
+                "pt": "Selecione a conta do cliente",
+                "ar": "حدد حساب العميل",
+                "hi": "ग्राहक खाता चुनें",
+                "ru": "Выберите учетную запись клиента"
+        },
+        "Select Global Language (10 Available)": {
+                "es": "Seleccionar idioma global (10 disponibles)",
+                "fr": "Sélectionnez la langue globale (10 disponibles)",
+                "de": "Globale Sprache auswählen (10 verfügbar)",
+                "zh": "选择全球语言（10 种可用）",
+                "ja": "グローバル言語を選択 (10 個が利用可能)",
+                "pt": "Selecione o idioma global (10 disponíveis)",
+                "ar": "اختر اللغة العالمية (10 متاحة)",
+                "hi": "वैश्विक भाषा चुनें (10 उपलब्ध)",
+                "ru": "Выберите глобальный язык (доступно 10)"
+        },
+        "Select Palette": {
+                "es": "Seleccionar paleta",
+                "fr": "Sélectionner une palette",
+                "de": "Wählen Sie Palette",
+                "zh": "选择调色板",
+                "ja": "パレットの選択",
+                "pt": "Selecione a paleta",
+                "ar": "حدد لوحة الألوان",
+                "hi": "पैलेट चुनें",
+                "ru": "Выбрать палитру"
+        },
+        "Select Slide Transition": {
+                "es": "Seleccionar transición de diapositiva",
+                "fr": "Sélectionnez la transition de diapositive",
+                "de": "Wählen Sie Folienübergang",
+                "zh": "选择幻灯片切换",
+                "ja": "スライドトランジションを選択",
+                "pt": "Selecione Transição de slides",
+                "ar": "حدد انتقال الشريحة",
+                "hi": "स्लाइड ट्रांज़िशन का चयन करें",
+                "ru": "Выберите переход слайдов"
+        },
+        "Select Typography Pair": {
+                "es": "Seleccionar par de tipografía",
+                "fr": "Sélectionnez une paire de typographies",
+                "de": "Wählen Sie Typografiepaar aus",
+                "zh": "选择版式对",
+                "ja": "タイポグラフィ ペアの選択",
+                "pt": "Selecione o par de tipografia",
+                "ar": "حدد زوج الطباعة",
+                "hi": "टाइपोग्राफी जोड़ी का चयन करें",
+                "ru": "Выберите пару типографики"
+        },
+        "Select a custom segment to drill down and visualize its time-series churn trend.": {
+                "es": "Seleccione un segmento personalizado para profundizar y visualizar su tendencia de abandono de series temporales.",
+                "fr": "Sélectionnez un segment personnalisé pour explorer et visualiser sa tendance de désabonnement des séries chronologiques.",
+                "de": "Wählen Sie ein benutzerdefiniertes Segment aus, um einen Drilldown durchzuführen und dessen Zeitreihen-Abwanderungstrend zu visualisieren.",
+                "zh": "选择一个自定义细分以深入了解并可视化其时间序列流失趋势。",
+                "ja": "カスタム セグメントを選択してドリルダウンし、時系列のチャーン トレンドを視覚化します。",
+                "pt": "Selecione um segmento personalizado para detalhar e visualizar sua tendência de rotatividade de série temporal.",
+                "ar": "حدد شريحة مخصصة للتنقل لأسفل وتصور اتجاه التراجع في السلاسل الزمنية الخاصة بها.",
+                "hi": "समय-श्रृंखला मंथन की प्रवृत्ति को समझने और देखने के लिए एक कस्टम सेगमेंट का चयन करें।",
+                "ru": "Выберите специальный сегмент, чтобы детализировать его и визуализировать тенденцию оттока временных рядов."
+        },
+        "Select an active customer first.": {
+                "es": "Seleccione primero un cliente activo.",
+                "fr": "Sélectionnez d'abord un client actif.",
+                "de": "Wählen Sie zunächst einen aktiven Kunden aus.",
+                "zh": "首先选择活跃客户。",
+                "ja": "まずアクティブな顧客を選択します。",
+                "pt": "Selecione primeiro um cliente ativo.",
+                "ar": "حدد عميلاً نشطًا أولاً.",
+                "hi": "पहले एक सक्रिय ग्राहक चुनें.",
+                "ru": "Сначала выберите активного клиента."
+        },
+        "Select any customer from the account dropdown list, type the CSM's name, select the outreach SLA status, and write down collaboration notes.": {
+                "es": "Seleccione cualquier cliente de la lista desplegable de cuentas, escriba el nombre del CSM, seleccione el estado del SLA de extensión y escriba notas de colaboración.",
+                "fr": "Sélectionnez n'importe quel client dans la liste déroulante des comptes, saisissez le nom du CSM, sélectionnez le statut du SLA de sensibilisation et notez les notes de collaboration.",
+                "de": "Wählen Sie einen beliebigen Kunden aus der Konto-Dropdown-Liste aus, geben Sie den Namen des CSM ein, wählen Sie den Outreach-SLA-Status aus und notieren Sie Notizen zur Zusammenarbeit.",
+                "zh": "从帐户下拉列表中选择任何客户，键入 CSM 的名称，选择外展 SLA 状态，然后写下协作注释。",
+                "ja": "アカウント ドロップダウン リストから任意の顧客を選択し、CSM の名前を入力し、アウトリーチ SLA ステータスを選択して、コラボレーションに関するメモを書き留めます。",
+                "pt": "Selecione qualquer cliente na lista suspensa de contas, digite o nome do CSM, selecione o status do SLA de divulgação e anote notas de colaboração.",
+                "ar": "حدد أي عميل من القائمة المنسدلة للحساب، واكتب اسم CSM، وحدد حالة اتفاقية مستوى الخدمة الخاصة بالتواصل، وقم بتدوين ملاحظات التعاون.",
+                "hi": "खाता ड्रॉपडाउन सूची से किसी भी ग्राहक का चयन करें, सीएसएम का नाम टाइप करें, आउटरीच एसएलए स्थिति का चयन करें, और सहयोग नोट्स लिखें।",
+                "ru": "Выберите любого клиента из раскрывающегося списка учетной записи, введите имя CSM, выберите статус соглашения об уровне обслуживания и запишите примечания к сотрудничеству."
+        },
+        "Select design style": {
+                "es": "Seleccionar estilo de diseño",
+                "fr": "Sélectionnez le style de conception",
+                "de": "Designstil auswählen",
+                "zh": "选择设计风格",
+                "ja": "デザインスタイルを選択してください",
+                "pt": "Selecione o estilo de design",
+                "ar": "حدد نمط التصميم",
+                "hi": "डिज़ाइन शैली चुनें",
+                "ru": "Выберите стиль дизайна"
+        },
+        "Select slide count": {
+                "es": "Seleccionar recuento de diapositivas",
+                "fr": "Sélectionnez le nombre de diapositives",
+                "de": "Wählen Sie die Anzahl der Folien aus",
+                "zh": "选择幻灯片数",
+                "ja": "スライド数を選択してください",
+                "pt": "Selecione a contagem de slides",
+                "ar": "حدد عدد الشرائح",
+                "hi": "स्लाइड संख्या का चयन करें",
+                "ru": "Выберите количество слайдов"
+        },
+        "Self-contained .twbx package containing 2023.1 XML and Data/CustomerIntelligence.csv.": {
+                "es": "Paquete .twbx autónomo que contiene XML 2023.1 y Data/CustomerIntelligence.csv.",
+                "fr": "Package .twbx autonome contenant 2023.1 XML et Data/CustomerIntelligence.csv.",
+                "de": "Eigenständiges .twbx-Paket mit 2023.1 XML und Data/CustomerIntelligence.csv.",
+                "zh": "包含 2023.1 XML 和 Data/CustomerIntelligence.csv 的独立 .twbx 包。",
+                "ja": "2023.1 XML と Data/CustomerIntelligence.csv を含む自己完結型の .twbx パッケージ。",
+                "pt": "Pacote .twbx independente contendo XML 2023.1 e Data/CustomerIntelligence.csv.",
+                "ar": "حزمة .twbx قائمة بذاتها تحتوي على 2023.1 XML وData/CustomerIntelligence.csv.",
+                "hi": "स्व-निहित .twbx पैकेज जिसमें 2023.1 XML और Data/CustomerIntelligence.csv शामिल है।",
+                "ru": "Автономный пакет .twbx, содержащий XML 2023.1 и Data/CustomerIntelligence.csv."
+        },
+        "Settings & Roles": {
+                "es": "Configuraciones y roles",
+                "fr": "Paramètres et rôles",
+                "de": "Einstellungen und Rollen",
+                "zh": "设置和角色",
+                "ja": "設定と役割",
+                "pt": "Configurações e funções",
+                "ar": "الإعدادات والأدوار",
+                "hi": "सेटिंग्स और भूमिकाएँ",
+                "ru": "Настройки и роли"
+        },
+        "Showing 1–25 of 25 accounts": {
+                "es": "Mostrando 1–25 de 25 cuentas",
+                "fr": "Affichage de 1 à 25 sur 25 comptes",
+                "de": "Zeigt 1–25 von 25 Konten",
+                "zh": "显示 25 个帐户中的 1–25 个",
+                "ja": "25 アカウント中 1 ～ 25 を表示",
+                "pt": "Mostrando de 1 a 25 de 25 contas",
+                "ar": "عرض 1–25 من 25 حسابًا",
+                "hi": "25 में से 1-25 खाते दिखा रहा हूँ",
+                "ru": "Показаны 1–25 из 25 аккаунтов"
+        },
+        "Simplifies SOC 2 audit checkpoints by demonstrating compliance with privacy policies and security regulations.": {
+                "es": "Simplifica los puntos de control de auditoría SOC 2 al demostrar el cumplimiento de las políticas de privacidad y las normas de seguridad.",
+                "fr": "Simplifie les points de contrôle d'audit SOC 2 en démontrant la conformité aux politiques de confidentialité et aux réglementations de sécurité.",
+                "de": "Vereinfacht SOC 2-Audit-Kontrollpunkte durch den Nachweis der Einhaltung von Datenschutzrichtlinien und Sicherheitsvorschriften.",
+                "zh": "通过证明对隐私政策和安全法规的遵守来简化 SOC 2 审计检查点。",
+                "ja": "プライバシー ポリシーとセキュリティ規制への準拠を実証することで、SOC 2 監査チェックポイントを簡素化します。",
+                "pt": "Simplifica os pontos de verificação de auditoria SOC 2, demonstrando conformidade com políticas de privacidade e regulamentos de segurança.",
+                "ar": "يبسط نقاط فحص التدقيق الخاصة بـ SOC 2 من خلال إظهار الامتثال لسياسات الخصوصية ولوائح الأمان.",
+                "hi": "गोपनीयता नीतियों और सुरक्षा नियमों के अनुपालन को प्रदर्शित करके एसओसी 2 ऑडिट चौकियों को सरल बनाता है।",
+                "ru": "Упрощает контрольные точки аудита SOC 2, демонстрируя соответствие политикам конфиденциальности и правилам безопасности."
+        },
+        "Simulate account parameters to test dynamic churn probability": {
+                "es": "Simule parámetros para evaluar la probabilidad dinámica de cancelación",
+                "fr": "Simulez les attributs pour évaluer la probabilité dynamique d'attrition",
+                "de": "Simulieren Sie Kontenmerkmale zur Ermittlung der dynamischen Abwanderung",
+                "zh": "调整账户参数，即时推演客户流失概率及敏感性",
+                "ja": "顧客属性を変更し解約リスクの変動を検証します",
+                "pt": "Simule atributos de contas para verificar a probabilidade dinâmica de churn",
+                "ar": "قم بتعديل متغيرات العميل لقياس احتمالية التسرب ديناميكياً",
+                "hi": "मंथन संभावना का परीक्षण करने के लिए खाता मापदंडों का अनुकरण करें",
+                "ru": "Моделируйте параметры для проверки динамической вероятности оттока"
+        },
+        "Simulate acute churn escalation": {
+                "es": "Simular una escalada aguda de abandono",
+                "fr": "Simuler une escalade aiguë du taux de désabonnement",
+                "de": "Simulieren Sie eine akute Abwanderungseskalation",
+                "zh": "模拟急剧的客户流失升级",
+                "ja": "急激なチャーンエスカレーションのシミュレーション",
+                "pt": "Simular escalada de rotatividade aguda",
+                "ar": "محاكاة تصعيد الاضطراب الحاد",
+                "hi": "तीव्र मंथन वृद्धि का अनुकरण करें",
+                "ru": "Имитировать резкий рост оттока клиентов"
+        },
+        "Simulate low-churn enterprise account": {
+                "es": "Simule una cuenta empresarial con baja rotación",
+                "fr": "Simuler un compte d'entreprise à faible taux de désabonnement",
+                "de": "Simulieren Sie ein Unternehmenskonto mit geringer Abwanderung",
+                "zh": "模拟低流失率企业帐户",
+                "ja": "低チャーンのエンタープライズアカウントをシミュレートする",
+                "pt": "Simule uma conta corporativa com baixa rotatividade",
+                "ar": "محاكاة حساب المؤسسة منخفضة الحركة",
+                "hi": "कम-मंथन उद्यम खाते का अनुकरण करें",
+                "ru": "Имитировать корпоративный аккаунт с низким оттоком"
+        },
+        "Simulate mid-risk customer": {
+                "es": "Simular cliente de riesgo medio",
+                "fr": "Simuler un client à risque moyen",
+                "de": "Simulieren Sie Kunden mit mittlerem Risiko",
+                "zh": "模拟中风险客户",
+                "ja": "中リスクの顧客をシミュレートする",
+                "pt": "Simular cliente de médio risco",
+                "ar": "محاكاة العميل متوسط المخاطر",
+                "hi": "मध्य जोखिम वाले ग्राहक का अनुकरण करें",
+                "ru": "Имитация клиента со средним уровнем риска"
+        },
+        "Simulator & AI Quick actions": {
+                "es": "Simulador e IA Acciones rápidas",
+                "fr": "Simulateur et IA Actions rapides",
+                "de": "Simulator- und KI-Schnellaktionen",
+                "zh": "模拟器和人工智能快速操作",
+                "ja": "シミュレータとAIのクイックアクション",
+                "pt": "Simulador e ações rápidas de IA",
+                "ar": "إجراءات سريعة للمحاكاة والذكاء الاصطناعي",
+                "hi": "सिम्युलेटर और एआई त्वरित कार्रवाई",
+                "ru": "Симулятор и искусственный интеллект Быстрые действия"
+        },
+        "Size (e.g. 100)": {
+                "es": "Tamaño (por ejemplo, 100)",
+                "fr": "Taille (par exemple 100)",
+                "de": "Größe (z. B. 100)",
+                "zh": "尺寸（例如 100）",
+                "ja": "サイズ (例: 100)",
+                "pt": "Tamanho (por exemplo, 100)",
+                "ar": "الحجم (على سبيل المثال 100)",
+                "hi": "आकार (जैसे 100)",
+                "ru": "Размер (например, 100)"
+        },
+        "Skip Tour & Enter Workspace": {
+                "es": "Saltar recorrido e ingresar al espacio de trabajo",
+                "fr": "Passer la visite et accéder à l'espace de travail",
+                "de": "Tour überspringen und Arbeitsbereich betreten",
+                "zh": "跳过浏览并进入工作区",
+                "ja": "ツアーをスキップしてワークスペースに入る",
+                "pt": "Pular tour e entrar no espaço de trabalho",
+                "ar": "تخطي الجولة وأدخل مساحة العمل",
+                "hi": "दौरा छोड़ें और कार्यस्थल में प्रवेश करें",
+                "ru": "Пропустить тур и войти в рабочее пространство"
+        },
+        "Slate & Indigo": {
+                "es": "Pizarra y índigo",
+                "fr": "Ardoise et Indigo",
+                "de": "Schiefer und Indigo",
+                "zh": "板岩和靛蓝",
+                "ja": "スレート&インディゴ",
+                "pt": "Ardósia e índigo",
+                "ar": "حجر ونيلي",
+                "hi": "स्लेट और इंडिगो",
+                "ru": "Сланец и Индиго"
+        },
+        "Slide Copy & Bullets (one per line)": {
+                "es": "Copia de diapositiva y viñetas (una por línea)",
+                "fr": "Copie de diapositives et puces (une par ligne)",
+                "de": "Folienkopie und Aufzählungszeichen (eines pro Zeile)",
+                "zh": "幻灯片副本和项目符号（每行一份）",
+                "ja": "スライドのコピーと箇条書き (1 行に 1 つ)",
+                "pt": "Cópia de slides e marcadores (um por linha)",
+                "ar": "نسخ الشرائح والتعداد النقطي (واحد لكل سطر)",
+                "hi": "स्लाइड कॉपी एवं बुलेट्स (प्रति पंक्ति एक)",
+                "ru": "Копия слайда и маркеры (по одному на строку)"
+        },
+        "Slide Layout & Infographic Theme": {
+                "es": "Diseño de diapositivas y tema de infografía",
+                "fr": "Disposition des diapositives et thème de l'infographie",
+                "de": "Folienlayout und Infografik-Thema",
+                "zh": "幻灯片布局和信息图表主题",
+                "ja": "スライドのレイアウトとインフォグラフィックのテーマ",
+                "pt": "Layout de slide e tema infográfico",
+                "ar": "تخطيط الشريحة وموضوع المعلومات البيانية",
+                "hi": "स्लाइड लेआउट और इन्फोग्राफिक थीम",
+                "ru": "Макет слайдов и тема инфографики"
+        },
+        "Slide Presentation Exporter": {
+                "es": "Exportador de presentaciones de diapositivas",
+                "fr": "Exportateur de présentations de diapositives",
+                "de": "Folienpräsentations-Exporter",
+                "zh": "幻灯片演示导出器",
+                "ja": "スライド プレゼンテーション エクスポーター",
+                "pt": "Exportador de apresentações de slides",
+                "ar": "مصدر عرض الشرائح",
+                "hi": "स्लाइड प्रस्तुति निर्यातक",
+                "ru": "Экспортер слайд-презентаций"
+        },
+        "Slide Sorter Timeline": {
+                "es": "Línea de tiempo del clasificador de diapositivas",
+                "fr": "Chronologie de la trieuse de diapositives",
+                "de": "Zeitleiste des Foliensortierers",
+                "zh": "幻灯片排序时间轴",
+                "ja": "スライドソーターのタイムライン",
+                "pt": "Linha do tempo do classificador de slides",
+                "ar": "الجدول الزمني لفارز الشرائح",
+                "hi": "स्लाइड सॉर्टर टाइमलाइन",
+                "ru": "Временная шкала сортировщика слайдов"
+        },
+        "Slide Subtitle": {
+                "es": "Subtítulo de diapositiva",
+                "fr": "Sous-titre de la diapositive",
+                "de": "Untertitel der Folie",
+                "zh": "幻灯片字幕",
+                "ja": "スライドの字幕",
+                "pt": "Legenda do slide",
+                "ar": "الترجمة للشرائح",
+                "hi": "स्लाइड उपशीर्षक",
+                "ru": "Слайд с субтитрами"
+        },
+        "Slide Title": {
+                "es": "Título de la diapositiva",
+                "fr": "Titre de la diapositive",
+                "de": "Folientitel",
+                "zh": "幻灯片标题",
+                "ja": "スライドのタイトル",
+                "pt": "Título do slide",
+                "ar": "عنوان الشريحة",
+                "hi": "स्लाइड शीर्षक",
+                "ru": "Название слайда"
+        },
+        "Slide to select category": {
+                "es": "Deslice para seleccionar categoría",
+                "fr": "Faites glisser pour sélectionner la catégorie",
+                "de": "Schieben Sie, um die Kategorie auszuwählen",
+                "zh": "滑动选择类别",
+                "ja": "スライドしてカテゴリーを選択してください",
+                "pt": "Deslize para selecionar a categoria",
+                "ar": "قم بالتمرير لتحديد الفئة",
+                "hi": "श्रेणी चुनने के लिए स्लाइड करें",
+                "ru": "Слайд для выбора категории"
+        },
+        "Sliders populated dynamically": {
+                "es": "Controles deslizantes completados dinámicamente",
+                "fr": "Curseurs remplis dynamiquement",
+                "de": "Schieberegler werden dynamisch befüllt",
+                "zh": "动态填充滑块",
+                "ja": "スライダーは動的に設定されます",
+                "pt": "Controles deslizantes preenchidos dinamicamente",
+                "ar": "يتم تعبئة المتزلجون ديناميكيًا",
+                "hi": "स्लाइडर गतिशील रूप से पॉप्युलेट हुए",
+                "ru": "Слайдеры заполняются динамически"
+        },
+        "Slides will be rendered here dynamically": {
+                "es": "Las diapositivas se renderizarán aquí dinámicamente.",
+                "fr": "Les diapositives seront rendues ici dynamiquement",
+                "de": "Folien werden hier dynamisch gerendert",
+                "zh": "幻灯片将在这里动态渲染",
+                "ja": "スライドはここに動的にレンダリングされます",
+                "pt": "Os slides serão renderizados aqui dinamicamente",
+                "ar": "سيتم عرض الشرائح هنا ديناميكيًا",
+                "hi": "यहां स्लाइड्स को गतिशील रूप से प्रस्तुत किया जाएगा",
+                "ru": "Слайды будут отображаться здесь динамически."
+        },
+        "Slow Moving": {
+                "es": "movimiento lento",
+                "fr": "Mouvement lent",
+                "de": "Langsame Bewegung",
+                "zh": "缓慢移动",
+                "ja": "ゆっくりとした動き",
+                "pt": "Movimento Lento",
+                "ar": "بطيء الحركة",
+                "hi": "धीमी गति से चलना",
+                "ru": "Медленное движение"
+        },
+        "Small campaign list preview": {
+                "es": "Vista previa de la lista de campañas pequeñas",
+                "fr": "Aperçu de la petite liste de campagnes",
+                "de": "Kleine Vorschau der Kampagnenliste",
+                "zh": "小型营销活动列表预览",
+                "ja": "小規模なキャンペーン リストのプレビュー",
+                "pt": "Pré-visualização da lista de campanhas pequenas",
+                "ar": "معاينة قائمة الحملات الصغيرة",
+                "hi": "लघु अभियान सूची पूर्वावलोकन",
+                "ru": "Предварительный просмотр небольшого списка кампаний"
+        },
+        "Smart Corporate Scratchpad & Notes": {
+                "es": "Bloc de notas y notas corporativas inteligentes",
+                "fr": "Bloc-notes et notes d'entreprise intelligents",
+                "de": "Smart Corporate Scratchpad und Notizen",
+                "zh": "智能企业便签本和笔记",
+                "ja": "スマートな企業用スクラッチパッドとメモ",
+                "pt": "Bloco de notas e notas corporativas inteligentes",
+                "ar": "دفتر الملاحظات والملاحظات الذكية للشركات",
+                "hi": "स्मार्ट कॉर्पोरेट स्क्रैचपैड और नोट्स",
+                "ru": "Умный корпоративный блокнот и заметки"
+        },
+        "Smooth Fade": {
+                "es": "Desvanecimiento suave",
+                "fr": "Fondu en douceur",
+                "de": "Glattes Verblassen",
+                "zh": "平滑淡入淡出",
+                "ja": "スムースフェード",
+                "pt": "Desbotamento Suave",
+                "ar": "تتلاشى السلس",
+                "hi": "चिकना फीका",
+                "ru": "Плавное затухание"
+        },
+        "Sorted by Churn Probability DESC": {
+                "es": "Ordenado por probabilidad de abandono DESC",
+                "fr": "Triés par probabilité de désabonnement DESC",
+                "de": "Sortiert nach Abwanderungswahrscheinlichkeit DESC",
+                "zh": "按流失概率 DESC 排序",
+                "ja": "チャーン確率 DESC で並べ替え",
+                "pt": "Ordenado por probabilidade de rotatividade DESC",
+                "ar": "تم الترتيب حسب احتمالية الاضطراب DESC",
+                "hi": "मंथन संभाव्यता DESC द्वारा क्रमबद्ध",
+                "ru": "Сортировка по вероятности оттока DESC"
+        },
+        "Sources": {
+                "es": "Fuentes",
+                "fr": "Sources",
+                "de": "Quellen",
+                "zh": "数据源",
+                "ja": "データソース",
+                "pt": "Fontes",
+                "ar": "المصادر",
+                "hi": "डेटा स्रोत",
+                "ru": "Источники"
+        },
+        "Sources will be rendered dynamically": {
+                "es": "Las fuentes se renderizarán dinámicamente",
+                "fr": "Les sources seront rendues dynamiquement",
+                "de": "Quellen werden dynamisch gerendert",
+                "zh": "源将动态渲染",
+                "ja": "ソースは動的にレンダリングされます",
+                "pt": "As fontes serão renderizadas dinamicamente",
+                "ar": "سيتم عرض المصادر ديناميكيًا",
+                "hi": "स्रोतों को गतिशील रूप से प्रस्तुत किया जाएगा",
+                "ru": "Исходники будут отображаться динамически."
+        },
+        "Specials & Critical KPIs": {
+                "es": "KPI especiales y críticos",
+                "fr": "Spéciaux et KPI critiques",
+                "de": "Sonderangebote und kritische KPIs",
+                "zh": "特价和关键 KPI",
+                "ja": "スペシャルと重要な KPI",
+                "pt": "Especiais e KPIs críticos",
+                "ar": "العروض الخاصة ومؤشرات الأداء الرئيسية الحرجة",
+                "hi": "विशेष एवं महत्वपूर्ण KPI",
+                "ru": "Специальные и критические KPI"
+        },
+        "Specials & KPIs": {
+                "es": "Especiales y KPI",
+                "fr": "Offres spéciales et KPI",
+                "de": "Sonderangebote & KPIs",
+                "zh": "特价和关键绩效指标",
+                "ja": "スペシャルと KPI",
+                "pt": "Especiais e KPIs",
+                "ar": "العروض الخاصة ومؤشرات الأداء الرئيسية",
+                "hi": "विशेष एवं KPI",
+                "ru": "Специальные предложения и ключевые показатели эффективности"
+        },
+        "Stable, satisfied accounts with high tenure. Target cohort for annual expansion & upsell offers.": {
+                "es": "Cuentas estables, satisfechas y con alta permanencia. Cohorte objetivo para ofertas anuales de expansión y ventas adicionales.",
+                "fr": "Comptes stables et satisfaits avec une ancienneté élevée. Cohorte cible pour les offres d'expansion et de vente incitatives annuelles.",
+                "de": "Stabile, zufriedene Konten mit hoher Laufzeit. Zielgruppe für jährliche Expansions- und Upselling-Angebote.",
+                "zh": "稳定、满意的客户，任期较长。年度扩张和追加销售优惠的目标群体。",
+                "ja": "勤続年数が長く、安定した満足度の高いアカウント。年間拡張およびアップセル オファーの対象となるコホート。",
+                "pt": "Contas estáveis e satisfeitas com alta estabilidade. Coorte alvo para expansão anual e ofertas de upsell.",
+                "ar": "حسابات مستقرة وراضية مع فترة طويلة. المجموعة المستهدفة للتوسع السنوي وعروض البيع.",
+                "hi": "उच्च कार्यकाल के साथ स्थिर, संतुष्ट खाते। वार्षिक विस्तार और अपसेल ऑफर के लिए लक्षित समूह।",
+                "ru": "Стабильные, довольные аккаунты с большим стажем. Целевая группа для ежегодного расширения и дополнительных продаж."
+        },
+        "Standalone binary template with pre-wired visuals and measures.": {
+                "es": "Plantilla binaria independiente con imágenes y medidas precableadas.",
+                "fr": "Modèle binaire autonome avec visuels et mesures pré-câblés.",
+                "de": "Eigenständige binäre Vorlage mit vorverdrahteten Visuals und Maßnahmen.",
+                "zh": "具有预连接视觉效果和测量值的独立二进制模板。",
+                "ja": "事前に配線されたビジュアルとメジャーを備えたスタンドアロンのバイナリ テンプレート。",
+                "pt": "Modelo binário independente com recursos visuais e medidas pré-conectados.",
+                "ar": "قالب ثنائي مستقل مع صور ومقاييس سلكية مسبقًا.",
+                "hi": "पूर्व-वायर्ड दृश्यों और मापों के साथ स्टैंडअलोन बाइनरी टेम्पलेट।",
+                "ru": "Автономный двоичный шаблон с предварительно настроенными визуальными элементами и показателями."
+        },
+        "Star Schema Architecture Box": {
+                "es": "Caja de arquitectura de esquema de estrella",
+                "fr": "Boîte d'architecture de schéma en étoile",
+                "de": "Star Schema Architecture Box",
+                "zh": "星型模式架构盒",
+                "ja": "スター スキーマ アーキテクチャ ボックス",
+                "pt": "Caixa de arquitetura de esquema em estrela",
+                "ar": "صندوق هندسة المخطط النجمي",
+                "hi": "स्टार स्कीमा आर्किटेक्चर बॉक्स",
+                "ru": "Архитектурный блок звездообразной схемы"
+        },
+        "Star-Schema Relational Architecture (1 Fact + 4 Dimensions)": {
+                "es": "Arquitectura relacional de esquema en estrella (1 hecho + 4 dimensiones)",
+                "fr": "Architecture relationnelle en étoile (1 fait + 4 dimensions)",
+                "de": "Relationale Sternschema-Architektur (1 Fakt + 4 Dimensionen)",
+                "zh": "星型关系架构（1 个事实 + 4 个维度）",
+                "ja": "スター スキーマ リレーショナル アーキテクチャ (1 ファクト + 4 ディメンション)",
+                "pt": "Arquitetura relacional de esquema estrela (1 fato + 4 dimensões)",
+                "ar": "العمارة العلائقية للمخطط النجمي (حقيقة واحدة + 4 أبعاد)",
+                "hi": "स्टार-स्कीमा रिलेशनल आर्किटेक्चर (1 तथ्य + 4 आयाम)",
+                "ru": "Реляционная архитектура звездообразной схемы (1 факт + 4 измерения)"
+        },
+        "Start Guided Tour": {
+                "es": "Iniciar visita guiada",
+                "fr": "Commencer la visite guidée",
+                "de": "Führung starten",
+                "zh": "开始导览",
+                "ja": "ガイド付きツアーを開始する",
+                "pt": "Iniciar visita guiada",
+                "ar": "ابدأ الجولة الإرشادية",
+                "hi": "निर्देशित यात्रा प्रारंभ करें",
+                "ru": "Начать экскурсию"
+        },
+        "Step 1 of 7": {
+                "es": "Paso 1 de 7",
+                "fr": "Étape 1 sur 7",
+                "de": "Schritt 1 von 7",
+                "zh": "第 1 步（共 7 步）",
+                "ja": "ステップ 1/7",
+                "pt": "Etapa 1 de 7",
+                "ar": "الخطوة 1 من 7",
+                "hi": "7 में से चरण 1",
+                "ru": "Шаг 1 из 7"
+        },
+        "Stream data dynamically from HubSpot, Salesforce, Stripe, and generate executive reports.": {
+                "es": "Transmita datos dinámicamente desde HubSpot, Salesforce, Stripe y genere informes ejecutivos.",
+                "fr": "Diffusez dynamiquement des données depuis HubSpot, Salesforce, Stripe et générez des rapports exécutifs.",
+                "de": "Streamen Sie Daten dynamisch von HubSpot, Salesforce, Stripe und erstellen Sie Executive Reports.",
+                "zh": "从 HubSpot、Salesforce、Stripe 动态传输数据并生成执行报告。",
+                "ja": "HubSpot、Salesforce、Stripe からデータを動的にストリーミングし、エグゼクティブ レポートを生成します。",
+                "pt": "Transmita dados dinamicamente do HubSpot, Salesforce, Stripe e gere relatórios executivos.",
+                "ar": "يمكنك دفق البيانات ديناميكيًا من HubSpot وSalesforce وStripe وإنشاء التقارير التنفيذية.",
+                "hi": "हबस्पॉट, सेल्सफोर्स, स्ट्राइप से गतिशील रूप से डेटा स्ट्रीम करें और कार्यकारी रिपोर्ट तैयार करें।",
+                "ru": "Динамическая потоковая передача данных из HubSpot, Salesforce, Stripe и создание отчетов для руководителей."
+        },
+        "Stripe Billing": {
+                "es": "Facturación de franjas",
+                "fr": "Facturation Stripe",
+                "de": "Stripe-Abrechnung",
+                "zh": "条纹计费",
+                "ja": "ストライプビリング",
+                "pt": "Faturamento de faixa",
+                "ar": "الفواتير الشريطية",
+                "hi": "धारी बिलिंग",
+                "ru": "Полосовой биллинг"
+        },
+        "Structured star schema adhering to Microsoft Power BI best practices. Central Fact table connected via 1-to-many, single-direction relationships to continuous Date, Customer, Product, and Region dimensions.": {
+                "es": "Esquema de estrella estructurado que se adhiere a las mejores prácticas de Microsoft Power BI. Tabla de hechos centrales conectada mediante relaciones unidireccionales de 1 a muchos a dimensiones continuas de Fecha, Cliente, Producto y Región.",
+                "fr": "Schéma en étoile structuré adhérant aux meilleures pratiques de Microsoft Power BI. Table de faits centrale connectée via des relations unidirectionnelles unidirectionnelles à des dimensions continues de date, de client, de produit et de région.",
+                "de": "Strukturiertes Sternschema gemäß den Best Practices von Microsoft Power BI. Zentrale Faktentabelle, die über 1-zu-viele-Beziehungen in einer Richtung mit kontinuierlichen Datums-, Kunden-, Produkt- und Regionsdimensionen verbunden ist.",
+                "zh": "结构化星型架构遵循 Microsoft Power BI 最佳实践。中央事实表通过一对多、单向关系连接到连续的日期、客户、产品和区域维度。",
+                "ja": "Microsoft Power BI のベスト プラクティスに準拠した構造化されたスター スキーマ。 1 対多の一方向のリレーションシップを介して、連続した日付、顧客、製品、および地域のディメンションに接続された中央ファクト テーブル。",
+                "pt": "Esquema em estrela estruturado de acordo com as práticas recomendadas do Microsoft Power BI. Tabela central de fatos conectada por meio de relacionamentos unidirecionais de 1 para muitos às dimensões contínuas de Data, Cliente, Produto e Região.",
+                "ar": "مخطط نجمي منظم يلتزم بأفضل ممارسات Microsoft Power BI. جدول الحقائق المركزي متصل عبر علاقات 1 إلى كثير وأحادية الاتجاه بأبعاد التاريخ والعميل والمنتج والمنطقة المستمرة.",
+                "hi": "Microsoft Power BI सर्वोत्तम प्रथाओं का पालन करते हुए संरचित स्टार स्कीमा। केंद्रीय तथ्य तालिका 1-से-अनेक, एकल-दिशा संबंधों के माध्यम से निरंतर दिनांक, ग्राहक, उत्पाद और क्षेत्र आयामों से जुड़ी हुई है।",
+                "ru": "Структурированная звездообразная схема, соответствующая лучшим практикам Microsoft Power BI. Центральная таблица фактов, соединенная однонаправленными связями «один ко многим» с непрерывными измерениями «Дата», «Клиент», «Продукт» и «Регион»."
+        },
+        "Studio Header": {
+                "es": "Encabezado de estudio",
+                "fr": "En-tête du studio",
+                "de": "Studio-Header",
+                "zh": "工作室头",
+                "ja": "スタジオヘッダー",
+                "pt": "Cabeçalho do estúdio",
+                "ar": "رأس الاستوديو",
+                "hi": "स्टूडियो हेडर",
+                "ru": "Заголовок студии"
+        },
+        "Submit failed:": {
+                "es": "El envío falló:",
+                "fr": "Échec de la soumission :",
+                "de": "Senden fehlgeschlagen:",
+                "zh": "提交失败：",
+                "ja": "送信に失敗しました:",
+                "pt": "Falha no envio:",
+                "ar": "فشل الإرسال:",
+                "hi": "सबमिट विफल:",
+                "ru": "Отправить не удалось:"
+        },
+        "Subtle Zoom": {
+                "es": "Zoom sutil",
+                "fr": "Zoom subtil",
+                "de": "Dezenter Zoom",
+                "zh": "微妙的变焦",
+                "ja": "微妙なズーム",
+                "pt": "Zoom Sutil",
+                "ar": "تكبير دقيق",
+                "hi": "सूक्ष्म ज़ूम",
+                "ru": "Тонкий зум"
+        },
+        "Summary Execution Closing": {
+                "es": "Cierre de ejecución sumario",
+                "fr": "Clôture de l’exécution sommaire",
+                "de": "Zusammenfassender Abschluss der Ausführung",
+                "zh": "摘要执行结束",
+                "ja": "概要実行の終了",
+                "pt": "Encerramento de Execução Sumária",
+                "ar": "إغلاق التنفيذ الموجز",
+                "hi": "सारांश निष्पादन समापन",
+                "ru": "Итоговое закрытие исполнения"
+        },
+        "Sunset & Crimson": {
+                "es": "Atardecer y carmesí",
+                "fr": "Coucher de soleil et cramoisi",
+                "de": "Sonnenuntergang und Purpur",
+                "zh": "日落与深红",
+                "ja": "サンセット＆クリムゾン",
+                "pt": "Pôr do sol e carmesim",
+                "ar": "غروب الشمس والقرمزي",
+                "hi": "सूर्यास्त और क्रिमसन",
+                "ru": "Закат и малиновый"
+        },
+        "Supply Chain Intelligence": {
+                "es": "Cadena de Suministro",
+                "fr": "Chaîne d'Approvisionnement",
+                "de": "Lieferketten-Intelligence",
+                "zh": "供应链及交付风险",
+                "ja": "サプライチェーン監視",
+                "pt": "Cadeia de Suprimentos",
+                "ar": "سلاسل الإمداد",
+                "hi": "सप्लाई चेन इंटेलिजेंस",
+                "ru": "Цепочки поставок"
+        },
+        "Support SLA & CSAT": {
+                "es": "Soporte SLA y CSAT",
+                "fr": "Prise en charge des SLA et des CSAT",
+                "de": "Unterstützen Sie SLA und CSAT",
+                "zh": "支持SLA和CSAT",
+                "ja": "SLAとCSATをサポート",
+                "pt": "Suporte a SLA e CSAT",
+                "ar": "دعم جيش تحرير السودان وCSAT",
+                "hi": "एसएलए और सीएसएटी का समर्थन करें",
+                "ru": "Поддержка SLA и CSAT"
+        },
+        "Support Tickets (Unresolved)": {
+                "es": "Tickets de soporte (sin resolver)",
+                "fr": "Tickets d'assistance (non résolus)",
+                "de": "Support-Tickets (ungelöst)",
+                "zh": "支持票（未解决）",
+                "ja": "サポートチケット（未解決）",
+                "pt": "Tickets de suporte (não resolvidos)",
+                "ar": "تذاكر الدعم (لم يتم حلها)",
+                "hi": "समर्थन टिकट (अनियंत्रित)",
+                "ru": "Запросы в службу поддержки (нерешенные)"
+        },
+        "Switch Dark / Light Theme": {
+                "es": "Cambiar tema oscuro/claro",
+                "fr": "Changer de thème sombre/clair",
+                "de": "Wechseln Sie zwischen dunklem und hellem Thema",
+                "zh": "切换深色/浅色主题",
+                "ja": "ダーク/ライトテーマを切り替える",
+                "pt": "Alternar tema escuro / claro",
+                "ar": "تبديل المظهر الداكن / الفاتح",
+                "hi": "डार्क/लाइट थीम स्विच करें",
+                "ru": "Переключение темной/светлой темы"
+        },
+        "Symmetrical User Session Banner": {
+                "es": "Banner de sesión de usuario simétrico",
+                "fr": "Bannière de session utilisateur symétrique",
+                "de": "Symmetrisches Benutzersitzungsbanner",
+                "zh": "对称用户会话横幅",
+                "ja": "対称的なユーザー セッション バナー",
+                "pt": "Banner simétrico de sessão de usuário",
+                "ar": "شعار جلسة المستخدم المتماثل",
+                "hi": "सममित उपयोगकर्ता सत्र बैनर",
+                "ru": "Симметричный баннер сеанса пользователя"
+        },
+        "Sync Telemetry": {
+                "es": "Sincronizar telemetría",
+                "fr": "Synchroniser la télémétrie",
+                "de": "Telemetrie synchronisieren",
+                "zh": "同步遥测",
+                "ja": "同期テレメトリ",
+                "pt": "Sincronizar Telemetria",
+                "ar": "مزامنة القياس عن بعد",
+                "hi": "सिंक टेलीमेट्री",
+                "ru": "Синхронизировать телеметрию"
+        },
+        "Sync Telemetry Stream": {
+                "es": "Sincronizar flujo de telemetría",
+                "fr": "Synchroniser le flux de télémétrie",
+                "de": "Telemetrie-Stream synchronisieren",
+                "zh": "同步遥测流",
+                "ja": "テレメトリストリームの同期",
+                "pt": "Sincronizar fluxo de telemetria",
+                "ar": "مزامنة دفق القياس عن بعد",
+                "hi": "सिंक टेलीमेट्री स्ट्रीम",
+                "ru": "Синхронизировать поток телеметрии"
+        },
+        "Synthesizes an executive-ready audit report directly from your ingested customer dataset, including CLV revenue risk quadrants, CSAT and support friction telemetry, and 30-60-90 day retention playbooks.": {
+                "es": "Sintetiza un informe de auditoría listo para ejecutivos directamente desde el conjunto de datos de sus clientes recopilados, incluidos los cuadrantes de riesgo de ingresos CLV, CSAT y telemetría de fricción de soporte, y guías de retención de 30-60-90 días.",
+                "fr": "Synthèse d'un rapport d'audit destiné aux dirigeants directement à partir de votre ensemble de données client ingéré, y compris les quadrants de risque de revenus CLV, la télémétrie de friction CSAT et de support, ainsi que les playbooks de rétention de 30 à 60 à 90 jours.",
+                "de": "Erstellt direkt aus Ihrem erfassten Kundendatensatz einen betriebsbereiten Prüfbericht, einschließlich CLV-Umsatzrisiko-Quadranten, CSAT- und Support-Friction-Telemetrie sowie Playbooks zur Kundenbindung für 30-60-90 Tage.",
+                "zh": "直接从您获取的客户数据集中合成可供执行人员使用的审计报告，包括 CLV 收入风险象限、CSAT 和支持摩擦遥测以及 30-60-90 天保留手册。",
+                "ja": "CLV 収益リスク象限、CSAT およびサポート フリクション テレメトリ、30 ～ 60 ～ 90 日の保持プレイブックなど、取り込まれた顧客データセットから経営幹部向けの監査レポートを直接合成します。",
+                "pt": "Sintetiza um relatório de auditoria pronto para executivos diretamente do conjunto de dados de clientes ingeridos, incluindo quadrantes de risco de receita CLV, CSAT e telemetria de atrito de suporte e manuais de retenção de 30-60-90 dias.",
+                "ar": "يقوم بتجميع تقرير تدقيق جاهز للتنفيذيين مباشرة من مجموعة بيانات العملاء التي تم استيعابها، بما في ذلك أرباع مخاطر إيرادات CLV، وCSAT ودعم قياس الاحتكاك عن بعد، وأدلة تشغيل الاحتفاظ لمدة 30-60-90 يومًا.",
+                "hi": "सीधे आपके सम्मिलित ग्राहक डेटासेट से एक कार्यकारी-तैयार ऑडिट रिपोर्ट को संश्लेषित करता है, जिसमें सीएलवी राजस्व जोखिम चतुर्थांश, सीएसएटी और समर्थन घर्षण टेलीमेट्री, और 30-60-90 दिन की रिटेंशन प्लेबुक शामिल हैं।",
+                "ru": "Синтезирует готовый для руководства аудиторский отчет непосредственно из полученного вами набора данных о клиентах, включая квадранты риска дохода CLV, CSAT и телеметрию поддержки трения, а также сценарии хранения на 30-60-90 дней."
+        },
+        "System Controls": {
+                "es": "Controles del sistema",
+                "fr": "Contrôles du système",
+                "de": "Systemkontrollen",
+                "zh": "系统控制",
+                "ja": "システム制御",
+                "pt": "Controles do sistema",
+                "ar": "ضوابط النظام",
+                "hi": "सिस्टम नियंत्रण",
+                "ru": "Системные элементы управления"
+        },
+        "System Guided Walkthrough": {
+                "es": "Tutorial guiado por el sistema",
+                "fr": "Présentation guidée du système",
+                "de": "Systemgeführte Komplettlösung",
+                "zh": "系统引导演练",
+                "ja": "システムガイド付きウォークスルー",
+                "pt": "Passo a passo guiado pelo sistema",
+                "ar": "إرشادات النظام الإرشادية",
+                "hi": "सिस्टम गाइडेड वॉकथ्रू",
+                "ru": "Системное пошаговое руководство"
+        },
+        "System automatically logs actions, timestamp coordinates, affected customer IDs, and user roles into an immutable list.": {
+                "es": "El sistema registra automáticamente acciones, coordenadas de marca de tiempo, ID de clientes afectados y roles de usuario en una lista inmutable.",
+                "fr": "Le système enregistre automatiquement les actions, les coordonnées d'horodatage, les identifiants clients concernés et les rôles d'utilisateur dans une liste immuable.",
+                "de": "Das System protokolliert automatisch Aktionen, Zeitstempelkoordinaten, betroffene Kunden-IDs und Benutzerrollen in einer unveränderlichen Liste.",
+                "zh": "系统自动将操作、时间戳坐标、受影响的客户 ID 和用户角色记录到不可变列表中。",
+                "ja": "システムは、アクション、タイムスタンプ座標、影響を受ける顧客 ID、およびユーザーの役割を不変のリストに自動的に記録します。",
+                "pt": "O sistema registra automaticamente ações, coordenadas de carimbo de data/hora, IDs de clientes afetados e funções de usuário em uma lista imutável.",
+                "ar": "يقوم النظام تلقائيًا بتسجيل الإجراءات وإحداثيات الطابع الزمني ومعرفات العملاء المتأثرة وأدوار المستخدم في قائمة غير قابلة للتغيير.",
+                "hi": "सिस्टम स्वचालित रूप से क्रियाओं, टाइमस्टैम्प निर्देशांक, प्रभावित ग्राहक आईडी और उपयोगकर्ता भूमिकाओं को एक अपरिवर्तनीय सूची में लॉग करता है।",
+                "ru": "Система автоматически регистрирует действия, координаты временных меток, затронутые идентификаторы клиентов и роли пользователей в неизменяемый список."
+        },
+        "Tab 1: Executive Overview": {
+                "es": "Pestaña 1: Descripción general ejecutiva",
+                "fr": "Onglet 1 : Aperçu de la direction",
+                "de": "Tab 1: Executive-Übersicht",
+                "zh": "表 1：执行概述",
+                "ja": "タブ 1: 概要",
+                "pt": "Guia 1: Visão Geral Executiva",
+                "ar": "علامة التبويب 1: نظرة عامة تنفيذية",
+                "hi": "टैब 1: कार्यकारी अवलोकन",
+                "ru": "Вкладка 1: Обзор исполнительной власти"
+        },
+        "Tab 2: Churn Risk & Drivers": {
+                "es": "Pestaña 2: Riesgo de abandono y factores determinantes",
+                "fr": "Onglet 2 : Risque de désabonnement et facteurs déterminants",
+                "de": "Tab 2: Abwanderungsrisiko und Treiber",
+                "zh": "表 2：流失风险和驱动因素",
+                "ja": "タブ 2: チャーン リスクと要因",
+                "pt": "Guia 2: Riscos e motivadores de rotatividade",
+                "ar": "علامة التبويب 2: مخاطر التقلب والعوامل الدافعة",
+                "hi": "टैब 2: मंथन जोखिम और ड्राइवर",
+                "ru": "Вкладка 2: Риск оттока и движущие силы"
+        },
+        "Tab 3: Slicers & Explorer": {
+                "es": "Pestaña 3: Cortadoras y Explorador",
+                "fr": "Onglet 3 : Trancheurs et Explorateur",
+                "de": "Tab 3: Slicer und Explorer",
+                "zh": "选项卡 3：切片器和资源管理器",
+                "ja": "タブ 3: スライサーとエクスプローラー",
+                "pt": "Guia 3: Slicers e Explorer",
+                "ar": "علامة التبويب 3: أدوات تقطيع الشرائح والمستكشف",
+                "hi": "टैब 3: स्लाइसर और एक्सप्लोरर",
+                "ru": "Вкладка 3: Срезы и проводник"
+        },
+        "Tab 4: Star Schema & DAX Measures": {
+                "es": "Pestaña 4: Esquema en estrella y medidas DAX",
+                "fr": "Onglet 4 : Schéma en étoile et mesures DAX",
+                "de": "Tab 4: Star-Schema und DAX-Kennzahlen",
+                "zh": "表 4：星型架构和 DAX 度量",
+                "ja": "タブ 4: スター スキーマと DAX 測定",
+                "pt": "Guia 4: Esquema Star e Medidas DAX",
+                "ar": "علامة التبويب 4: مخطط النجوم ومقاييس DAX",
+                "hi": "टैब 4: स्टार स्कीमा और DAX उपाय",
+                "ru": "Вкладка 4: Звездообразная схема и показатели DAX"
+        },
+        "Tab 5: All File Formats & Connectors": {
+                "es": "Pestaña 5: Todos los formatos de archivos y conectores",
+                "fr": "Onglet 5 : Tous les formats de fichiers et connecteurs",
+                "de": "Tab 5: Alle Dateiformate und Konnektoren",
+                "zh": "选项卡 5：所有文件格式和连接器",
+                "ja": "タブ 5: すべてのファイル形式とコネクタ",
+                "pt": "Guia 5: Todos os formatos de arquivo e conectores",
+                "ar": "علامة التبويب 5: كافة تنسيقات الملفات والموصلات",
+                "hi": "टैब 5: सभी फ़ाइल प्रारूप और कनेक्टर",
+                "ru": "Вкладка 5: Все форматы файлов и соединители"
+        },
+        "Tableau Official Integration": {
+                "es": "Integración oficial de Tableau",
+                "fr": "Intégration officielle de Tableau",
+                "de": "Offizielle Tableau-Integration",
+                "zh": "Tableau 官方集成",
+                "ja": "Tableau 公式統合",
+                "pt": "Integração oficial do Tableau",
+                "ar": "التكامل الرسمي للتابلوه",
+                "hi": "झांकी आधिकारिक एकीकरण",
+                "ru": "Официальная интеграция Tableau"
+        },
+        "Tableau Packaged Workbook": {
+                "es": "Libro de trabajo empaquetado de Tableau",
+                "fr": "Classeur fourni par Tableau",
+                "de": "Tableau-Arbeitsmappe im Paket",
+                "zh": "Tableau 打包工作簿",
+                "ja": "Tableau パッケージ化されたワークブック",
+                "pt": "Pasta de trabalho empacotada do Tableau",
+                "ar": "المصنف المعبأ في Tableau",
+                "hi": "झांकी पैकेज्ड वर्कबुक",
+                "ru": "Упакованная рабочая книга Tableau"
+        },
+        "Tableau Packaged Workbook (.twbx)": {
+                "es": "Libro de trabajo empaquetado de Tableau (.twbx)",
+                "fr": "Classeur fourni Tableau (.twbx)",
+                "de": "Verpackte Tableau-Arbeitsmappe (.twbx)",
+                "zh": "Tableau 打包工作簿 (.twbx)",
+                "ja": "Tableau パッケージ化されたワークブック (.twbx)",
+                "pt": "Pasta de trabalho empacotada do Tableau (.twbx)",
+                "ar": "المصنف المعبأ في Tableau (.twbx)",
+                "hi": "झांकी पैकेज्ड वर्कबुक (.twbx)",
+                "ru": "Упакованная рабочая книга Tableau (.twbx)"
+        },
+        "Tableau Server / Cloud REST Publish": {
+                "es": "Publicación REST de Tableau Server/nube",
+                "fr": "Publication Tableau Server/Cloud REST",
+                "de": "Tableau Server/Cloud REST Publish",
+                "zh": "Tableau Server/云 REST 发布",
+                "ja": "Tableau Server / クラウド REST パブリッシュ",
+                "pt": "Publicação REST do Tableau Server/Cloud",
+                "ar": "خادم Tableau / نشر Cloud REST",
+                "hi": "झांकी सर्वर/क्लाउड रेस्ट प्रकाशन",
+                "ru": "Сервер Tableau/Облачная публикация REST"
+        },
+        "Tableau Studio": {
+                "es": "Estudio de tabla",
+                "fr": "Tableau Studio",
+                "de": "Tableau Studio",
+                "zh": "画面工作室",
+                "ja": "Tableau スタジオ",
+                "pt": "Estúdio de mesa",
+                "ar": "ستوديو تابلوه",
+                "hi": "झांकी स्टूडियो",
+                "ru": "Табло Студия"
+        },
+        "Tabular Hybrid Transformer": {
+                "es": "Transformador híbrido tabular",
+                "fr": "Transformateur hybride tabulaire",
+                "de": "Tabellarischer Hybridtransformator",
+                "zh": "板状混合变压器",
+                "ja": "板状ハイブリッド変圧器",
+                "pt": "Transformador Híbrido Tabular",
+                "ar": "محول هجين جدولي",
+                "hi": "सारणीबद्ध हाइब्रिड ट्रांसफार्मर",
+                "ru": "Табличный гибридный трансформатор"
+        },
+        "Tactile Slide Rail / Range Slider": {
+                "es": "Riel deslizante táctil/control deslizante de rango",
+                "fr": "Rail coulissant tactile/curseur de plage",
+                "de": "Taktile Gleitschiene/Bereichsschieber",
+                "zh": "触觉滑轨/范围滑块",
+                "ja": "タクタイルスライドレール/レンジスライダー",
+                "pt": "Trilho deslizante tátil / controle deslizante de alcance",
+                "ar": "السكك الحديدية المنزلقة اللمسية / مجموعة التمرير",
+                "hi": "स्पर्शनीय स्लाइड रेल/रेंज स्लाइडर",
+                "ru": "Тактильная направляющая/ползунок диапазона"
+        },
+        "Target Risk Threshold:": {
+                "es": "Umbral de riesgo objetivo:",
+                "fr": "Seuil de risque cible :",
+                "de": "Zielrisikoschwelle:",
+                "zh": "目标风险阈值：",
+                "ja": "目標リスクしきい値:",
+                "pt": "Limite de risco alvo:",
+                "ar": "عتبة المخاطرة المستهدفة:",
+                "hi": "लक्ष्य जोखिम सीमा:",
+                "ru": "Целевой порог риска:"
+        },
+        "Target only accounts with risk >= threshold": {
+                "es": "Dirigirse únicamente a cuentas con riesgo >= umbral",
+                "fr": "Cibler uniquement les comptes avec un risque >= seuil",
+                "de": "Zielen Sie nur auf Konten mit einem Risiko >= Schwellenwert ab",
+                "zh": "仅定位风险 >= 阈值的账户",
+                "ja": "リスクがしきい値以上のアカウントのみをターゲットにする",
+                "pt": "Segmentar apenas contas com risco >= limite",
+                "ar": "استهدف فقط الحسابات ذات المخاطر >= الحد الأدنى",
+                "hi": "लक्ष्य केवल जोखिम >= सीमा वाले खाते हैं",
+                "ru": "Таргетинг только на аккаунты с риском >= порога"
+        },
+        "Targeted Accounts": {
+                "es": "Cuentas específicas",
+                "fr": "Comptes ciblés",
+                "de": "Gezielte Konten",
+                "zh": "目标账户",
+                "ja": "標的にされたアカウント",
+                "pt": "Contas direcionadas",
+                "ar": "الحسابات المستهدفة",
+                "hi": "लक्षित खाते",
+                "ru": "Целевые аккаунты"
+        },
+        "Telemetry reload failed:": {
+                "es": "Falló la recarga de telemetría:",
+                "fr": "Échec du rechargement de la télémétrie :",
+                "de": "Das erneute Laden der Telemetrie ist fehlgeschlagen:",
+                "zh": "遥测重新加载失败：",
+                "ja": "テレメトリのリロードに失敗しました:",
+                "pt": "Falha no recarregamento da telemetria:",
+                "ar": "فشلت إعادة تحميل القياس عن بعد:",
+                "hi": "टेलीमेट्री पुनः लोड विफल:",
+                "ru": "Не удалось перезагрузить телеметрию:"
+        },
+        "Template (.pbit)": {
+                "es": "Plantilla (.pbit)",
+                "fr": "Modèle (.pbit)",
+                "de": "Vorlage (.pbit)",
+                "zh": "模板（.pbit）",
+                "ja": "テンプレート (.pbit)",
+                "pt": "Modelo (.pbit)",
+                "ar": "القالب (.pbit)",
+                "hi": "टेम्प्लेट (.pbit)",
+                "ru": "Шаблон (.pbit)"
+        },
+        "Tenure (Shortest First)": {
+                "es": "Tenencia (primero más corto)",
+                "fr": "Mandat (le plus court en premier)",
+                "de": "Amtszeit (kürzeste zuerst)",
+                "zh": "任期（时间最短的优先）",
+                "ja": "在職期間（短い順）",
+                "pt": "Mandato (mais curto primeiro)",
+                "ar": "المدة (الأقصر أولا)",
+                "hi": "कार्यकाल (सबसे छोटा पहला)",
+                "ru": "Срок владения (самый короткий срок)"
+        },
+        "Tenure: -- • Contract: --": {
+                "es": "Duración: -- • Contrato: --",
+                "fr": "Mandat : -- • Contrat : --",
+                "de": "Amtszeit: -- • Vertrag: --",
+                "zh": "任期： -- • 合同： --",
+                "ja": "在職期間: -- • 契約: --",
+                "pt": "Posse: -- • Contrato: --",
+                "ar": "المدة :- • العقد :-",
+                "hi": "कार्यकाल:-- • अनुबंध:--",
+                "ru": "Срок владения: -- • Контракт: --"
+        },
+        "Test in Sandbox": {
+                "es": "Prueba en la zona de pruebas",
+                "fr": "Tester dans le bac à sable",
+                "de": "Testen Sie in der Sandbox",
+                "zh": "在沙盒中测试",
+                "ja": "サンドボックスでのテスト",
+                "pt": "Teste em Sandbox",
+                "ar": "اختبار في رمل",
+                "hi": "सैंडबॉक्स में परीक्षण करें",
+                "ru": "Тест в песочнице"
+        },
+        "Test scenarios in the Sandbox simulation engine": {
+                "es": "Escenarios de prueba en el motor de simulación Sandbox",
+                "fr": "Scénarios de test dans le moteur de simulation Sandbox",
+                "de": "Testszenarien in der Sandbox-Simulations-Engine",
+                "zh": "沙箱模拟引擎中的测试场景",
+                "ja": "サンドボックス シミュレーション エンジンのテスト シナリオ",
+                "pt": "Cenários de teste no mecanismo de simulação Sandbox",
+                "ar": "سيناريوهات الاختبار في محرك محاكاة Sandbox",
+                "hi": "सैंडबॉक्स सिमुलेशन इंजन में परीक्षण परिदृश्य",
+                "ru": "Сценарии тестирования в механизме моделирования Sandbox"
+        },
+        "The number of months required for a customer to generate enough gross profit to pay back the initial acquisition cost.": {
+                "es": "La cantidad de meses necesarios para que un cliente genere suficientes ganancias brutas para pagar el costo de adquisición inicial.",
+                "fr": "Le nombre de mois nécessaires à un client pour générer suffisamment de bénéfice brut pour rembourser le coût d'acquisition initial.",
+                "de": "Die Anzahl der Monate, die ein Kunde benötigt, um genügend Bruttogewinn zu erwirtschaften, um die anfänglichen Anschaffungskosten zurückzuzahlen.",
+                "zh": "客户产生足够的毛利润以偿还初始采购成本所需的月数。",
+                "ja": "顧客が初期取得コストを返済するのに十分な粗利益を生み出すまでに必要な月数。",
+                "pt": "O número de meses necessários para que um cliente gere lucro bruto suficiente para pagar o custo de aquisição inicial.",
+                "ar": "عدد الأشهر اللازمة للعميل لتحقيق إجمالي ربح كافٍ لسداد تكلفة الاستحواذ الأولية.",
+                "hi": "किसी ग्राहक को प्रारंभिक अधिग्रहण लागत का भुगतान करने के लिए पर्याप्त सकल लाभ उत्पन्न करने के लिए आवश्यक महीनों की संख्या।",
+                "ru": "Количество месяцев, необходимое клиенту для получения достаточной валовой прибыли для погашения первоначальных затрат на приобретение."
+        },
+        "Theme": {
+                "es": "Tema",
+                "fr": "Thème",
+                "de": "Thema",
+                "zh": "主题",
+                "ja": "テーマ",
+                "pt": "Tema",
+                "ar": "الموضوع",
+                "hi": "थीम",
+                "ru": "Тема"
+        },
+        "Tied Compensations": {
+                "es": "Compensaciones vinculadas",
+                "fr": "Rémunérations liées",
+                "de": "Gebundene Vergütungen",
+                "zh": "附带报酬",
+                "ja": "連動報酬",
+                "pt": "Compensações vinculadas",
+                "ar": "التعويضات المقيدة",
+                "hi": "बंधा हुआ मुआवजा",
+                "ru": "Связанные компенсации"
+        },
+        "Time-Series": {
+                "es": "Serie de tiempo",
+                "fr": "Série chronologique",
+                "de": "Zeitreihe",
+                "zh": "时间序列",
+                "ja": "時系列",
+                "pt": "Série temporal",
+                "ar": "السلسلة الزمنية",
+                "hi": "समय-श्रृंखला",
+                "ru": "Временной ряд"
+        },
+        "Title & Neural Emblem Layout": {
+                "es": "Diseño de título y emblema neuronal",
+                "fr": "Disposition du titre et de l’emblème neuronal",
+                "de": "Titel und neuronales Emblem-Layout",
+                "zh": "标题和神经徽章布局",
+                "ja": "タイトルとニューラルエンブレムのレイアウト",
+                "pt": "Layout do título e do emblema neural",
+                "ar": "العنوان وتخطيط الشعار العصبي",
+                "hi": "शीर्षक और तंत्रिका प्रतीक लेआउट",
+                "ru": "Название и макет нейронной эмблемы"
+        },
+        "Toast Notification Container": {
+                "es": "Contenedor de notificación de brindis",
+                "fr": "Conteneur de notification Toast",
+                "de": "Toast-Benachrichtigungscontainer",
+                "zh": "Toast 通知容器",
+                "ja": "トースト通知コンテナ",
+                "pt": "Contêiner de notificação do brinde",
+                "ar": "حاوية إعلام التوست",
+                "hi": "टोस्ट अधिसूचना कंटेनर",
+                "ru": "Контейнер всплывающих уведомлений"
+        },
+        "Toggle Compact High-Density View": {
+                "es": "Alternar vista compacta de alta densidad",
+                "fr": "Activer/Désactiver la vue compacte haute densité",
+                "de": "Schalten Sie die kompakte High-Density-Ansicht um",
+                "zh": "切换紧凑高密度视图",
+                "ja": "Toggle コンパクト高密度ビュー",
+                "pt": "Alternar visualização compacta de alta densidade",
+                "ar": "تبديل العرض المضغوط عالي الكثافة",
+                "hi": "कॉम्पैक्ट उच्च-घनत्व दृश्य टॉगल करें",
+                "ru": "Toggle Компактный просмотр с высокой плотностью изображения"
+        },
+        "Toggle Dark / Light Theme": {
+                "es": "Alternar tema oscuro/claro",
+                "fr": "Basculer le thème sombre/clair",
+                "de": "Schalten Sie das Thema Dunkel/Hell um",
+                "zh": "切换深色/浅色主题",
+                "ja": "ダーク/ライトテーマの切り替え",
+                "pt": "Alternar tema escuro/claro",
+                "ar": "تبديل المظهر الداكن / الفاتح",
+                "hi": "डार्क/लाइट थीम टॉगल करें",
+                "ru": "Переключить темную/светлую тему"
+        },
+        "Toggle Datasets Sidebar": {
+                "es": "Alternar barra lateral de conjuntos de datos",
+                "fr": "Toggle la barre latérale des ensembles de données",
+                "de": "Toggle Datasets-Seitenleiste",
+                "zh": "切换数据集侧边栏",
+                "ja": "データセットの切り替えサイドバー",
+                "pt": "Alternar barra lateral de conjuntos de dados",
+                "ar": "تبديل الشريط الجانبي لمجموعات البيانات",
+                "hi": "डेटासेट साइडबार टॉगल करें",
+                "ru": "Переключить боковую панель «Наборы данных»"
+        },
+        "Toggle Notes Sidebar": {
+                "es": "Alternar barra lateral de notas",
+                "fr": "Activer/Désactiver la barre latérale Notes",
+                "de": "Notizen-Seitenleiste umschalten",
+                "zh": "切换注释侧边栏",
+                "ja": "ノートサイドバーの切り替え",
+                "pt": "Alternar barra lateral de notas",
+                "ar": "تبديل الشريط الجانبي للملاحظات",
+                "hi": "नोट्स साइडबार टॉगल करें",
+                "ru": "Переключить боковую панель заметок"
+        },
+        "Toggle Theme Palette": {
+                "es": "Alternar paleta de temas",
+                "fr": "Basculer la palette de thèmes",
+                "de": "Themenpalette umschalten",
+                "zh": "切换主题调色板",
+                "ja": "テーマパレットの切り替え",
+                "pt": "Alternar paleta de temas",
+                "ar": "تبديل لوحة الموضوع",
+                "hi": "थीम पैलेट टॉगल करें",
+                "ru": "Переключить палитру тем"
+        },
+        "Tool A to Z Guide": {
+                "es": "Guía de herramientas de la A a la Z",
+                "fr": "Guide des outils de A à Z",
+                "de": "Werkzeug-Anleitung von A bis Z",
+                "zh": "工具 A 到 Z 指南",
+                "ja": "ツール A to Z ガイド",
+                "pt": "Guia de ferramentas de A a Z",
+                "ar": "دليل الأداة من الألف إلى الياء",
+                "hi": "टूल ए टू जेड गाइड",
+                "ru": "Руководство по инструменту от А до Я"
+        },
+        "Tool Information": {
+                "es": "Información de la herramienta",
+                "fr": "Informations sur l'outil",
+                "de": "Werkzeuginformationen",
+                "zh": "工具信息",
+                "ja": "ツール情報",
+                "pt": "Informações sobre a ferramenta",
+                "ar": "معلومات الأداة",
+                "hi": "उपकरण की जानकारी",
+                "ru": "Информация об инструменте"
+        },
+        "Tool Information Modal": {
+                "es": "Modal de información de herramientas",
+                "fr": "Modal d’informations sur l’outil",
+                "de": "Werkzeuginformationsmodal",
+                "zh": "工具信息模态",
+                "ja": "ツール情報モーダル",
+                "pt": "Modal de informações da ferramenta",
+                "ar": "معلومات الأداة مشروطة",
+                "hi": "उपकरण सूचना मॉडल",
+                "ru": "Модальное окно информации об инструменте"
+        },
+        "Top 20 At-Risk Customer Directory": {
+                "es": "Directorio de los 20 principales clientes en riesgo",
+                "fr": "Répertoire des 20 principaux clients à risque",
+                "de": "Verzeichnis der 20 gefährdetsten Kunden",
+                "zh": "前 20 位高风险客户名录",
+                "ja": "リスクのあるトップ 20 の顧客ディレクトリ",
+                "pt": "Diretório dos 20 principais clientes em risco",
+                "ar": "أعلى 20 دليل للعملاء المعرضين للخطر",
+                "hi": "शीर्ष 20 जोखिम वाली ग्राहक निर्देशिका",
+                "ru": "Каталог 20 наиболее подверженных риску клиентов"
+        },
+        "Top 20 At-Risk Customer Directory (Page 2 Visual)": {
+                "es": "Directorio de los 20 clientes principales en riesgo (página 2 visual)",
+                "fr": "Répertoire des 20 principaux clients à risque (page 2 visuelle)",
+                "de": "Verzeichnis der 20 gefährdetsten Kunden (Seite 2, visuell)",
+                "zh": "前 20 位高风险客户名录（第 2 页视觉）",
+                "ja": "危険にさらされている上位 20 の顧客ディレクトリ (ページ 2 ビジュアル)",
+                "pt": "Diretório dos 20 principais clientes em risco (visual da página 2)",
+                "ar": "أهم 20 دليل للعملاء المعرضين للخطر (الصفحة 2 مرئية)",
+                "hi": "शीर्ष 20 जोखिम वाले ग्राहक निर्देशिका (पेज 2 दृश्य)",
+                "ru": "Справочник 20 наиболее подверженных риску клиентов (стр. 2, наглядное изображение)"
+        },
+        "Top Selector Cards Grid": {
+                "es": "Cuadrícula de tarjetas de selección superior",
+                "fr": "Grille des cartes de sélection supérieure",
+                "de": "Top-Auswahlkartenraster",
+                "zh": "顶级选择卡网格",
+                "ja": "トップセレクターカードグリッド",
+                "pt": "Grade de cartões seletores superiores",
+                "ar": "شبكة بطاقات المحدد العلوي",
+                "hi": "शीर्ष चयनकर्ता कार्ड ग्रिड",
+                "ru": "Сетка лучших карточек выбора"
+        },
+        "Total Evaluated": {
+                "es": "Total evaluado",
+                "fr": "Total évalué",
+                "de": "Insgesamt bewertet",
+                "zh": "总评价",
+                "ja": "評価合計",
+                "pt": "Total avaliado",
+                "ar": "إجمالي التقييم",
+                "hi": "कुल मूल्यांकन",
+                "ru": "Всего оценено"
+        },
+        "Total Monthly Charges": {
+                "es": "Cargos mensuales totales",
+                "fr": "Frais mensuels totaux",
+                "de": "Gesamte monatliche Gebühren",
+                "zh": "每月总费用",
+                "ja": "月額料金合計",
+                "pt": "Total de cobranças mensais",
+                "ar": "إجمالي الرسوم الشهرية",
+                "hi": "कुल मासिक शुल्क",
+                "ru": "Общая ежемесячная плата"
+        },
+        "Total active accounts analyzed in current telemetry window": {
+                "es": "Total de cuentas activas analizadas en la ventana de telemetría actual",
+                "fr": "Total des comptes actifs analysés dans la fenêtre de télémétrie actuelle",
+                "de": "Gesamtzahl der im aktuellen Telemetriefenster analysierten aktiven Konten",
+                "zh": "当前遥测窗口中分析的活跃帐户总数",
+                "ja": "現在のテレメトリ ウィンドウで分析されたアクティブ アカウントの合計",
+                "pt": "Total de contas ativas analisadas na janela de telemetria atual",
+                "ar": "إجمالي الحسابات النشطة التي تم تحليلها في نافذة القياس عن بعد الحالية",
+                "hi": "वर्तमान टेलीमेट्री विंडो में कुल सक्रिय खातों का विश्लेषण किया गया",
+                "ru": "Общее количество активных учетных записей, проанализированных в текущем окне телеметрии"
+        },
+        "Total active contract value": {
+                "es": "Valor total del contrato activo",
+                "fr": "Valeur totale du contrat actif",
+                "de": "Gesamtwert des aktiven Vertrags",
+                "zh": "活跃合约总价值",
+                "ja": "有効な契約総額",
+                "pt": "Valor total do contrato ativo",
+                "ar": "إجمالي قيمة العقد النشط",
+                "hi": "कुल सक्रिय अनुबंध मूल्य",
+                "ru": "Общая стоимость активного контракта"
+        },
+        "Total predictable, normalized monthly income generated by active customer subscriptions.": {
+                "es": "Ingresos mensuales totales, predecibles y normalizados, generados por las suscripciones activas de los clientes.",
+                "fr": "Revenu mensuel total prévisible et normalisé généré par les abonnements clients actifs.",
+                "de": "Gesamtes vorhersehbares, normalisiertes monatliches Einkommen, das durch aktive Kundenabonnements generiert wird.",
+                "zh": "活跃客户订阅产生的可预测、标准化月收入总额。",
+                "ja": "アクティブな顧客のサブスクリプションによって生み出される、予測可能で正規化された月収の合計。",
+                "pt": "Renda mensal total previsível e normalizada gerada por assinaturas de clientes ativos.",
+                "ar": "إجمالي الدخل الشهري الطبيعي الذي يمكن التنبؤ به الناتج عن اشتراكات العملاء النشطة.",
+                "hi": "सक्रिय ग्राहक सदस्यता द्वारा उत्पन्न कुल अनुमानित, सामान्यीकृत मासिक आय।",
+                "ru": "Общий прогнозируемый нормализованный ежемесячный доход, полученный от активных подписок клиентов."
+        },
+        "Tour Step Title": {
+                "es": "Título del paso del recorrido",
+                "fr": "Titre de l'étape de la tournée",
+                "de": "Titel des Tourschritts",
+                "zh": "游览步骤标题",
+                "ja": "ツアーステップタイトル",
+                "pt": "Título da etapa do tour",
+                "ar": "عنوان خطوة الجولة",
+                "hi": "यात्रा चरण शीर्षक",
+                "ru": "Название этапа тура"
+        },
+        "Tour step explanation goes here.": {
+                "es": "La explicación de los pasos del recorrido va aquí.",
+                "fr": "L'explication des étapes de la visite va ici.",
+                "de": "Die Erklärung der Tourschritte finden Sie hier.",
+                "zh": "此处包含游览步骤说明。",
+                "ja": "ツアー手順の説明はここにあります。",
+                "pt": "A explicação da etapa do tour está aqui.",
+                "ar": "شرح خطوة الجولة يذهب هنا.",
+                "hi": "यात्रा चरण की व्याख्या यहां दी गई है।",
+                "ru": "Объяснение этапов тура находится здесь."
+        },
+        "True Neg (TN)": {
+                "es": "Neg verdadero (TN)",
+                "fr": "Vrai négatif (TN)",
+                "de": "Echtes Negativ (TN)",
+                "zh": "真阴性 (TN)",
+                "ja": "真陰性 (TN)",
+                "pt": "Verdadeiro Neg (TN)",
+                "ar": "صحيح نيج (TN)",
+                "hi": "सच्चा नकारात्मक (टीएन)",
+                "ru": "Истинный Нег (Теннесси)"
+        },
+        "True Negative (TN): Loyal accounts correctly classified as low-risk": {
+                "es": "Verdadero Negativo (TN): Cuentas fidelizadas correctamente clasificadas como de bajo riesgo",
+                "fr": "Vrai négatif (TN) : comptes fidèles correctement classés comme à faible risque",
+                "de": "True Negative (TN): Treuekonten wurden korrekt als risikoarm eingestuft",
+                "zh": "真阴性 (TN)：忠诚账户被正确分类为低风险",
+                "ja": "True Negative (TN): ロイヤル アカウントは低リスクとして正しく分類されています",
+                "pt": "Verdadeiro Negativo (TN): Contas fiéis classificadas corretamente como de baixo risco",
+                "ar": "سلبي حقيقي (TN): يتم تصنيف الحسابات الموالية بشكل صحيح على أنها منخفضة المخاطر",
+                "hi": "सच्चा नकारात्मक (टीएन): वफादार खातों को सही ढंग से कम जोखिम के रूप में वर्गीकृत किया गया है",
+                "ru": "True Negative (TN): Лояльные счета правильно классифицируются как аккаунты с низким уровнем риска."
+        },
+        "True Pos (TP)": {
+                "es": "Posición verdadera (TP)",
+                "fr": "Vraie position (TP)",
+                "de": "Wahre Position (TP)",
+                "zh": "真实位置 (TP)",
+                "ja": "トゥルーポジ（TP）",
+                "pt": "Pos verdadeira (TP)",
+                "ar": "نقاط البيع الحقيقية (TP)",
+                "hi": "सच्ची स्थिति (टीपी)",
+                "ru": "Истинная позиция (TP)"
+        },
+        "True Positive (TP): At-risk accounts successfully detected and flagged for retention": {
+                "es": "Verdadero positivo (TP): cuentas en riesgo detectadas y marcadas con éxito para su retención",
+                "fr": "Vrai positif (TP) : comptes à risque détectés avec succès et signalés pour conservation",
+                "de": "True Positive (TP): Gefährdete Konten wurden erfolgreich erkannt und zur Aufbewahrung markiert",
+                "zh": "真阳性 (TP)：成功检测到有风险的帐户并标记为保留",
+                "ja": "真陽性 (TP): リスクのあるアカウントが正常に検出され、保持のフラグが付けられました",
+                "pt": "Verdadeiro Positivo (TP): contas em risco detectadas e sinalizadas com sucesso para retenção",
+                "ar": "True Positive (TP): تم اكتشاف الحسابات المعرضة للخطر ووضع علامة عليها للاحتفاظ بها بنجاح",
+                "hi": "ट्रू पॉजिटिव (टीपी): जोखिम वाले खातों का सफलतापूर्वक पता लगाया गया और उन्हें बनाए रखने के लिए चिह्नित किया गया",
+                "ru": "True Positive (TP): учетные записи из группы риска успешно обнаружены и помечены для хранения."
+        },
+        "Twitter": {
+                "es": "Gorjeo",
+                "fr": "Twitter",
+                "de": "Twitter",
+                "zh": "推特",
+                "ja": "ツイッター",
+                "pt": "Twitter",
+                "ar": "تويتر",
+                "hi": "ट्विटर",
+                "ru": "Твиттер"
+        },
+        "Two Year Contract": {
+                "es": "Contrato de dos años",
+                "fr": "Contrat de deux ans",
+                "de": "Zweijahresvertrag",
+                "zh": "两年合同",
+                "ja": "2年契約",
+                "pt": "Contrato de dois anos",
+                "ar": "عقد لمدة عامين",
+                "hi": "दो साल का अनुबंध",
+                "ru": "Двухлетний контракт"
+        },
+        "Type a command or search section (e.g. Overview, Sandbox, Copilot, Reload)...": {
+                "es": "Escriba un comando o sección de búsqueda (por ejemplo, Descripción general, Sandbox, Copilot, Recargar)...",
+                "fr": "Tapez une commande ou une section de recherche (par exemple, Présentation, Sandbox, Copilot, Reload)...",
+                "de": "Geben Sie einen Befehl oder einen Suchabschnitt ein (z. B. Übersicht, Sandbox, Copilot, Neu laden) ...",
+                "zh": "输入命令或搜索部分（例如概述、沙盒、Copilot、重新加载）...",
+                "ja": "コマンドを入力するか、セクションを検索します (例: 概要、サンドボックス、コパイロット、リロード)...",
+                "pt": "Digite um comando ou seção de pesquisa (por exemplo, Visão geral, Sandbox, Copilot, Recarregar)...",
+                "ar": "اكتب أمرًا أو قسم بحث (على سبيل المثال، نظرة عامة، Sandbox، Copilot، Reload)...",
+                "hi": "एक आदेश टाइप करें या अनुभाग खोजें (उदा. अवलोकन, सैंडबॉक्स, कोपायलट, पुनः लोड करें)...",
+                "ru": "Введите команду или раздел поиска (например, «Обзор», «Песочница», «Второй пилот», «Перезагрузка»)..."
+        },
+        "Typography Pairing:": {
+                "es": "Emparejamiento de tipografía:",
+                "fr": "Appariement typographique :",
+                "de": "Typografie-Paarung:",
+                "zh": "版式配对：",
+                "ja": "タイポグラフィの組み合わせ:",
+                "pt": "Emparelhamento de tipografia:",
+                "ar": "إقران الطباعة:",
+                "hi": "टाइपोग्राफी जोड़ी:",
+                "ru": "Типографское сочетание:"
+        },
+        "USD ($)": {
+                "es": "USD ($)",
+                "fr": "USD ($)",
+                "de": "USD ($)",
+                "zh": "美元 ($)",
+                "ja": "米ドル ($)",
+                "pt": "USD ($)",
+                "ar": "دولار أمريكي ($)",
+                "hi": "अमरीकी डालर ($)",
+                "ru": "Доллар США ($)"
+        },
+        "Ultra Violet & Lavender": {
+                "es": "Ultravioleta y lavanda",
+                "fr": "Ultra Violet et Lavande",
+                "de": "Ultraviolett und Lavendel",
+                "zh": "紫外线和薰衣草色",
+                "ja": "ウルトラバイオレット＆ラベンダー",
+                "pt": "Ultra Violeta e Lavanda",
+                "ar": "الترا البنفسجي واللافندر",
+                "hi": "अल्ट्रा वायलेट और लैवेंडर",
+                "ru": "Ультрафиолет и лаванда"
+        },
+        "Unsplash Stock": {
+                "es": "Stock sin salpicar",
+                "fr": "Unsplash Stock",
+                "de": "Unsplash-Bestand",
+                "zh": "Unsplash 库存",
+                "ja": "アンスプラッシュストック",
+                "pt": "Estoque Unsplash",
+                "ar": "أونسبلاش الأسهم",
+                "hi": "स्टॉक अनप्लैश करें",
+                "ru": "Unsplash Stock"
+        },
+        "Up": {
+                "es": "arriba",
+                "fr": "Vers le haut",
+                "de": "Auf",
+                "zh": "向上",
+                "ja": "上へ",
+                "pt": "Acima",
+                "ar": "لأعلى",
+                "hi": "ऊपर",
+                "ru": "Вверх"
+        },
+        "Upload a customer file to generate an AI retention narrative.": {
+                "es": "Cargue un archivo de clientes para generar el análisis de retención por IA.",
+                "fr": "Importez un fichier clients pour générer la synthèse IA.",
+                "de": "Laden Sie Kundendaten hoch, um einen KI-Bericht zu generieren.",
+                "zh": "请上传客户数据集以生成专属 AI 商业洞察报告。",
+                "ja": "顧客ファイルをアップロードしてAI診断レポートを生成してください。",
+                "pt": "Faça upload de um arquivo de clientes para gerar o diagnóstico.",
+                "ar": "قم بتحميل ملف العملاء لإنشاء تقرير استبقاء مدعوم بالذكاء الاصطناعي.",
+                "hi": "AI रिपोर्ट उत्पन्न करने के लिए ग्राहक फ़ाइल अपलोड करें।",
+                "ru": "Загрузите файл клиентов для формирования аналитического отчета."
+        },
+        "Usage Milestone Alerts": {
+                "es": "Alertas de hitos de uso",
+                "fr": "Alertes d’étape d’utilisation",
+                "de": "Nutzungsmeilensteinwarnungen",
+                "zh": "使用里程碑警报",
+                "ja": "使用状況マイルストーンアラート",
+                "pt": "Alertas de marco de uso",
+                "ar": "تنبيهات مرحلة الاستخدام",
+                "hi": "उपयोग माइलस्टोन अलर्ट",
+                "ru": "Оповещения об этапах использования"
+        },
+        "View insights as role": {
+                "es": "Ver insights como rol",
+                "fr": "Afficher les insights en tant que rôle",
+                "de": "Einblicke als Rolle ansehen",
+                "zh": "将见解视为角色",
+                "ja": "インサイトを役割として表示する",
+                "pt": "Ver insights como função",
+                "ar": "عرض الرؤى كدور",
+                "hi": "अंतर्दृष्टि को भूमिका के रूप में देखें",
+                "ru": "Просмотр статистики как роли"
+        },
+        "Vintage Navy & Crimson (Design Forward)": {
+                "es": "Vintage azul marino y carmesí (diseño avanzado)",
+                "fr": "Vintage marine et cramoisi (Design Forward)",
+                "de": "Vintage Navy & Crimson (Design Forward)",
+                "zh": "复古海军蓝和深红色（设计前沿）",
+                "ja": "ヴィンテージ ネイビー & クリムゾン (デザインフォワード)",
+                "pt": "Vintage Marinha e Carmesim (Design Forward)",
+                "ar": "اللون الأزرق الداكن والقرمزي العتيق (التصميم للأمام)",
+                "hi": "विंटेज नेवी और क्रिमसन (डिज़ाइन फॉरवर्ड)",
+                "ru": "Винтажный темно-синий и малиновый (вперед в дизайне)"
+        },
+        "WATCHLIST COHORT": {
+                "es": "COHORTE DE LISTA DE SEGURIDAD",
+                "fr": "COHORTE DE LA LISTE DE SURVEILLANCE",
+                "de": "WATCHLIST-KOHORTE",
+                "zh": "关注列表群组",
+                "ja": "ウォッチリストコホート",
+                "pt": "COORTE DA LISTA DE ASSISTÊNCIA",
+                "ar": "مجموعة قائمة المراقبة",
+                "hi": "निगरानी सूची समूह",
+                "ru": "КОГОРТА СПИСКА ПРОСМОТРА"
+        },
+        "Watchlist": {
+                "es": "Lista de vigilancia",
+                "fr": "Liste de surveillance",
+                "de": "Beobachtungsliste",
+                "zh": "关注列表",
+                "ja": "ウォッチリスト",
+                "pt": "Lista de observação",
+                "ar": "قائمة المراقبة",
+                "hi": "निगरानी सूची",
+                "ru": "Список наблюдения"
+        },
+        "Webhook fire failed:": {
+                "es": "Error al activar el webhook:",
+                "fr": "Le lancement du webhook a échoué :",
+                "de": "Webhook-Auslösung fehlgeschlagen:",
+                "zh": "Webhook 触发失败：",
+                "ja": "Webhook の起動に失敗しました:",
+                "pt": "Falha no disparo do webhook:",
+                "ar": "فشل إطلاق Webhook:",
+                "hi": "वेबहुक फ़ायर विफल:",
+                "ru": "Не удалось запустить вебхук:"
+        },
+        "Weekly (Monday 8AM)": {
+                "es": "Semanal (lunes 8 a.m.)",
+                "fr": "Hebdomadaire (lundi 8h)",
+                "de": "Wöchentlich (Montag 8 Uhr)",
+                "zh": "每周（周一上午 8 点）",
+                "ja": "毎週 (月曜日午前 8 時)",
+                "pt": "Semanalmente (segunda-feira, 8h)",
+                "ar": "أسبوعيًا (الاثنين 8 صباحًا)",
+                "hi": "साप्ताहिक (सोमवार प्रातः 8 बजे)",
+                "ru": "Еженедельно (понедельник, 8:00)"
+        },
+        "Weekly Usage Hours": {
+                "es": "Horas de uso semanales",
+                "fr": "Heures d'utilisation hebdomadaires",
+                "de": "Wöchentliche Nutzungszeiten",
+                "zh": "每周使用时间",
+                "ja": "週の使用時間",
+                "pt": "Horário de uso semanal",
+                "ar": "ساعات الاستخدام الأسبوعية",
+                "hi": "साप्ताहिक उपयोग के घंटे",
+                "ru": "Еженедельные часы использования"
+        },
+        "Weighted average probability": {
+                "es": "Probabilidad media ponderada",
+                "fr": "Probabilité moyenne pondérée",
+                "de": "Gewichtete durchschnittliche Wahrscheinlichkeit",
+                "zh": "加权平均概率",
+                "ja": "加重平均確率",
+                "pt": "Probabilidade média ponderada",
+                "ar": "متوسط الاحتمالية المرجحة",
+                "hi": "भारित औसत संभावना",
+                "ru": "Средневзвешенная вероятность"
+        },
+        "Welcome to Business Decision Intelligence": {
+                "es": "Bienvenido a Inteligencia de Decisiones Empresariales",
+                "fr": "Bienvenue dans la Business Intelligence Décisionnelle",
+                "de": "Willkommen bei Business Decision Intelligence",
+                "zh": "欢迎来到商业决策智能",
+                "ja": "ビジネス意思決定インテリジェンスへようこそ",
+                "pt": "Bem-vindo à Inteligência de Decisão de Negócios",
+                "ar": "مرحبا بكم في ذكاء قرارات الأعمال",
+                "hi": "बिजनेस डिसीजन इंटेलिजेंस में आपका स्वागत है",
+                "ru": "Добро пожаловать в Business Decision Intelligence"
+        },
+        "What it is:": {
+                "es": "Qué es:",
+                "fr": "Qu'est-ce que c'est :",
+                "de": "Was es ist:",
+                "zh": "它是什么：",
+                "ja": "それは何ですか:",
+                "pt": "O que é:",
+                "ar": "ما هو:",
+                "hi": "यह क्या है:",
+                "ru": "Что это такое:"
+        },
+        "What's wrong with my business?": {
+                "es": "¿Qué problemas tiene mi negocio?",
+                "fr": "Qu'est-ce qui freine mon entreprise ?",
+                "de": "Welche Engpässe bestehen im Unternehmen?",
+                "zh": "当前业务存在哪些核心瓶颈？",
+                "ja": "現在ビジネスに生じている課題は？",
+                "pt": "O que está com problema no meu negócio?",
+                "ar": "ما هي المشكلات في أعمالي؟",
+                "hi": "मेरे व्यापार में क्या समस्या है?",
+                "ru": "Какие проблемы есть в моем бизнесе?"
+        },
+        "What-If AI Sandbox Simulator": {
+                "es": "Simulador de entorno aislado de IA \\\\",
+                "fr": "Simulateur de bac à sable IA de simulation",
+                "de": "Was-wäre-wenn-KI-Sandbox-Simulator",
+                "zh": "假设人工智能沙箱模拟器",
+                "ja": "What-If AI サンドボックス シミュレーター",
+                "pt": "Simulador de sandbox de IA hipotética",
+                "ar": "ماذا لو محاكاة وضع الحماية بالذكاء الاصطناعي",
+                "hi": "क्या-अगर एआई सैंडबॉक्स सिम्युलेटर",
+                "ru": "Симулятор песочницы «Что, если» с искусственным интеллектом"
+        },
+        "Workspace Hub Capabilities & Architecture": {
+                "es": "Capacidades y arquitectura de Workspace Hub",
+                "fr": "Fonctionnalités et architecture du Workspace Hub",
+                "de": "Funktionen und Architektur des Workspace Hub",
+                "zh": "工作空间中心功能和架构",
+                "ja": "Workspace Hub の機能とアーキテクチャ",
+                "pt": "Recursos e arquitetura do Workspace Hub",
+                "ar": "قدرات وبنية مركز مساحة العمل",
+                "hi": "कार्यक्षेत्र हब क्षमताएं और वास्तुकला",
+                "ru": "Возможности и архитектура Workspace Hub"
+        },
+        "Workspace Sections Checklist": {
+                "es": "Lista de verificación de secciones del espacio de trabajo",
+                "fr": "Liste de contrôle des sections de l'espace de travail",
+                "de": "Checkliste für Arbeitsbereichsabschnitte",
+                "zh": "工作区部分清单",
+                "ja": "ワークスペースセクションのチェックリスト",
+                "pt": "Lista de verificação das seções do espaço de trabalho",
+                "ar": "قائمة مراجعة أقسام مساحة العمل",
+                "hi": "कार्यक्षेत्र अनुभाग चेकलिस्ट",
+                "ru": "Контрольный список разделов рабочей области"
+        },
+        "Workspaces & Suites": {
+                "es": "Espacios de trabajo y suites",
+                "fr": "Espaces de travail et suites",
+                "de": "Arbeitsbereiche und Suiten",
+                "zh": "工作空间和套房",
+                "ja": "ワークスペースとスイート",
+                "pt": "Espaços de trabalho e suítes",
+                "ar": "مساحات العمل والأجنحة",
+                "hi": "कार्यस्थान और सुइट्स",
+                "ru": "Рабочие места и люксы"
+        },
+        "Write internal alignment notes or call summary...": {
+                "es": "Redactar notas de alineación interna o resumen de llamadas...",
+                "fr": "Rédiger des notes d'alignement interne ou un résumé d'appel...",
+                "de": "Schreiben Sie interne Abstimmungsnotizen oder eine Anrufzusammenfassung ...",
+                "zh": "编写内部对齐注释或通话摘要...",
+                "ja": "内部調整メモを書いたり、通話の概要を書いたり...",
+                "pt": "Escreva notas de alinhamento interno ou resumo da chamada...",
+                "ar": "اكتب ملاحظات المحاذاة الداخلية أو ملخص المكالمة...",
+                "hi": "आंतरिक संरेखण नोट्स लिखें या सारांश कॉल करें...",
+                "ru": "Напишите заметки о внутреннем согласовании или сводку звонков..."
+        },
+        "Year, Quarter, Month, Day, IsWeekend": {
+                "es": "Año, Trimestre, Mes, Día, Es Fin De Semana",
+                "fr": "Année, trimestre, mois, jour, est-ce week-end",
+                "de": "Jahr, Quartal, Monat, Tag, IsWeekend",
+                "zh": "年、季度、月、日、是周末",
+                "ja": "年、四半期、月、日、週末",
+                "pt": "Ano, trimestre, mês, dia, fim de semana",
+                "ar": "سنة، ربع، شهر، يوم، عطلة نهاية الأسبوع",
+                "hi": "वर्ष, तिमाही, महीना, दिन, इससप्ताहांत",
+                "ru": "Год, Квартал, Месяц, День, Выходной"
+        },
+        "and": {
+                "es": "y",
+                "fr": "et",
+                "de": "und",
+                "zh": "和",
+                "ja": "そして",
+                "pt": "e",
+                "ar": "و",
+                "hi": "और",
+                "ru": "и"
+        },
+        "board-members@company.com": {
+                "es": "miembros-de-la-junta@empresa.com",
+                "fr": "board-members@company.com",
+                "de": "board-members@company.com",
+                "zh": "board-members@company.com",
+                "ja": "board-members@company.com",
+                "pt": "membros do conselho@empresa.com",
+                "ar": "board-members@company.com",
+                "hi": "बोर्ड-members@company.com",
+                "ru": "board-members@company.com"
+        },
+        "column. Optional features:": {
+                "es": "columna. Características opcionales:",
+                "fr": "colonne. Fonctionnalités optionnelles :",
+                "de": "Spalte. Optionale Funktionen:",
+                "zh": "列。可选功能：",
+                "ja": "コラム。オプション機能:",
+                "pt": "coluna. Recursos opcionais:",
+                "ar": "عمود. الميزات الاختيارية:",
+                "hi": "स्तंभ. वैकल्पिक विशेषताएं:",
+                "ru": "столбец. Дополнительные функции:"
+        },
+        "csm-alerts@company.com": {
+                "es": "csm-alerts@empresa.com",
+                "fr": "csm-alerts@company.com",
+                "de": "csm-alerts@company.com",
+                "zh": "csm-alerts@company.com",
+                "ja": "csm-alerts@company.com",
+                "pt": "csm-alerts@company.com",
+                "ar": "csm-alerts@company.com",
+                "hi": "csm-alerts@company.com",
+                "ru": "csm-alerts@company.com"
+        },
+        "guaranteed <2 hour response SLA": {
+                "es": "SLA de respuesta garantizada de <2 horas",
+                "fr": "SLA de réponse garanti <2 heures",
+                "de": "Garantierte Reaktions-SLA von <2 Stunden",
+                "zh": "保证 <2 小时响应 SLA",
+                "ja": "2 時間未満の応答 SLA を保証",
+                "pt": "SLA de resposta garantido <2 horas",
+                "ar": "ضمان استجابة SLA لمدة أقل من ساعتين",
+                "hi": "गारंटीकृत <2 घंटे प्रतिक्रिया एसएलए",
+                "ru": "гарантированный ответ SLA <2 часов"
+        },
+        "html": {
+                "es": "HTML",
+                "fr": "HTML",
+                "de": "html",
+                "zh": "html",
+                "ja": "html",
+                "pt": "HTML",
+                "ar": "أتش تي أم أل",
+                "hi": "html",
+                "ru": "HTML"
+        },
+        "https://hooks.slack.com/services/...": {
+                "es": "https://hooks.slack.com/services/...",
+                "fr": "https://hooks.slack.com/services/...",
+                "de": "https://hooks.slack.com/services/...",
+                "zh": "https://hooks.slack.com/services/...",
+                "ja": "https://hooks.slack.com/services/...",
+                "pt": "https://hooks.slack.com/services/...",
+                "ar": "https://hooks.slack.com/services/...",
+                "hi": "https://hooks.slack.com/services/...",
+                "ru": "https://hooks.slack.com/services/..."
+        },
+        "is a state-of-the-art Business Decision Intelligence Platform. It leverages advanced predictive models to evaluate risk, identify revenue leakages, prioritize root-cause segments, and drive automated closed-loop resolution playbooks.": {
+                "es": "es una plataforma de inteligencia de decisiones comerciales de última generación. Aprovecha modelos predictivos avanzados para evaluar el riesgo, identificar fugas de ingresos, priorizar segmentos de causa raíz e impulsar guías automatizadas de resolución de circuito cerrado.",
+                "fr": "est une plateforme de pointe en matière de Business Decision Intelligence. Il exploite des modèles prédictifs avancés pour évaluer les risques, identifier les fuites de revenus, hiérarchiser les segments de causes profondes et piloter des playbooks de résolution automatisés en boucle fermée.",
+                "de": "ist eine hochmoderne Business Decision Intelligence-Plattform. Es nutzt fortschrittliche Vorhersagemodelle, um Risiken zu bewerten, Umsatzverluste zu identifizieren, Ursachensegmente zu priorisieren und automatisierte Playbooks zur Lösung im geschlossenen Regelkreis voranzutreiben.",
+                "zh": "是最先进的商业决策智能平台。它利用先进的预测模型来评估风险，识别收入泄漏，优先考虑根本原因部分，并推动自动化闭环解决方案。",
+                "ja": "は、最先端のビジネス意思決定インテリジェンス プラットフォームです。高度な予測モデルを活用して、リスクを評価し、収益漏洩を特定し、根本原因セグメントに優先順位を付け、自動化されたクローズドループ解決戦略を推進します。",
+                "pt": "é uma plataforma de inteligência de decisão de negócios de última geração. Ele aproveita modelos preditivos avançados para avaliar riscos, identificar perdas de receita, priorizar segmentos de causa raiz e impulsionar manuais automatizados de resolução de ciclo fechado.",
+                "ar": "هي منصة ذكاء قرارات الأعمال الحديثة. فهو يستفيد من النماذج التنبؤية المتقدمة لتقييم المخاطر، وتحديد تسرب الإيرادات، وتحديد أولويات قطاعات الأسباب الجذرية، وتوجيه قواعد اللعبة الآلية لحل الحلقة المغلقة.",
+                "hi": "एक अत्याधुनिक बिजनेस डिसीजन इंटेलिजेंस प्लेटफॉर्म है। यह जोखिम का मूल्यांकन करने, राजस्व रिसाव की पहचान करने, मूल-कारण खंडों को प्राथमिकता देने और स्वचालित बंद-लूप रिज़ॉल्यूशन प्लेबुक चलाने के लिए उन्नत पूर्वानुमानित मॉडल का लाभ उठाता है।",
+                "ru": "— это современная платформа для анализа бизнес-решений. Он использует передовые модели прогнозирования для оценки рисков, выявления утечек доходов, определения приоритетов сегментов первопричин и создания автоматизированных сценариев разрешения проблем с обратной связью."
+        },
+        "is built on a single core principle:": {
+                "es": "se basa en un principio básico único:",
+                "fr": "est construit sur un seul principe fondamental :",
+                "de": "basiert auf einem einzigen Kernprinzip:",
+                "zh": "建立在单一核心原则之上：",
+                "ja": "は、次の 1 つの基本原則に基づいて構築されています。",
+                "pt": "é construído sobre um único princípio fundamental:",
+                "ar": "مبني على مبدأ أساسي واحد:",
+                "hi": "एक ही मूल सिद्धांत पर बनाया गया है:",
+                "ru": "построен по единому основному принципу:"
+        },
+        "must be assigned to a Customer Success Manager with mandatory 1-on-1 outreach initiated within": {
+                "es": "debe ser asignado a un Gerente de Éxito del Cliente con alcance 1 a 1 obligatorio iniciado dentro",
+                "fr": "doit être affecté à un Customer Success Manager avec une sensibilisation individuelle obligatoire initiée dans",
+                "de": "muss einem Customer Success Manager zugewiesen werden, bei dem eine obligatorische persönliche Kontaktaufnahme eingeleitet werden muss",
+                "zh": "必须分配给客户成功经理，并在以下时间内发起强制性的一对一外展活动：",
+                "ja": "カスタマー サクセス マネージャーに割り当てられ、内で開始される 1 対 1 のアウトリーチが義務付けられている必要があります",
+                "pt": "deve ser atribuído a um Gerente de Sucesso do Cliente com divulgação individual obrigatória iniciada dentro",
+                "ar": "يجب تعيينه إلى مدير نجاح العملاء مع بدء التواصل الإلزامي 1 على 1 داخله",
+                "hi": "अनिवार्य 1-ऑन-1 आउटरीच के साथ एक ग्राहक सफलता प्रबंधक को सौंपा जाना चाहिए",
+                "ru": "должен быть назначен менеджеру по работе с клиентами с обязательной индивидуальной работой, инициированной в течение"
+        },
+        "to customers switching from paper checks or manual payment methods to automated credit card or ACH direct debit billing.": {
+                "es": "a los clientes que cambian de cheques en papel o métodos de pago manuales a tarjetas de crédito automatizadas o facturación por débito directo ACH.",
+                "fr": "aux clients passant des chèques papier ou des méthodes de paiement manuelles à la facturation automatisée par carte de crédit ou par prélèvement automatique ACH.",
+                "de": "für Kunden, die von Papierschecks oder manuellen Zahlungsmethoden auf die automatisierte Kreditkarten- oder ACH-Lastschriftabrechnung umsteigen.",
+                "zh": "客户从纸质支票或手动付款方式转换为自动信用卡或 ACH 直接借记账单。",
+                "ja": "紙の小切手や手動の支払い方法から自動クレジット カードや ACH 口座振替に切り替えた顧客向け。",
+                "pt": "para clientes que estão mudando de cheques em papel ou métodos de pagamento manuais para cartão de crédito automatizado ou cobrança por débito direto ACH.",
+                "ar": "للعملاء الذين يتحولون من الشيكات الورقية أو طرق الدفع اليدوية إلى بطاقة الائتمان الآلية أو فواتير الخصم المباشر عبر ACH.",
+                "hi": "पेपर चेक या मैन्युअल भुगतान विधियों से स्वचालित क्रेडिट कार्ड या एसीएच डायरेक्ट डेबिट बिलिंग पर स्विच करने वाले ग्राहकों के लिए।",
+                "ru": "клиентам, переходящим с бумажных чеков или способов оплаты вручную на автоматизированное выставление счетов по кредитным картам или прямое дебетование ACH."
+        },
+        "to exit": {
+                "es": "salir",
+                "fr": "sortir",
+                "de": "verlassen",
+                "zh": "退出",
+                "ja": "出る",
+                "pt": "sair",
+                "ar": "للخروج",
+                "hi": "बाहर निकलना",
+                "ru": "выйти"
+        },
+        "to month-to-month accounts in exchange for locking in a 12-month annual contract.": {
+                "es": "a cuentas de mes a mes a cambio de asegurar un contrato anual de 12 meses.",
+                "fr": "aux comptes mensuels en échange de la garantie d'un contrat annuel de 12 mois.",
+                "de": "auf Monatskonten im Gegenzug für den Abschluss eines Jahresvertrags mit einer Laufzeit von 12 Monaten.",
+                "zh": "每月账户，以换取锁定 12 个月的年度合同。",
+                "ja": "12 か月の年間契約を固定する代わりに、月単位のアカウントに移行します。",
+                "pt": "para contas mensais em troca do fechamento de um contrato anual de 12 meses.",
+                "ar": "إلى حسابات شهرية مقابل تأمين عقد سنوي مدته 12 شهرًا.",
+                "hi": "12-महीने के वार्षिक अनुबंध को लॉक करने के बदले में मासिक खातों में।",
+                "ru": "на ежемесячные счета в обмен на заключение 12-месячного годового контракта."
+        },
+        "v1.0.0-RF": {
+                "es": "v1.0.0-RF",
+                "fr": "v1.0.0-RF",
+                "de": "v1.0.0-RF",
+                "zh": "v1.0.0-RF",
+                "ja": "v1.0.0-RF",
+                "pt": "v1.0.0-RF",
+                "ar": "v1.0.0-RF",
+                "hi": "v1.0.0-आरएफ",
+                "ru": "v1.0.0-РФ"
+        },
+        "Русский": {
+                "es": "ruso",
+                "fr": "russe",
+                "de": "Russisch",
+                "zh": "俄罗斯",
+                "ja": "Русский",
+                "pt": "Russo",
+                "ar": "الروسية",
+                "hi": "Русский",
+                "ru": "Русский"
+        },
+        "العربية": {
+                "es": "العربية",
+                "fr": "العربية",
+                "de": "العربية",
+                "zh": "巴黎",
+                "ja": "ああ",
+                "pt": "العربية",
+                "ar": "العربية",
+                "hi": "धन्यवाद",
+                "ru": "عربية"
+        },
+        "हिन्दी": {
+                "es": "हिन्दी",
+                "fr": "हिन्दी",
+                "de": "Ja",
+                "zh": "हिन्दी",
+                "ja": "हिन्दी",
+                "pt": "Adeus",
+                "ar": "الهندية",
+                "hi": "हिन्दी",
+                "ru": "हिन्दी"
+        },
+        "‹ Previous": {
+                "es": "‹ Anterior",
+                "fr": "‹ Précédent",
+                "de": "‹ Zurück",
+                "zh": "← 上一页",
+                "ja": "« 前へ",
+                "pt": "‹ Anterior",
+                "ar": "‹ السابق",
+                "hi": "‹ पिछला",
+                "ru": "‹ Предыдущий"
+        },
+        "≥ 65.0%": {
+                "es": "≥ 65,0%",
+                "fr": "≥ 65,0%",
+                "de": "≥ 65,0 %",
+                "zh": "≥65.0%",
+                "ja": "65.0%以上",
+                "pt": "≥ 65,0%",
+                "ar": "≥ 65.0%",
+                "hi": "≥ 65.0%",
+                "ru": "≥ 65,0%"
+        },
+        "≥65% high-risk churn threshold": {
+                "es": "≥65 % del umbral de abandono de alto riesgo",
+                "fr": "Seuil de désabonnement à haut risque ≥65 %",
+                "de": "≥65 % Abwanderungsschwelle mit hohem Risiko",
+                "zh": "≥65% 高风险流失阈值",
+                "ja": "≥65% 高リスクチャーン閾値",
+                "pt": "≥65% limite de rotatividade de alto risco",
+                "ar": "≥65% عتبة التقلب عالية الخطورة",
+                "hi": "≥65% उच्च जोखिम मंथन सीमा",
+                "ru": "≥65% порог высокого риска оттока"
+        },
+        "★ Net Negative Possible": {
+                "es": "★ Negativo neto posible",
+                "fr": "★ Net négatif possible",
+                "de": "★ Netto-Negativ möglich",
+                "zh": "★ 净负值可能",
+                "ja": "★ネットネガティブの可能性あり",
+                "pt": "★ Negativo Líquido Possível",
+                "ar": "★ صافي السلبية الممكنة",
+                "hi": "★ शुद्ध नकारात्मक संभव",
+                "ru": "★ Возможен чистый отрицательный результат"
+        },
+        "★ Target: <12 Months": {
+                "es": "★ Objetivo: <12 meses",
+                "fr": "★ Cible : <12 mois",
+                "de": "★ Ziel: <12 Monate",
+                "zh": "★ 目标：<12 个月",
+                "ja": "★対象年齢: 12か月未満",
+                "pt": "★ Meta: <12 meses",
+                "ar": "★ الهدف: <12 شهرًا",
+                "hi": "★ लक्ष्य: <12 महीने",
+                "ru": "★ Цель: <12 месяцев."
+        },
+        "★ Target: >3.0x Ratio": {
+                "es": "★ Objetivo: proporción >3,0x",
+                "fr": "★ Cible : Ratio > 3,0x",
+                "de": "★ Ziel: >3,0-faches Verhältnis",
+                "zh": "★ 目标：>3.0x 比率",
+                "ja": "★ 目標: >3.0x 比率",
+                "pt": "★ Meta: Proporção >3,0x",
+                "ar": "★ الهدف: >نسبة 3.0x",
+                "hi": "★ लक्ष्य: >3.0x अनुपात",
+                "ru": "★ Цель: коэффициент >3,0x"
+        },
+        "⚠ Decay Visualization": {
+                "es": "⚠ Visualización de descomposición",
+                "fr": "⚠ Visualisation de la décomposition",
+                "de": "⚠ Verfallsvisualisierung",
+                "zh": "⚠ 衰减可视化",
+                "ja": "⚠ 崩壊の視覚化",
+                "pt": "⚠ Visualização de decaimento",
+                "ar": "⚠ تصور الاضمحلال",
+                "hi": "⚠ क्षय विज़ुअलाइज़ेशन",
+                "ru": "⚠ Визуализация распада"
+        },
+        "日本語": {
+                "es": "日本語",
+                "fr": "日本語",
+                "de": "日本語",
+                "zh": "日本语",
+                "ja": "日本語",
+                "pt": "日本語",
+                "ar": "日本語",
+                "hi": "ठीक है",
+                "ru": "日本語"
+        },
+        "简体中文": {
+                "es": "简体中文",
+                "fr": "简体中文",
+                "de": "简体中文",
+                "zh": "简体中文",
+                "ja": "简体中文",
+                "pt": "简体中文",
+                "ar": "简体中文",
+                "hi": "मुझे यह पसंद है",
+                "ru": "简体中文"
+        },
+        "🇧🇷": {
+                "es": "🇧🇷",
+                "fr": "🇧🇷",
+                "de": "🇧🇷",
+                "zh": "🇧🇷",
+                "ja": "🇧🇷",
+                "pt": "🇧🇷",
+                "ar": "🇧🇷",
+                "hi": "🇧🇷",
+                "ru": "🇧🇷"
+        },
+        "🇨🇳": {
+                "es": "🇨🇳",
+                "fr": "🇨🇳",
+                "de": "🇨🇳",
+                "zh": "🇨🇳",
+                "ja": "🇨🇳",
+                "pt": "🇨🇳",
+                "ar": "🇨🇳",
+                "hi": "🇨🇳",
+                "ru": "🇨🇳"
+        },
+        "🇩🇪": {
+                "es": "🇩🇪",
+                "fr": "🇩🇪",
+                "de": "🇩🇪",
+                "zh": "🇩🇪",
+                "ja": "🇩🇪",
+                "pt": "🇩🇪",
+                "ar": "🇩🇪",
+                "hi": "🇩🇪",
+                "ru": "🇩🇪"
+        },
+        "🇪🇸": {
+                "es": "🇪🇸",
+                "fr": "🇪🇸",
+                "de": "🇪🇸",
+                "zh": "🇪🇸",
+                "ja": "🇪🇸",
+                "pt": "🇪🇸",
+                "ar": "🇪🇸",
+                "hi": "🇪🇸",
+                "ru": "🇪🇸"
+        },
+        "🇫🇷": {
+                "es": "🇫🇷",
+                "fr": "🇫🇷",
+                "de": "🇫🇷",
+                "zh": "🇫🇷",
+                "ja": "🇫🇷",
+                "pt": "🇫🇷",
+                "ar": "🇫🇷",
+                "hi": "🇫🇷",
+                "ru": "🇫🇷"
+        },
+        "🇮🇳": {
+                "es": "🇮🇳",
+                "fr": "🇮🇳",
+                "de": "🇮🇳",
+                "zh": "🇮🇳",
+                "ja": "🇮🇳",
+                "pt": "🇮🇳",
+                "ar": "🇮🇳",
+                "hi": "🇮🇳",
+                "ru": "🇮🇳"
+        },
+        "🇯🇵": {
+                "es": "🇯🇵",
+                "fr": "🇯🇵",
+                "de": "🇯🇵",
+                "zh": "🇯🇵",
+                "ja": "🇯🇵",
+                "pt": "🇯🇵",
+                "ar": "🇯🇵",
+                "hi": "🇯🇵",
+                "ru": "🇯🇵"
+        },
+        "🇷🇺": {
+                "es": "🇷🇺",
+                "fr": "🇷🇺",
+                "de": "🇷🇺",
+                "zh": "🇷🇺",
+                "ja": "🇷🇺",
+                "pt": "🇷🇺",
+                "ar": "🇷🇺",
+                "hi": "🇷🇺",
+                "ru": "🇷🇺"
+        },
+        "🇸🇦": {
+                "es": "🇸🇦",
+                "fr": "🇸🇦",
+                "de": "🇸🇦",
+                "zh": "🇸🇦",
+                "ja": "🇸🇦",
+                "pt": "🇸🇦",
+                "ar": "🇸🇦",
+                "hi": "🇸🇦",
+                "ru": "🇸🇦"
+        },
+        "🇺🇸": {
+                "es": "🇺🇸",
+                "fr": "🇺🇸",
+                "de": "🇺🇸",
+                "zh": "🇺🇸",
+                "ja": "🇺🇸",
+                "pt": "🇺🇸",
+                "ar": "🇺🇸",
+                "hi": "🇺🇸",
+                "ru": "🇺🇸"
+        },
+        "Select Language": {
+                "es": "Seleccionar Idioma",
+                "fr": "Choisir la Langue",
+                "de": "Sprache Wählen",
+                "zh": "选择语言",
+                "ja": "言語を選択",
+                "pt": "Selecionar Idioma",
+                "ar": "اختر اللغة",
+                "hi": "भाषा चुनें",
+                "ru": "Выберите Язык"
+        },
+        "Account Name": {
+                "es": "Nombre de Cuenta",
+                "fr": "Nom du Compte",
+                "de": "Kontoname",
+                "zh": "账户名称",
+                "ja": "アカウント名",
+                "pt": "Nome da Conta",
+                "ar": "اسم الحساب",
+                "hi": "खाते का नाम",
+                "ru": "Название Аккаунта"
+        },
+        "Segment": {
+                "es": "Segmento",
+                "fr": "Segment",
+                "de": "Segment",
+                "zh": "市场分群",
+                "ja": "セグメント",
+                "pt": "Segmento",
+                "ar": "شريحة العميل",
+                "hi": "सेगमेंट",
+                "ru": "Сегмент"
+        },
+        "Tenure": {
+                "es": "Antigüedad",
+                "fr": "Ancienneté",
+                "de": "Laufzeit",
+                "zh": "在网周期",
+                "ja": "契約期間",
+                "pt": "Tempo de Casa",
+                "ar": "مدة الاشتراك",
+                "hi": "अवधि",
+                "ru": "Срок"
+        },
+        "Churn Score": {
+                "es": "Puntuación de Cancelación",
+                "fr": "Score d'Attrition",
+                "de": "Kündigungsscore",
+                "zh": "流失风险分",
+                "ja": "解約スコア",
+                "pt": "Pontuação de Churn",
+                "ar": "درجة التسرب",
+                "hi": "मंथन स्कोर",
+                "ru": "Оценка Оттока"
+        },
+        "Status": {
+                "es": "Estado",
+                "fr": "Statut",
+                "de": "Status",
+                "zh": "状态",
+                "ja": "ステータス",
+                "pt": "Status",
+                "ar": "الحالة",
+                "hi": "स्थिति",
+                "ru": "Статус"
+        },
+        "Revenue (ARR)": {
+                "es": "Ingresos (ARR)",
+                "fr": "Revenu (ARR)",
+                "de": "Umsatz (ARR)",
+                "zh": "年度经常性收入 (ARR)",
+                "ja": "年間経常収益 (ARR)",
+                "pt": "Receita (ARR)",
+                "ar": "الإيراد السنوي (ARR)",
+                "hi": "राजस्व (ARR)",
+                "ru": "Выручка (ARR)"
+        },
+        "Power BI Executive Intelligence Studio": {
+                "es": "Power BI Executive Intelligence Studio",
+                "fr": "Studio d'Intelligence Dirigeante Power BI",
+                "de": "Power BI Executive Intelligence Studio",
+                "zh": "Power BI 高管商业智能工作台",
+                "ja": "Power BI エグゼクティブ・インテリジェンス・スタジオ",
+                "pt": "Power BI Executive Intelligence Studio",
+                "ar": "استوديو الذكاء التنفيذي لـ Power BI",
+                "hi": "Power BI कार्यकारी इंटेलिजेंस स्टूडियो",
+                "ru": "Студия Управленческой Аналитики Power BI"
+        },
+        "Tableau Executive Intelligence Studio": {
+                "es": "Tableau Executive Intelligence Studio",
+                "fr": "Studio d'Intelligence Dirigeante Tableau",
+                "de": "Tableau Executive Intelligence Studio",
+                "zh": "Tableau 高管数据智能工作台",
+                "ja": "Tableau エグゼクティブ・インテリジェンス・スタジオ",
+                "pt": "Tableau Executive Intelligence Studio",
+                "ar": "استوديو الذكاء التنفيذي لـ Tableau",
+                "hi": "Tableau कार्यकारी इंटेलिजेंस स्टूडियो",
+                "ru": "Студия Управленческой Аналитики Tableau"
+        },
+        "Live Star-Schema Data Model | Enterprise DAX Measures | Zero Manual Repair Deliverables": {
+                "es": "Modelo de Datos Star-Schema en Vivo | Medidas DAX Empresariales | Cero Reparaciones Manuales",
+                "fr": "Modèle de Données en Étoile en Direct | Mesures DAX Entreprise | Sans Réparation Manuelle",
+                "de": "Live-Sternschema-Datenmodell | Enterprise DAX-Kennzahlen | Sofort Einsatzbereit",
+                "zh": "实时星型数据模型 | 企业级 DAX 度量值 | 即开即用交付物",
+                "ja": "リアルタイム・スタースキーマ | エンタープライズDAXメジャー | 即時利用可能",
+                "pt": "Modelo Star-Schema em Tempo Real | Medidas DAX Corporativas | Entregáveis Prontos",
+                "ar": "نموذج بيانات المخطط النجمي المباشر | قياسات DAX المؤسسية | تسليمات جاهزة للاستخدام",
+                "hi": "लाइव स्टार-स्कीमा डेटा मॉडल | एंटरप्राइज DAX माप | तैयार डिलीवरी पैकेज",
+                "ru": "Живая модель данных «Звезда» | Корпоративные меры DAX | Без ручной доработки"
+        },
+        "Packaged Workbook (.twbx) | 2023.1 XML Schema | Calculated Fields | REST Cloud Publish": {
+                "es": "Libro empaquetado (.twbx) | Esquema XML 2023.1 | Campos calculados | Publicación REST en la nube",
+                "fr": "Classeur Empaqueté (.twbx) | Schéma XML 2023.1 | Champs Calculés | Publication Cloud REST",
+                "de": "Gepackte Arbeitsmappe (.twbx) | 2023.1 XML-Schema | Berechnete Felder | REST Cloud-Veröffentlichung",
+                "zh": "打包工作簿 (.twbx) | 2023.1 XML 架构 | 计算字段 | REST 云端发布",
+                "ja": "パッケージドワークブック (.twbx) | 2023.1 XMLスキーマ | 計算フィールド | RESTクラウド発行",
+                "pt": "Pasta Empacotada (.twbx) | Esquema XML 2023.1 | Campos Calculados | Publicação REST Cloud",
+                "ar": "مصنف مجمع (.twbx) | مخطط XML 2023.1 | حقول محسوبة | نشر سحابي عبر REST",
+                "hi": "पैकेज्ड वर्कबुक (.twbx) | 2023.1 XML स्कीमा | गणना किए गए फील्ड्स | REST क्लाउड पब्लिश",
+                "ru": "Упакованная книга (.twbx) | Схема XML 2023.1 | Вычисляемые поля | REST Публикация"
+        },
+        "Page 1: Executive Overview": {
+                "es": "Página 1: Resumen Ejecutivo",
+                "fr": "Page 1 : Vue d'Ensemble Dirigeante",
+                "de": "Seite 1: Führungskräfte-Übersicht",
+                "zh": "第 1 页：执行管理总览",
+                "ja": "ページ 1: エグゼクティブ概要",
+                "pt": "Página 1: Visão Geral Executiva",
+                "ar": "الصفحة 1: نظرة عامة تنفيذية",
+                "hi": "पेज 1: कार्यकारी सारांश",
+                "ru": "Стр. 1: Исполнительный обзор"
+        },
+        "Page 2: Churn Risk & Drivers": {
+                "es": "Página 2: Riesgo de Cancelación y Factores",
+                "fr": "Page 2 : Risque d'Attrition & Facteurs",
+                "de": "Seite 2: Kündigungsrisiko & Treiber",
+                "zh": "第 2 页：流失风险与归因",
+                "ja": "ページ 2: 解約リスクと要因分析",
+                "pt": "Página 2: Risco de Churn e Fatores",
+                "ar": "الصفحة 2: مخاطر التسرب والمحركات",
+                "hi": "पेज 2: मंथन जोखिम और प्रमुख कारक",
+                "ru": "Стр. 2: Риск оттока и факторы"
+        },
+        "Page 3: Slicers & Explorer": {
+                "es": "Página 3: Segmentadores y Explorador",
+                "fr": "Page 3 : Segmenteurs & Explorateur",
+                "de": "Seite 3: Datenschnitte & Explorer",
+                "zh": "第 3 页：切片筛选与数据透视",
+                "ja": "ページ 3: スライサーとエクスプローラー",
+                "pt": "Página 3: Segmentadores e Explorador",
+                "ar": "الصفحة 3: الفلاتر ومستكشف البيانات",
+                "hi": "पेज 3: स्लाइसर्स और एक्सप्लोरर",
+                "ru": "Стр. 3: Срезы и проводник данных"
+        },
+        "Page 4: Star Schema & DAX": {
+                "es": "Página 4: Esquema en Estrella y DAX",
+                "fr": "Page 4 : Schéma en Étoile & DAX",
+                "de": "Seite 4: Sternschema & DAX",
+                "zh": "第 4 页：星型架构与 DAX 体系",
+                "ja": "ページ 4: スタースキーマとDAXメジャー",
+                "pt": "Página 4: Esquema em Estrela e DAX",
+                "ar": "الصفحة 4: المخطط النجمي ومقاييس DAX",
+                "hi": "पेज 4: स्टार स्कीमा और DAX उपाय",
+                "ru": "Стр. 4: Схема «Звезда» и меры DAX"
+        },
+        "Page 4: Semantic Model & Calculated Fields": {
+                "es": "Página 4: Modelo Semántico y Campos Calculados",
+                "fr": "Page 4 : Modèle Sémantique & Champs Calculés",
+                "de": "Seite 4: Semantisches Modell & Berechnete Felder",
+                "zh": "第 4 页：语义模型与计算字段",
+                "ja": "ページ 4: セマンティックモデルと計算フィールド",
+                "pt": "Página 4: Modelo Semântico e Campos Calculados",
+                "ar": "الصفحة 4: النموذج الدلالي والحقول المحسوبة",
+                "hi": "पेज 4: सिमेंटिक मॉडल और गणना किए गए फील्ड्स",
+                "ru": "Стр. 4: Семантическая модель и вычисляемые поля"
+        },
+        "Page 5: Connectors & Deployment": {
+                "es": "Página 5: Conectores y Despliegue",
+                "fr": "Page 5 : Connecteurs & Déploiement",
+                "de": "Seite 5: Konnektoren & Bereitstellung",
+                "zh": "第 5 页：连接器与云端发布",
+                "ja": "ページ 5: コネクタと展開",
+                "pt": "Página 5: Conectores e Implantação",
+                "ar": "الصفحة 5: الروابط والربط السحابي",
+                "hi": "पेज 5: कनेक्टर्स और डिप्लॉयमेंट",
+                "ru": "Стр. 5: Коннекторы и развертывание"
+        },
+        "Total Revenue": {
+                "es": "Ingresos Totales",
+                "fr": "Revenu Total",
+                "de": "Gesamtumsatz",
+                "zh": "总营收规模",
+                "ja": "総収益規模",
+                "pt": "Receita Total",
+                "ar": "إجمالي الإيرادات",
+                "hi": "कुल राजस्व",
+                "ru": "Общая Выручка"
+        },
+        "Evaluated Customers": {
+                "es": "Clientes Evaluados",
+                "fr": "Clients Évalués",
+                "de": "Bewertete Kunden",
+                "zh": "已评估客户数",
+                "ja": "評価済み顧客数",
+                "pt": "Clientes Avaliados",
+                "ar": "العملاء المقيمون",
+                "hi": "मूल्यांकित ग्राहक",
+                "ru": "Оцененные Клиенты"
+        },
+        "Portfolio Churn Rate": {
+                "es": "Tasa de Cancelación de Cartera",
+                "fr": "Taux d'Attrition du Portefeuille",
+                "de": "Portfolio-Kündigungsrate",
+                "zh": "组合流失率",
+                "ja": "ポートフォリオ解約率",
+                "pt": "Taxa de Churn da Carteira",
+                "ar": "معدل تسرب المحفظة",
+                "hi": "पोर्टफोलियो मंथन दर",
+                "ru": "Уровень Оттока Портфеля"
+        },
+        "Revenue at Risk": {
+                "es": "Ingresos en Riesgo",
+                "fr": "Revenu à Risque",
+                "de": "Gefährdeter Umsatz",
+                "zh": "高危受损金额",
+                "ja": "解約リスク金額",
+                "pt": "Receita em Risco",
+                "ar": "الإيرادات المعرضة للخطر",
+                "hi": "जोखिम में राजस्व",
+                "ru": "Выручка под Риском"
+        },
+        "All Records": {
+                "es": "Todos los Registros",
+                "fr": "Tous les Enregistrements",
+                "de": "Alle Datensätze",
+                "zh": "全部数据记录",
+                "ja": "すべてのレコード",
+                "pt": "Todos os Registros",
+                "ar": "جميع السجلات",
+                "hi": "सभी रिकॉर्ड",
+                "ru": "Все Записи"
+        },
+        "High Risk (≥70%)": {
+                "es": "Alto Riesgo (≥70%)",
+                "fr": "Risque Élevé (≥70%)",
+                "de": "Hohes Risiko (≥70%)",
+                "zh": "高危预警 (≥70%)",
+                "ja": "高リスク (≥70%)",
+                "pt": "Alto Risco (≥70%)",
+                "ar": "مخاطر عالية (≥70%)",
+                "hi": "उच्च जोखिम (≥70%)",
+                "ru": "Высокий Риск (≥70%)"
+        },
+        "Moderate Risk (30-70%)": {
+                "es": "Riesgo Moderado (30-70%)",
+                "fr": "Risque Modéré (30-70%)",
+                "de": "Mäßiges Risiko (30-70%)",
+                "zh": "中度风险 (30-70%)",
+                "ja": "中程度リスク (30-70%)",
+                "pt": "Risco Moderado (30-70%)",
+                "ar": "مخاطر متوسطة (30-70%)",
+                "hi": "मध्यम जोखिम (30-70%)",
+                "ru": "Умеренный Риск (30-70%)"
+        },
+        "Low Risk (<30%)": {
+                "es": "Bajo Riesgo (<30%)",
+                "fr": "Faible Risque (<30%)",
+                "de": "Geringes Risiko (<30%)",
+                "zh": "健康基线 (<30%)",
+                "ja": "低リスク (<30%)",
+                "pt": "Baixo Risco (<30%)",
+                "ar": "مخاطر منخفضة (<30%)",
+                "hi": "कम जोखिम (<30%)",
+                "ru": "Низкий Риск (<30%)"
+        },
+        "Official DAX Measures Suite": {
+                "es": "Suite Oficial de Medidas DAX",
+                "fr": "Suite Officielle de Mesures DAX",
+                "de": "Offizielle DAX-Measures-Suite",
+                "zh": "官方标准 DAX 度量公式集",
+                "ja": "公式DAXメジャー集",
+                "pt": "Conjunto Oficial de Medidas DAX",
+                "ar": "حزمة مقاييس DAX الرسمية",
+                "hi": "आधिकारिक DAX माप संग्रह",
+                "ru": "Официальный Пакет Мер DAX"
+        },
+        "Official Tableau Calculated Fields Suite": {
+                "es": "Suite Oficial de Campos Calculados de Tableau",
+                "fr": "Suite Officielle de Champs Calculés Tableau",
+                "de": "Offizielle Tableau Berechnete Felder",
+                "zh": "官方标准 Tableau 计算字段集",
+                "ja": "公式Tableau計算フィールド集",
+                "pt": "Conjunto Oficial de Campos Calculados Tableau",
+                "ar": "حزمة حقول Tableau المحسوبة الرسمية",
+                "hi": "आधिकारिक Tableau गणना किए गए फील्ड्स",
+                "ru": "Официальный Пакет Вычисляемых Полей Tableau"
+        },
+        "Live Telemetry Feed URL (Web Connector)": {
+                "es": "URL de Telemetría en Vivo (Conector Web)",
+                "fr": "URL du Flux Télémétrique en Direct (Connecteur Web)",
+                "de": "Live-Telemetrie-Feed-URL (Web-Konnektor)",
+                "zh": "实时遥测订阅 URL（Web 连接器）",
+                "ja": "リアルタイムテレメトリURL（Webコネクタ）",
+                "pt": "URL do Feed de Telemetria (Conector Web)",
+                "ar": "رابط بيانات التتبع المباشر (Web Connector)",
+                "hi": "लाइव टेलीमेट्री फीड URL (वेब कनेक्टर)",
+                "ru": "URL Телеметрии в Реальном Времени (Веб-Коннектор)"
+        },
+        "Copy URL": {
+                "es": "Copiar URL",
+                "fr": "Copier l'URL",
+                "de": "URL kopieren",
+                "zh": "复制订阅地址",
+                "ja": "URLをコピー",
+                "pt": "Copiar URL",
+                "ar": "نسخ الرابط",
+                "hi": "URL कॉपी करें",
+                "ru": "Скопировать URL"
+        },
+        "Prev": {
+                "es": "Anterior",
+                "fr": "Précédent",
+                "de": "Zurück",
+                "zh": "上一页",
+                "ja": "前へ",
+                "pt": "Anterior",
+                "ar": "السابق",
+                "hi": "पिछला",
+                "ru": "Назад"
+        },
+        "Next": {
+                "es": "Siguiente",
+                "fr": "Suivant",
+                "de": "Weiter",
+                "zh": "下一页",
+                "ja": "次へ",
+                "pt": "Próximo",
+                "ar": "التالي",
+                "hi": "अगला",
+                "ru": "Вперед"
+        },
+        "Download Power BI Package (.pbip ZIP)": {
+                "es": "Descargar Paquete Power BI (.pbip ZIP)",
+                "fr": "Télécharger le Package Power BI (.pbip ZIP)",
+                "de": "Power BI-Paket herunterladen (.pbip ZIP)",
+                "zh": "下载 Power BI 工程包 (.pbip ZIP)",
+                "ja": "Power BIパッケージのダウンロード (.pbip ZIP)",
+                "pt": "Baixar Pacote Power BI (.pbip ZIP)",
+                "ar": "تنزيل حزمة Power BI (.pbip ZIP)",
+                "hi": "Power BI पैकेज डाउनलोड करें (.pbip ZIP)",
+                "ru": "Скачать пакет Power BI (.pbip ZIP)"
+        },
+        "Download Tableau Package (.twbx)": {
+                "es": "Descargar Paquete Tableau (.twbx)",
+                "fr": "Télécharger le Package Tableau (.twbx)",
+                "de": "Tableau-Paket herunterladen (.twbx)",
+                "zh": "下载 Tableau 交付包 (.twbx)",
+                "ja": "Tableauパッケージのダウンロード (.twbx)",
+                "pt": "Baixar Pacote Tableau (.twbx)",
+                "ar": "تنزيل حزمة Tableau (.twbx)",
+                "hi": "Tableau पैकेज डाउनलोड करें (.twbx)",
+                "ru": "Скачать пакет Tableau (.twbx)"
+        },
+        "Publish to Server": {
+                "es": "Publicar en Servidor",
+                "fr": "Publier sur le Serveur",
+                "de": "Auf Server Veröffentlichen",
+                "zh": "发布至 Tableau 云服务器",
+                "ja": "Tableau Serverへ公開",
+                "pt": "Publicar no Servidor",
+                "ar": "نشر إلى الخادم",
+                "hi": "सर्वर पर प्रकाशित करें",
+                "ru": "Опубликовать на Сервере"
+        },
+        "Push Live REST": {
+                "es": "Transmitir REST en Vivo",
+                "fr": "Pousser REST en Direct",
+                "de": "Live-REST-Push",
+                "zh": "推送到 Power BI 实时服务",
+                "ja": "Power BIサービスへプッシュ",
+                "pt": "Transmitir REST ao Vivo",
+                "ar": "إرسال REST المباشر",
+                "hi": "लाइव REST पुश करें",
+                "ru": "Отправить через REST"
+        },
+        "Upload Customer Dataset": {
+                "es": "Subir Conjunto de Datos de Clientes",
+                "fr": "Charger un Fichier Client",
+                "de": "Kundendatensatz hochladen",
+                "zh": "导入客户数据集",
+                "ja": "顧客データセットをアップロード",
+                "pt": "Carregar Conjunto de Clientes",
+                "ar": "رفع بيانات العملاء",
+                "hi": "ग्राहक डेटासेट अपलोड करें",
+                "ru": "Загрузить данные клиентов"
+        },
+        "Reset Filters": {
+                "es": "Restablecer Filtros",
+                "fr": "Réinitialiser les Filtres",
+                "de": "Filter zurücksetzen",
+                "zh": "重置筛选条件",
+                "ja": "フィルターをリセット",
+                "pt": "Redefinir Filtros",
+                "ar": "إعادة تعيين الفلاتر",
+                "hi": "फ़िल्टर रीसेट करें",
+                "ru": "Сбросить фильтры"
+        },
+        "No Prediction Results Available": {
+                "es": "No hay resultados de predicción disponibles",
+                "fr": "Aucun résultat de prédiction disponible",
+                "de": "Keine Prognoseergebnisse verfügbar",
+                "zh": "暂无分析预测数据",
+                "ja": "予測結果はありません",
+                "pt": "Nenhum resultado de previsão disponível",
+                "ar": "لا توجد نتائج توقعات متاحة",
+                "hi": "कोई भविष्यवाणी परिणाम उपलब्ध नहीं है",
+                "ru": "Нет доступных прогнозов"
+        },
+        "Import a dataset or click below to run ML inference on active business accounts.": {
+                "es": "Importe un conjunto de datos para ejecutar inferencia de ML en cuentas activas.",
+                "fr": "Importez un jeu de données pour exécuter l'inférence ML.",
+                "de": "Importieren Sie einen Datensatz, um die ML-Inferenz auszuführen.",
+                "zh": "导入数据集以运行机器学习智能推理。",
+                "ja": "顧客データをインポートして機械学習分析を実行してください。",
+                "pt": "Importe um conjunto de dados para executar inferência de ML.",
+                "ar": "استورد ملف بيانات لبدء استنتاج نماذج الذكاء الاصطناعي.",
+                "hi": "व्यावसायिक खातों पर ML निष्पादित करने के लिए डेटासेट आयात करें।",
+                "ru": "Импортируйте датасет для запуска машинного обучения."
+        },
+        "No Customers Match Active Filters": {
+                "es": "Ningún cliente coincide con los filtros activos",
+                "fr": "Aucun client ne correspond aux filtres actifs",
+                "de": "Keine Kunden entsprechen den aktiven Filtern",
+                "zh": "无匹配该筛选条件的客户账户",
+                "ja": "条件に一致する顧客アカウントが見つかりません",
+                "pt": "Nenhum cliente corresponde aos filtros ativos",
+                "ar": "لا يوجد عملاء يطابقون الفلاتر المحددة",
+                "hi": "सक्रिय फ़िल्टर से कोई ग्राहक मेल नहीं खाता",
+                "ru": "Нет клиентов, соответствующих фильтрам"
+        },
+        "Try clearing your search query or switching the risk filter.": {
+                "es": "Intente borrar su búsqueda o cambiar el filtro de riesgo.",
+                "fr": "Essayez d'effacer votre recherche ou de modifier le filtre.",
+                "de": "Löschen Sie Ihre Suchanfrage oder ändern Sie den Risikofilter.",
+                "zh": "请尝试清空搜索栏或调整风险等级筛选。",
+                "ja": "検索ワードをクリアするか、リスクフィルターを変更してください。",
+                "pt": "Tente limpar sua pesquisa ou alterar o filtro de risco.",
+                "ar": "امسح نص البحث أو غيّر فلتر المخاطر.",
+                "hi": "अपनी खोज साफ़ करें या जोखिम फ़िल्टर बदलें।",
+                "ru": "Очистите поисковый запрос или измените фильтр риска."
+        },
+        "Showing accounts": {
+                "es": "Mostrando cuentas",
+                "fr": "Affichage des comptes",
+                "de": "Konten werden angezeigt",
+                "zh": "显示账户记录",
+                "ja": "アカウントを表示中",
+                "pt": "Exibindo contas",
+                "ar": "عرض الحسابات",
+                "hi": "खाते दिखाए जा रहे हैं",
+                "ru": "Отображаются аккаунты"
+        },
+        "Category Slider": {
+                "es": "Control Deslizante de Categoría",
+                "fr": "Curseur de Catégories",
+                "de": "Kategorie-Schieberegler",
+                "zh": "分类滑动导航",
+                "ja": "カテゴリスライダー",
+                "pt": "Controle Deslizante de Categoria",
+                "ar": "شريط تمرير الفئات",
+                "hi": "श्रेणी स्लाइडर",
+                "ru": "Слайдер Категорий"
+        },
+        "Business Decision Intelligence": {
+                "es": "Inteligencia para Decisiones de Negocio",
+                "fr": "Intelligence Décisionnelle d'Entreprise",
+                "de": "Business Decision Intelligence",
+                "zh": "商业智能与决策分析引擎",
+                "ja": "ビジネス意思決定インテリジェンス",
+                "pt": "Inteligência para Decisões de Negócios",
+                "ar": "ذكاء اتخاذ القرارات التجارية",
+                "hi": "व्यापार निर्णय और भविष्यवाणी इंटेलिजेंस",
+                "ru": "Интеллект для принятия бизнес-решений"
+        },
+        "Requires a customer_id column. Optional features: tenure_months, contract_type, monthly_charges, support_tickets, churned.": {
+                "es": "Requiere columna customer_id. Opcionales: tenure_months, contract_type, monthly_charges, support_tickets, churned.",
+                "fr": "Requiert customer_id. Colonnes optionnelles: tenure_months, contract_type, monthly_charges, support_tickets, churned.",
+                "de": "Benötigt customer_id. Optionale Felder: tenure_months, contract_type, monthly_charges, support_tickets, churned.",
+                "zh": "必须包含 customer_id 列。可选字段：tenure_months, contract_type, monthly_charges, support_tickets, churned。",
+                "ja": "customer_id 列が必須です。任意: tenure_months, contract_type, monthly_charges, support_tickets, churned。",
+                "pt": "Requer coluna customer_id. Opcionais: tenure_months, contract_type, monthly_charges, support_tickets, churned.",
+                "ar": "يتطلب عمود customer_id. الحقول الاختيارية: tenure_months, contract_type, monthly_charges, support_tickets, churned.",
+                "hi": "customer_id कॉलम अनिवार्य है। वैकल्पिक: tenure_months, contract_type, monthly_charges, support_tickets, churned।",
+                "ru": "Требуется колонка customer_id. Дополнительно: tenure_months, contract_type, monthly_charges, support_tickets, churned."
+        },
+        "High risk": {
+                "es": "Alto riesgo",
+                "fr": "Risque élevé",
+                "de": "Hohes Risiko",
+                "zh": "高风险",
+                "ja": "高リスク",
+                "pt": "Alto risco",
+                "ar": "عالي الخطورة",
+                "hi": "उच्च जोखिम",
+                "ru": "Высокий риск"
+        },
+        "Low risk": {
+                "es": "Bajo riesgo",
+                "fr": "Faible risque",
+                "de": "Geringes Risiko",
+                "zh": "低风险",
+                "ja": "低リスク",
+                "pt": "Baixo risco",
+                "ar": "منخفض الخطورة",
+                "hi": "कम जोखिम",
+                "ru": "Низкий риск"
+        },
+        "Accounts requiring SLA triage": {
+                "es": "Cuentas que requieren atención de SLA",
+                "fr": "Comptes nécessitant un triage SLA",
+                "de": "Konten mit dringendem SLA-Handlungsbedarf",
+                "zh": "超出阈值急需SLA干预的账户",
+                "ja": "SLA対応が必要な高解約リスク顧客",
+                "pt": "Contas que exigem atenção de SLA",
+                "ar": "حسابات تتطلب تدخلاً فورياً بموجب SLA",
+                "hi": "SLA प्राथमिकता की आवश्यकता वाले खाते",
+                "ru": "Аккаунты, требующие реагирования по SLA"
+        },
+        "Stable retention cohorts": {
+                "es": "Cohortes de retención estables",
+                "fr": "Cohortes stables et protégées",
+                "de": "Stabile Kundenkohorten",
+                "zh": "高续约率健康客户群",
+                "ja": "安定維持されている優良顧客層",
+                "pt": "Coortes de retenção estáveis",
+                "ar": "مجموعات العملاء المستقرة",
+                "hi": "स्थिर और सुरक्षित ग्राहक समूह",
+                "ru": "Стабильные когорты удержания"
+        },
+        "Evaluated attributes & signals": {
+                "es": "Atributos y señales analizados",
+                "fr": "Attributs et signaux comportementaux",
+                "de": "Bewertete Attribute & Verhaltenssignale",
+                "zh": "参与模型运算的行为与财务特征",
+                "ja": "機械学習で評価中の特徴量項目",
+                "pt": "Atributos comportamentais e métricas",
+                "ar": "الخصائص السلوكية والمالية المقيمة",
+                "hi": "मॉडल में विश्लेषित विशेषताएं और संकेत",
+                "ru": "Анализируемые атрибуты и поведенческие сигналы"
+        },
+        "Model Performance Metrics": {
+                "es": "Métricas de Rendimiento del Modelo",
+                "fr": "Métriques de Performance du Modèle",
+                "de": "Modell-Leistungsmetriken",
+                "zh": "机器学习模型性能评估",
+                "ja": "モデル性能評価メトリクス",
+                "pt": "Métricas de Performance do Modelo",
+                "ar": "مقاييس أداء النموذج",
+                "hi": "मॉडल प्रदर्शन मेट्रिक्स",
+                "ru": "Метрики производительности модели"
+        },
+        "Confusion Matrix": {
+                "es": "Matriz de Confusión",
+                "fr": "Matrice de Confusion",
+                "de": "Konfusionsmatrix",
+                "zh": "混淆矩阵 (Confusion Matrix)",
+                "ja": "混同行列 (Confusion Matrix)",
+                "pt": "Matriz de Confusão",
+                "ar": "مصفوفة الارتباك",
+                "hi": "कन्फ्यूजन मैट्रिक्स",
+                "ru": "Матрица ошибок"
+        },
+        "Live AI Churn Intelligence Summary": {
+                "es": "Resumen Ejecutivo de Inteligencia IA",
+                "fr": "Synthèse Décisionnelle IA en Direct",
+                "de": "Live-KI-Kundenbindungsübersicht",
+                "zh": "AI 实时客户流失深度诊断摘要",
+                "ja": "AIリアルタイム解約診断サマリー",
+                "pt": "Resumo Executivo de Inteligência IA",
+                "ar": "ملخص الذكاء الاصطناعي المباشر للتسرب",
+                "hi": "लाइव AI मंथन विश्लेषण सारांश",
+                "ru": "Оперативная сводка ИИ по оттоку"
+        },
+        "AI Strategic Advisor Guidance": {
+                "es": "Orientación Estratégica del Asesor IA",
+                "fr": "Recommandations Stratégiques du Conseiller IA",
+                "de": "Strategische KI-Beraterempfehlungen",
+                "zh": "AI 首席顾问战略建议",
+                "ja": "AIアドバイザー戦略提言",
+                "pt": "Orientações Estratégicas do Consultor IA",
+                "ar": "توجيهات مستشار الذكاء الاصطناعي الاستراتيجية",
+                "hi": "AI सलाहकार की रणनीतिक सिफारिशें",
+                "ru": "Стратегические рекомендации ИИ-советника"
+        },
+        "Prediction Results": {
+                "es": "Resultados de Predicción",
+                "fr": "Résultats des Prédictions",
+                "de": "Prognoseergebnisse",
+                "zh": "流失预测评估表",
+                "ja": "予測分析結果",
+                "pt": "Resultados da Predição",
+                "ar": "نتائج التنبؤات",
+                "hi": "भविष्यवाणी परिणाम",
+                "ru": "Результаты прогнозирования"
+        },
+        "Search customer ID...": {
+                "es": "Buscar ID de cliente...",
+                "fr": "Rechercher un ID client...",
+                "de": "Kunden-ID suchen...",
+                "zh": "搜索客户编号 (如 C001)...",
+                "ja": "顧客IDを検索...",
+                "pt": "Buscar ID de cliente...",
+                "ar": "البحث عن معرف العميل...",
+                "hi": "ग्राहक आईडी खोजें...",
+                "ru": "Поиск по ID клиента..."
+        },
+        "Risk": {
+                "es": "Riesgo",
+                "fr": "Risque",
+                "de": "Risiko",
+                "zh": "风险等级",
+                "ja": "リスク",
+                "pt": "Risco",
+                "ar": "مستوى الخطر",
+                "hi": "जोखिम",
+                "ru": "Риск"
+        },
+        "Probability": {
+                "es": "Probabilidad",
+                "fr": "Probabilité",
+                "de": "Wahrscheinlichkeit",
+                "zh": "流失概率",
+                "ja": "解約確率",
+                "pt": "Probabilidade",
+                "ar": "الاحتمالية",
+                "hi": "संभावना",
+                "ru": "Вероятность"
+        },
+        "Monthly Cost": {
+                "es": "Costo Mensual",
+                "fr": "Coût Mensuel",
+                "de": "Monatl. Kosten",
+                "zh": "月度资费",
+                "ja": "月額料金",
+                "pt": "Custo Mensal",
+                "ar": "التكلفة الشهرية",
+                "hi": "मासिक शुल्क",
+                "ru": "Ежемесячный счет"
+        },
+        "Action": {
+                "es": "Acción",
+                "fr": "Action",
+                "de": "Aktion",
+                "zh": "操作",
+                "ja": "アクション",
+                "pt": "Ação",
+                "ar": "الإجراء",
+                "hi": "कार्रवाई",
+                "ru": "Действие"
+        },
+        "Active Resolution Loops": {
+                "es": "Bucles de Resolución Activos",
+                "fr": "Boucles de Résolution Actives",
+                "de": "Aktive Lösungsschleifen",
+                "zh": "正在执行中的闭环处置任务",
+                "ja": "実行中の解決ループ",
+                "pt": "Loops de Resolução Ativos",
+                "ar": "حلقات الحل النشطة",
+                "hi": "सक्रिय समाधान लूप्स",
+                "ru": "Активные циклы решений"
+        },
+        "Financial ROI Simulator & Cost-Benefit Engine": {
+                "es": "Simulador de ROI y Retorno Financiero",
+                "fr": "Simulateur de ROI & Rentabilité Financière",
+                "de": "Finanzieller ROI- und Kosten-Nutzen-Simulator",
+                "zh": "财务投资回报率 (ROI) 与敏感度模拟",
+                "ja": "投資対効果 (ROI) シミュレータ",
+                "pt": "Simulador Financeiro de ROI e Custo-Benefício",
+                "ar": "محاكي العائد على الاستثمار والجدوى المالية",
+                "hi": "वित्तीय ROI और लागत-लाभ सिम्युलेटर",
+                "ru": "Симулятор окупаемости (ROI) и затрат"
+        },
+        "🟢 Loyal Account": {
+                "es": "🟢 Cliente Leal",
+                "fr": "🟢 Client Fidèle",
+                "de": "🟢 Treuer Kunde",
+                "zh": "🟢 忠诚企业客户",
+                "ja": "🟢 ロイヤル顧客",
+                "pt": "🟢 Cliente Leal",
+                "ar": "🟢 عميل مخلص",
+                "hi": "🟢 वफादार ग्राहक",
+                "ru": "🟢 Лояльный клиент"
+        },
+        "🟡 Moderate Risk": {
+                "es": "🟡 Riesgo Moderado",
+                "fr": "🟡 Risque Modéré",
+                "de": "🟡 Moderates Risiko",
+                "zh": "🟡 中度风险客户",
+                "ja": "🟡 中リスク顧客",
+                "pt": "🟡 Risco Moderado",
+                "ar": "🟡 مخاطرة متوسطة",
+                "hi": "🟡 मध्यम जोखिम",
+                "ru": "🟡 Средний риск"
+        },
+        "🔴 Critical Risk": {
+                "es": "🔴 Riesgo Crítico",
+                "fr": "🔴 Risque Critique",
+                "de": "🔴 Kritisches Risiko",
+                "zh": "🔴 极高流失风险",
+                "ja": "🔴 緊急リスク顧客",
+                "pt": "🔴 Risco Crítico",
+                "ar": "🔴 مخاطرة حرجة",
+                "hi": "🔴 गंभीर जोखिम",
+                "ru": "🔴 Критический риск"
+        },
+        "🔄 Reset": {
+                "es": "🔄 Restablecer",
+                "fr": "🔄 Réinitialiser",
+                "de": "🔄 Zurücksetzen",
+                "zh": "🔄 恢复默认值",
+                "ja": "🔄 初期化",
+                "pt": "🔄 Redefinir",
+                "ar": "🔄 إعادة ضبط",
+                "hi": "🔄 रीसेट करें",
+                "ru": "🔄 Сброс"
+        },
+        "2. Real-Time Churn Probability Gauge": {
+                "es": "2. Medidor de Probabilidad de Churn",
+                "fr": "2. Jauge de Probabilité d'Attrition",
+                "de": "2. Echtzeit-Abwanderungswahrscheinlichkeit",
+                "zh": "2. 实时流失概率仪表盘",
+                "ja": "2. リアルタイム解約確率メーター",
+                "pt": "2. Medidor de Probabilidade de Churn",
+                "ar": "2. مقياس احتمالية التسرب الفوري",
+                "hi": "2. रियल-टाइम मंथन संभावना गेज",
+                "ru": "2. Индикатор вероятности оттока"
+        },
+        "3. Prescriptive AI Interventions": {
+                "es": "3. Intervenciones Prescriptivas de IA",
+                "fr": "3. Interventions Prescriptives d'IA",
+                "de": "3. Präskriptive KI-Interventionen",
+                "zh": "3. 规范化 AI 挽留建议",
+                "ja": "3. AI処方箋アクション",
+                "pt": "3. Intervenções Prescritivas de IA",
+                "ar": "3. التدخلات التوجيهية للذكاء الاصطناعي",
+                "hi": "3. निर्धारित AI हस्तक्षेप",
+                "ru": "3. Рекомендованные меры ИИ"
+        },
+        "Gamma-Style AI Presentation Studio": {
+                "es": "Estudio de Presentaciones IA Estilo Gamma",
+                "fr": "Studio de Présentation IA Style Gamma",
+                "de": "Gamma-Style KI-Präsentationsstudio",
+                "zh": "Gamma 风格 AI 商业汇报演示文稿工坊",
+                "ja": "Gamma風 AIプレゼンテーションスタジオ",
+                "pt": "Estúdio de Apresentação IA Estilo Gamma",
+                "ar": "أستوديو العروض التقديمية بأسلوب Gamma",
+                "hi": "Gamma-शैली AI प्रेजेंटेशन स्टूडियो",
+                "ru": "ИИ-студия презентаций в стиле Gamma"
+        },
+        "Generate Deck": {
+                "es": "Generar Diapositivas",
+                "fr": "Générer la Présentation",
+                "de": "Präsentation erstellen",
+                "zh": "一键生成汇报幻灯片",
+                "ja": "スライドデッキを生成",
+                "pt": "Gerar Apresentação",
+                "ar": "إنشاء العرض التقديمي",
+                "hi": "डेक तैयार करें",
+                "ru": "Создать слайды"
+        },
+        "Comprehensive guide matching Qiplo's core motive: 'Never lose a customer again.'": {
+                "es": "Manual integral alineado al principio de Qiplo: 'Nunca vuelva a perder un cliente.'",
+                "fr": "Guide complet incarnant la devise de Qiplo: 'Ne perdez plus jamais un client.'",
+                "de": "Umfassender Leitfaden nach dem Leitmotiv: 'Verlieren Sie nie wieder einen Kunden.'",
+                "zh": "贯彻 Qiplo 核心使命：‘永不流失任何一位客户。’",
+                "ja": "Qiploの理念：『もう二度と顧客を失わない』に基づく完全ガイド。",
+                "pt": "Guia completo alinhado ao lema da Qiplo: 'Nunca mais perca um cliente.'",
+                "ar": "دليل شامل يجسد مبدأ Qiplo: 'لا تفقد عميلاً أبداً بعد اليوم.'",
+                "hi": "Qiplo के सिद्धांत: 'फिर कभी कोई ग्राहक न खोएं' पर आधारित मार्गदर्शिका।",
+                "ru": "Полное руководство под девизом Qiplo: 'Больше никогда не теряйте клиентов.'"
+        },
+        "Show AI Copilot": {
+                "es": "Copiloto IA Show",
+                "fr": "Copilote IA Show",
+                "de": "Show KI-Copilot",
+                "zh": "Show AI 智囊副驾驶",
+                "ja": "Show AI コパイロット",
+                "pt": "Copiloto IA Show",
+                "ar": "المساعد الذكي Show AI",
+                "hi": "Show AI कोपायलट",
+                "ru": "Show AI Копилот"
+        },
+        "Lead Retention Consultant": {
+                "es": "Consultor Principal de Retención",
+                "fr": "Consultant Principal en Fidélisation",
+                "de": "Leitender Retention-Berater",
+                "zh": "首席客户留存高级顾问",
+                "ja": "主任リテンションコンサルタント",
+                "pt": "Consultor Chefe de Retenção",
+                "ar": "كبير مستشاري استبقاء العملاء",
+                "hi": "प्रमुख ग्राहक प्रतिधारण सलाहकार",
+                "ru": "Ведущий консультант по удержанию"
+        },
+        "Ask a business or analysis query...": {
+                "es": "Haga una consulta analítica o de negocio...",
+                "fr": "Posez une question financière ou stratégique...",
+                "de": "Stellen Sie eine geschäftliche Frage...",
+                "zh": "请输入商业或数据分析咨询问题...",
+                "ja": "ビジネスや分析に関する質問を入力...",
+                "pt": "Faça uma pergunta sobre o negócio ou análise...",
+                "ar": "اطرح استفساراً تحليلياً أو تجارياً...",
+                "hi": "व्यावसायिक या विश्लेषण संबंधी प्रश्न पूछें...",
+                "ru": "Задайте бизнес- или аналитический вопрос..."
+        },
+        "Retention advice for high-risk accounts": {
+                "es": "Consejos para cuentas en riesgo crítico",
+                "fr": "Conseils pour comptes à risque élevé",
+                "de": "Kundenbindung für Risikokonten",
+                "zh": "工单较多客户的挽留方案",
+                "ja": "サポート件数が多い顧客への対策",
+                "pt": "Dicas para contas com muitos chamados",
+                "ar": "نصائح للحسابات كثيرة التذاكر",
+                "hi": "सपोर्ट टिकट वाले खातों के लिए सलाह",
+                "ru": "Советы для клиентов с частыми тикетами"
+        },
+        "\"Draft a personalized recovery email for client C001.\"": {
+                "es": "\"Redactar un correo electrónico de recuperación personalizado para el cliente C001\".",
+                "fr": "\"Rédigez un e-mail de récupération personnalisé pour le client C001.\"",
+                "de": "„Entwerfen Sie eine personalisierte Wiederherstellungs-E-Mail für Kunde C001.“",
+                "zh": "“为客户 C001 起草一封个性化的恢复电子邮件。”",
+                "ja": "「クライアント C001 用にパーソナライズされた回復メールの下書きを作成します。」",
+                "pt": "\"Elabore um e-mail de recuperação personalizado para o cliente C001.\"",
+                "ar": "\"قم بصياغة بريد إلكتروني مخصص للاسترداد للعميل C001.\"",
+                "hi": "\"क्लाइंट C001 के लिए एक वैयक्तिकृत पुनर्प्राप्ति ईमेल ड्राफ़्ट करें।\"",
+                "ru": "«Составьте персонализированное письмо восстановления для клиента C001»."
+        },
+        "\"Give me a breakdown of monthly charges for high-risk accounts.\"": {
+                "es": "\"Dame un desglose de los cargos mensuales de las cuentas de alto riesgo\".",
+                "fr": "\"Donnez-moi le détail des frais mensuels pour les comptes à haut risque.\"",
+                "de": "„Geben Sie mir eine Aufschlüsselung der monatlichen Gebühren für Hochrisikokonten.“",
+                "zh": "“请给我一份高风险账户每月费用的明细。”",
+                "ja": "「高リスク口座の月額料金の内訳を教えてください。」",
+                "pt": "\"Dê-me um detalhamento das cobranças mensais para contas de alto risco.\"",
+                "ar": "\"أعطني تفاصيل الرسوم الشهرية للحسابات عالية المخاطر.\"",
+                "hi": "\"मुझे उच्च जोखिम वाले खातों के लिए मासिक शुल्क का विवरण दें।\"",
+                "ru": "«Дайте мне разбивку ежемесячных расходов по счетам с высоким риском»."
+        },
+        "\"Never lose a customer again.\"": {
+                "es": "\"No vuelvas a perder un cliente nunca más.\"",
+                "fr": "\"Ne perdez plus jamais un client.\"",
+                "de": "„Nie wieder einen Kunden verlieren.“",
+                "zh": "“再也不会失去客户了。”",
+                "ja": "「もう二度と顧客を失うことはありません。」",
+                "pt": "\"Nunca mais perca um cliente.\"",
+                "ar": "\"لا تفقد عميلاً مرة أخرى.\"",
+                "hi": "\"फिर कभी ग्राहक मत खोना।\"",
+                "ru": "«Никогда больше не теряйте клиентов»."
+        },
+        "\"What are the top 3 contract types linked to churn?\"": {
+                "es": "\"¿Cuáles son los 3 principales tipos de contratos relacionados con la deserción?\"",
+                "fr": "« Quels sont les 3 principaux types de contrats liés au désabonnement ? »",
+                "de": "„Welche Vertragstypen sind am häufigsten mit der Abwanderung verbunden?“",
+                "zh": "“与客户流失相关的前 3 名合同类型是什么？”",
+                "ja": "「解約に関連する上位 3 つの契約タイプは何ですか?」",
+                "pt": "“Quais são os três principais tipos de contrato vinculados ao churn?”",
+                "ar": "\"ما هي أهم ثلاثة أنواع من العقود المرتبطة بالخسارة؟\"",
+                "hi": "\"मंथन से जुड़े शीर्ष 3 अनुबंध प्रकार क्या हैं?\"",
+                "ru": "«Какие три типа контрактов чаще всего связаны с оттоком?»"
+        },
+        "Click \"Generate AI Deck\" or select a prompt magic template above to compile your custom presentation.": {
+                "es": "Haga clic en \"Generar AI Deck\" o seleccione una plantilla mágica rápida arriba para compilar su presentación personalizada.",
+                "fr": "Cliquez sur « Générer AI Deck » ou sélectionnez un modèle magique d'invite ci-dessus pour compiler votre présentation personnalisée.",
+                "de": "Klicken Sie auf „KI-Deck generieren“ oder wählen Sie oben eine Prompt-Magic-Vorlage aus, um Ihre individuelle Präsentation zusammenzustellen.",
+                "zh": "单击“生成 AI Deck”或选择上面的提示魔术模板来编译您的自定义演示文稿。",
+                "ja": "[Generate AI Deck] をクリックするか、上のプロンプト マジック テンプレートを選択してカスタム プレゼンテーションをコンパイルします。",
+                "pt": "Clique em \"Gerar deck de IA\" ou selecione um modelo mágico de prompt acima para compilar sua apresentação personalizada.",
+                "ar": "انقر فوق \"إنشاء مجموعة AI\" أو حدد قالبًا سحريًا سريعًا أعلاه لتجميع العرض التقديمي المخصص الخاص بك.",
+                "hi": "अपनी कस्टम प्रस्तुति को संकलित करने के लिए \"जेनरेट एआई डेक\" पर क्लिक करें या ऊपर एक त्वरित मैजिक टेम्पलेट का चयन करें।",
+                "ru": "Нажмите «Создать презентацию AI» или выберите шаблон магической подсказки выше, чтобы скомпилировать собственную презентацию."
+        },
+        "Draft a personalized recovery email for client C001.": {
+                "es": "Redacte un correo electrónico de recuperación personalizado para el cliente C001.",
+                "fr": "Rédigez un e-mail de récupération personnalisé pour le client C001.",
+                "de": "Entwerfen Sie eine personalisierte Wiederherstellungs-E-Mail für Kunde C001.",
+                "zh": "为客户 C001 起草个性化恢复电子邮件。",
+                "ja": "クライアント C001 用にパーソナライズされた回復メールの下書きを作成します。",
+                "pt": "Elabore um e-mail de recuperação personalizado para o cliente C001.",
+                "ar": "قم بصياغة بريد إلكتروني مخصص للاسترداد للعميل C001.",
+                "hi": "क्लाइंट C001 के लिए एक वैयक्तिकृत पुनर्प्राप्ति ईमेल ड्राफ़्ट करें।",
+                "ru": "Составьте персонализированное письмо восстановления для клиента C001."
+        },
+        "Give me a breakdown of monthly charges for high-risk accounts.": {
+                "es": "Dame un desglose de los cargos mensuales para cuentas de alto riesgo.",
+                "fr": "Donnez-moi une répartition des frais mensuels pour les comptes à haut risque.",
+                "de": "Geben Sie mir eine Aufschlüsselung der monatlichen Gebühren für Hochrisikokonten.",
+                "zh": "请给我详细说明高风险账户的每月费用。",
+                "ja": "高リスク口座の月額料金の内訳を教えてください。",
+                "pt": "Dê-me um detalhamento das cobranças mensais para contas de alto risco.",
+                "ar": "أعطني تفاصيل الرسوم الشهرية للحسابات عالية المخاطر.",
+                "hi": "मुझे उच्च जोखिम वाले खातों के लिए मासिक शुल्क का विवरण दें।",
+                "ru": "Дайте мне разбивку ежемесячных расходов по счетам с высоким риском."
+        },
+        "What are the top 3 contract types linked to churn?": {
+                "es": "¿Cuáles son los 3 principales tipos de contratos vinculados al abandono?",
+                "fr": "Quels sont les 3 principaux types de contrats liés au désabonnement ?",
+                "de": "Welche drei Vertragstypen sind am häufigsten mit Abwanderung verbunden?",
+                "zh": "与客户流失相关的前 3 种合同类型是什么？",
+                "ja": "解約に関連する上位 3 つの契約タイプは何ですか?",
+                "pt": "Quais são os três principais tipos de contrato vinculados ao churn?",
+                "ar": "ما هي أهم ثلاثة أنواع من العقود المرتبطة بالخسارة؟",
+                "hi": "मंथन से जुड़े शीर्ष 3 अनुबंध प्रकार क्या हैं?",
+                "ru": "Какие 3 типа контрактов чаще всего связаны с оттоком?"
         }
 };
 
@@ -3400,6 +14433,10 @@
         const cleanNoPunct = lower.replace(/[^\w\s]/g, '').trim();
         if (cleanNoPunct && cleanNoPunct !== lower) {
             LOWER_LOOKUP[cleanNoPunct] = v;
+        }
+        const normalized = lower.replace(/\s+/g, ' ');
+        if (normalized !== lower) {
+            LOWER_LOOKUP[normalized] = v;
         }
     }
 
@@ -3427,7 +14464,30 @@
             return LOWER_LOOKUP[lower][lang];
         }
 
-        // 4. Reverse key lookup from TRANSLATIONS.en
+        // 4. Normalized whitespace
+        const normalized = lower.replace(/\s+/g, ' ');
+        if (LOWER_LOOKUP[normalized] && LOWER_LOOKUP[normalized][lang]) {
+            return LOWER_LOOKUP[normalized][lang];
+        }
+
+        // 5. Punctuation strip lookup
+        const cleanNoPunct = lower.replace(/[^\w\s]/g, '').trim();
+        if (LOWER_LOOKUP[cleanNoPunct] && LOWER_LOOKUP[cleanNoPunct][lang]) {
+            return LOWER_LOOKUP[cleanNoPunct][lang];
+        }
+
+        // 6. Trailing punctuation preservation (e.g. "Active:", "Status -", "Error!")
+        const punctMatch = clean.match(/^([^\s].*?)([:!?,.\-—–/]+)$/);
+        if (punctMatch) {
+            const core = punctMatch[1].trim();
+            const punct = punctMatch[2];
+            const coreTrans = getTranslationForText(core, lang);
+            if (coreTrans && coreTrans !== core) {
+                return coreTrans + (punct.startsWith(' ') ? '' : ' ') + punct.trim();
+            }
+        }
+
+        // 7. Reverse key lookup from TRANSLATIONS.en
         const enDict = TRANSLATIONS['en'];
         for (const [k, enVal] of Object.entries(enDict)) {
             if (enVal && enVal.toLowerCase().trim() === lower) {
@@ -3452,6 +14512,33 @@
         const trans = getTranslationForText(key, currentLang);
         if (trans) return trans;
         return fallback || key;
+    }
+
+    function translateTextNode(node, lang) {
+        if (!node || node.nodeType !== Node.TEXT_NODE) return;
+        const raw = node.nodeValue;
+        if (!raw) return;
+        const trimmed = raw.trim();
+        if (!trimmed || trimmed.length < 2 || /^[\d.,%$\s\-\+\/]+$/.test(trimmed)) return;
+        if (/^(QIPLO|EN|ES|FR|DE|ZH|JA|PT|AR|HI|RU)$/i.test(trimmed)) return;
+
+        if (!node._origText) {
+            node._origText = trimmed;
+        }
+        const orig = node._origText;
+        if (lang === 'en') {
+            const prefix = raw.match(/^\s*/)[0];
+            const suffix = raw.match(/\s*$/)[0];
+            node.nodeValue = prefix + orig + suffix;
+            return;
+        }
+
+        const trans = getTranslationForText(orig, lang);
+        if (trans && trans !== orig) {
+            const prefix = raw.match(/^\s*/)[0];
+            const suffix = raw.match(/\s*$/)[0];
+            node.nodeValue = prefix + trans + suffix;
+        }
     }
 
     function translateDOM(root = document.body) {
@@ -3501,6 +14588,7 @@
 
         // 3. Translate tooltips [title]
         root.querySelectorAll('[title]').forEach(el => {
+            if (el.closest('.logoBox, .monaco-editor')) return;
             if (!el.hasAttribute('data-i18n-orig-title')) {
                 el.setAttribute('data-i18n-orig-title', el.title);
             }
@@ -3513,96 +14601,75 @@
             }
         });
 
-        // 4. Translate all text tags across the document
-        const textTags = 'h1, h2, h3, h4, h5, p, span, button, a, th, label, option, summary, strong, b, td';
-        root.querySelectorAll(textTags).forEach(el => {
-            // Skip code blocks, scripts, and numerical data badges
-            if (el.closest('script, style, code, pre, .monaco-editor, #valSandboxTenure, .kpiValue, .metricCardVal, #overviewCurrencySelect, #specialSimSlider')) return;
-            // Skip logo label to preserve brand mark
-            if (el.classList.contains('logoSubLabel') || el.id === 'brandTitle') return;
-
-            const hasChildElements = Array.from(el.children).some(c => c.tagName !== 'BR');
-
-            if (!hasChildElements) {
-                const txt = el.textContent.trim();
-                if (!txt || /^\d+([.,]\d+)?%?$/.test(txt) || /^\$[\d,]+/.test(txt)) return;
-
-                if (!el.hasAttribute('data-i18n-orig')) {
-                    el.setAttribute('data-i18n-orig', txt);
-                }
-                const orig = el.getAttribute('data-i18n-orig');
-                if (isEn) {
-                    el.textContent = orig;
-                } else {
-                    const trans = getTranslationForText(orig, lang);
-                    if (trans) el.textContent = trans;
-                }
+        // 4. Translate [aria-label]
+        root.querySelectorAll('[aria-label]').forEach(el => {
+            if (el.closest('.logoBox, .monaco-editor')) return;
+            if (!el.hasAttribute('data-i18n-orig-aria')) {
+                el.setAttribute('data-i18n-orig-aria', el.getAttribute('aria-label'));
+            }
+            const orig = el.getAttribute('data-i18n-orig-aria');
+            if (isEn) {
+                el.setAttribute('aria-label', orig);
             } else {
-                Array.from(el.childNodes).forEach(node => {
-                    if (node.nodeType === Node.TEXT_NODE) {
-                        const raw = node.textContent.trim();
-                        if (!raw || /^\d+([.,]\d+)?%?$/.test(raw) || /^\$[\d,]+/.test(raw)) return;
-
-                        if (!node._origText) {
-                            node._origText = raw;
-                        }
-                        const orig = node._origText;
-                        if (isEn) {
-                            node.textContent = (node.textContent.startsWith(' ') ? ' ' : '') + orig;
-                        } else {
-                            const trans = getTranslationForText(orig, lang);
-                            if (trans) {
-                                node.textContent = (node.textContent.startsWith(' ') ? ' ' : '') + trans;
-                            }
-                        }
-                    }
-                });
+                const trans = getTranslationForText(orig, lang);
+                if (trans) el.setAttribute('aria-label', trans);
             }
         });
 
-        // 5. Update Language Switcher UI
+        // 5. Universal TreeWalker covering ALL DOM elements (divs, headings, spans, buttons, table cells, lists)
+        try {
+            const walker = document.createTreeWalker(
+                root,
+                NodeFilter.SHOW_TEXT,
+                {
+                    acceptNode: function(node) {
+                        if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+                        const parent = node.parentElement;
+                        if (!parent) return NodeFilter.FILTER_REJECT;
+                        const tag = parent.tagName.toUpperCase();
+                        if (['SCRIPT', 'STYLE', 'CODE', 'PRE', 'SVG', 'NOSCRIPT'].includes(tag)) {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        if (parent.closest('.monaco-editor, code, pre, .logoSubLabel, #brandTitle, #overviewCurrencySelect')) {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                }
+            );
+
+            let textNode;
+            while ((textNode = walker.nextNode())) {
+                translateTextNode(textNode, lang);
+            }
+        } catch (err) {
+            console.warn('[Qiplo i18n] TreeWalker traversal warning:', err);
+        }
+
+        // 6. Update Header & Dropdown Language UI Elements
         const hFlag = document.getElementById('headerLangFlag');
         const hCode = document.getElementById('headerLangCode');
         if (hFlag) hFlag.textContent = langConfig.flag;
         if (hCode) hCode.textContent = langConfig.code.toUpperCase();
 
-        document.querySelectorAll('.header-lang-item').forEach(item => {
-            const code = item.getAttribute('data-lang');
-            if (code === lang) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
-        });
-
-        document.querySelectorAll('.langCurrentLabel').forEach(el => {
-            el.textContent = langConfig.code.toUpperCase();
-        });
-        document.querySelectorAll('.langCurrentName').forEach(el => {
-            el.textContent = langConfig.native;
-        });
-
-        document.querySelectorAll('.langOptionItem').forEach(item => {
-            const code = item.getAttribute('data-lang');
-            if (code === lang) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
-        });
-        document.querySelectorAll('.lang-quick-btn').forEach(btn => {
-            const code = btn.getAttribute('data-lang');
-            if (code === lang) {
+        document.querySelectorAll('.header-lang-item').forEach(btn => {
+            const bLang = btn.getAttribute('data-lang');
+            if (bLang === lang) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');
             }
         });
 
-        // 6. Refresh Lucide Icons safely
-        if (window.lucide && typeof window.lucide.createIcons === 'function') {
-            window.lucide.createIcons();
-        }
+        // Also update mobile 3-dot menu language active buttons
+        document.querySelectorAll('.lang-quick-btn, #langDropdownMenu button').forEach(btn => {
+            const bLang = btn.getAttribute('data-lang');
+            if (bLang === lang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
     }
 
     function translateUI() {
@@ -3619,12 +14686,7 @@
 
         const langObj = SUPPORTED_LANGUAGES.find(l => l.code === currentLang);
         if (window.showBiToast && langObj) {
-            window.showBiToast(`${langObj.flag} Language changed to ${langObj.native} (${langObj.name})`, 'globe');
-        }
-
-        if (window.appendMessage && currentLang !== 'en' && langObj) {
-            const notice = `${langObj.flag} **Language updated to ${langObj.native} (${langObj.name})**. All dashboard workspaces, predictive AI queries, and presentation decks will now process in ${langObj.name}.`;
-            window.appendMessage('bot', notice, true);
+            window.showBiToast(`Language changed to ${langObj.native} (${langObj.name})`, 'globe');
         }
     }
 
@@ -3636,29 +14698,38 @@
         return SUPPORTED_LANGUAGES;
     }
 
-    window.toggleHeaderLangMenu = function(e) {
-        if (e) e.stopPropagation();
-        const dd = document.getElementById('headerLangDropdown');
-        if (dd) {
-            dd.classList.toggle('hidden');
+    // Dynamic Mutation Observer for auto-translating newly injected DOM elements
+    let _mutationDebounceTimer = null;
+    const observer = new MutationObserver((mutations) => {
+        if (currentLang === 'en') return;
+        let needsTranslation = false;
+        for (const m of mutations) {
+            if (m.addedNodes.length > 0) {
+                for (const node of m.addedNodes) {
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        const tag = node.tagName ? node.tagName.toUpperCase() : '';
+                        if (!['SCRIPT', 'STYLE', 'SVG'].includes(tag) && !node.classList.contains('monaco-editor')) {
+                            needsTranslation = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (needsTranslation) break;
         }
-    };
-
-    window.closeHeaderLangMenu = function() {
-        const dd = document.getElementById('headerLangDropdown');
-        if (dd) {
-            dd.classList.add('hidden');
-        }
-    };
-
-    document.addEventListener('click', (e) => {
-        const wrapper = document.getElementById('headerLangWrapper');
-        if (wrapper && !wrapper.contains(e.target)) {
-            window.closeHeaderLangMenu();
+        if (needsTranslation) {
+            clearTimeout(_mutationDebounceTimer);
+            _mutationDebounceTimer = setTimeout(() => {
+                translateDOM(document.body);
+            }, 80);
         }
     });
 
+    // Global Public Qiplo i18n API
     window.qiploI18n = {
+        SUPPORTED_LANGUAGES,
+        TRANSLATIONS,
+        PHRASE_DICTIONARY,
         t,
         getTranslationForText,
         translateDOM,
@@ -3669,8 +14740,14 @@
     };
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', translateUI);
+        document.addEventListener('DOMContentLoaded', () => {
+            translateUI();
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
     } else {
-        setTimeout(translateUI, 50);
+        setTimeout(() => {
+            translateUI();
+            observer.observe(document.body, { childList: true, subtree: true });
+        }, 50);
     }
 })();
