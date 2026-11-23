@@ -10747,3 +10747,247 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-webkit-slider-thumb:hover {
     transform: scale(1.18) !important;
 }
+
+/* ==========================================================================
+   PURE POLISH DESIGN SYSTEM: TYPOGRAPHY, ICONS, AND FLUID ANIMATIONS
+   Ultra-Refined Visual Excellence Across All Text, Icons, and Micro-Interactions
+   ========================================================================== */
+
+/* 1. Global Typography Pureness & Smoothing */
+html, body {
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    text-rendering: optimizeLegibility !important;
+}
+
+body.light-theme {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+body.dark-theme {
+    background-color: #090b10 !important;
+    color: #f8fafc !important;
+}
+
+/* Crisp Heading Hierarchy */
+h1, h2, h3, h4, h5, h6,
+.executiveViewTitle,
+.saasCardTitle,
+.insightsHeadline,
+.workflowStepTitle,
+.modelPerformanceHead h4,
+.confusionMatrixHead h4 {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    letter-spacing: -0.022em !important;
+    font-weight: 700 !important;
+}
+
+/* Crisp UI & Body Text */
+p, span, label, input, button, select, textarea,
+.aiSub, .kpiFooter, .funnelStageLabel, .sparkSubLabel, .insightsSub,
+.workflowStepSub, .metricCardLabel, .confusionCellSub, .status, .hint {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Numeric & Monospace Purity */
+.statValue, .metric-value, .stat-value, .kpi-val, .kpiValue,
+.volumeBigVal, .sparkBigVal, .sparkDeltaVal, .insightsBigStat,
+.funnelStageVal, .metricCardVal, .confusionCellVal, .probCell, .prob,
+#sandboxProbabilityText, .roiValue, .savedArrValue, .tabular-nums {
+    font-family: 'Plus Jakarta Sans', 'Inter', var(--font-mono), monospace !important;
+    font-variant-numeric: tabular-nums lining-nums !important;
+    font-feature-settings: 'tnum' 1, 'zero' 1 !important;
+    letter-spacing: -0.025em !important;
+}
+
+/* 2. Pure Icon Consistency & Alignment */
+i.lucide-icon,
+svg.lucide-icon,
+.tab i,
+.tab svg,
+.filterPillBtn i,
+.filterPillBtn svg,
+.primaryBtn i,
+.primaryBtn svg,
+.ghostBtn i,
+.ghostBtn svg,
+.saasMoreBtn i,
+.saasMoreBtn svg,
+.badge i,
+.badge svg,
+.kpiBadge i,
+.kpiBadge svg {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    vertical-align: middle !important;
+    stroke-width: 1.85px !important;
+    stroke: currentColor !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+    flex-shrink: 0 !important;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, stroke 0.2s ease !important;
+}
+
+/* Hover Icon Motion */
+.tab:hover i,
+.tab:hover svg,
+.primaryBtn:hover i,
+.primaryBtn:hover svg,
+.ghostBtn:hover i,
+.ghostBtn:hover svg,
+.filterPillBtn:hover i,
+.filterPillBtn:hover svg {
+    transform: scale(1.08) !important;
+}
+
+/* 3. Fluid Micro-Animations */
+
+/* Tab Switching Cross-Fade & Slide */
+@keyframes pureTabReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tabBody:not(.hidden) {
+    animation: pureTabReveal 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+/* Button & Action Click Physical Feedback */
+.primaryBtn:active,
+.ghostBtn:active,
+.filterPillBtn:active,
+.tab:active,
+.saasMoreBtn:active,
+.heroPromptSubmitBtn:active,
+.pane-collapse-btn:active {
+    transform: scale(0.96) !important;
+    transition: transform 0.08s ease !important;
+}
+
+/* Funnel Bar Stripe Shimmer */
+@keyframes pureStripeFlow {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 28px 0;
+    }
+}
+
+.saasFunnelContainer .funnelBar:not(.bar-3) {
+    animation: pureStripeFlow 20s linear infinite !important;
+}
+
+/* Dot Matrix Peak Aura Breathing */
+@keyframes pureDotBreathe {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.15);
+        opacity: 0.85;
+    }
+}
+
+.dotMatrixGrid .col-peak .dot.deep {
+    animation: pureDotBreathe 2.6s ease-in-out infinite !important;
+}
+
+/* Floating AI Oval Copilot Breathing Glow */
+@keyframes pureOvalPulse {
+    0%, 100% {
+        box-shadow: 0 4px 18px rgba(139, 92, 246, 0.35), 0 0 0 1px rgba(139, 92, 246, 0.2);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 6px 26px rgba(217, 70, 239, 0.5), 0 0 0 3px rgba(217, 70, 239, 0.3);
+        transform: scale(1.03);
+    }
+}
+
+.copilotLauncherOval {
+    animation: pureOvalPulse 3.5s ease-in-out infinite !important;
+    border-radius: 9999px !important;
+    transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.copilotLauncherOval:hover {
+    transform: scale(1.08) translateY(-2px) !important;
+    animation: none !important;
+    box-shadow: 0 8px 30px rgba(139, 92, 246, 0.6), 0 0 0 4px rgba(217, 70, 239, 0.35) !important;
+}
+
+/* Skeleton Shimmer Waves */
+@keyframes pureShimmerWave {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.skeleton-loader {
+    background: linear-gradient(90deg, rgba(125, 125, 125, 0.08) 25%, rgba(125, 125, 125, 0.18) 50%, rgba(125, 125, 125, 0.08) 75%) !important;
+    background-size: 200% 100% !important;
+    animation: pureShimmerWave 1.8s ease-in-out infinite !important;
+    border-radius: 6px !important;
+}
+
+/* 4. Pure Light & Dark Theme Elevation & Polish */
+body.light-theme .saasHeroCard,
+body.light-theme .saasMetricCard,
+body.light-theme .executiveKpiCard,
+body.light-theme .aiCard,
+body.light-theme .special-module-card,
+body.light-theme .framer-card,
+body.light-theme .resultScorecard,
+body.light-theme .fStatCard,
+body.light-theme .simResultCard,
+body.light-theme .guideSectionCard,
+body.light-theme .guideHeaderCard,
+body.light-theme .pbiKpiCard,
+body.light-theme .tableContainer,
+body.light-theme .customersTableWrap {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.035), 0 2px 6px -1px rgba(0, 0, 0, 0.012) !important;
+}
+
+body.dark-theme .saasHeroCard,
+body.dark-theme .saasMetricCard,
+body.dark-theme .executiveKpiCard,
+body.dark-theme .aiCard,
+body.dark-theme .special-module-card,
+body.dark-theme .framer-card,
+body.dark-theme .resultScorecard,
+body.dark-theme .fStatCard,
+body.dark-theme .simResultCard,
+body.dark-theme .guideSectionCard,
+body.dark-theme .guideHeaderCard,
+body.dark-theme .pbiKpiCard,
+body.dark-theme .tableContainer,
+body.dark-theme .customersTableWrap {
+    background: #121520 !important;
+    border: 1px solid rgba(255, 255, 255, 0.075) !important;
+    box-shadow: 0 6px 24px -2px rgba(0, 0, 0, 0.42) !important;
+}
+
+/* Universal Card Hover Micro-Lift */
+.saasHeroCard:hover,
+.saasMetricCard:hover,
+.executiveKpiCard:hover,
+.special-module-card:hover,
+.resultScorecard:hover,
+.fStatCard:hover,
+.simResultCard:hover {
+    transform: translateY(-3px) scale(1.002) !important;
+}
