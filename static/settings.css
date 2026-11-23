@@ -413,3 +413,41 @@ body.device-desktop .settings-grid {
     max-width: 100%;
 }
 
+
+/* Inspiration Design Harmonization for Settings */
+:root {
+    --radius-sm: 10px !important;
+    --radius: 18px !important;
+    --radius-lg: 24px !important;
+}
+
+.settings-card,
+.card,
+.panel {
+    border-radius: 24px !important;
+    border: 1px solid var(--border) !important;
+}
+
+button,
+.btn,
+.btn-primary,
+.btn-secondary {
+    border-radius: 9999px !important;
+    padding: 8px 18px !important;
+    font-weight: 600 !important;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select {
+    border-radius: 9999px !important;
+    padding: 8px 16px !important;
+    border: 1px solid var(--border) !important;
+}
+input:focus,
+select:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16) !important;
+}

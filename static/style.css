@@ -10204,3 +10204,546 @@ body.dark-theme .retentionPinBadge {
         font-size: 2.8rem;
     }
 }
+
+/* ==========================================================================
+   WHOLE-SITE DESIGN SYSTEM HARMONIZATION: INSPIRATION DESIGN LANGUAGE
+   Elevating every studio tab, card, table, sidebar, badge, and button across Qiplo
+   ========================================================================== */
+
+/* 1. Global Core Variables */
+:root {
+    --radius-sm: 10px !important;
+    --radius: 18px !important;
+    --radius-md: 20px !important;
+    --radius-lg: 24px !important;
+    --radius-xl: 28px !important;
+    --radius-pill: 9999px !important;
+}
+
+/* 2. Unified Card Surfaces Across All Tabs */
+.executiveKpiCard,
+.aiCard,
+.special-module-card,
+.framer-card,
+.analyzedTipsContainer,
+.insightBox,
+.resultScorecard,
+.fStatCard,
+.simResultCard,
+.active-loops-card,
+.decision-intelligence-console,
+.report-config-card,
+.health-summary-panel,
+.presContainer,
+.presCard,
+.presQABlock,
+.slideEditorPanel,
+.guideHeaderCard,
+.guideSectionCard,
+.pbiKpiCard,
+.pbiConnectorCard,
+.pbiChartCard,
+.tour-card,
+.telemetryCard,
+.modelPerformanceCard,
+.confusionMatrixCard,
+.signalsBlock,
+.modal-content,
+.modalContent {
+    border-radius: 24px !important;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease !important;
+}
+
+body.light-theme .executiveKpiCard,
+body.light-theme .aiCard,
+body.light-theme .special-module-card,
+body.light-theme .framer-card,
+body.light-theme .insightBox,
+body.light-theme .resultScorecard,
+body.light-theme .fStatCard,
+body.light-theme .simResultCard,
+body.light-theme .active-loops-card,
+body.light-theme .decision-intelligence-console,
+body.light-theme .report-config-card,
+body.light-theme .health-summary-panel,
+body.light-theme .presContainer,
+body.light-theme .presCard,
+body.light-theme .presQABlock,
+body.light-theme .slideEditorPanel,
+body.light-theme .guideHeaderCard,
+body.light-theme .guideSectionCard,
+body.light-theme .pbiKpiCard,
+body.light-theme .pbiConnectorCard,
+body.light-theme .pbiChartCard,
+body.light-theme .tour-card,
+body.light-theme .modelPerformanceCard,
+body.light-theme .confusionMatrixCard,
+body.light-theme .signalsBlock,
+body.light-theme .modal-content,
+body.light-theme .modalContent {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.035), 0 2px 6px -1px rgba(0, 0, 0, 0.015) !important;
+}
+
+body.dark-theme .executiveKpiCard,
+body.dark-theme .aiCard,
+body.dark-theme .special-module-card,
+body.dark-theme .framer-card,
+body.dark-theme .insightBox,
+body.dark-theme .resultScorecard,
+body.dark-theme .fStatCard,
+body.dark-theme .simResultCard,
+body.dark-theme .active-loops-card,
+body.dark-theme .decision-intelligence-console,
+body.dark-theme .report-config-card,
+body.dark-theme .health-summary-panel,
+body.dark-theme .presContainer,
+body.dark-theme .presCard,
+body.dark-theme .presQABlock,
+body.dark-theme .slideEditorPanel,
+body.dark-theme .guideHeaderCard,
+body.dark-theme .guideSectionCard,
+body.dark-theme .pbiKpiCard,
+body.dark-theme .pbiConnectorCard,
+body.dark-theme .pbiChartCard,
+body.dark-theme .tour-card,
+body.dark-theme .modelPerformanceCard,
+body.dark-theme .confusionMatrixCard,
+body.dark-theme .signalsBlock,
+body.dark-theme .modal-content,
+body.dark-theme .modalContent {
+    background: #151722 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 6px 24px -2px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Interactive Card Hover Elevation */
+.executiveKpiCard:hover,
+.special-module-card:hover,
+.resultScorecard:hover,
+.fStatCard:hover,
+.simResultCard:hover,
+.pbiKpiCard:hover {
+    transform: translateY(-2px) !important;
+}
+body.light-theme .executiveKpiCard:hover,
+body.light-theme .special-module-card:hover,
+body.light-theme .resultScorecard:hover,
+body.light-theme .fStatCard:hover,
+body.light-theme .simResultCard:hover,
+body.light-theme .pbiKpiCard:hover {
+    box-shadow: 0 8px 28px -4px rgba(0, 0, 0, 0.07), 0 3px 8px -1px rgba(0, 0, 0, 0.03) !important;
+}
+body.dark-theme .executiveKpiCard:hover,
+body.dark-theme .special-module-card:hover,
+body.dark-theme .resultScorecard:hover,
+body.dark-theme .fStatCard:hover,
+body.dark-theme .simResultCard:hover,
+body.dark-theme .pbiKpiCard:hover {
+    box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.55) !important;
+}
+
+/* 3. Nested Sub-Cards & Metric Cards */
+.telemetryCard,
+.modelMetricCard,
+.confusionCell,
+.sourceCard,
+.sourceItem,
+.noteItem,
+.pbiDimCard,
+.pbiFactCard {
+    border-radius: 18px !important;
+    border: 1px solid var(--border) !important;
+}
+body.light-theme .telemetryCard,
+body.light-theme .modelMetricCard,
+body.light-theme .sourceCard,
+body.light-theme .sourceItem,
+body.light-theme .noteItem,
+body.light-theme .pbiDimCard,
+body.light-theme .pbiFactCard {
+    background: #f8fafc !important;
+}
+body.dark-theme .telemetryCard,
+body.dark-theme .modelMetricCard,
+body.dark-theme .sourceCard,
+body.dark-theme .sourceItem,
+body.dark-theme .noteItem,
+body.dark-theme .pbiDimCard,
+body.dark-theme .pbiFactCard {
+    background: #10121a !important;
+}
+
+/* 4. Pills, Badges & Chips Across All Tabs */
+.badge,
+.kpiBadge,
+.resultScorecardBadge,
+.meta-pill,
+.chip,
+.sloganBadge,
+.demoBadge,
+.workflowStepPill,
+.pbiBadge,
+.tag-pill,
+.status-pill {
+    border-radius: 9999px !important;
+    padding: 4px 12px !important;
+    font-size: 0.74rem !important;
+    font-weight: 600 !important;
+    font-family: var(--font-ui), sans-serif !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+}
+
+/* 5. Buttons Across All Tabs */
+.primaryBtn,
+button.primaryBtn,
+.btn-primary,
+#generatePresBtn,
+#surprisePresBtn,
+#triggerSlaAlertBtn,
+#saveAlertChannelsBtn,
+#crmConnectBtn,
+#generateCustomReportBtn,
+#schedulerBtn {
+    border-radius: 9999px !important;
+    padding: 8px 18px !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    font-family: var(--font-heading), var(--font-ui), sans-serif !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+}
+
+body.light-theme .primaryBtn,
+body.light-theme button.primaryBtn,
+body.light-theme .btn-primary,
+body.light-theme #generatePresBtn,
+body.light-theme #surprisePresBtn,
+body.light-theme #triggerSlaAlertBtn,
+body.light-theme #saveAlertChannelsBtn,
+body.light-theme #crmConnectBtn,
+body.light-theme #generateCustomReportBtn,
+body.light-theme #schedulerBtn {
+    background: #111827 !important;
+    color: #ffffff !important;
+    border: 1px solid #111827 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+}
+body.light-theme .primaryBtn:hover,
+body.light-theme button.primaryBtn:hover,
+body.light-theme .btn-primary:hover,
+body.light-theme #generatePresBtn:hover,
+body.light-theme #surprisePresBtn:hover,
+body.light-theme #triggerSlaAlertBtn:hover,
+body.light-theme #saveAlertChannelsBtn:hover,
+body.light-theme #crmConnectBtn:hover,
+body.light-theme #generateCustomReportBtn:hover,
+body.light-theme #schedulerBtn:hover {
+    background: #1f2937 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18) !important;
+}
+
+body.dark-theme .primaryBtn,
+body.dark-theme button.primaryBtn,
+body.dark-theme .btn-primary,
+body.dark-theme #generatePresBtn,
+body.dark-theme #surprisePresBtn,
+body.dark-theme #triggerSlaAlertBtn,
+body.dark-theme #saveAlertChannelsBtn,
+body.dark-theme #crmConnectBtn,
+body.dark-theme #generateCustomReportBtn,
+body.dark-theme #schedulerBtn {
+    background: #ffffff !important;
+    color: #090a0f !important;
+    border: 1px solid #ffffff !important;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.15) !important;
+}
+body.dark-theme .primaryBtn:hover,
+body.dark-theme button.primaryBtn:hover,
+body.dark-theme .btn-primary:hover,
+body.dark-theme #generatePresBtn:hover,
+body.dark-theme #surprisePresBtn:hover,
+body.dark-theme #triggerSlaAlertBtn:hover,
+body.dark-theme #saveAlertChannelsBtn:hover,
+body.dark-theme #crmConnectBtn:hover,
+body.dark-theme #generateCustomReportBtn:hover,
+body.dark-theme #schedulerBtn:hover {
+    background: #f1f5f9 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.25) !important;
+}
+
+.ghostBtn,
+button.ghostBtn,
+.secondaryBtn,
+button.secondaryBtn,
+.header-lang-btn,
+.mobile-menu-btn,
+.iconOnlyBtn {
+    border-radius: 9999px !important;
+    padding: 7px 16px !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    font-family: var(--font-ui), sans-serif !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+    border: 1px solid var(--border) !important;
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+}
+.ghostBtn:hover,
+button.ghostBtn:hover,
+.secondaryBtn:hover,
+button.secondaryBtn:hover,
+.header-lang-btn:hover {
+    background: var(--surface-2) !important;
+    border-color: var(--accent) !important;
+    color: var(--text) !important;
+}
+
+.iconOnlyBtn,
+.pane-collapse-btn,
+.header-more-btn {
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* 6. Form Inputs & Selects */
+input[type="text"],
+input[type="search"],
+input[type="number"],
+input[type="email"],
+select,
+.roleSelect,
+#companyNameInput,
+#customerSearchInput,
+#presPromptInput {
+    border-radius: 9999px !important;
+    padding: 8px 16px !important;
+    font-size: 0.85rem !important;
+    border: 1px solid var(--border) !important;
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    font-family: var(--font-ui), sans-serif !important;
+    outline: none !important;
+    transition: all 0.18s ease !important;
+}
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+select:focus,
+.roleSelect:focus,
+#companyNameInput:focus,
+#customerSearchInput:focus,
+#presPromptInput:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16) !important;
+}
+
+textarea {
+    border-radius: 16px !important;
+    padding: 12px 16px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    font-family: var(--font-ui), sans-serif !important;
+    outline: none !important;
+    transition: all 0.18s ease !important;
+}
+textarea:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16) !important;
+}
+
+/* 7. Tables Across All Views */
+.tableContainer,
+.customersTableWrap,
+.cohortTableWrap,
+.auditLogTableWrap,
+.complianceTableWrap {
+    border-radius: 22px !important;
+    overflow: hidden !important;
+    border: 1px solid var(--border) !important;
+}
+body.light-theme .tableContainer,
+body.light-theme .customersTableWrap,
+body.light-theme .cohortTableWrap,
+body.light-theme .auditLogTableWrap {
+    background: #ffffff !important;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.035) !important;
+}
+body.dark-theme .tableContainer,
+body.dark-theme .customersTableWrap,
+body.dark-theme .cohortTableWrap,
+body.dark-theme .auditLogTableWrap {
+    background: #141620 !important;
+    box-shadow: 0 6px 24px -2px rgba(0, 0, 0, 0.35) !important;
+}
+
+table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    width: 100% !important;
+}
+
+th,
+.table-header-cell {
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    padding: 12px 16px !important;
+    border-bottom: 1px solid var(--border) !important;
+}
+body.light-theme th,
+body.light-theme .table-header-cell {
+    background: #f8fafc !important;
+    color: #475569 !important;
+}
+body.dark-theme th,
+body.dark-theme .table-header-cell {
+    background: #10121a !important;
+    color: #94a3b8 !important;
+}
+
+td {
+    padding: 12px 16px !important;
+    border-bottom: 1px solid var(--border) !important;
+    font-size: 0.86rem !important;
+    transition: background 0.15s ease !important;
+}
+tbody tr:hover td {
+    background: rgba(59, 130, 246, 0.05) !important;
+}
+
+/* 8. Sidebars (Sources & Notes) */
+.sourcesPane {
+    border-radius: 0 24px 24px 0 !important;
+}
+.notesPane {
+    border-radius: 24px 0 0 24px !important;
+}
+body.light-theme .sourcesPane,
+body.light-theme .notesPane {
+    background: #ffffff !important;
+    border-color: rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04) !important;
+}
+body.dark-theme .sourcesPane,
+body.dark-theme .notesPane {
+    background: #12141c !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.4) !important;
+}
+
+.sourceMeta {
+    border-radius: 18px !important;
+    border: 1px solid var(--border) !important;
+    overflow: hidden !important;
+}
+
+/* 9. Floating Copilot Window & Modal Windows */
+.floatingCopilotWindow {
+    border-radius: 28px !important;
+    overflow: hidden !important;
+}
+body.light-theme .floatingCopilotWindow {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.14) !important;
+}
+body.dark-theme .floatingCopilotWindow {
+    background: #151722 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 16px 44px -4px rgba(0, 0, 0, 0.6) !important;
+}
+
+.floatingCopilotHeader {
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid var(--border) !important;
+}
+
+.copilotInputArea input,
+#chatInput {
+    border-radius: 9999px !important;
+    padding: 10px 48px 10px 18px !important;
+}
+
+.copilotSendBtn,
+#chatSendBtn {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+}
+
+/* 10. Topbar & Header Aesthetics */
+header.topbar {
+    border-bottom: 1px solid var(--border) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+}
+body.light-theme header.topbar {
+    background: rgba(255, 255, 255, 0.92) !important;
+}
+body.dark-theme header.topbar {
+    background: rgba(15, 17, 24, 0.92) !important;
+}
+
+.capsule-group {
+    border-radius: 9999px !important;
+    padding: 3px !important;
+    border: 1px solid var(--border) !important;
+}
+body.light-theme .capsule-group {
+    background: #f1f5f9 !important;
+}
+body.dark-theme .capsule-group {
+    background: #11131c !important;
+}
+
+/* 11. Range Sliders in Sandbox */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px !important;
+    border-radius: 9999px !important;
+    background: var(--surface-3) !important;
+    outline: none !important;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 50% !important;
+    background: #3b82f6 !important;
+    cursor: pointer !important;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.45) !important;
+    transition: transform 0.15s ease !important;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.18) !important;
+}
