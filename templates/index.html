@@ -949,7 +949,7 @@
                                 <div class="saasFunnelStage stage-1">
                                     <div class="funnelStageHead">
                                         <span class="funnelStageLabel" data-i18n="funnel_s1">Ingested Accounts</span>
-                                        <strong class="funnelStageVal" id="funnelValIngested">65.2k</strong>
+                                        <strong class="funnelStageVal" id="funnelValIngested"><span class="skeleton-loader"></span></strong>
                                     </div>
                                     <div class="funnelBarWrapper">
                                         <div class="funnelBar bar-1"></div>
@@ -959,7 +959,7 @@
                                 <div class="saasFunnelStage stage-2">
                                     <div class="funnelStageHead">
                                         <span class="funnelStageLabel" data-i18n="funnel_s2">Monitored Base</span>
-                                        <strong class="funnelStageVal" id="funnelValMonitored">54.8k</strong>
+                                        <strong class="funnelStageVal" id="funnelValMonitored"><span class="skeleton-loader"></span></strong>
                                     </div>
                                     <div class="funnelBarWrapper">
                                         <div class="funnelBar bar-2"></div>
@@ -969,13 +969,13 @@
                                 <div class="saasFunnelStage stage-3 stage-featured">
                                     <div class="funnelStageHead">
                                         <span class="funnelStageLabel" data-i18n="funnel_s3">Healthy Cohorts</span>
-                                        <strong class="funnelStageVal" id="funnelValHealthy">48.6k</strong>
+                                        <strong class="funnelStageVal" id="funnelValHealthy"><span class="skeleton-loader"></span></strong>
                                     </div>
                                     <div class="funnelBarWrapper">
                                         <div class="funnelBar bar-3">
                                             <div class="funnelTooltip">
                                                 <span class="tooltipPointer"></span>
-                                                <span class="tooltipText"><span id="tooltipVal">48.6k</span> <span data-i18n="tooltip_accounts">accounts</span> | <span data-i18n="tooltip_retention">Retention</span>: 89% | <span data-i18n="tooltip_dropoff">Drop-off</span>: -11%</span>
+                                                <span class="tooltipText"><span id="tooltipVal">--</span> <span data-i18n="tooltip_accounts">accounts</span> | <span data-i18n="tooltip_retention">Retention</span>: <span id="tooltipRetentionPct">--%</span> | <span data-i18n="tooltip_dropoff">Drop-off</span>: <span id="tooltipDropoffPct">--%</span></span>
                                             </div>
                                         </div>
                                     </div>
@@ -984,7 +984,7 @@
                                 <div class="saasFunnelStage stage-4">
                                     <div class="funnelStageHead">
                                         <span class="funnelStageLabel" data-i18n="funnel_s4">Elevated Risk</span>
-                                        <strong class="funnelStageVal" id="funnelValElevated">38.3k</strong>
+                                        <strong class="funnelStageVal" id="funnelValElevated"><span class="skeleton-loader"></span></strong>
                                     </div>
                                     <div class="funnelBarWrapper">
                                         <div class="funnelBar bar-4"></div>
@@ -994,7 +994,7 @@
                                 <div class="saasFunnelStage stage-5">
                                     <div class="funnelStageHead">
                                         <span class="funnelStageLabel" data-i18n="funnel_s5">Critical SLA Triage</span>
-                                        <strong class="funnelStageVal" id="funnelValCritical">32.9k</strong>
+                                        <strong class="funnelStageVal" id="funnelValCritical"><span class="skeleton-loader"></span></strong>
                                     </div>
                                     <div class="funnelBarWrapper">
                                         <div class="funnelBar bar-5"></div>
@@ -1043,14 +1043,14 @@
                                             </button>
                                             <button type="button" class="cardMenuItem" onclick="askCopilotCard('retention')">
                                                 <i data-lucide="sparkles" class="lucide-icon"></i>
-                                                <span>Ask AI: Why is Retention at 42%?</span>
+                                                <span id="retentionCardMenuText">Ask AI: Analyze Portfolio Retention</span>
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="retentionChartBody">
-                                    <div class="retentionPinBadge" id="retentionPinBadge">42%</div>
-                                    <svg class="retentionSvg" viewBox="0 0 240 120" preserveAspectRatio="none">
+                                    <div class="retentionPinBadge" id="retentionPinBadge">--%</div>
+                                    <svg class="retentionSvg" id="retentionSvgChart" viewBox="0 0 240 120" preserveAspectRatio="none">
                                         <defs>
                                             <linearGradient id="retentionGrad" x1="0" y1="0" x2="0" y2="100%">
                                                 <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.18" />
@@ -1061,11 +1061,11 @@
                                             </pattern>
                                         </defs>
                                         <!-- Shaded Drop Lines Background -->
-                                        <polygon points="10,80 30,80 30,90 50,90 50,60 80,60 80,68 100,68 100,42 120,42 120,48 140,48 140,78 160,78 160,70 180,70 180,95 200,95 200,74 230,74 230,120 10,120" fill="url(#pinkHatch)" />
+                                        <polygon id="retentionPolyFill" points="10,80 30,80 30,90 50,90 50,60 80,60 80,68 100,68 100,42 120,42 120,48 140,48 140,78 160,78 160,70 180,70 180,95 200,95 200,74 230,74 230,120 10,120" fill="url(#pinkHatch)" />
                                         <!-- Stepped Line -->
-                                        <polyline points="10,80 30,80 30,90 50,90 50,60 80,60 80,68 100,68 100,42 120,42 120,48 140,48 140,78 160,78 160,70 180,70 180,95 200,95 200,74 230,74" fill="none" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        <polyline id="retentionPolyLine" points="10,80 30,80 30,90 50,90 50,60 80,60 80,68 100,68 100,42 120,42 120,48 140,48 140,78 160,78 160,70 180,70 180,95 200,95 200,74 230,74" fill="none" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                                         <!-- Pin Dot -->
-                                        <circle cx="100" cy="42" r="3.5" fill="#f43f5e" />
+                                        <circle id="retentionPinDot" cx="100" cy="42" r="3.5" fill="#f43f5e" />
                                     </svg>
                                     <div class="retentionXAxis">
                                         <span>Jan</span>
@@ -1111,7 +1111,7 @@
                                     </div>
                                     <div class="sparkCardContent">
                                         <div class="sparkCardLeft">
-                                            <div class="sparkBigVal" id="cardInferencesVal">106k</div>
+                                            <div class="sparkBigVal" id="cardInferencesVal"><span class="skeleton-loader"></span></div>
                                         </div>
                                         <div class="sparkCardMiddle">
                                             <div class="sparkPillBadge badge-emerald" data-i18n="peak_wed">Peak: Wed</div>
@@ -1127,7 +1127,7 @@
                                         </div>
                                         <div class="sparkCardRight">
                                             <span class="sparkSubLabel" data-i18n="vs_last_period">vs last period</span>
-                                            <span class="sparkDeltaVal delta-pos">+34,002</span>
+                                            <span class="sparkDeltaVal delta-pos" id="sparkDeltaInferences">+--</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1163,7 +1163,7 @@
                                     </div>
                                     <div class="sparkCardContent">
                                         <div class="sparkCardLeft">
-                                            <div class="sparkBigVal" id="cardCustomersVal">1,284</div>
+                                            <div class="sparkBigVal" id="cardCustomersVal"><span class="skeleton-loader"></span></div>
                                         </div>
                                         <div class="sparkCardMiddle">
                                             <div class="sparkPillBadge badge-blue" data-i18n="highest_thu">Highest: Thu</div>
@@ -1179,7 +1179,7 @@
                                         </div>
                                         <div class="sparkCardRight">
                                             <span class="sparkSubLabel" data-i18n="vs_last_period">vs last period</span>
-                                            <span class="sparkDeltaVal delta-pos">+320</span>
+                                            <span class="sparkDeltaVal delta-pos" id="sparkDeltaCustomers">+--</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1219,38 +1219,38 @@
                                 </div>
                             </div>
                             <div class="volumeHeroValueRow">
-                                <strong class="volumeBigVal" id="grossArrVal">$41,540</strong>
-                                <span class="volumeGrowthBadge"><i data-lucide="triangle" class="lucide-icon icon-up"></i> +15%</span>
+                                <strong class="volumeBigVal" id="grossArrVal"><span class="skeleton-loader"></span></strong>
+                                <span class="volumeGrowthBadge" id="volumeGrowthBadge"><i data-lucide="triangle" class="lucide-icon icon-up"></i> +--%</span>
                             </div>
 
                             <div class="volumeBreakdownRows">
                                 <div class="volumeBreakdownItem">
                                     <div class="breakdownMeta">
                                         <span class="breakdownLabel" data-i18n="arr_tier_critical">Critical Risk Contracts</span>
-                                        <strong class="breakdownVal" id="tierCriticalVal">$26,800</strong>
+                                        <strong class="breakdownVal" id="tierCriticalVal"><span class="skeleton-loader"></span></strong>
                                     </div>
                                     <div class="breakdownTrack">
-                                        <div class="breakdownFill fill-emerald" style="width: 65%;"></div>
+                                        <div class="breakdownFill fill-emerald" id="tierCriticalBar" style="width: 0%;"></div>
                                     </div>
                                 </div>
 
                                 <div class="volumeBreakdownItem">
                                     <div class="breakdownMeta">
                                         <span class="breakdownLabel" data-i18n="arr_tier_moderate">Moderate Exposure Cohorts</span>
-                                        <strong class="breakdownVal" id="tierModerateVal">$10,400</strong>
+                                        <strong class="breakdownVal" id="tierModerateVal"><span class="skeleton-loader"></span></strong>
                                     </div>
                                     <div class="breakdownTrack">
-                                        <div class="breakdownFill fill-blue" style="width: 42%;"></div>
+                                        <div class="breakdownFill fill-blue" id="tierModerateBar" style="width: 0%;"></div>
                                     </div>
                                 </div>
 
                                 <div class="volumeBreakdownItem">
                                     <div class="breakdownMeta">
                                         <span class="breakdownLabel" data-i18n="arr_tier_retained">Retained Baseline MRR</span>
-                                        <strong class="breakdownVal" id="tierRetainedVal">$4,340</strong>
+                                        <strong class="breakdownVal" id="tierRetainedVal"><span class="skeleton-loader"></span></strong>
                                     </div>
                                     <div class="breakdownTrack">
-                                        <div class="breakdownFill fill-pink" style="width: 25%;"></div>
+                                        <div class="breakdownFill fill-pink" id="tierRetainedBar" style="width: 0%;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1266,14 +1266,14 @@
                             </div>
 
                             <div class="insightsBody">
-                                <div class="insightsBigStat">75%</div>
-                                <h3 class="insightsHeadline" data-i18n="insights_headline">Retention rate increased by 4% compared to last week.</h3>
-                                <p class="insightsSub" data-i18n="insights_desc">Proactive SLA discount interventions reduced churn risk by 950 accounts and is projected to recover $12,400 in MRR.</p>
+                                <div class="insightsBigStat" id="insightsBigStat">--%</div>
+                                <h3 class="insightsHeadline" id="insightsHeadline" data-i18n="insights_headline">Synchronizing live telemetry...</h3>
+                                <p class="insightsSub" id="insightsSub" data-i18n="insights_desc">Proactive retention triage and SLA protections active.</p>
                             </div>
 
                             <div class="insightsFooterSlider">
                                 <div class="insightsSliderTrack">
-                                    <div class="insightsSliderProgress" style="width: 58%;"></div>
+                                    <div class="insightsSliderProgress" id="insightsSliderProgress" style="width: 0%;"></div>
                                 </div>
                             </div>
                         </div>

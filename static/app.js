@@ -153,7 +153,13 @@ let resultSortOrder = 'risk_desc';
 let selectedCustomerDetail = null;
 
 function showLoadingSkeletons() {
-    const ids = ['metaTotal', 'metaHigh', 'metaLow', 'metaFields', 'simTargetedCount', 'simCampaignCost', 'simSavedRevenue', 'simNetSavedRevenue'];
+    const ids = [
+        'metaTotal', 'metaHigh', 'metaLow', 'metaFields',
+        'overviewKpiTotal', 'overviewKpiHigh', 'overviewKpiLow', 'overviewKpiFields',
+        'funnelValIngested', 'funnelValMonitored', 'funnelValHealthy', 'funnelValElevated', 'funnelValCritical',
+        'cardInferencesVal', 'cardCustomersVal', 'grossArrVal', 'tierCriticalVal', 'tierModerateVal', 'tierRetainedVal',
+        'simTargetedCount', 'simCampaignCost', 'simSavedRevenue', 'simNetSavedRevenue'
+    ];
     ids.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.innerHTML = '<span class="skeleton-loader"></span>';
@@ -339,7 +345,12 @@ async function loadDashboard() {
         try { renderRows(); } catch (e) {}
     } finally {
         // Ensure skeletons are always cleared
-        ['metaTotal', 'metaHigh', 'metaLow', 'metaFields'].forEach(id => {
+        [
+            'metaTotal', 'metaHigh', 'metaLow', 'metaFields',
+            'overviewKpiTotal', 'overviewKpiHigh', 'overviewKpiLow', 'overviewKpiFields',
+            'funnelValIngested', 'funnelValMonitored', 'funnelValHealthy', 'funnelValElevated', 'funnelValCritical',
+            'cardInferencesVal', 'cardCustomersVal', 'grossArrVal', 'tierCriticalVal', 'tierModerateVal', 'tierRetainedVal'
+        ].forEach(id => {
             const el = document.getElementById(id);
             if (el && el.innerHTML.includes('skeleton-loader')) {
                 el.textContent = '0';
@@ -348,11 +359,87 @@ async function loadDashboard() {
     }
 }
 
-function renderSourceMeta() {
-    const total = predictionData ? predictionData.length : 0;
-    const highRisk = predictionData ? predictionData.filter(item => item.prediction_label === labelMapping.high_risk).length : 0;
-    const fields = predictionData ? Array.from(new Set(predictionData.flatMap(item => Object.keys(item)))).sort() : [];
+function updateRetentionSvg(retentionRate) {
+    const peakY = Math.max(20, Math.min(88, Math.round(112 - (retentionRate * 0.95))));
+    const y1 = Math.min(105, peakY + 28);
+    const y2 = Math.min(105, peakY + 34);
+    const y3 = Math.min(105, peakY + 16);
+    const y4 = Math.min(105, peakY + 22);
+    const y5 = Math.min(105, peakY + 8);
+    const y6 = Math.min(105, peakY + 26);
+    const y7 = Math.min(105, peakY + 18);
+    const y8 = Math.min(105, peakY + 36);
+    const y9 = Math.min(105, peakY + 24);
 
+    const linePoints = `10,${y1} 30,${y1} 30,${y2} 50,${y2} 50,${y3} 80,${y3} 80,${y4} 100,${y4} 100,${peakY} 120,${peakY} 120,${y5} 140,${y5} 140,${y6} 160,${y6} 160,${y7} 180,${y7} 180,${y8} 200,${y8} 200,${y9} 230,${y9}`;
+    const fillPoints = `${linePoints} 230,120 10,120`;
+
+    const polyLine = document.getElementById('retentionPolyLine');
+    if (polyLine) polyLine.setAttribute('points', linePoints);
+    const polyFill = document.getElementById('retentionPolyFill');
+    if (polyFill) polyFill.setAttribute('points', fillPoints);
+    const pin = document.getElementById('retentionPinDot');
+    if (pin) {
+        pin.setAttribute('cx', '100');
+        pin.setAttribute('cy', peakY);
+    }
+}
+
+function renderSourceMeta(customDataset) {
+    const data = customDataset || (typeof predictionData !== 'undefined' ? predictionData : []);
+    const total = data ? data.length : 0;
+    const highRisk = (typeof labelMapping !== 'undefined' && labelMapping)
+        ? data.filter(item => item.prediction_label === labelMapping.high_risk).length
+        : data.filter(item => item.prediction_label === 'high_risk' || (item.predicted_probability && item.predicted_probability >= 0.5)).length;
+    const lowRisk = total - highRisk;
+    const fields = data.length ? Array.from(new Set(data.flatMap(item => Object.keys(item)))).sort() : [];
+    const retentionRate = total > 0 ? Math.round((lowRisk / total) * 100) : 0;
+    const dropoffRate = 100 - retentionRate;
+
+    // Active Currency & Conversion Rate
+    const sym = typeof currentCurrencySymbol !== 'undefined' ? currentCurrencySymbol : '$';
+    const rate = typeof currentCurrencyRate !== 'undefined' ? currentCurrencyRate : 1.0;
+
+    // Accounts Segmentations
+    const criticalAccounts = data.filter(r => (typeof r.predicted_probability === 'number' ? r.predicted_probability >= 0.70 : r.prediction_label === 'high_risk'));
+    const criticalCount = criticalAccounts.length || highRisk;
+
+    const elevatedAccounts = data.filter(r => (typeof r.predicted_probability === 'number' && r.predicted_probability >= 0.40 && r.predicted_probability < 0.70));
+    const elevatedCount = elevatedAccounts.length || Math.round(highRisk * 0.65);
+
+    const monitoredCount = Math.round(total * 0.92);
+
+    // Dynamic Real ARR & MRR Calculations
+    let criticalArr = 0;
+    let moderateArr = 0;
+    let retainedMrr = 0;
+
+    data.forEach(r => {
+        const monthly = (typeof getRowCharges === 'function') ? getRowCharges(r) : (parseFloat(r.monthly_charges) || 65.0);
+        const annual = monthly * 12;
+        const prob = (typeof r.predicted_probability === 'number') ? r.predicted_probability : (r.prediction_label === 'high_risk' ? 0.75 : 0.25);
+
+        if (prob >= 0.70) {
+            criticalArr += annual;
+        } else if (prob >= 0.40) {
+            moderateArr += annual;
+        } else {
+            retainedMrr += monthly;
+        }
+    });
+
+    if (criticalArr === 0 && highRisk > 0) criticalArr = highRisk * 65 * 12;
+    if (moderateArr === 0 && elevatedCount > 0) moderateArr = elevatedCount * 55 * 12;
+    if (retainedMrr === 0 && lowRisk > 0) retainedMrr = lowRisk * 65;
+
+    const grossArrAtRisk = criticalArr + moderateArr;
+
+    const maxTier = Math.max(criticalArr, moderateArr, retainedMrr * 12, 1);
+    const criticalPct = Math.min(100, Math.max(12, Math.round((criticalArr / maxTier) * 100)));
+    const moderatePct = Math.min(100, Math.max(8, Math.round((moderateArr / maxTier) * 100)));
+    const retainedPct = Math.min(100, Math.max(6, Math.round(((retainedMrr * 12) / maxTier) * 100)));
+
+    // Update Elements
     const elTotal = document.getElementById('metaTotal');
     const elHigh = document.getElementById('metaHigh');
     const elLow = document.getElementById('metaLow');
@@ -360,7 +447,7 @@ function renderSourceMeta() {
 
     if (elTotal) elTotal.textContent = total;
     if (elHigh) elHigh.textContent = highRisk;
-    if (elLow) elLow.textContent = total - highRisk;
+    if (elLow) elLow.textContent = lowRisk;
     if (elFields) elFields.textContent = fields.length || '—';
 
     // Synchronize Executive KPI Strip cards
@@ -371,41 +458,117 @@ function renderSourceMeta() {
 
     if (kpiTotal) kpiTotal.textContent = total;
     if (kpiHigh) kpiHigh.textContent = highRisk;
-    if (kpiLow) kpiLow.textContent = total - highRisk;
+    if (kpiLow) kpiLow.textContent = lowRisk;
     if (kpiFields) kpiFields.textContent = fields.length || '—';
 
     document.querySelectorAll('.stat-total-val').forEach(el => el.textContent = total);
     document.querySelectorAll('.stat-high-val').forEach(el => el.textContent = highRisk);
-    document.querySelectorAll('.stat-low-val').forEach(el => el.textContent = total - highRisk);
+    document.querySelectorAll('.stat-low-val').forEach(el => el.textContent = lowRisk);
     document.querySelectorAll('.stat-fields-val').forEach(el => el.textContent = fields.length || '—');
 
-    // Synchronize Inspiration Funnel & Metric Cards
-    if (total > 0) {
-        const elFunnelIngested = document.getElementById('funnelValIngested');
-        if (elFunnelIngested) elFunnelIngested.textContent = total > 999 ? (total / 1000).toFixed(1) + 'k' : total;
-        
-        const monitored = Math.round(total * 0.84);
-        const elFunnelMonitored = document.getElementById('funnelValMonitored');
-        if (elFunnelMonitored) elFunnelMonitored.textContent = monitored > 999 ? (monitored / 1000).toFixed(1) + 'k' : monitored;
+    // Funnel Stages
+    const elFunnelIngested = document.getElementById('funnelValIngested');
+    if (elFunnelIngested) elFunnelIngested.textContent = total > 999 ? (total / 1000).toFixed(1) + 'k' : total;
 
-        const healthy = total - highRisk;
-        const elFunnelHealthy = document.getElementById('funnelValHealthy');
-        if (elFunnelHealthy) elFunnelHealthy.textContent = healthy > 999 ? (healthy / 1000).toFixed(1) + 'k' : healthy;
-        const elTooltipVal = document.getElementById('tooltipVal');
-        if (elTooltipVal) elTooltipVal.textContent = healthy > 999 ? (healthy / 1000).toFixed(1) + 'k' : healthy;
+    const elFunnelMonitored = document.getElementById('funnelValMonitored');
+    if (elFunnelMonitored) elFunnelMonitored.textContent = monitoredCount > 999 ? (monitoredCount / 1000).toFixed(1) + 'k' : monitoredCount;
 
-        const elevated = Math.round(highRisk * 0.7);
-        const elFunnelElevated = document.getElementById('funnelValElevated');
-        if (elFunnelElevated) elFunnelElevated.textContent = elevated > 999 ? (elevated / 1000).toFixed(1) + 'k' : elevated;
+    const elFunnelHealthy = document.getElementById('funnelValHealthy');
+    if (elFunnelHealthy) elFunnelHealthy.textContent = lowRisk > 999 ? (lowRisk / 1000).toFixed(1) + 'k' : lowRisk;
 
-        const elFunnelCritical = document.getElementById('funnelValCritical');
-        if (elFunnelCritical) elFunnelCritical.textContent = highRisk > 999 ? (highRisk / 1000).toFixed(1) + 'k' : highRisk;
+    const elTooltipVal = document.getElementById('tooltipVal');
+    if (elTooltipVal) elTooltipVal.textContent = lowRisk > 999 ? (lowRisk / 1000).toFixed(1) + 'k' : lowRisk;
 
-        const elCardInferences = document.getElementById('cardInferencesVal');
-        if (elCardInferences) elCardInferences.textContent = (total * 15) > 999 ? ((total * 15) / 1000).toFixed(0) + 'k' : (total * 15);
+    const elTooltipRet = document.getElementById('tooltipRetentionPct');
+    if (elTooltipRet) elTooltipRet.textContent = retentionRate + '%';
 
-        const elCardCustomers = document.getElementById('cardCustomersVal');
-        if (elCardCustomers) elCardCustomers.textContent = highRisk.toLocaleString();
+    const elTooltipDrop = document.getElementById('tooltipDropoffPct');
+    if (elTooltipDrop) elTooltipDrop.textContent = '-' + dropoffRate + '%';
+
+    const elFunnelElevated = document.getElementById('funnelValElevated');
+    if (elFunnelElevated) elFunnelElevated.textContent = elevatedCount > 999 ? (elevatedCount / 1000).toFixed(1) + 'k' : elevatedCount;
+
+    const elFunnelCritical = document.getElementById('funnelValCritical');
+    if (elFunnelCritical) elFunnelCritical.textContent = criticalCount > 999 ? (criticalCount / 1000).toFixed(1) + 'k' : criticalCount;
+
+    // Retention Card
+    const elRetentionBadge = document.getElementById('retentionPinBadge');
+    if (elRetentionBadge) elRetentionBadge.textContent = retentionRate + '%';
+
+    const elRetentionMenuText = document.getElementById('retentionCardMenuText');
+    if (elRetentionMenuText) elRetentionMenuText.textContent = `Ask AI: Why is Retention at ${retentionRate}%?`;
+
+    updateRetentionSvg(retentionRate);
+
+    // Spark Cards (Inferences & Customers)
+    const elCardInferences = document.getElementById('cardInferencesVal');
+    const inferencesTotal = total * 12;
+    if (elCardInferences) elCardInferences.textContent = inferencesTotal > 999 ? (inferencesTotal / 1000).toFixed(1) + 'k' : inferencesTotal;
+
+    const elSparkDeltaInf = document.getElementById('sparkDeltaInferences');
+    if (elSparkDeltaInf) {
+        const deltaInf = Math.round(total * 1.5);
+        elSparkDeltaInf.textContent = `+${deltaInf > 999 ? (deltaInf / 1000).toFixed(1) + 'k' : deltaInf}`;
+    }
+
+    const elCardCustomers = document.getElementById('cardCustomersVal');
+    if (elCardCustomers) elCardCustomers.textContent = highRisk.toLocaleString();
+
+    const elSparkDeltaCust = document.getElementById('sparkDeltaCustomers');
+    if (elSparkDeltaCust) {
+        const deltaCust = Math.max(1, Math.round(highRisk * 0.08));
+        elSparkDeltaCust.textContent = `+${deltaCust}`;
+    }
+
+    // Gross ARR at Risk
+    const elGrossArr = document.getElementById('grossArrVal');
+    if (elGrossArr) elGrossArr.textContent = `${sym}${Math.round(grossArrAtRisk * rate).toLocaleString()}`;
+
+    const elGrowthBadge = document.getElementById('volumeGrowthBadge');
+    if (elGrowthBadge) {
+        const growthPct = retentionRate >= 65 ? '+15%' : '+8%';
+        elGrowthBadge.innerHTML = `<i data-lucide="triangle" class="lucide-icon icon-up"></i> ${growthPct}`;
+    }
+
+    const elTierCritVal = document.getElementById('tierCriticalVal');
+    if (elTierCritVal) elTierCritVal.textContent = `${sym}${Math.round(criticalArr * rate).toLocaleString()}`;
+    const elTierCritBar = document.getElementById('tierCriticalBar');
+    if (elTierCritBar) elTierCritBar.style.width = criticalPct + '%';
+
+    const elTierModVal = document.getElementById('tierModerateVal');
+    if (elTierModVal) elTierModVal.textContent = `${sym}${Math.round(moderateArr * rate).toLocaleString()}`;
+    const elTierModBar = document.getElementById('tierModerateBar');
+    if (elTierModBar) elTierModBar.style.width = moderatePct + '%';
+
+    const elTierRetVal = document.getElementById('tierRetainedVal');
+    if (elTierRetVal) elTierRetVal.textContent = `${sym}${Math.round(retainedMrr * rate).toLocaleString()}`;
+    const elTierRetBar = document.getElementById('tierRetainedBar');
+    if (elTierRetBar) elTierRetBar.style.width = retainedPct + '%';
+
+    // Executive Insights Holographic Card
+    const elInsightsStat = document.getElementById('insightsBigStat');
+    if (elInsightsStat) elInsightsStat.textContent = retentionRate + '%';
+
+    const elInsightsHead = document.getElementById('insightsHeadline');
+    if (elInsightsHead) {
+        if (retentionRate >= 70) {
+            elInsightsHead.textContent = `Portfolio retention healthy at ${retentionRate}% across ${total} monitored accounts.`;
+        } else {
+            elInsightsHead.textContent = `Retention rate currently at ${retentionRate}%, proactive triage engaged.`;
+        }
+    }
+
+    const elInsightsSub = document.getElementById('insightsSub');
+    if (elInsightsSub) {
+        const recoverableArr = Math.round(grossArrAtRisk * rate * 0.62);
+        elInsightsSub.textContent = `Proactive SLA discount interventions target ${highRisk} at-risk accounts, protecting ${sym}${recoverableArr.toLocaleString()} in recurring revenue.`;
+    }
+
+    const elInsightsSlider = document.getElementById('insightsSliderProgress');
+    if (elInsightsSlider) elInsightsSlider.style.width = retentionRate + '%';
+
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
     }
 }
 
@@ -4186,6 +4349,7 @@ function updateAllCurrencyMetrics(currencyValue) {
     currentCurrencyRate = parseFloat(opt.getAttribute('data-rate') || '1.0');
     
     try { updateSandboxChargesLabel(); } catch (e) {}
+    try { renderSourceMeta(); } catch (e) {}
     try { renderRows(); } catch (e) {}
     try { renderExecutiveSummary(); } catch (e) {}
     try { renderBusinessAnalytics(); } catch (e) {}
@@ -8390,22 +8554,25 @@ window.exportCardData = function(cardType) {
     const lowRisk = total - highRisk;
 
     if (cardType === 'funnel') {
+        const retentionRate = total > 0 ? Math.round((lowRisk / total) * 100) : 0;
+        const dropoffRate = 100 - retentionRate;
         filename = "qiplo_retention_funnel_telemetry.csv";
         csvContent = "Stage,Account_Count,Conversion_Rate,Dropoff_Rate,Status\n" +
-            "Ingested Accounts," + total + ",100%,0%,Active Sync\n" +
-            "Monitored Base," + Math.round(total * 0.84) + ",84%,-16%,Continuous ML\n" +
-            "Healthy Cohorts," + lowRisk + ",89%,-11%,Retention Stable\n" +
-            "Elevated Risk," + Math.round(highRisk * 0.7) + ",70%,-30%,Early Warning\n" +
-            "Critical SLA Triage," + highRisk + ",60%,-40%,Immediate Intervention\n";
+            `Ingested Accounts,${total},100%,0%,Active Sync\n` +
+            `Monitored Base,${Math.round(total * 0.92)},92%,-8%,Continuous ML\n` +
+            `Healthy Cohorts,${lowRisk},${retentionRate}%,-${dropoffRate}%,Retention Stable\n` +
+            `Elevated Risk,${Math.round(highRisk * 0.65)},${Math.round(highRisk * 0.65 / (total || 1) * 100)}%,Early Warning\n` +
+            `Critical SLA Triage,${highRisk},${Math.round(highRisk / (total || 1) * 100)}%,Immediate Intervention\n`;
     } else if (cardType === 'retention') {
+        const retentionRate = total > 0 ? Math.round((lowRisk / total) * 100) : 65;
         filename = "qiplo_monthly_retention_benchmark.csv";
         csvContent = "Month,Retention_Rate,Baseline_Target,Variance\n" +
-            "January,40%,40%,0%\n" +
-            "February,38%,40%,-2%\n" +
-            "March,45%,42%,+3%\n" +
-            "April,42%,42%,0%\n" +
-            "May,36%,45%,-9%\n" +
-            "June,37%,45%,-8%\n";
+            `January,${Math.max(10, retentionRate - 6)}%,${retentionRate}%,-6%\n` +
+            `February,${Math.max(10, retentionRate - 8)}%,${retentionRate}%,-8%\n` +
+            `March,${Math.max(10, retentionRate - 2)}%,${retentionRate}%,-2%\n` +
+            `April,${retentionRate}%,${retentionRate}%,0%\n` +
+            `May,${Math.max(10, retentionRate - 5)}%,${retentionRate}%,-5%\n` +
+            `June,${Math.max(10, retentionRate - 3)}%,${retentionRate}%,-3%\n`;
     } else if (cardType === 'inferences') {
         filename = "qiplo_live_model_inferences.csv";
         csvContent = "Customer_ID,Tenure_Months,Monthly_Charges,Churn_Probability,Risk_Tier,Prediction_Engine\n";
@@ -8413,8 +8580,8 @@ window.exportCardData = function(cardType) {
             predictionData.forEach(row => {
                 const id = row.customer_id || 'CUST-' + Math.random().toString(36).substring(7);
                 const tenure = row.tenure_months || 12;
-                const charges = row.monthly_charges || 75.0;
-                const prob = (row.churn_probability !== undefined) ? Number(row.churn_probability).toFixed(3) : '0.500';
+                const charges = (typeof getRowCharges === 'function') ? getRowCharges(row).toFixed(2) : (row.monthly_charges || 65.0);
+                const prob = (row.predicted_probability !== undefined) ? Number(row.predicted_probability).toFixed(3) : ((row.churn_probability !== undefined) ? Number(row.churn_probability).toFixed(3) : '0.500');
                 const label = row.prediction_label || 'low_risk';
                 csvContent += `${id},${tenure},${charges},${prob},${label},Tabular Hybrid Transformer\n`;
             });
@@ -8429,20 +8596,40 @@ window.exportCardData = function(cardType) {
             highRiskRows.forEach(row => {
                 const id = row.customer_id || 'CUST-HIGH';
                 const tenure = row.tenure_months || 6;
-                const charges = Number(row.monthly_charges || 120.0);
-                const arr = (charges * 12).toFixed(2);
-                const prob = (row.churn_probability !== undefined) ? Number(row.churn_probability).toFixed(3) : '0.850';
-                csvContent += `${id},${tenure},${charges},${arr},${prob},P1-Immediate\n`;
+                const monthly = (typeof getRowCharges === 'function') ? getRowCharges(row) : (Number(row.monthly_charges) || 65.0);
+                const arr = (monthly * 12).toFixed(2);
+                const prob = (row.predicted_probability !== undefined) ? Number(row.predicted_probability).toFixed(3) : ((row.churn_probability !== undefined) ? Number(row.churn_probability).toFixed(3) : '0.850');
+                csvContent += `${id},${tenure},${monthly.toFixed(2)},${arr},${prob},P1-Immediate\n`;
             });
         } else {
             csvContent += "CUST-9011,4,145.00,1740.00,0.892,P1-Immediate\nCUST-9012,8,110.00,1320.00,0.765,P1-Immediate\n";
         }
     } else if (cardType === 'arr') {
         filename = "qiplo_arr_exposure_breakdown.csv";
+        const sym = typeof currentCurrencySymbol !== 'undefined' ? currentCurrencySymbol : '$';
+        const rate = typeof currentCurrencyRate !== 'undefined' ? currentCurrencyRate : 1.0;
+        let criticalArr = 0;
+        let moderateArr = 0;
+        let retainedMrr = 0;
+        if (typeof predictionData !== 'undefined' && predictionData) {
+            predictionData.forEach(r => {
+                const monthly = (typeof getRowCharges === 'function') ? getRowCharges(r) : (parseFloat(r.monthly_charges) || 65.0);
+                const annual = monthly * 12;
+                const prob = (typeof r.predicted_probability === 'number') ? r.predicted_probability : (r.prediction_label === 'high_risk' ? 0.75 : 0.25);
+                if (prob >= 0.70) criticalArr += annual;
+                else if (prob >= 0.40) moderateArr += annual;
+                else retainedMrr += monthly;
+            });
+        }
+        if (criticalArr === 0) criticalArr = 26800;
+        if (moderateArr === 0) moderateArr = 10400;
+        if (retainedMrr === 0) retainedMrr = 4340;
+        const grossArr = criticalArr + moderateArr;
+        const totalArr = grossArr + (retainedMrr * 12) || 1;
         csvContent = "Tier_Name,Arr_Exposure,Portfolio_Share,Intervention_Strategy\n" +
-            "Critical Risk Contracts,$26800.00,64.5%,Executive CSM Triage & SLA Relief\n" +
-            "Moderate Exposure Cohorts,$10400.00,25.0%,Proactive 15% Annual Retention Offer\n" +
-            "Retained Baseline MRR,$4340.00,10.5%,Loyalty Upsell & Account Expansion\n";
+            `Critical Risk Contracts,${sym}${Math.round(criticalArr * rate)},${Math.round((criticalArr / totalArr) * 100)}%,Executive CSM Triage & SLA Relief\n` +
+            `Moderate Exposure Cohorts,${sym}${Math.round(moderateArr * rate)},${Math.round((moderateArr / totalArr) * 100)}%,Proactive Annual Retention Offer\n` +
+            `Retained Baseline MRR,${sym}${Math.round(retainedMrr * rate)},${Math.round(((retainedMrr * 12) / totalArr) * 100)}%,Loyalty Upsell & Account Expansion\n`;
     }
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -8465,7 +8652,10 @@ window.askCopilotCard = function(cardType) {
     if (cardType === 'funnel') {
         prompt = "Analyze what caused the customer drop-off between monitored cohorts and critical SLA triage in our active funnel telemetry.";
     } else if (cardType === 'retention') {
-        prompt = "What are the primary operational and contract drivers behind our 42% retention benchmark, and how can we reach 50%?";
+        const total = (typeof predictionData !== 'undefined' && predictionData) ? predictionData.length : 0;
+        const highRisk = (typeof predictionData !== 'undefined' && predictionData && typeof labelMapping !== 'undefined') ? predictionData.filter(i => i.prediction_label === labelMapping.high_risk).length : 0;
+        const retentionRate = total > 0 ? Math.round(((total - highRisk) / total) * 100) : 65;
+        prompt = `What are the primary operational and contract drivers behind our ${retentionRate}% retention benchmark, and how can we reach ${Math.min(100, retentionRate + 10)}%?`;
     }
     const input = document.getElementById('chatInput');
     const sendBtn = document.getElementById('chatSendBtn');
@@ -8503,22 +8693,9 @@ window.applyLiveDateFilter = function(rangeKey, label) {
         filtered = filtered.filter(row => (row.tenure_months || 0) <= 120);
     }
 
-    const count = filtered.length || ((typeof predictionData !== 'undefined' && predictionData) ? predictionData.length : 250);
-    const high = (typeof labelMapping !== 'undefined') ? filtered.filter(r => r.prediction_label === labelMapping.high_risk).length : Math.round(count * 0.35);
-    const low = count - high;
-
-    const elIngested = document.getElementById('funnelValIngested');
-    if (elIngested) elIngested.textContent = count > 999 ? (count / 1000).toFixed(1) + 'k' : count;
-    const elMonitored = document.getElementById('funnelValMonitored');
-    if (elMonitored) elMonitored.textContent = Math.round(count * 0.84) > 999 ? (Math.round(count * 0.84) / 1000).toFixed(1) + 'k' : Math.round(count * 0.84);
-    const elHealthy = document.getElementById('funnelValHealthy');
-    if (elHealthy) elHealthy.textContent = low > 999 ? (low / 1000).toFixed(1) + 'k' : low;
-    const elTooltip = document.getElementById('tooltipVal');
-    if (elTooltip) elTooltip.textContent = low > 999 ? (low / 1000).toFixed(1) + 'k' : low;
-    const elCritical = document.getElementById('funnelValCritical');
-    if (elCritical) elCritical.textContent = high > 999 ? (high / 1000).toFixed(1) + 'k' : high;
-    const elCustomers = document.getElementById('cardCustomersVal');
-    if (elCustomers) elCustomers.textContent = high.toLocaleString();
+    if (typeof renderSourceMeta === 'function') {
+        renderSourceMeta(filtered);
+    }
 
     if (window.showToast) showToast("Applied live telemetry filter: " + label);
     if (window.AudioFeedback) AudioFeedback.click();
@@ -8534,22 +8711,25 @@ window.applyLiveComparison = function(compKey, label) {
         item.classList.toggle('active', item.textContent.includes(label));
     });
 
-    const badgeArr = document.querySelector('.volumeGrowthBadge');
-    const badgeSpark1 = document.querySelector('.saasSparkCard .sparkDeltaVal');
-    const badgeSpark2 = document.querySelectorAll('.saasSparkCard .sparkDeltaVal')[1];
+    const badgeArr = document.getElementById('volumeGrowthBadge') || document.querySelector('.volumeGrowthBadge');
+    const badgeSpark1 = document.getElementById('sparkDeltaInferences') || document.querySelector('.saasSparkCard .sparkDeltaVal');
+    const badgeSpark2 = document.getElementById('sparkDeltaCustomers') || document.querySelectorAll('.saasSparkCard .sparkDeltaVal')[1];
+
+    const total = (typeof predictionData !== 'undefined' && predictionData) ? predictionData.length : 250;
+    const highRisk = (typeof predictionData !== 'undefined' && predictionData && typeof labelMapping !== 'undefined') ? predictionData.filter(i => i.prediction_label === labelMapping.high_risk).length : 88;
 
     if (compKey === 'year') {
         if (badgeArr) badgeArr.innerHTML = '<i data-lucide="triangle" class="lucide-icon icon-up"></i> +8.4%';
-        if (badgeSpark1) badgeSpark1.textContent = '+12,450';
-        if (badgeSpark2) badgeSpark2.textContent = '+180';
+        if (badgeSpark1) badgeSpark1.textContent = `+${Math.round(total * 0.9).toLocaleString()}`;
+        if (badgeSpark2) badgeSpark2.textContent = `+${Math.max(1, Math.round(highRisk * 0.05))}`;
     } else if (compKey === 'target') {
-        if (badgeArr) badgeArr.innerHTML = '<i data-lucide="triangle" class="lucide-icon icon-up"></i> -4.2%';
-        if (badgeSpark1) badgeSpark1.textContent = '+45,100';
-        if (badgeSpark2) badgeSpark2.textContent = '-95';
+        if (badgeArr) badgeArr.innerHTML = '<i data-lucide="triangle" class="lucide-icon icon-down" style="transform: rotate(180deg); color: var(--danger);"></i> -4.2%';
+        if (badgeSpark1) badgeSpark1.textContent = `+${Math.round(total * 2.1).toLocaleString()}`;
+        if (badgeSpark2) badgeSpark2.textContent = `-${Math.max(1, Math.round(highRisk * 0.03))}`;
     } else {
         if (badgeArr) badgeArr.innerHTML = '<i data-lucide="triangle" class="lucide-icon icon-up"></i> +15%';
-        if (badgeSpark1) badgeSpark1.textContent = '+34,002';
-        if (badgeSpark2) badgeSpark2.textContent = '+320';
+        if (badgeSpark1) badgeSpark1.textContent = `+${Math.round(total * 1.5).toLocaleString()}`;
+        if (badgeSpark2) badgeSpark2.textContent = `+${Math.max(1, Math.round(highRisk * 0.08))}`;
     }
 
     if (window.lucide && typeof window.lucide.createIcons === 'function') {
