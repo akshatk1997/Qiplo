@@ -2074,8 +2074,15 @@ def create_app() -> Flask:
         user_message = data.get("message")
         history = data.get("history", [])
         model_key = data.get("model_key") or data.get("api_key") or os.environ.get("GEMINI_API_KEY")
-        language = data.get("language", "en")
-        from i18n_backend import enhance_system_instruction_with_language, format_localized_chat_response
+        raw_lang = data.get("language", "en")
+        from i18n_backend import (
+            enhance_system_instruction_with_language,
+            format_localized_chat_response,
+            detect_user_language,
+            match_chat_intent,
+            normalize_language
+        )
+        language = detect_user_language(user_message, raw_lang)
 
         if not user_message:
             return jsonify({"error": "Message is required."}), 400
@@ -2266,6 +2273,7 @@ def create_app() -> Flask:
             import re
             
             cust_id_pattern = re.findall(r'\bc\d+\b', msg_lower)
+            intent = match_chat_intent(user_message)
 
             # 1. Specific customer lookup
             if cust_id_pattern:
@@ -2345,10 +2353,10 @@ def create_app() -> Flask:
                         )
 
             # 2. High-risk customer listing
-            elif any(w in msg_lower for w in ("high risk list", "who is high risk", "show high risk", "list of high risk", "which customers are high risk")):
+            elif intent == "high_risk" or any(w in msg_lower for w in ("high risk list", "who is high risk", "show high risk", "list of high risk", "which customers are high risk")):
                 high_list = conn.execute(
                     f"""
-                    SELECT cp.customer_id, cp.predicted_probability, {select_clause.replace("cc.", "")}
+                    SELECT cp.predicted_probability, {select_clause}
                     FROM churn_predictions cp
                     JOIN customer_churn cc ON cp.customer_id = cc.customer_id
                     WHERE cp.prediction_label = 'high_risk'
@@ -2384,7 +2392,7 @@ def create_app() -> Flask:
                         res_text = "### 🟢 No High-Risk Accounts Found\n\nAll customer accounts are currently stable and in the healthy low-risk category."
 
             # 3. CSM assignments listing
-            elif any(w in msg_lower for w in ("csm status", "assigned", "who is assigned", "csm list", "assignments")):
+            elif intent == "csm" or any(w in msg_lower for w in ("csm status", "assigned", "who is assigned", "csm list", "assignments")):
                 ass_list = conn.execute(
                     """
                     SELECT customer_id, csm_name, status, notes
@@ -2417,7 +2425,7 @@ def create_app() -> Flask:
                         res_text = "### 👥 No CSM Assignments Recorded\n\nNo accounts have been assigned to Customer Success Managers yet. Select a high-risk account in the **Actions** tab control center to begin tracking."
 
             # 4. A/B campaigns listing
-            elif any(w in msg_lower for w in ("ab test", "campaign results", "retention outcome", "ab list", "a/b test list")):
+            elif intent == "ab_test" or any(w in msg_lower for w in ("ab test", "campaign results", "retention outcome", "ab list", "a/b test list")):
                 ab_list = conn.execute(
                     """
                     SELECT campaign_name, sample_size, predicted_churn_rate, actual_churn_rate, start_date
@@ -2450,7 +2458,7 @@ def create_app() -> Flask:
                         res_text = "### 🧪 No Active Campaigns\n\nNo A/B retention campaign results have been logged. Submit a campaign in the **Actions** tab to track outcomes."
 
             # 5. Model telemetry metrics
-            elif any(w in msg_lower for w in ("model accuracy", "metrics", "test size", "train model", "train split", "model metrics")):
+            elif intent == "model_metrics" or any(w in msg_lower for w in ("model accuracy", "metrics", "test size", "train model", "train split", "model metrics")):
                 from churn_analysis import load_model_metrics
                 metrics_data = load_model_metrics(BASE_DIR) or {}
                 acc = f"{metrics_data.get('accuracy', 0.942) * 100:.1f}%"
@@ -2476,7 +2484,7 @@ def create_app() -> Flask:
                     )
 
             # 6. Greetings & Introductions
-            elif any(w in msg_lower for w in ("hi", "hello", "hey", "who are you", "what can you do", "intro", "welcome", "start")):
+            elif intent == "greetings" or any(w in msg_lower for w in ("hi", "hello", "hey", "who are you", "what can you do", "intro", "welcome", "start")):
                 if language and language != "en":
                     res_text = format_localized_chat_response("welcome_header", {
                         "total_cust": total_cust,
@@ -2504,10 +2512,10 @@ def create_app() -> Flask:
                         "Feel free to ask me any question about your data or retention strategy!"
                     )
 
-            # 2. What is Churn / General Retention Concepts & Guidance
-            elif any(w in msg_lower for w in ("what is churn", "why churn", "how to stop churn", "prevent churn", "retention strategy", "attrition", "loyalty")):
+            # 7. What is Churn / General Retention Concepts & Guidance
+            elif intent == "churn_causes" or any(w in msg_lower for w in ("what is churn", "why churn", "how to stop churn", "prevent churn", "retention strategy", "attrition", "loyalty", "churn causes", "risk drivers")):
                 if language and language != "en":
-                    res_text = format_localized_chat_response("churn_concepts", {
+                    res_text = format_localized_chat_response("churn_causes", {
                         "total_cust": total_cust,
                         "high_risk": high_risk,
                         "high_risk_pct": high_risk_pct,
@@ -2528,25 +2536,26 @@ def create_app() -> Flask:
                         "4. **90-Day Onboarding Workflows**: Establish structured check-ins during the critical first 90 days to ensure product adoption."
                     )
 
+            # 8. Power BI / Tableau / Exports
+            elif intent == "export_bi" or any(w in msg_lower for w in ("power bi", "powerbi", "tableau", "dashboard", "export", "connect", "bi")):
+                if language and language != "en":
+                    res_text = format_localized_chat_response("export_bi", {}, language=language)
+                else:
+                    res_text = (
+                        "### Professional Dashboard Integration & Telemetry Connectors\n\n"
+                        "Qiplo provides pre-built connector workbooks mapping directly to your active SQLite predictions database:\n\n"
+                        "- **[Download Power BI Datasource (.pbids)](/api/export/powerbi)**\n"
+                        "- **[Download Tableau Workbook (.twb)](/api/export/tableau)**\n"
+                        "- **[Download Excel Spreadsheet (.xlsx)](/api/export/excel)**\n"
+                        "- **[Download Full Analysis Audit Report](/api/export/report)**\n\n"
+                        "**How to Sync:**\n"
+                        "1. Download the connector file above.\n"
+                        "2. Open the file in Power BI Desktop or Tableau Desktop.\n"
+                        "3. All tables (`customer_churn`, `churn_predictions`, `data_sources`) will automatically load into your BI environment for instant custom visualization."
+                    )
 
-
-            # 4. Power BI / Tableau / Exports
-            elif any(w in msg_lower for w in ("power bi", "powerbi", "tableau", "dashboard", "export", "connect", "bi")):
-                res_text = (
-                    "### Professional Dashboard Integration & Telemetry Connectors\n\n"
-                    "Qiplo provides pre-built connector workbooks mapping directly to your active SQLite predictions database:\n\n"
-                    "- **[Download Power BI Datasource (.pbids)](/api/export/powerbi)**\n"
-                    "- **[Download Tableau Workbook (.twb)](/api/export/tableau)**\n"
-                    "- **[Download Excel Spreadsheet (.xlsx)](/api/export/excel)**\n"
-                    "- **[Download Full Analysis Audit Report](/api/export/report)**\n\n"
-                    "**How to Sync:**\n"
-                    "1. Download the connector file above.\n"
-                    "2. Open the file in Power BI Desktop or Tableau Desktop.\n"
-                    "3. All tables (`customer_churn`, `churn_predictions`, `data_sources`) will automatically load into your BI environment for instant custom visualization."
-                )
-
-            # 5. Machine Learning Models & Algorithms
-            elif any(w in msg_lower for w in ("transformer", "attention", "model", "algorithm", "train", "accuracy", "precision", "recall", "f1", "auc", "classifier", "machine learning", "scikit")):
+            # 9. Machine Learning Models & Algorithms
+            elif any(w in msg_lower for w in ("transformer", "attention", "classifier", "machine learning", "scikit")):
                 res_text = (
                     "### Machine Learning Engine Diagnostics & Model Architecture\n\n"
                     "Qiplo uses an optimized **Tabular Hybrid Transformer** Classifier pipeline integrated with custom Queries, Keys, and Values self-attention projections:\n\n"
@@ -2562,36 +2571,46 @@ def create_app() -> Flask:
                     "- **AUC-ROC Rating**: Optimized to **>0.85 (94.2% accuracy)** on standard benchmark customer datasets."
                 )
 
-            # 6. Billing, Charges, Financials & CLV
-            elif any(w in msg_lower for w in ("billing", "charges", "revenue", "mrr", "arr", "clv", "financial", "roi", "cost", "money")):
-                q = """
-                    SELECT cc.contract_type, COUNT(*) as cnt, AVG(cp.predicted_probability) as risk
-                    FROM churn_predictions cp
-                    JOIN customer_churn cc ON cp.customer_id = cc.customer_id
-                    WHERE cc.contract_type IS NOT NULL
-                    GROUP BY cc.contract_type
-                    ORDER BY risk DESC
-                """
-                rows = conn.execute(q).fetchall()
-                res_text = (
-                    "### Revenue Exposure & Financial Impact Analysis\n\n"
-                    f"Qiplo is currently tracking **{total_cust:,} active accounts** with a total Monthly Recurring Revenue (MRR) of **${total_mrr:,.2f}**.\n\n"
-                    f"**Financial Risk Exposure:**\n"
-                    f"- **High-Risk Monthly Revenue Exposure (MRR at Risk)**: **${risk_mrr:,.2f}** ({((risk_mrr/total_mrr*100) if total_mrr > 0 else 0):.1f}% of total MRR)\n"
-                    f"- **Annualized ARR at Risk**: **${(risk_mrr * 12):,.2f}**\n\n"
-                    "**Contract Risk Breakdown:**\n"
-                )
-                for r in rows:
-                    contract_title = (r['contract_type'] or "Unknown").replace("_", " ").title()
-                    res_text += f"- **{contract_title}**: {r['cnt']} accounts (Average predictive risk: {r['risk']:.1%})\n"
-                
-                res_text += (
-                    "\n**CLV Formula & Optimization:**\n"
-                    "\\[\\text{CLV} = \\frac{\\text{Average Monthly Billing (ARPU)} \\times \\text{Gross Margin}}{\\text{Churn Rate}}\\]\n\n"
-                    "**Recommendation**: Converting just 20% of month-to-month high-risk accounts to 1-year contracts reclaims significant recurring ARR!"
-                )
+            # 10. Billing, Charges, Financials & CLV
+            elif intent == "financials" or any(w in msg_lower for w in ("billing", "charges", "revenue", "mrr", "arr", "clv", "financial", "roi", "cost", "money")):
+                if language and language != "en":
+                    res_text = format_localized_chat_response("financials", {
+                        "total_cust": total_cust,
+                        "total_mrr": total_mrr,
+                        "risk_mrr": risk_mrr,
+                        "risk_pct": (risk_mrr / total_mrr * 100) if total_mrr > 0 else 0.0,
+                        "arr_at_risk": risk_mrr * 12,
+                        "avg_risk": avg_risk
+                    }, language=language)
+                else:
+                    q = """
+                        SELECT cc.contract_type, COUNT(*) as cnt, AVG(cp.predicted_probability) as risk
+                        FROM churn_predictions cp
+                        JOIN customer_churn cc ON cp.customer_id = cc.customer_id
+                        WHERE cc.contract_type IS NOT NULL
+                        GROUP BY cc.contract_type
+                        ORDER BY risk DESC
+                    """
+                    rows = conn.execute(q).fetchall()
+                    res_text = (
+                        "### Revenue Exposure & Financial Impact Analysis\n\n"
+                        f"Qiplo is currently tracking **{total_cust:,} active accounts** with a total Monthly Recurring Revenue (MRR) of **${total_mrr:,.2f}**.\n\n"
+                        f"**Financial Risk Exposure:**\n"
+                        f"- **High-Risk Monthly Revenue Exposure (MRR at Risk)**: **${risk_mrr:,.2f}** ({((risk_mrr/total_mrr*100) if total_mrr > 0 else 0):.1f}% of total MRR)\n"
+                        f"- **Annualized ARR at Risk**: **${(risk_mrr * 12):,.2f}**\n\n"
+                        "**Contract Risk Breakdown:**\n"
+                    )
+                    for r in rows:
+                        contract_title = (r['contract_type'] or "Unknown").replace("_", " ").title()
+                        res_text += f"- **{contract_title}**: {r['cnt']} accounts (Average predictive risk: {r['risk']:.1%})\n"
+                    
+                    res_text += (
+                        "\n**CLV Formula & Optimization:**\n"
+                        "\\[\\text{CLV} = \\frac{\\text{Average Monthly Billing (ARPU)} \\times \\text{Gross Margin}}{\\text{Churn Rate}}\\]\n\n"
+                        "**Recommendation**: Converting just 20% of month-to-month high-risk accounts to 1-year contracts reclaims significant recurring ARR!"
+                    )
 
-            # 7. Support Tickets, Complaints & CSAT
+            # 11. Support Tickets, Complaints & CSAT
             elif any(w in msg_lower for w in ("ticket", "support", "complaint", "satisfaction", "csat", "nps", "service")):
                 res_text = (
                     "### Customer Support & Satisfaction Diagnostics\n\n"
@@ -2603,29 +2622,32 @@ def create_app() -> Flask:
                     "  2. Follow up with low-CSAT survey respondents within 24 hours to address complaints directly."
                 )
 
-            # 8. Email Outreach Templates
-            elif any(w in msg_lower for w in ("email", "template", "outreach", "campaign", "draft", "write", "message")):
-                res_text = (
-                    "### Retention Campaign Email Outreach Templates\n\n"
-                    "**Template A: Proactive Contract Loyalty Offer**\n"
-                    "```\n"
-                    "Subject: Exclusive 20% loyalty credit on your Qiplo account\n\n"
-                    "Dear [Customer Name],\n\n"
-                    "We deeply value your partnership. To show our appreciation, we have applied an exclusive 20% loyalty credit to your account when migrating to our 1-year plan.\n\n"
-                    "Warm regards,\n"
-                    "Customer Success Executive\n"
-                    "```\n\n"
-                    "**Template B: Priority Support Follow-Up**\n"
-                    "```\n"
-                    "Subject: Ensuring your total satisfaction with our team\n\n"
-                    "Dear [Customer Name],\n\n"
-                    "I noticed you recently reached out to our support team. I want to personally ensure all your concerns were resolved. Would you be open to a brief call with a senior manager to review your setup?\n\n"
-                    "Warm regards,\n"
-                    "Head of Client Experience\n"
-                    "```"
-                )
+            # 12. Email Outreach Templates & Playbook
+            elif intent == "playbook" or any(w in msg_lower for w in ("email", "template", "outreach", "campaign", "draft", "write", "message")):
+                if language and language != "en":
+                    res_text = format_localized_chat_response("playbook", {}, language=language)
+                else:
+                    res_text = (
+                        "### Retention Campaign Email Outreach Templates\n\n"
+                        "**Template A: Proactive Contract Loyalty Offer**\n"
+                        "```\n"
+                        "Subject: Exclusive 20% loyalty credit on your Qiplo account\n\n"
+                        "Dear [Customer Name],\n\n"
+                        "We deeply value your partnership. To show our appreciation, we have applied an exclusive 20% loyalty credit to your account when migrating to our 1-year plan.\n\n"
+                        "Warm regards,\n"
+                        "Customer Success Executive\n"
+                        "```\n\n"
+                        "**Template B: Priority Support Follow-Up**\n"
+                        "```\n"
+                        "Subject: Ensuring your total satisfaction with our team\n\n"
+                        "Dear [Customer Name],\n\n"
+                        "I noticed you recently reached out to our support team. I want to personally ensure all your concerns were resolved. Would you be open to a brief call with a senior manager to review your setup?\n\n"
+                        "Warm regards,\n"
+                        "Head of Client Experience\n"
+                        "```"
+                    )
 
-            # 9. Slide Decks & Reports
+            # 13. Slide Decks & Reports
             elif any(w in msg_lower for w in ("presentation", "slide", "deck", "report", "pdf", "ppt", "powerpoint")):
                 res_text = (
                     "### Slide Decks & Analysis Reports Guidance\n\n"
@@ -2635,30 +2657,46 @@ def create_app() -> Flask:
                     "3. **Excel & Data Exports**: Download raw predictions via **[Excel (.xlsx)](/api/export/excel)** or **[PDF Report](/api/export/pdf)**."
                 )
 
-            # 10. Universal Dynamic Multi-Option Advisory Response for ANY Question
+            # 14. Universal Dynamic Multi-Option Advisory Response for ANY Question
             else:
-                res_text = (
-                    f"### Qiplo Native AI Advisory — Multi-Perspective Analysis\n\n"
-                    f"**User Prompt Evaluated**: *\"{user_message}\"*\n\n"
-                    f"Analyzing your **{total_cust:,} evaluated accounts** ({high_risk:,} high-risk records; ${risk_mrr:,.2f}/mo in MRR exposure; mean churn probability: **{avg_risk:.1f}%**).\n\n"
-                    f"Here are **3 strategic execution paths** tailored to your inquiry:\n\n"
-                    f"#### Option 1: Executive & Financial Risk Stabilization\n"
-                    f"- **Core Focus**: Reclaim maximum MRR by targeting top revenue-generating month-to-month accounts.\n"
-                    f"- **Action Plan**: Deploy a 15% billing discount for migrating to annual contracts, preserving up to **${(risk_mrr * 12 * 0.25):,.2f}/yr** in ARR.\n\n"
-                    f"#### 📞 Option 2: Proactive Customer Success Outreach SLA\n"
-                    f"- **Core Focus**: Rapid intervention for accounts displaying risk probability ≥ 65%.\n"
-                    f"- **Action Plan**: Mandate a 24-hour phone callback SLA from CSMs to resolve onboarding or billing friction points.\n\n"
-                    f"#### 🛠️ Option 3: Support Escalation & Ticket Routing\n"
-                    f"- **Core Focus**: Eliminate service dissatisfaction among active subscribers.\n"
-                    f"- **Action Plan**: Route support tickets from high-risk clients to a VIP senior technical queue (<2h response target).\n\n"
-                    f"*(Powered by Qiplo Ultra-Fast Native AI Engine — 100% Free & Unlimited)*"
-                )
+                if language and language != "en":
+                    res_text = format_localized_chat_response("default_fallback", {}, language=language)
+                else:
+                    res_text = (
+                        f"### Qiplo Native AI Advisory — Multi-Perspective Analysis\n\n"
+                        f"**User Prompt Evaluated**: *\"{user_message}\"*\n\n"
+                        f"Analyzing your **{total_cust:,} evaluated accounts** ({high_risk:,} high-risk records; ${risk_mrr:,.2f}/mo in MRR exposure; mean churn probability: **{avg_risk:.1f}%**).\n\n"
+                        f"Here are **3 strategic execution paths** tailored to your inquiry:\n\n"
+                        f"#### Option 1: Executive & Financial Risk Stabilization\n"
+                        f"- **Core Focus**: Reclaim maximum MRR by targeting top revenue-generating month-to-month accounts.\n"
+                        f"- **Action Plan**: Deploy a 15% billing discount for migrating to annual contracts, preserving up to **${(risk_mrr * 12 * 0.25):,.2f}/yr** in ARR.\n\n"
+                        f"#### 📞 Option 2: Proactive Customer Success Outreach SLA\n"
+                        f"- **Core Focus**: Rapid intervention for accounts displaying risk probability ≥ 65%.\n"
+                        f"- **Action Plan**: Mandate a 24-hour phone callback SLA from CSMs to resolve onboarding or billing friction points.\n\n"
+                        f"#### 🛠️ Option 3: Support Escalation & Ticket Routing\n"
+                        f"- **Core Focus**: Eliminate service dissatisfaction among active subscribers.\n"
+                        f"- **Action Plan**: Route support tickets from high-risk clients to a VIP senior technical queue (<2h response target).\n\n"
+                        f"*(Powered by Qiplo Ultra-Fast Native AI Engine — 100% Free & Unlimited)*"
+                    )
             
             # Check if current dataset is demo sandbox
             active_sources = conn.execute("SELECT source_id FROM data_sources WHERE is_active = 1").fetchall()
             is_demo = len(active_sources) == 1 and active_sources[0]["source_id"] == "sample_data"
             if is_demo:
-                res_text = "*(Analyzing Demo Sandbox Data)*\n\n" + res_text
+                demo_tags = {
+                    "en": "*(Analyzing Demo Sandbox Data)*\n\n",
+                    "es": "*(Analizando Datos de Demostración)*\n\n",
+                    "fr": "*(Analyse des Données de Démonstration)*\n\n",
+                    "de": "*(Analyse von Demo-Sandbox-Daten)*\n\n",
+                    "zh": "*(正在分析演示沙盒数据)*\n\n",
+                    "ja": "*(デモサンドボックスデータを分析中)*\n\n",
+                    "pt": "*(Analisando Dados de Demonstração)*\n\n",
+                    "ar": "*(تحليل بيانات العرض التوضيحي)*\n\n",
+                    "hi": "*(डेमो सैंडबॉक्स डेटा का विश्लेषण)*\n\n",
+                    "ru": "*(Анализ демонстрационных данных)*\n\n"
+                }
+                demo_prefix = demo_tags.get(language, demo_tags["en"])
+                res_text = demo_prefix + res_text
 
             conn.close()
             return jsonify({"response": res_text})

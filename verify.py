@@ -18,6 +18,7 @@ if sys.platform.startswith("win"):
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 os.environ["TESTING"] = "True"
 os.environ["CHURN_DB"] = "churn_verify.db"
+os.environ["CHURN_MODEL"] = "churn_verify_model.pkl"
 
 import app as app_module
 import churn_analysis
@@ -254,13 +255,14 @@ def run_atoz_verification():
         print(f"  [ERROR] GET /api/export/bi/insights -> FAILED ({res.status_code})")
         success = False
 
-    # Clean up verification database file
-    try:
-        db_file = Path("churn_verify.db")
-        if db_file.exists():
-            db_file.unlink()
-    except Exception:
-        pass
+    # Clean up verification database file, model, and metrics
+    for f in ["churn_verify.db", "churn_verify_model.pkl", "model_metrics.json"]:
+        try:
+            p = Path(f)
+            if p.exists():
+                p.unlink()
+        except Exception:
+            pass
 
     print("\n======================================================================")
     if success:

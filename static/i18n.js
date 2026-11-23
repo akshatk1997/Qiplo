@@ -14423,7 +14423,655 @@
                 "hi": "मंथन से जुड़े शीर्ष 3 अनुबंध प्रकार क्या हैं?",
                 "ru": "Какие 3 типа контрактов чаще всего связаны с оттоком?"
         }
-};
+,
+        "8 suites": {
+            es: "8 suites",
+            fr: "8 suites",
+            de: "8 Suiten",
+            zh: "8\u4e2a\u5957\u4ef6",
+            ja: "8\u30b9\u30a4\u30fc\u30c8",
+            pt: "8 su\u00edtes",
+            ar: "8 \u0623\u062c\u0646\u062d\u0629",
+            hi: "8 \u0938\u0942\u091f",
+            ru: "8 \u043f\u0430\u043a\u0435\u0442\u043e\u0432"
+        },
+        "6 items": {
+            es: "6 elementos",
+            fr: "6 \u00e9l\u00e9ments",
+            de: "6 Elemente",
+            zh: "6\u4e2a\u9879\u76ee",
+            ja: "6\u9805\u76ee",
+            pt: "6 itens",
+            ar: "6 \u0639\u0646\u0627\u0635\u0631",
+            hi: "6 \u0906\u0907\u091f\u092e",
+            ru: "6 \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u043e\u0432"
+        },
+        "5 tools": {
+            es: "5 herramientas",
+            fr: "5 outils",
+            de: "5 Werkzeuge",
+            zh: "5\u4e2a\u5de5\u5177",
+            ja: "5\u30c4\u30fc\u30eb",
+            pt: "5 ferramentas",
+            ar: "5 \u0623\u062f\u0648\u0627\u062a",
+            hi: "5 \u0909\u092a\u0915\u0930\u0923",
+            ru: "5 \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u043e\u0432"
+        },
+        "4 controls": {
+            es: "4 controles",
+            fr: "4 contr\u00f4les",
+            de: "4 Steuerelemente",
+            zh: "4\u4e2a\u63a7\u5236",
+            ja: "4\u30b3\u30f3\u30c8\u30ed\u30fc\u30eb",
+            pt: "4 controles",
+            ar: "4 \u0639\u0646\u0627\u0635\u0631 \u062a\u062d\u0643\u0645",
+            hi: "4 \u0928\u093f\u092f\u0902\u0924\u094d\u0930\u0923",
+            ru: "4 \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u0430 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f"
+        },
+        "10 languages": {
+            es: "10 idiomas",
+            fr: "10 langues",
+            de: "10 Sprachen",
+            zh: "10\u79cd\u8bed\u8a00",
+            ja: "10\u8a00\u8a9e",
+            pt: "10 idiomas",
+            ar: "10 \u0644\u063a\u0627\u062a",
+            hi: "10 \u092d\u093e\u0937\u093e\u090f\u0901",
+            ru: "10 \u044f\u0437\u044b\u043a\u043e\u0432"
+        },
+        "suites": {
+            es: "suites",
+            fr: "suites",
+            de: "Suiten",
+            zh: "\u5957\u4ef6",
+            ja: "\u30b9\u30a4\u30fc\u30c8",
+            pt: "su\u00edtes",
+            ar: "\u0623\u062c\u0646\u062d\u0629",
+            hi: "\u0938\u0942\u091f",
+            ru: "\u043f\u0430\u043a\u0435\u0442\u044b"
+        },
+        "items": {
+            es: "elementos",
+            fr: "\u00e9l\u00e9ments",
+            de: "Elemente",
+            zh: "\u9879\u76ee",
+            ja: "\u9805\u76ee",
+            pt: "itens",
+            ar: "\u0639\u0646\u0627\u0635\u0631",
+            hi: "\u0906\u0907\u091f\u092e",
+            ru: "\u044d\u043b\u0435\u043c\u0435\u043d\u0442\u044b"
+        },
+        "tools": {
+            es: "herramientas",
+            fr: "outils",
+            de: "Werkzeuge",
+            zh: "\u5de5\u5177",
+            ja: "\u30c4\u30fc\u30eb",
+            pt: "ferramentas",
+            ar: "\u0623\u062f\u0648\u0627\u062a",
+            hi: "\u0909\u092a\u0915\u0930\u0923",
+            ru: "\u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u044b"
+        },
+        "controls": {
+            es: "controles",
+            fr: "contr\u00f4les",
+            de: "Steuerelemente",
+            zh: "\u63a7\u5236",
+            ja: "\u30b3\u30f3\u30c8\u30ed\u30fc\u30eb",
+            pt: "controles",
+            ar: "\u0639\u0646\u0627\u0635\u0631 \u062a\u062d\u0643\u0645",
+            hi: "\u0928\u093f\u092f\u0902\u0924\u094d\u0930\u0923",
+            ru: "\u044d\u043b\u0435\u043c\u0435\u043d\u0442\u044b \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f"
+        },
+        "languages": {
+            es: "idiomas",
+            fr: "langues",
+            de: "Sprachen",
+            zh: "\u8bed\u8a00",
+            ja: "\u8a00\u8a9e",
+            pt: "idiomas",
+            ar: "\u0644\u063a\u0627\u062a",
+            hi: "\u092d\u093e\u0937\u093e\u090f\u0901",
+            ru: "\u044f\u0437\u044b\u043a\u0438"
+        },
+        "Click \"Generate AI Deck\" or select a prompt magic template above to compile your custom presentation.": {
+            es: "Haga clic en \"Generar Presentaci\u00f3n IA\" o seleccione una plantilla para compilar su presentaci\u00f3n personalizada.",
+            fr: "Cliquez sur \"G\u00e9n\u00e9rer Pr\u00e9sentation IA\" ou s\u00e9lectionnez un mod\u00e8le pour compiler votre pr\u00e9sentation personnalis\u00e9e.",
+            de: "Klicken Sie auf \"KI-Pr\u00e4sentation erstellen\" oder w\u00e4hlen Sie eine Vorlage, um Ihre Pr\u00e4sentation zu erstellen.",
+            zh: "\u70b9\u51fb\u201c\u751f\u6210AI\u6f14\u793a\u6587\u7a3f\u201d\u6216\u9009\u62e9\u63d0\u793a\u6a21\u677f\u4ee5\u7f16\u8bd1\u81ea\u5b9a\u4e49\u6f14\u793a\u6587\u7a3f\u3002",
+            ja: "\u300cAI\u30b9\u30e9\u30a4\u30c9\u751f\u6210\u300d\u3092\u30af\u30ea\u30c3\u30af\u3059\u308b\u304b\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u3092\u9078\u629e\u3057\u3066\u30ab\u30b9\u30bf\u30e0\u30d7\u30ec\u30bc\u30f3\u3092\u4f5c\u6210\u3057\u307e\u3059\u3002",
+            pt: "Clique em \"Gerar Apresenta\u00e7\u00e3o IA\" ou selecione um modelo para compilar sua apresenta\u00e7\u00e3o personalizada.",
+            ar: "\u0627\u0646\u0642\u0631 \u0639\u0644\u0649 \"\u0625\u0646\u0634\u0627\u0621 \u0639\u0631\u0636 \u0628\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a\" \u0623\u0648 \u0627\u062e\u062a\u0631 \u0642\u0627\u0644\u0628\u0627\u064b \u0644\u062a\u062c\u0645\u064a\u0639 \u0639\u0631\u0636\u0643 \u0627\u0644\u062a\u0642\u062f\u064a\u0645\u064a \u0627\u0644\u0645\u062e\u0635\u0635.",
+            hi: "\u0905\u092a\u0928\u0940 \u0915\u0938\u094d\u091f\u092e \u092a\u094d\u0930\u0938\u094d\u0924\u0941\u0924\u093f \u0938\u0902\u0915\u0932\u093f\u0924 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \"\u090f\u0906\u0908 \u0921\u0947\u0915 \u092c\u0928\u093e\u090f\u0902\" \u092a\u0930 \u0915\u094d\u0932\u093f\u0915 \u0915\u0930\u0947\u0902 \u092f\u093e \u090f\u0915 \u091f\u0947\u092e\u094d\u092a\u0932\u0947\u091f \u091a\u0941\u0928\u0947\u0902\u0964",
+            ru: "\u041d\u0430\u0436\u043c\u0438\u0442\u0435 \u00ab\u0421\u043e\u0437\u0434\u0430\u0442\u044c \u0418\u0418-\u043f\u0440\u0435\u0437\u0435\u043d\u0442\u0430\u0446\u0438\u044e\u00bb \u0438\u043b\u0438 \u0432\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0448\u0430\u0431\u043b\u043e\u043d \u0434\u043b\u044f \u043a\u043e\u043c\u043f\u0438\u043b\u044f\u0446\u0438\u0438 \u0432\u0430\u0448\u0435\u0439 \u043f\u0440\u0435\u0437\u0435\u043d\u0442\u0430\u0446\u0438\u0438."
+        },
+        "\"Never lose a customer again.\"": {
+            es: "\"Nunca vuelva a perder un cliente.\"",
+            fr: "\"Ne perdez plus jamais un client.\"",
+            de: "\"Verlieren Sie nie wieder einen Kunden.\"",
+            zh: "\u201c\u6c38\u4e0d\u6d41\u5931\u5ba2\u6237\u3002\u201d",
+            ja: "\u300c\u4e8c\u5ea6\u3068\u9867\u5ba2\u3092\u5931\u308f\u306a\u3044\u3002\u300d",
+            pt: "\"Nunca mais perca um cliente.\"",
+            ar: "\"\u0644\u0627 \u062a\u0641\u0642\u062f \u0639\u0645\u064a\u0644\u0627\u064b \u0623\u0628\u062f\u0627\u064b \u0645\u0631\u0629 \u0623\u062e\u0631\u0649.\"",
+            hi: "\"\u0915\u092d\u0940 \u092d\u0940 \u0915\u094b\u0908 \u0917\u094d\u0930\u093e\u0939\u0915 \u0928 \u0916\u094b\u090f\u0902\u0964\"",
+            ru: "\u00ab\u041d\u0438\u043a\u043e\u0433\u0434\u0430 \u0431\u043e\u043b\u044c\u0448\u0435 \u043d\u0435 \u0442\u0435\u0440\u044f\u0439\u0442\u0435 \u043a\u043b\u0438\u0435\u043d\u0442\u0430.\u00bb"
+        },
+        "\"What are the top 3 contract types linked to churn?\"": {
+            es: "\"\u00bfCu\u00e1les son los 3 principales tipos de contrato vinculados a la p\u00e9rdida?\"",
+            fr: "\"Quels sont les 3 principaux types de contrats li\u00e9s \u00e0 la r\u00e9siliation ?\"",
+            de: "\"Welche 3 Vertragstypen sind am st\u00e4rksten mit Abwanderung verkn\u00fcpft?\"",
+            zh: "\u201c\u4e0e\u5ba2\u6237\u6d41\u5931\u6700\u76f8\u5173\u76843\u79cd\u5408\u540c\u7c7b\u578b\u662f\u4ec0\u4e48\uff1f\u201d",
+            ja: "\u300c\u89e3\u7d04\u306b\u6700\u3082\u95a2\u4fc2\u3059\u308b\u5951\u7d04\u5f62\u614b\u306e\u4e0a\u4f4d3\u3064\u306f\u4f55\u3067\u3059\u304b\uff1f\u300d",
+            pt: "\"Quais s\u00e3o os 3 principais tipos de contrato vinculados ao cancelamento?\"",
+            ar: "\"\u0645\u0627 \u0647\u064a \u0623\u0639\u0644\u0649 3 \u0623\u0646\u0648\u0627\u0639 \u0639\u0642\u0648\u062f \u0645\u0631\u062a\u0628\u0637\u0629 \u0628\u0641\u0642\u062f\u0627\u0646 \u0627\u0644\u0639\u0645\u0644\u0627\u0621\u061f\"",
+            hi: "\"\u092e\u0902\u0925\u0928 \u0938\u0947 \u091c\u0941\u0921\u093c\u0947 \u0936\u0940\u0930\u094d\u0937 3 \u0905\u0928\u0941\u092c\u0902\u0927 \u092a\u094d\u0930\u0915\u093e\u0930 \u0915\u094c\u0928 \u0938\u0947 \u0939\u0948\u0902?\"",
+            ru: "\u00ab\u041a\u0430\u043a\u043e\u0432\u044b 3 \u043e\u0441\u043d\u043e\u0432\u043d\u044b\u0445 \u0442\u0438\u043f\u0430 \u043a\u043e\u043d\u0442\u0440\u0430\u043a\u0442\u043e\u0432, \u0441\u0432\u044f\u0437\u0430\u043d\u043d\u044b\u0445 \u0441 \u043e\u0442\u0442\u043e\u043a\u043e\u043c?\u00bb"
+        },
+        "\"Draft a personalized recovery email for client C001.\"": {
+            es: "\"Redacte un correo de recuperaci\u00f3n personalizado para el cliente C001.\"",
+            fr: "\"R\u00e9digez un courriel de r\u00e9cup\u00e9ration personnalis\u00e9 pour le client C001.\"",
+            de: "\"Entwerfen Sie eine personalisierte R\u00fcckgewinnungs-E-Mail f\u00fcr Kunde C001.\"",
+            zh: "\u201c\u4e3a\u5ba2\u6237C001\u8d77\u8349\u4e2a\u6027\u5316\u633d\u7559\u90ae\u4ef6\u3002\u201d",
+            ja: "\u300c\u9867\u5ba2C001\u5411\u3051\u306e\u30d1\u30fc\u30bd\u30ca\u30e9\u30a4\u30ba\u3055\u308c\u305f\u30ea\u30ab\u30d0\u30ea\u30fc\u30e1\u30fc\u30eb\u3092\u4f5c\u6210\u3057\u3066\u304f\u3060\u3055\u3044\u3002\u300d",
+            pt: "\"Elabore um e-mail de recupera\u00e7\u00e3o personalizado para o cliente C001.\"",
+            ar: "\"\u0635\u064a\u0627\u063a\u0629 \u0628\u0631\u064a\u062f \u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u0645\u062e\u0635\u0635 \u0644\u0644\u0627\u0633\u062a\u0631\u062f\u0627\u062f \u0644\u0644\u0639\u0645\u064a\u0644 C001.\"",
+            hi: "\"\u0917\u094d\u0930\u093e\u0939\u0915 C001 \u0915\u0947 \u0932\u093f\u090f \u090f\u0915 \u0935\u0948\u092f\u0915\u094d\u0924\u093f\u0915\u0943\u0924 \u092a\u0941\u0928\u0930\u094d\u092a\u094d\u0930\u093e\u092a\u094d\u0924\u093f \u0908\u092e\u0947\u0932 \u0915\u093e \u092e\u0938\u094c\u0926\u093e \u0924\u0948\u092f\u093e\u0930 \u0915\u0930\u0947\u0902\u0964\"",
+            ru: "\u00ab\u0421\u043e\u0441\u0442\u0430\u0432\u044c\u0442\u0435 \u043f\u0435\u0440\u0441\u043e\u043d\u0430\u043b\u0438\u0437\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u043e\u0435 \u043f\u0438\u0441\u044c\u043c\u043e \u0434\u043b\u044f \u0432\u043e\u0437\u0432\u0440\u0430\u0442\u0430 \u043a\u043b\u0438\u0435\u043d\u0442\u0430 C001.\u00bb"
+        },
+        "\"Give me a breakdown of monthly charges for high-risk accounts.\"": {
+            es: "\"Br\u00edndeme un desglose de los cargos mensuales para cuentas de alto riesgo.\"",
+            fr: "\"Donnez-moi une ventilation des frais mensuels pour les comptes \u00e0 haut risque.\"",
+            de: "\"Geben Sie mir eine Aufschl\u00fcsselung der monatlichen Geb\u00fchren f\u00fcr Konten mit hohem Risiko.\"",
+            zh: "\u201c\u63d0\u4f9b\u9ad8\u98ce\u9669\u8d26\u6237\u7684\u6708\u5ea6\u8d39\u7528\u660e\u7ec6\u3002\u201d",
+            ja: "\u300c\u9ad8\u30ea\u30b9\u30af\u30a2\u30ab\u30a6\u30f3\u30c8\u306e\u6708\u984d\u8cbb\u7528\u306e\u5185\u8a33\u3092\u6559\u3048\u3066\u304f\u3060\u3055\u3044\u3002\u300d",
+            pt: "\"Forne\u00e7a um detalhamento dos encargos mensais para contas de alto risco.\"",
+            ar: "\"\u0623\u0639\u0637\u0646\u064a \u062a\u0641\u0635\u064a\u0644\u0627\u064b \u0644\u0644\u0631\u0633\u0648\u0645 \u0627\u0644\u0634\u0647\u0631\u064a\u0629 \u0644\u0644\u062d\u0633\u0627\u0628\u0627\u062a \u0639\u0627\u0644\u064a\u0629 \u0627\u0644\u062e\u0637\u0648\u0631\u0629.\"",
+            hi: "\"\u0909\u091a\u094d\u091a \u091c\u094b\u0916\u093f\u092e \u0935\u093e\u0932\u0947 \u0916\u093e\u0924\u094b\u0902 \u0915\u0947 \u0932\u093f\u090f \u092e\u093e\u0938\u093f\u0915 \u0936\u0941\u0932\u094d\u0915 \u0915\u093e \u0935\u093f\u0935\u0930\u0923 \u0926\u0947\u0902\u0964\"",
+            ru: "\u00ab\u041f\u0440\u0435\u0434\u043e\u0441\u0442\u0430\u0432\u044c\u0442\u0435 \u0440\u0430\u0437\u0431\u0438\u0432\u043a\u0443 \u0435\u0436\u0435\u043c\u0435\u0441\u044f\u0447\u043d\u044b\u0445 \u043f\u043b\u0430\u0442\u0435\u0436\u0435\u0439 \u0434\u043b\u044f \u0443\u0447\u0435\u0442\u043d\u044b\u0445 \u0437\u0430\u043f\u0438\u0441\u0435\u0439 \u0432\u044b\u0441\u043e\u043a\u043e\u0433\u043e \u0440\u0438\u0441\u043a\u0430.\u00bb"
+        },
+        "Pred Neg": {
+            es: "Pred Neg",
+            fr: "Pr\u00e9d N\u00e9g",
+            de: "Vorh Neg",
+            zh: "\u9884\u6d4b\u8d1f\u4f8b",
+            ja: "\u4e88\u6e2c\u9670\u6027",
+            pt: "Pred Neg",
+            ar: "\u062a\u0648\u0642\u0639 \u0633\u0644\u0628\u064a",
+            hi: "\u0905\u0928\u0941\u092e\u093e\u0928\u093f\u0924 \u0928\u0915\u093e\u0930\u093e\u0924\u094d\u092e\u0915",
+            ru: "\u041f\u0440\u0435\u0434 \u041e\u0442\u0440\u0438\u0446"
+        },
+        "Pred Pos": {
+            es: "Pred Pos",
+            fr: "Pr\u00e9d Pos",
+            de: "Vorh Pos",
+            zh: "\u9884\u6d4b\u6b63\u4f8b",
+            ja: "\u4e88\u6e2c\u967d\u6027",
+            pt: "Pred Pos",
+            ar: "\u062a\u0648\u0642\u0639 \u0625\u064a\u062c\u0627\u0628\u064a",
+            hi: "\u0905\u0928\u0941\u092e\u093e\u0928\u093f\u0924 \u0938\u0915\u093e\u0930\u093e\u0924\u094d\u092e\u0915",
+            ru: "\u041f\u0440\u0435\u0434 \u041f\u043e\u043b\u043e\u0436"
+        },
+        "Act Neg": {
+            es: "Act Neg",
+            fr: "Act N\u00e9g",
+            de: "Tats Neg",
+            zh: "\u5b9e\u9645\u8d1f\u4f8b",
+            ja: "\u5b9f\u969b\u9670\u6027",
+            pt: "Real Neg",
+            ar: "\u0641\u0639\u0644\u064a \u0633\u0644\u0628\u064a",
+            hi: "\u0935\u093e\u0938\u094d\u0924\u0935\u093f\u0915 \u0928\u0915\u093e\u0930\u093e\u0924\u094d\u092e\u0915",
+            ru: "\u0424\u0430\u043a\u0442 \u041e\u0442\u0440\u0438\u0446"
+        },
+        "Act Pos": {
+            es: "Act Pos",
+            fr: "Act Pos",
+            de: "Tats Pos",
+            zh: "\u5b9e\u9645\u6b63\u4f8b",
+            ja: "\u5b9f\u969b\u967d\u6027",
+            pt: "Real Pos",
+            ar: "\u0641\u0639\u0644\u064a \u0625\u064a\u062c\u0627\u0628\u064a",
+            hi: "\u0935\u093e\u0938\u094d\u0924\u0935\u093f\u0915 \u0938\u0915\u093e\u0930\u093e\u0924\u094d\u092e\u0915",
+            ru: "\u0424\u0430\u043a\u0442 \u041f\u043e\u043b\u043e\u0436"
+        },
+        "True Neg (TN)": {
+            es: "Verdadero Neg (VN)",
+            fr: "Vrai N\u00e9g (VN)",
+            de: "Echt Neg (TN)",
+            zh: "\u771f\u8d1f\u4f8b (TN)",
+            ja: "\u771f\u9670\u6027 (TN)",
+            pt: "Verdadeiro Neg (VN)",
+            ar: "\u0633\u0644\u0628\u064a \u062d\u0642\u064a\u0642\u064a (TN)",
+            hi: "\u0938\u091a\u094d\u091a\u093e \u0928\u0915\u093e\u0930\u093e\u0924\u094d\u092e\u0915 (TN)",
+            ru: "\u0418\u0441\u0442\u0438\u043d\u043d\u043e \u043e\u0442\u0440\u0438\u0446 (TN)"
+        },
+        "False Pos (FP)": {
+            es: "Falso Pos (FP)",
+            fr: "Faux Pos (FP)",
+            de: "Falsch Pos (FP)",
+            zh: "\u5047\u6b63\u4f8b (FP)",
+            ja: "\u507d\u967d\u6027 (FP)",
+            pt: "Falso Pos (FP)",
+            ar: "\u0625\u064a\u062c\u0627\u0628\u064a \u0643\u0627\u0630\u0628 (FP)",
+            hi: "\u0917\u0932\u0924 \u0938\u0915\u093e\u0930\u093e\u0924\u094d\u092e\u0915 (FP)",
+            ru: "\u041b\u043e\u0436\u043d\u043e \u043f\u043e\u043b\u043e\u0436 (FP)"
+        },
+        "False Neg (FN)": {
+            es: "Falso Neg (FN)",
+            fr: "Faux N\u00e9g (FN)",
+            de: "Falsch Neg (FN)",
+            zh: "\u5047\u8d1f\u4f8b (FN)",
+            ja: "\u507d\u9670\u6027 (FN)",
+            pt: "Falso Neg (FN)",
+            ar: "\u0633\u0644\u0628\u064a \u0643\u0627\u0630\u0628 (FN)",
+            hi: "\u0917\u0932\u0924 \u0928\u0915\u093e\u0930\u093e\u0924\u094d\u092e\u0915 (FN)",
+            ru: "\u041b\u043e\u0436\u043d\u043e \u043e\u0442\u0440\u0438\u0446 (FN)"
+        },
+        "True Pos (TP)": {
+            es: "Verdadero Pos (VP)",
+            fr: "Vrai Pos (VP)",
+            de: "Echt Pos (TP)",
+            zh: "\u771f\u6b63\u4f8b (TP)",
+            ja: "\u771f\u967d\u6027 (TP)",
+            pt: "Verdadeiro Pos (VP)",
+            ar: "\u0625\u064a\u062c\u0627\u0628\u064a \u062d\u0642\u064a\u0642\u064a (TP)",
+            hi: "\u0938\u091a\u094d\u091a\u093e \u0938\u0915\u093e\u0930\u093e\u0924\u094d\u092e\u0915 (TP)",
+            ru: "\u0418\u0441\u0442\u0438\u043d\u043d\u043e \u043f\u043e\u043b\u043e\u0436 (TP)"
+        },
+        "Live Tracking Sync Active": {
+            es: "Sincronizaci\u00f3n de Rastreo en Vivo Activa",
+            fr: "Synchronisation du Suivi en Direct Active",
+            de: "Live-Tracking-Synchronisierung Aktiv",
+            zh: "\u5b9e\u65f6\u8ddf\u8e2a\u540c\u6b65\u5df2\u6fc0\u6d3b",
+            ja: "\u30ea\u30a2\u30eb\u30bf\u30a4\u30e0\u8ffd\u8de1\u540c\u671f\u304c\u30a2\u30af\u30c6\u30a3\u30d6",
+            pt: "Sincroniza\u00e7\u00e3o de Rastreamento em Tempo Real Ativa",
+            ar: "\u0645\u0632\u0627\u0645\u0646\u0629 \u0627\u0644\u062a\u062a\u0628\u0639 \u0627\u0644\u0645\u0628\u0627\u0634\u0631 \u0646\u0634\u0637\u0629",
+            hi: "\u0932\u093e\u0907\u0935 \u091f\u094d\u0930\u0948\u0915\u093f\u0902\u0917 \u0938\u093f\u0902\u0915 \u0938\u0915\u094d\u0930\u093f\u092f",
+            ru: "\u0421\u0438\u043d\u0445\u0440\u043e\u043d\u0438\u0437\u0430\u0446\u0438\u044f \u043e\u0442\u0441\u043b\u0435\u0436\u0438\u0432\u0430\u043d\u0438\u044f \u0430\u043a\u0442\u0438\u0432\u043d\u0430"
+        },
+        "Projected Suite Impact:": {
+            es: "Impacto Proyectado de la Suite:",
+            fr: "Impact Projet\u00e9 de la Suite :",
+            de: "Prognostizierte Suite-Auswirkung:",
+            zh: "\u9884\u8ba1\u5957\u4ef6\u5f71\u54cd\uff1a",
+            ja: "\u4e88\u6e2c\u30b9\u30a4\u30fc\u30c8\u5f71\u97ff\uff1a",
+            pt: "Impacto Projetado da Su\u00edte:",
+            ar: "\u0627\u0644\u062a\u0623\u062b\u064a\u0631 \u0627\u0644\u0645\u062a\u0648\u0642\u0639 \u0644\u0644\u062c\u0646\u0627\u062d:",
+            hi: "\u0905\u0928\u0941\u092e\u093e\u0928\u093f\u0924 \u0938\u0942\u091f \u092a\u094d\u0930\u092d\u093e\u0935:",
+            ru: "\u041f\u0440\u043e\u0433\u043d\u043e\u0437\u0438\u0440\u0443\u0435\u043c\u043e\u0435 \u0432\u043b\u0438\u044f\u043d\u0438\u0435 \u043f\u0430\u043a\u0435\u0442\u0430:"
+        },
+        "Suite Copilot Briefing": {
+            es: "Informe Copilot de la Suite",
+            fr: "Briefing Copilot de la Suite",
+            de: "Suite Copilot Briefing",
+            zh: "\u5957\u4ef6Copilot\u7b80\u62a5",
+            ja: "\u30b9\u30a4\u30fc\u30c8Copilot\u30d6\u30ea\u30fc\u30d5\u30a3\u30f3\u30b0",
+            pt: "Briefing do Copilot da Su\u00edte",
+            ar: "\u0625\u062d\u0627\u0637\u0629 \u0645\u0633\u0627\u0639\u062f \u0627\u0644\u062c\u0646\u0627\u062d",
+            hi: "\u0938\u0942\u091f \u0915\u094b\u092a\u093e\u092f\u0932\u091f \u092c\u094d\u0930\u0940\u092b\u093f\u0902\u0917",
+            ru: "\u0411\u0440\u0438\u0444\u0438\u043d\u0433 Copilot \u0434\u043b\u044f \u043f\u0430\u043a\u0435\u0442\u0430"
+        },
+        "Sorted by Churn Probability DESC": {
+            es: "Ordenado por Probabilidad de Cancelaci\u00f3n DESC",
+            fr: "Tri\u00e9 par Probabilit\u00e9 de R\u00e9siliation DESC",
+            de: "Sortiert nach Abwanderungswahrscheinlichkeit ABST",
+            zh: "\u6309\u6d41\u5931\u6982\u7387\u964d\u5e8f\u6392\u5e8f",
+            ja: "\u89e3\u7d04\u78ba\u7387\u964d\u9806\u3067\u4e26\u3079\u66ff\u3048",
+            pt: "Ordenado por Probabilidade de Cancelamento DESC",
+            ar: "\u0645\u0631\u062a\u0628 \u062d\u0633\u0628 \u0627\u062d\u062a\u0645\u0627\u0644 \u0641\u0642\u062f\u0627\u0646 \u0627\u0644\u0639\u0645\u0644\u0627\u0621 \u062a\u0646\u0627\u0632\u0644\u064a\u0627\u064b",
+            hi: "\u092e\u0902\u0925\u0928 \u0938\u0902\u092d\u093e\u0935\u0928\u093e \u0915\u0947 \u0905\u0928\u0941\u0938\u093e\u0930 \u0918\u091f\u0924\u0947 \u0915\u094d\u0930\u092e \u092e\u0947\u0902 \u0915\u094d\u0930\u092e\u092c\u0926\u094d\u0927",
+            ru: "\u0421\u043e\u0440\u0442\u0438\u0440\u043e\u0432\u043a\u0430 \u043f\u043e \u0432\u0435\u0440\u043e\u044f\u0442\u043d\u043e\u0441\u0442\u0438 \u043e\u0442\u0442\u043e\u043a\u0430 \u0423\u0411\u042b\u0412"
+        },
+        "Interactive Slicers:": {
+            es: "Segmentadores Interactivos:",
+            fr: "Segments Interactifs :",
+            de: "Interaktive Datenschnitte:",
+            zh: "\u4ea4\u4e92\u5f0f\u5207\u7247\u5668\uff1a",
+            ja: "\u30a4\u30f3\u30bf\u30e9\u30af\u30c6\u30a3\u30d6\u30b9\u30e9\u30a4\u30b5\u30fc\uff1a",
+            pt: "Fatiadores Interativos:",
+            ar: "\u0645\u0642\u0633\u0645\u0627\u062a \u062a\u0641\u0627\u0639\u0644\u064a\u0629:",
+            hi: "\u0907\u0902\u091f\u0930\u0948\u0915\u094d\u091f\u093f\u0935 \u0938\u094d\u0932\u093e\u0907\u0938\u0930:",
+            ru: "\u0418\u043d\u0442\u0435\u0440\u0430\u043a\u0442\u0438\u0432\u043d\u044b\u0435 \u0441\u0440\u0435\u0437\u044b:"
+        },
+        "Loading live Power BI dataset...": {
+            es: "Cargando conjunto de datos Power BI en vivo...",
+            fr: "Chargement du jeu de donn\u00e9es Power BI en direct...",
+            de: "Lade Live-Power BI-Datensatz...",
+            zh: "\u6b63\u5728\u52a0\u8f7d\u5b9e\u65f6Power BI\u6570\u636e\u96c6...",
+            ja: "\u30ea\u30a2\u30eb\u30bf\u30a4\u30e0Power BI\u30c7\u30fc\u30bf\u30bb\u30c3\u30c8\u3092\u8aad\u307f\u8fbc\u307f\u4e2d...",
+            pt: "Carregando conjunto de dados Power BI em tempo real...",
+            ar: "\u062c\u0627\u0631\u064d \u062a\u062d\u0645\u064a\u0644 \u0645\u062c\u0645\u0648\u0639\u0629 \u0628\u064a\u0627\u0646\u0627\u062a Power BI \u0627\u0644\u0645\u0628\u0627\u0634\u0631\u0629...",
+            hi: "\u0932\u093e\u0907\u0935 Power BI \u0921\u0947\u091f\u093e\u0938\u0947\u091f \u0932\u094b\u0921 \u0939\u094b \u0930\u0939\u093e \u0939\u0948...",
+            ru: "\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430 \u0434\u0438\u043d\u0430\u043c\u0438\u0447\u0435\u0441\u043a\u043e\u0433\u043e \u043d\u0430\u0431\u043e\u0440\u0430 \u0434\u0430\u043d\u043d\u044b\u0445 Power BI..."
+        },
+        "Loading matrix data...": {
+            es: "Cargando datos matriciales...",
+            fr: "Chargement des donn\u00e9es matricielles...",
+            de: "Lade Matrixdaten...",
+            zh: "\u6b63\u5728\u52a0\u8f7d\u77e9\u9635\u6570\u636e...",
+            ja: "\u30de\u30c8\u30ea\u30c3\u30af\u30b9\u30c7\u30fc\u30bf\u3092\u8aad\u307f\u8fbc\u307f\u4e2d...",
+            pt: "Carregando dados matriciais...",
+            ar: "\u062c\u0627\u0631\u064d \u062a\u062d\u0645\u064a\u0644 \u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0645\u0635\u0641\u0648\u0641\u0629...",
+            hi: "\u092e\u0948\u091f\u094d\u0930\u093f\u0915\u094d\u0938 \u0921\u0947\u091f\u093e \u0932\u094b\u0921 \u0939\u094b \u0930\u0939\u093e \u0939\u0948...",
+            ru: "\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430 \u043c\u0430\u0442\u0440\u0438\u0447\u043d\u044b\u0445 \u0434\u0430\u043d\u043d\u044b\u0445..."
+        },
+        "Click formula button to copy DAX to clipboard": {
+            es: "Haga clic en el bot\u00f3n de f\u00f3rmula para copiar DAX al portapapeles",
+            fr: "Cliquez sur le bouton de formule pour copier le DAX dans le presse-papiers",
+            de: "Formel-Schaltfl\u00e4che anklicken, um DAX in die Zwischenablage zu kopieren",
+            zh: "\u70b9\u51fb\u516c\u5f0f\u6309\u94ae\u5c06DAX\u590d\u5236\u5230\u526a\u8d34\u677f",
+            ja: "\u6570\u5f0f\u30dc\u30bf\u30f3\u3092\u30af\u30ea\u30c3\u30af\u3057\u3066DAX\u3092\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u306b\u30b3\u30d4\u30fc",
+            pt: "Clique no bot\u00e3o de f\u00f3rmula para copiar DAX para a \u00e1rea de transfer\u00eancia",
+            ar: "\u0627\u0646\u0642\u0631 \u0639\u0644\u0649 \u0632\u0631 \u0627\u0644\u0645\u0639\u0627\u062f\u0644\u0629 \u0644\u0646\u0633\u062e DAX \u0625\u0644\u0649 \u0627\u0644\u062d\u0627\u0641\u0638\u0629",
+            hi: "DAX \u0915\u094b \u0915\u094d\u0932\u093f\u092a\u092c\u094b\u0930\u094d\u0921 \u092a\u0930 \u0915\u0949\u092a\u0940 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \u092b\u093c\u0949\u0930\u094d\u092e\u0942\u0932\u093e \u092c\u091f\u0928 \u092a\u0930 \u0915\u094d\u0932\u093f\u0915 \u0915\u0930\u0947\u0902",
+            ru: "\u041d\u0430\u0436\u043c\u0438\u0442\u0435 \u043a\u043d\u043e\u043f\u043a\u0443 \u0444\u043e\u0440\u043c\u0443\u043b\u044b, \u0447\u0442\u043e\u0431\u044b \u0441\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u0442\u044c DAX \u0432 \u0431\u0443\u0444\u0435\u0440 \u043e\u0431\u043c\u0435\u043d\u0430"
+        },
+        "Standalone binary template with pre-wired visuals and measures.": {
+            es: "Plantilla binaria independiente con elementos visuales y medidas precableados.",
+            fr: "Mod\u00e8le binaire autonome avec visuels et mesures pr\u00e9configur\u00e9s.",
+            de: "Eigenst\u00e4ndige Bin\u00e4rvorlage mit vorkonfigurierten Visuals und Measures.",
+            zh: "\u5177\u6709\u9884\u8fde\u7ebf\u89c6\u89c9\u6548\u679c\u548c\u5ea6\u91cf\u503c\u7684\u72ec\u7acb\u4e8c\u8fdb\u5236\u6a21\u677f\u3002",
+            ja: "\u30d3\u30b8\u30e5\u30a2\u30eb\u3068\u30e1\u30b8\u30e3\u30fc\u304c\u3042\u3089\u304b\u3058\u3081\u7d44\u307f\u8fbc\u307e\u308c\u305f\u30b9\u30bf\u30f3\u30c9\u30a2\u30ed\u30f3\u30d0\u30a4\u30ca\u30ea\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u3002",
+            pt: "Modelo bin\u00e1rio independente com visuais e medidas pr\u00e9-configurados.",
+            ar: "\u0642\u0627\u0644\u0628 \u062b\u0646\u0627\u0626\u064a \u0645\u0633\u062a\u0642\u0644 \u064a\u062d\u062a\u0648\u064a \u0639\u0644\u0649 \u0645\u0631\u0626\u064a\u0627\u062a \u0648\u0645\u0642\u0627\u064a\u064a\u0633 \u0645\u0648\u0635\u0648\u0644\u0629 \u0645\u0633\u0628\u0642\u0627\u064b.",
+            hi: "\u092a\u094d\u0930\u0940-\u0935\u093e\u092f\u0930\u094d\u0921 \u0935\u093f\u091c\u0941\u0905\u0932\u094d\u0938 \u0914\u0930 \u0909\u092a\u093e\u092f\u094b\u0902 \u0915\u0947 \u0938\u093e\u0925 \u0938\u094d\u091f\u0948\u0902\u0921\u0905\u0932\u094b\u0928 \u092c\u093e\u0907\u0928\u0930\u0940 \u091f\u0947\u092e\u094d\u092a\u0932\u0947\u091f\u0964",
+            ru: "\u0410\u0432\u0442\u043e\u043d\u043e\u043c\u043d\u044b\u0439 \u0431\u0438\u043d\u0430\u0440\u043d\u044b\u0439 \u0448\u0430\u0431\u043b\u043e\u043d \u0441 \u043f\u0440\u0435\u0434\u0432\u0430\u0440\u0438\u0442\u0435\u043b\u044c\u043d\u043e \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u043d\u044b\u043c\u0438 \u0432\u0438\u0437\u0443\u0430\u043b\u044c\u043d\u044b\u043c\u0438 \u044d\u043b\u0435\u043c\u0435\u043d\u0442\u0430\u043c\u0438 \u0438 \u043c\u0435\u0440\u0430\u043c\u0438."
+        },
+        "Direct connection file to link Power BI directly to your live SQLite feed.": {
+            es: "Archivo de conexi\u00f3n directa para vincular Power BI a su fuente SQLite en vivo.",
+            fr: "Fichier de connexion directe pour relier Power BI \u00e0 votre flux SQLite en direct.",
+            de: "Direktverbindungsdatei zur Verkn\u00fcpfung von Power BI mit Ihrem SQLite-Live-Feed.",
+            zh: "\u76f4\u63a5\u8fde\u63a5\u6587\u4ef6\uff0c\u5c06Power BI\u76f4\u63a5\u94fe\u63a5\u5230\u60a8\u7684\u5b9e\u65f6SQLite\u6e90\u3002",
+            ja: "Power BI\u3092\u30ea\u30a2\u30eb\u30bf\u30a4\u30e0SQLite\u30d5\u30a3\u30fc\u30c9\u306b\u76f4\u63a5\u30ea\u30f3\u30af\u3059\u308b\u63a5\u7d9a\u30d5\u30a1\u30a4\u30eb\u3002",
+            pt: "Arquivo de conex\u00e3o direta para vincular o Power BI ao seu feed SQLite em tempo real.",
+            ar: "\u0645\u0644\u0641 \u0627\u062a\u0635\u0627\u0644 \u0645\u0628\u0627\u0634\u0631 \u0644\u0631\u0628\u0637 Power BI \u0645\u0628\u0627\u0634\u0631\u0629 \u0628\u062a\u063a\u0630\u064a\u0629 SQLite \u0627\u0644\u0645\u0628\u0627\u0634\u0631\u0629.",
+            hi: "Power BI \u0915\u094b \u0938\u0940\u0927\u0947 \u0906\u092a\u0915\u0947 \u0932\u093e\u0907\u0935 SQLite \u092b\u093c\u0940\u0921 \u0938\u0947 \u091c\u094b\u0921\u093c\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \u0938\u0940\u0927\u093e \u0915\u0928\u0947\u0915\u094d\u0936\u0928 \u092b\u093c\u093e\u0907\u0932\u0964",
+            ru: "\u0424\u0430\u0439\u043b \u043f\u0440\u044f\u043c\u043e\u0433\u043e \u043f\u043e\u0434\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f \u0434\u043b\u044f \u0441\u0432\u044f\u0437\u044b\u0432\u0430\u043d\u0438\u044f Power BI \u0441 \u0432\u0430\u0448\u0438\u043c \u043f\u043e\u0442\u043e\u043a\u043e\u043c SQLite."
+        },
+        "Self-contained .twbx package containing 2023.1 XML and Data/CustomerIntelligence.csv.": {
+            es: "Paquete .twbx aut\u00f3nomo que contiene XML 2023.1 y Data/CustomerIntelligence.csv.",
+            fr: "Package .twbx autonome contenant le XML 2023.1 et Data/CustomerIntelligence.csv.",
+            de: "In sich geschlossenes .twbx-Paket mit 2023.1 XML und Data/CustomerIntelligence.csv.",
+            zh: "\u5305\u542b2023.1 XML\u548cData/CustomerIntelligence.csv\u7684\u81ea\u5305\u542b.twbx\u5305\u3002",
+            ja: "2023.1 XML\u304a\u3088\u3073Data/CustomerIntelligence.csv\u3092\u542b\u3080\u81ea\u5df1\u5b8c\u7d50\u578b.twbx\u30d1\u30c3\u30b1\u30fc\u30b8\u3002",
+            pt: "Pacote .twbx autocontido contendo XML 2023.1 e Data/CustomerIntelligence.csv.",
+            ar: "\u062d\u0632\u0645\u0629 .twbx \u0642\u0627\u0626\u0645\u0629 \u0628\u0630\u0627\u062a\u0647\u0627 \u062a\u062d\u062a\u0648\u064a \u0639\u0644\u0649 XML 2023.1 \u0648 Data/CustomerIntelligence.csv.",
+            hi: "2023.1 XML \u0914\u0930 Data/CustomerIntelligence.csv \u092f\u0941\u0915\u094d\u0924 \u0938\u094d\u0935-\u0928\u093f\u0939\u093f\u0924 .twbx \u092a\u0948\u0915\u0947\u091c\u0964",
+            ru: "\u0410\u0432\u0442\u043e\u043d\u043e\u043c\u043d\u044b\u0439 \u043f\u0430\u043a\u0435\u0442 .twbx, \u0441\u043e\u0434\u0435\u0440\u0436\u0430\u0449\u0438\u0439 XML 2023.1 \u0438 Data/CustomerIntelligence.csv."
+        },
+        "Raw M-code script for Power Query Advanced Editor.": {
+            es: "Script de c\u00f3digo M sin procesar para el Editor avanzado de Power Query.",
+            fr: "Script de code M brut pour l'\u00e9diteur avanc\u00e9 de Power Query.",
+            de: "Rohes M-Code-Skript f\u00fcr den erweiterten Power Query-Editor.",
+            zh: "\u7528\u4e8ePower Query\u9ad8\u7ea7\u7f16\u8f91\u5668\u7684\u539f\u59cbM\u4ee3\u7801\u811a\u672c\u3002",
+            ja: "Power Query\u9ad8\u5ea6\u306a\u30a8\u30c7\u30a3\u30bf\u30fc\u7528\u306e\u672a\u52a0\u5de5M\u30b3\u30fc\u30c9\u30b9\u30af\u30ea\u30d7\u30c8\u3002",
+            pt: "Script de c\u00f3digo M bruto para o Editor Avan\u00e7ado do Power Query.",
+            ar: "\u0646\u0635 \u0628\u0631\u0645\u062c\u064a \u062e\u0627\u0645 \u0644\u0643\u0648\u062f M \u0644\u0644\u0645\u062d\u0631\u0631 \u0627\u0644\u0645\u062a\u0642\u062f\u0645 \u0641\u064a Power Query.",
+            hi: "Power Query \u0909\u0928\u094d\u0928\u0924 \u0938\u0902\u092a\u093e\u0926\u0915 \u0915\u0947 \u0932\u093f\u090f \u0915\u091a\u094d\u091a\u093e M-\u0915\u094b\u0921 \u0938\u094d\u0915\u094d\u0930\u093f\u092a\u094d\u091f\u0964",
+            ru: "\u0418\u0441\u0445\u043e\u0434\u043d\u044b\u0439 \u0441\u043a\u0440\u0438\u043f\u0442 \u043a\u043e\u0434\u0430 M \u0434\u043b\u044f \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043d\u043d\u043e\u0433\u043e \u0440\u0435\u0434\u0430\u043a\u0442\u043e\u0440\u0430 Power Query."
+        },
+        "Direct cloud sync via Personal Access Token (PAT)": {
+            es: "Sincronizaci\u00f3n directa en la nube mediante Token de Acceso Personal (PAT)",
+            fr: "Synchronisation cloud directe via jeton d'acc\u00e8s personnel (PAT)",
+            de: "Direkte Cloud-Synchronisierung \u00fcber pers\u00f6nliches Zugriffstoken (PAT)",
+            zh: "\u901a\u8fc7\u4e2a\u4eba\u8bbf\u95ee\u4ee4\u724c (PAT) \u8fdb\u884c\u76f4\u63a5\u4e91\u540c\u6b65",
+            ja: "\u500b\u4eba\u30a2\u30af\u30bb\u30b9\u30c8\u30fc\u30af\u30f3\uff08PAT\uff09\u306b\u3088\u308b\u76f4\u63a5\u30af\u30e9\u30a6\u30c9\u540c\u671f",
+            pt: "Sincroniza\u00e7\u00e3o direta na nuvem via Token de Acesso Pessoal (PAT)",
+            ar: "\u0645\u0632\u0627\u0645\u0646\u0629 \u0633\u062d\u0627\u0628\u064a\u0629 \u0645\u0628\u0627\u0634\u0631\u0629 \u0639\u0628\u0631 \u0631\u0645\u0632 \u0627\u0644\u0648\u0635\u0648\u0644 \u0627\u0644\u0634\u062e\u0635\u064a (PAT)",
+            hi: "\u0935\u094d\u092f\u0915\u094d\u0924\u093f\u0917\u0924 \u090f\u0915\u094d\u0938\u0947\u0938 \u091f\u094b\u0915\u0928 (PAT) \u0915\u0947 \u092e\u093e\u0927\u094d\u092f\u092e \u0938\u0947 \u0938\u0940\u0927\u093e \u0915\u094d\u0932\u093e\u0909\u0921 \u0938\u093f\u0902\u0915",
+            ru: "\u041f\u0440\u044f\u043c\u0430\u044f \u0441\u0438\u043d\u0445\u0440\u043e\u043d\u0438\u0437\u0430\u0446\u0438\u044f \u0441 \u043e\u0431\u043b\u0430\u043a\u043e\u043c \u0447\u0435\u0440\u0435\u0437 \u043f\u0435\u0440\u0441\u043e\u043d\u0430\u043b\u044c\u043d\u044b\u0439 \u0442\u043e\u043a\u0435\u043d \u0434\u043e\u0441\u0442\u0443\u043f\u0430 (PAT)"
+        },
+        "Direct cloud sync via Azure AD Client Credentials": {
+            es: "Sincronizaci\u00f3n directa en la nube mediante credenciales de cliente Azure AD",
+            fr: "Synchronisation cloud directe via les informations d'identification client Azure AD",
+            de: "Direkte Cloud-Synchronisierung \u00fcber Azure AD Client-Anmeldeinformationen",
+            zh: "\u901a\u8fc7Azure AD\u5ba2\u6237\u7aef\u51ed\u636e\u8fdb\u884c\u76f4\u63a5\u4e91\u540c\u6b65",
+            ja: "Azure AD\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u8a8d\u8a3c\u60c5\u5831\u306b\u3088\u308b\u76f4\u63a5\u30af\u30e9\u30a6\u30c9\u540c\u671f",
+            pt: "Sincroniza\u00e7\u00e3o direta na nuvem via Credenciais de Cliente do Azure AD",
+            ar: "\u0645\u0632\u0627\u0645\u0646\u0629 \u0633\u062d\u0627\u0628\u064a\u0629 \u0645\u0628\u0627\u0634\u0631\u0629 \u0639\u0628\u0631 \u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0639\u062a\u0645\u0627\u062f \u0639\u0645\u064a\u0644 Azure AD",
+            hi: "Azure AD \u0915\u094d\u0932\u093e\u0907\u0902\u091f \u0915\u094d\u0930\u0947\u0921\u0947\u0902\u0936\u093f\u092f\u0932 \u0915\u0947 \u092e\u093e\u0927\u094d\u092f\u092e \u0938\u0947 \u0938\u0940\u0927\u093e \u0915\u094d\u0932\u093e\u0909\u0921 \u0938\u093f\u0902\u0915",
+            ru: "\u041f\u0440\u044f\u043c\u0430\u044f \u0441\u0438\u043d\u0445\u0440\u043e\u043d\u0438\u0437\u0430\u0446\u0438\u044f \u0441 \u043e\u0431\u043b\u0430\u043a\u043e\u043c \u0447\u0435\u0440\u0435\u0437 \u0443\u0447\u0435\u0442\u043d\u044b\u0435 \u0434\u0430\u043d\u043d\u044b\u0435 \u043a\u043b\u0438\u0435\u043d\u0442\u0430 Azure AD"
+        },
+        "Jump to Main Executive Dashboard": {
+            es: "Ir al Panel Ejecutivo Principal",
+            fr: "Acc\u00e9der au tableau de bord ex\u00e9cutif principal",
+            de: "Zum Haupt-Executive-Dashboard springen",
+            zh: "\u8df3\u8f6c\u5230\u4e3b\u6267\u884c\u4eea\u8868\u677f",
+            ja: "\u30e1\u30a4\u30f3\u30a8\u30b0\u30bc\u30af\u30c6\u30a3\u30d6\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u306b\u79fb\u52d5",
+            pt: "Ir para o Painel Executivo Principal",
+            ar: "\u0627\u0644\u0627\u0646\u062a\u0642\u0627\u0644 \u0625\u0644\u0649 \u0644\u0648\u062d\u0629 \u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0627\u0644\u062a\u0646\u0641\u064a\u0630\u064a\u0629 \u0627\u0644\u0631\u0626\u064a\u0633\u064a\u0629",
+            hi: "\u092e\u0941\u0916\u094d\u092f \u0915\u093e\u0930\u094d\u092f\u0915\u093e\u0930\u0940 \u0921\u0948\u0936\u092c\u094b\u0930\u094d\u0921 \u092a\u0930 \u091c\u093e\u090f\u0902",
+            ru: "\u041f\u0435\u0440\u0435\u0439\u0442\u0438 \u043d\u0430 \u0433\u043b\u0430\u0432\u043d\u0443\u044e \u043f\u0430\u043d\u0435\u043b\u044c \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f"
+        },
+        "Jump to Specials & BI Suite": {
+            es: "Ir a la Suite Especial y de BI",
+            fr: "Acc\u00e9der \u00e0 la suite sp\u00e9ciale et BI",
+            de: "Zur Spezial- & BI-Suite springen",
+            zh: "\u8df3\u8f6c\u5230\u7279\u9009\u4e0e\u5546\u4e1a\u667a\u80fd\u5957\u4ef6",
+            ja: "\u7279\u5225\u30fbBI\u30b9\u30a4\u30fc\u30c8\u306b\u79fb\u52d5",
+            pt: "Ir para a Su\u00edte de Especiais e BI",
+            ar: "\u0627\u0644\u0627\u0646\u062a\u0642\u0627\u0644 \u0625\u0644\u0649 \u062c\u0646\u0627\u062d \u0627\u0644\u0645\u064a\u0632\u0627\u062a \u0627\u0644\u062e\u0627\u0635\u0629 \u0648 BI",
+            hi: "\u0938\u094d\u092a\u0947\u0936\u0932 \u0914\u0930 \u092c\u0940\u0906\u0908 \u0938\u0942\u091f \u092a\u0930 \u091c\u093e\u090f\u0902",
+            ru: "\u041f\u0435\u0440\u0435\u0439\u0442\u0438 \u0432 \u0441\u043f\u0435\u0446\u0438\u0430\u043b\u044c\u043d\u044b\u0439 \u043f\u0430\u043a\u0435\u0442 BI"
+        },
+        "Jump to Strategic SLA Actions": {
+            es: "Ir a Acciones Estrat\u00e9gicas de SLA",
+            fr: "Acc\u00e9der aux actions strat\u00e9giques SLA",
+            de: "Zu strategischen SLA-Aktionen springen",
+            zh: "\u8df3\u8f6c\u5230\u6218\u7565SLA\u884c\u52a8",
+            ja: "\u6226\u7565\u7684SLA\u30a2\u30af\u30b7\u30e7\u30f3\u306b\u79fb\u52d5",
+            pt: "Ir para A\u00e7\u00f5es Estrat\u00e9gicas de SLA",
+            ar: "\u0627\u0644\u0627\u0646\u062a\u0642\u0627\u0644 \u0625\u0644\u0649 \u0625\u062c\u0631\u0627\u0621\u0627\u062a SLA \u0627\u0644\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629",
+            hi: "\u0930\u0923\u0928\u0940\u0924\u093f\u0915 SLA \u0915\u093e\u0930\u094d\u0930\u0935\u093e\u0907\u092f\u094b\u0902 \u092a\u0930 \u091c\u093e\u090f\u0902",
+            ru: "\u041f\u0435\u0440\u0435\u0439\u0442\u0438 \u043a \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u0447\u0435\u0441\u043a\u0438\u043c \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044f\u043c SLA"
+        },
+        "Jump to What-If Scenario Sandbox": {
+            es: "Ir al Simulador de Escenarios Hipot\u00e9ticos",
+            fr: "Acc\u00e9der au bac \u00e0 sable de simulation",
+            de: "Zum Was-w\u00e4re-wenn-Sandbox springen",
+            zh: "\u8df3\u8f6c\u5230\u5047\u8bbe\u60c5\u666f\u6c99\u76d2",
+            ja: "What-If\u30b7\u30ca\u30ea\u30aa\u30b5\u30f3\u30c9\u30dc\u30c3\u30af\u30b9\u306b\u79fb\u52d5",
+            pt: "Ir para o Sandbox de Cen\u00e1rios Hipot\u00e9ticos",
+            ar: "\u0627\u0644\u0627\u0646\u062a\u0642\u0627\u0644 \u0625\u0644\u0649 \u0645\u062d\u0627\u0643\u064a \u0627\u0644\u0633\u064a\u0646\u0627\u0631\u064a\u0648\u0647\u0627\u062a \u0627\u0644\u0627\u0641\u062a\u0631\u0627\u0636\u064a\u0629",
+            hi: "\u0915\u093e\u0932\u094d\u092a\u0928\u093f\u0915 \u092a\u0930\u093f\u0926\u0943\u0936\u094d\u092f \u0938\u0948\u0902\u0921\u092c\u0949\u0915\u094d\u0938 \u092a\u0930 \u091c\u093e\u090f\u0902",
+            ru: "\u041f\u0435\u0440\u0435\u0439\u0442\u0438 \u0432 \u043f\u0435\u0441\u043e\u0447\u043d\u0438\u0446\u0443 \u0441\u0446\u0435\u043d\u0430\u0440\u0438\u0435\u0432 \u00ab\u0427\u0442\u043e, \u0435\u0441\u043b\u0438\u00bb"
+        },
+        "Consult AI Advisor Copilot": {
+            es: "Consultar al Asesor Copilot IA",
+            fr: "Consulter le Copilot IA",
+            de: "KI-Berater Copilot konsultieren",
+            zh: "\u54a8\u8be2AI\u987e\u95eeCopilot",
+            ja: "AI\u30a2\u30c9\u30d0\u30a4\u30b6\u30fcCopilot\u306b\u76f8\u8ac7",
+            pt: "Consultar o Copilot Assessor de IA",
+            ar: "\u0627\u0633\u062a\u0634\u0627\u0631\u0629 \u0645\u0633\u0627\u0639\u062f \u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a",
+            hi: "\u090f\u0906\u0908 \u0938\u0932\u093e\u0939\u0915\u093e\u0930 \u0915\u094b\u092a\u093e\u092f\u0932\u091f \u0938\u0947 \u092a\u0930\u093e\u092e\u0930\u094d\u0936 \u0915\u0930\u0947\u0902",
+            ru: "\u041f\u0440\u043e\u043a\u043e\u043d\u0441\u0443\u043b\u044c\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c\u0441\u044f \u0441 \u0418\u0418-\u0430\u0441\u0441\u0438\u0441\u0442\u0435\u043d\u0442\u043e\u043c"
+        },
+        "Toggle Dark / Light Theme": {
+            es: "Alternar Tema Oscuro / Claro",
+            fr: "Basculer th\u00e8me sombre / clair",
+            de: "Dunkles / Helles Design umschalten",
+            zh: "\u5207\u6362\u6df1\u8272/\u6d45\u8272\u4e3b\u9898",
+            ja: "\u30c0\u30fc\u30af/\u30e9\u30a4\u30c8\u30c6\u30fc\u30de\u306e\u5207\u308a\u66ff\u3048",
+            pt: "Alternar Tema Escuro / Claro",
+            ar: "\u062a\u0628\u062f\u064a\u0644 \u0627\u0644\u0645\u0638\u0647\u0631 \u0627\u0644\u062f\u0627\u0643\u0646 / \u0627\u0644\u0641\u0627\u062a\u062d",
+            hi: "\u0921\u093e\u0930\u094d\u0915 / \u0932\u093e\u0907\u091f \u0925\u0940\u092e \u091f\u0949\u0917\u0932 \u0915\u0930\u0947\u0902",
+            ru: "\u041f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0438\u0442\u044c \u0442\u0435\u043c\u043d\u0443\u044e / \u0441\u0432\u0435\u0442\u043b\u0443\u044e \u0442\u0435\u043c\u0443"
+        },
+        "Toggle Compact High-Density View": {
+            es: "Alternar Vista Compacta de Alta Densidad",
+            fr: "Basculer la vue compacte haute densit\u00e9",
+            de: "Kompakte Hochdichte-Ansicht umschalten",
+            zh: "\u5207\u6362\u7d27\u51d1\u9ad8\u5bc6\u5ea6\u89c6\u56fe",
+            ja: "\u30b3\u30f3\u30d1\u30af\u30c8\u9ad8\u5bc6\u5ea6\u30d3\u30e5\u30fc\u306e\u5207\u308a\u66ff\u3048",
+            pt: "Alternar Visualiza\u00e7\u00e3o Compacta de Alta Densidade",
+            ar: "\u062a\u0628\u062f\u064a\u0644 \u0627\u0644\u0639\u0631\u0636 \u0627\u0644\u0645\u0636\u063a\u0648\u0637 \u0639\u0627\u0644\u064a \u0627\u0644\u0643\u062b\u0627\u0641\u0629",
+            hi: "\u0915\u0949\u092e\u094d\u092a\u0948\u0915\u094d\u091f \u0909\u091a\u094d\u091a-\u0918\u0928\u0924\u094d\u0935 \u0926\u0943\u0936\u094d\u092f \u091f\u0949\u0917\u0932 \u0915\u0930\u0947\u0902",
+            ru: "\u041f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0438\u0442\u044c \u043a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u044b\u0439 \u0432\u0438\u0434 \u0432\u044b\u0441\u043e\u043a\u043e\u0439 \u043f\u043b\u043e\u0442\u043d\u043e\u0441\u0442\u0438"
+        },
+        "Toggle Datasets Sidebar": {
+            es: "Alternar Barra Lateral de Conjuntos de Datos",
+            fr: "Basculer la barre lat\u00e9rale des jeux de donn\u00e9es",
+            de: "Datensatz-Seitenleiste umschalten",
+            zh: "\u5207\u6362\u6570\u636e\u96c6\u4fa7\u8fb9\u680f",
+            ja: "\u30c7\u30fc\u30bf\u30bb\u30c3\u30c8\u30b5\u30a4\u30c9\u30d0\u30fc\u306e\u5207\u308a\u66ff\u3048",
+            pt: "Alternar Barra Lateral de Conjuntos de Dados",
+            ar: "\u062a\u0628\u062f\u064a\u0644 \u0627\u0644\u0634\u0631\u064a\u0637 \u0627\u0644\u062c\u0627\u0646\u0628\u064a \u0644\u0645\u062c\u0645\u0648\u0639\u0627\u062a \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a",
+            hi: "\u0921\u0947\u091f\u093e\u0938\u0947\u091f \u0938\u093e\u0907\u0921\u092c\u093e\u0930 \u091f\u0949\u0917\u0932 \u0915\u0930\u0947\u0902",
+            ru: "\u041f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0438\u0442\u044c \u0431\u043e\u043a\u043e\u0432\u0443\u044e \u043f\u0430\u043d\u0435\u043b\u044c \u043d\u0430\u0431\u043e\u0440\u043e\u0432 \u0434\u0430\u043d\u043d\u044b\u0445"
+        },
+        "Toggle Notes Sidebar": {
+            es: "Alternar Barra Lateral de Notas",
+            fr: "Basculer la barre lat\u00e9rale des notes",
+            de: "Notizen-Seitenleiste umschalten",
+            zh: "\u5207\u6362\u4fbf\u7b7e\u4fa7\u8fb9\u680f",
+            ja: "\u30ce\u30fc\u30c8\u30b5\u30a4\u30c9\u30d0\u30fc\u306e\u5207\u308a\u66ff\u3048",
+            pt: "Alternar Barra Lateral de Notas",
+            ar: "\u062a\u0628\u062f\u064a\u0644 \u0627\u0644\u0634\u0631\u064a\u0637 \u0627\u0644\u062c\u0627\u0646\u0628\u064a \u0644\u0644\u0645\u0644\u0627\u062d\u0638\u0627\u062a",
+            hi: "\u0928\u094b\u091f\u094d\u0938 \u0938\u093e\u0907\u0921\u092c\u093e\u0930 \u091f\u0949\u0917\u0932 \u0915\u0930\u0947\u0902",
+            ru: "\u041f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0438\u0442\u044c \u0431\u043e\u043a\u043e\u0432\u0443\u044e \u043f\u0430\u043d\u0435\u043b\u044c \u0437\u0430\u043c\u0435\u0442\u043e\u043a"
+        },
+        "Reload Telemetry & Database State": {
+            es: "Recargar Telemetr\u00eda y Estado de Base de Datos",
+            fr: "Recharger la t\u00e9l\u00e9m\u00e9trie et la base de donn\u00e9es",
+            de: "Telemetrie- & Datenbankstatus neu laden",
+            zh: "\u91cd\u65b0\u52a0\u8f7d\u9065\u6d4b\u548c\u6570\u636e\u5e93\u72b6\u6001",
+            ja: "\u30c6\u30ec\u30e1\u30c8\u30ea\u3068\u30c7\u30fc\u30bf\u30d9\u30fc\u30b9\u72b6\u614b\u3092\u518d\u8aad\u307f\u8fbc\u307f",
+            pt: "Recarregar Telemetria e Estado do Banco de Dados",
+            ar: "\u0625\u0639\u0627\u062f\u0629 \u062a\u062d\u0645\u064a\u0644 \u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0642\u064a\u0627\u0633 \u0648\u062d\u0627\u0644\u0629 \u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a",
+            hi: "\u091f\u0947\u0932\u0940\u092e\u0947\u091f\u094d\u0930\u0940 \u0914\u0930 \u0921\u0947\u091f\u093e\u092c\u0947\u0938 \u0938\u094d\u0925\u093f\u0924\u093f \u092a\u0941\u0928\u0903 \u0932\u094b\u0921 \u0915\u0930\u0947\u0902",
+            ru: "\u041f\u0435\u0440\u0435\u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0442\u0435\u043b\u0435\u043c\u0435\u0442\u0440\u0438\u044e \u0438 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435 \u0431\u0430\u0437\u044b \u0434\u0430\u043d\u043d\u044b\u0445"
+        },
+        "Hello! I am your": {
+            es: "\u00a1Hola! Soy su",
+            fr: "Bonjour ! Je suis votre",
+            de: "Hallo! Ich bin Ihr",
+            zh: "\u60a8\u597d\uff01\u6211\u662f\u60a8\u7684",
+            ja: "\u3053\u3093\u306b\u3061\u306f\uff01\u79c1\u306f\u3042\u306a\u305f\u306e",
+            pt: "Ol\u00e1! Eu sou seu",
+            ar: "\u0645\u0631\u062d\u0628\u0627\u064b! \u0623\u0646\u0627",
+            hi: "\u0928\u092e\u0938\u094d\u0924\u0947! \u092e\u0948\u0902 \u0906\u092a\u0915\u093e",
+            ru: "\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439\u0442\u0435! \u042f \u0432\u0430\u0448"
+        },
+        ". I have direct access to your database details, prediction summaries, and retention records. Ask me anything:": {
+            es: ". Tengo acceso directo a los detalles de su base de datos, res\u00famenes de predicci\u00f3n y registros de retenci\u00f3n. Preg\u00fanteme cualquier cosa:",
+            fr: ". J'ai un acc\u00e8s direct aux d\u00e9tails de votre base de donn\u00e9es, aux r\u00e9sum\u00e9s de pr\u00e9diction et aux dossiers de r\u00e9tention. Posez-moi vos questions :",
+            de: ". Ich habe direkten Zugriff auf Ihre Datenbankdetails, Prognosezusammenfassungen und Kundenbindungsaufzeichnungen. Fragen Sie mich alles:",
+            zh: "\u3002\u6211\u53ef\u4ee5\u76f4\u63a5\u8bbf\u95ee\u60a8\u7684\u6570\u636e\u5e93\u8be6\u7ec6\u4fe1\u606f\u3001\u9884\u6d4b\u6458\u8981\u548c\u5ba2\u6237\u7559\u5b58\u8bb0\u5f55\u3002\u8bf7\u968f\u65f6\u63d0\u95ee\uff1a",
+            ja: "\u3002\u30c7\u30fc\u30bf\u30d9\u30fc\u30b9\u306e\u8a73\u7d30\u3001\u4e88\u6e2c\u6982\u8981\u3001\u30ea\u30c6\u30f3\u30b7\u30e7\u30f3\u8a18\u9332\u306b\u76f4\u63a5\u30a2\u30af\u30bb\u30b9\u3067\u304d\u307e\u3059\u3002\u4f55\u3067\u3082\u3054\u8cea\u554f\u304f\u3060\u3055\u3044\uff1a",
+            pt: ". Tenho acesso direto aos detalhes do seu banco de dados, resumos de previs\u00e3o e registros de reten\u00e7\u00e3o. Pergunte-me qualquer coisa:",
+            ar: ". \u0644\u062f\u064a \u0648\u0635\u0648\u0644 \u0645\u0628\u0627\u0634\u0631 \u0625\u0644\u0649 \u062a\u0641\u0627\u0635\u064a\u0644 \u0642\u0627\u0639\u062f\u0629 \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0648\u0645\u0644\u062e\u0635\u0627\u062a \u0627\u0644\u062a\u0646\u0628\u0624 \u0648\u0633\u062c\u0644\u0627\u062a \u0627\u0644\u0627\u062d\u062a\u0641\u0627\u0638. \u0627\u0633\u0623\u0644\u0646\u064a \u0623\u064a \u0634\u064a\u0621:",
+            hi: "\u0964 \u092e\u0947\u0930\u0947 \u092a\u093e\u0938 \u0906\u092a\u0915\u0947 \u0921\u0947\u091f\u093e\u092c\u0947\u0938 \u0935\u093f\u0935\u0930\u0923, \u092d\u0935\u093f\u0937\u094d\u092f\u0935\u093e\u0923\u0940 \u0938\u093e\u0930\u093e\u0902\u0936 \u0914\u0930 \u092a\u094d\u0930\u0924\u093f\u0927\u093e\u0930\u0923 \u0930\u093f\u0915\u0949\u0930\u094d\u0921 \u0924\u0915 \u0938\u0940\u0927\u0940 \u092a\u0939\u0941\u0902\u091a \u0939\u0948\u0964 \u092e\u0941\u091d\u0938\u0947 \u0915\u0941\u091b \u092d\u0940 \u092a\u0942\u091b\u0947\u0902:",
+            ru: "\u3002\u0423 \u043c\u0435\u043d\u044f \u0435\u0441\u0442\u044c \u043f\u0440\u044f\u043c\u043e\u0439 \u0434\u043e\u0441\u0442\u0443\u043f \u043a \u0434\u0430\u043d\u043d\u044b\u043c \u0432\u0430\u0448\u0435\u0439 \u0431\u0430\u0437\u044b \u0434\u0430\u043d\u043d\u044b\u0445, \u0441\u0432\u043e\u0434\u043a\u0430\u043c \u043f\u0440\u043e\u0433\u043d\u043e\u0437\u043e\u0432 \u0438 \u0437\u0430\u043f\u0438\u0441\u044f\u043c \u0443\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u044f. \u0421\u043f\u0440\u0430\u0448\u0438\u0432\u0430\u0439\u0442\u0435 \u043c\u0435\u043d\u044f \u043e \u0447\u0435\u043c \u0443\u0433\u043e\u0434\u043d\u043e:"
+        },
+        "Show top churn risks": {
+            es: "Mostrar mayores riesgos de cancelaci\u00f3n",
+            fr: "Afficher les principaux risques de r\u00e9siliation",
+            de: "H\u00f6chste Abwanderungsrisiken anzeigen",
+            zh: "\u663e\u793a\u4e3b\u8981\u6d41\u5931\u98ce\u9669",
+            ja: "\u6700\u5927\u306e\u89e3\u7d04\u30ea\u30b9\u30af\u3092\u8868\u793a",
+            pt: "Mostrar principais riscos de cancelamento",
+            ar: "\u0625\u0638\u0647\u0627\u0631 \u0623\u0647\u0645 \u0645\u062e\u0627\u0637\u0631 \u0641\u0642\u062f\u0627\u0646 \u0627\u0644\u0639\u0645\u0644\u0627\u0621",
+            hi: "\u0936\u0940\u0930\u094d\u0937 \u092e\u0902\u0925\u0928 \u091c\u094b\u0916\u093f\u092e \u0926\u093f\u0916\u093e\u090f\u0902",
+            ru: "\u041f\u043e\u043a\u0430\u0437\u0430\u0442\u044c \u0433\u043b\u0430\u0432\u043d\u044b\u0435 \u0440\u0438\u0441\u043a\u0438 \u043e\u0442\u0442\u043e\u043a\u0430"
+        },
+        "Compare regions by risk": {
+            es: "Comparar regiones por riesgo",
+            fr: "Comparer les r\u00e9gions par risque",
+            de: "Regionen nach Risiko vergleichen",
+            zh: "\u6309\u98ce\u9669\u6bd4\u8f83\u5404\u5730\u533a",
+            ja: "\u5730\u57df\u5225\u30ea\u30b9\u30af\u3092\u6bd4\u8f03",
+            pt: "Comparar regi\u00f5es por risco",
+            ar: "\u0645\u0642\u0627\u0631\u0646\u0629 \u0627\u0644\u0645\u0646\u0627\u0637\u0642 \u062d\u0633\u0628 \u0627\u0644\u0645\u062e\u0627\u0637\u0631",
+            hi: "\u091c\u094b\u0916\u093f\u092e \u0915\u0947 \u0905\u0928\u0941\u0938\u093e\u0930 \u0915\u094d\u0937\u0947\u0924\u094d\u0930\u094b\u0902 \u0915\u0940 \u0924\u0941\u0932\u0928\u093e \u0915\u0930\u0947\u0902",
+            ru: "\u0421\u0440\u0430\u0432\u043d\u0438\u0442\u044c \u0440\u0435\u0433\u0438\u043e\u043d\u044b \u043f\u043e \u0440\u0438\u0441\u043a\u0443"
+        },
+        "Retention advice": {
+            es: "Consejos de retenci\u00f3n",
+            fr: "Conseils de r\u00e9tention",
+            de: "Kundenbindungsberatung",
+            zh: "\u7559\u5b58\u5efa\u8bae",
+            ja: "\u30ea\u30c6\u30f3\u30b7\u30e7\u30f3\u30a2\u30c9\u30d0\u30a4\u30b9",
+            pt: "Conselhos de reten\u00e7\u00e3o",
+            ar: "\u0646\u0635\u0627\u0626\u062d \u0627\u0644\u0627\u062d\u062a\u0641\u0627\u0638 \u0628\u0627\u0644\u0639\u0645\u0644\u0627\u0621",
+            hi: "\u092a\u094d\u0930\u0924\u093f\u0927\u093e\u0930\u0923 \u0938\u0932\u093e\u0939",
+            ru: "\u0421\u043e\u0432\u0435\u0442\u044b \u043f\u043e \u0443\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u044e"
+        },
+        "Laser Pointer": {
+            es: "Puntero L\u00e1ser",
+            fr: "Pointeur laser",
+            de: "Laserpointer",
+            zh: "\u6fc0\u5149\u7b14",
+            ja: "\u30ec\u30fc\u30b6\u30fc\u30dd\u30a4\u30f3\u30bf\u30fc",
+            pt: "Apontador Laser",
+            ar: "\u0645\u0624\u0634\u0631 \u0644\u064a\u0632\u0631",
+            hi: "\u0932\u0947\u091c\u0930 \u092a\u0949\u0907\u0902\u091f\u0930",
+            ru: "\u041b\u0430\u0437\u0435\u0440\u043d\u0430\u044f \u0443\u043a\u0430\u0437\u043a\u0430"
+        },
+        "Auto Play": {
+            es: "Reproducci\u00f3n Autom\u00e1tica",
+            fr: "Lecture automatique",
+            de: "Automatische Wiedergabe",
+            zh: "\u81ea\u52a8\u64ad\u653e",
+            ja: "\u81ea\u52d5\u518d\u751f",
+            pt: "Reprodu\u00e7\u00e3o Autom\u00e1tica",
+            ar: "\u062a\u0634\u063a\u064a\u0644 \u062a\u0644\u0642\u0627\u0626\u064a",
+            hi: "\u0911\u091f\u094b \u092a\u094d\u0932\u0947",
+            ru: "\u0410\u0432\u0442\u043e\u0432\u043e\u0441\u043f\u0440\u043e\u0438\u0437\u0432\u0435\u0434\u0435\u043d\u0438\u0435"
+        },
+        "Exit (ESC)": {
+            es: "Salir (ESC)",
+            fr: "Quitter (\u00c9chap)",
+            de: "Beenden (ESC)",
+            zh: "\u9000\u51fa (ESC)",
+            ja: "\u7d42\u4e86 (ESC)",
+            pt: "Sair (ESC)",
+            ar: "\u062e\u0631\u0648\u062c (ESC)",
+            hi: "\u092c\u093e\u0939\u0930 \u0928\u093f\u0915\u0932\u0947\u0902 (ESC)",
+            ru: "\u0412\u044b\u0445\u043e\u0434 (ESC)"
+        },
+        "\u2039 Previous": {
+            es: "\u2039 Anterior",
+            fr: "\u2039 Pr\u00e9c\u00e9dent",
+            de: "\u2039 Zur\u00fcck",
+            zh: "\u2039 \u4e0a\u4e00\u4e2a",
+            ja: "\u2039 \u524d\u3078",
+            pt: "\u2039 Anterior",
+            ar: "\u2039 \u0627\u0644\u0633\u0627\u0628\u0642",
+            hi: "\u2039 \u092a\u093f\u091b\u0932\u093e",
+            ru: "\u2039 \u041f\u0440\u0435\u0434\u044b\u0434\u0443\u0449\u0438\u0439"
+        },
+        "Next \u203a": {
+            es: "Siguiente \u203a",
+            fr: "Suivant \u203a",
+            de: "Weiter \u203a",
+            zh: "\u4e0b\u4e00\u4e2a \u203a",
+            ja: "\u6b21\u3078 \u203a",
+            pt: "Pr\u00f3ximo \u203a",
+            ar: "\u0627\u0644\u062a\u0627\u0644\u064a \u203a",
+            hi: "\u0905\u0917\u0932\u093e \u203a",
+            ru: "\u0421\u043b\u0435\u0434\u0443\u044e\u0449\u0438\u0439 \u203a"
+        },
+        "Card 1 of 5": {
+            es: "Tarjeta 1 de 5",
+            fr: "Fiche 1 sur 5",
+            de: "Karte 1 von 5",
+            zh: "\u5361\u7247 1 / 5",
+            ja: "\u30ab\u30fc\u30c9 1 / 5",
+            pt: "Cart\u00e3o 1 de 5",
+            ar: "\u0628\u0637\u0627\u0642\u0629 1 \u0645\u0646 5",
+            hi: "\u0915\u093e\u0930\u094d\u0921 1 / 5",
+            ru: "\u0421\u043b\u0430\u0439\u0434 1 \u0438\u0437 5"
+        }
+    ,
+        "Target:": {
+            es: "Objetivo:", fr: "Cible :", de: "Ziel:", zh: "目标：", ja: "目標：",
+            pt: "Alvo:", ar: "الهدف:", hi: "लक्ष्य:", ru: "Цель:"
+        },
+        "★ Target:": {
+            es: "★ Objetivo:", fr: "★ Cible :", de: "★ Ziel:", zh: "★ 目标：", ja: "★ 目標：",
+            pt: "★ Alvo:", ar: "★ الهدف:", hi: "★ लक्ष्य:", ru: "★ Цель:"
+        },
+    };
 
     // Fast lowercase and clean lookup index
     const LOWER_LOOKUP = {};
@@ -14444,9 +15092,10 @@
     if (!TRANSLATIONS[currentLang]) currentLang = 'en';
 
     function getTranslationForText(text, lang) {
-        if (!text || lang === 'en') return text;
+        if (!text || typeof text !== 'string') return null;
+        if (lang === 'en') return text;
         const clean = text.trim();
-        if (!clean) return text;
+        if (!clean || clean.length < 2) return null;
 
         // 1. Exact phrase in PHRASE_DICTIONARY
         if (PHRASE_DICTIONARY[clean] && PHRASE_DICTIONARY[clean][lang]) {
@@ -14487,12 +15136,55 @@
             }
         }
 
-        // 7. Reverse key lookup from TRANSLATIONS.en
+        // 7. Number prefix pattern: e.g. "1. Ingestion & Telemetry" -> "1. " + trans("Ingestion & Telemetry")
+        const numPrefixMatch = clean.match(/^(\d+[\.\)]\s+)(.+)$/);
+        if (numPrefixMatch) {
+            const prefix = numPrefixMatch[1];
+            const rest = numPrefixMatch[2].trim();
+            const restTrans = getTranslationForText(rest, lang);
+            if (restTrans && restTrans !== rest) {
+                return prefix + restTrans;
+            }
+        }
+
+        // 8. Count suffix pattern: e.g. "8 suites" -> "8 " + trans("suites"), "10 languages" -> "10 " + trans("languages")
+        const countMatch = clean.match(/^(\d+)\s+([a-zA-Z]+.*)$/);
+        if (countMatch) {
+            const countNum = countMatch[1];
+            const unit = countMatch[2].trim();
+            const unitTrans = getTranslationForText(unit, lang);
+            if (unitTrans && unitTrans !== unit) {
+                return countNum + ' ' + unitTrans;
+            }
+        }
+
+        // 9. Colon label pattern: e.g. "Currency: USD" or "Currency:"
+        const colonMatch = clean.match(/^([a-zA-Z\s]+):\s*(.*)$/);
+        if (colonMatch) {
+            const label = colonMatch[1].trim();
+            const val = colonMatch[2].trim();
+            const labelTrans = getTranslationForText(label, lang);
+            if (labelTrans && labelTrans !== label) {
+                return labelTrans + (val ? ': ' + val : ':');
+            }
+        }
+
+        // 10. Reverse key lookup from TRANSLATIONS.en
         const enDict = TRANSLATIONS['en'];
         for (const [k, enVal] of Object.entries(enDict)) {
             if (enVal && enVal.toLowerCase().trim() === lower) {
                 if (TRANSLATIONS[lang] && TRANSLATIONS[lang][k]) {
                     return TRANSLATIONS[lang][k];
+                }
+            }
+        }
+
+        // 11. Reverse phrase lookup (if user switched from another language into this language)
+        for (const [enKey, transObj] of Object.entries(PHRASE_DICTIONARY)) {
+            for (const [otherLang, otherVal] of Object.entries(transObj)) {
+                if (otherVal && otherVal.toLowerCase().trim() === lower) {
+                    if (transObj[lang]) return transObj[lang];
+                    return enKey;
                 }
             }
         }
@@ -14616,34 +15308,39 @@
             }
         });
 
-        // 5. Universal TreeWalker covering ALL DOM elements (divs, headings, spans, buttons, table cells, lists)
-        try {
-            const walker = document.createTreeWalker(
-                root,
-                NodeFilter.SHOW_TEXT,
-                {
-                    acceptNode: function(node) {
-                        if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-                        const parent = node.parentElement;
-                        if (!parent) return NodeFilter.FILTER_REJECT;
-                        const tag = parent.tagName.toUpperCase();
-                        if (['SCRIPT', 'STYLE', 'CODE', 'PRE', 'SVG', 'NOSCRIPT'].includes(tag)) {
-                            return NodeFilter.FILTER_REJECT;
-                        }
-                        if (parent.closest('.monaco-editor, code, pre, .logoSubLabel, #brandTitle, #overviewCurrencySelect')) {
-                            return NodeFilter.FILTER_REJECT;
-                        }
-                        return NodeFilter.FILTER_ACCEPT;
-                    }
-                }
-            );
-
-            let textNode;
-            while ((textNode = walker.nextNode())) {
-                translateTextNode(textNode, lang);
+        // 5. Universal Fail-Safe Recursive Node Walker (100% full interface DOM coverage)
+        function walkTextNodes(node, callback) {
+            if (!node) return;
+            const type = node.nodeType;
+            if (type === Node.TEXT_NODE) {
+                callback(node);
+                return;
             }
+            if (type !== Node.ELEMENT_NODE) return;
+
+            const tag = (node.tagName || '').toUpperCase();
+            if (['SCRIPT', 'STYLE', 'CODE', 'PRE', 'SVG', 'NOSCRIPT', 'CANVAS'].includes(tag)) return;
+            if (node.classList) {
+                if (node.classList.contains('monaco-editor') || node.classList.contains('logoSubLabel') || node.classList.contains('header-lang-list')) {
+                    return;
+                }
+            }
+            if (node.id === 'brandTitle' || node.id === 'overviewCurrencySelect') return;
+
+            let child = node.firstChild;
+            while (child) {
+                const next = child.nextSibling;
+                walkTextNodes(child, callback);
+                child = next;
+            }
+        }
+
+        try {
+            walkTextNodes(root, (textNode) => {
+                translateTextNode(textNode, lang);
+            });
         } catch (err) {
-            console.warn('[Qiplo i18n] TreeWalker traversal warning:', err);
+            console.warn('[Qiplo i18n] Node traversal warning:', err);
         }
 
         // 6. Update Header & Dropdown Language UI Elements
