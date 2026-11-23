@@ -10991,3 +10991,165 @@ body.dark-theme .customersTableWrap {
 .simResultCard:hover {
     transform: translateY(-3px) scale(1.002) !important;
 }
+
+/* ==========================================================================
+   INTERACTIVE 3-DOT CARD MENUS & LIVE FILTER DROPDOWNS
+   Fully clickable, real-time data-driven actions across all dashboard elements
+   ========================================================================== */
+
+.saasMoreWrapper,
+.filterPillWrapper {
+    position: relative !important;
+    display: inline-block !important;
+}
+
+/* Card 3-Dot Dropdown Menus */
+.saasCardMenuDropdown {
+    position: absolute !important;
+    top: calc(100% + 8px) !important;
+    right: 0 !important;
+    width: 250px !important;
+    border-radius: 18px !important;
+    padding: 6px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    z-index: 1500 !important;
+    animation: pureTabReveal 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+body.light-theme .saasCardMenuDropdown {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+}
+body.dark-theme .saasCardMenuDropdown {
+    background: #141724 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 16px 40px -4px rgba(0, 0, 0, 0.65) !important;
+}
+.saasCardMenuDropdown.hidden {
+    display: none !important;
+}
+
+.cardMenuHead {
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    color: var(--muted) !important;
+    padding: 8px 12px 4px !important;
+    font-family: var(--font-heading), sans-serif !important;
+}
+
+.cardMenuItem {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px 12px !important;
+    border-radius: 12px !important;
+    font-size: 0.8rem !important;
+    font-weight: 500 !important;
+    color: var(--text) !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    text-align: left !important;
+    transition: all 0.14s ease !important;
+    font-family: var(--font-ui), sans-serif !important;
+    line-height: 1.2 !important;
+}
+.cardMenuItem:hover {
+    background: var(--surface-2) !important;
+    color: #3b82f6 !important;
+}
+.cardMenuItem i,
+.cardMenuItem svg {
+    width: 14px !important;
+    height: 14px !important;
+    color: var(--muted) !important;
+    stroke-width: 2px !important;
+    flex-shrink: 0 !important;
+}
+.cardMenuItem:hover i,
+.cardMenuItem:hover svg {
+    color: #3b82f6 !important;
+}
+
+/* Filter Pill Dropdown Menus */
+.filterDropdownMenu {
+    position: absolute !important;
+    top: calc(100% + 8px) !important;
+    left: 0 !important;
+    width: 260px !important;
+    border-radius: 18px !important;
+    padding: 6px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    z-index: 1500 !important;
+    animation: pureTabReveal 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+body.light-theme .filterDropdownMenu {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+}
+body.dark-theme .filterDropdownMenu {
+    background: #141724 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 16px 40px -4px rgba(0, 0, 0, 0.65) !important;
+}
+.filterDropdownMenu.hidden {
+    display: none !important;
+}
+
+.filterDropdownHead {
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    color: var(--muted) !important;
+    padding: 8px 12px 4px !important;
+    font-family: var(--font-heading), sans-serif !important;
+}
+
+.filterDropdownItem {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px 12px !important;
+    border-radius: 12px !important;
+    font-size: 0.8rem !important;
+    font-weight: 500 !important;
+    color: var(--text) !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    text-align: left !important;
+    transition: all 0.14s ease !important;
+    font-family: var(--font-ui), sans-serif !important;
+    line-height: 1.2 !important;
+}
+.filterDropdownItem:hover {
+    background: var(--surface-2) !important;
+    color: #3b82f6 !important;
+}
+.filterDropdownItem.active {
+    background: rgba(59, 130, 246, 0.12) !important;
+    color: #3b82f6 !important;
+    font-weight: 600 !important;
+}
+.filterDropdownItem i,
+.filterDropdownItem svg {
+    width: 14px !important;
+    height: 14px !important;
+    color: var(--muted) !important;
+    stroke-width: 2px !important;
+    flex-shrink: 0 !important;
+}
+.filterDropdownItem.active i,
+.filterDropdownItem.active svg {
+    color: #3b82f6 !important;
+}

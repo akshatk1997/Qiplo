@@ -33,6 +33,39 @@
         if (window.lucide && typeof window.lucide.createIcons === 'function') {
             window.lucide.createIcons();
         }
+        // Immediate Fail-Safe Global Dropdown Handlers
+        window.toggleHeaderLangMenu = function(e) {
+            if (e && e.stopPropagation) e.stopPropagation();
+            const d = document.getElementById('headerLangDropdown');
+            const b = document.getElementById('headerLangBtn');
+            if (!d) return;
+            const isHidden = d.classList.contains('hidden');
+            if (typeof window.closeHeaderMoreMenu === 'function') window.closeHeaderMoreMenu();
+            d.classList.toggle('hidden', !isHidden);
+            if (b) b.classList.toggle('active', isHidden);
+        };
+        window.closeHeaderLangMenu = function() {
+            const d = document.getElementById('headerLangDropdown');
+            const b = document.getElementById('headerLangBtn');
+            if (d) d.classList.add('hidden');
+            if (b) b.classList.remove('active');
+        };
+        window.toggleHeaderMoreMenu = function(e) {
+            if (e && e.stopPropagation) e.stopPropagation();
+            const d = document.getElementById('mobileMenuDropdown');
+            const b = document.getElementById('mobileMenuBtn');
+            if (!d) return;
+            const isVis = d.classList.contains('visible');
+            if (typeof window.closeHeaderLangMenu === 'function') window.closeHeaderLangMenu();
+            d.classList.toggle('visible', !isVis);
+            if (b) b.classList.toggle('active', !isVis);
+        };
+        window.closeHeaderMoreMenu = function() {
+            const d = document.getElementById('mobileMenuDropdown');
+            const b = document.getElementById('mobileMenuBtn');
+            if (d) d.classList.remove('visible');
+            if (b) b.classList.remove('active');
+        };
     </script>
 </head>
 <body class="dark-theme">
@@ -153,7 +186,7 @@
 
             <!-- Master 3-Dot All Features & Actions Menu -->
             <div class="header-actions-menu mobile-actions-menu" id="headerMoreMenuContainer">
-                <button id="mobileMenuBtn" class="ghostBtn mobile-menu-btn iconOnlyBtn header-more-btn" type="button" aria-label="All Platform Features & Actions" title="All Platform Features & Actions (More...)">
+                <button id="mobileMenuBtn" class="ghostBtn mobile-menu-btn iconOnlyBtn header-more-btn" onclick="toggleHeaderMoreMenu(event)" type="button" aria-label="All Platform Features & Actions" title="All Platform Features & Actions (More...)">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" class="lucide-icon" role="img" aria-hidden="true">
                         <circle cx="12" cy="12" r="2.2"></circle>
                         <circle cx="19" cy="12" r="2.2"></circle>
@@ -784,23 +817,89 @@
                     </div>
                     <div class="executiveFilterToolbar">
                         <div class="filterPillGroup">
-                            <button type="button" class="filterPillBtn" id="overviewDateRangeBtn" title="Current Telemetry Range">
-                                <i data-lucide="calendar" class="lucide-icon" style="width: 13px; height: 13px;"></i>
-                                <span data-i18n="date_range_current">Jan 01 - Dec 31</span>
-                                <i data-lucide="chevron-down" class="lucide-icon" style="width: 12px; height: 12px;"></i>
-                            </button>
+                            <!-- Date Range Filter Pill & Dropdown -->
+                            <div class="filterPillWrapper" style="position: relative;">
+                                <button type="button" class="filterPillBtn" id="overviewDateRangeBtn" onclick="toggleFilterDropdown(event, 'dateRangeDropdown')" title="Current Telemetry Range">
+                                    <i data-lucide="calendar" class="lucide-icon" style="width: 13px; height: 13px;"></i>
+                                    <span id="dateRangeBtnText" data-i18n="date_range_current">Jan 01 - Dec 31</span>
+                                    <i data-lucide="chevron-down" class="lucide-icon" style="width: 12px; height: 12px;"></i>
+                                </button>
+                                <div class="filterDropdownMenu hidden" id="dateRangeDropdown">
+                                    <div class="filterDropdownHead">Telemetry Range</div>
+                                    <button type="button" class="filterDropdownItem active" onclick="applyLiveDateFilter('all', 'Jan 01 - Dec 31')">
+                                        <i data-lucide="database" class="lucide-icon"></i>
+                                        <span>All Loaded Records (Full)</span>
+                                    </button>
+                                    <button type="button" class="filterDropdownItem" onclick="applyLiveDateFilter('ytd', 'YTD (2026)')">
+                                        <i data-lucide="calendar" class="lucide-icon"></i>
+                                        <span>Year to Date (2026)</span>
+                                    </button>
+                                    <button type="button" class="filterDropdownItem" onclick="applyLiveDateFilter('90d', 'Last 90 Days')">
+                                        <i data-lucide="clock" class="lucide-icon"></i>
+                                        <span>Last 90 Days (Q3 Telemetry)</span>
+                                    </button>
+                                    <button type="button" class="filterDropdownItem" onclick="applyLiveDateFilter('30d', 'Last 30 Days')">
+                                        <i data-lucide="activity" class="lucide-icon"></i>
+                                        <span>Last 30 Days (Active Retention)</span>
+                                    </button>
+                                    <button type="button" class="filterDropdownItem" onclick="applyLiveDateFilter('7d', 'Last 7 Days')">
+                                        <i data-lucide="zap" class="lucide-icon"></i>
+                                        <span>Last 7 Days (Critical SLA)</span>
+                                    </button>
+                                </div>
+                            </div>
+
                             <span class="filterCompareLabel" data-i18n="compared_to_label">compared to</span>
-                            <button type="button" class="filterPillBtn" id="overviewCompareRangeBtn" title="Comparison Window">
-                                <i data-lucide="calendar" class="lucide-icon" style="width: 13px; height: 13px;"></i>
-                                <span data-i18n="date_range_prior">Previous Period</span>
-                                <i data-lucide="chevron-down" class="lucide-icon" style="width: 12px; height: 12px;"></i>
-                            </button>
+
+                            <!-- Comparison Range Pill & Dropdown -->
+                            <div class="filterPillWrapper" style="position: relative;">
+                                <button type="button" class="filterPillBtn" id="overviewCompareRangeBtn" onclick="toggleFilterDropdown(event, 'compareDropdown')" title="Comparison Window">
+                                    <i data-lucide="calendar" class="lucide-icon" style="width: 13px; height: 13px;"></i>
+                                    <span id="compareRangeBtnText" data-i18n="date_range_prior">Previous Period</span>
+                                    <i data-lucide="chevron-down" class="lucide-icon" style="width: 12px; height: 12px;"></i>
+                                </button>
+                                <div class="filterDropdownMenu hidden" id="compareDropdown">
+                                    <div class="filterDropdownHead">Comparison Window</div>
+                                    <button type="button" class="filterDropdownItem active" onclick="applyLiveComparison('prev', 'Previous Period')">
+                                        <i data-lucide="history" class="lucide-icon"></i>
+                                        <span>Previous Period (Prior 30d)</span>
+                                    </button>
+                                    <button type="button" class="filterDropdownItem" onclick="applyLiveComparison('year', 'Prior Year (2025)')">
+                                        <i data-lucide="trending-up" class="lucide-icon"></i>
+                                        <span>Prior Year Benchmark (2025)</span>
+                                    </button>
+                                    <button type="button" class="filterDropdownItem" onclick="applyLiveComparison('target', 'SLA Baseline Target')">
+                                        <i data-lucide="target" class="lucide-icon"></i>
+                                        <span>Model Target Expectations</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="filterPillGroup">
-                            <button type="button" class="filterPillBtn" id="overviewFreqBtn" title="Aggregation Cadence">
-                                <span data-i18n="freq_daily">Daily</span>
-                                <i data-lucide="chevron-down" class="lucide-icon" style="width: 12px; height: 12px;"></i>
-                            </button>
+                            <!-- Cadence / Frequency Pill & Dropdown -->
+                            <div class="filterPillWrapper" style="position: relative;">
+                                <button type="button" class="filterPillBtn" id="overviewFreqBtn" onclick="toggleFilterDropdown(event, 'freqDropdown')" title="Aggregation Cadence">
+                                    <span id="freqBtnText" data-i18n="freq_daily">Daily</span>
+                                    <i data-lucide="chevron-down" class="lucide-icon" style="width: 12px; height: 12px;"></i>
+                                </button>
+                                <div class="filterDropdownMenu hidden" id="freqDropdown">
+                                    <div class="filterDropdownHead">Aggregation Cadence</div>
+                                    <button type="button" class="filterDropdownItem active" onclick="applyLiveFrequency('daily', 'Daily')">
+                                        <i data-lucide="clock" class="lucide-icon"></i>
+                                        <span>Daily (Real-time Stream)</span>
+                                    </button>
+                                    <button type="button" class="filterDropdownItem" onclick="applyLiveFrequency('weekly', 'Weekly')">
+                                        <i data-lucide="calendar" class="lucide-icon"></i>
+                                        <span>Weekly (Sprint Aggregates)</span>
+                                    </button>
+                                    <button type="button" class="filterDropdownItem" onclick="applyLiveFrequency('monthly', 'Monthly')">
+                                        <i data-lucide="layers" class="lucide-icon"></i>
+                                        <span>Monthly (Executive Rollup)</span>
+                                    </button>
+                                </div>
+                            </div>
+
                             <button type="button" class="filterPillBtn filterPillBtnPrimary" id="overviewAddFilterBtn" onclick="toggleSourcesSidebar()" title="Upload or configure dataset filters">
                                 <i data-lucide="plus" class="lucide-icon" style="width: 13px; height: 13px;"></i>
                                 <span data-i18n="btn_add_filter">Add Filter</span>
@@ -819,9 +918,30 @@
                                 <div class="saasCardTitleRow">
                                     <h3 class="saasCardTitle" data-i18n="funnel_title">Retention Risk & Attrition Pipeline</h3>
                                 </div>
-                                <button type="button" class="saasMoreBtn" aria-label="Card Options" title="Card Options">
-                                    <i data-lucide="more-horizontal" class="lucide-icon"></i>
-                                </button>
+                                <div class="saasMoreWrapper" style="position: relative;">
+                                    <button type="button" class="saasMoreBtn" onclick="toggleCardMenu(event, 'heroCardMenu')" aria-label="Pipeline Options" title="Card Options">
+                                        <i data-lucide="more-horizontal" class="lucide-icon"></i>
+                                    </button>
+                                    <div class="saasCardMenuDropdown hidden" id="heroCardMenu">
+                                        <div class="cardMenuHead">Funnel Intelligence</div>
+                                        <button type="button" class="cardMenuItem" onclick="exportCardData('funnel')">
+                                            <i data-lucide="download" class="lucide-icon"></i>
+                                            <span>Export Funnel Data (.CSV)</span>
+                                        </button>
+                                        <button type="button" class="cardMenuItem" onclick="askCopilotCard('funnel')">
+                                            <i data-lucide="sparkles" class="lucide-icon"></i>
+                                            <span>Analyze Attrition with AI</span>
+                                        </button>
+                                        <button type="button" class="cardMenuItem" onclick="switchTab('specials')">
+                                            <i data-lucide="layers" class="lucide-icon"></i>
+                                            <span>View Deep Module Telemetry</span>
+                                        </button>
+                                        <button type="button" class="cardMenuItem" onclick="recalculateLivePipeline()">
+                                            <i data-lucide="refresh-cw" class="lucide-icon"></i>
+                                            <span>Recalculate Pipeline</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Stepped 3D Glassmorphic Funnel Visualization -->
@@ -903,9 +1023,30 @@
                             <div class="saasMetricCard saasRetentionCard">
                                 <div class="saasCardHead">
                                     <h4 class="saasCardTitle" data-i18n="card_retention_title">Retention</h4>
-                                    <button type="button" class="saasMoreBtn" aria-label="Card Options" title="Options">
-                                        <i data-lucide="more-horizontal" class="lucide-icon"></i>
-                                    </button>
+                                    <div class="saasMoreWrapper" style="position: relative;">
+                                        <button type="button" class="saasMoreBtn" onclick="toggleCardMenu(event, 'retentionCardMenu')" aria-label="Retention Options" title="Options">
+                                            <i data-lucide="more-horizontal" class="lucide-icon"></i>
+                                        </button>
+                                        <div class="saasCardMenuDropdown hidden" id="retentionCardMenu">
+                                            <div class="cardMenuHead">Retention Actions</div>
+                                            <button type="button" class="cardMenuItem" onclick="openCohorts()">
+                                                <i data-lucide="calendar" class="lucide-icon"></i>
+                                                <span>Open Retention Cohorts</span>
+                                            </button>
+                                            <button type="button" class="cardMenuItem" onclick="exportCardData('retention')">
+                                                <i data-lucide="download" class="lucide-icon"></i>
+                                                <span>Export Retention Points (.CSV)</span>
+                                            </button>
+                                            <button type="button" class="cardMenuItem" onclick="simulateLevers()">
+                                                <i data-lucide="flask-conical" class="lucide-icon"></i>
+                                                <span>Simulate Retention Interventions</span>
+                                            </button>
+                                            <button type="button" class="cardMenuItem" onclick="askCopilotCard('retention')">
+                                                <i data-lucide="sparkles" class="lucide-icon"></i>
+                                                <span>Ask AI: Why is Retention at 42%?</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="retentionChartBody">
                                     <div class="retentionPinBadge" id="retentionPinBadge">42%</div>
@@ -943,9 +1084,30 @@
                                 <div class="saasMetricCard saasSparkCard">
                                     <div class="saasCardHead">
                                         <h4 class="saasCardTitle" data-i18n="card_predictions_title">Model Inferences</h4>
-                                        <button type="button" class="saasMoreBtn" aria-label="Card Options" title="Options">
-                                            <i data-lucide="more-horizontal" class="lucide-icon"></i>
-                                        </button>
+                                        <div class="saasMoreWrapper" style="position: relative;">
+                                            <button type="button" class="saasMoreBtn" onclick="toggleCardMenu(event, 'inferencesCardMenu')" aria-label="Inference Options" title="Options">
+                                                <i data-lucide="more-horizontal" class="lucide-icon"></i>
+                                            </button>
+                                            <div class="saasCardMenuDropdown hidden" id="inferencesCardMenu">
+                                                <div class="cardMenuHead">Model Telemetry</div>
+                                                <button type="button" class="cardMenuItem" onclick="scrollToElement('modelPerformanceCard')">
+                                                    <i data-lucide="gauge" class="lucide-icon"></i>
+                                                    <span>View Accuracy, Recall & AUC</span>
+                                                </button>
+                                                <button type="button" class="cardMenuItem" onclick="scrollToElement('importanceChart')">
+                                                    <i data-lucide="bar-chart-2" class="lucide-icon"></i>
+                                                    <span>Inspect SHAP Feature Weights</span>
+                                                </button>
+                                                <button type="button" class="cardMenuItem" onclick="exportCardData('inferences')">
+                                                    <i data-lucide="download" class="lucide-icon"></i>
+                                                    <span>Export Scored Probabilities (.CSV)</span>
+                                                </button>
+                                                <button type="button" class="cardMenuItem" onclick="retrainModelLive()">
+                                                    <i data-lucide="cpu" class="lucide-icon"></i>
+                                                    <span>Retrain Prediction Engine</span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="sparkCardContent">
                                         <div class="sparkCardLeft">
@@ -974,9 +1136,30 @@
                                 <div class="saasMetricCard saasSparkCard">
                                     <div class="saasCardHead">
                                         <h4 class="saasCardTitle" data-i18n="card_customers_title">At-Risk Accounts</h4>
-                                        <button type="button" class="saasMoreBtn" aria-label="Card Options" title="Options">
-                                            <i data-lucide="more-horizontal" class="lucide-icon"></i>
-                                        </button>
+                                        <div class="saasMoreWrapper" style="position: relative;">
+                                            <button type="button" class="saasMoreBtn" onclick="toggleCardMenu(event, 'customersCardMenu')" aria-label="Customer Options" title="Options">
+                                                <i data-lucide="more-horizontal" class="lucide-icon"></i>
+                                            </button>
+                                            <div class="saasCardMenuDropdown hidden" id="customersCardMenu">
+                                                <div class="cardMenuHead">Customer Actions</div>
+                                                <button type="button" class="cardMenuItem" onclick="triageHighRisk()">
+                                                    <i data-lucide="alert-triangle" class="lucide-icon"></i>
+                                                    <span>Triage High-Risk Accounts (SLA)</span>
+                                                </button>
+                                                <button type="button" class="cardMenuItem" onclick="exportCardData('customers')">
+                                                    <i data-lucide="download" class="lucide-icon"></i>
+                                                    <span>Export At-Risk Account List (.CSV)</span>
+                                                </button>
+                                                <button type="button" class="cardMenuItem" onclick="triggerAlertModal()">
+                                                    <i data-lucide="bell" class="lucide-icon"></i>
+                                                    <span>Configure SLA Alert Webhooks</span>
+                                                </button>
+                                                <button type="button" class="cardMenuItem" onclick="generatePitchDeckLive()">
+                                                    <i data-lucide="presentation" class="lucide-icon"></i>
+                                                    <span>Generate Retention Pitch Deck</span>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="sparkCardContent">
                                         <div class="sparkCardLeft">
@@ -1010,9 +1193,30 @@
                         <div class="saasMetricCard saasVolumeCard">
                             <div class="saasCardHead">
                                 <h4 class="saasCardTitle" data-i18n="gross_arr_title">Gross ARR at Risk</h4>
-                                <button type="button" class="saasMoreBtn" aria-label="Card Options" title="Options">
-                                    <i data-lucide="more-horizontal" class="lucide-icon"></i>
-                                </button>
+                                <div class="saasMoreWrapper" style="position: relative;">
+                                    <button type="button" class="saasMoreBtn" onclick="toggleCardMenu(event, 'volumeCardMenu')" aria-label="ARR Options" title="Options">
+                                        <i data-lucide="more-horizontal" class="lucide-icon"></i>
+                                    </button>
+                                    <div class="saasCardMenuDropdown hidden" id="volumeCardMenu">
+                                        <div class="cardMenuHead">Revenue Intelligence</div>
+                                        <button type="button" class="cardMenuItem" onclick="switchTab('business')">
+                                            <i data-lucide="briefcase" class="lucide-icon"></i>
+                                            <span>Open Business Revenue Hub</span>
+                                        </button>
+                                        <button type="button" class="cardMenuItem" onclick="exportCardData('arr')">
+                                            <i data-lucide="download" class="lucide-icon"></i>
+                                            <span>Export ARR Tier Breakdown (.CSV)</span>
+                                        </button>
+                                        <button type="button" class="cardMenuItem" onclick="simulateLevers()">
+                                            <i data-lucide="calculator" class="lucide-icon"></i>
+                                            <span>Calculate Intervention ROI</span>
+                                        </button>
+                                        <button type="button" class="cardMenuItem" onclick="triggerReportModal()">
+                                            <i data-lucide="file-text" class="lucide-icon"></i>
+                                            <span>Generate Executive Report</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="volumeHeroValueRow">
                                 <strong class="volumeBigVal" id="grossArrVal">$41,540</strong>
