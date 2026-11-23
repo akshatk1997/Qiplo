@@ -507,6 +507,161 @@ def generate_heuristic_target(frame: pd.DataFrame) -> pd.Series:
     return pd.Series(binary_labels, dtype=int)
 
 
+def generate_hard_enterprise_dataset(n_samples: int = 250, seed: int = 42) -> pd.DataFrame:
+    """Generate a multi-archetype, challenging enterprise benchmark dataset.
+    Features 5 distinct real-world customer segments:
+    1. Core Loyal Enterprise (low friction, consistent usage, retained)
+    2. High-Velocity Shock Churners (short tenure, tickets, dissatisfaction, churn)
+    3. Silent Disengagement (longer tenure, quiet, usage collapsed, payment delays, churn)
+    4. Resilient Power Users (billing friction, delays, but high usage and CSAT, retained)
+    5. Mid-Market Growth Accounts (non-linear multivariate decision boundary)
+    """
+    rng = np.random.RandomState(seed)
+    records = []
+
+    # Archetype 1: Loyal Core Enterprise (approx 35%)
+    n_loyal = int(n_samples * 0.35)
+    for _ in range(n_loyal):
+        tenure = int(rng.randint(24, 72))
+        charges = round(float(rng.uniform(70.0, 150.0)), 2)
+        tickets = int(rng.choice([0, 1, 2], p=[0.7, 0.25, 0.05]))
+        satisfaction = int(rng.choice([4, 5], p=[0.3, 0.7]))
+        delays = int(rng.choice([0, 1], p=[0.9, 0.1]))
+        usage = round(float(rng.uniform(30.0, 60.0)), 1)
+        complaints = 0
+        contract = str(rng.choice(["One year", "Two year"], p=[0.3, 0.7]))
+        pay_method = str(rng.choice(["Bank transfer (automatic)", "Credit card (automatic)"]))
+        region = str(rng.choice(["North America", "Europe", "Asia-Pacific", "Latin America"]))
+        records.append({
+            "tenure_months": tenure,
+            "monthly_charges": charges,
+            "support_tickets": tickets,
+            "customer_satisfaction_score": satisfaction,
+            "payment_delays": delays,
+            "product_usage": usage,
+            "complaint_count": complaints,
+            "contract_type": contract,
+            "payment_method": pay_method,
+            "region": region,
+            "churned": 0,
+        })
+
+    # Archetype 2: High-Velocity Shock Churners (approx 20%)
+    n_shock = int(n_samples * 0.20)
+    for _ in range(n_shock):
+        tenure = int(rng.randint(1, 6))
+        charges = round(float(rng.uniform(65.0, 120.0)), 2)
+        tickets = int(rng.randint(3, 7))
+        satisfaction = int(rng.choice([1, 2], p=[0.75, 0.25]))
+        delays = int(rng.randint(2, 6))
+        usage = round(float(rng.uniform(3.0, 14.0)), 1)
+        complaints = int(rng.randint(1, 4))
+        contract = "Month-to-month"
+        pay_method = str(rng.choice(["Electronic check", "Mailed check"]))
+        region = str(rng.choice(["North America", "Europe", "Asia-Pacific", "Latin America"]))
+        records.append({
+            "tenure_months": tenure,
+            "monthly_charges": charges,
+            "support_tickets": tickets,
+            "customer_satisfaction_score": satisfaction,
+            "payment_delays": delays,
+            "product_usage": usage,
+            "complaint_count": complaints,
+            "contract_type": contract,
+            "payment_method": pay_method,
+            "region": region,
+            "churned": 1,
+        })
+
+    # Archetype 3: Silent Disengagement / Hard Churners (approx 15%)
+    n_silent = int(n_samples * 0.15)
+    for _ in range(n_silent):
+        tenure = int(rng.randint(18, 42))
+        charges = round(float(rng.uniform(80.0, 130.0)), 2)
+        tickets = int(rng.choice([0, 1], p=[0.8, 0.2]))
+        satisfaction = int(rng.choice([2, 3], p=[0.6, 0.4]))
+        delays = int(rng.randint(2, 5))
+        usage = round(float(rng.uniform(4.0, 12.0)), 1)
+        complaints = int(rng.choice([0, 1], p=[0.85, 0.15]))
+        contract = str(rng.choice(["Month-to-month", "One year"], p=[0.8, 0.2]))
+        pay_method = str(rng.choice(["Electronic check", "Bank transfer (automatic)"]))
+        region = str(rng.choice(["North America", "Europe", "Asia-Pacific", "Latin America"]))
+        records.append({
+            "tenure_months": tenure,
+            "monthly_charges": charges,
+            "support_tickets": tickets,
+            "customer_satisfaction_score": satisfaction,
+            "payment_delays": delays,
+            "product_usage": usage,
+            "complaint_count": complaints,
+            "contract_type": contract,
+            "payment_method": pay_method,
+            "region": region,
+            "churned": 1,
+        })
+
+    # Archetype 4: Resilient Power Users / High-Dependency Retained (approx 15%)
+    n_resilient = int(n_samples * 0.15)
+    for _ in range(n_resilient):
+        tenure = int(rng.randint(10, 36))
+        charges = round(float(rng.uniform(85.0, 140.0)), 2)
+        tickets = int(rng.randint(1, 3))
+        satisfaction = int(rng.choice([4, 5], p=[0.4, 0.6]))
+        delays = int(rng.randint(2, 4))
+        usage = round(float(rng.uniform(35.0, 58.0)), 1)
+        complaints = int(rng.choice([0, 1], p=[0.7, 0.3]))
+        contract = str(rng.choice(["Month-to-month", "One year", "Two year"], p=[0.4, 0.4, 0.2]))
+        pay_method = str(rng.choice(["Bank transfer (automatic)", "Credit card (automatic)", "Electronic check"]))
+        region = str(rng.choice(["North America", "Europe", "Asia-Pacific", "Latin America"]))
+        records.append({
+            "tenure_months": tenure,
+            "monthly_charges": charges,
+            "support_tickets": tickets,
+            "customer_satisfaction_score": satisfaction,
+            "payment_delays": delays,
+            "product_usage": usage,
+            "complaint_count": complaints,
+            "contract_type": contract,
+            "payment_method": pay_method,
+            "region": region,
+            "churned": 0,
+        })
+
+    # Archetype 5: Borderline / Mid-market Growth accounts (remaining)
+    n_mid = n_samples - len(records)
+    for _ in range(n_mid):
+        tenure = int(rng.randint(8, 28))
+        charges = round(float(rng.uniform(50.0, 95.0)), 2)
+        tickets = int(rng.randint(1, 3))
+        satisfaction = int(rng.choice([3, 4], p=[0.5, 0.5]))
+        delays = int(rng.choice([0, 1, 2], p=[0.6, 0.3, 0.1]))
+        usage = round(float(rng.uniform(16.0, 32.0)), 1)
+        complaints = int(rng.choice([0, 1], p=[0.8, 0.2]))
+        contract = str(rng.choice(["Month-to-month", "One year"], p=[0.6, 0.4]))
+        pay_method = str(rng.choice(["Credit card (automatic)", "Bank transfer (automatic)"]))
+        region = str(rng.choice(["North America", "Europe", "Asia-Pacific", "Latin America"]))
+        score = (delays * 0.25) + (tickets * 0.15) - (tenure * 0.02) - (usage * 0.015)
+        churn = 1 if score > 0 else 0
+        records.append({
+            "tenure_months": tenure,
+            "monthly_charges": charges,
+            "support_tickets": tickets,
+            "customer_satisfaction_score": satisfaction,
+            "payment_delays": delays,
+            "product_usage": usage,
+            "complaint_count": complaints,
+            "contract_type": contract,
+            "payment_method": pay_method,
+            "region": region,
+            "churned": churn,
+        })
+
+    df = pd.DataFrame(records)
+    df = df.sample(frac=1.0, random_state=seed).reset_index(drop=True)
+    df.insert(0, "customer_id", [f"CUST_{i+1:05d}" for i in range(len(df))])
+    return df
+
+
 def connect_db(db_path: Path | str) -> sqlite3.Connection:
     p = Path(db_path)
     if p.exists():
@@ -556,21 +711,7 @@ def ensure_database(db_path: Path, schema_path: Path, config: dict | None = None
     pred_count = conn.execute("SELECT COUNT(*) FROM churn_predictions").fetchone()[0]
     result = conn.execute("SELECT COUNT(*) FROM customer_churn").fetchone()[0]
     if result == 0:
-        data = {
-            "customer_id": [f"CUST_{i+1:05d}" for i in range(25)],
-            "tenure_months": [12, 24, 36, 4, 8, 48, 1, 15, 60, 3, 10, 20, 30, 40, 50, 6, 18, 32, 44, 55, 9, 21, 33, 45, 11],
-            "monthly_charges": [70.0, 85.0, 100.0, 55.0, 65.0, 110.0, 45.0, 75.0, 95.0, 50.0, 60.0, 80.0, 90.0, 105.0, 115.0, 52.0, 72.0, 88.0, 92.0, 102.0, 58.0, 78.0, 84.0, 98.0, 68.0],
-            "support_tickets": [0, 1, 0, 4, 2, 0, 5, 1, 0, 3, 2, 1, 0, 1, 0, 3, 1, 0, 0, 1, 2, 1, 0, 0, 1],
-            "customer_satisfaction_score": [5, 4, 5, 2, 3, 5, 1, 4, 5, 2, 3, 4, 5, 4, 5, 2, 4, 5, 5, 4, 3, 4, 5, 5, 4],
-            "payment_delays": [0, 1, 0, 4, 2, 0, 7, 1, 0, 3, 2, 1, 0, 2, 0, 5, 1, 0, 0, 1, 3, 1, 0, 0, 2],
-            "product_usage": [15.5, 25.0, 35.5, 8.0, 12.5, 45.0, 5.0, 18.0, 38.5, 6.0, 10.5, 22.0, 32.5, 42.0, 48.5, 7.0, 20.0, 30.5, 40.0, 46.5, 11.0, 23.0, 28.5, 44.0, 14.5],
-            "complaint_count": [0, 0, 0, 2, 1, 0, 3, 0, 0, 1, 1, 0, 0, 1, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-            "contract_type": ["One year", "Two year", "Two year", "Month-to-month", "Month-to-month", "Two year", "Month-to-month", "One year", "Two year", "Month-to-month", "One year", "Two year", "Two year", "Two year", "Two year", "Month-to-month", "One year", "Two year", "Two year", "Two year", "Month-to-month", "One year", "Two year", "Two year", "Month-to-month"],
-            "payment_method": ["Bank transfer (automatic)", "Credit card (automatic)", "Credit card (automatic)", "Electronic check", "Electronic check", "Credit card (automatic)", "Electronic check", "Bank transfer (automatic)", "Credit card (automatic)", "Electronic check", "Bank transfer (automatic)", "Credit card (automatic)", "Bank transfer (automatic)", "Credit card (automatic)", "Credit card (automatic)", "Electronic check", "Bank transfer (automatic)", "Credit card (automatic)", "Credit card (automatic)", "Credit card (automatic)", "Electronic check", "Bank transfer (automatic)", "Credit card (automatic)", "Credit card (automatic)", "Electronic check"],
-            "region": ["North America", "Europe", "Asia-Pacific", "North America", "Europe", "North America", "North America", "Europe", "Asia-Pacific", "North America", "Europe", "North America", "Asia-Pacific", "Europe", "North America", "North America", "Europe", "Asia-Pacific", "North America", "Europe", "North America", "Europe", "Asia-Pacific", "North America", "Europe"],
-            "churned": [0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0]
-        }
-        df = pd.DataFrame(data)
+        df = generate_hard_enterprise_dataset(250)
         df = normalize_customer_frame(df, include_target=True, config=config)
         df["source_id"] = "sample_data"
         ensure_customer_table_columns(conn, config, frame=df)

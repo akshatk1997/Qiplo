@@ -20,11 +20,11 @@ def test_get_database_context_summary_populated(tmp_path):
     schema_path = Path(__file__).resolve().parents[1] / "sql" / "schema.sql"
     
     churn_analysis.ensure_database(db_path, schema_path)
-    # The ensure_database will populate it with 25 records and train
+    # The ensure_database will populate it with 250 benchmark records and train
     
     res = churn_analysis.get_database_context_summary(db_path)
     assert "system database context" in res.lower()
-    assert "total customer records: 25" in res.lower()
+    assert "total customer records: 250" in res.lower()
     assert "highest risk" in res.lower()
 
 
