@@ -378,6 +378,35 @@ function renderSourceMeta() {
     document.querySelectorAll('.stat-high-val').forEach(el => el.textContent = highRisk);
     document.querySelectorAll('.stat-low-val').forEach(el => el.textContent = total - highRisk);
     document.querySelectorAll('.stat-fields-val').forEach(el => el.textContent = fields.length || '—');
+
+    // Synchronize Inspiration Funnel & Metric Cards
+    if (total > 0) {
+        const elFunnelIngested = document.getElementById('funnelValIngested');
+        if (elFunnelIngested) elFunnelIngested.textContent = total > 999 ? (total / 1000).toFixed(1) + 'k' : total;
+        
+        const monitored = Math.round(total * 0.84);
+        const elFunnelMonitored = document.getElementById('funnelValMonitored');
+        if (elFunnelMonitored) elFunnelMonitored.textContent = monitored > 999 ? (monitored / 1000).toFixed(1) + 'k' : monitored;
+
+        const healthy = total - highRisk;
+        const elFunnelHealthy = document.getElementById('funnelValHealthy');
+        if (elFunnelHealthy) elFunnelHealthy.textContent = healthy > 999 ? (healthy / 1000).toFixed(1) + 'k' : healthy;
+        const elTooltipVal = document.getElementById('tooltipVal');
+        if (elTooltipVal) elTooltipVal.textContent = healthy > 999 ? (healthy / 1000).toFixed(1) + 'k' : healthy;
+
+        const elevated = Math.round(highRisk * 0.7);
+        const elFunnelElevated = document.getElementById('funnelValElevated');
+        if (elFunnelElevated) elFunnelElevated.textContent = elevated > 999 ? (elevated / 1000).toFixed(1) + 'k' : elevated;
+
+        const elFunnelCritical = document.getElementById('funnelValCritical');
+        if (elFunnelCritical) elFunnelCritical.textContent = highRisk > 999 ? (highRisk / 1000).toFixed(1) + 'k' : highRisk;
+
+        const elCardInferences = document.getElementById('cardInferencesVal');
+        if (elCardInferences) elCardInferences.textContent = (total * 15) > 999 ? ((total * 15) / 1000).toFixed(0) + 'k' : (total * 15);
+
+        const elCardCustomers = document.getElementById('cardCustomersVal');
+        if (elCardCustomers) elCardCustomers.textContent = highRisk.toLocaleString();
+    }
 }
 
 function renderAiPanel(aiData) {
@@ -8181,3 +8210,43 @@ window.addEventListener('languageChanged', (e) => {
         renderAnalyzedTips(role);
     }
 });
+
+
+// Submit Prompt from Docked AI Exploration Bar inside the Hero Funnel Card
+window.submitHeroPrompt = function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const input = document.getElementById('heroPromptInput');
+    if (!input) return;
+    const q = input.value.trim();
+    if (!q) return;
+
+    if (typeof window.toggleFloatingCopilot === 'function') {
+        window.toggleFloatingCopilot(true);
+    }
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('chatSendBtn');
+    if (chatInput) {
+        chatInput.value = q;
+        if (sendBtn) {
+            setTimeout(() => sendBtn.click(), 120);
+        } else if (typeof handleChatMessage === 'function') {
+            setTimeout(() => handleChatMessage(), 120);
+        }
+    }
+    input.value = '';
+};
+
+// Wire up Enter key on hero prompt input
+if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+        const heroInput = document.getElementById('heroPromptInput');
+        if (heroInput) {
+            heroInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    submitHeroPrompt(e);
+                }
+            });
+        }
+    });
+}

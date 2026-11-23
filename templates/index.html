@@ -763,17 +763,318 @@
             </div>
 
             <div class="studioTabs">
-                <button class="tab active" data-tab="overview" type="button"><i data-lucide="layout-dashboard" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Overview</button>
-                <button class="tab" data-tab="specials" type="button"><i data-lucide="layers" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Specials</button>
-                <button class="tab" data-tab="actions" type="button"><i data-lucide="zap" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Actions</button>
-                <button class="tab" data-tab="customers" type="button"><i data-lucide="users" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Customers</button>
-                <button class="tab" data-tab="business" type="button"><i data-lucide="briefcase" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Business</button>
-                <button class="tab" data-tab="sandbox" type="button"><i data-lucide="flask-conical" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Sandbox</button>
-                <button class="tab" data-tab="presentation" type="button"><i data-lucide="presentation" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Presentation</button>
-                <button class="tab" data-tab="guide" type="button"><i data-lucide="book-marked" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> Guide</button>
+                <button class="tab active" data-tab="overview" type="button"><i data-lucide="layout-dashboard" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> <span data-i18n="tab_overview">Overview</span></button>
+                <button class="tab" data-tab="specials" type="button"><i data-lucide="layers" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> <span data-i18n="tab_specials">Specials</span></button>
+                <button class="tab" data-tab="actions" type="button"><i data-lucide="zap" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> <span data-i18n="tab_actions">Actions</span></button>
+                <button class="tab" data-tab="customers" type="button"><i data-lucide="users" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> <span data-i18n="tab_customers">Customers</span></button>
+                <button class="tab" data-tab="business" type="button"><i data-lucide="briefcase" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> <span data-i18n="tab_business">Business</span></button>
+                <button class="tab" data-tab="sandbox" type="button"><i data-lucide="flask-conical" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> <span data-i18n="tab_sandbox">Sandbox</span></button>
+                <button class="tab" data-tab="presentation" type="button"><i data-lucide="presentation" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> <span data-i18n="tab_presentation">Presentation</span></button>
+                <button class="tab" data-tab="guide" type="button"><i data-lucide="book-marked" class="lucide-icon" style="width: 16px; height: 16px; vertical-align: middle;"></i> <span data-i18n="tab_guide">Guide</span></button>
             </div>
 
             <div class="tabBody" id="tab-overview">
+                <!-- Executive Inspiration Subheader & Filter Toolbar -->
+                <div class="executiveSubheader">
+                    <div class="executiveSubheaderLeft">
+                        <h1 class="executiveViewTitle" data-i18n="overview_title">Overview</h1>
+                        <button type="button" class="viewLinkBtn" title="Copy View URL" aria-label="Copy View URL" onclick="if(navigator.clipboard){navigator.clipboard.writeText(window.location.href);if(window.showToast)showToast('Dashboard URL copied to clipboard');}">
+                            <i data-lucide="link-2" class="lucide-icon" style="width: 14px; height: 14px;"></i>
+                        </button>
+                    </div>
+                    <div class="executiveFilterToolbar">
+                        <div class="filterPillGroup">
+                            <button type="button" class="filterPillBtn" id="overviewDateRangeBtn" title="Current Telemetry Range">
+                                <i data-lucide="calendar" class="lucide-icon" style="width: 13px; height: 13px;"></i>
+                                <span data-i18n="date_range_current">Jan 01 - Dec 31</span>
+                                <i data-lucide="chevron-down" class="lucide-icon" style="width: 12px; height: 12px;"></i>
+                            </button>
+                            <span class="filterCompareLabel" data-i18n="compared_to_label">compared to</span>
+                            <button type="button" class="filterPillBtn" id="overviewCompareRangeBtn" title="Comparison Window">
+                                <i data-lucide="calendar" class="lucide-icon" style="width: 13px; height: 13px;"></i>
+                                <span data-i18n="date_range_prior">Previous Period</span>
+                                <i data-lucide="chevron-down" class="lucide-icon" style="width: 12px; height: 12px;"></i>
+                            </button>
+                        </div>
+                        <div class="filterPillGroup">
+                            <button type="button" class="filterPillBtn" id="overviewFreqBtn" title="Aggregation Cadence">
+                                <span data-i18n="freq_daily">Daily</span>
+                                <i data-lucide="chevron-down" class="lucide-icon" style="width: 12px; height: 12px;"></i>
+                            </button>
+                            <button type="button" class="filterPillBtn filterPillBtnPrimary" id="overviewAddFilterBtn" onclick="toggleSourcesSidebar()" title="Upload or configure dataset filters">
+                                <i data-lucide="plus" class="lucide-icon" style="width: 13px; height: 13px;"></i>
+                                <span data-i18n="btn_add_filter">Add Filter</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Executive Inspiration Grid: Funnel, ARR, Retention Sparklines & Insights -->
+                <div class="inspirationGrid">
+                    <!-- LEFT COLUMN -->
+                    <div class="inspirationColLeft">
+                        <!-- HERO CARD: Retention Risk & Attrition Pipeline -->
+                        <div class="saasHeroCard">
+                            <div class="saasCardHead">
+                                <div class="saasCardTitleRow">
+                                    <h3 class="saasCardTitle" data-i18n="funnel_title">Retention Risk & Attrition Pipeline</h3>
+                                </div>
+                                <button type="button" class="saasMoreBtn" aria-label="Card Options" title="Card Options">
+                                    <i data-lucide="more-horizontal" class="lucide-icon"></i>
+                                </button>
+                            </div>
+
+                            <!-- Stepped 3D Glassmorphic Funnel Visualization -->
+                            <div class="saasFunnelContainer">
+                                <div class="saasFunnelStage stage-1">
+                                    <div class="funnelStageHead">
+                                        <span class="funnelStageLabel" data-i18n="funnel_s1">Ingested Accounts</span>
+                                        <strong class="funnelStageVal" id="funnelValIngested">65.2k</strong>
+                                    </div>
+                                    <div class="funnelBarWrapper">
+                                        <div class="funnelBar bar-1"></div>
+                                    </div>
+                                </div>
+
+                                <div class="saasFunnelStage stage-2">
+                                    <div class="funnelStageHead">
+                                        <span class="funnelStageLabel" data-i18n="funnel_s2">Monitored Base</span>
+                                        <strong class="funnelStageVal" id="funnelValMonitored">54.8k</strong>
+                                    </div>
+                                    <div class="funnelBarWrapper">
+                                        <div class="funnelBar bar-2"></div>
+                                    </div>
+                                </div>
+
+                                <div class="saasFunnelStage stage-3 stage-featured">
+                                    <div class="funnelStageHead">
+                                        <span class="funnelStageLabel" data-i18n="funnel_s3">Healthy Cohorts</span>
+                                        <strong class="funnelStageVal" id="funnelValHealthy">48.6k</strong>
+                                    </div>
+                                    <div class="funnelBarWrapper">
+                                        <div class="funnelBar bar-3">
+                                            <div class="funnelTooltip">
+                                                <span class="tooltipPointer"></span>
+                                                <span class="tooltipText"><span id="tooltipVal">48.6k</span> <span data-i18n="tooltip_accounts">accounts</span> | <span data-i18n="tooltip_retention">Retention</span>: 89% | <span data-i18n="tooltip_dropoff">Drop-off</span>: -11%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="saasFunnelStage stage-4">
+                                    <div class="funnelStageHead">
+                                        <span class="funnelStageLabel" data-i18n="funnel_s4">Elevated Risk</span>
+                                        <strong class="funnelStageVal" id="funnelValElevated">38.3k</strong>
+                                    </div>
+                                    <div class="funnelBarWrapper">
+                                        <div class="funnelBar bar-4"></div>
+                                    </div>
+                                </div>
+
+                                <div class="saasFunnelStage stage-5">
+                                    <div class="funnelStageHead">
+                                        <span class="funnelStageLabel" data-i18n="funnel_s5">Critical SLA Triage</span>
+                                        <strong class="funnelStageVal" id="funnelValCritical">32.9k</strong>
+                                    </div>
+                                    <div class="funnelBarWrapper">
+                                        <div class="funnelBar bar-5"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Integrated AI Copilot Exploration Prompt Bar (Docked inside Hero Card) -->
+                            <div class="saasHeroPromptDock">
+                                <div class="heroPromptPromptRow">
+                                    <i data-lucide="sparkles" class="lucide-icon promptSparkleIcon"></i>
+                                    <span class="promptHeaderPrompt" data-i18n="prompt_dock_header">What would you like to explore next?</span>
+                                </div>
+                                <div class="heroPromptInputRow">
+                                    <input type="text" id="heroPromptInput" class="heroPromptInput" placeholder="I want to know what caused the drop-off in high-risk retention cohorts..." data-i18n="prompt_dock_placeholder" autocomplete="off" />
+                                    <button type="button" id="heroPromptSubmitBtn" class="heroPromptSubmitBtn" onclick="submitHeroPrompt(event)" title="Ask Qiplo AI Copilot">
+                                        <i data-lucide="arrow-right" class="lucide-icon"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BOTTOM ROW OF LEFT COLUMN: 3 Cards from Image 1! -->
+                        <div class="saasMetricsTrioRow">
+                            <!-- CARD 1: Retention Stepped Area Chart -->
+                            <div class="saasMetricCard saasRetentionCard">
+                                <div class="saasCardHead">
+                                    <h4 class="saasCardTitle" data-i18n="card_retention_title">Retention</h4>
+                                    <button type="button" class="saasMoreBtn" aria-label="Card Options" title="Options">
+                                        <i data-lucide="more-horizontal" class="lucide-icon"></i>
+                                    </button>
+                                </div>
+                                <div class="retentionChartBody">
+                                    <div class="retentionPinBadge" id="retentionPinBadge">42%</div>
+                                    <svg class="retentionSvg" viewBox="0 0 240 120" preserveAspectRatio="none">
+                                        <defs>
+                                            <linearGradient id="retentionGrad" x1="0" y1="0" x2="0" y2="100%">
+                                                <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.18" />
+                                                <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.0" />
+                                            </linearGradient>
+                                            <pattern id="pinkHatch" width="4" height="4" patternUnits="userSpaceOnUse">
+                                                <line x1="2" y1="0" x2="2" y2="4" stroke="#f43f5e" stroke-width="0.75" stroke-opacity="0.25" />
+                                            </pattern>
+                                        </defs>
+                                        <!-- Shaded Drop Lines Background -->
+                                        <polygon points="10,80 30,80 30,90 50,90 50,60 80,60 80,68 100,68 100,42 120,42 120,48 140,48 140,78 160,78 160,70 180,70 180,95 200,95 200,74 230,74 230,120 10,120" fill="url(#pinkHatch)" />
+                                        <!-- Stepped Line -->
+                                        <polyline points="10,80 30,80 30,90 50,90 50,60 80,60 80,68 100,68 100,42 120,42 120,48 140,48 140,78 160,78 160,70 180,70 180,95 200,95 200,74 230,74" fill="none" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        <!-- Pin Dot -->
+                                        <circle cx="100" cy="42" r="3.5" fill="#f43f5e" />
+                                    </svg>
+                                    <div class="retentionXAxis">
+                                        <span>Jan</span>
+                                        <span>Feb</span>
+                                        <span>Mar</span>
+                                        <span>Apr</span>
+                                        <span>May</span>
+                                        <span>Jun</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RIGHT COLUMN OF TRIO: 2 STACKED DOT MATRIX CARDS -->
+                            <div class="saasStackedSparkCol">
+                                <!-- CARD 2: Model Inferences (Transactions in Image 1) -->
+                                <div class="saasMetricCard saasSparkCard">
+                                    <div class="saasCardHead">
+                                        <h4 class="saasCardTitle" data-i18n="card_predictions_title">Model Inferences</h4>
+                                        <button type="button" class="saasMoreBtn" aria-label="Card Options" title="Options">
+                                            <i data-lucide="more-horizontal" class="lucide-icon"></i>
+                                        </button>
+                                    </div>
+                                    <div class="sparkCardContent">
+                                        <div class="sparkCardLeft">
+                                            <div class="sparkBigVal" id="cardInferencesVal">106k</div>
+                                        </div>
+                                        <div class="sparkCardMiddle">
+                                            <div class="sparkPillBadge badge-emerald" data-i18n="peak_wed">Peak: Wed</div>
+                                            <div class="dotMatrixGrid dotMatrixGreen" aria-hidden="true">
+                                                <div class="dotCol col-1"><span class="dot"></span></div>
+                                                <div class="dotCol col-2"><span class="dot"></span><span class="dot"></span></div>
+                                                <div class="dotCol col-3"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                                                <div class="dotCol col-4 col-peak"><span class="dot deep"></span><span class="dot deep"></span><span class="dot deep"></span><span class="dot deep"></span></div>
+                                                <div class="dotCol col-5"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                                                <div class="dotCol col-6"><span class="dot"></span><span class="dot"></span></div>
+                                                <div class="dotCol col-7"><span class="dot"></span><span class="dot"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="sparkCardRight">
+                                            <span class="sparkSubLabel" data-i18n="vs_last_period">vs last period</span>
+                                            <span class="sparkDeltaVal delta-pos">+34,002</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CARD 3: At-Risk Accounts (Customers in Image 1) -->
+                                <div class="saasMetricCard saasSparkCard">
+                                    <div class="saasCardHead">
+                                        <h4 class="saasCardTitle" data-i18n="card_customers_title">At-Risk Accounts</h4>
+                                        <button type="button" class="saasMoreBtn" aria-label="Card Options" title="Options">
+                                            <i data-lucide="more-horizontal" class="lucide-icon"></i>
+                                        </button>
+                                    </div>
+                                    <div class="sparkCardContent">
+                                        <div class="sparkCardLeft">
+                                            <div class="sparkBigVal" id="cardCustomersVal">1,284</div>
+                                        </div>
+                                        <div class="sparkCardMiddle">
+                                            <div class="sparkPillBadge badge-blue" data-i18n="highest_thu">Highest: Thu</div>
+                                            <div class="dotMatrixGrid dotMatrixBlue" aria-hidden="true">
+                                                <div class="dotCol col-1"><span class="dot"></span></div>
+                                                <div class="dotCol col-2"><span class="dot"></span><span class="dot"></span></div>
+                                                <div class="dotCol col-3"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                                                <div class="dotCol col-4"><span class="dot"></span><span class="dot"></span></div>
+                                                <div class="dotCol col-5 col-peak"><span class="dot deep"></span><span class="dot deep"></span><span class="dot deep"></span><span class="dot deep"></span></div>
+                                                <div class="dotCol col-6"><span class="dot"></span><span class="dot"></span></div>
+                                                <div class="dotCol col-7"><span class="dot"></span><span class="dot"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="sparkCardRight">
+                                            <span class="sparkSubLabel" data-i18n="vs_last_period">vs last period</span>
+                                            <span class="sparkDeltaVal delta-pos">+320</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN -->
+                    <div class="inspirationColRight">
+                        <!-- TOP: Gross ARR at Risk & Revenue Preservation Card -->
+                        <div class="saasMetricCard saasVolumeCard">
+                            <div class="saasCardHead">
+                                <h4 class="saasCardTitle" data-i18n="gross_arr_title">Gross ARR at Risk</h4>
+                                <button type="button" class="saasMoreBtn" aria-label="Card Options" title="Options">
+                                    <i data-lucide="more-horizontal" class="lucide-icon"></i>
+                                </button>
+                            </div>
+                            <div class="volumeHeroValueRow">
+                                <strong class="volumeBigVal" id="grossArrVal">$41,540</strong>
+                                <span class="volumeGrowthBadge"><i data-lucide="triangle" class="lucide-icon icon-up"></i> +15%</span>
+                            </div>
+
+                            <div class="volumeBreakdownRows">
+                                <div class="volumeBreakdownItem">
+                                    <div class="breakdownMeta">
+                                        <span class="breakdownLabel" data-i18n="arr_tier_critical">Critical Risk Contracts</span>
+                                        <strong class="breakdownVal" id="tierCriticalVal">$26,800</strong>
+                                    </div>
+                                    <div class="breakdownTrack">
+                                        <div class="breakdownFill fill-emerald" style="width: 65%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="volumeBreakdownItem">
+                                    <div class="breakdownMeta">
+                                        <span class="breakdownLabel" data-i18n="arr_tier_moderate">Moderate Exposure Cohorts</span>
+                                        <strong class="breakdownVal" id="tierModerateVal">$10,400</strong>
+                                    </div>
+                                    <div class="breakdownTrack">
+                                        <div class="breakdownFill fill-blue" style="width: 42%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="volumeBreakdownItem">
+                                    <div class="breakdownMeta">
+                                        <span class="breakdownLabel" data-i18n="arr_tier_retained">Retained Baseline MRR</span>
+                                        <strong class="breakdownVal" id="tierRetainedVal">$4,340</strong>
+                                    </div>
+                                    <div class="breakdownTrack">
+                                        <div class="breakdownFill fill-pink" style="width: 25%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BOTTOM: Executive Retention Insights Holographic Gradient Card -->
+                        <div class="saasInsightsCard">
+                            <div class="insightsFrostedHead">
+                                <div class="insightsPillBadge">
+                                    <i data-lucide="lightbulb" class="lucide-icon" style="width: 14px; height: 14px;"></i>
+                                    <span data-i18n="insights_badge">Insights</span>
+                                </div>
+                            </div>
+
+                            <div class="insightsBody">
+                                <div class="insightsBigStat">75%</div>
+                                <h3 class="insightsHeadline" data-i18n="insights_headline">Retention rate increased by 4% compared to last week.</h3>
+                                <p class="insightsSub" data-i18n="insights_desc">Proactive SLA discount interventions reduced churn risk by 950 accounts and is projected to recover $12,400 in MRR.</p>
+                            </div>
+
+                            <div class="insightsFooterSlider">
+                                <div class="insightsSliderTrack">
+                                    <div class="insightsSliderProgress" style="width: 58%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- Executive High-Impact KPI Metric Strip -->
                 <div class="executiveKpiStrip" id="executiveKpiStrip">
                     <div class="executiveKpiCard" title="Total active accounts analyzed in current telemetry window">
