@@ -818,47 +818,49 @@
             </p>
         </div>
 
-        <table class="comparisonMatrixTable">
-            <thead>
-                <tr>
-                    <th style="width: 30%;">Capability</th>
-                    <th style="width: 35%;">Traditional Churn Tools</th>
-                    <th style="width: 35%;" class="qiploColumnHead">Qiplo Continuous Engine</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Telemetry Refresh Cadence</strong></td>
-                    <td>Weekly or monthly batch exports</td>
-                    <td class="qiploColumnCell">Sub-second continuous streaming &amp; live sync</td>
-                </tr>
-                <tr>
-                    <td><strong>Machine Learning Architecture</strong></td>
-                    <td>Black-box logistic regression or legacy trees</td>
-                    <td class="qiploColumnCell">Tabular Hybrid Attention Transformer with high-order feature cross</td>
-                </tr>
-                <tr>
-                    <td><strong>Actionability &amp; Triage</strong></td>
-                    <td>Passive reports with no operational dispatch</td>
-                    <td class="qiploColumnCell">Automated prescriptive SLA alerts to Slack, Teams &amp; CSM queues</td>
-                </tr>
-                <tr>
-                    <td><strong>What-If Simulation</strong></td>
-                    <td>Requires custom Python / SQL scripts</td>
-                    <td class="qiploColumnCell">Interactive visual sandbox with instant sensitivity levers</td>
-                </tr>
-                <tr>
-                    <td><strong>Executive Deliverables</strong></td>
-                    <td>Static screenshots and manual copy-paste</td>
-                    <td class="qiploColumnCell">Native 1-click PowerPoint (.pptx), Tableau (.twbx) &amp; Power BI (.pbit)</td>
-                </tr>
-                <tr>
-                    <td><strong>Setup &amp; Deployment Time</strong></td>
-                    <td>3-6 months of data engineering</td>
-                    <td class="qiploColumnCell">Zero-code instant setup with automatic schema normalization</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="tableResponsiveWrapper">
+            <table class="comparisonMatrixTable">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Capability</th>
+                        <th style="width: 35%;">Traditional Churn Tools</th>
+                        <th style="width: 35%;" class="qiploColumnHead">Qiplo Continuous Engine</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Telemetry Refresh Cadence</strong></td>
+                        <td>Weekly or monthly batch exports</td>
+                        <td class="qiploColumnCell">Sub-second continuous streaming &amp; live sync</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Machine Learning Architecture</strong></td>
+                        <td>Black-box logistic regression or legacy trees</td>
+                        <td class="qiploColumnCell">Tabular Hybrid Attention Transformer with high-order feature cross</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Actionability &amp; Triage</strong></td>
+                        <td>Passive reports with no operational dispatch</td>
+                        <td class="qiploColumnCell">Automated prescriptive SLA alerts to Slack, Teams &amp; CSM queues</td>
+                    </tr>
+                    <tr>
+                        <td><strong>What-If Simulation</strong></td>
+                        <td>Requires custom Python / SQL scripts</td>
+                        <td class="qiploColumnCell">Interactive visual sandbox with instant sensitivity levers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Executive Deliverables</strong></td>
+                        <td>Static screenshots and manual copy-paste</td>
+                        <td class="qiploColumnCell">Native 1-click PowerPoint (.pptx), Tableau (.twbx) &amp; Power BI (.pbit)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Setup &amp; Deployment Time</strong></td>
+                        <td>3-6 months of data engineering</td>
+                        <td class="qiploColumnCell">Zero-code instant setup with automatic schema normalization</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <!-- ==========================================================================
@@ -1018,12 +1020,17 @@
        HIGH-IMPACT BOTTOM CTA BANNER
        ========================================================================== -->
     <section class="landingBottomCta">
+        <!-- Signature Living Telemetry Wave Ribbon Flow (Carried Through to Bottom) -->
+        <div class="bottomCtaWaveWrapper" title="Qiplo Living Telemetry Wave Flow — Enterprise Retention Rhythm">
+            <canvas id="bottomCtaWaveCanvas" class="bottomCtaWaveCanvas"></canvas>
+        </div>
+
         <div class="bottomCtaEyebrow">
             <span class="live-pulse-dot"></span>
             <span>Enterprise Expansion &amp; Retention Engine</span>
         </div>
         <h2 class="bottomCtaTitle">
-            Turn Customer Retention Into Your Strongest Growth Engine
+            Turn Customer Retention Into Your <span class="bottomCtaAnimatedGradient">Strongest Growth Engine</span>
         </h2>
         <p class="bottomCtaDesc">
             Join modern B2B SaaS teams using Qiplo to protect recurring revenue, automate prescriptive SLAs, and eliminate customer churn before it happens.

@@ -50,6 +50,7 @@
         refreshIcons();
         if (window.QiploWaves && typeof window.QiploWaves.initHeroWave === 'function') {
             window.QiploWaves.initHeroWave('heroWaveCanvas');
+            window.QiploWaves.initHeroWave('bottomCtaWaveCanvas');
         }
     }
 
@@ -614,6 +615,7 @@
         refreshIcons();
         if (window.QiploWaves && typeof window.QiploWaves.initHeroWave === 'function') {
             window.QiploWaves.initHeroWave('heroWaveCanvas');
+            window.QiploWaves.initHeroWave('bottomCtaWaveCanvas');
         }
     }
 

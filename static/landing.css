@@ -1139,6 +1139,7 @@ body.light-theme .platformPill svg {
     padding: 96px 24px;
     position: relative;
     z-index: 10;
+    overflow: visible !important;
 }
 
 .sectionHeader {
@@ -1834,9 +1835,11 @@ body.light-theme .deckThumbItem.active .deckThumbNum {
     font-size: 0.76rem;
     font-weight: 700;
     color: #F8FAFC;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    line-height: 1.3 !important;
+    word-wrap: break-word !important;
 }
 
 body.light-theme .deckThumbTitle {
@@ -2006,13 +2009,22 @@ body.light-theme .featureLinkPill {
 /* ==========================================================================
    COMPARISON MATRIX
    ========================================================================== */
+.tableResponsiveWrapper {
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-radius: 16px !important;
+    margin-bottom: 24px !important;
+}
+
 .comparisonMatrixTable {
-    width: 100%;
-    border-collapse: collapse;
-    background: #0F1322;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
-    overflow: hidden;
+    width: 100% !important;
+    min-width: 680px !important;
+    border-collapse: collapse !important;
+    background: #0F1322 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 16px !important;
+    overflow: visible !important;
 }
 
 body.light-theme .comparisonMatrixTable {
@@ -2146,6 +2158,8 @@ body.light-theme .pricingDiscountBadge {
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     align-items: stretch;
+    overflow: visible !important;
+    padding-top: 16px !important;
 }
 
 .pricingCard {
@@ -2290,8 +2304,8 @@ body.light-theme .pricingFeatureList {
     background: #0F1322;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 14px;
-    overflow: hidden;
-    transition: border-color 0.2s ease;
+    overflow: visible !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 body.light-theme .faqItem {
@@ -2321,10 +2335,12 @@ body.light-theme .faqQuestionBtn {
 
 .faqAnswer {
     padding: 0 24px 20px 24px;
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     color: #CBD5E1;
-    line-height: 1.6;
+    line-height: 1.7 !important;
     display: none;
+    overflow: visible !important;
+    word-wrap: break-word !important;
 }
 
 body.light-theme .faqAnswer {
@@ -2354,20 +2370,49 @@ body.light-theme .faqChevron {
 .landingBottomCta {
     max-width: 1200px;
     margin: 70px auto 90px auto;
-    padding: 68px 48px;
+    padding: 56px 48px 68px 48px;
     border-radius: 26px;
     text-align: center;
     background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.32) 0%, rgba(15, 23, 42, 0.96) 65%), #0A0D18 !important;
     border: 1.5px solid rgba(99, 102, 241, 0.55) !important;
     box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65), 0 0 50px rgba(99, 102, 241, 0.25) !important;
     position: relative;
-    overflow: hidden;
+    overflow: visible !important;
 }
 
 body.light-theme .landingBottomCta {
     background: radial-gradient(circle at 50% 0%, #EEF2FF 0%, #FFFFFF 75%), #F8FAFC !important;
     border: 1.5px solid #C7D2FE !important;
     box-shadow: 0 20px 60px rgba(79, 70, 229, 0.14) !important;
+}
+
+/* Living Telemetry Wave Flow Ribbon in Bottom CTA */
+.bottomCtaWaveWrapper {
+    position: relative !important;
+    width: 100% !important;
+    height: 48px !important;
+    margin: 0 auto 24px auto !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    background: radial-gradient(circle at 50% 100%, rgba(99, 102, 241, 0.16) 0%, transparent 80%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+}
+
+body.light-theme .bottomCtaWaveWrapper {
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%) !important;
+    border: 1px solid #E2E8F0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+}
+
+.bottomCtaWaveCanvas {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    pointer-events: none !important;
 }
 
 .bottomCtaEyebrow {
@@ -2398,12 +2443,15 @@ body.light-theme .bottomCtaEyebrow {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
     font-size: clamp(2rem, 4vw, 2.85rem) !important;
     font-weight: 800 !important;
-    line-height: 1.22 !important;
-    letter-spacing: -0.025em !important;
+    line-height: 1.35 !important;
+    letter-spacing: -0.02em !important;
     color: #FFFFFF !important;
     margin: 0 auto 18px auto !important;
-    max-width: 860px !important;
+    max-width: 920px !important;
     text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7) !important;
+    overflow: visible !important;
+    word-wrap: break-word !important;
+    padding: 4px 8px 8px 8px !important;
 }
 
 body.light-theme .bottomCtaTitle,
@@ -2412,14 +2460,41 @@ body.light-theme .landingBottomCta h2 {
     text-shadow: none !important;
 }
 
+.bottomCtaAnimatedGradient {
+    background: linear-gradient(135deg, #6366F1 0%, #A855F7 35%, #00F5FF 70%, #6366F1 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    animation: ctaTextShimmer 6s ease-in-out infinite alternate;
+    display: inline-block;
+    padding-bottom: 6px;
+    overflow: visible !important;
+}
+
+@keyframes ctaTextShimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body.light-theme .bottomCtaAnimatedGradient {
+    background: linear-gradient(135deg, #4338CA 0%, #6366F1 35%, #0284C7 70%, #4338CA 100%) !important;
+    background-size: 300% 300%;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
 .bottomCtaDesc,
 .landingBottomCta p {
     font-family: 'Inter', sans-serif !important;
     font-size: clamp(1.02rem, 1.8vw, 1.16rem) !important;
-    line-height: 1.65 !important;
+    line-height: 1.72 !important;
     color: #CBD5E1 !important;
-    max-width: 720px !important;
-    margin: 0 auto 12px auto !important;
+    max-width: 780px !important;
+    margin: 0 auto 16px auto !important;
+    overflow: visible !important;
+    word-wrap: break-word !important;
+    padding: 0 8px !important;
 }
 
 body.light-theme .bottomCtaDesc,
@@ -2525,10 +2600,12 @@ body.light-theme .footerLinks a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.82rem;
+    font-size: 0.84rem !important;
     color: #94A3B8;
     flex-wrap: wrap;
     gap: 16px;
+    line-height: 1.6 !important;
+    overflow: visible !important;
 }
 
 body.light-theme .footerBottomBar {

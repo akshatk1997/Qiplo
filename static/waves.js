@@ -307,9 +307,11 @@
         document.addEventListener('DOMContentLoaded', () => {
             bindInteractiveWaves();
             initHeroWaveCanvas('heroWaveCanvas');
+            initHeroWaveCanvas('bottomCtaWaveCanvas');
         });
     } else {
         bindInteractiveWaves();
         initHeroWaveCanvas('heroWaveCanvas');
+        initHeroWaveCanvas('bottomCtaWaveCanvas');
     }
 })();
