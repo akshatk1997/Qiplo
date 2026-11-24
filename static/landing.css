@@ -555,6 +555,53 @@ body.light-theme .heroWaveContainer {
     pointer-events: none !important;
 }
 
+/* ==========================================================================
+   Unified Executive Workflow Navigator & Living Telemetry Wave Hub
+   (Matching Reference Theme Line & 3-Step Decision Pipeline)
+   ========================================================================== */
+.executiveWorkflowHub {
+    position: relative !important;
+    width: 100% !important;
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 20px !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03) !important;
+    margin: 0 0 20px 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+body.dark-theme .executiveWorkflowHub {
+    background: #141829 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+}
+
+.executiveWorkflowHub .heroWaveContainer {
+    position: relative !important;
+    width: 100% !important;
+    height: 52px !important;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+}
+
+.executiveWorkflowHub .executiveWorkflowBanner {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 16px !important;
+    padding: 0 16px 16px 16px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+}
+
 /* 3-Step Decision Navigator Cards (Exact Theme Line Inspiration Cards from Attachment) */
 .heroConsoleStepsGrid,
 .executiveWorkflowBanner {

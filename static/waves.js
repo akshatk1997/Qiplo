@@ -180,7 +180,7 @@
         triggerCardWave(container, rect.left + srcX, rect.top + srcY, paletteName, 850);
     }
 
-    // Ambient Hero Wave Canvas (Fluid Living Telemetry Ripple)
+    // Ambient Hero Wave Canvas (Fluid Living Telemetry Ripple - Chromatic Ribbon Wave)
     function initHeroWaveCanvas(canvasId = 'heroWaveCanvas') {
         const canvas = document.getElementById(canvasId);
         if (!canvas) return;
@@ -192,7 +192,7 @@
         function resize() {
             dpr = Math.min(window.devicePixelRatio || 1, 2);
             width = canvas.parentElement ? canvas.parentElement.clientWidth : 1200;
-            height = canvas.parentElement ? canvas.parentElement.clientHeight : 160;
+            height = canvas.parentElement ? canvas.parentElement.clientHeight : 56;
             canvas.width = Math.round(width * dpr);
             canvas.height = Math.round(height * dpr);
             ctx.scale(dpr, dpr);
@@ -202,61 +202,91 @@
         resize();
 
         let time = 0;
-        const waves = [
-            { speed: 0.018, freq: 0.006, amp: 24, phase: 0, palette: PALETTES.cyber },
-            { speed: 0.024, freq: 0.009, amp: 18, phase: 1.5, palette: PALETTES.aurora },
-            { speed: 0.012, freq: 0.004, amp: 14, phase: 3.2, palette: PALETTES.violet }
+        // 6 distinct pastel/vivid chromatic ribbon lines matching the reference UI:
+        // Sky Blue, Soft Purple/Indigo, Rose Pink, Amber Orange, Canary Yellow, Turquoise Mint
+        const ribbonLines = [
+            { color: '#38BDF8', speed: 0.013, freq: 0.0042, amp: 14, phase: 0.0, yOffset: -5 },
+            { color: '#818CF8', speed: 0.017, freq: 0.0050, amp: 16, phase: 1.1, yOffset: -2 },
+            { color: '#F472B6', speed: 0.011, freq: 0.0038, amp: 15, phase: 2.3, yOffset: 1 },
+            { color: '#FB923C', speed: 0.019, freq: 0.0055, amp: 13, phase: 3.5, yOffset: 4 },
+            { color: '#FACC15', speed: 0.015, freq: 0.0046, amp: 14, phase: 4.7, yOffset: 6 },
+            { color: '#2DD4BF', speed: 0.021, freq: 0.0052, amp: 12, phase: 5.8, yOffset: 0 }
         ];
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
-
             time += 1;
 
-            waves.forEach((w, wIdx) => {
-                ctx.beginPath();
-                ctx.moveTo(0, height);
+            const isDark = document.body && document.body.classList.contains('dark-theme');
+            const centerY = height * 0.48;
 
-                for (let x = 0; x <= width; x += 6) {
-                    const y = (height * 0.6) +
-                        Math.sin(x * w.freq + time * w.speed + w.phase) * w.amp +
-                        Math.cos(x * w.freq * 0.5 - time * w.speed * 0.6) * (w.amp * 0.4);
-                    if (x === 0) {
-                        ctx.lineTo(x, y);
-                    } else {
-                        ctx.lineTo(x, y);
-                    }
+            // Generate points along smooth sine harmonics
+            const pointsByLine = ribbonLines.map(line => {
+                const pts = [];
+                for (let x = 0; x <= width + 8; x += 8) {
+                    const y = centerY + line.yOffset +
+                        Math.sin(x * line.freq + time * line.speed + line.phase) * line.amp +
+                        Math.cos(x * (line.freq * 0.6) - time * (line.speed * 0.7) + line.phase * 0.5) * (line.amp * 0.4);
+                    pts.push({ x, y });
                 }
+                return pts;
+            });
 
-                ctx.lineTo(width, height);
+            // Delicate iridescent silk gradient fill between top and bottom ribbon envelopes
+            if (pointsByLine.length >= 2) {
+                const topPts = pointsByLine[0];
+                const botPts = pointsByLine[4] || pointsByLine[pointsByLine.length - 1];
+
+                ctx.beginPath();
+                ctx.moveTo(topPts[0].x, topPts[0].y);
+                for (let i = 1; i < topPts.length; i++) {
+                    ctx.lineTo(topPts[i].x, topPts[i].y);
+                }
+                for (let i = botPts.length - 1; i >= 0; i--) {
+                    ctx.lineTo(botPts[i].x, botPts[i].y);
+                }
                 ctx.closePath();
 
-                const grad = ctx.createLinearGradient(0, 0, width, 0);
-                const colors = w.palette;
-                colors.forEach((c, idx) => {
-                    grad.addColorStop(idx / (colors.length - 1), c);
-                });
+                const ribbonGrad = ctx.createLinearGradient(0, 0, width, 0);
+                ribbonGrad.addColorStop(0.0, 'rgba(56, 189, 248, 0.06)');
+                ribbonGrad.addColorStop(0.25, 'rgba(129, 140, 248, 0.07)');
+                ribbonGrad.addColorStop(0.5, 'rgba(244, 114, 182, 0.07)');
+                ribbonGrad.addColorStop(0.75, 'rgba(251, 146, 60, 0.06)');
+                ribbonGrad.addColorStop(1.0, 'rgba(250, 204, 21, 0.05)');
 
-                ctx.fillStyle = grad;
-                ctx.globalAlpha = 0.08 + wIdx * 0.04;
+                ctx.fillStyle = ribbonGrad;
                 ctx.fill();
+            }
 
-                // Luminous top crest line
+            // Draw individual graceful, luminous ribbon strokes
+            ribbonLines.forEach((line, idx) => {
+                const pts = pointsByLine[idx];
                 ctx.beginPath();
-                for (let x = 0; x <= width; x += 6) {
-                    const y = (height * 0.6) +
-                        Math.sin(x * w.freq + time * w.speed + w.phase) * w.amp +
-                        Math.cos(x * w.freq * 0.5 - time * w.speed * 0.6) * (w.amp * 0.4);
-                    if (x === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
+                ctx.moveTo(pts[0].x, pts[0].y);
+
+                for (let i = 1; i < pts.length; i++) {
+                    const xc = (pts[i - 1].x + pts[i].x) / 2;
+                    const yc = (pts[i - 1].y + pts[i].y) / 2;
+                    ctx.quadraticCurveTo(pts[i - 1].x, pts[i - 1].y, xc, yc);
                 }
-                ctx.strokeStyle = grad;
-                ctx.lineWidth = 1.5;
-                ctx.globalAlpha = 0.25 + wIdx * 0.15;
+                ctx.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
+
+                ctx.strokeStyle = line.color;
+                ctx.lineWidth = isDark ? 1.75 : 1.55;
+                ctx.globalAlpha = isDark ? 0.9 : 0.82;
+
+                if (isDark) {
+                    ctx.shadowColor = line.color;
+                    ctx.shadowBlur = 6;
+                } else {
+                    ctx.shadowBlur = 0;
+                }
+
                 ctx.stroke();
             });
 
-            ctx.globalAlpha = 1;
+            ctx.globalAlpha = 1.0;
+            ctx.shadowBlur = 0;
             requestAnimationFrame(animate);
         }
 

@@ -6924,7 +6924,54 @@ body.high-density .kpi-val {
     z-index: 15;
 }
 
-/* Executive 3-Step Decision Pipeline Flow Banner */
+/* ==========================================================================
+   Unified Executive Workflow Navigator & Living Telemetry Wave Hub
+   (Matching Reference Theme Line & 3-Step Decision Pipeline)
+   ========================================================================== */
+.executiveWorkflowHub {
+    position: relative !important;
+    width: 100% !important;
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 20px !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03) !important;
+    margin: 0 0 20px 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+body.dark-theme .executiveWorkflowHub {
+    background: var(--surface, #141830) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+}
+
+.executiveWorkflowHub .heroWaveContainer {
+    position: relative !important;
+    width: 100% !important;
+    height: 52px !important;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+}
+
+.executiveWorkflowHub .executiveWorkflowBanner {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 16px !important;
+    padding: 0 16px 16px 16px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+}
+
+/* Fallback standalone Executive 3-Step Decision Pipeline Flow Banner */
 .executiveWorkflowBanner {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
@@ -6939,20 +6986,21 @@ body.high-density .kpi-val {
     flex-direction: column !important;
     align-items: flex-start !important;
     justify-content: space-between !important;
-    min-height: 168px !important;
-    padding: 20px 22px 18px 22px !important;
-    border-radius: 16px !important;
+    min-height: 156px !important;
+    padding: 18px 20px 16px 20px !important;
+    border-radius: 14px !important;
     cursor: pointer !important;
     position: relative !important;
     overflow: hidden !important;
     transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease !important;
     will-change: transform !important;
+    box-sizing: border-box !important;
 }
 
 body.light-theme .workflowStepCard {
     background: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
 }
 
 body.light-theme .workflowStepCard:hover {
@@ -6961,14 +7009,26 @@ body.light-theme .workflowStepCard:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
 }
 
-body.light-theme .workflowStepCard.step-active {
+body.light-theme .workflowStepCard[data-step="1"].step-active {
     background: #F8FAFF !important;
     border: 1.5px solid #4F46E5 !important;
-    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.09) !important;
+    box-shadow: 0 4px 18px rgba(79, 70, 229, 0.09) !important;
+}
+
+body.light-theme .workflowStepCard[data-step="2"].step-active {
+    background: #FFF9F7 !important;
+    border: 1.5px solid #FF6B4A !important;
+    box-shadow: 0 4px 18px rgba(255, 107, 74, 0.09) !important;
+}
+
+body.light-theme .workflowStepCard[data-step="3"].step-active {
+    background: #F0FDF9 !important;
+    border: 1.5px solid #00BFA5 !important;
+    box-shadow: 0 4px 18px rgba(0, 191, 165, 0.09) !important;
 }
 
 body.dark-theme .workflowStepCard {
-    background: var(--surface) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
 }
@@ -6979,13 +7039,25 @@ body.dark-theme .workflowStepCard:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
 }
 
-body.dark-theme .workflowStepCard.step-active {
+body.dark-theme .workflowStepCard[data-step="1"].step-active {
     background: rgba(20, 24, 48, 0.95) !important;
     border: 1.5px solid #6366F1 !important;
     box-shadow: 0 0 22px rgba(99, 102, 241, 0.22), inset 0 0 16px rgba(99, 102, 241, 0.06) !important;
 }
 
-/* Step Badges */
+body.dark-theme .workflowStepCard[data-step="2"].step-active {
+    background: rgba(48, 20, 20, 0.95) !important;
+    border: 1.5px solid #FF6B4A !important;
+    box-shadow: 0 0 22px rgba(255, 107, 74, 0.22), inset 0 0 16px rgba(255, 107, 74, 0.06) !important;
+}
+
+body.dark-theme .workflowStepCard[data-step="3"].step-active {
+    background: rgba(16, 40, 36, 0.95) !important;
+    border: 1.5px solid #00BFA5 !important;
+    box-shadow: 0 0 22px rgba(0, 191, 165, 0.22), inset 0 0 16px rgba(0, 191, 165, 0.06) !important;
+}
+
+/* Step Badges (Exact Gradient Pills from Reference UI) */
 .workflowStepBadge {
     width: 28px !important;
     height: 28px !important;
@@ -6993,28 +7065,28 @@ body.dark-theme .workflowStepCard.step-active {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 0.78rem !important;
+    font-size: 0.8rem !important;
     font-weight: 800 !important;
     font-family: var(--font-heading), 'Plus Jakarta Sans', sans-serif !important;
     color: #ffffff !important;
     flex-shrink: 0 !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 10px !important;
     letter-spacing: -0.01em !important;
 }
 
 .workflowStepCard[data-step="1"] .workflowStepBadge {
-    background: linear-gradient(135deg, #4338CA 0%, #6366F1 100%) !important;
+    background: linear-gradient(135deg, #3730A3 0%, #4F46E5 100%) !important;
     box-shadow: 0 3px 10px rgba(79, 70, 229, 0.4) !important;
 }
 
 .workflowStepCard[data-step="2"] .workflowStepBadge {
-    background: linear-gradient(135deg, #FF6B35 0%, #FF1361 100%) !important;
-    box-shadow: 0 3px 10px rgba(255, 107, 53, 0.4) !important;
+    background: linear-gradient(135deg, #FF3B30 0%, #FF6B4A 100%) !important;
+    box-shadow: 0 3px 10px rgba(255, 107, 74, 0.4) !important;
 }
 
 .workflowStepCard[data-step="3"] .workflowStepBadge {
-    background: linear-gradient(135deg, #00F5D4 0%, #00BBF9 100%) !important;
-    box-shadow: 0 3px 10px rgba(0, 245, 212, 0.4) !important;
+    background: linear-gradient(135deg, #00C6FF 0%, #0072FF 100%) !important;
+    box-shadow: 0 3px 10px rgba(0, 198, 255, 0.4) !important;
 }
 
 /* Step Content */
@@ -7029,13 +7101,13 @@ body.dark-theme .workflowStepCard.step-active {
 
 .workflowStepTitle {
     font-family: var(--font-heading), 'Plus Jakarta Sans', sans-serif !important;
-    font-size: 0.94rem !important;
+    font-size: 0.95rem !important;
     font-weight: 700 !important;
     letter-spacing: -0.015em !important;
-    margin: 0 0 5px 0 !important;
+    margin: 0 0 4px 0 !important;
     display: flex !important;
     align-items: center !important;
-    gap: 7px !important;
+    gap: 8px !important;
     line-height: 1.25 !important;
 }
 
@@ -7054,18 +7126,18 @@ body.dark-theme .workflowStepTitle {
 
 .workflowStepCard[data-step="2"] .workflowStepTitle i,
 .workflowStepCard[data-step="2"] .workflowStepTitle svg {
-    color: #FF6B35 !important;
+    color: #FF6B4A !important;
 }
 
 .workflowStepCard[data-step="3"] .workflowStepTitle i,
 .workflowStepCard[data-step="3"] .workflowStepTitle svg {
-    color: #059669 !important;
+    color: #00BFA5 !important;
 }
 
 .workflowStepSub {
     font-family: var(--font-ui), 'Inter', sans-serif !important;
-    font-size: 0.78rem !important;
-    line-height: 1.4 !important;
+    font-size: 0.8rem !important;
+    line-height: 1.45 !important;
     margin: 0 !important;
 }
 
@@ -7082,7 +7154,7 @@ body.dark-theme .workflowStepSub {
     margin: auto auto 0 auto !important;
     align-self: center !important;
     border-radius: 9999px !important;
-    padding: 4px 20px !important;
+    padding: 5px 22px !important;
     font-family: var(--font-heading), 'Plus Jakarta Sans', sans-serif !important;
     font-size: 0.68rem !important;
     font-weight: 700 !important;
@@ -7097,17 +7169,31 @@ body.dark-theme .workflowStepSub {
 }
 
 body.light-theme .workflowStepPill {
-    background: #F1F5F9 !important;
+    background: #F8FAFC !important;
     border: 1px solid #E2E8F0 !important;
     color: #64748B !important;
     box-shadow: none !important;
 }
 
-body.light-theme .workflowStepPill.active {
-    background: #FFFFFF !important;
+body.light-theme .workflowStepCard[data-step="1"] .workflowStepPill.active {
+    background: #F5F6FF !important;
     border: 1.5px solid #4F46E5 !important;
     color: #4F46E5 !important;
-    box-shadow: 0 2px 6px rgba(79, 70, 229, 0.12) !important;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.12) !important;
+}
+
+body.light-theme .workflowStepCard[data-step="2"] .workflowStepPill.active {
+    background: #FFF5F2 !important;
+    border: 1.5px solid #FF6B4A !important;
+    color: #FF6B4A !important;
+    box-shadow: 0 2px 8px rgba(255, 107, 74, 0.12) !important;
+}
+
+body.light-theme .workflowStepCard[data-step="3"] .workflowStepPill.active {
+    background: #E6FFFA !important;
+    border: 1.5px solid #00BFA5 !important;
+    color: #00BFA5 !important;
+    box-shadow: 0 2px 8px rgba(0, 191, 165, 0.12) !important;
 }
 
 body.light-theme .workflowStepPill.done {
@@ -7122,11 +7208,25 @@ body.dark-theme .workflowStepPill {
     color: #94A3B8 !important;
 }
 
-body.dark-theme .workflowStepPill.active {
+body.dark-theme .workflowStepCard[data-step="1"] .workflowStepPill.active {
     background: rgba(99, 102, 241, 0.2) !important;
     border: 1.5px solid #6366F1 !important;
     color: #A5B4FC !important;
     box-shadow: 0 0 10px rgba(99, 102, 241, 0.25) !important;
+}
+
+body.dark-theme .workflowStepCard[data-step="2"] .workflowStepPill.active {
+    background: rgba(255, 107, 74, 0.2) !important;
+    border: 1.5px solid #FF6B4A !important;
+    color: #FFAAA0 !important;
+    box-shadow: 0 0 10px rgba(255, 107, 74, 0.25) !important;
+}
+
+body.dark-theme .workflowStepCard[data-step="3"] .workflowStepPill.active {
+    background: rgba(0, 191, 165, 0.2) !important;
+    border: 1.5px solid #00BFA5 !important;
+    color: #76E8D6 !important;
+    box-shadow: 0 0 10px rgba(0, 191, 165, 0.25) !important;
 }
 
 body.dark-theme .workflowStepPill.done {

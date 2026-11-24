@@ -418,44 +418,51 @@
             </p>
         </div>
 
-        <div class="executiveWorkflowBanner">
-            <!-- Pipeline Step 1 -->
-            <div class="workflowStepCard" data-step="1">
-                <div class="workflowStepBadge">01</div>
-                <div class="workflowStepInfo">
-                    <div class="workflowStepTitle">
-                        <i data-lucide="database" class="lucide-icon"></i>
-                        <span>Ingestion & Telemetry</span>
-                    </div>
-                    <p class="workflowStepSub">Continuous streaming connectors for billing logs, CRM touchpoints, support tickets, and zero-code CSV/Excel imports with automated schema normalization.</p>
-                </div>
-                <a href="/dashboard" class="workflowStepPill" style="text-decoration: none;">Launch Ingestion Studio</a>
+        <div class="executiveWorkflowHub" id="landingWorkflowHub">
+            <!-- Living Telemetry Wave Ribbon Header -->
+            <div class="heroWaveContainer" title="Living Telemetry Wave Flow — Continuous Three-Step Pipeline">
+                <canvas id="pipelineWaveCanvas" class="heroWaveCanvas"></canvas>
             </div>
 
-            <!-- Pipeline Step 2 -->
-            <div class="workflowStepCard" data-step="2">
-                <div class="workflowStepBadge">02</div>
-                <div class="workflowStepInfo">
-                    <div class="workflowStepTitle">
-                        <i data-lucide="flask-conical" class="lucide-icon"></i>
-                        <span>Predictive AI & Sandbox</span>
+            <div class="executiveWorkflowBanner">
+                <!-- Pipeline Step 1 -->
+                <div class="workflowStepCard" data-step="1">
+                    <div class="workflowStepBadge">01</div>
+                    <div class="workflowStepInfo">
+                        <div class="workflowStepTitle">
+                            <i data-lucide="database" class="lucide-icon"></i>
+                            <span>Ingestion & Telemetry</span>
+                        </div>
+                        <p class="workflowStepSub">Continuous streaming connectors for billing logs, CRM touchpoints, support tickets, and zero-code CSV/Excel imports with automated schema normalization.</p>
                     </div>
-                    <p class="workflowStepSub">Explainable Tabular Hybrid Transformer inference. Test what-if retention levers, model pricing sensitivity, and simulate retention outcomes before deploying playbooks.</p>
+                    <a href="/dashboard" class="workflowStepPill" style="text-decoration: none;">Launch Ingestion Studio</a>
                 </div>
-                <a href="/dashboard#sandbox" class="workflowStepPill" style="text-decoration: none;">Open What-If Sandbox</a>
-            </div>
 
-            <!-- Pipeline Step 3 -->
-            <div class="workflowStepCard" data-step="3">
-                <div class="workflowStepBadge">03</div>
-                <div class="workflowStepInfo">
-                    <div class="workflowStepTitle">
-                        <i data-lucide="zap" class="lucide-icon"></i>
-                        <span>Prescriptive SLA Actions</span>
+                <!-- Pipeline Step 2 -->
+                <div class="workflowStepCard" data-step="2">
+                    <div class="workflowStepBadge">02</div>
+                    <div class="workflowStepInfo">
+                        <div class="workflowStepTitle">
+                            <i data-lucide="flask-conical" class="lucide-icon"></i>
+                            <span>Predictive AI & Sandbox</span>
+                        </div>
+                        <p class="workflowStepSub">Explainable Tabular Hybrid Transformer inference. Test what-if retention levers, model pricing sensitivity, and simulate retention outcomes before deploying playbooks.</p>
                     </div>
-                    <p class="workflowStepSub">Automated triage routing, CSM alerting, and 1-click PowerPoint (.PPTX), Tableau (.TWBX), and Power BI (.PBIT) presentation generation for board reviews.</p>
+                    <a href="/dashboard#sandbox" class="workflowStepPill" style="text-decoration: none;">Open What-If Sandbox</a>
                 </div>
-                <a href="/dashboard#actions" class="workflowStepPill" style="text-decoration: none;">Deploy SLA Playbooks</a>
+
+                <!-- Pipeline Step 3 -->
+                <div class="workflowStepCard" data-step="3">
+                    <div class="workflowStepBadge">03</div>
+                    <div class="workflowStepInfo">
+                        <div class="workflowStepTitle">
+                            <i data-lucide="zap" class="lucide-icon"></i>
+                            <span>Prescriptive SLA Actions</span>
+                        </div>
+                        <p class="workflowStepSub">Automated triage routing, CSM alerting, and 1-click PowerPoint (.PPTX), Tableau (.TWBX), and Power BI (.PBIT) presentation generation for board reviews.</p>
+                    </div>
+                    <a href="/dashboard#actions" class="workflowStepPill" style="text-decoration: none;">Deploy SLA Playbooks</a>
+                </div>
             </div>
         </div>
     </section>
