@@ -36,7 +36,7 @@ def run_atoz_verification():
 
     # 1. Test HTML loading routes
     print("[INFO] Testing HTML Loading Routes...")
-    routes = ["/", "/dashboard", "/actions", "/business", "/presentation", "/guide"]
+    routes = ["/", "/landing", "/dashboard", "/actions", "/business", "/presentation", "/guide"]
     for r in routes:
         res = client.get(r)
         if res.status_code == 200:

@@ -127,6 +127,12 @@
 
         <!-- Right Utility & Settings (All Actions In Master 3-Dot Menu) -->
         <div class="topbarRight">
+            <!-- Public Product Landing Page Link -->
+            <a href="/landing" class="ghostBtn header-tour-link" title="Product Landing Page & Architecture Tour" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; font-family: var(--font-heading); color: var(--accent); padding: 5px 12px; border-radius: 8px; border: 1px solid rgba(99, 102, 241, 0.3); background: rgba(99, 102, 241, 0.08);">
+                <i data-lucide="compass" class="lucide-icon" style="width: 13px; height: 13px;"></i>
+                <span class="hide-mobile">Product Tour</span>
+            </a>
+
             <!-- Global Language Switcher Capsule -->
             <div class="header-lang-wrapper" id="headerLangWrapper">
                 <button type="button" class="ghostBtn header-lang-btn" id="headerLangBtn" onclick="toggleHeaderLangMenu(event)" aria-label="Change Language" title="Select Global Language (10 Available)">
@@ -604,6 +610,15 @@
                             </div>
                         </summary>
                         <div class="folder-content">
+                            <button class="dropdown-item" type="button" onclick="location.href='/landing'">
+                                <div class="item-left">
+                                    <span class="item-icon-box" title="Public Product Landing Page">
+                                        <svg class="brand-logo-svg" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                                    </span>
+                                    <span class="item-label"><span class="headerBtnLabel">Public Landing Page</span></span>
+                                </div>
+                                <span class="item-meta">Landing</span>
+                            </button>
                             <button class="dropdown-item" type="button" id="headerTourBtn" onclick="startTour()">
                                 <div class="item-left">
                                     <span class="item-icon-box" title="System Guided Walkthrough">

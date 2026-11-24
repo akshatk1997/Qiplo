@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Qiplo — Real-Time Customer Churn Intelligence & Prescriptive SLA Engine</title>
+    <meta name="description" content="Qiplo is the continuous intelligence platform for B2B SaaS and high-volume billing. Stream multi-channel billing telemetry, train hybrid transformer models, and trigger automated CSM triage before revenue drops off." />
+    
+    <!-- Open Graph / Meta -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Qiplo — Real-Time Customer Churn Intelligence" />
+    <meta property="og:description" content="Stop churn before it happens. Multi-channel ingestion, tabular transformer models, and automated prescriptive SLA actions." />
+    <meta property="og:image" content="/static/assets/og-image.png" />
+    <meta property="og:url" content="https://qiplo.vercel.app/landing" />
+
+    <!-- Google Fonts Stack -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Master CSS & Dedicated Landing CSS -->
+    <link rel="stylesheet" href="/static/style.css?v=2.7.0" />
+    <link rel="stylesheet" href="/static/landing.css?v=2.7.0" />
+
+    <!-- Local Offline-Safe Lucide Icons -->
+    <script src="/static/lucide.min.js?v=0.460.0"></script>
+    <script src="/static/i18n.js?v=2.7.0" defer></script>
+    <script src="/static/landing.js?v=2.7.0" defer></script>
+</head>
+<body class="dark-theme landingBody">
+
+    <!-- Background Ambient Glow Lights -->
+    <div class="landingAmbientGlow" aria-hidden="true">
+        <div class="ambientOrb1"></div>
+        <div class="ambientOrb2"></div>
+        <div class="ambientOrb3"></div>
+    </div>
+
+    <!-- Sticky Glassmorphic Navbar -->
+    <nav class="landingNavbar" id="landingNavbar" aria-label="Main Navigation">
+        <div class="landingNavContainer">
+            <a href="/" class="landingBrand" title="Qiplo Continuous Attrition Intelligence">
+                <svg viewBox="0 0 32 32" width="32" height="32" role="img" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="landingLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#4F46E5" />
+                            <stop offset="50%" stop-color="#8B5CF6" />
+                            <stop offset="100%" stop-color="#00F5FF" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="32" height="32" rx="8" fill="#11131E" stroke="url(#landingLogoGrad)" stroke-width="1.5" />
+                    <circle cx="13.5" cy="13.5" r="5.5" fill="none" stroke="url(#landingLogoGrad)" stroke-width="2.5" />
+                    <circle cx="18.5" cy="18.5" r="4" fill="none" stroke="#FFFFFF" stroke-width="2.5" />
+                    <circle cx="21" cy="21" r="1.5" fill="url(#landingLogoGrad)" />
+                </svg>
+                <span class="landingBrandText">QIPLO</span>
+                <span class="landingLivePill">
+                    <span class="live-pulse-dot"></span>
+                    <span>Live Telemetry</span>
+                </span>
+            </a>
+
+            <!-- Navigation Links -->
+            <ul class="landingNavLinks">
+                <li><a href="#pipeline">Pipeline</a></li>
+                <li><a href="#ai-engine">AI Engine</a></li>
+                <li><a href="#roi-calculator">ROI Calculator</a></li>
+                <li><a href="#comparison">Compare</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="/guide">Documentation</a></li>
+            </ul>
+
+            <!-- Nav Actions (Theme, Language, Workspace CTA) -->
+            <div class="landingNavActions">
+                <!-- Theme Toggle Button -->
+                <button type="button" class="btnGhostOutline iconOnlyBtn" id="landingThemeToggleBtn" title="Toggle Dark / Light Theme" aria-label="Toggle Theme">
+                    <i data-lucide="sun-moon" class="lucide-icon" style="width: 17px; height: 17px;"></i>
+                </button>
+
+                <!-- Global Language Switcher -->
+                <div class="header-lang-wrapper" style="position: relative;">
+                    <button type="button" class="btnGhostOutline" id="langSelectBtn" onclick="toggleHeaderLangMenu(event)" aria-label="Change Language" title="Select Language">
+                        <span id="landingLangFlag">🇺🇸</span>
+                        <span id="landingLangCode">EN</span>
+                        <i data-lucide="chevron-down" style="width: 12px; height: 12px; margin-left: 2px;"></i>
+                    </button>
+                    <div class="header-lang-dropdown hidden" id="langDropdownMenu" style="position: absolute; right: 0; top: 110%; z-index: 200;">
+                        <div class="header-lang-dropdown-head">
+                            <i data-lucide="globe" style="width: 14px; height: 14px; color: var(--accent);"></i>
+                            <span>Select Language</span>
+                        </div>
+                        <div class="header-lang-list">
+                            <button type="button" class="header-lang-item active" data-lang="en" onclick="if(window.qiploI18n)qiploI18n.setLanguage('en');">
+                                <span class="header-lang-item-flag">🇺🇸</span>
+                                <span class="header-lang-item-name">English</span>
+                                <span class="header-lang-item-code">EN</span>
+                            </button>
+                            <button type="button" class="header-lang-item" data-lang="es" onclick="if(window.qiploI18n)qiploI18n.setLanguage('es');">
+                                <span class="header-lang-item-flag">🇪🇸</span>
+                                <span class="header-lang-item-name">Español</span>
+                                <span class="header-lang-item-code">ES</span>
+                            </button>
+                            <button type="button" class="header-lang-item" data-lang="fr" onclick="if(window.qiploI18n)qiploI18n.setLanguage('fr');">
+                                <span class="header-lang-item-flag">🇫🇷</span>
+                                <span class="header-lang-item-name">Français</span>
+                                <span class="header-lang-item-code">FR</span>
+                            </button>
+                            <button type="button" class="header-lang-item" data-lang="de" onclick="if(window.qiploI18n)qiploI18n.setLanguage('de');">
+                                <span class="header-lang-item-flag">🇩🇪</span>
+                                <span class="header-lang-item-name">Deutsch</span>
+                                <span class="header-lang-item-code">DE</span>
+                            </button>
+                            <button type="button" class="header-lang-item" data-lang="zh" onclick="if(window.qiploI18n)qiploI18n.setLanguage('zh');">
+                                <span class="header-lang-item-flag">🇨🇳</span>
+                                <span class="header-lang-item-name">简体中文</span>
+                                <span class="header-lang-item-code">ZH</span>
+                            </button>
+                            <button type="button" class="header-lang-item" data-lang="ja" onclick="if(window.qiploI18n)qiploI18n.setLanguage('ja');">
+                                <span class="header-lang-item-flag">🇯🇵</span>
+                                <span class="header-lang-item-name">日本語</span>
+                                <span class="header-lang-item-code">JA</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sign in to studio -->
+                <a href="/dashboard" class="btnGhostOutline" title="Open Qiplo Executive Studio">Workspace</a>
+
+                <!-- Primary CTA -->
+                <a href="/dashboard" class="btnPrimaryGlow" title="Launch Interactive Studio">
+                    <span>Launch Studio Demo</span>
+                    <i data-lucide="arrow-right" class="lucide-icon" style="width: 15px; height: 15px;"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==========================================================================
+       HERO SECTION
+       ========================================================================== -->
+    <header class="landingHero">
+        <!-- Living Telemetry Rainbow Wave Flow -->
+        <div class="heroWaveStripWrapper" title="Qiplo Living Telemetry Wave Flow">
+            <canvas id="landingWaveCanvas" class="landingWaveCanvas"></canvas>
+        </div>
+
+        <!-- Eyebrow Badge -->
+        <div class="heroEyebrowBadge">
+            <span class="live-pulse-dot"></span>
+            <span>✦ QIPLO 2.0 • Real-Time Prescriptive Attrition Intelligence</span>
+        </div>
+
+        <!-- Display Headline -->
+        <h1 class="heroMainHeadline">
+            Stop Customer Churn Before It Happens. <br />
+            <span class="textGradient">Prescribe The Win In Real Time.</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="heroLeadSubtitle">
+            The continuous intelligence platform for B2B SaaS and high-volume billing. Stream multi-channel billing telemetry, train hybrid transformer models, and trigger automated CSM triage before revenue drops off.
+        </p>
+
+        <!-- CTA Row -->
+        <div class="heroCtaButtonGroup">
+            <a href="/dashboard" class="btnPrimaryGlow" title="Launch Live Qiplo Workspace">
+                <i data-lucide="play" class="lucide-icon" style="width: 17px; height: 17px;"></i>
+                <span>Launch Interactive Studio</span>
+            </a>
+            <a href="#roi-calculator" class="btnGhostOutline" title="Calculate Portfolio ROI">
+                <i data-lucide="calculator" class="lucide-icon" style="width: 17px; height: 17px;"></i>
+                <span>Calculate Churn ROI</span>
+            </a>
+            <button type="button" class="btnGhostOutline openEnterpriseModalBtn" title="Schedule Architecture Consultation">
+                <i data-lucide="calendar" class="lucide-icon" style="width: 17px; height: 17px;"></i>
+                <span>Book Architecture Review</span>
+            </button>
+        </div>
+
+        <!-- Telemetry Status Ticker -->
+        <div class="heroMetricsTickerPill">
+            <i data-lucide="zap" class="lucide-icon" style="width: 14px; height: 14px; color: #10B981;"></i>
+            <span>Real-time Telemetry: <strong>250 Monitored Cohorts</strong> • <strong>99.4% ROC-AUC</strong> • <strong>&lt;45ms Latency</strong></span>
+        </div>
+
+        <!-- ==========================================================================
+           INTERACTIVE HERO CONSOLE / PIPELINE PREVIEW
+           ========================================================================== -->
+        <div class="heroConsoleWrapper" id="heroInteractiveConsole">
+            <div class="heroConsoleInner">
+                <!-- Console Top Window Bar -->
+                <div class="consoleHeaderBar">
+                    <div class="consoleWindowDots">
+                        <span class="windowDot dotRed"></span>
+                        <span class="windowDot dotYellow"></span>
+                        <span class="windowDot dotGreen"></span>
+                    </div>
+                    <div class="consoleWindowTitle">
+                        <i data-lucide="cpu" class="lucide-icon" style="width: 14px; height: 14px; color: var(--accent);"></i>
+                        <span>Qiplo Executive Decision Workflow Navigator — Interactive Live Preview</span>
+                    </div>
+                    <span class="consoleInteractiveNotice">Click Stages to Test Live</span>
+                </div>
+
+                <!-- 3-Step Navigator Tabs (Theme Line Inspiration Cards) -->
+                <div class="heroConsoleStepsGrid">
+                    <!-- Stage 1 -->
+                    <div class="heroConsoleStepTab active" data-console-step="Ingestion">
+                        <div class="workflowStepBadge" style="background: linear-gradient(135deg, #4338CA 0%, #6366F1 100%) !important; box-shadow: 0 3px 10px rgba(79, 70, 229, 0.4) !important;">01</div>
+                        <div class="workflowStepInfo">
+                            <div class="workflowStepTitle">
+                                <i data-lucide="database" class="lucide-icon" style="color: #4F46E5 !important;"></i>
+                                <span>Ingestion & Telemetry</span>
+                            </div>
+                            <p class="workflowStepSub">Active records, billing distribution & dataset sync</p>
+                        </div>
+                        <div class="workflowStepPill active">Active Step</div>
+                    </div>
+
+                    <!-- Stage 2 -->
+                    <div class="heroConsoleStepTab" data-console-step="Sandbox">
+                        <div class="workflowStepBadge" style="background: linear-gradient(135deg, #FF6B35 0%, #FF1361 100%) !important; box-shadow: 0 3px 10px rgba(255, 107, 53, 0.4) !important;">02</div>
+                        <div class="workflowStepInfo">
+                            <div class="workflowStepTitle">
+                                <i data-lucide="flask-conical" class="lucide-icon" style="color: #FF6B35 !important;"></i>
+                                <span>Predictive AI & Sandbox</span>
+                            </div>
+                            <p class="workflowStepSub">Test retention levers & simulate churn outlooks</p>
+                        </div>
+                        <div class="workflowStepPill">Explore</div>
+                    </div>
+
+                    <!-- Stage 3 -->
+                    <div class="heroConsoleStepTab" data-console-step="Actions">
+                        <div class="workflowStepBadge" style="background: linear-gradient(135deg, #00F5D4 0%, #00BBF9 100%) !important; box-shadow: 0 3px 10px rgba(0, 245, 212, 0.4) !important;">03</div>
+                        <div class="workflowStepInfo">
+                            <div class="workflowStepTitle">
+                                <i data-lucide="zap" class="lucide-icon" style="color: #059669 !important;"></i>
+                                <span>Prescriptive SLA Actions</span>
+                            </div>
+                            <p class="workflowStepSub">Automated triage, CSM assignments & Gamma pitch decks</p>
+                        </div>
+                        <div class="workflowStepPill">Explore</div>
+                    </div>
+                </div>
+
+                <!-- Interactive Console Screen Container -->
+                <div class="consoleScreenContent">
+                    <!-- Screen Pane 1: Telemetry Stream -->
+                    <div class="screenPane active" id="consolePaneIngestion">
+                        <div class="telemetryGridMock">
+                            <div class="telemetryMetricBox">
+                                <div class="telemetryBoxLabel">Active Cohort Records</div>
+                                <div class="telemetryBoxVal">250 Accounts</div>
+                            </div>
+                            <div class="telemetryMetricBox">
+                                <div class="telemetryBoxLabel">Monitored Gross Volume</div>
+                                <div class="telemetryBoxVal">$41,540 ARR</div>
+                            </div>
+                            <div class="telemetryMetricBox">
+                                <div class="telemetryBoxLabel">Telemetry Ingestion Status</div>
+                                <div class="telemetryBoxVal" style="color: #10B981;">Synchronized (100%)</div>
+                            </div>
+                        </div>
+                        <table class="streamTableMock">
+                            <thead>
+                                <tr>
+                                    <th>ACCOUNT ID</th>
+                                    <th>TENURE</th>
+                                    <th>CONTRACT</th>
+                                    <th>CHARGES</th>
+                                    <th>CSAT</th>
+                                    <th>RISK CLASS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>CUST-90412</td>
+                                    <td>24 mos</td>
+                                    <td>Two year</td>
+                                    <td>$89.50/mo</td>
+                                    <td>9.4/10</td>
+                                    <td><span class="actionBadgeTriage badgeAutomation">LOW RISK (12%)</span></td>
+                                </tr>
+                                <tr>
+                                    <td>CUST-88123</td>
+                                    <td>3 mos</td>
+                                    <td>Month-to-month</td>
+                                    <td>$115.00/mo</td>
+                                    <td>4.2/10</td>
+                                    <td><span class="actionBadgeTriage badgeHighRisk">HIGH RISK (84%)</span></td>
+                                </tr>
+                                <tr>
+                                    <td>CUST-77401</td>
+                                    <td>14 mos</td>
+                                    <td>One year</td>
+                                    <td>$65.20/mo</td>
+                                    <td>6.8/10</td>
+                                    <td><span class="actionBadgeTriage badgeMediumRisk">MODERATE (42%)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Screen Pane 2: Live AI Sandbox Lever Tester -->
+                    <div class="screenPane" id="consolePaneSandbox">
+                        <div class="sandboxSliderControlRow">
+                            <div class="sliderRowGroup">
+                                <div class="sliderField">
+                                    <div class="sliderHead">
+                                        <span>Customer Account Tenure</span>
+                                        <span id="heroTenureVal">18 mo</span>
+                                    </div>
+                                    <input type="range" class="rangeSlider" id="heroTenureSlider" min="1" max="72" value="18" />
+                                </div>
+                                <div class="sliderField">
+                                    <div class="sliderHead">
+                                        <span>Customer Satisfaction Score (CSAT)</span>
+                                        <span id="heroCsatVal">6.5/10</span>
+                                    </div>
+                                    <input type="range" class="rangeSlider" id="heroCsatSlider" min="1" max="10" step="0.5" value="6.5" />
+                                </div>
+                                <div class="sliderField">
+                                    <div class="sliderHead">
+                                        <span>Recent Support Tickets</span>
+                                        <span id="heroTicketsVal">3</span>
+                                    </div>
+                                    <input type="range" class="rangeSlider" id="heroTicketsSlider" min="0" max="12" value="3" />
+                                </div>
+                            </div>
+                            <div class="sandboxGaugeCard">
+                                <div class="telemetryBoxLabel">Predicted Churn Probability</div>
+                                <div class="gaugeBigVal" id="heroGaugeText">28.4%</div>
+                                <span class="actionBadgeTriage badgeAutomation" id="heroGaugeBadge">LOW ATTRITION RISK</span>
+                                <div style="margin-top: 10px; font-size: 0.72rem; color: var(--muted);">Live Tabular Transformer Inference</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Screen Pane 3: Prescriptive Actions -->
+                    <div class="screenPane" id="consolePaneActions">
+                        <div class="actionsPrescriptiveGrid">
+                            <div class="prescriptiveActionCard">
+                                <span class="actionBadgeTriage badgeHighRisk">SLA Escalation #402</span>
+                                <strong style="font-size: 0.88rem;">Trigger CSM Executive Outreach</strong>
+                                <p style="font-size: 0.76rem; color: var(--muted); margin: 0;">Assigned to Sarah Chen (Tier 1 Enterprise CS Lead). Dispatch within 24 hours.</p>
+                                <a href="/dashboard#actions" class="featureLinkPill">Review SLA in Workspace →</a>
+                            </div>
+                            <div class="prescriptiveActionCard">
+                                <span class="actionBadgeTriage badgeMediumRisk">Automation Hook</span>
+                                <strong style="font-size: 0.88rem;">Slack & Webhook Dispatch</strong>
+                                <p style="font-size: 0.76rem; color: var(--muted); margin: 0;">Real-time notification routed to #customer-health-war-room.</p>
+                                <a href="/dashboard#actions" class="featureLinkPill">Test Webhook Payload →</a>
+                            </div>
+                            <div class="prescriptiveActionCard">
+                                <span class="actionBadgeTriage badgeAutomation">Executive Deck</span>
+                                <strong style="font-size: 0.88rem;">Compile PPTX Presentation</strong>
+                                <p style="font-size: 0.76rem; color: var(--muted); margin: 0;">5-slide PowerPoint deck ready with high-risk cohort breakdown and ROI levers.</p>
+                                <a href="/dashboard#presentation" class="featureLinkPill">Open Presentation Deck →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================================================
+       STATISTICS & TRUST MARQUEE STRIP
+       ========================================================================== -->
+    <section class="landingStatStrip" aria-label="Key Performance Indicators">
+        <div class="statStripGrid">
+            <div class="statStripCard">
+                <div class="statStripNum">$41.5K+</div>
+                <div class="statStripLabel">Active Monitored ARR Volume</div>
+            </div>
+            <div class="statStripCard">
+                <div class="statStripNum">250</div>
+                <div class="statStripLabel">Live Telemetry Cohort Accounts</div>
+            </div>
+            <div class="statStripCard">
+                <div class="statStripNum">99.4%</div>
+                <div class="statStripLabel">Transformer ROC-AUC Precision</div>
+            </div>
+            <div class="statStripCard">
+                <div class="statStripNum">&lt;45ms</div>
+                <div class="statStripLabel">Sub-Second SLA Triage Latency</div>
+            </div>
+        </div>
+
+        <div class="landingLogoRow">
+            <div class="platformPill"><i data-lucide="database"></i> Snowflake Lakehouse</div>
+            <div class="platformPill"><i data-lucide="layers"></i> Databricks Spark</div>
+            <div class="platformPill"><i data-lucide="credit-card"></i> Stripe Connect</div>
+            <div class="platformPill"><i data-lucide="radio"></i> Apache Kafka</div>
+            <div class="platformPill"><i data-lucide="users"></i> Salesforce CRM</div>
+            <div class="platformPill"><i data-lucide="bar-chart-2"></i> Tableau & Power BI</div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       THE 3-STEP DECISION PIPELINE DEEP-DIVE
+       ========================================================================== */
+    <section class="landingSection" id="pipeline">
+        <div class="sectionHeader">
+            <span class="sectionTag">The 3-Step Decision Pipeline</span>
+            <h2 class="sectionTitle">From Raw Telemetry to Saved Revenue in Three Continuous Steps</h2>
+            <p class="sectionSub">
+                Traditional BI tells you who churned last month. Qiplo prescribes the exact operational and financial intervention to save vulnerable accounts today.
+            </p>
+        </div>
+
+        <div class="executiveWorkflowBanner" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 24px;">
+            <!-- Pipeline Step 1 -->
+            <div class="workflowStepCard" style="display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; padding: 24px; border-radius: 16px;">
+                <div class="workflowStepBadge" style="background: linear-gradient(135deg, #4338CA 0%, #6366F1 100%) !important; box-shadow: 0 3px 10px rgba(79, 70, 229, 0.4) !important;">01</div>
+                <div class="workflowStepInfo" style="margin: 14px 0 16px 0;">
+                    <div class="workflowStepTitle">
+                        <i data-lucide="database" class="lucide-icon" style="color: #4F46E5 !important;"></i>
+                        <span>Ingestion & Telemetry</span>
+                    </div>
+                    <p class="workflowStepSub">Continuous streaming connectors for billing logs, CRM touchpoints, support tickets, and zero-code CSV/Excel imports with automated schema normalization.</p>
+                </div>
+                <a href="/dashboard" class="workflowStepPill" style="text-decoration: none;">Launch Ingestion Studio</a>
+            </div>
+
+            <!-- Pipeline Step 2 -->
+            <div class="workflowStepCard" style="display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; padding: 24px; border-radius: 16px;">
+                <div class="workflowStepBadge" style="background: linear-gradient(135deg, #FF6B35 0%, #FF1361 100%) !important; box-shadow: 0 3px 10px rgba(255, 107, 53, 0.4) !important;">02</div>
+                <div class="workflowStepInfo" style="margin: 14px 0 16px 0;">
+                    <div class="workflowStepTitle">
+                        <i data-lucide="flask-conical" class="lucide-icon" style="color: #FF6B35 !important;"></i>
+                        <span>Predictive AI & Sandbox</span>
+                    </div>
+                    <p class="workflowStepSub">Explainable Tabular Hybrid Transformer inference. Test what-if retention levers, model pricing sensitivity, and simulate retention outcomes before deploying playbooks.</p>
+                </div>
+                <a href="/dashboard#sandbox" class="workflowStepPill" style="text-decoration: none;">Open What-If Sandbox</a>
+            </div>
+
+            <!-- Pipeline Step 3 -->
+            <div class="workflowStepCard" style="display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; padding: 24px; border-radius: 16px;">
+                <div class="workflowStepBadge" style="background: linear-gradient(135deg, #00F5D4 0%, #00BBF9 100%) !important; box-shadow: 0 3px 10px rgba(0, 245, 212, 0.4) !important;">03</div>
+                <div class="workflowStepInfo" style="margin: 14px 0 16px 0;">
+                    <div class="workflowStepTitle">
+                        <i data-lucide="zap" class="lucide-icon" style="color: #059669 !important;"></i>
+                        <span>Prescriptive SLA Actions</span>
+                    </div>
+                    <p class="workflowStepSub">Automated triage routing, CSM alerting, and 1-click PowerPoint (.PPTX), Tableau (.TWBX), and Power BI (.PBIT) presentation generation for board reviews.</p>
+                </div>
+                <a href="/dashboard#actions" class="workflowStepPill" style="text-decoration: none;">Deploy SLA Playbooks</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       INTERACTIVE REAL-TIME ARR & CHURN ROI CALCULATOR
+       ========================================================================== -->
+    <section class="landingSection" id="roi-calculator">
+        <div class="sectionHeader">
+            <span class="sectionTag">Real-Time Financial Simulator</span>
+            <h2 class="sectionTitle">Interactive ARR & Churn Prevention ROI Calculator</h2>
+            <p class="sectionSub">
+                Move the sliders to match your current subscription profile and instantly see the bottom-line financial impact of deploying Qiplo.
+            </p>
+        </div>
+
+        <div class="roiCalculatorCard">
+            <!-- Controls Column -->
+            <div class="roiControlsColumn">
+                <!-- Slider 1: Annual ARR -->
+                <div class="roiSliderBlock">
+                    <div class="roiLabelRow">
+                        <span class="roiSliderLabel">Annual Recurring Revenue (ARR)</span>
+                        <span class="roiSliderCurrentVal" id="roiArrLabel">$5,000,000</span>
+                    </div>
+                    <input type="range" class="rangeSlider" id="roiArrSlider" min="500000" max="50000000" step="250000" value="5000000" />
+                    <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted);">
+                        <span>$500K</span>
+                        <span>$25M</span>
+                        <span>$50M+</span>
+                    </div>
+                </div>
+
+                <!-- Slider 2: Current Churn Rate -->
+                <div class="roiSliderBlock">
+                    <div class="roiLabelRow">
+                        <span class="roiSliderLabel">Current Annual Churn Rate</span>
+                        <span class="roiSliderCurrentVal" id="roiChurnLabel">12%</span>
+                    </div>
+                    <input type="range" class="rangeSlider" id="roiChurnSlider" min="2" max="35" step="1" value="12" />
+                    <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted);">
+                        <span>2% (Best in Class)</span>
+                        <span>15% (Industry Avg)</span>
+                        <span>35% (Elevated)</span>
+                    </div>
+                </div>
+
+                <!-- Slider 3: Target Reduction Rate -->
+                <div class="roiSliderBlock">
+                    <div class="roiLabelRow">
+                        <span class="roiSliderLabel">Qiplo Target Retention Improvement</span>
+                        <span class="roiSliderCurrentVal" id="roiReductionLabel">25%</span>
+                    </div>
+                    <input type="range" class="rangeSlider" id="roiReductionSlider" min="5" max="50" step="5" value="25" />
+                    <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted);">
+                        <span>5% (Conservative)</span>
+                        <span>25% (Realistic)</span>
+                        <span>50% (High Impact)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Column -->
+            <div class="roiOutputColumn">
+                <div class="roiOutputItem">
+                    <span class="roiOutputLabel">Current Annual Revenue Lost to Churn</span>
+                    <div class="roiOutputVal" id="roiOutputLost" style="color: #EF4444;">$600,000 / yr</div>
+                </div>
+
+                <div class="roiOutputItem">
+                    <span class="roiOutputLabel">Direct Annual Revenue Preserved with Qiplo</span>
+                    <div class="roiOutputVal highlightGreen" id="roiOutputSaved">+$150,000 / yr</div>
+                </div>
+
+                <div class="roiOutputItem">
+                    <span class="roiOutputLabel">5-Year Compounded Retention Gain</span>
+                    <div class="roiOutputVal highlightGradient" id="roiOutput5Year">+$877,500</div>
+                </div>
+
+                <div class="roiOutputItem">
+                    <span class="roiOutputLabel">Estimated Return on Investment</span>
+                    <div class="roiOutputVal" id="roiOutputRoi" style="color: #6366F1;">12.5x ROI</div>
+                </div>
+
+                <!-- Export Action -->
+                <button type="button" class="btnPrimaryGlow" id="roiExportDeckBtn" style="width: 100%; justify-content: center; margin-top: 10px;">
+                    <i data-lucide="presentation" class="lucide-icon"></i>
+                    <span>Export Custom ROI Analysis to PowerPoint (.pptx)</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       ENTERPRISE FEATURES & DEEP CAPABILITIES
+       ========================================================================== -->
+    <section class="landingSection" id="ai-engine">
+        <div class="sectionHeader">
+            <span class="sectionTag">Enterprise Architecture</span>
+            <h2 class="sectionTitle">Engineered for Precision, Speed, and Compliance</h2>
+            <p class="sectionSub">
+                Qiplo combines cutting-edge deep learning with executive deliverable engines built directly into your day-to-day workflow.
+            </p>
+        </div>
+
+        <div class="featureCardsGrid">
+            <!-- Feature 1 -->
+            <div class="featureCard">
+                <div>
+                    <div class="featureIconBox" style="background: rgba(99, 102, 241, 0.15); color: #6366F1;">
+                        <i data-lucide="brain-circuit"></i>
+                    </div>
+                    <h3 class="featureTitle">Tabular Hybrid Transformer</h3>
+                    <p class="featureDesc">Self-attention across sparse tabular features captures nonlinear interactions between payment delays, support ticket escalation, and tenure.</p>
+                </div>
+                <a href="/dashboard" class="featureLinkPill">Explore Model Engine →</a>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="featureCard">
+                <div>
+                    <div class="featureIconBox" style="background: rgba(239, 68, 68, 0.15); color: #EF4444;">
+                        <i data-lucide="bell-ring"></i>
+                    </div>
+                    <h3 class="featureTitle">Automated SLA Notifications</h3>
+                    <p class="featureDesc">Instant webhook alerts dispatch to Slack, Microsoft Teams, and PagerDuty when account risk exceeds configurable thresholds.</p>
+                </div>
+                <a href="/dashboard#actions" class="featureLinkPill">Configure Alert Rules →</a>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="featureCard">
+                <div>
+                    <div class="featureIconBox" style="background: rgba(0, 245, 255, 0.15); color: #00F5FF;">
+                        <i data-lucide="presentation"></i>
+                    </div>
+                    <h3 class="featureTitle">1-Click Presentation Generator</h3>
+                    <p class="featureDesc">Automatically compile executive slide decks in PowerPoint (.pptx) and Gamma formats with narrative insights and cohort breakdowns.</p>
+                </div>
+                <a href="/dashboard#presentation" class="featureLinkPill">Generate Pitch Deck →</a>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="featureCard">
+                <div>
+                    <div class="featureIconBox" style="background: rgba(245, 158, 11, 0.15); color: #F59E0B;">
+                        <i data-lucide="line-chart"></i>
+                    </div>
+                    <h3 class="featureTitle">Native Tableau & Power BI</h3>
+                    <p class="featureDesc">Bi-directional exports for Tableau Packaged Workbooks (.twbx) and Microsoft Power BI Templates (.pbit) with zero manual data wrangling.</p>
+                </div>
+                <a href="/dashboard" class="featureLinkPill">Download BI Templates →</a>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="featureCard">
+                <div>
+                    <div class="featureIconBox" style="background: rgba(16, 185, 129, 0.15); color: #10B981;">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <h3 class="featureTitle">SOC-2 & GDPR Compliance</h3>
+                    <p class="featureDesc">Granular audit logging, role-based access control (RBAC), on-premise VPC isolation, and zero third-party training data leakage.</p>
+                </div>
+                <a href="/guide" class="featureLinkPill">Read Security Whitepaper →</a>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="featureCard">
+                <div>
+                    <div class="featureIconBox" style="background: rgba(168, 85, 247, 0.15); color: #A855F7;">
+                        <i data-lucide="sparkles"></i>
+                    </div>
+                    <h3 class="featureTitle">Copilot AI Retention Advisor</h3>
+                    <p class="featureDesc">Interactive conversational advisor explaining root causes of customer risk, cohort shifts, and drafting custom win-back strategies.</p>
+                </div>
+                <a href="/dashboard" class="featureLinkPill">Chat with AI Copilot →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       COMPARISON MATRIX
+       ========================================================================== -->
+    <section class="landingSection" id="comparison">
+        <div class="sectionHeader">
+            <span class="sectionTag">Why Modern Revenue Teams Choose Qiplo</span>
+            <h2 class="sectionTitle">Traditional Churn Tools vs. Qiplo Real-Time Continuous Engine</h2>
+            <p class="sectionSub">
+                See how Qiplo replaces disconnected spreadsheets and static BI dashboards with end-to-end continuous intelligence.
+            </p>
+        </div>
+
+        <table class="comparisonMatrixTable">
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Capability</th>
+                    <th style="width: 35%;">Traditional Churn Tools</th>
+                    <th style="width: 35%;" class="qiploColumnHead">Qiplo Continuous Engine</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Telemetry Refresh Cadence</strong></td>
+                    <td>Weekly or monthly batch exports</td>
+                    <td class="qiploColumnCell">Sub-second continuous streaming &amp; live sync</td>
+                </tr>
+                <tr>
+                    <td><strong>Machine Learning Architecture</strong></td>
+                    <td>Black-box logistic regression or legacy trees</td>
+                    <td class="qiploColumnCell">Tabular Hybrid Attention Transformer with high-order feature cross</td>
+                </tr>
+                <tr>
+                    <td><strong>Actionability &amp; Triage</strong></td>
+                    <td>Passive reports with no operational dispatch</td>
+                    <td class="qiploColumnCell">Automated prescriptive SLA alerts to Slack, Teams &amp; CSM queues</td>
+                </tr>
+                <tr>
+                    <td><strong>What-If Simulation</strong></td>
+                    <td>Requires custom Python / SQL scripts</td>
+                    <td class="qiploColumnCell">Interactive visual sandbox with instant sensitivity levers</td>
+                </tr>
+                <tr>
+                    <td><strong>Executive Deliverables</strong></td>
+                    <td>Static screenshots and manual copy-paste</td>
+                    <td class="qiploColumnCell">Native 1-click PowerPoint (.pptx), Tableau (.twbx) &amp; Power BI (.pbit)</td>
+                </tr>
+                <tr>
+                    <td><strong>Setup &amp; Deployment Time</strong></td>
+                    <td>3-6 months of data engineering</td>
+                    <td class="qiploColumnCell">Zero-code instant setup with automatic schema normalization</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ==========================================================================
+       PRICING & DEPLOYMENT TIERS
+       ========================================================================== -->
+    <section class="landingSection" id="pricing">
+        <div class="sectionHeader">
+            <span class="sectionTag">Simple, Transparent Pricing</span>
+            <h2 class="sectionTitle">Predictable Pricing for High-Growth SaaS & Enterprise</h2>
+            <p class="sectionSub">
+                Start free with zero credit card required. Upgrade as your cohort volume scales.
+            </p>
+        </div>
+
+        <!-- Monthly / Annual Toggle -->
+        <div class="pricingBillingToggleRow">
+            <span class="toggleLabel" id="labelMonthly">Billed Monthly</span>
+            <div class="toggleSwitch active" id="pricingBillingToggle" title="Toggle Billing Period">
+                <div class="toggleKnob"></div>
+            </div>
+            <span class="toggleLabel" id="labelAnnual">Billed Annually</span>
+            <span class="pricingDiscountBadge">Save 20% + 2 Months Free</span>
+        </div>
+
+        <div class="pricingGrid">
+            <!-- Starter Tier -->
+            <div class="pricingCard">
+                <div>
+                    <h3 class="pricingTierName">Starter / Studio</h3>
+                    <p class="pricingTierSub">For founders and growth leads exploring predictive customer retention.</p>
+                    <div class="pricingAmountRow">
+                        <span class="pricingAmount">$0</span>
+                        <span class="pricingPeriod">/ forever</span>
+                    </div>
+                    <ul class="pricingFeatureList">
+                        <li><i data-lucide="check"></i> Up to 1,000 active customer records</li>
+                        <li><i data-lucide="check"></i> Tabular Hybrid Transformer inference</li>
+                        <li><i data-lucide="check"></i> CSV &amp; Excel data ingestion</li>
+                        <li><i data-lucide="check"></i> Standard Overview &amp; Specials analytics</li>
+                        <li><i data-lucide="check"></i> Community support &amp; documentation</li>
+                    </ul>
+                </div>
+                <a href="/dashboard" class="btnGhostOutline" style="width: 100%; justify-content: center;">Launch Free Studio</a>
+            </div>
+
+            <!-- Growth / Pro Tier (Featured) -->
+            <div class="pricingCard featured">
+                <span class="pricingFeaturedPill">Most Popular</span>
+                <div>
+                    <h3 class="pricingTierName">Growth / Pro</h3>
+                    <p class="pricingTierSub">For high-growth SaaS teams actively managing customer retention and SLAs.</p>
+                    <div class="pricingAmountRow">
+                        <span class="pricingAmount" id="pricingProPrice">$399</span>
+                        <span class="pricingPeriod" id="pricingProPeriod">/ month (billed annually)</span>
+                    </div>
+                    <ul class="pricingFeatureList">
+                        <li><i data-lucide="check"></i> Up to 50,000 active customer records</li>
+                        <li><i data-lucide="check"></i> Real-time automated SLA webhook alerts</li>
+                        <li><i data-lucide="check"></i> 1-Click PowerPoint (.pptx) generator</li>
+                        <li><i data-lucide="check"></i> Tableau (.twbx) &amp; Power BI (.pbit) exports</li>
+                        <li><i data-lucide="check"></i> Copilot AI Retention Advisor session</li>
+                        <li><i data-lucide="check"></i> Priority 4-hour support SLA</li>
+                    </ul>
+                </div>
+                <a href="/dashboard" class="btnPrimaryGlow" style="width: 100%; justify-content: center;">Start 14-Day Free Trial</a>
+            </div>
+
+            <!-- Enterprise Tier -->
+            <div class="pricingCard">
+                <div>
+                    <h3 class="pricingTierName">Enterprise Dedicated</h3>
+                    <p class="pricingTierSub">For large multi-product operations requiring custom VPC or on-premise governance.</p>
+                    <div class="pricingAmountRow">
+                        <span class="pricingAmount">Custom</span>
+                        <span class="pricingPeriod">/ custom billing</span>
+                    </div>
+                    <ul class="pricingFeatureList">
+                        <li><i data-lucide="check"></i> Unlimited active accounts &amp; cohorts</li>
+                        <li><i data-lucide="check"></i> On-premise VPC or dedicated cloud deployment</li>
+                        <li><i data-lucide="check"></i> Custom transformer model fine-tuning</li>
+                        <li><i data-lucide="check"></i> Bi-directional CRM &amp; Data Warehouse sync</li>
+                        <li><i data-lucide="check"></i> 99.99% uptime enterprise SLA</li>
+                        <li><i data-lucide="check"></i> Dedicated Senior Machine Learning Architect</li>
+                    </ul>
+                </div>
+                <button type="button" class="btnGhostOutline openEnterpriseModalBtn" style="width: 100%; justify-content: center;">Contact Enterprise Sales</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       FREQUENTLY ASKED QUESTIONS (ACCORDION)
+       ========================================================================== -->
+    <section class="landingSection" id="faq">
+        <div class="sectionHeader">
+            <span class="sectionTag">Frequently Asked Questions</span>
+            <h2 class="sectionTitle">Got Questions? We Have Answers.</h2>
+            <p class="sectionSub">
+                Everything you need to know about Qiplo's architecture, data security, and setup process.
+            </p>
+        </div>
+
+        <div class="faqAccordion">
+            <div class="faqItem open">
+                <button type="button" class="faqQuestionBtn">
+                    <span>How does Qiplo integrate with our existing billing and CRM stack?</span>
+                    <i data-lucide="chevron-down" class="lucide-icon faqChevron"></i>
+                </button>
+                <div class="faqAnswer">
+                    Qiplo connects directly via REST APIs, webhook streams, database connectors (Snowflake, Databricks, PostgreSQL), or simple CSV/Excel uploads. Our automated normalization pipeline maps your schema with zero data loss and no mandatory schema re-engineering.
+                </div>
+            </div>
+
+            <div class="faqItem">
+                <button type="button" class="faqQuestionBtn">
+                    <span>What machine learning model does Qiplo run?</span>
+                    <i data-lucide="chevron-down" class="lucide-icon faqChevron"></i>
+                </button>
+                <div class="faqAnswer">
+                    Qiplo leverages a SOTA Tabular Hybrid Attention Transformer. It combines self-attention mechanisms with high-order feature crossing to capture complex churn signals while maintaining full explainability via Shapley value feature attributions.
+                </div>
+            </div>
+
+            <div class="faqItem">
+                <button type="button" class="faqQuestionBtn">
+                    <span>Can we export models and predictions into Tableau and Power BI?</span>
+                    <i data-lucide="chevron-down" class="lucide-icon faqChevron"></i>
+                </button>
+                <div class="faqAnswer">
+                    Yes. Qiplo includes native, built-in exporters that compile Tableau Packaged Workbooks (.twbx and .twb) and Microsoft Power BI Templates (.pbit, .pbids, and Power Query M scripts) with zero third-party connector fees.
+                </div>
+            </div>
+
+            <div class="faqItem">
+                <button type="button" class="faqQuestionBtn">
+                    <span>Is customer data secure and compliant with GDPR / SOC-2?</span>
+                    <i data-lucide="chevron-down" class="lucide-icon faqChevron"></i>
+                </button>
+                <div class="faqAnswer">
+                    Absolutely. Data is encrypted in transit (TLS 1.3) and at rest (AES-256). Qiplo enforces comprehensive audit logging, role-based access control (RBAC), and never uses your customer data to train public foundation models.
+                </div>
+            </div>
+
+            <div class="faqItem">
+                <button type="button" class="faqQuestionBtn">
+                    <span>How quickly can our team get started?</span>
+                    <i data-lucide="chevron-down" class="lucide-icon faqChevron"></i>
+                </button>
+                <div class="faqAnswer">
+                    Immediately. You can launch the interactive studio right now, upload a customer dataset, and see trained transformer model evaluations, what-if simulations, and SLA triage workflows in less than two minutes.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       HIGH-IMPACT BOTTOM CTA BANNER
+       ========================================================================== -->
+    <section class="landingBottomCta">
+        <h2 style="font-family: var(--font-heading), 'Plus Jakarta Sans', sans-serif; font-size: 2.6rem; font-weight: 800; margin-bottom: 16px;">
+            Turn Customer Retention Into Your Strongest Growth Engine
+        </h2>
+        <p style="font-size: 1.1rem; color: var(--muted); max-width: 680px; margin: 0 auto 32px auto;">
+            Join modern B2B SaaS teams using Qiplo to protect recurring revenue, automate prescriptive SLAs, and eliminate blind-spot churn.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+            <a href="/dashboard" class="btnPrimaryGlow" style="padding: 14px 34px; font-size: 1rem;">
+                <span>Launch Interactive Studio Now</span>
+                <i data-lucide="arrow-right" class="lucide-icon"></i>
+            </a>
+            <button type="button" class="btnGhostOutline openEnterpriseModalBtn" style="padding: 14px 28px; font-size: 1rem;">
+                <span>Request Custom Architecture Demo</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       COMPREHENSIVE MODERN FOOTER
+       ========================================================================== -->
+    <footer class="landingFooter">
+        <div class="footerContainer">
+            <div>
+                <div class="landingBrand" style="margin-bottom: 14px;">
+                    <svg viewBox="0 0 32 32" width="28" height="28" role="img">
+                        <rect width="32" height="32" rx="8" fill="#11131E" stroke="#6366F1" stroke-width="1.5" />
+                        <circle cx="13.5" cy="13.5" r="5.5" fill="none" stroke="#6366F1" stroke-width="2.5" />
+                        <circle cx="18.5" cy="18.5" r="4" fill="none" stroke="#FFFFFF" stroke-width="2.5" />
+                    </svg>
+                    <span class="landingBrandText">QIPLO</span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--muted); line-height: 1.5; max-width: 320px;">
+                    Enterprise Prescriptive Customer Churn &amp; Attrition Intelligence. Powered by Tabular Hybrid Transformers.
+                </p>
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 14px;">
+                    <span class="live-pulse-dot"></span>
+                    <span style="font-size: 0.74rem; font-weight: 700; color: #10B981;">ALL SYSTEMS OPERATIONAL (HTTP 200)</span>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="footerColHead">Platform</h4>
+                <ul class="footerLinks">
+                    <li><a href="/dashboard">Overview Analytics</a></li>
+                    <li><a href="/dashboard#sandbox">What-If Sandbox</a></li>
+                    <li><a href="/dashboard#actions">Prescriptive SLAs</a></li>
+                    <li><a href="/dashboard#presentation">PPTX Pitch Deck Engine</a></li>
+                    <li><a href="/dashboard#business">Revenue Hub</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footerColHead">Resources</h4>
+                <ul class="footerLinks">
+                    <li><a href="/guide">System Governance &amp; Guide</a></li>
+                    <li><a href="/api/download-template">CSV Dataset Schema</a></li>
+                    <li><a href="/api/compliance/audit/export">Audit Logs Export</a></li>
+                    <li><a href="/settings">RBAC &amp; API Keys</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footerColHead">Security &amp; Legal</h4>
+                <ul class="footerLinks">
+                    <li><a href="/guide">SOC-2 Type II Compliance</a></li>
+                    <li><a href="/guide">GDPR &amp; Data Privacy</a></li>
+                    <li><a href="/guide">HIPAA Architecture Ready</a></li>
+                    <li><a href="https://github.com/akshatk1997/Qiplo" target="_blank" rel="noopener">GitHub Repository</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footerBottomBar">
+            <div>&copy; 2026 Qiplo Intelligence Systems Inc. All rights reserved.</div>
+            <div style="display: flex; gap: 20px;">
+                <span>Never Lose A Customer Again</span>
+                <span>•</span>
+                <span>Version 2.7.0 LTS</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+       ENTERPRISE DEMO MODAL DIALOG
+       ========================================================================== -->
+    <div class="landingModalOverlay" id="enterpriseDemoModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="landingModalCard">
+            <button type="button" class="modalCloseBtn" id="closeEnterpriseModalBtn" aria-label="Close Modal">&times;</button>
+            <h3 id="modalTitle" style="font-family: var(--font-heading), 'Plus Jakarta Sans', sans-serif; font-size: 1.35rem; font-weight: 800; margin-bottom: 8px;">
+                Book an Enterprise Architecture Review
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 20px;">
+                Speak with a Senior Machine Learning Architect about your data warehouse connectors, VPC security, and custom transformer fine-tuning.
+            </p>
+            <form id="enterpriseDemoForm">
+                <div style="margin-bottom: 14px;">
+                    <label style="display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 6px;">Work Email</label>
+                    <input type="email" required placeholder="you@company.com" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2); color: inherit; font-size: 0.88rem;" />
+                </div>
+                <div style="margin-bottom: 14px;">
+                    <label style="display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 6px;">Company Name &amp; ARR Range</label>
+                    <input type="text" required placeholder="Acme SaaS ($5M - $20M ARR)" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2); color: inherit; font-size: 0.88rem;" />
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 6px;">Data Warehouse / Telemetry Source</label>
+                    <select style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2); color: inherit; font-size: 0.88rem;">
+                        <option value="snowflake">Snowflake Lakehouse</option>
+                        <option value="databricks">Databricks Spark</option>
+                        <option value="stripe">Stripe Connect &amp; Billing</option>
+                        <option value="postgres">PostgreSQL / SQL Server</option>
+                        <option value="csv">CSV / Flat File Ingestion</option>
+                    </select>
+                </div>
+                <button type="submit" class="btnPrimaryGlow" style="width: 100%; justify-content: center; padding: 12px;">
+                    <span>Schedule Architecture Review</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

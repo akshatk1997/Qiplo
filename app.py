@@ -914,7 +914,13 @@ def create_app() -> Flask:
     @app.route("/presentation")
     @app.route("/guide")
     def index() -> str:
+        if request.args.get("view") == "landing":
+            return render_template("landing.html")
         return render_template("index.html")
+
+    @app.route("/landing")
+    def landing() -> str:
+        return render_template("landing.html")
 
     @app.errorhandler(Exception)
     def handle_global_exception(e):
