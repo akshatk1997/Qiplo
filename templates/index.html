@@ -57,8 +57,14 @@
             if (!d) return;
             const isVis = d.classList.contains('visible');
             if (typeof window.closeHeaderLangMenu === 'function') window.closeHeaderLangMenu();
+            if (typeof window.closeAllCardMenus === 'function') window.closeAllCardMenus();
+            if (typeof window.closeAllFilterDropdowns === 'function') window.closeAllFilterDropdowns();
             d.classList.toggle('visible', !isVis);
             if (b) b.classList.toggle('active', !isVis);
+            if (!isVis && typeof window.selectMenuCategory === 'function') {
+                const s = document.getElementById('menuFolderSlider');
+                setTimeout(() => { window.selectMenuCategory(s ? s.value : 0, false); }, 30);
+            }
         };
         window.closeHeaderMoreMenu = function() {
             const d = document.getElementById('mobileMenuDropdown');

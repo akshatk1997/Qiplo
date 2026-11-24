@@ -7848,18 +7848,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenuDropdown = document.getElementById('mobileMenuDropdown');
     if (mobileMenuBtn && mobileMenuDropdown) {
-        mobileMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (window.AudioFeedback) AudioFeedback.click();
-            mobileMenuDropdown.classList.toggle('visible');
-            mobileMenuBtn.classList.toggle('active', mobileMenuDropdown.classList.contains('visible'));
-            if (mobileMenuDropdown.classList.contains('visible') && window.selectMenuCategory) {
-                const slider = document.getElementById('menuFolderSlider');
-                setTimeout(() => {
-                    window.selectMenuCategory(slider ? slider.value : 0, false);
-                }, 40);
-            }
-        });
+        // Click on mobileMenuBtn is cleanly handled by window.toggleHeaderMoreMenu(event) via inline onclick.
+        // We attach outside-click and item-dismiss listeners here.
         document.addEventListener('click', (e) => {
             if (!mobileMenuBtn.contains(e.target) && !mobileMenuDropdown.contains(e.target)) {
                 mobileMenuDropdown.classList.remove('visible');
@@ -8436,7 +8426,13 @@ window.toggleHeaderMoreMenu = function(e) {
     } else {
         dropdown.classList.add('visible');
         if (btn) btn.classList.add('active');
-        if (window.AudioFeedback) AudioFeedback.click();
+        if (window.AudioFeedback && window.AudioFeedback.click) AudioFeedback.click();
+        if (typeof window.selectMenuCategory === 'function') {
+            const slider = document.getElementById('menuFolderSlider');
+            setTimeout(() => {
+                window.selectMenuCategory(slider ? slider.value : 0, false);
+            }, 30);
+        }
     }
 };
 

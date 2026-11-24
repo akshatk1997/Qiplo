@@ -4045,10 +4045,10 @@ def create_app() -> Flask:
             --text: #F9FAFB;
             --text-dim: #D1D5DB;
             --muted: #9CA3AF;
-            --font-heading: 'Avenir Next', 'AvenirNextforSAS', 'Anova', 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-            --font-body: 'Anova UI', 'Avenir Next', 'AvenirNextforSAS', 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-            --font-ui: 'Avenir Next', 'AvenirNextforSAS', 'Anova UI', 'Plus Jakarta Sans', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-            --font-mono: 'SAS Monospace', 'JetBrains Mono', 'Space Mono', 'Consolas', monospace;
+            --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            --font-ui: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Space Mono', 'Consolas', monospace;
         }}
         @media print {{
             @page {{
@@ -5276,7 +5276,7 @@ function initAllCharts() {{
         return;
     }}
 
-    Chart.defaults.font.family = "'Avenir Next', 'AvenirNextforSAS', 'Anova', 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif";
+    Chart.defaults.font.family = "'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif";
     Chart.defaults.color = "#9CA3AF";
 
     // 1. Portfolio Risk Distribution Doughnut

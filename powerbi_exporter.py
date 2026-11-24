@@ -305,7 +305,7 @@ def generate_theme_json():
                         "show": True,
                         "fontColor": {"solid": {"color": "#FFFFFF"}},
                         "fontSize": 12,
-                        "fontFamily": "'Avenir Next', 'Plus Jakarta Sans', 'Segoe UI', sans-serif"
+                        "fontFamily": "'Plus Jakarta Sans', 'Inter', 'Segoe UI', sans-serif"
                     }]
                 }
             }
