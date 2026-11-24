@@ -5316,6 +5316,29 @@ body.light-theme .bullet-item i {
     visibility: hidden;
     pointer-events: none;
     transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+
+.mobile-menu-dropdown::-webkit-scrollbar,
+.header-more-dropdown::-webkit-scrollbar {
+    width: 5px;
+}
+
+.mobile-menu-dropdown::-webkit-scrollbar-track,
+.header-more-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.mobile-menu-dropdown::-webkit-scrollbar-thumb,
+.header-more-dropdown::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 9999px;
+}
+
+body.light-theme .mobile-menu-dropdown::-webkit-scrollbar-thumb,
+body.light-theme .header-more-dropdown::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
 }
 
 .mobile-menu-dropdown.visible,

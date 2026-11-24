@@ -908,6 +908,11 @@ def create_app() -> Flask:
         return [row[1] for row in conn.execute("PRAGMA table_info(customer_churn)").fetchall()]
 
     @app.route("/")
+    def root() -> str:
+        if request.args.get("view") in ("dashboard", "app", "studio", "work"):
+            return render_template("index.html")
+        return render_template("landing.html")
+
     @app.route("/dashboard")
     @app.route("/actions")
     @app.route("/business")

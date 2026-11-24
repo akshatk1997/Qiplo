@@ -86,7 +86,7 @@
                         <span id="landingLangCode">EN</span>
                         <i data-lucide="chevron-down" class="lucide-icon" style="width: 12px; height: 12px; margin-left: 2px;"></i>
                     </button>
-                    <div class="header-lang-dropdown hidden" id="langDropdownMenu" style="position: absolute; right: 0; top: 110%; z-index: 200;">
+                    <div class="header-lang-dropdown mobile-lang-grid hidden" id="langDropdownMenu" style="position: absolute; right: 0; top: 110%; z-index: 200;">
                         <div class="header-lang-dropdown-head">
                             <i data-lucide="globe" class="lucide-icon" style="width: 14px; height: 14px; color: var(--accent);"></i>
                             <span>Select Language</span>
@@ -1018,13 +1018,17 @@
        HIGH-IMPACT BOTTOM CTA BANNER
        ========================================================================== -->
     <section class="landingBottomCta">
-        <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.8rem; font-weight: 800; margin-bottom: 16px;">
+        <div class="bottomCtaEyebrow">
+            <span class="live-pulse-dot"></span>
+            <span>Enterprise Expansion &amp; Retention Engine</span>
+        </div>
+        <h2 class="bottomCtaTitle">
             Turn Customer Retention Into Your Strongest Growth Engine
         </h2>
-        <p style="font-size: 1.15rem; line-height: 1.6; max-width: 720px; margin: 0 auto 34px auto;">
-            Join modern B2B SaaS teams using Qiplo to protect recurring revenue, automate prescriptive SLAs, and eliminate blind-spot churn.
+        <p class="bottomCtaDesc">
+            Join modern B2B SaaS teams using Qiplo to protect recurring revenue, automate prescriptive SLAs, and eliminate customer churn before it happens.
         </p>
-        <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+        <div class="bottomCtaActions">
             <a href="/dashboard" class="btnPrimaryGlow" style="padding: 14px 34px; font-size: 1rem;">
                 <span>Launch Interactive Studio Now</span>
                 <i data-lucide="arrow-right" class="lucide-icon"></i>
@@ -1133,10 +1137,6 @@
                 </div>
                 <button type="submit" class="btnPrimaryGlow modalSubmitBtn">
                     <span>Schedule Architecture Review</span>
-                </button>
-            </form>
-        </div>
-    </div>
                 </button>
             </form>
         </div>
