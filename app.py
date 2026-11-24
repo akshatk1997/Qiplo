@@ -21,7 +21,7 @@ if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 import pandas as pd
 from flask import Flask, jsonify, render_template, request, Response, redirect
 
@@ -1296,7 +1296,7 @@ def create_app() -> Flask:
             }
 
         # Get model version and last retrained metadata
-        from datetime import datetime
+        from datetime import datetime, timezone
         model_last_trained = "Awaiting initial training"
         model_version = "v1.0.0-RF"
         try:

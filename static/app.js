@@ -465,6 +465,7 @@ function renderSourceMeta(customDataset) {
     document.querySelectorAll('.stat-high-val').forEach(el => el.textContent = highRisk);
     document.querySelectorAll('.stat-low-val').forEach(el => el.textContent = lowRisk);
     document.querySelectorAll('.stat-fields-val').forEach(el => el.textContent = fields.length || '—');
+    if (typeof updateAllLiveBadges === 'function') updateAllLiveBadges(total);
 
     // Funnel Stages
     const elFunnelIngested = document.getElementById('funnelValIngested');
@@ -2604,6 +2605,17 @@ function animateLogo() {
 let lastTelemetryHash = null;
 let isSyncingLiveData = false;
 
+function updateAllLiveBadges(count) {
+    const text = `Live (${count || 0})`;
+    const liveBadgeText = document.getElementById('liveTrackingText');
+    if (liveBadgeText) liveBadgeText.textContent = text;
+    const topbarLiveText = document.getElementById('topbarLiveTrackingText');
+    if (topbarLiveText) topbarLiveText.textContent = text;
+    const sourcesLiveText = document.getElementById('sourcesLiveStatusText');
+    if (sourcesLiveText) sourcesLiveText.textContent = text;
+}
+window.updateAllLiveBadges = updateAllLiveBadges;
+
 function initLiveDataTracker() {
     const checkTrackingStatus = async () => {
         if (isSyncingLiveData) return;
@@ -2612,15 +2624,15 @@ function initLiveDataTracker() {
             if (!res || !res.ok) return;
             const data = await res.json();
             if (data.status === 'active' && data.telemetry_hash) {
-                const liveBadgeText = document.getElementById('liveTrackingText');
-                if (liveBadgeText) {
-                    liveBadgeText.textContent = `Live (${data.total_active_records || 0})`;
-                }
+                updateAllLiveBadges(data.total_active_records);
                 if (lastTelemetryHash && lastTelemetryHash !== data.telemetry_hash) {
                     isSyncingLiveData = true;
                     try {
-                        showBiToast('Live data file change detected. Syncing telemetry...', 'refresh-cw');
+                        if (typeof showBiToast === 'function') {
+                            showBiToast('Live data file change detected. Syncing telemetry...', 'refresh-cw');
+                        }
                         await loadDashboard();
+                        await fetchSources();
                     } finally {
                         isSyncingLiveData = false;
                     }
@@ -2633,7 +2645,7 @@ function initLiveDataTracker() {
     };
 
     checkTrackingStatus();
-    setInterval(checkTrackingStatus, 5000);
+    setInterval(checkTrackingStatus, 4000);
 }
 
 setupTabs();
