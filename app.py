@@ -9141,6 +9141,21 @@ def download_presentation_pptx():
         palette_name = "indigo"
 
     try:
+        # Check if caller passed a corporate-presentation skill deck with native blocks
+        if any(s.get("blocks") for s in slides) or "deck" in data:
+            deck_obj = data.get("deck") or {
+                "slides": slides,
+                "theme": {"palette_name": palette_name},
+                "meta": {"title": title, "dataset_id": "active_lakehouse"}
+            }
+            filename = f"qiplo_corporate_deck_{int(datetime.now().timestamp())}.pptx"
+            out_path = SEARCH_FILES_DIR / filename
+            corp_pres.export_corporate_deck_to_pptx(deck_obj, str(out_path), palette_name=palette_name)
+            return jsonify({
+                "status": "ok",
+                "download_url": f"/api/download/{filename}"
+            })
+
         from pptx import Presentation
         from pptx.util import Inches
         
@@ -9250,6 +9265,127 @@ def download_presentation_pptx():
         })
     except Exception as e:
         return jsonify({"error": f"Failed to build presentation PPTX: {e}"}), 500
+
+
+# ============================================================
+# Corporate Presentation Skill Engine Routes
+# Compliant with corporate-presentation/SKILL.md
+# ============================================================
+import corporate_presentation as corp_pres
+
+@app.route("/api/corporate-presentation/generate", methods=["GET", "POST"])
+def corporate_presentation_generate():
+    """Generates a board-level, data-accurate presentation deck JSON adhering to corporate-presentation/SKILL.md."""
+    data = (request.json or {}) if request.method == "POST" else (request.args or {})
+    audience = (data.get("audience") or "board").strip().lower()
+    purpose = (data.get("purpose") or "Executive Churn & Retention Review").strip()
+    language = (data.get("language") or "en").strip()
+    theme_name = (data.get("theme") or "classic_blue").strip().lower()
+    num_slides = int(data.get("num_slides") or 9)
+    custom_prompt = (data.get("custom_prompt") or "").strip()
+
+    try:
+        deck_json = corp_pres.generate_corporate_deck_json(
+            audience=audience,
+            purpose=purpose,
+            language=language,
+            custom_prompt=custom_prompt,
+            theme_name=theme_name,
+            num_slides=num_slides
+        )
+        return jsonify({
+            "status": "ok",
+            "deck": deck_json,
+            "bindings": deck_json.get("bindings", {}),
+            "slides_count": len(deck_json.get("slides", []))
+        })
+    except Exception as e:
+        return jsonify({
+            "ok": False,
+            "stage": "generate",
+            "message": f"Corporate presentation generation failed: {e}",
+            "fix": "Verify database lakehouse connection and schema bindings."
+        }), 500
+
+
+@app.route("/api/corporate-presentation/patch", methods=["POST"])
+def corporate_presentation_patch():
+    """Applies RFC 6902 JSON patches to a Deck JSON with validation and locked slide enforcement."""
+    data = request.json or {}
+    deck = data.get("deck")
+    patches = data.get("patches", [])
+    bindings = data.get("bindings")
+
+    if not deck or not isinstance(deck, dict):
+        return jsonify({
+            "ok": False,
+            "stage": "patch",
+            "message": "Missing 'deck' JSON object in request payload.",
+            "fix": "Pass the current deck JSON object alongside patches."
+        }), 400
+
+    try:
+        res = corp_pres.apply_deck_patch(deck, patches, bindings=bindings)
+        status_code = 200 if res.get("ok") else 400
+        return jsonify(res), status_code
+    except Exception as e:
+        return jsonify({
+            "ok": False,
+            "stage": "patch",
+            "message": f"Failed to apply patch: {e}",
+            "fix": "Check patch format and JSON paths."
+        }), 500
+
+
+@app.route("/api/corporate-presentation/validate", methods=["POST"])
+def corporate_presentation_validate():
+    """Validates accuracy guardrails (reconciliations, resolved placeholders, dataRefs)."""
+    data = request.json or {}
+    deck = data.get("deck", {})
+    bindings = data.get("bindings") or corp_pres.compute_dataset_bindings()
+
+    try:
+        res = corp_pres.validate_accuracy_guardrails(deck, bindings)
+        status_code = 200 if res.get("ok") else 400
+        return jsonify(res), status_code
+    except Exception as e:
+        return jsonify({
+            "ok": False,
+            "stage": "guardrails",
+            "message": f"Guardrails validation error: {e}",
+            "fix": "Check deck structure and binding definitions."
+        }), 500
+
+
+@app.route("/api/corporate-presentation/export-pptx", methods=["POST"])
+def corporate_presentation_export_pptx():
+    """Exports a corporate Deck JSON to a 16:9 native PPTX with native charts, tables, and notes."""
+    data = request.json or {}
+    deck = data.get("deck")
+    theme_name = (data.get("theme") or "").strip().lower() or None
+
+    if not deck:
+        # If no deck is passed directly, generate standard board deck
+        deck = corp_pres.generate_corporate_deck_json(theme_name=theme_name or "classic_blue")
+
+    try:
+        filename = f"qiplo_corporate_deck_{int(datetime.now().timestamp())}.pptx"
+        out_path = SEARCH_FILES_DIR / filename
+        corp_pres.export_corporate_deck_to_pptx(deck, str(out_path), palette_name=theme_name)
+
+        return jsonify({
+            "status": "ok",
+            "download_url": f"/api/download/{filename}",
+            "filename": filename,
+            "slides_count": len(deck.get("slides", []))
+        })
+    except Exception as e:
+        return jsonify({
+            "ok": False,
+            "stage": "export",
+            "message": f"Corporate PPTX export failed: {e}",
+            "fix": "Verify block structures and chart values."
+        }), 500
 
 
 # ============================================================
