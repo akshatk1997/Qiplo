@@ -1178,12 +1178,12 @@ body.light-theme .platformPill svg {
 }
 
 /* ==========================================================================
-   SECTIONS GLOBAL
+   SECTIONS GLOBAL & SYSTEMATIC HEADER ARCHITECTURE
    ========================================================================== */
 .landingSection {
     max-width: 1260px;
     margin: 0 auto;
-    padding: 96px 24px;
+    padding: 84px 24px;
     position: relative;
     z-index: 10;
     overflow: visible !important;
@@ -1191,33 +1191,46 @@ body.light-theme .platformPill svg {
 
 .sectionHeader {
     text-align: center;
-    max-width: 800px;
-    margin: 0 auto 56px auto;
+    max-width: 760px;
+    margin: 0 auto 52px auto;
 }
 
 .sectionTag {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 9999px;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.3);
     font-family: 'Plus Jakarta Sans', sans-serif !important;
-    font-size: 0.76rem;
-    font-weight: 800;
+    font-size: 0.72rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #818CF8;
-    margin-bottom: 12px;
+    color: #A5B4FC;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(99, 102, 241, 0.1);
+    transition: all 0.2s ease;
 }
 
 body.light-theme .sectionTag {
-    color: #4F46E5 !important;
+    background: #EEF2FF !important;
+    border: 1px solid #C7D2FE !important;
+    color: #4338CA !important;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.08) !important;
 }
 
 .sectionTitle {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
-    font-size: 2.6rem;
+    font-size: clamp(2rem, 3.2vw, 2.7rem);
     font-weight: 800;
-    letter-spacing: -0.025em;
-    line-height: 1.2;
-    margin-bottom: 16px;
+    letter-spacing: -0.03em;
+    line-height: 1.18;
+    margin: 0 auto 14px auto;
     color: #FFFFFF;
+    text-wrap: balance;
 }
 
 body.light-theme .sectionTitle {
@@ -1225,13 +1238,56 @@ body.light-theme .sectionTitle {
 }
 
 .sectionSub {
-    font-size: 1.1rem;
-    color: #CBD5E1;
-    line-height: 1.6;
+    font-family: 'Inter', sans-serif !important;
+    font-size: clamp(1rem, 1.6vw, 1.1rem);
+    color: #94A3B8;
+    line-height: 1.62;
+    max-width: 660px;
+    margin: 0 auto;
+    text-wrap: pretty;
 }
 
 body.light-theme .sectionSub {
-    color: #334155 !important;
+    color: #475569 !important;
+}
+
+.attentionFactorLabel {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #818CF8;
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+}
+
+body.light-theme .attentionFactorLabel {
+    color: #4F46E5 !important;
+}
+
+.roiPresetsHeader {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #94A3B8;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+}
+
+body.light-theme .roiPresetsHeader {
+    color: #475569 !important;
+}
+
+.roiScaleLabels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #94A3B8;
+    margin-top: 4px;
+}
+
+body.light-theme .roiScaleLabels {
+    color: #64748B !important;
 }
 
 /* ==========================================================================
@@ -2821,6 +2877,8 @@ body.light-theme .footerBrandDesc {
    RESPONSIVE DESIGN
    ========================================================================== */
 @media (max-width: 1024px) {
+    .landingSection { padding: 68px 20px !important; }
+    .sectionHeader { margin-bottom: 40px !important; }
     .heroMainHeadline { font-size: 2.8rem; }
     .heroConsoleStepsGrid { grid-template-columns: 1fr; }
     .statStripGrid { grid-template-columns: repeat(2, 1fr); }
@@ -2835,6 +2893,8 @@ body.light-theme .footerBrandDesc {
 
 @media (max-width: 768px) {
     .landingNavLinks { display: none; }
+    .landingSection { padding: 52px 16px !important; }
+    .sectionHeader { margin-bottom: 32px !important; }
     .heroMainHeadline { font-size: 2.2rem; }
     .heroLeadSubtitle { font-size: 1.05rem; }
     .sandboxSliderControlRow { grid-template-columns: 1fr; }
