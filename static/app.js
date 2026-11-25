@@ -2606,7 +2606,7 @@ let lastTelemetryHash = null;
 let isSyncingLiveData = false;
 
 function updateAllLiveBadges(count) {
-    const text = `Live (${count || 0})`;
+    const text = `Active (${count || 0})`;
     const liveBadgeText = document.getElementById('liveTrackingText');
     if (liveBadgeText) liveBadgeText.textContent = text;
     const topbarLiveText = document.getElementById('topbarLiveTrackingText');

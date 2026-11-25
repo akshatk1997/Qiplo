@@ -98,10 +98,6 @@
                     <span class="sloganBadge" style="font-size: 0.72rem; background: rgba(79, 70, 229, 0.12); border: 1px solid rgba(79, 70, 229, 0.2); color: #4F46E5; padding: 3px 8px; border-radius: 999px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; line-height: 1;">
                         <i data-lucide="shield-check" class="lucide-icon" style="width: 12px; height: 12px;"></i> <span data-i18n="slogan">Never lose a customer again</span>
                     </span>
-                    <span class="topbarLiveBadge" id="topbarLiveBadge" title="Live Continuous Database Telemetry Stream Active">
-                        <span class="live-pulse-dot"></span>
-                        <span id="topbarLiveTrackingText">Live (250)</span>
-                    </span>
                     <span class="demoBadge" id="demoBadge" style="display: none;">
                         <i data-lucide="flask-conical" class="lucide-icon" style="width: 11px; height: 11px;"></i> <span data-i18n="demo_badge">Demo Sandbox Active</span>
                     </span>
@@ -359,9 +355,9 @@
                                 </div>
                                 <span class="item-meta">.pdf</span>
                             </button>
-                            <button class="dropdown-item telemetry-item" id="liveTrackingBadge" type="button" onclick="reloadData()" title="Live Continuous Database Telemetry Stream - Click to Sync">
+                            <button class="dropdown-item telemetry-item" id="liveTrackingBadge" type="button" onclick="reloadData()" title="Continuous Database Telemetry Stream - Click to Sync">
                                 <div class="item-left">
-                                    <span class="item-icon-box" title="Live Telemetry Stream Engine">
+                                    <span class="item-icon-box" title="Telemetry Stream Engine">
                                         <svg class="brand-logo-svg brand-telemetry" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="12" cy="12" r="9.5" stroke="#22C55E" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.6"/>
                                             <circle cx="12" cy="12" r="5.5" stroke="#22C55E" stroke-width="1.2" opacity="0.8"/>
@@ -369,7 +365,7 @@
                                             <path d="M12 12l6-6" stroke="#4ADE80" stroke-width="1.5" stroke-linecap="round"/>
                                         </svg>
                                     </span>
-                                    <span class="item-label">Live Telemetry Stream</span>
+                                    <span class="item-label">Telemetry Stream</span>
                                 </div>
                                 <span class="item-meta telemetry-meta"><span class="live-pulse-dot"></span> <span id="liveTrackingText">Active</span></span>
                             </button>
@@ -640,7 +636,7 @@
                                             <path d="M20 4v5h-5M4 20v-5h5" stroke="#34D399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
                                     </span>
-                                    <span class="item-label">Sync Live Telemetry</span>
+                                    <span class="item-label">Sync Telemetry Stream</span>
                                 </div>
                                 <span class="item-meta">Sync</span>
                             </button>

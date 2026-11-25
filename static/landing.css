@@ -657,11 +657,28 @@ body.light-theme .workflowStepCard:hover {
     box-shadow: 0 0 22px rgba(99, 102, 241, 0.22), inset 0 0 16px rgba(99, 102, 241, 0.06) !important;
 }
 
-body.light-theme .workflowStepCard.step-active,
-body.light-theme .workflowStepCard.active {
+body.light-theme .workflowStepCard[data-step="1"].step-active,
+body.light-theme .workflowStepCard[data-step="1"].active,
+body.light-theme .heroConsoleStepTab[data-console-step="Ingestion"].active {
     background: #F8FAFF !important;
     border: 1.5px solid #4F46E5 !important;
     box-shadow: 0 4px 20px rgba(79, 70, 229, 0.09) !important;
+}
+
+body.light-theme .workflowStepCard[data-step="2"].step-active,
+body.light-theme .workflowStepCard[data-step="2"].active,
+body.light-theme .heroConsoleStepTab[data-console-step="Sandbox"].active {
+    background: #FFF9F7 !important;
+    border: 1.5px solid #FF6B4A !important;
+    box-shadow: 0 4px 20px rgba(255, 107, 74, 0.09) !important;
+}
+
+body.light-theme .workflowStepCard[data-step="3"].step-active,
+body.light-theme .workflowStepCard[data-step="3"].active,
+body.light-theme .heroConsoleStepTab[data-console-step="Actions"].active {
+    background: #F0FDF9 !important;
+    border: 1.5px solid #00BFA5 !important;
+    box-shadow: 0 4px 20px rgba(0, 191, 165, 0.09) !important;
 }
 
 /* Step Badges */
@@ -796,11 +813,28 @@ body.light-theme .workflowStepPill {
     box-shadow: 0 0 10px rgba(99, 102, 241, 0.25) !important;
 }
 
-body.light-theme .workflowStepPill.active {
+body.light-theme .workflowStepCard[data-step="1"] .workflowStepPill.active,
+body.light-theme .heroConsoleStepTab[data-console-step="Ingestion"] .workflowStepPill.active {
     background: #FFFFFF !important;
     border: 1.5px solid #4F46E5 !important;
     color: #4F46E5 !important;
     box-shadow: 0 2px 6px rgba(79, 70, 229, 0.12) !important;
+}
+
+body.light-theme .workflowStepCard[data-step="2"] .workflowStepPill.active,
+body.light-theme .heroConsoleStepTab[data-console-step="Sandbox"] .workflowStepPill.active {
+    background: #FFFFFF !important;
+    border: 1.5px solid #FF6B4A !important;
+    color: #FF6B4A !important;
+    box-shadow: 0 2px 6px rgba(255, 107, 74, 0.12) !important;
+}
+
+body.light-theme .workflowStepCard[data-step="3"] .workflowStepPill.active,
+body.light-theme .heroConsoleStepTab[data-console-step="Actions"] .workflowStepPill.active {
+    background: #FFFFFF !important;
+    border: 1.5px solid #00BFA5 !important;
+    color: #00BFA5 !important;
+    box-shadow: 0 2px 6px rgba(0, 191, 165, 0.12) !important;
 }
 
 /* Dynamic Interactive Console Screen */
