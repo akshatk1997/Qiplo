@@ -7287,10 +7287,84 @@ body.light-theme .heroWaveContainer {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(139, 92, 246, 0.15);
 }
 
-/* Responsive adjustment for Workflow banner */
+/* Responsive adjustment for Workflow banner & Decision Hub */
 @media (max-width: 900px) {
+    .executiveWorkflowHub .executiveWorkflowBanner,
     .executiveWorkflowBanner {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        padding: 0 14px 16px 14px !important;
+    }
+    .workflowStepCard {
+        min-height: auto !important;
+        padding: 15px 16px !important;
+        border-radius: 12px !important;
+    }
+    .workflowStepBadge {
+        margin-bottom: 8px !important;
+    }
+    .workflowStepInfo {
+        margin-bottom: 8px !important;
+    }
+    .workflowStepTitle {
+        font-size: 0.92rem !important;
+    }
+    .workflowStepSub {
+        font-size: 0.8rem !important;
+        line-height: 1.4 !important;
+    }
+    .workflowStepPill {
+        margin: 6px auto 0 auto !important;
+        align-self: center !important;
+        padding: 5px 20px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .hide-mobile {
+        display: none !important;
+    }
+    .executiveWorkflowHub {
+        border-radius: 14px !important;
+        margin-bottom: 16px !important;
+    }
+    .executiveWorkflowHub .heroWaveContainer {
+        height: 42px !important;
+    }
+    .executiveWorkflowHub .executiveWorkflowBanner,
+    .executiveWorkflowBanner {
+        padding: 0 10px 12px 10px !important;
+        gap: 10px !important;
+    }
+    .studioTabs {
+        padding: 8px 10px 0 10px !important;
+        gap: 4px !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+    }
+    .tab {
+        padding: 8px 14px !important;
+        font-size: 0.82rem !important;
+        gap: 6px !important;
+    }
+    .executiveSubheader {
+        margin: 12px 0 16px 0 !important;
+        gap: 12px !important;
+    }
+    .executiveViewTitle {
+        font-size: 1.45rem !important;
+    }
+    .executiveFilterToolbar {
+        width: 100% !important;
+        gap: 8px !important;
+    }
+    .filterPillGroup {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+    }
+    .filterPillBtn {
+        font-size: 0.74rem !important;
+        padding: 5px 10px !important;
     }
 }
 

@@ -600,10 +600,64 @@
 
     window.showLandingToast = showToast;
 
+    // Mobile Drawer Navigation Toggle
+    function initMobileMenu() {
+        const toggleBtn = document.getElementById('landingMobileMenuToggle');
+        const drawer = document.getElementById('landingMobileDrawer');
+        if (!toggleBtn || !drawer) return;
+
+        function closeDrawer() {
+            drawer.classList.add('hidden');
+            drawer.setAttribute('aria-hidden', 'true');
+            toggleBtn.classList.remove('active');
+            toggleBtn.innerHTML = '<i data-lucide="menu" class="lucide-icon"></i>';
+            refreshIcons();
+        }
+
+        function openDrawer() {
+            drawer.classList.remove('hidden');
+            drawer.setAttribute('aria-hidden', 'false');
+            toggleBtn.classList.add('active');
+            toggleBtn.innerHTML = '<i data-lucide="x" class="lucide-icon"></i>';
+            refreshIcons();
+        }
+
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (drawer.classList.contains('hidden')) {
+                openDrawer();
+            } else {
+                closeDrawer();
+            }
+        });
+
+        // Close when clicking any nav link inside drawer
+        drawer.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                closeDrawer();
+            });
+        });
+
+        // Close on click outside
+        document.addEventListener('click', (e) => {
+            if (!drawer.classList.contains('hidden') && !drawer.contains(e.target) && !toggleBtn.contains(e.target)) {
+                closeDrawer();
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !drawer.classList.contains('hidden')) {
+                closeDrawer();
+            }
+        });
+    }
+
     // Initialization
     function onInit() {
         initTheme();
         initLandingWaves();
+        initMobileMenu();
         initHeroConsoleNavigator();
         initSandboxLeverTester();
         initRoiCalculator();

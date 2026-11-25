@@ -123,13 +123,35 @@
                 </div>
 
                 <!-- Open Studio Workspace -->
-                <a href="/dashboard" class="btnGhostOutline" title="Open Qiplo Executive Studio">Workspace</a>
+                <a href="/dashboard" class="btnGhostOutline landingWorkspaceBtn hide-mobile-inline" title="Open Qiplo Executive Studio">Workspace</a>
 
                 <!-- Primary CTA -->
-                <a href="/dashboard" class="btnPrimaryGlow" title="Launch Interactive Studio">
-                    <span>Launch Studio</span>
+                <a href="/dashboard" class="btnPrimaryGlow landingLaunchBtn" title="Launch Interactive Studio">
+                    <span class="launchBtnText">Launch Studio</span>
                     <i data-lucide="arrow-right" class="lucide-icon"></i>
                 </a>
+
+                <!-- Mobile Navigation Toggle -->
+                <button type="button" class="btnGhostOutline iconOnlyBtn landingMobileMenuToggle" id="landingMobileMenuToggle" aria-label="Toggle Navigation Menu" title="Open Navigation Menu">
+                    <i data-lucide="menu" class="lucide-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer / Dropdown Menu -->
+        <div class="landingMobileDrawer hidden" id="landingMobileDrawer" aria-hidden="true">
+            <ul class="mobileDrawerLinks">
+                <li><a href="#pipeline" class="mobileDrawerLink"><i data-lucide="git-branch" class="lucide-icon"></i> <span>Pipeline</span></a></li>
+                <li><a href="#cohort-radar" class="mobileDrawerLink"><i data-lucide="radar" class="lucide-icon"></i> <span>Live Cohorts</span></a></li>
+                <li><a href="#ai-engine" class="mobileDrawerLink"><i data-lucide="cpu" class="lucide-icon"></i> <span>AI Engine</span></a></li>
+                <li><a href="#roi-calculator" class="mobileDrawerLink"><i data-lucide="calculator" class="lucide-icon"></i> <span>ROI Simulator</span></a></li>
+                <li><a href="#deck-preview" class="mobileDrawerLink"><i data-lucide="presentation" class="lucide-icon"></i> <span>Executive Decks</span></a></li>
+                <li><a href="#pricing" class="mobileDrawerLink"><i data-lucide="credit-card" class="lucide-icon"></i> <span>Pricing</span></a></li>
+                <li><a href="/guide" class="mobileDrawerLink"><i data-lucide="book-open" class="lucide-icon"></i> <span>Docs &amp; Guide</span></a></li>
+            </ul>
+            <div class="mobileDrawerActions">
+                <a href="/dashboard" class="btnGhostOutline mobileDrawerBtn"><i data-lucide="layout-dashboard" class="lucide-icon"></i> <span>Open Workspace</span></a>
+                <a href="/dashboard" class="btnPrimaryGlow mobileDrawerBtn"><span>Launch Studio</span> <i data-lucide="arrow-right" class="lucide-icon"></i></a>
             </div>
         </div>
     </nav>

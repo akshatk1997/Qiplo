@@ -2907,34 +2907,325 @@ body.light-theme .footerBrandDesc {
     color: #475569 !important;
 }
 
+/* Mobile Navigation Drawer & Hamburger Toggle */
+.landingMobileMenuToggle {
+    display: none !important;
+}
+
+.landingMobileDrawer {
+    display: none !important;
+}
+
 /* ==========================================================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN (TABLETS & MOBILE SMARTPHONES)
    ========================================================================== */
 @media (max-width: 1024px) {
     .landingSection { padding: 68px 20px !important; }
     .sectionHeader { margin-bottom: 40px !important; }
-    .heroMainHeadline { font-size: 2.8rem; }
-    .heroConsoleStepsGrid { grid-template-columns: 1fr; }
-    .statStripGrid { grid-template-columns: repeat(2, 1fr); }
-    .roiCalculatorCard { grid-template-columns: 1fr; }
-    .featureCardsGrid { grid-template-columns: repeat(2, 1fr); }
-    .pricingGrid { grid-template-columns: 1fr; }
-    .pricingCard.featured { transform: none; }
-    .footerContainer { grid-template-columns: 1fr 1fr; }
-    .cohortLiveAccountsGrid { grid-template-columns: 1fr; }
-    .attentionNodesGrid { grid-template-columns: repeat(2, 1fr); }
+    .heroMainHeadline { font-size: 2.8rem !important; }
+    .heroConsoleStepsGrid,
+    .executiveWorkflowBanner,
+    .executiveWorkflowHub .executiveWorkflowBanner {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    .statStripGrid { grid-template-columns: repeat(2, 1fr) !important; }
+    .roiCalculatorCard { grid-template-columns: 1fr !important; }
+    .featureCardsGrid { grid-template-columns: repeat(2, 1fr) !important; }
+    .pricingGrid { grid-template-columns: 1fr !important; }
+    .pricingCard.featured { transform: none !important; }
+    .footerContainer { grid-template-columns: 1fr 1fr !important; }
+    .cohortLiveAccountsGrid { grid-template-columns: 1fr !important; }
+    .attentionNodesGrid { grid-template-columns: repeat(2, 1fr) !important; }
+    .deckSlideStage { padding: 28px 24px !important; }
 }
 
 @media (max-width: 768px) {
-    .landingNavLinks { display: none; }
-    .landingSection { padding: 52px 16px !important; }
-    .sectionHeader { margin-bottom: 32px !important; }
-    .heroMainHeadline { font-size: 2.2rem; }
-    .heroLeadSubtitle { font-size: 1.05rem; }
-    .sandboxSliderControlRow { grid-template-columns: 1fr; }
-    .actionsPrescriptiveGrid { grid-template-columns: 1fr; }
-    .telemetryGridMock { grid-template-columns: 1fr; }
-    .featureCardsGrid { grid-template-columns: 1fr; }
-    .footerContainer { grid-template-columns: 1fr; }
-    .attentionNodesGrid { grid-template-columns: 1fr; }
+    /* Navigation Bar Mobile Layout */
+    .landingNavLinks { display: none !important; }
+    .hide-mobile-inline { display: none !important; }
+    .landingNavContainer { padding: 12px 16px !important; }
+    .landingMobileMenuToggle {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 38px !important;
+        height: 38px !important;
+        padding: 0 !important;
+        border-radius: 9px !important;
+        cursor: pointer !important;
+    }
+    .landingLaunchBtn {
+        padding: 8px 14px !important;
+        font-size: 0.82rem !important;
+    }
+    .landingMobileDrawer:not(.hidden) {
+        display: flex !important;
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px 18px 20px 18px;
+        background: rgba(13, 16, 38, 0.98) !important;
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+        animation: mobileDrawerSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    body.light-theme .landingMobileDrawer:not(.hidden) {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border-bottom: 1px solid #E2E8F0 !important;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08) !important;
+    }
+    @keyframes mobileDrawerSlideDown {
+        from { opacity: 0; transform: translateY(-8px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .mobileDrawerLinks {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+    .mobileDrawerLink {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        text-decoration: none;
+        color: #E2E8F0 !important;
+        font-size: 0.92rem;
+        font-weight: 600;
+        transition: background 0.15s ease, color 0.15s ease;
+    }
+    .mobileDrawerLink i, .mobileDrawerLink svg {
+        color: #818CF8;
+        width: 16px;
+        height: 16px;
+    }
+    body.light-theme .mobileDrawerLink {
+        color: #1E293B !important;
+    }
+    body.light-theme .mobileDrawerLink i, body.light-theme .mobileDrawerLink svg {
+        color: #4F46E5;
+    }
+    .mobileDrawerLink:hover {
+        background: rgba(99, 102, 241, 0.12);
+        color: #00F5FF !important;
+    }
+    body.light-theme .mobileDrawerLink:hover {
+        background: #F1F5F9;
+        color: #4F46E5 !important;
+    }
+    .mobileDrawerActions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    body.light-theme .mobileDrawerActions {
+        border-top-color: #E2E8F0 !important;
+    }
+    .mobileDrawerBtn {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 11px 16px !important;
+        font-size: 0.9rem !important;
+        text-align: center;
+    }
+
+    /* Sections & Typography */
+    .landingSection { padding: 48px 16px !important; }
+    .sectionHeader { margin-bottom: 28px !important; }
+    .sectionTitle { font-size: 1.85rem !important; }
+    .sectionSub { font-size: 0.95rem !important; }
+    .heroMainHeadline {
+        font-size: 2.1rem !important;
+        line-height: 1.18 !important;
+        margin-bottom: 16px !important;
+    }
+    .heroLeadSubtitle {
+        font-size: 1.0rem !important;
+        line-height: 1.55 !important;
+        margin-bottom: 24px !important;
+    }
+    .heroEyebrowBadge {
+        font-size: 0.74rem !important;
+        padding: 4px 12px !important;
+        max-width: 95% !important;
+        text-align: center !important;
+    }
+    .heroMetricsTickerPill {
+        font-size: 0.72rem !important;
+        padding: 6px 14px !important;
+        max-width: 95% !important;
+        text-align: center !important;
+        line-height: 1.4 !important;
+    }
+    .heroCtaButtonGroup {
+        gap: 10px !important;
+        margin-bottom: 28px !important;
+    }
+    .heroCtaButtonGroup .btnPrimaryGlow,
+    .heroCtaButtonGroup .btnGhostOutline {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 13px 20px !important;
+        font-size: 0.95rem !important;
+    }
+
+    /* 3-Step Decision Workflow Navigator Hub */
+    .executiveWorkflowHub {
+        border-radius: 14px !important;
+        margin-bottom: 16px !important;
+    }
+    .executiveWorkflowHub .heroWaveContainer {
+        height: 42px !important;
+    }
+    .executiveWorkflowHub .executiveWorkflowBanner,
+    .executiveWorkflowBanner,
+    .heroConsoleStepsGrid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+        padding: 0 10px 12px 10px !important;
+    }
+    .workflowStepCard {
+        min-height: auto !important;
+        padding: 14px 16px !important;
+        border-radius: 12px !important;
+    }
+    .workflowStepBadge {
+        margin-bottom: 8px !important;
+    }
+    .workflowStepInfo {
+        margin-bottom: 8px !important;
+    }
+    .workflowStepTitle {
+        font-size: 0.92rem !important;
+    }
+    .workflowStepSub {
+        font-size: 0.78rem !important;
+        line-height: 1.4 !important;
+    }
+    .workflowStepPill {
+        margin: 6px auto 0 auto !important;
+        align-self: center !important;
+        padding: 5px 20px !important;
+    }
+
+    /* Interactive Hero Console Screen */
+    .heroConsoleWrapper {
+        margin: 32px auto 0 auto !important;
+        padding: 8px !important;
+        border-radius: 16px !important;
+    }
+    .heroConsoleInner {
+        padding: 14px 12px !important;
+        border-radius: 12px !important;
+    }
+    .consoleHeaderBar {
+        padding-bottom: 12px !important;
+        margin-bottom: 14px !important;
+    }
+    .consoleWindowTitle {
+        font-size: 0.8rem !important;
+    }
+    .consoleInteractiveNotice {
+        font-size: 0.68rem !important;
+        padding: 3px 7px !important;
+    }
+    .consoleScreenContent {
+        padding: 14px 10px !important;
+        min-height: auto !important;
+        border-radius: 10px !important;
+    }
+    .screenPane {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    .streamTableMock {
+        min-width: 520px !important;
+    }
+    .telemetryGridMock {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    .telemetryMetricBox {
+        padding: 12px 14px !important;
+    }
+    .telemetryBoxVal {
+        font-size: 1.15rem !important;
+    }
+    .sandboxSliderControlRow {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+    .sandboxGaugeCard {
+        padding: 16px !important;
+    }
+    .gaugeBigVal {
+        font-size: 2.1rem !important;
+    }
+    .actionsPrescriptiveGrid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    /* Grids & Cards Across Sections */
+    .roiCalculatorCard {
+        padding: 22px 16px !important;
+        gap: 24px !important;
+        border-radius: 16px !important;
+    }
+    .deckSlideStage {
+        padding: 20px 14px !important;
+        border-radius: 14px !important;
+    }
+    .deckSlideTitle {
+        font-size: 1.25rem !important;
+    }
+    .deckThumbGrid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+    .deckThumbTitle {
+        font-size: 0.74rem !important;
+    }
+    .featureCardsGrid { grid-template-columns: 1fr !important; gap: 14px !important; }
+    .footerContainer { grid-template-columns: 1fr !important; gap: 28px !important; }
+    .attentionNodesGrid { grid-template-columns: 1fr !important; }
+    .footerBottomBar {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .launchBtnText { display: none !important; }
+    .landingLaunchBtn {
+        padding: 8px 10px !important;
+    }
+    .heroMainHeadline {
+        font-size: 1.85rem !important;
+    }
+    .heroLeadSubtitle {
+        font-size: 0.92rem !important;
+    }
+    .statStripGrid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    .statStripCard {
+        padding: 18px 14px !important;
+    }
+    .statStripNum {
+        font-size: 2.1rem !important;
+    }
+    .pricingCard {
+        padding: 26px 18px !important;
+    }
 }
