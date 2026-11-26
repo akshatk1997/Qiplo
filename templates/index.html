@@ -2389,185 +2389,218 @@
 
 
             <div class="tabBody hidden" id="tab-presentation">
-                <div class="presentationHub">
-                    <div class="presPromptChips" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; align-items: center;">
-                        <span style="font-size: 0.8rem; color: var(--accent); font-weight: 700; display: inline-flex; align-items: center; gap: 4px;"><i data-lucide="sparkles" class="lucide-icon"></i> Curated Deck Themes:</span>
-                        <button type="button" class="chip pres-prompt-chip" data-prompt="Next-Gen Creative Agency Growth & Trajectory with Stepped Staircase and Numbered 01-03 Cards"><i data-lucide="sparkles" class="lucide-icon"></i> Creative Agency Growth</button>
-                        <button type="button" class="chip pres-prompt-chip" data-prompt="Mejor Exporta Global Trade Roadmap with Connected Capsule Process and Arcs"><i data-lucide="globe" class="lucide-icon"></i> Mejor Exporta Trade</button>
-                        <button type="button" class="chip pres-prompt-chip" data-prompt="Endorf Artisanal Luxury Portfolio with Terracotta Crest and Product Catalog Matrix"><i data-lucide="award" class="lucide-icon"></i> Endorf Artisanal Luxury</button>
-                        <button type="button" class="chip pres-prompt-chip" data-prompt="Weskout Vibrant SaaS Momentum Pitch with Concentric Ripples and Bold Action Statement"><i data-lucide="zap" class="lucide-icon"></i> Weskout SaaS Momentum</button>
-                        <button type="button" class="chip pres-prompt-chip" data-prompt="MyTemp Minimalist Enterprise Strategy Deck with Diagonal Capsule Masks and Accent Pillars"><i data-lucide="layout" class="lucide-icon"></i> MyTemp Minimalist</button>
-                        <button type="button" class="chip pres-prompt-chip" data-prompt="Ell.co Neo-Glass Autonomous Decision Constellation Hub and Spoke Network"><i data-lucide="network" class="lucide-icon"></i> Ell.co Neo-Glass Hub</button>
-                        <button type="button" class="chip pres-prompt-chip" data-prompt="Customer Lifetime Value (CLV) & Revenue Risk 4-Quadrant Strategy Deck"><i data-lucide="grid" class="lucide-icon"></i> CLV & ARR Matrix</button>
-                        <button type="button" class="chip pres-prompt-chip" data-prompt="Financial ARR Recovery Scenarios & ROI Payback Executive Forecast"><i data-lucide="dollar-sign" class="lucide-icon"></i> ARR Recovery Scenarios</button>
-                    </div>
-
-                    <div class="presentationToolbar" style="display: flex; gap: 10px; align-items: center; width: 100%; flex-wrap: wrap; margin-bottom: 15px;">
-                        <input id="presCustomPrompt" type="text" placeholder="Enter custom deck instructions (e.g., Focus on support tickets, CFO presentation)..." style="flex: 1; min-width: 250px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 16px; border-radius: var(--radius-sm); font-size: 0.9rem;" />
-                        <select id="presImageStyle" aria-label="Select design style" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600;">
-                            <option value="corporate" selected>Corporate Photography</option>
-                            <option value="anime">Modern Illustration</option>
-                            <option value="minimalist">Clean Minimalist</option>
-                            <option value="cyberpunk">High-Tech Studio</option>
-                        </select>
-                        <select id="presFontPairing" aria-label="Select Typography Pair" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600;">
-                            <option value="inter_mono" selected>Inter & JetBrains Mono</option>
-                            <option value="outfit_jakarta">Outfit & Plus Jakarta</option>
-                            <option value="playfair_roboto">Playfair & Roboto</option>
-                            <option value="montserrat_fira">Montserrat & Fira Code</option>
-                        </select>
-                        <select id="presThemeColor" aria-label="Select Palette" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600;">
-                            <optgroup label="⭐ Curated Presentation Themes">
-                                <option value="creative_agency" selected>Next-Gen Creative Agency (Forest Green & Lime)</option>
-                                <option value="global_export">Mejor Exporta Global Trade (Royal Cobalt & Azure)</option>
-                                <option value="artisan_luxury">Endorf Artisanal Luxury (Midnight Navy & Terracotta)</option>
-                                <option value="tech_weskout">Weskout Vibrant SaaS (Hyper Cobalt & Ripple Lines)</option>
-                                <option value="minimal_mytemp">MyTemp Minimalist Enterprise (Slate Teal & Amber Gold)</option>
-                                <option value="radial_glass">Ell.co Neo-Glass Hub (Electric Indigo-Violet & Frosted Glass)</option>
-                            </optgroup>
-                            <optgroup label="Enterprise & Classic Palettes">
-                                <option value="indigo">Slate & Indigo</option>
-                                <option value="classic_blue">Classic Navy & Blue (Finance & Trust)</option>
-                                <option value="teal_coral">Dark Teal & Coral (Modern Tech)</option>
-                                <option value="bold_red">Crimson & Bright Red (Decisive Action)</option>
-                                <option value="warm_blush">Espresso & Warm Blush (Premium Consumer)</option>
-                                <option value="burgundy_luxury">Burgundy & Wine Crimson (Executive Luxury)</option>
-                                <option value="deep_purple_emerald">Deep Plum & Emerald Teal (Analytics & AI)</option>
-                                <option value="cream_forest">Forest Green & Cream (Sustainability & Bio)</option>
-                                <option value="pink_purple">Deep Violet & Vivid Purple (Creative Bold)</option>
-                                <option value="lime_plum">Dark Plum & Lime (Disruptor Tech)</option>
-                                <option value="black_gold">Jet Black & Executive Gold (VIP Wealth)</option>
-                                <option value="sage_terracotta">Sage & Warm Terracotta (Wellness Architecture)</option>
-                                <option value="charcoal_red">Deep Charcoal & Signal Red (High Contrast)</option>
-                                <option value="vibrant_orange">Dark Slate & Vivid Orange (Action Growth)</option>
-                                <option value="forest_green">Evergreen & Pine (Longevity & Capital)</option>
-                                <option value="retro_rainbow">Vintage Navy & Crimson (Design Forward)</option>
-                                <option value="vintage_earthy">Espresso & Copper Sienna (Heritage Artisanal)</option>
-                                <option value="coastal_rose">Deep Ocean & Coastal Coral (Clean Maritime)</option>
-                                <option value="orange_turquoise">Deep Petrol & Sunset (Dynamic SaaS)</option>
-                                <option value="emerald">Forest & Emerald</option>
-                                <option value="amber">Charcoal & Amber</option>
-                                <option value="crimson">Sunset & Crimson</option>
-                                <option value="cyan">Ocean & Cyan</option>
-                                <option value="violet">Ultra Violet & Lavender</option>
-                                <option value="midnight_gold">Midnight Navy & Gold</option>
-                                <option value="slate_dark">Minimalist Steel Slate</option>
-                                <option value="rose_quartz">Rose Quartz & Coral</option>
-                                <option value="vibrant_neon">Cyber Neon Pink & Cyan</option>
-                                <option value="clean_light">Executive Clean Light</option>
-                                <option value="monochrome_pro">Platinum & Charcoal</option>
-                            </optgroup>
-                        </select>
-                        <select id="presTransition" aria-label="Select Slide Transition" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600;">
-                            <option value="fade" selected>Smooth Fade</option>
-                            <option value="slide">Horizontal Slide</option>
-                            <option value="zoom">Subtle Zoom</option>
-                            <option value="flip">3D Card Flip</option>
-                        </select>
-                        <select id="presSlideCount" aria-label="Select slide count" style="background: var(--surface-2); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600;">
-                            <option value="3">3 Slides (Quick Executive Brief)</option>
-                            <option value="5" selected>5 Slides (Executive Deck)</option>
-                            <option value="8">8 Slides (Comprehensive Audit Deck)</option>
-                            <option value="10">10 Slides (Full Board Pitch Deck)</option>
-                            <option value="12">12 Slides (Enterprise Deep Dive)</option>
-                        </select>
-                        <button id="generatePresBtn" class="primaryBtn" style="padding: 10px 20px; display: inline-flex; align-items: center; gap: 6px;"><i data-lucide="wand-2" class="lucide-icon"></i> Generate AI Deck</button>
-                        <button id="surprisePresBtn" class="ghostBtn" style="padding: 10px 16px; display: inline-flex; align-items: center; gap: 6px;" type="button" title="Generate a deck with randomized theme and layout variety"><i data-lucide="shuffle" class="lucide-icon"></i> Surprise Me</button>
-                        <div class="presActionButtons" style="display: flex; gap: 8px;">
-                            <button id="fullscreenPresBtn" class="ghostBtn hidden"><i data-lucide="maximize" class="lucide-icon"></i> Fullscreen Mode</button>
-                            <button id="printPresBtn" class="ghostBtn hidden" onclick="window.print()"><i data-lucide="printer" class="lucide-icon"></i> Print / Save PDF Deck</button>
-                            <button id="downloadPresBtn" class="ghostBtn hidden"><i data-lucide="download" class="lucide-icon"></i> Download Clean HTML Deck</button>
-                            <button id="downloadPresPptxBtn" class="ghostBtn hidden"><i data-lucide="presentation" class="lucide-icon"></i> Download PPTX Deck</button>
+                <div class="presentationHub gammaStudioShell">
+                    <!-- Gamma Studio Top Command Bar -->
+                    <div class="gammaStudioTopBar">
+                        <div class="gammaStudioBrand">
+                            <span class="gammaBadgePill"><i data-lucide="sparkles" class="lucide-icon" style="width: 14px; height: 14px;"></i> Gamma Presentation Studio</span>
+                            <div class="deckStatus" id="deckStatus">Ready — Select a curated theme or enter a prompt to generate your deck.</div>
+                        </div>
+                        <div class="presActionButtons gammaExportActions">
+                            <button id="fullscreenPresBtn" class="ghostBtn hidden"><i data-lucide="maximize" class="lucide-icon"></i> Fullscreen</button>
+                            <button id="printPresBtn" class="ghostBtn hidden" onclick="window.print()"><i data-lucide="printer" class="lucide-icon"></i> PDF / Print</button>
+                            <button id="downloadPresBtn" class="ghostBtn hidden"><i data-lucide="download" class="lucide-icon"></i> HTML</button>
+                            <button id="downloadPresPptxBtn" class="primaryBtn hidden" style="padding: 8px 14px; font-size: 0.82rem;"><i data-lucide="presentation" class="lucide-icon"></i> Export PPTX</button>
                         </div>
                     </div>
-                    
-                    <div class="deckStatus" id="deckStatus">Click "Generate AI Deck" or select a prompt magic template above to compile your custom presentation.</div>
+
+                    <!-- Gamma AI Prompt & Configuration Hero -->
+                    <div class="gammaPromptHero">
+                        <div class="gammaPromptInputRow">
+                            <div class="gammaPromptInputWrap">
+                                <i data-lucide="wand-2" class="lucide-icon gammaPromptIcon"></i>
+                                <input id="presCustomPrompt" type="text" placeholder="Describe the presentation you want to create (e.g., Next-Gen Creative Agency growth deck, CFO ARR risk briefing)..." />
+                            </div>
+                            <button id="generatePresBtn" class="primaryBtn gammaGenerateBtn"><i data-lucide="sparkles" class="lucide-icon"></i> Generate AI Deck</button>
+                            <button id="surprisePresBtn" class="ghostBtn gammaSurpriseBtn" type="button" title="Generate a deck with randomized theme and layout variety"><i data-lucide="shuffle" class="lucide-icon"></i> Surprise Me</button>
+                        </div>
+
+                        <div class="presentationToolbar gammaConfigPills">
+                            <div class="gammaConfigPill">
+                                <label for="presThemeColor">Theme</label>
+                                <select id="presThemeColor" aria-label="Select Palette">
+                                    <optgroup label="⭐ Curated Presentation Themes">
+                                        <option value="creative_agency" selected>Next-Gen Creative Agency (Forest & Lime)</option>
+                                        <option value="global_export">Mejor Exporta Global Trade (Royal & Azure)</option>
+                                        <option value="artisan_luxury">Endorf Artisanal Luxury (Navy & Terracotta)</option>
+                                        <option value="tech_weskout">Weskout Vibrant SaaS (Cobalt & Ripples)</option>
+                                        <option value="minimal_mytemp">MyTemp Minimalist (Teal & Amber)</option>
+                                        <option value="radial_glass">Ell.co Neo-Glass Hub (Indigo & Radial)</option>
+                                    </optgroup>
+                                    <optgroup label="Enterprise & Classic Palettes">
+                                        <option value="indigo">Slate & Indigo</option>
+                                        <option value="classic_blue">Classic Navy & Blue</option>
+                                        <option value="teal_coral">Dark Teal & Coral</option>
+                                        <option value="bold_red">Crimson & Bright Red</option>
+                                        <option value="warm_blush">Espresso & Warm Blush</option>
+                                        <option value="burgundy_luxury">Burgundy & Wine Crimson</option>
+                                        <option value="deep_purple_emerald">Deep Plum & Emerald</option>
+                                        <option value="cream_forest">Forest Green & Cream</option>
+                                        <option value="pink_purple">Deep Violet & Purple</option>
+                                        <option value="lime_plum">Dark Plum & Lime</option>
+                                        <option value="black_gold">Jet Black & Gold</option>
+                                        <option value="sage_terracotta">Sage & Terracotta</option>
+                                        <option value="charcoal_red">Charcoal & Signal Red</option>
+                                        <option value="vibrant_orange">Dark Slate & Orange</option>
+                                        <option value="forest_green">Evergreen & Pine</option>
+                                        <option value="retro_rainbow">Vintage Navy & Crimson</option>
+                                        <option value="vintage_earthy">Espresso & Copper</option>
+                                        <option value="coastal_rose">Deep Ocean & Coral</option>
+                                        <option value="orange_turquoise">Deep Petrol & Sunset</option>
+                                        <option value="emerald">Forest & Emerald</option>
+                                        <option value="amber">Charcoal & Amber</option>
+                                        <option value="crimson">Sunset & Crimson</option>
+                                        <option value="cyan">Ocean & Cyan</option>
+                                        <option value="violet">Ultra Violet & Lavender</option>
+                                        <option value="midnight_gold">Midnight Navy & Gold</option>
+                                        <option value="slate_dark">Minimalist Steel Slate</option>
+                                        <option value="rose_quartz">Rose Quartz & Coral</option>
+                                        <option value="vibrant_neon">Cyber Neon Pink & Cyan</option>
+                                        <option value="clean_light">Executive Clean Light</option>
+                                        <option value="monochrome_pro">Platinum & Charcoal</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="gammaConfigPill">
+                                <label for="presFontPairing">Typography</label>
+                                <select id="presFontPairing" aria-label="Select Typography Pair">
+                                    <option value="inter_mono" selected>Inter & JetBrains Mono</option>
+                                    <option value="outfit_jakarta">Outfit & Plus Jakarta</option>
+                                    <option value="playfair_roboto">Playfair & Roboto</option>
+                                    <option value="montserrat_fira">Montserrat & Fira Code</option>
+                                </select>
+                            </div>
+                            <div class="gammaConfigPill">
+                                <label for="presImageStyle">Visuals</label>
+                                <select id="presImageStyle" aria-label="Select design style">
+                                    <option value="corporate" selected>Corporate Photography</option>
+                                    <option value="anime">Modern Illustration</option>
+                                    <option value="minimalist">Clean Minimalist</option>
+                                    <option value="cyberpunk">High-Tech Studio</option>
+                                </select>
+                            </div>
+                            <div class="gammaConfigPill">
+                                <label for="presTransition">Motion</label>
+                                <select id="presTransition" aria-label="Select Slide Transition">
+                                    <option value="fade" selected>Smooth Fade</option>
+                                    <option value="slide">Horizontal Slide</option>
+                                    <option value="zoom">Subtle Zoom</option>
+                                    <option value="flip">3D Card Flip</option>
+                                </select>
+                            </div>
+                            <div class="gammaConfigPill">
+                                <label for="presSlideCount">Length</label>
+                                <select id="presSlideCount" aria-label="Select slide count">
+                                    <option value="3">3 Slides (Brief)</option>
+                                    <option value="5" selected>5 Slides (Executive)</option>
+                                    <option value="8">8 Slides (Audit)</option>
+                                    <option value="10">10 Slides (Board Pitch)</option>
+                                    <option value="12">12 Slides (Deep Dive)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="presPromptChips gammaPromptChips">
+                            <span class="gammaChipsLabel"><i data-lucide="layers" class="lucide-icon"></i> Curated Templates:</span>
+                            <button type="button" class="chip pres-prompt-chip" data-prompt="Next-Gen Creative Agency Growth & Trajectory with Stepped Staircase and Numbered 01-03 Cards"><i data-lucide="sparkles" class="lucide-icon"></i> Creative Agency</button>
+                            <button type="button" class="chip pres-prompt-chip" data-prompt="Mejor Exporta Global Trade Roadmap with Connected Capsule Process and Arcs"><i data-lucide="globe" class="lucide-icon"></i> Mejor Exporta</button>
+                            <button type="button" class="chip pres-prompt-chip" data-prompt="Endorf Artisanal Luxury Portfolio with Terracotta Crest and Product Catalog Matrix"><i data-lucide="award" class="lucide-icon"></i> Endorf Luxury</button>
+                            <button type="button" class="chip pres-prompt-chip" data-prompt="Weskout Vibrant SaaS Momentum Pitch with Concentric Ripples and Bold Action Statement"><i data-lucide="zap" class="lucide-icon"></i> Weskout SaaS</button>
+                            <button type="button" class="chip pres-prompt-chip" data-prompt="MyTemp Minimalist Enterprise Strategy Deck with Diagonal Capsule Masks and Accent Pillars"><i data-lucide="layout" class="lucide-icon"></i> MyTemp Minimalist</button>
+                            <button type="button" class="chip pres-prompt-chip" data-prompt="Ell.co Neo-Glass Autonomous Decision Constellation Hub and Spoke Network"><i data-lucide="network" class="lucide-icon"></i> Ell.co Neo-Glass</button>
+                            <button type="button" class="chip pres-prompt-chip" data-prompt="Customer Lifetime Value (CLV) & Revenue Risk 4-Quadrant Strategy Deck"><i data-lucide="grid" class="lucide-icon"></i> CLV Matrix</button>
+                            <button type="button" class="chip pres-prompt-chip" data-prompt="Financial ARR Recovery Scenarios & ROI Payback Executive Forecast"><i data-lucide="dollar-sign" class="lucide-icon"></i> ARR Recovery</button>
+                        </div>
+                    </div>
 
                     <!-- Interactive Visual Theme & Typography Controller Swatches -->
-                    <div id="presVisualThemeControls" class="presVisualThemeControls hidden" style="display: flex; gap: 15px; align-items: center; margin-top: 10px; margin-bottom: 15px; padding: 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); flex-wrap: wrap;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="font-size: 0.78rem; font-weight: 700; color: var(--muted);">Curated Themes:</span>
-                            <button type="button" class="theme-swatch active" data-theme="creative_agency" style="width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #163323, #84CC16); border: 2px solid #ffffff; cursor: pointer; transition: transform 0.15s ease;" title="Next-Gen Creative Agency" onclick="applyVisualTheme('creative_agency')"></button>
-                            <button type="button" class="theme-swatch" data-theme="global_export" style="width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #0B3C85, #00A3FF); border: 2px solid transparent; cursor: pointer; transition: transform 0.15s ease;" title="Mejor Exporta Global Trade" onclick="applyVisualTheme('global_export')"></button>
-                            <button type="button" class="theme-swatch" data-theme="artisan_luxury" style="width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #142036, #C28E6A); border: 2px solid transparent; cursor: pointer; transition: transform 0.15s ease;" title="Endorf Artisanal Luxury" onclick="applyVisualTheme('artisan_luxury')"></button>
-                            <button type="button" class="theme-swatch" data-theme="tech_weskout" style="width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #1D4ED8, #00F5FF); border: 2px solid transparent; cursor: pointer; transition: transform 0.15s ease;" title="Weskout Vibrant SaaS" onclick="applyVisualTheme('tech_weskout')"></button>
-                            <button type="button" class="theme-swatch" data-theme="minimal_mytemp" style="width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #0D6E6E, #F59E0B); border: 2px solid transparent; cursor: pointer; transition: transform 0.15s ease;" title="MyTemp Minimalist Enterprise" onclick="applyVisualTheme('minimal_mytemp')"></button>
-                            <button type="button" class="theme-swatch" data-theme="radial_glass" style="width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #4338CA, #7C3AED); border: 2px solid transparent; cursor: pointer; transition: transform 0.15s ease;" title="Ell.co Neo-Glass Hub" onclick="applyVisualTheme('radial_glass')"></button>
+                    <div id="presVisualThemeControls" class="presVisualThemeControls gammaThemeStrip hidden">
+                        <div class="gammaThemeSwatchesGroup">
+                            <span class="gammaStripLabel">Theme Vibe:</span>
+                            <button type="button" class="theme-swatch active" data-theme="creative_agency" style="background: linear-gradient(135deg, #163323, #84CC16);" title="Next-Gen Creative Agency" onclick="applyVisualTheme('creative_agency')"></button>
+                            <button type="button" class="theme-swatch" data-theme="global_export" style="background: linear-gradient(135deg, #0B3C85, #00A3FF);" title="Mejor Exporta Global Trade" onclick="applyVisualTheme('global_export')"></button>
+                            <button type="button" class="theme-swatch" data-theme="artisan_luxury" style="background: linear-gradient(135deg, #142036, #C28E6A);" title="Endorf Artisanal Luxury" onclick="applyVisualTheme('artisan_luxury')"></button>
+                            <button type="button" class="theme-swatch" data-theme="tech_weskout" style="background: linear-gradient(135deg, #1D4ED8, #00F5FF);" title="Weskout Vibrant SaaS" onclick="applyVisualTheme('tech_weskout')"></button>
+                            <button type="button" class="theme-swatch" data-theme="minimal_mytemp" style="background: linear-gradient(135deg, #0D6E6E, #F59E0B);" title="MyTemp Minimalist Enterprise" onclick="applyVisualTheme('minimal_mytemp')"></button>
+                            <button type="button" class="theme-swatch" data-theme="radial_glass" style="background: linear-gradient(135deg, #4338CA, #7C3AED);" title="Ell.co Neo-Glass Hub" onclick="applyVisualTheme('radial_glass')"></button>
                         </div>
-                        <div style="width: 1px; height: 18px; background: var(--border);"></div>
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="font-size: 0.78rem; font-weight: 700; color: var(--muted);">Typography Pairing:</span>
-                            <button type="button" class="font-pill active" data-font="inter_mono" style="padding: 4px 10px; font-size: 0.75rem; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer;" onclick="applyVisualFont('inter_mono')">Inter & Mono</button>
-                            <button type="button" class="font-pill" data-font="outfit_jakarta" style="padding: 4px 10px; font-size: 0.75rem; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer;" onclick="applyVisualFont('outfit_jakarta')">Outfit & Jakarta</button>
-                            <button type="button" class="font-pill" data-font="playfair_roboto" style="padding: 4px 10px; font-size: 0.75rem; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer;" onclick="applyVisualFont('playfair_roboto')">Playfair & Roboto</button>
+                        <div class="gammaStripDivider"></div>
+                        <div class="gammaFontPillsGroup">
+                            <span class="gammaStripLabel">Fonts:</span>
+                            <button type="button" class="font-pill active" data-font="inter_mono" onclick="applyVisualFont('inter_mono')">Inter & Mono</button>
+                            <button type="button" class="font-pill" data-font="outfit_jakarta" onclick="applyVisualFont('outfit_jakarta')">Outfit & Jakarta</button>
+                            <button type="button" class="font-pill" data-font="playfair_roboto" onclick="applyVisualFont('playfair_roboto')">Playfair & Roboto</button>
                         </div>
-                        <div style="width: 1px; height: 18px; background: var(--border);"></div>
-                        <div style="display: flex; align-items: center; gap: 8px; margin-left: auto;">
-                            <span style="font-size: 0.78rem; font-weight: 700; color: var(--muted);">Auto-Play:</span>
-                            <button id="playSlideshowBtn" type="button" class="ghostBtn" style="padding: 4px 10px; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--border);" onclick="toggleSlideshowPlay()"><i data-lucide="play" style="width: 11px; height: 11px;"></i> Play</button>
+                        <div style="margin-left: auto; display: flex; align-items: center; gap: 8px;">
+                            <button id="playSlideshowBtn" type="button" class="ghostBtn" style="padding: 5px 12px; font-size: 0.78rem; display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--border);" onclick="toggleSlideshowPlay()"><i data-lucide="play" style="width: 12px; height: 12px;"></i> Auto-Play</button>
                         </div>
                     </div>
 
-                    <!-- Slide Sorter Timeline -->
-                    <div id="slideSorterTimeline" class="slideSorterTimeline hidden" style="margin: 15px 0; padding: 10px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow-x: auto; display: flex; gap: 10px; align-items: center; scrollbar-width: thin;">
-                    </div>
+                    <!-- Gamma 2-Pane Studio Workspace: Left Filmstrip + Center 16:9 Stage -->
+                    <div class="gammaWorkspaceGrid">
+                        <!-- Left Filmstrip Card Navigator -->
+                        <div id="slideSorterTimeline" class="slideSorterTimeline gammaFilmstripRail hidden">
+                        </div>
 
-                    <!-- Gamma Card Level Inspector & Actions Toolbar -->
-                    <div id="gammaCardInspector" class="gammaCardInspector hidden" style="display: flex; gap: 10px; align-items: center; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px 14px; margin-bottom: 12px; flex-wrap: wrap;">
-                        <div style="display: flex; align-items: center; gap: 6px;">
-                            <span style="font-size: 0.75rem; font-weight: 800; color: var(--accent); background: rgba(99, 102, 241, 0.12); padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border);" id="gammaCardCounterBadge">CARD 1 OF 5</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 6px;">
-                            <label for="gammaCardLayoutSelect" style="font-size: 0.75rem; font-weight: 700; color: var(--muted);">Layout:</label>
-                            <select id="gammaCardLayoutSelect" style="background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 600;" onchange="changeCurrentSlideLayout(this.value)">
-                                <optgroup label="⭐ Curated Deck Layouts">
-                                    <option value="title">Hero Title & Brand Emblem</option>
-                                    <option value="stepped_growth">Stepped Staircase Growth & Ascending Bars</option>
-                                    <option value="what_makes_different">Numbered Process Cards (01, 02, 03 Pills)</option>
-                                    <option value="kpi_split_cards">Split High-Contrast KPI Cards</option>
-                                    <option value="capsule_roadmap">Connected Capsule Process Roadmap</option>
-                                    <option value="radial_hub">Radial Constellation Hub & Spoke</option>
-                                    <option value="catalog_matrix">Product & Portfolio Catalog Matrix</option>
-                                    <option value="statement_ripple">Bold Action Statement & Ripple Rings</option>
-                                    <option value="quote_tab">Executive Perspective (Accent Tab Quote)</option>
-                                </optgroup>
-                                <optgroup label="Analytical & Operational Layouts">
-                                    <option value="split_metrics">Executive Split & Metrics (40/60 Split)</option>
-                                    <option value="clv_quadrants">CLV 4-Quadrant Retention Matrix</option>
-                                    <option value="friction_telemetry">Behavioral Friction & Support Telemetry</option>
-                                    <option value="recovery_scenarios">Financial ARR Preservation & ROI Scenarios</option>
-                                    <option value="segment_comparison">Segment Comparison Matrix</option>
-                                    <option value="prescriptive_playbook">Action Playbook Grid</option>
-                                    <option value="journey_workflow">Process Roadmap Nodes</option>
-                                    <option value="quote">Executive Leadership Quote</option>
-                                    <option value="closing">Summary Execution Closing</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                        <div style="width: 1px; height: 18px; background: var(--border);"></div>
-                        <div style="display: flex; gap: 6px; align-items: center;">
-                            <button type="button" class="ghostBtn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="moveCurrentCardUp()" title="Move card up in order"><i data-lucide="arrow-up" style="width: 12px; height: 12px;"></i> Up</button>
-                            <button type="button" class="ghostBtn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="moveCurrentCardDown()" title="Move card down in order"><i data-lucide="arrow-down" style="width: 12px; height: 12px;"></i> Down</button>
-                            <button type="button" class="ghostBtn" style="padding: 4px 10px; font-size: 0.75rem; color: var(--accent);" onclick="aiPolishCurrentCard()" title="AI Polish & Upgrade Card Content"><i data-lucide="sparkles" style="width: 12px; height: 12px;"></i> AI Polish</button>
-                            <button type="button" class="ghostBtn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="duplicateCurrentSlide()"><i data-lucide="copy" style="width: 12px; height: 12px;"></i> Duplicate</button>
-                            <button type="button" class="ghostBtn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="addNewBlankSlide()"><i data-lucide="plus-circle" style="width: 12px; height: 12px;"></i> Add Card</button>
-                            <button type="button" class="dangerBtn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="deleteCurrentSlide()"><i data-lucide="trash-2" style="width: 12px; height: 12px;"></i> Delete</button>
-                        </div>
-                        <div style="margin-left: auto; display: flex; gap: 6px; align-items: center;">
-                            <button type="button" class="ghostBtn" style="padding: 4px 10px; font-size: 0.75rem;" onclick="copyDeckOutline()" title="Copy entire deck outline to clipboard"><i data-lucide="clipboard" style="width: 12px; height: 12px;"></i> Copy Outline</button>
-                            <button type="button" class="primaryBtn" style="padding: 4px 12px; font-size: 0.75rem; background: linear-gradient(135deg, #6366f1, #a855f7);" onclick="enterGammaLivePresenter()"><i data-lucide="play" style="width: 12px; height: 12px;"></i> Present Live</button>
+                        <!-- Center 16:9 Presentation Stage -->
+                        <div class="gammaMainStage">
+                            <!-- Floating Card Inspector & Actions Toolbar -->
+                            <div id="gammaCardInspector" class="gammaCardInspector hidden">
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="gammaCardCounterBadge" id="gammaCardCounterBadge">CARD 1 OF 5</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <label for="gammaCardLayoutSelect" style="font-size: 0.75rem; font-weight: 700; color: var(--muted);">Layout:</label>
+                                    <select id="gammaCardLayoutSelect" style="background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 5px 10px; border-radius: 8px; font-size: 0.78rem; font-weight: 600;" onchange="changeCurrentSlideLayout(this.value)">
+                                        <optgroup label="⭐ Curated Deck Layouts">
+                                            <option value="title">Hero Title & Brand Emblem</option>
+                                            <option value="stepped_growth">Stepped Staircase Growth</option>
+                                            <option value="what_makes_different">Numbered Process Cards (01-03)</option>
+                                            <option value="kpi_split_cards">Split High-Contrast KPI Cards</option>
+                                            <option value="capsule_roadmap">Connected Capsule Roadmap</option>
+                                            <option value="radial_hub">Radial Constellation Hub</option>
+                                            <option value="catalog_matrix">Product Catalog Matrix</option>
+                                            <option value="statement_ripple">Bold Statement & Ripple Rings</option>
+                                            <option value="quote_tab">Executive Quote (Accent Tab)</option>
+                                        </optgroup>
+                                        <optgroup label="Analytical & Operational Layouts">
+                                            <option value="split_metrics">Executive Split & Metrics</option>
+                                            <option value="clv_quadrants">CLV 4-Quadrant Matrix</option>
+                                            <option value="friction_telemetry">Friction & Support Telemetry</option>
+                                            <option value="recovery_scenarios">ARR Preservation Scenarios</option>
+                                            <option value="segment_comparison">Segment Comparison Matrix</option>
+                                            <option value="prescriptive_playbook">Action Playbook Grid</option>
+                                            <option value="journey_workflow">Process Roadmap Nodes</option>
+                                            <option value="quote">Executive Leadership Quote</option>
+                                            <option value="closing">Summary Execution Closing</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div style="display: flex; gap: 4px; align-items: center; flex-wrap: wrap;">
+                                    <button type="button" class="ghostBtn" style="padding: 5px 9px; font-size: 0.75rem;" onclick="moveCurrentCardUp()" title="Move card up"><i data-lucide="arrow-up" style="width: 12px; height: 12px;"></i></button>
+                                    <button type="button" class="ghostBtn" style="padding: 5px 9px; font-size: 0.75rem;" onclick="moveCurrentCardDown()" title="Move card down"><i data-lucide="arrow-down" style="width: 12px; height: 12px;"></i></button>
+                                    <button type="button" class="ghostBtn" style="padding: 5px 10px; font-size: 0.75rem; color: var(--accent);" onclick="aiPolishCurrentCard()" title="AI Polish Card"><i data-lucide="sparkles" style="width: 12px; height: 12px;"></i> Polish</button>
+                                    <button type="button" class="ghostBtn" style="padding: 5px 10px; font-size: 0.75rem;" onclick="duplicateCurrentSlide()" title="Duplicate Card"><i data-lucide="copy" style="width: 12px; height: 12px;"></i></button>
+                                    <button type="button" class="ghostBtn" style="padding: 5px 10px; font-size: 0.75rem;" onclick="addNewBlankSlide()" title="Add New Card"><i data-lucide="plus-circle" style="width: 12px; height: 12px;"></i> Add</button>
+                                    <button type="button" class="dangerBtn" style="padding: 5px 10px; font-size: 0.75rem;" onclick="deleteCurrentSlide()" title="Delete Card"><i data-lucide="trash-2" style="width: 12px; height: 12px;"></i></button>
+                                </div>
+                                <div style="margin-left: auto; display: flex; gap: 6px; align-items: center;">
+                                    <button type="button" class="ghostBtn" style="padding: 5px 10px; font-size: 0.75rem;" onclick="copyDeckOutline()" title="Copy outline"><i data-lucide="clipboard" style="width: 12px; height: 12px;"></i> Outline</button>
+                                    <button type="button" class="primaryBtn" style="padding: 5px 14px; font-size: 0.78rem; background: linear-gradient(135deg, #6366f1, #a855f7);" onclick="enterGammaLivePresenter()"><i data-lucide="play" style="width: 12px; height: 12px;"></i> Present</button>
+                                </div>
+                            </div>
+
+                            <div class="presContainer gammaStageCanvas">
+                                <div id="slideViewport" class="slideViewport hidden">
+                                    <!-- Slides will be rendered here dynamically -->
+                                </div>
+                                <button id="prevSlideBtn" class="navSlideBtn prev hidden" aria-label="Previous slide">&lsaquo;</button>
+                                <button id="nextSlideBtn" class="navSlideBtn next hidden" aria-label="Next slide">&rsaquo;</button>
+                            </div>
+
+                            <div class="presIndicator" id="presIndicator"></div>
                         </div>
                     </div>
-
-                    <div class="presContainer">
-                        <div id="slideViewport" class="slideViewport hidden">
-                            <!-- Slides will be rendered here dynamically -->
-                        </div>
-                        <button id="prevSlideBtn" class="navSlideBtn prev hidden" aria-label="Previous slide">&lsaquo;</button>
-                        <button id="nextSlideBtn" class="navSlideBtn next hidden" aria-label="Next slide">&rsaquo;</button>
-                    </div>
-
-                    <div class="presIndicator" id="presIndicator"></div>
 
                     <!-- Interactive Slide Editor Panel -->
                     <div id="slideEditorPanel" class="slideEditorPanel hidden" style="margin-top: 25px; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow);">

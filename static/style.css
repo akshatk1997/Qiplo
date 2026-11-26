@@ -12440,3 +12440,315 @@ body.light-theme .sourceRows {
     border-color: #CBD5E1 !important;
     color: #475569 !important;
 }
+
+
+/* ==============================================================================
+   GAMMA-STYLE PRESENTATION STUDIO WORKSPACE
+   ============================================================================== */
+
+.gammaStudioShell {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.gammaStudioTopBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 12px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    flex-wrap: wrap;
+}
+
+.gammaStudioBrand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.gammaBadgePill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(168, 85, 247, 0.18));
+    color: var(--accent-2, var(--accent));
+    border: 1px solid rgba(99, 102, 241, 0.35);
+}
+
+.gammaExportActions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.gammaPromptHero {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.gammaPromptInputRow {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.gammaPromptInputWrap {
+    flex: 1;
+    min-width: 260px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.gammaPromptIcon {
+    position: absolute;
+    left: 14px;
+    width: 16px;
+    height: 16px;
+    color: var(--accent);
+    pointer-events: none;
+}
+
+.gammaPromptInputWrap input {
+    width: 100%;
+    padding: 12px 16px 12px 40px;
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 0.92rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gammaPromptInputWrap input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.gammaGenerateBtn {
+    padding: 12px 20px !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+}
+
+.gammaSurpriseBtn {
+    padding: 11px 16px !important;
+    border-radius: 12px !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.gammaConfigPills {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.gammaConfigPill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 4px 10px;
+}
+
+.gammaConfigPill label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.gammaConfigPill select {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 4px 2px;
+    cursor: pointer;
+}
+
+.gammaConfigPill select:focus {
+    outline: none;
+}
+
+.gammaPromptChips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: 4px;
+}
+
+.gammaChipsLabel {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.gammaThemeStrip {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 10px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    flex-wrap: wrap;
+}
+
+.gammaThemeSwatchesGroup,
+.gammaFontPillsGroup {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.gammaStripLabel {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+
+.gammaThemeStrip .theme-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.gammaThemeStrip .theme-swatch:hover {
+    transform: scale(1.15);
+}
+
+.gammaThemeStrip .theme-swatch.active {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+.gammaStripDivider {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+}
+
+.gammaFontPillsGroup .font-pill {
+    padding: 4px 11px;
+    font-size: 0.75rem;
+    border-radius: 999px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* Gamma 2-Pane Workspace */
+.gammaWorkspaceGrid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 16px;
+    align-items: start;
+}
+
+.gammaFilmstripRail {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 620px;
+    overflow-y: auto;
+    padding: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    scrollbar-width: thin;
+}
+
+.gammaMainStage {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    min-width: 0;
+}
+
+.gammaCardInspector {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px 12px;
+    flex-wrap: wrap;
+}
+
+.gammaCardCounterBadge {
+    font-size: 0.74rem;
+    font-weight: 800;
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.12);
+    padding: 4px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.gammaStageCanvas {
+    border-radius: 16px !important;
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.25) !important;
+    overflow: hidden;
+}
+
+@media (max-width: 900px) {
+    .gammaWorkspaceGrid {
+        grid-template-columns: 1fr;
+    }
+    .gammaFilmstripRail {
+        flex-direction: row;
+        max-height: none;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .gammaPromptInputWrap {
+        min-width: 100%;
+    }
+}
