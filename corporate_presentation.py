@@ -38,6 +38,92 @@ from pptx.chart.data import CategoryChartData
 # ==============================================================================
 
 CORPORATE_PALETTES = {
+    # 6 Authentic Curated Themes from Presentation Analyses
+    "creative_agency": {
+        "primary": "#163323",
+        "accent": "#84CC16",
+        "accent_2": "#A3E635",
+        "surface": "#1E4230",
+        "bg": "#163323",
+        "surface_light": "#F4F6F0",
+        "text": "#F4F6F0",
+        "text_dark": "#163323",
+        "muted": "#A7C4B5",
+        "success": "#84CC16",
+        "warning": "#EAB308",
+        "danger": "#EF4444"
+    },
+    "global_export": {
+        "primary": "#0B3C85",
+        "accent": "#00A3FF",
+        "accent_2": "#1976D2",
+        "surface": "#F0F4FA",
+        "bg": "#FFFFFF",
+        "surface_light": "#FFFFFF",
+        "text": "#0B192C",
+        "text_dark": "#0B192C",
+        "muted": "#64748B",
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "danger": "#EF4444"
+    },
+    "artisan_luxury": {
+        "primary": "#142036",
+        "accent": "#C28E6A",
+        "accent_2": "#D4AF37",
+        "surface": "#1C2B47",
+        "bg": "#142036",
+        "surface_light": "#F7F4EE",
+        "text": "#F7F4EE",
+        "text_dark": "#1A1A1A",
+        "muted": "#B8C5D6",
+        "success": "#10B981",
+        "warning": "#C28E6A",
+        "danger": "#DC2626"
+    },
+    "tech_weskout": {
+        "primary": "#1D4ED8",
+        "accent": "#00F5FF",
+        "accent_2": "#FFFFFF",
+        "surface": "#2563EB",
+        "bg": "#1D4ED8",
+        "surface_light": "#FFFFFF",
+        "text": "#FFFFFF",
+        "text_dark": "#0F172A",
+        "muted": "#BFDBFE",
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "danger": "#EF4444"
+    },
+    "minimal_mytemp": {
+        "primary": "#0D6E6E",
+        "accent": "#F59E0B",
+        "accent_2": "#749F8C",
+        "surface": "#FFFFFF",
+        "bg": "#F8FAFC",
+        "surface_light": "#FFFFFF",
+        "text": "#111827",
+        "text_dark": "#111827",
+        "muted": "#6B7280",
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "danger": "#EF4444"
+    },
+    "radial_glass": {
+        "primary": "#4338CA",
+        "accent": "#7C3AED",
+        "accent_2": "#FBBF24",
+        "surface": "#1E1B4B",
+        "bg": "#0F0E2A",
+        "surface_light": "#FFFFFF",
+        "text": "#EEF2FF",
+        "text_dark": "#0F172A",
+        "muted": "#A5B4FC",
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "danger": "#EF4444"
+    },
+    # Foundation Palettes
     "classic_blue": {
         "primary": "#1E3A8A",
         "accent": "#2563EB",

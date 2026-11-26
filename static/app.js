@@ -5628,6 +5628,357 @@ function renderSlides(slides) {
                     </div>
                 </div>
             `;
+        } else if (slide.layout === 'stepped_growth' || slide.layout === 'staircase_growth') {
+            const listHtml = (slide.bullets || []).map((b, bIdx) => `<li contenteditable="true" data-slide-index="${idx}" data-field="bullet" data-bullet-index="${bIdx}">${b}</li>`).join('');
+            const badgePct = slide.badge_pct || '90%';
+            const steps = slide.steps_data || [
+                { val: '$5M', date: 'AUG 2023', h: 100 },
+                { val: '$10M', date: 'AUG 2024', h: 145 },
+                { val: '$15M', date: 'AUG 2025', h: 190 }
+            ];
+            contentHtml = `
+                <div class="slideContent layout-stepped-growth">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Annual Retention & Growth Trajectory</span>
+                    </div>
+                    <div style="display: flex; gap: 20px; margin: 12px 0; align-items: stretch; width: 100%; flex: 1;">
+                        <!-- Left Context Column -->
+                        <div style="flex: 0 0 35%; display: flex; flex-direction: column; justify-content: space-between; background: var(--pres-surface, var(--surface-2)); border: 1px solid var(--pres-border, var(--border)); border-radius: 12px; padding: 14px;">
+                            <div>
+                                <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 800; color: var(--pres-accent, var(--accent)); background: var(--pres-accent-soft, rgba(132,204,22,0.12)); padding: 4px 10px; border-radius: 20px; margin-bottom: 8px;">
+                                    <span>${badgePct} RETENTION TARGET</span>
+                                </div>
+                                <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin: 0 0 10px; font-size: 1.15rem; color: var(--pres-text, var(--text));">${slide.title || 'Year-over-Year Growth'}</h2>
+                                <ul style="line-height: 1.5; font-size: 0.8rem; color: var(--pres-muted, var(--muted)); padding-left: 16px; margin: 0;">${listHtml}</ul>
+                            </div>
+                            <div style="margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.15); border-radius: 8px; font-size: 0.72rem; color: var(--pres-muted, var(--muted));">
+                                📈 Compounded Multi-Year Account LTV
+                            </div>
+                        </div>
+
+                        <!-- Right Stepped Columns & Revenue Bar -->
+                        <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; background: var(--pres-surface, var(--surface-2)); border: 1px solid var(--pres-border, var(--border)); border-radius: 12px; padding: 16px;">
+                            <div style="font-size: 0.75rem; font-weight: 700; color: var(--pres-muted, var(--muted)); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Preserved Portfolio ARR Milestones</div>
+                            <!-- 3 Ascending Columns -->
+                            <div style="display: flex; align-items: flex-end; justify-content: space-around; gap: 14px; flex: 1; min-height: 190px; padding-bottom: 8px;">
+                                ${steps.map((st, sIdx) => `
+                                    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%;">
+                                        <div style="width: 100%; height: ${st.h || 120}px; background: linear-gradient(180deg, var(--pres-accent-2, #A3E635), var(--pres-accent, #84CC16)); border-radius: 14px 14px 6px 6px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 10px 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                                            <div style="font-size: 1.25rem; font-weight: 900; color: #163323; font-family: var(--font-heading);">${st.val}</div>
+                                            <div style="font-size: 0.65rem; font-weight: 700; color: rgba(22,51,35,0.85); background: rgba(255,255,255,0.4); padding: 2px 8px; border-radius: 10px;">${st.date}</div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <!-- Estimated Revenue Horizontal Bar Strip -->
+                            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--pres-border, var(--border));">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--pres-muted, var(--muted)); margin-bottom: 4px;">
+                                    <span>ARR Expansion Gradient</span>
+                                    <span>$20k → $40k → $60k → $85k → $100k+</span>
+                                </div>
+                                <div style="width: 100%; height: 8px; background: rgba(0,0,0,0.2); border-radius: 10px; overflow: hidden; display: flex;">
+                                    <div style="width: 20%; background: #4ADE80;"></div>
+                                    <div style="width: 20%; background: #60A5FA;"></div>
+                                    <div style="width: 25%; background: #A78BFA;"></div>
+                                    <div style="width: 35%; background: var(--pres-accent, #84CC16);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slideFooter">
+                        <span>Year-over-Year Retention Growth</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
+        } else if (slide.layout === 'what_makes_different' || slide.layout === 'numbered_pills') {
+            const pills = slide.pills_data || [
+                { num: '01', title: 'Tailored Retention Strategies', desc: 'Predictive machine learning classifies high-exposure accounts for immediate prescriptive interventions.' },
+                { num: '02', title: 'Automated SLA Enforcement', desc: 'Sub-second webhook routing triggers executive alignment calls before churn escalation deadlines.' },
+                { num: '03', title: 'Reconciled Financial Visibility', desc: 'Deterministic revenue preservation analytics connected directly to billing data sources.' }
+            ];
+            contentHtml = `
+                <div class="slideContent layout-what-makes-different">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Competitive Differentiation & Moat</span>
+                    </div>
+                    <div style="display: flex; gap: 24px; margin: 12px 0; align-items: stretch; width: 100%; flex: 1;">
+                        <!-- Left Hero Column -->
+                        <div style="flex: 0 0 38%; display: flex; flex-direction: column; justify-content: center; background: var(--pres-surface, var(--surface-2)); border: 1px solid var(--pres-border, var(--border)); border-radius: 14px; padding: 24px;">
+                            <div style="display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; font-weight: 800; color: var(--pres-accent, var(--accent)); text-transform: uppercase; margin-bottom: 8px;">
+                                <i data-lucide="shield-check" class="lucide-icon" style="width: 13px; height: 13px;"></i> Core Advantage
+                            </div>
+                            <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin: 0 0 12px; font-size: 1.8rem; line-height: 1.2; color: var(--pres-text, var(--text)); font-family: var(--font-heading);">${slide.title || 'What makes us different?'}</h2>
+                            <p style="font-size: 0.85rem; line-height: 1.5; color: var(--pres-muted, var(--muted)); margin: 0 0 16px;">${slide.subtitle || 'Autonomous decision intelligence eliminating churn leakage across all customer tiers.'}</p>
+                            <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700; color: var(--pres-accent, var(--accent)); background: var(--pres-accent-soft, rgba(0,245,255,0.1)); padding: 6px 14px; border-radius: 20px; border: 1px solid var(--pres-border, var(--border)); width: fit-content;">
+                                ⚡ Sub-Second SLA Automation
+                            </div>
+                        </div>
+
+                        <!-- Right 3 Numbered Pills Cards -->
+                        <div style="flex: 1; display: flex; flex-direction: column; gap: 10px; justify-content: center;">
+                            ${pills.map((pill, pIdx) => `
+                                <div class="curatedPillCard" style="display: flex; align-items: center; gap: 16px; padding: 14px 18px; background: var(--pres-surface, var(--surface-2)); border: 1px solid var(--pres-border, var(--border)); border-radius: 12px;">
+                                    <div style="flex: 0 0 38px; height: 38px; border-radius: 50%; background: var(--pres-accent-soft, rgba(132,204,22,0.15)); border: 1.5px solid var(--pres-accent, var(--accent)); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 900; color: var(--pres-accent, var(--accent)); font-family: var(--font-heading);">
+                                        ${pill.num || `0${pIdx+1}`}
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <div style="font-size: 0.95rem; font-weight: 800; color: var(--pres-text, var(--text)); margin-bottom: 3px; font-family: var(--font-heading);">${pill.title}</div>
+                                        <div style="font-size: 0.78rem; line-height: 1.45; color: var(--pres-muted, var(--muted));">${pill.desc}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="slideFooter">
+                        <span>Competitive Architecture</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
+        } else if (slide.layout === 'kpi_split_cards' || slide.layout === 'kpi_hero_cards') {
+            const listHtml = (slide.bullets || []).map((b, bIdx) => `<li contenteditable="true" data-slide-index="${idx}" data-field="bullet" data-bullet-index="${bIdx}">${b}</li>`).join('');
+            const kpis = slide.hero_kpis || [
+                { val: '$2.5M', label: 'Monitored Gross ARR' },
+                { val: '150%', label: 'Net Expansion Rate' },
+                { val: '$3.2M', label: '5-Year Preserved Value' }
+            ];
+            contentHtml = `
+                <div class="slideContent layout-kpi-split-cards">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Executive Telemetry Benchmarks</span>
+                    </div>
+                    <div style="display: flex; gap: 24px; margin: 12px 0; align-items: stretch; width: 100%; flex: 1;">
+                        <!-- Left Context Column -->
+                        <div style="flex: 0 0 40%; display: flex; flex-direction: column; justify-content: space-between; background: var(--pres-surface, var(--surface-2)); border: 1px solid var(--pres-border, var(--border)); border-radius: 14px; padding: 20px;">
+                            <div>
+                                <div style="font-size: 0.72rem; font-weight: 800; color: var(--pres-accent, var(--accent)); text-transform: uppercase; margin-bottom: 8px;">RECONCILED AUDIT</div>
+                                <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin: 0 0 12px; font-size: 1.4rem; color: var(--pres-text, var(--text)); font-family: var(--font-heading);">${slide.title || 'Portfolio KPI Benchmarks'}</h2>
+                                <ul style="line-height: 1.55; font-size: 0.85rem; color: var(--pres-muted, var(--muted)); padding-left: 18px; margin: 0;">${listHtml}</ul>
+                            </div>
+                            <div style="padding: 10px 14px; background: rgba(0,0,0,0.15); border-radius: 10px; font-size: 0.75rem; color: var(--pres-muted, var(--muted)); display: flex; align-items: center; gap: 8px;">
+                                <i data-lucide="check-circle" class="lucide-icon" style="color: var(--pres-accent, #84CC16); width: 14px; height: 14px;"></i>
+                                <span>Zero LLM number hallucination. 100% code derived.</span>
+                            </div>
+                        </div>
+
+                        <!-- Right 3 Stacked KPI Cards -->
+                        <div style="flex: 1; display: flex; flex-direction: column; gap: 12px; justify-content: center;">
+                            ${kpis.map((kpi) => `
+                                <div class="curatedPillCard" style="display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; background: var(--pres-surface, var(--surface-2)); border: 1px solid var(--pres-border, var(--border)); border-radius: 14px;">
+                                    <div>
+                                        <div style="font-size: 0.75rem; font-weight: 800; color: var(--pres-muted, var(--muted)); text-transform: uppercase; letter-spacing: 0.05em;">${kpi.label}</div>
+                                        <div style="font-size: 0.72rem; color: var(--pres-accent, var(--accent)); margin-top: 2px;">• Active Lakehouse Sync</div>
+                                    </div>
+                                    <div style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; color: var(--pres-accent-2, var(--pres-text, var(--text))); line-height: 1;">
+                                        ${kpi.val}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="slideFooter">
+                        <span>Reconciled Financial Scorecard</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
+        } else if (slide.layout === 'capsule_roadmap' || slide.layout === 'connected_process') {
+            const steps = slide.steps || [
+                { num: '01', title: 'Telemetry Connectors', desc: 'Sub-second sync with Snowflake, BigQuery & Databricks telemetry.' },
+                { num: '02', title: 'Transformer Scoring', desc: 'Tabular hybrid transformer models compute risk with 99.4% ROC-AUC.' },
+                { num: '03', title: 'Prescriptive Alerts', desc: 'Real-time task dispatch to Customer Success Slack and Teams channels.' },
+                { num: '04', title: 'Contract Renewal', desc: 'Annual renewal incentives secured; ARR leakage fully eliminated.' }
+            ];
+            contentHtml = `
+                <div class="slideContent layout-capsule-roadmap">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Connected Operational Roadmap</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: center; margin: 12px 0; width: 100%; flex: 1;">
+                        <div style="margin-bottom: 16px; text-align: left;">
+                            <div style="font-size: 0.72rem; font-weight: 800; color: var(--pres-accent, var(--accent)); text-transform: uppercase;">OPERATIONAL LIFECYCLE</div>
+                            <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin: 2px 0 0; font-size: 1.4rem; color: var(--pres-text, var(--text)); font-family: var(--font-heading);">${slide.title || 'End-to-End Governance Roadmap'}</h2>
+                        </div>
+                        <!-- 4 Connected Capsules -->
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; position: relative;">
+                            ${steps.map((st, sIdx) => `
+                                <div class="curatedPillCard" style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 20px 14px; background: var(--pres-surface, var(--surface-2)); border: 1.5px solid var(--pres-border, var(--border)); border-radius: 16px; position: relative;">
+                                    <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--pres-accent-soft, rgba(0,163,255,0.15)); border: 2px solid var(--pres-accent, var(--accent)); display: flex; align-items: center; justify-content: center; font-size: 0.95rem; font-weight: 900; color: var(--pres-accent, var(--accent)); font-family: var(--font-heading); margin-bottom: 12px;">
+                                        ${st.num || `0${sIdx+1}`}
+                                    </div>
+                                    <div style="font-size: 0.95rem; font-weight: 800; color: var(--pres-text, var(--text)); margin-bottom: 6px; font-family: var(--font-heading);">${st.title}</div>
+                                    <div style="font-size: 0.75rem; line-height: 1.45; color: var(--pres-muted, var(--muted));">${st.desc}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="slideFooter">
+                        <span>Connected Lifecycle Roadmap</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
+        } else if (slide.layout === 'radial_hub' || slide.layout === 'constellation_hub') {
+            const listHtml = (slide.bullets || []).map((b, bIdx) => `<li contenteditable="true" data-slide-index="${idx}" data-field="bullet" data-bullet-index="${bIdx}">${b}</li>`).join('');
+            contentHtml = `
+                <div class="slideContent layout-radial-hub">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Autonomous Decision Constellation</span>
+                    </div>
+                    <div style="display: flex; gap: 24px; margin: 10px 0; align-items: stretch; width: 100%; flex: 1;">
+                        <!-- Left Info Card -->
+                        <div style="flex: 0 0 38%; display: flex; flex-direction: column; justify-content: space-between; background: var(--pres-surface, var(--surface-2)); border: 1px solid var(--pres-border, var(--border)); border-radius: 14px; padding: 20px;">
+                            <div>
+                                <div style="font-size: 0.72rem; font-weight: 800; color: var(--pres-accent, var(--accent)); text-transform: uppercase; margin-bottom: 6px;">INTELLIGENT NETWORK</div>
+                                <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin: 0 0 10px; font-size: 1.35rem; color: var(--pres-text, var(--text)); font-family: var(--font-heading);">${slide.title || 'Neural Decision Constellation'}</h2>
+                                <ul style="line-height: 1.55; font-size: 0.82rem; color: var(--pres-muted, var(--muted)); padding-left: 18px; margin: 0;">${listHtml}</ul>
+                            </div>
+                            <!-- Bottom Metric Strip -->
+                            <div style="margin-top: 10px; padding: 10px 14px; background: rgba(0,0,0,0.18); border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-size: 0.65rem; color: var(--pres-muted, var(--muted)); text-transform: uppercase;">Annual Preserved ARR</div>
+                                    <div style="font-size: 1.1rem; font-weight: 900; color: var(--pres-accent-2, #FBBF24); font-family: var(--font-heading);">$120k+</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 0.65rem; color: var(--pres-muted, var(--muted)); text-transform: uppercase;">Satisfaction</div>
+                                    <div style="font-size: 0.85rem; font-weight: 800; color: #FBBF24;">4.9 ★★★★★</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Constellation Graphic -->
+                        <div style="flex: 1; display: flex; align-items: center; justify-content: center; position: relative; background: var(--pres-surface, var(--surface-2)); border: 1px solid var(--pres-border, var(--border)); border-radius: 14px; overflow: hidden; padding: 20px;">
+                            <svg width="100%" height="100%" viewBox="0 0 340 240" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                                <!-- Dashed Radial Orbit Lines -->
+                                <line x1="170" y1="120" x2="60" y2="50" stroke="var(--pres-accent, #7C3AED)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
+                                <line x1="170" y1="120" x2="280" y2="50" stroke="var(--pres-accent, #7C3AED)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
+                                <line x1="170" y1="120" x2="60" y2="190" stroke="var(--pres-accent, #7C3AED)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
+                                <line x1="170" y1="120" x2="280" y2="190" stroke="var(--pres-accent, #7C3AED)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
+                            </svg>
+
+                            <!-- Central Core Hub Node -->
+                            <div class="radialConstellationNode" style="width: 72px; height: 72px; z-index: 2;">
+                                <div style="font-size: 0.65rem; font-weight: 900; color: var(--pres-accent-2, #FBBF24); letter-spacing: 0.05em;">CORE</div>
+                                <div style="font-size: 0.72rem; font-weight: 800; color: var(--pres-text, var(--text));">QIPLO</div>
+                            </div>
+
+                            <!-- 4 Orbit Satellites -->
+                            <div style="position: absolute; top: 25px; left: 30px; padding: 6px 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--pres-border, var(--border)); border-radius: 20px; font-size: 0.72rem; font-weight: 700; color: var(--pres-text, var(--text)); display: flex; align-items: center; gap: 6px;">
+                                <span>Support SLA</span>
+                            </div>
+                            <div style="position: absolute; top: 25px; right: 30px; padding: 6px 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--pres-border, var(--border)); border-radius: 20px; font-size: 0.72rem; font-weight: 700; color: var(--pres-text, var(--text)); display: flex; align-items: center; gap: 6px;">
+                                <span>Billing Health</span>
+                            </div>
+                            <div style="position: absolute; bottom: 25px; left: 30px; padding: 6px 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--pres-border, var(--border)); border-radius: 20px; font-size: 0.72rem; font-weight: 700; color: var(--pres-text, var(--text)); display: flex; align-items: center; gap: 6px;">
+                                <span>Contract Terms</span>
+                            </div>
+                            <div style="position: absolute; bottom: 25px; right: 30px; padding: 6px 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--pres-border, var(--border)); border-radius: 20px; font-size: 0.72rem; font-weight: 700; color: var(--pres-text, var(--text)); display: flex; align-items: center; gap: 6px;">
+                                <span>Usage Velocity</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slideFooter">
+                        <span>Autonomous Decision Network</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
+        } else if (slide.layout === 'catalog_matrix' || slide.layout === 'product_catalog') {
+            const items = slide.catalog_items || [
+                { name: 'Tier-1 Enterprise Accounts', pct: '99.4% ROC', desc: 'High-touch white-glove retention workflows with executive sponsorship.' },
+                { name: 'Mid-Market Growth Cohort', pct: '84% Protected', desc: 'Proactive 60-day renewal incentives and customer success check-ins.' },
+                { name: 'Continuous Telemetry Engine', pct: '<45ms Latency', desc: 'Sub-second streaming analytics across all active billing events.' },
+                { name: 'Governance & Audit Trail', pct: '100% Reconciled', desc: 'Zero data loss normalization meeting enterprise SOC-2 Type II standards.' }
+            ];
+            contentHtml = `
+                <div class="slideContent layout-catalog-matrix">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Product & Portfolio Catalog Matrix</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: center; margin: 12px 0; width: 100%; flex: 1;">
+                        <div style="margin-bottom: 14px; text-align: left;">
+                            <div style="font-size: 0.72rem; font-weight: 800; color: var(--pres-accent, var(--accent)); text-transform: uppercase;">PORTFOLIO SPECIFICATION</div>
+                            <h2 contenteditable="true" data-slide-index="${idx}" data-field="title" style="margin: 2px 0 0; font-size: 1.4rem; color: var(--pres-text, var(--text)); font-family: var(--font-heading);">${slide.title || 'Premium Artisanal Portfolio Matrix'}</h2>
+                        </div>
+                        <!-- 2x2 Luxury Catalog Grid -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                            ${items.map((item) => `
+                                <div class="curatedPillCard" style="background: var(--pres-surface, var(--surface-2)); border: 1.5px solid var(--pres-border, var(--border)); border-radius: 12px; overflow: hidden; padding: 0;">
+                                    <div style="background: var(--pres-accent, #C28E6A); padding: 8px 14px; display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="font-size: 0.82rem; font-weight: 800; color: #FFFFFF; font-family: var(--font-heading);">${item.name}</span>
+                                        <span style="font-size: 0.72rem; font-weight: 900; background: rgba(0,0,0,0.25); padding: 2px 8px; border-radius: 10px; color: #FFFFFF;">${item.pct}</span>
+                                    </div>
+                                    <div style="padding: 12px 14px;">
+                                        <div style="font-size: 0.78rem; line-height: 1.45; color: var(--pres-muted, var(--muted));">${item.desc}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="slideFooter">
+                        <span>Portfolio Catalog & Specifications</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
+        } else if (slide.layout === 'statement_ripple' || slide.layout === 'bold_statement') {
+            const actionWord = slide.action_word || 'Grow.';
+            const statement = slide.statement || 'We help businesses transform customer retention into their most predictable revenue engine.';
+            contentHtml = `
+                <div class="slideContent layout-statement-ripple" style="position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: center;">
+                    <svg class="rippleRingBg" width="600" height="400" viewBox="0 0 600 400" fill="none">
+                        <circle cx="300" cy="200" r="80" stroke="var(--pres-accent, #00F5FF)" stroke-width="1.5"/>
+                        <circle cx="300" cy="200" r="140" stroke="var(--pres-accent, #00F5FF)" stroke-width="1.5"/>
+                        <circle cx="300" cy="200" r="200" stroke="var(--pres-accent, #00F5FF)" stroke-width="1.5"/>
+                        <circle cx="300" cy="200" r="260" stroke="var(--pres-accent, #00F5FF)" stroke-width="1.5"/>
+                    </svg>
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Executive Strategic Mandate</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 20px; z-index: 2;">
+                        <h1 contenteditable="true" data-slide-index="${idx}" data-field="title" style="font-size: 4.2rem; font-weight: 900; line-height: 1; margin: 0 0 16px; color: var(--pres-accent-2, #FFFFFF); font-family: var(--font-heading);">${actionWord}</h1>
+                        <p style="font-size: 1.25rem; font-weight: 700; line-height: 1.45; color: var(--pres-text, var(--text)); max-width: 680px; margin: 0;">${statement}</p>
+                    </div>
+                    <div class="slideFooter">
+                        <span>Vision & Momentum</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
+        } else if (slide.layout === 'quote_tab' || slide.layout === 'highlight_quote') {
+            const quote = slide.quote || 'Turn customer retention into your strongest, most predictable growth and valuation engine.';
+            const attribution = slide.attribution || 'Qiplo Autonomous Decision Studio';
+            contentHtml = `
+                <div class="slideContent layout-quote-tab">
+                    <div class="slideHeader">
+                        <div class="presMiniLogo">Qiplo</div>
+                        <span>Executive Leadership Vision</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; flex: 1; margin: 12px 0;">
+                        <div class="curatedPillCard" style="display: flex; align-items: stretch; background: var(--pres-surface, var(--surface-2)); border: 1.5px solid var(--pres-border, var(--border)); border-radius: 16px; overflow: hidden; max-width: 780px; width: 100%; box-shadow: 0 8px 24px rgba(0,0,0,0.18);">
+                            <!-- Left Accent Highlight Strip -->
+                            <div style="width: 14px; background: var(--pres-accent, #F59E0B);"></div>
+                            <div style="padding: 30px 36px; flex: 1; text-align: left;">
+                                <div style="font-size: 0.72rem; font-weight: 800; color: var(--pres-accent, var(--accent)); text-transform: uppercase; margin-bottom: 8px;">STRATEGIC TAKEAWAY</div>
+                                <blockquote contenteditable="true" data-slide-index="${idx}" data-field="quote" style="margin: 0 0 16px; font-size: 1.35rem; font-weight: 800; line-height: 1.4; color: var(--pres-text, var(--text)); font-family: var(--font-heading);">"${quote}"</blockquote>
+                                <div style="font-size: 0.82rem; font-weight: 700; color: var(--pres-muted, var(--muted));">— ${attribution}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slideFooter">
+                        <span>Executive Perspective</span>
+                        <span>Slide ${idx+1} of ${slides.length}</span>
+                    </div>
+                </div>
+            `;
         } else if (slide.layout === 'closing') {
             contentHtml = `
                 <div class="slideContent layout-closing" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; text-align: center;">

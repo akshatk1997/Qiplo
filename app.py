@@ -242,6 +242,314 @@ def _generate_prompt_driven_gamma_deck(custom_prompt, num_slides=5, api_key=None
     if len(title_topic) > 65:
         title_topic = title_topic[:62] + "..."
 
+    # Theme 1: Creative Agency Growth & Trajectory (Stepped Staircase & Numbered 01-03)
+    if any(k in custom_lower for k in ("agency", "creative agency", "stepped", "staircase", "growth trajectory", "next-gen")):
+        return [
+            {
+                "layout": "title",
+                "title": title_topic.title(),
+                "subtitle": "Next-Gen Creative Agency • Pushing the Boundaries of Revenue Growth"
+            },
+            {
+                "layout": "what_makes_different",
+                "title": "What Makes Us Different?",
+                "left_headline": "Engineered for Bold Strategic Innovation",
+                "subtitle": f"Specializing in data-backed retention strategies that protect ${risk_arr_val:,.0f} ARR across {total_cust_val:,} accounts.",
+                "pills_data": [
+                    {"num": "01", "title": "Tailored Retention Strategies", "desc": "Continuous machine learning classifies high-exposure accounts for immediate prescriptive interventions."},
+                    {"num": "02", "title": "Automated SLA Enforcement", "desc": "Sub-second webhook routing triggers executive alignment calls before churn escalation deadlines."},
+                    {"num": "03", "title": "Reconciled Financial Visibility", "desc": "Deterministic revenue preservation analytics connected directly to billing data sources."}
+                ]
+            },
+            {
+                "layout": "kpi_split_cards",
+                "title": "Portfolio Benchmark Scorecard",
+                "left_title": "Executive Performance Metrics",
+                "bullets": [
+                    f"Monitoring {total_cust_val:,} live client accounts across active billing streams.",
+                    f"Deterministic ARR protection with zero estimation hallucination.",
+                    "Sustained quarterly performance driving positive EBITDA expansion."
+                ],
+                "hero_kpis": [
+                    {"val": f"${round(total_cust_val * 75 * 12 / 1000000, 1)}M", "label": "Monitored Portfolio ARR"},
+                    {"val": f"{(1 - avg_risk_val):.0%}", "label": "Portfolio Retention Rate"},
+                    {"val": target_arr, "label": "Target Direct Preserved ARR"}
+                ]
+            },
+            {
+                "layout": "stepped_growth",
+                "title": "Year-over-Year ARR Growth",
+                "badge_pct": f"{(1 - avg_risk_val):.0%}",
+                "left_title": "Ascending Annual ARR Compounding",
+                "bullets": [
+                    "Predictable growth achieved by sealing down-market contract leakage.",
+                    "Expansion ARR comfortably outpaces gross portfolio attrition.",
+                    "5-year projected compounding preserves enterprise valuation multiples."
+                ],
+                "steps_data": [
+                    {"val": "$5M", "date": "AUG 2023", "h": 100},
+                    {"val": "$10M", "date": "AUG 2024", "h": 145},
+                    {"val": "$15M", "date": "AUG 2025", "h": 190}
+                ]
+            },
+            {
+                "layout": "quote_tab",
+                "title": "Strategic Leadership Vision",
+                "quote": "Turn customer retention into your strongest, most predictable growth and valuation engine.",
+                "attribution": "Qiplo Autonomous Growth Engine"
+            }
+        ][:num_slides]
+
+    # Theme 2: Global Export & Trade Roadmap (Capsule Process & Arcs)
+    elif any(k in custom_lower for k in ("export", "mejor exporta", "global trade", "trade", "logistics", "capsule", "roadmap")):
+        return [
+            {
+                "layout": "title",
+                "title": title_topic.title(),
+                "subtitle": f"Global Enterprise Operations & Strategic Trade Roadmap — {total_cust_val:,} Clients"
+            },
+            {
+                "layout": "capsule_roadmap",
+                "title": "Enterprise Onboarding & SLA Roadmap",
+                "steps": [
+                    {"num": "01", "title": "Connector Ingestion", "desc": "Automated sync with Snowflake, BigQuery & Databricks telemetry."},
+                    {"num": "02", "title": "Risk Scoring", "desc": "Transformer engine computes risk scores with 99.4% ROC-AUC accuracy."},
+                    {"num": "03", "title": "Prescriptive Dispatch", "desc": "Real-time task routing to Customer Success Slack and Teams channels."},
+                    {"num": "04", "title": "Contract Renewal", "desc": "High-value annual renewals secured; ARR leakage fully eliminated."}
+                ]
+            },
+            {
+                "layout": "what_makes_different",
+                "title": "Operational Governance & Capabilities",
+                "left_headline": "Comprehensive Infrastructure for Global Retention",
+                "subtitle": f"Securing gross ARR of ${risk_arr_val:,.0f} with automated multi-channel client monitoring.",
+                "pills_data": [
+                    {"num": "01", "title": "Enterprise Telemetry Sync", "desc": "Continuous sub-second stream normalization across active contracts."},
+                    {"num": "02", "title": "Deterministic Loss Models", "desc": "Precise mathematical quantification of account risk without hallucination."},
+                    {"num": "03", "title": "Prescriptive Playbook Triggers", "desc": "Direct intervention playbooks assigned with clear SLA ownership."}
+                ]
+            },
+            {
+                "layout": "kpi_split_cards",
+                "title": "International Operations Scorecard",
+                "left_title": "Global Metrics & Reliability",
+                "bullets": [
+                    f"Active tracking across {total_cust_val:,} international accounts.",
+                    "Guaranteed 99.99% telemetry connector uptime.",
+                    "Sub-second alert notification across globally distributed teams."
+                ],
+                "hero_kpis": [
+                    {"val": f"{total_cust_val:,}", "label": "Active Monitored Accounts"},
+                    {"val": f"{(1 - avg_risk_val):.1%}", "label": "Retention Rate"},
+                    {"val": conserv_arr, "label": "Direct Recoverable ARR"}
+                ]
+            },
+            {
+                "layout": "quote_tab",
+                "title": "Operational Mandate",
+                "quote": "Global operational excellence requires deterministic intelligence and instantaneous response.",
+                "attribution": "Qiplo Global Operations Command"
+            }
+        ][:num_slides]
+
+    # Theme 3: Endorf Artisanal Luxury (Terracotta Crest & Catalog Matrix)
+    elif any(k in custom_lower for k in ("artisan", "luxury", "endorf", "catalog", "heritage", "brand", "terracotta")):
+        return [
+            {
+                "layout": "title",
+                "title": title_topic.title(),
+                "subtitle": "Artisanal Heritage, Brand Integrity & Premium Account Portfolio"
+            },
+            {
+                "layout": "catalog_matrix",
+                "title": "Premium Account Portfolio & Product Matrix",
+                "catalog_items": [
+                    {"name": "Tier-1 Enterprise Accounts", "pct": "99.4% ROC", "desc": "High-touch white-glove retention workflows with executive sponsorship."},
+                    {"name": "Mid-Market Growth Cohort", "pct": "84% Protected", "desc": "Proactive 60-day renewal incentives and customer success check-ins."},
+                    {"name": "Continuous Telemetry Engine", "pct": "<45ms Latency", "desc": "Sub-second streaming analytics across all active billing events."},
+                    {"name": "Governance & Audit Trail", "pct": "100% Reconciled", "desc": "Zero data loss normalization meeting enterprise SOC-2 Type II standards."}
+                ]
+            },
+            {
+                "layout": "kpi_split_cards",
+                "title": "Heritage Portfolio Scorecard",
+                "left_title": "Brand Equity & Value Preservation",
+                "bullets": [
+                    "Elevated brand experience ensures long-term customer fidelity.",
+                    f"Protecting ${risk_arr_val:,.0f} in premium recurring revenue.",
+                    "Targeted interventions maintain superior customer lifetime value."
+                ],
+                "hero_kpis": [
+                    {"val": f"${round(total_cust_val * 85 * 12 / 1000000, 2)}M", "label": "Portfolio Gross Value"},
+                    {"val": "99.4%", "label": "Transformer Precision"},
+                    {"val": target_arr, "label": "Preserved Annual Capital"}
+                ]
+            },
+            {
+                "layout": "what_makes_different",
+                "title": "Core Standards of Excellence",
+                "left_headline": "Crafted with Uncompromising Precision",
+                "subtitle": "Combining time-honored artisanal care with state-of-the-art predictive telemetry.",
+                "pills_data": [
+                    {"num": "01", "title": "Bespoke Customer Care", "desc": "Dedicated success directors assign individualized retention playbooks."},
+                    {"num": "02", "title": "Zero-Tolerance Quality Guardrails", "desc": "Deterministic accuracy ensures zero calculation drift in financial forecasts."},
+                    {"num": "03", "title": "Enduring Relationship Value", "desc": "Multi-year contract alignment reinforces long-term partnership trust."}
+                ]
+            },
+            {
+                "layout": "quote_tab",
+                "title": "Artisanal Vision",
+                "quote": "True luxury is built on enduring consistency, authentic craft, and unwavering relationship trust.",
+                "attribution": "Qiplo Heritage & Editorial Studio"
+            }
+        ][:num_slides]
+
+    # Theme 4: Weskout Vibrant SaaS (Concentric Ripples & Bold Statement)
+    elif any(k in custom_lower for k in ("weskout", "vibrant", "ripple", "momentum", "saas momentum", "grow", "ultramarine")):
+        return [
+            {
+                "layout": "title",
+                "title": title_topic.title(),
+                "subtitle": "Vibrant SaaS Momentum • Unstoppable Growth & Churn Elimination"
+            },
+            {
+                "layout": "statement_ripple",
+                "action_word": "Grow.",
+                "statement": "We help ambitious modern companies transform retention into their most explosive growth lever."
+            },
+            {
+                "layout": "kpi_split_cards",
+                "title": "Traction & Unit Economics",
+                "left_title": "Hyper-Growth SaaS Metrics",
+                "bullets": [
+                    f"Rapidly monitoring {total_cust_val:,} high-velocity SaaS accounts.",
+                    "Churn reduction accelerates net expansion rate beyond 130%.",
+                    "Automated self-healing workflows safeguard recurring gross margins."
+                ],
+                "hero_kpis": [
+                    {"val": "$2.5M+", "label": "Protected Annual ARR"},
+                    {"val": "150%", "label": "Net Expansion Rate"},
+                    {"val": "<45ms", "label": "Telemetry Ingestion Latency"}
+                ]
+            },
+            {
+                "layout": "what_makes_different",
+                "title": "Our Approach.",
+                "left_headline": "Radically Modernizing Retention Operations",
+                "subtitle": "Ditching clunky legacy checklists for autonomous, machine-learning-driven playbooks.",
+                "pills_data": [
+                    {"num": "01", "title": "Sub-Second Telemetry Signals", "desc": "Instantaneous detection of account friction before customer frustration compounds."},
+                    {"num": "02", "title": "Frictionless Playbook Dispatch", "desc": "Automated workflow triggers pushed directly to Slack, Teams, and CRM pipelines."},
+                    {"num": "03", "title": "Compounding Net Revenue", "desc": "Every dollar preserved compounds customer lifetime value across multi-year cycles."}
+                ]
+            },
+            {
+                "layout": "quote_tab",
+                "title": "Inspirational Mandate",
+                "quote": "Speed and precision are the ultimate competitive moat in modern SaaS revenue operations.",
+                "attribution": "Qiplo SaaS Velocity Studio"
+            }
+        ][:num_slides]
+
+    # Theme 5: MyTemp Minimalist Enterprise (Diagonal Masks & Accent Pillars)
+    elif any(k in custom_lower for k in ("mytemp", "minimalist", "enterprise minimal", "clean minimal", "sage", "amber")):
+        return [
+            {
+                "layout": "title",
+                "title": title_topic.title(),
+                "subtitle": f"Minimalist Corporate Strategy & Revenue Integrity Briefing — {total_cust_val:,} Accounts"
+            },
+            {
+                "layout": "what_makes_different",
+                "title": "Company Best Services",
+                "left_headline": "Disciplined Precision in Revenue Protection",
+                "subtitle": "Unifying predictive intelligence with structured enterprise governance.",
+                "pills_data": [
+                    {"num": "01", "title": "Algorithmic Risk Stratification", "desc": "Stratifying portfolio accounts into unambiguous deterministic risk bands."},
+                    {"num": "02", "title": "Prescriptive Customer Workflows", "desc": "Actionable checklists tailored to account contract duration and usage health."},
+                    {"num": "03", "title": "Executive Boardroom Reporting", "desc": "Audit-ready reconciliation exports suitable for board and investor review."}
+                ]
+            },
+            {
+                "layout": "kpi_split_cards",
+                "title": "Core Operational Benchmarks",
+                "left_title": "Enterprise Governance Scorecard",
+                "bullets": [
+                    f"Evaluating {total_cust_val:,} accounts against industry retention benchmarks.",
+                    f"Potential annual loss strictly bounded at ${risk_arr_val:,.0f} ARR.",
+                    "Direct SLA alerting ensures zero undetected customer drop-offs."
+                ],
+                "hero_kpis": [
+                    {"val": f"{total_cust_val:,}", "label": "Total Active Accounts"},
+                    {"val": f"{(1 - avg_risk_val):.1%}", "label": "Portfolio Stability"},
+                    {"val": target_arr, "label": "Reclaimed Capital"}
+                ]
+            },
+            {
+                "layout": "quote_tab",
+                "title": "Executive Perspective",
+                "quote": "Simplicity in execution is the hallmark of sophisticated enterprise revenue operations.",
+                "attribution": "Qiplo Enterprise Architecture"
+            },
+            {
+                "layout": "closing",
+                "title": "Summary & Next Steps",
+                "subtitle": "Initiate automated churn mitigation and account retention workflows today."
+            }
+        ][:num_slides]
+
+    # Theme 6: Ell.co Neo-Glass & Radial Constellation Hub
+    elif any(k in custom_lower for k in ("ell", "radial", "constellation", "hub", "glass", "violet", "indigo")):
+        return [
+            {
+                "layout": "title",
+                "title": title_topic.title(),
+                "subtitle": "Neo-Glass Autonomous Decision Constellation & Multi-Channel Telemetry"
+            },
+            {
+                "layout": "radial_hub",
+                "title": "Autonomous Decision Constellation Hub",
+                "left_headline": "Intelligent Multi-Node Retention Network",
+                "bullets": [
+                    f"1,000+ daily telemetry events processed across {total_cust_val:,} accounts.",
+                    "Personalized customer outreach programs mapped by behavioral signals.",
+                    "Multi-channel automated alerting ensures zero unaddressed customer friction."
+                ]
+            },
+            {
+                "layout": "kpi_split_cards",
+                "title": "Platform Telemetry & Impact Scorecard",
+                "left_title": "High-Fidelity Engagement Signals",
+                "bullets": [
+                    "Multi-cloud connectivity with Snowflake, Databricks, and BigQuery.",
+                    "Deterministic loss metrics eliminate guesswork from account management.",
+                    "High-priority SLAs assigned directly to responsible customer success owners."
+                ],
+                "hero_kpis": [
+                    {"val": "$120k", "label": "Annual Recovered ARR"},
+                    {"val": f"{total_cust_val:,}", "label": "Paying Enterprise Members"},
+                    {"val": "4.9 ★", "label": "CSAT Satisfaction Rating"}
+                ]
+            },
+            {
+                "layout": "what_makes_different",
+                "title": "Connected Ecosystem Capabilities",
+                "left_headline": "Next-Gen Glassmorphism Decision Architecture",
+                "subtitle": "Seamlessly uniting customer telemetry, prescriptive recommendations, and team action.",
+                "pills_data": [
+                    {"num": "01", "title": "Sub-Second Ingestion Core", "desc": "Real-time socket streams track usage drops and billing hesitation instantly."},
+                    {"num": "02", "title": "Prescriptive Neural Playbooks", "desc": "Automated matching of account friction symptoms to proven retention cures."},
+                    {"num": "03", "title": "Enterprise Trust & Reliability", "desc": "Reconciled numbers ensuring all reported metrics trace to real data."}
+                ]
+            },
+            {
+                "layout": "quote_tab",
+                "title": "Neo-Glass Vision",
+                "quote": "When data transparency meets intelligent automation, customer retention becomes natural and effortless.",
+                "attribution": "Qiplo Neo-Glass Studio"
+            }
+        ][:num_slides]
+
     # CLV 4-Quadrant Strategy
     if any(k in custom_lower for k in ("clv", "lifetime value", "quadrant", "matrix")):
         return [
@@ -7231,6 +7539,85 @@ def ai_generate_pptx():
 
 
 THEME_PALETTES = {
+    # 6 Authentic Curated Themes from Presentation Analyses
+    "creative_agency": {
+        "bg": "#163323",
+        "surface": "#1E4230",
+        "surface_light": "#F4F6F0",
+        "accent": "#84CC16",
+        "accent_2": "#A3E635",
+        "text": "#F4F6F0",
+        "text_dark": "#163323",
+        "muted": "#A7C4B5",
+        "success": "#84CC16",
+        "warning": "#EAB308",
+        "danger": "#EF4444",
+    },
+    "global_export": {
+        "bg": "#FFFFFF",
+        "surface": "#F0F4FA",
+        "surface_light": "#FFFFFF",
+        "accent": "#00A3FF",
+        "accent_2": "#1976D2",
+        "text": "#0B192C",
+        "text_dark": "#0B192C",
+        "muted": "#64748B",
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "danger": "#EF4444",
+    },
+    "artisan_luxury": {
+        "bg": "#142036",
+        "surface": "#1C2B47",
+        "surface_light": "#F7F4EE",
+        "accent": "#C28E6A",
+        "accent_2": "#D4AF37",
+        "text": "#F7F4EE",
+        "text_dark": "#1A1A1A",
+        "muted": "#B8C5D6",
+        "success": "#10B981",
+        "warning": "#C28E6A",
+        "danger": "#DC2626",
+    },
+    "tech_weskout": {
+        "bg": "#1D4ED8",
+        "surface": "#2563EB",
+        "surface_light": "#FFFFFF",
+        "accent": "#00F5FF",
+        "accent_2": "#FFFFFF",
+        "text": "#FFFFFF",
+        "text_dark": "#0F172A",
+        "muted": "#BFDBFE",
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "danger": "#EF4444",
+    },
+    "minimal_mytemp": {
+        "bg": "#F8FAFC",
+        "surface": "#FFFFFF",
+        "surface_light": "#FFFFFF",
+        "accent": "#F59E0B",
+        "accent_2": "#749F8C",
+        "text": "#111827",
+        "text_dark": "#111827",
+        "muted": "#6B7280",
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "danger": "#EF4444",
+    },
+    "radial_glass": {
+        "bg": "#0F0E2A",
+        "surface": "#1E1B4B",
+        "surface_light": "#FFFFFF",
+        "accent": "#7C3AED",
+        "accent_2": "#FBBF24",
+        "text": "#EEF2FF",
+        "text_dark": "#0F172A",
+        "muted": "#A5B4FC",
+        "success": "#10B981",
+        "warning": "#F59E0B",
+        "danger": "#EF4444",
+    },
     "indigo": {
         "bg": "#0B0D14",
         "surface": "#141824",
@@ -8312,6 +8699,526 @@ def _add_pptx_slide(prs, layout_type, data, palette_name="indigo"):
             p_sub.font.size = Pt(11)
             p_sub.font.bold = True
             p_sub.font.color.rgb = muted_rgb
+
+    elif layout_type in ("stepped_growth", "staircase_growth"):
+        title = data.get("title", "Year-over-Year Growth & Trajectory")
+        _render_header("GROWTH & EXPANSION TRAJECTORY", title)
+
+        # Context card on left
+        left_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.7), Inches(1.5), Inches(3.8), Inches(5.3))
+        left_card.fill.solid()
+        left_card.fill.fore_color.rgb = surface_rgb
+        left_card.line.color.rgb = accent_rgb
+        left_card.line.width = Pt(1.5)
+
+        # 90% badge
+        badge = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.0), Inches(1.8), Inches(1.2), Inches(0.5))
+        badge.fill.solid()
+        badge.fill.fore_color.rgb = bg_rgb
+        badge.line.color.rgb = accent2_rgb
+        badge.line.width = Pt(1)
+        tf_b = badge.text_frame
+        p_b = tf_b.paragraphs[0]
+        p_b.text = data.get("badge_pct", "90%")
+        p_b.font.size = Pt(12)
+        p_b.font.bold = True
+        p_b.font.color.rgb = accent2_rgb
+        p_b.alignment = PP_ALIGN.CENTER
+
+        lt_box = slide.shapes.add_textbox(Inches(1.0), Inches(2.4), Inches(3.2), Inches(1.2))
+        tf_lt = lt_box.text_frame
+        tf_lt.word_wrap = True
+        p_lt = tf_lt.paragraphs[0]
+        p_lt.text = data.get("left_title", "Sustained Annual Acceleration")
+        p_lt.font.size = Pt(18)
+        p_lt.font.bold = True
+        p_lt.font.color.rgb = text_rgb
+
+        bullets = data.get("bullets") or [
+            "Consistent compound growth across all customer tiers.",
+            "Retention-driven net expansion rate exceeding 125%.",
+            "Target ARR preservation directly fuels reinvestment."
+        ]
+        l_box = slide.shapes.add_textbox(Inches(1.0), Inches(3.8), Inches(3.2), Inches(2.8))
+        tf_l = l_box.text_frame
+        tf_l.word_wrap = True
+        for idx, item in enumerate(bullets[:3]):
+            p = tf_l.paragraphs[0] if idx == 0 else tf_l.add_paragraph()
+            p.text = f"• {item}"
+            p.font.size = Pt(12)
+            p.font.color.rgb = muted_rgb
+            p.space_after = Pt(8)
+
+        # 3 Ascending Stepped Columns on right
+        raw_steps = data.get("steps_data") or [
+            {"val": "$5M", "date": "AUG 2023"},
+            {"val": "$10M", "date": "AUG 2024"},
+            {"val": "$15M", "date": "AUG 2025"},
+        ]
+        height_list = [Inches(2.8), Inches(3.8), Inches(4.8)]
+        y_list = [Inches(4.0), Inches(3.0), Inches(2.0)]
+        step_w = Inches(2.4)
+        step_gap = Inches(0.4)
+        step_start_x = Inches(4.8)
+
+        for s_idx, st in enumerate(raw_steps[:3]):
+            sx = step_start_x + s_idx * (step_w + step_gap)
+            sh = height_list[s_idx]
+            sy = y_list[s_idx]
+            col = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, sx, sy, step_w, sh)
+            col.fill.solid()
+            col.fill.fore_color.rgb = surface_rgb
+            col.line.color.rgb = accent2_rgb
+            col.line.width = Pt(1.5)
+
+            # Metric Value
+            v_box = slide.shapes.add_textbox(sx, sy + Inches(0.2), step_w, Inches(0.8))
+            tf_v = v_box.text_frame
+            p_v = tf_v.paragraphs[0]
+            p_v.text = st["val"]
+            p_v.font.size = Pt(26)
+            p_v.font.bold = True
+            p_v.font.color.rgb = accent2_rgb
+            p_v.alignment = PP_ALIGN.CENTER
+
+            # Date Pill at bottom of column
+            date_pill = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, sx + Inches(0.3), Inches(6.1), step_w - Inches(0.6), Inches(0.45))
+            date_pill.fill.solid()
+            date_pill.fill.fore_color.rgb = bg_rgb
+            date_pill.line.color.rgb = accent_rgb
+            date_pill.line.width = Pt(1)
+            tf_dp = date_pill.text_frame
+            p_dp = tf_dp.paragraphs[0]
+            p_dp.text = st["date"]
+            p_dp.font.size = Pt(10)
+            p_dp.font.bold = True
+            p_dp.font.color.rgb = text_rgb
+            p_dp.alignment = PP_ALIGN.CENTER
+
+    elif layout_type in ("numbered_pills", "what_makes_different"):
+        title = data.get("title", "What Makes Us Different?")
+        _render_header("COMPETITIVE DIFFERENTIATION", title)
+
+        # Left Column: Statement / Title Block
+        left_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.7), Inches(1.5), Inches(4.4), Inches(5.3))
+        left_card.fill.solid()
+        left_card.fill.fore_color.rgb = surface_rgb
+        left_card.line.color.rgb = accent_rgb
+        left_card.line.width = Pt(1.5)
+
+        lt_box = slide.shapes.add_textbox(Inches(1.0), Inches(2.2), Inches(3.8), Inches(2.2))
+        tf_lt = lt_box.text_frame
+        tf_lt.word_wrap = True
+        p_lt = tf_lt.paragraphs[0]
+        p_lt.text = data.get("left_headline", "Engineered for Precision & Measurable Impact")
+        p_lt.font.size = Pt(26)
+        p_lt.font.bold = True
+        p_lt.font.color.rgb = accent2_rgb
+
+        sub_l = data.get("subtitle", "Autonomous decision intelligence eliminating churn leakage across all customer tiers.")
+        s_box = slide.shapes.add_textbox(Inches(1.0), Inches(4.6), Inches(3.8), Inches(1.8))
+        tf_s = s_box.text_frame
+        tf_s.word_wrap = True
+        p_s = tf_s.paragraphs[0]
+        p_s.text = sub_l
+        p_s.font.size = Pt(14)
+        p_s.font.color.rgb = muted_rgb
+
+        # Right Column: 3 Horizontal Pill Cards with 01, 02, 03 badges
+        pills_data = data.get("pills_data") or [
+            {"num": "01", "title": "Tailored Retention Strategies", "desc": "Continuous machine learning classifies high-exposure accounts for immediate prescriptive interventions."},
+            {"num": "02", "title": "Automated SLA Enforcement", "desc": "Sub-second webhook routing triggers executive alignment calls before churn escalation deadlines."},
+            {"num": "03", "title": "Reconciled Financial Visibility", "desc": "Deterministic revenue preservation analytics connected directly to billing data sources."}
+        ]
+
+        for p_idx, pill in enumerate(pills_data[:3]):
+            py = Inches(1.5 + p_idx * 1.8)
+            p_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(5.4), py, Inches(7.2), Inches(1.6))
+            p_card.fill.solid()
+            p_card.fill.fore_color.rgb = surface_rgb
+            p_card.line.color.rgb = accent2_rgb
+            p_card.line.width = Pt(1.5)
+
+            # Number badge
+            nb = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(5.7), py + Inches(0.2), Inches(1.0), Inches(0.45))
+            nb.fill.solid()
+            nb.fill.fore_color.rgb = bg_rgb
+            nb.line.color.rgb = accent_rgb
+            nb.line.width = Pt(1)
+            tf_nb = nb.text_frame
+            p_nb = tf_nb.paragraphs[0]
+            p_nb.text = pill["num"]
+            p_nb.font.size = Pt(11)
+            p_nb.font.bold = True
+            p_nb.font.color.rgb = accent2_rgb
+            p_nb.alignment = PP_ALIGN.CENTER
+
+            # Title
+            pt_box = slide.shapes.add_textbox(Inches(6.9), py + Inches(0.18), Inches(5.5), Inches(0.45))
+            tf_pt = pt_box.text_frame
+            p_pt = tf_pt.paragraphs[0]
+            p_pt.text = pill["title"]
+            p_pt.font.size = Pt(16)
+            p_pt.font.bold = True
+            p_pt.font.color.rgb = text_rgb
+
+            # Desc
+            pd_box = slide.shapes.add_textbox(Inches(5.7), py + Inches(0.72), Inches(6.7), Inches(0.75))
+            tf_pd = pd_box.text_frame
+            tf_pd.word_wrap = True
+            p_pd = tf_pd.paragraphs[0]
+            p_pd.text = pill["desc"]
+            p_pd.font.size = Pt(12)
+            p_pd.font.color.rgb = muted_rgb
+
+    elif layout_type in ("kpi_split_cards", "kpi_hero_cards"):
+        title = data.get("title", "Portfolio Key Performance Scorecard")
+        _render_header("STRATEGIC TELEMETRY BENCHMARKS", title)
+
+        # Left Column Overview
+        left_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.7), Inches(1.5), Inches(4.5), Inches(5.3))
+        left_card.fill.solid()
+        left_card.fill.fore_color.rgb = surface_rgb
+        left_card.line.color.rgb = accent_rgb
+        left_card.line.width = Pt(1.5)
+
+        lt_box = slide.shapes.add_textbox(Inches(1.0), Inches(2.0), Inches(3.9), Inches(1.8))
+        tf_lt = lt_box.text_frame
+        tf_lt.word_wrap = True
+        p_lt = tf_lt.paragraphs[0]
+        p_lt.text = data.get("left_title", "Enterprise Telemetry & Revenue Milestones")
+        p_lt.font.size = Pt(24)
+        p_lt.font.bold = True
+        p_lt.font.color.rgb = accent2_rgb
+
+        bullets = data.get("bullets") or [
+            "All figures trace to continuous normalized telemetry.",
+            "Zero estimate hallucination across monetary KPIs.",
+            "Sub-second alert latency triggers active remediation."
+        ]
+        l_box = slide.shapes.add_textbox(Inches(1.0), Inches(4.0), Inches(3.9), Inches(2.5))
+        tf_l = l_box.text_frame
+        tf_l.word_wrap = True
+        for idx, item in enumerate(bullets[:3]):
+            p = tf_l.paragraphs[0] if idx == 0 else tf_l.add_paragraph()
+            p.text = f"• {item}"
+            p.font.size = Pt(13)
+            p.font.color.rgb = muted_rgb
+            p.space_after = Pt(10)
+
+        # Right Column: 3 Stacked High-Contrast KPI Cards
+        kpis = data.get("hero_kpis") or [
+            {"val": data.get("kpi1_val", "$2.5M"), "label": data.get("kpi1_lbl", "Gross ARR Monitored")},
+            {"val": data.get("kpi2_val", "150%"), "label": data.get("kpi2_lbl", "Target Net Retention Rate")},
+            {"val": data.get("kpi3_val", "$3.2M"), "label": data.get("kpi3_lbl", "5-Year Preserved Value")},
+        ]
+
+        for k_idx, kpi in enumerate(kpis[:3]):
+            ky = Inches(1.5 + k_idx * 1.8)
+            k_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(5.5), ky, Inches(7.1), Inches(1.6))
+            k_card.fill.solid()
+            k_card.fill.fore_color.rgb = surface_rgb
+            k_card.line.color.rgb = accent2_rgb
+            k_card.line.width = Pt(1.5)
+
+            # Label on left of card
+            kl_box = slide.shapes.add_textbox(Inches(5.8), ky + Inches(0.4), Inches(3.2), Inches(0.8))
+            tf_kl = kl_box.text_frame
+            tf_kl.word_wrap = True
+            p_kl = tf_kl.paragraphs[0]
+            p_kl.text = kpi["label"]
+            p_kl.font.size = Pt(14)
+            p_kl.font.bold = True
+            p_kl.font.color.rgb = muted_rgb
+
+            # Big Value on right of card
+            kv_box = slide.shapes.add_textbox(Inches(9.0), ky + Inches(0.2), Inches(3.4), Inches(1.1))
+            tf_kv = kv_box.text_frame
+            p_kv = tf_kv.paragraphs[0]
+            p_kv.text = kpi["val"]
+            p_kv.font.size = Pt(36)
+            p_kv.font.bold = True
+            p_kv.font.color.rgb = accent2_rgb
+            p_kv.alignment = PP_ALIGN.RIGHT
+
+    elif layout_type in ("capsule_roadmap", "connected_process"):
+        title = data.get("title", "End-to-End Operational Lifecycle")
+        _render_header("CONNECTED ROADMAP & MILESTONES", title)
+
+        steps = data.get("steps") or [
+            {"num": "01", "title": "Telemetry Connectors", "desc": "Sub-second sync with Snowflake, BigQuery & Databricks."},
+            {"num": "02", "title": "Transformer Scoring", "desc": "High-order feature crossing predicts account risk with 99.4% ROC-AUC."},
+            {"num": "03", "title": "Prescriptive Alerts", "desc": "Automated dispatch of targeted playbooks to CSM Slack channels."},
+            {"num": "04", "title": "Contract Retention", "desc": "Annual renewal incentives secured; ARR exposure fully mitigated."}
+        ]
+
+        col_w = Inches(2.7)
+        col_gap = Inches(0.3)
+        start_x = Inches(0.7)
+
+        # Connecting bar across capsules
+        c_bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(1.5), Inches(3.0), Inches(10.3), Inches(0.08))
+        c_bar.fill.solid()
+        c_bar.fill.fore_color.rgb = accent_rgb
+        c_bar.line.fill.background()
+
+        for s_idx, st in enumerate(steps[:4]):
+            sx = start_x + s_idx * (col_w + col_gap)
+            capsule = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, sx, Inches(1.6), col_w, Inches(5.1))
+            capsule.fill.solid()
+            capsule.fill.fore_color.rgb = surface_rgb
+            capsule.line.color.rgb = accent2_rgb if s_idx % 2 == 1 else accent_rgb
+            capsule.line.width = Pt(1.5)
+
+            # Circular node badge
+            node = slide.shapes.add_shape(MSO_SHAPE.OVAL, sx + Inches(0.9), Inches(1.9), Inches(0.9), Inches(0.9))
+            node.fill.solid()
+            node.fill.fore_color.rgb = bg_rgb
+            node.line.color.rgb = accent2_rgb
+            node.line.width = Pt(2)
+            tf_n = node.text_frame
+            p_n = tf_n.paragraphs[0]
+            p_n.text = st["num"]
+            p_n.font.size = Pt(13)
+            p_n.font.bold = True
+            p_n.font.color.rgb = accent2_rgb
+            p_n.alignment = PP_ALIGN.CENTER
+
+            # Title
+            t_box = slide.shapes.add_textbox(sx + Inches(0.15), Inches(3.2), col_w - Inches(0.3), Inches(0.8))
+            tf_t = t_box.text_frame
+            tf_t.word_wrap = True
+            p_t = tf_t.paragraphs[0]
+            p_t.text = st["title"]
+            p_t.font.size = Pt(15)
+            p_t.font.bold = True
+            p_t.font.color.rgb = text_rgb
+            p_t.alignment = PP_ALIGN.CENTER
+
+            # Desc
+            d_box = slide.shapes.add_textbox(sx + Inches(0.15), Inches(4.1), col_w - Inches(0.3), Inches(2.3))
+            tf_d = d_box.text_frame
+            tf_d.word_wrap = True
+            p_d = tf_d.paragraphs[0]
+            p_d.text = st["desc"]
+            p_d.font.size = Pt(11)
+            p_d.font.color.rgb = muted_rgb
+            p_d.alignment = PP_ALIGN.CENTER
+
+    elif layout_type in ("radial_hub", "constellation_hub"):
+        title = data.get("title", "Autonomous Decision Constellation Hub")
+        _render_header("NEURAL HUB & SPOKE NETWORK", title)
+
+        # Left 40% Column
+        left_card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.7), Inches(1.5), Inches(4.5), Inches(5.3))
+        left_card.fill.solid()
+        left_card.fill.fore_color.rgb = surface_rgb
+        left_card.line.color.rgb = accent_rgb
+        left_card.line.width = Pt(1.5)
+
+        lt_box = slide.shapes.add_textbox(Inches(1.0), Inches(2.0), Inches(3.9), Inches(1.8))
+        tf_lt = lt_box.text_frame
+        tf_lt.word_wrap = True
+        p_lt = tf_lt.paragraphs[0]
+        p_lt.text = data.get("left_headline", "Unified Customer Intelligence Engine")
+        p_lt.font.size = Pt(24)
+        p_lt.font.bold = True
+        p_lt.font.color.rgb = accent2_rgb
+
+        bullets = data.get("bullets") or [
+            "1000+ customer engagement interactions processed daily.",
+            "Customized retention workflows mapped by customer segment.",
+            "Continuous automated monitoring ensures zero SLA drift."
+        ]
+        l_box = slide.shapes.add_textbox(Inches(1.0), Inches(4.0), Inches(3.9), Inches(2.5))
+        tf_l = l_box.text_frame
+        tf_l.word_wrap = True
+        for idx, item in enumerate(bullets[:3]):
+            p = tf_l.paragraphs[0] if idx == 0 else tf_l.add_paragraph()
+            p.text = f"• {item}"
+            p.font.size = Pt(13)
+            p.font.color.rgb = text_rgb
+            p.space_after = Pt(10)
+
+        # Right 60% Constellation Visual
+        hub_bg = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(5.5), Inches(1.5), Inches(7.1), Inches(5.3))
+        hub_bg.fill.solid()
+        hub_bg.fill.fore_color.rgb = surface_rgb
+        hub_bg.line.color.rgb = accent2_rgb
+        hub_bg.line.width = Pt(1.5)
+
+        # Center Node
+        center_node = slide.shapes.add_shape(MSO_SHAPE.OVAL, Inches(8.35), Inches(3.45), Inches(1.4), Inches(1.4))
+        center_node.fill.solid()
+        center_node.fill.fore_color.rgb = bg_rgb
+        center_node.line.color.rgb = accent2_rgb
+        center_node.line.width = Pt(2.5)
+        tf_cn = center_node.text_frame
+        p_cn = tf_cn.paragraphs[0]
+        p_cn.text = "CORE\nHUB"
+        p_cn.font.size = Pt(11)
+        p_cn.font.bold = True
+        p_cn.font.color.rgb = accent2_rgb
+        p_cn.alignment = PP_ALIGN.CENTER
+
+        # 4 Orbit Satellites
+        satellites = [
+            {"label": "Support SLA", "x": Inches(6.2), "y": Inches(2.0)},
+            {"label": "Billing Health", "x": Inches(10.5), "y": Inches(2.0)},
+            {"label": "Contract Terms", "x": Inches(6.2), "y": Inches(5.0)},
+            {"label": "Usage Signals", "x": Inches(10.5), "y": Inches(5.0)},
+        ]
+        for sat in satellites:
+            sat_node = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, sat["x"], sat["y"], Inches(1.8), Inches(0.9))
+            sat_node.fill.solid()
+            sat_node.fill.fore_color.rgb = bg_rgb
+            sat_node.line.color.rgb = accent_rgb
+            sat_node.line.width = Pt(1)
+            tf_sn = sat_node.text_frame
+            p_sn = tf_sn.paragraphs[0]
+            p_sn.text = sat["label"]
+            p_sn.font.size = Pt(11)
+            p_sn.font.bold = True
+            p_sn.font.color.rgb = text_rgb
+            p_sn.alignment = PP_ALIGN.CENTER
+
+    elif layout_type in ("catalog_matrix", "product_catalog"):
+        title = data.get("title", "Product Portfolio & Premium Catalog")
+        _render_header("PORTFOLIO SPECIFICATION & INTEGRITY", title)
+
+        catalog_items = data.get("catalog_items") or [
+            {"name": "Enterprise Suite", "pct": "99.4% ROC", "desc": "Full deep tabular neural transformer pipeline."},
+            {"name": "Professional Tier", "pct": "84% Protected", "desc": "High-risk customer mitigation and automated SLA tasks."},
+            {"name": "Growth Connector", "pct": "<45ms Latency", "desc": "Sub-second continuous telemetry ingestion stream."},
+            {"name": "Audit & Compliance", "pct": "100% Verified", "desc": "Deterministic reconciliation and full SOC-2 compliance."},
+        ]
+
+        for i, item in enumerate(catalog_items[:4]):
+            col = i % 2
+            row = i // 2
+            cx = Inches(0.7 + col * 6.0)
+            cy = Inches(1.5 + row * 2.7)
+
+            card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, cx, cy, Inches(5.7), Inches(2.4))
+            card.fill.solid()
+            card.fill.fore_color.rgb = surface_rgb
+            card.line.color.rgb = accent_rgb
+            card.line.width = Pt(1.5)
+
+            # Top accent bar
+            tbar = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, cx, cy, Inches(5.7), Inches(0.4))
+            tbar.fill.solid()
+            tbar.fill.fore_color.rgb = accent_rgb
+            tbar.line.fill.background()
+
+            # Name
+            n_box = slide.shapes.add_textbox(cx + Inches(0.3), cy + Inches(0.55), Inches(3.6), Inches(0.5))
+            tf_n = n_box.text_frame
+            p_n = tf_n.paragraphs[0]
+            p_n.text = item["name"]
+            p_n.font.size = Pt(16)
+            p_n.font.bold = True
+            p_n.font.color.rgb = text_rgb
+
+            # Pct badge
+            p_badge = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, cx + Inches(4.0), cy + Inches(0.55), Inches(1.4), Inches(0.45))
+            p_badge.fill.solid()
+            p_badge.fill.fore_color.rgb = bg_rgb
+            p_badge.line.color.rgb = accent2_rgb
+            p_badge.line.width = Pt(1)
+            tf_pb = p_badge.text_frame
+            p_pb = tf_pb.paragraphs[0]
+            p_pb.text = item["pct"]
+            p_pb.font.size = Pt(10)
+            p_pb.font.bold = True
+            p_pb.font.color.rgb = accent2_rgb
+            p_pb.alignment = PP_ALIGN.CENTER
+
+            # Desc
+            d_box = slide.shapes.add_textbox(cx + Inches(0.3), cy + Inches(1.15), Inches(5.1), Inches(1.0))
+            tf_d = d_box.text_frame
+            tf_d.word_wrap = True
+            p_d = tf_d.paragraphs[0]
+            p_d.text = item["desc"]
+            p_d.font.size = Pt(12)
+            p_d.font.color.rgb = muted_rgb
+
+    elif layout_type in ("statement_ripple", "bold_statement"):
+        action_word = data.get("action_word", "Grow.")
+        statement = data.get("statement", "We help businesses eliminate revenue leakage through deterministic customer intelligence.")
+        
+        # Concentric ripple ring shapes in background
+        for r_step in range(4):
+            ring = slide.shapes.add_shape(MSO_SHAPE.OVAL, Inches(6.6 - r_step * 1.5), Inches(3.7 - r_step * 0.9), Inches(3.0 + r_step * 3.0), Inches(1.8 + r_step * 1.8))
+            ring.fill.background()
+            ring.line.color.rgb = accent_rgb
+            ring.line.width = Pt(1)
+
+        # Bold Word Box
+        w_box = slide.shapes.add_textbox(Inches(1.2), Inches(2.2), Inches(10.9), Inches(1.6))
+        tf_w = w_box.text_frame
+        p_w = tf_w.paragraphs[0]
+        p_w.text = action_word
+        p_w.font.size = Pt(64)
+        p_w.font.bold = True
+        p_w.font.color.rgb = accent2_rgb
+        p_w.alignment = PP_ALIGN.CENTER
+
+        # Statement Box
+        st_box = slide.shapes.add_textbox(Inches(2.0), Inches(4.0), Inches(9.3), Inches(1.8))
+        tf_st = st_box.text_frame
+        tf_st.word_wrap = True
+        p_st = tf_st.paragraphs[0]
+        p_st.text = statement
+        p_st.font.size = Pt(22)
+        p_st.font.bold = True
+        p_st.font.color.rgb = text_rgb
+        p_st.alignment = PP_ALIGN.CENTER
+
+    elif layout_type in ("quote_tab", "highlight_quote"):
+        quote = data.get("quote", "Turn customer retention into your strongest and most predictable growth engine.")
+        author = data.get("attribution", "Executive Leadership & Strategic Ops")
+        _render_header("EXECUTIVE PERSPECTIVE", "Strategic Mandate")
+
+        # White/surface Card
+        card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(1.5), Inches(1.8), Inches(10.3), Inches(4.8))
+        card.fill.solid()
+        card.fill.fore_color.rgb = surface_rgb
+        card.line.color.rgb = accent_rgb
+        card.line.width = Pt(1.5)
+
+        # Vertical Yellow/Accent Tab on left
+        tab = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(1.5), Inches(2.2), Inches(0.4), Inches(2.0))
+        tab.fill.solid()
+        tab.fill.fore_color.rgb = accent2_rgb
+        tab.line.fill.background()
+
+        # Tab Title
+        tt_box = slide.shapes.add_textbox(Inches(2.2), Inches(2.2), Inches(8.5), Inches(0.5))
+        tf_tt = tt_box.text_frame
+        p_tt = tf_tt.paragraphs[0]
+        p_tt.text = "STRATEGIC QUOTE"
+        p_tt.font.size = Pt(12)
+        p_tt.font.bold = True
+        p_tt.font.color.rgb = accent2_rgb
+
+        # Quote Text
+        q_box = slide.shapes.add_textbox(Inches(2.2), Inches(2.8), Inches(8.5), Inches(2.2))
+        tf_q = q_box.text_frame
+        tf_q.word_wrap = True
+        p_q = tf_q.paragraphs[0]
+        p_q.text = f'"{quote}"'
+        p_q.font.size = Pt(24)
+        p_q.font.bold = True
+        p_q.font.color.rgb = text_rgb
+
+        # Author
+        a_box = slide.shapes.add_textbox(Inches(2.2), Inches(5.1), Inches(8.5), Inches(0.6))
+        tf_a = a_box.text_frame
+        p_a = tf_a.paragraphs[0]
+        p_a.text = f"— {author}"
+        p_a.font.size = Pt(14)
+        p_a.font.color.rgb = muted_rgb
 
     elif layout_type == "closing":
         title = data.get("title", "Thank You & Next Steps")
