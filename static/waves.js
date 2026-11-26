@@ -185,6 +185,12 @@
         const canvas = document.getElementById(canvasId);
         if (!canvas) return;
 
+        if (canvas._qiploHeroWaveInit) {
+            if (canvas._qiploResize) canvas._qiploResize();
+            return;
+        }
+        canvas._qiploHeroWaveInit = true;
+
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
@@ -197,11 +203,15 @@
             canvas.height = Math.round(height * dpr);
             ctx.scale(dpr, dpr);
         }
+        canvas._qiploResize = resize;
 
         window.addEventListener('resize', resize, { passive: true });
         resize();
 
         let time = 0;
+        let animId = null;
+        let isVisible = true;
+
         // 6 distinct pastel/vivid chromatic ribbon lines matching the reference UI:
         // Sky Blue, Soft Purple/Indigo, Rose Pink, Amber Orange, Canary Yellow, Turquoise Mint
         const ribbonLines = [
@@ -214,6 +224,11 @@
         ];
 
         function animate() {
+            if (!isVisible || document.hidden) {
+                animId = null;
+                return;
+            }
+
             ctx.clearRect(0, 0, width, height);
             time += 1;
 
@@ -287,10 +302,30 @@
 
             ctx.globalAlpha = 1.0;
             ctx.shadowBlur = 0;
-            requestAnimationFrame(animate);
+            animId = requestAnimationFrame(animate);
         }
 
-        requestAnimationFrame(animate);
+        // Performance Throttling: Pause when hidden or off-screen
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting && !document.hidden;
+                    if (isVisible && !animId) {
+                        animId = requestAnimationFrame(animate);
+                    }
+                });
+            }, { threshold: 0.02 });
+            observer.observe(canvas);
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            isVisible = !document.hidden;
+            if (isVisible && !animId) {
+                animId = requestAnimationFrame(animate);
+            }
+        }, { passive: true });
+
+        animId = requestAnimationFrame(animate);
     }
 
     // Auto-bind click waves to interactive cards & buttons

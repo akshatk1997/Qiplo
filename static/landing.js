@@ -76,6 +76,8 @@
         resize();
 
         let time = 0;
+        let animId = null;
+        let isVisible = true;
         const waves = [
             { speed: 0.020, freq: 0.007, amp: 14, phase: 0, colors: ['#4338CA', '#6366F1', '#A855F7'] },
             { speed: 0.026, freq: 0.010, amp: 10, phase: 1.8, colors: ['#FF6B35', '#FF1361', '#F59E0B'] },
@@ -83,6 +85,11 @@
         ];
 
         function animate() {
+            if (!isVisible || document.hidden) {
+                animId = null;
+                return;
+            }
+
             ctx.clearRect(0, 0, width, height);
             time += 1;
 
@@ -125,10 +132,29 @@
             });
 
             ctx.globalAlpha = 1;
-            requestAnimationFrame(animate);
+            animId = requestAnimationFrame(animate);
         }
 
-        animate();
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting && !document.hidden;
+                    if (isVisible && !animId) {
+                        animId = requestAnimationFrame(animate);
+                    }
+                });
+            }, { threshold: 0.02 });
+            observer.observe(canvas);
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            isVisible = !document.hidden;
+            if (isVisible && !animId) {
+                animId = requestAnimationFrame(animate);
+            }
+        }, { passive: true });
+
+        animId = requestAnimationFrame(animate);
     }
 
     // 3. Interactive Hero 3-Step Decision Navigator

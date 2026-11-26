@@ -7287,6 +7287,12 @@ body.light-theme .heroWaveContainer {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(139, 92, 246, 0.15);
 }
 
+/* Touch Optimizations & Performance Across Dashboard */
+button, select, input, a, .tab, .chip, .workflowStepCard, .special-module-card, .fStatCard, .resultFilterPill, .resultActionBtn {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
 /* Responsive adjustment for Workflow banner & Decision Hub */
 @media (max-width: 900px) {
     .executiveWorkflowHub .executiveWorkflowBanner,
@@ -7318,18 +7324,50 @@ body.light-theme .heroWaveContainer {
         align-self: center !important;
         padding: 5px 20px !important;
     }
+
+    /* Sandbox tab split layout */
+    #sandboxSplitLayout {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+    .sandboxPresetsBar {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+    }
+
+    /* Specials Workspace */
+    .specials-split-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    /* Presentation Studio */
+    .presentationToolbar input,
+    .presentationToolbar select {
+        min-width: 100% !important;
+    }
+    .gammaCardInspector {
+        gap: 8px !important;
+    }
 }
 
 @media (max-width: 768px) {
     .hide-mobile {
         display: none !important;
     }
+    .studio {
+        padding: 10px 12px !important;
+        gap: 12px !important;
+    }
+    .studioPane {
+        border-radius: 14px !important;
+    }
     .executiveWorkflowHub {
         border-radius: 14px !important;
-        margin-bottom: 16px !important;
+        margin-bottom: 14px !important;
     }
     .executiveWorkflowHub .heroWaveContainer {
-        height: 42px !important;
+        height: 40px !important;
     }
     .executiveWorkflowHub .executiveWorkflowBanner,
     .executiveWorkflowBanner {
@@ -7343,16 +7381,23 @@ body.light-theme .heroWaveContainer {
         scrollbar-width: none !important;
     }
     .tab {
-        padding: 8px 14px !important;
-        font-size: 0.82rem !important;
-        gap: 6px !important;
+        padding: 8px 12px !important;
+        font-size: 0.80rem !important;
+        gap: 5px !important;
+    }
+    .tab i, .tab svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+    .tabBody {
+        padding: 14px 12px !important;
     }
     .executiveSubheader {
-        margin: 12px 0 16px 0 !important;
-        gap: 12px !important;
+        margin: 10px 0 14px 0 !important;
+        gap: 10px !important;
     }
     .executiveViewTitle {
-        font-size: 1.45rem !important;
+        font-size: 1.35rem !important;
     }
     .executiveFilterToolbar {
         width: 100% !important;
@@ -7361,10 +7406,284 @@ body.light-theme .heroWaveContainer {
     .filterPillGroup {
         flex-wrap: wrap !important;
         gap: 6px !important;
+        width: 100% !important;
+    }
+    .filterPillWrapper {
+        flex: 1 1 auto;
     }
     .filterPillBtn {
-        font-size: 0.74rem !important;
-        padding: 5px 10px !important;
+        font-size: 0.72rem !important;
+        padding: 6px 10px !important;
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+
+    /* Overview Tab Grids */
+    .inspirationGrid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+    .saasMetricsTrioRow {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    .saasHeroCard {
+        padding: 16px !important;
+    }
+    .saasCardHead {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
+    .saasFunnelContainer {
+        height: 160px !important;
+        gap: 6px !important;
+    }
+
+    /* Customers Tab */
+    .resultSectionHead {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+        margin-bottom: 14px !important;
+    }
+    .resultHeadActions {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+    .resultHeadActions .resultActionBtn {
+        flex: 1 1 calc(50% - 4px) !important;
+        justify-content: center !important;
+        padding: 8px 12px !important;
+        font-size: 0.78rem !important;
+    }
+    .resultScorecardsGrid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    .resultScorecard {
+        padding: 12px 14px !important;
+    }
+    .resultScorecardVal {
+        font-size: 1.5rem !important;
+    }
+    .resultFilterToolbar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+        padding: 12px !important;
+    }
+    .resultToolbarLeft {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        width: 100% !important;
+        gap: 10px !important;
+    }
+    .resultSearchWrapper {
+        width: 100% !important;
+    }
+    .resultFilterPills {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+    }
+    .resultFilterPill {
+        font-size: 0.72rem !important;
+        padding: 5px 8px !important;
+    }
+    .resultToolbarRight {
+        flex-wrap: wrap !important;
+        width: 100% !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+    }
+    .resultSelectGroup {
+        flex: 1 1 calc(50% - 4px);
+    }
+    .resultSelectGroup select {
+        width: 100% !important;
+    }
+    .resultTableWrap {
+        border-radius: 10px !important;
+        -webkit-overflow-scrolling: touch !important;
+        margin-bottom: 12px !important;
+    }
+    .predictionTable {
+        min-width: 720px !important;
+    }
+    .resultPaginationBar {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 10px !important;
+        padding: 12px !important;
+    }
+
+    /* Business Tab */
+    .businessHubHeader {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+    .decision-intelligence-console {
+        padding: 16px !important;
+    }
+    .console-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
+    .console-body-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+    .financialStatsGrid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    .fStatCard {
+        padding: 14px 16px !important;
+    }
+    .campaignSimulator {
+        padding: 16px !important;
+    }
+    .simControlsGrid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    .simResultsGrid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+    .businessHubLayout .cohortBlock,
+    .businessHubLayout .enterpriseGrid,
+    .businessHubLayout .enterpriseGrid2,
+    .businessHubLayout div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    /* Presentation Tab */
+    .presentationHub {
+        padding: 14px 10px !important;
+    }
+    .presPromptChips {
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        flex-wrap: nowrap !important;
+        -webkit-overflow-scrolling: touch !important;
+        padding-bottom: 6px !important;
+    }
+    .presPromptChips .chip {
+        flex-shrink: 0 !important;
+    }
+    .presentationToolbar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+    .presentationToolbar input,
+    .presentationToolbar select,
+    .presentationToolbar button {
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+    .presVisualThemeControls {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+        padding: 12px !important;
+    }
+    .gammaCardInspector {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+        padding: 10px 12px !important;
+    }
+    .gammaCardInspector div {
+        flex-wrap: wrap !important;
+    }
+    .gammaCardInspector select {
+        width: 100% !important;
+    }
+    .editorFields,
+    .presentationHub div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    .presContainer {
+        min-height: 280px !important;
+    }
+
+    /* Guide Tab */
+    .guideHeaderCard {
+        padding: 16px !important;
+    }
+    .guideSectionCard {
+        padding: 16px !important;
+    }
+    .guideSectionCard .guideResponsiveGrid,
+    .guideSectionCard div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    .termBox {
+        padding: 12px 14px !important;
+    }
+
+    /* Modals & Dialogs */
+    .modal-content,
+    .modalContent,
+    .pbiStudioModal,
+    .customerDetailCard {
+        width: 95% !important;
+        max-width: 95% !important;
+        padding: 16px 14px !important;
+        border-radius: 14px !important;
+        max-height: 92vh !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    .pbiHeaderBar,
+    .customerDetailHeader {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+    .pbiNavTabs {
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    .pbiKpiGrid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    .pbiConnectorsGrid {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    .detailMetricsGrid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+    }
+    .customerDetailFooter {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+    .customerDetailFooter button {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .detailMetricsGrid {
+        grid-template-columns: 1fr !important;
+    }
+    .resultHeadActions .resultActionBtn {
+        flex: 1 1 100% !important;
+    }
+    .statStripCard {
+        padding: 14px 12px !important;
     }
 }
 
